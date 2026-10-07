@@ -25,6 +25,8 @@ jobs:
       - run: pnpm run lint
       - run: pnpm run test
       - run: pnpm run build
+      - name: Research pipeline smoke test (offline)
+        run: node scripts/research/update.mjs --mock --dry-run --limit 4
       - name: Check generated data is up to date
         run: |
           pnpm run data:countries

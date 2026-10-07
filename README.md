@@ -25,7 +25,7 @@ Node 20 or newer. The project deploys to Vercel with no configuration beyond `ve
 | Map | d3-geo + d3-zoom on inline SVG | No tile server, no API key, works offline once loaded |
 | Geometry | Natural Earth 1:110m via `world-atlas`, bundled | ~38 KB gzipped; sovereign states too small for the polygons are drawn as markers so no member goes missing |
 | Country facts | Slim table derived from `world-countries` at build time | Keeps 20 MB of flags and translations out of the bundle; CI fails if the committed table drifts |
-| Data | Hand-curated TypeScript in `src/data/` | Reviewable in a diff; integrity tests check every ISO code resolves and headline member counts hold |
+| Data | JSON in `src/data/` with zod schemas | Reviewable in a diff, writable by the weekly research script; tests check every ISO code resolves and headline member counts hold |
 
 Vendor code is split into `react`, `d3` and `geo` chunks, and the map component loads lazily so the shell paints before the geometry arrives.
 
@@ -33,11 +33,11 @@ Vendor code is split into `react`, `d3` and `geo` chunks, and the map component 
 
 ```
 src/
-  data/        blocs.ts, conflicts.ts, types.ts, countries.generated.json, geo/
+  data/        conflicts.json, blocs.json, schema.ts, guards.ts, types.ts, countries.generated.json, geo/
   lib/         countries, geo, search, labels, url state
   components/  WorldMap, Search, DetailPanel, Legend, BlocChips, ErrorBoundary, ThemeToggle
   hooks/       useAppState (hash-synced)
-scripts/       build-countries.mjs
+scripts/       build-countries.mjs, research/update.mjs (weekly Claude research pass)
 ```
 
 ## Data and its limits
@@ -51,10 +51,22 @@ Conventions worth knowing:
 - A country is tinted in Conflicts mode by the most intense conflict on its territory, including conflicts where it is an external party.
 - Bloc "member" counts in the legend and tests count full members only.
 
-### Updating the data
+### How the data stays current
 
-1. Edit `src/data/blocs.ts` or `src/data/conflicts.ts`. Bump the entry's `updated` month.
-2. Run `pnpm test`. The integrity tests catch typos in ISO codes and broken member counts.
+Every Monday the **Weekly data refresh** workflow runs `scripts/research/update.mjs`. For each conflict it asks Claude, with web search, for a fresh assessment and appends it to `src/data/conflicts.json` only when all of these hold:
+
+- the model reports a material development and the text is not a reworded repeat;
+- every cited URL appeared in that run's search results or lives on a trusted tracker or wire-service host (invented links are dropped, and an update with no surviving source is rejected);
+- intensity moves at most one step per pass; larger jumps are clamped and flagged.
+
+It also reviews bloc memberships against the same rules and lists possible new conflicts for a human to consider, without adding them. The run opens a pull request whose body is the research report, so changes are reviewed before they reach the site. Conflicts checked without change get a `lastChecked` date, which the panel shows.
+
+Setup: add an `ANTHROPIC_API_KEY` repository secret (Settings → Secrets and variables → Actions). A full pass costs a few dollars. You can trigger it by hand from the Actions tab with an optional list of conflict ids or a limit. `pnpm run data:research:mock` exercises the pipeline offline, and CI runs that on every push.
+
+### Updating the data by hand
+
+1. Edit `src/data/conflicts.json` or `src/data/blocs.json`. Add a new dated entry to `history` or `changes` rather than editing old ones.
+2. Run `pnpm test`. The schema and integrity tests catch bad dates, unknown ISO codes, missing sources and broken member counts.
 3. After bumping `world-countries`, run `pnpm run data:countries` and commit the regenerated table.
 
 ## Accessibility
