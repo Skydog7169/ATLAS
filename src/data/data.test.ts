@@ -46,7 +46,7 @@ describe('blocs', () => {
     expect(full('asean')).toBe(11);
     expect(full('au') + BLOCS.find((b) => b.id === 'au')!.members.filter((m) => m.status === 'suspended').length).toBe(55);
     expect(full('arab-league')).toBe(22);
-    expect(full('opec')).toBe(12);
+    expect(full('opec')).toBe(11);
   });
 });
 

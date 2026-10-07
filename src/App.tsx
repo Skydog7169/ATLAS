@@ -10,13 +10,18 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import Legend from './components/Legend';
 import Search, { type SearchHit } from './components/Search';
 import ThemeToggle from './components/ThemeToggle';
+import Clock from './components/Clock';
+import { formatMonth } from './lib/labels';
 import type { CountryFill, Focus, MapMarker } from './components/WorldMap';
 
 // The map pulls in d3 and the 110m geometry; loading it after the shell
 // paints keeps first render fast on phones.
 const WorldMap = lazy(() => import('./components/WorldMap'));
 
-const OVERVIEW_STEPS = ['var(--land)', '#3a4a7a', '#4a5fa3', '#5b74cc', '#7aa2ff'];
+const OVERVIEW_STEPS = ['var(--land)', '#123a4a', '#17607a', '#1f8fb3', '#35e0ff'];
+
+/** Newest `updated` month across both datasets, shown in the header readouts. */
+const DATA_ASOF = [...BLOCS.map((b) => b.updated), ...CONFLICTS.map((c) => c.updated)].sort().at(-1) ?? '';
 
 const membershipCount = new Map<string, number>();
 for (const b of BLOCS) for (const m of b.members) if (m.status === 'member') membershipCount.set(m.iso, (membershipCount.get(m.iso) ?? 0) + 1);
@@ -32,9 +37,10 @@ for (const c of CONFLICTS) {
 function Logo() {
   return (
     <svg viewBox="0 0 32 32" aria-hidden="true">
-      <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" strokeWidth="2" />
-      <ellipse cx="16" cy="16" rx="6" ry="14" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M2 16h28M16 2v28" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="16" cy="16" r="12" fill="none" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="16" cy="16" r="5.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M16 1v6M16 25v6M1 16h6M25 16h6" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="16" cy="16" r="1.6" fill="var(--warn)" />
     </svg>
   );
 }
@@ -44,7 +50,7 @@ function MapSkeleton() {
     <div className="map-skeleton" aria-busy="true">
       <div>
         <div className="globe" />
-        Loading map…
+        INITIALISING MAP
       </div>
     </div>
   );
@@ -173,7 +179,10 @@ export default function App() {
       <header className="header">
         <a className="brand" href="#" onClick={(e) => { e.preventDefault(); update({ selection: null, bloc: null }); setFocus({ kind: 'reset' }); }}>
           <Logo />
-          ATLAS
+          <span>
+            <span className="word">ATLAS</span>
+            <span className="tag">GEOPOLITICAL AWARENESS</span>
+          </span>
         </a>
         <div className="segmented" role="group" aria-label="Map mode">
           <button aria-pressed={mode === 'blocs'} onClick={() => update({ mode: 'blocs', selection: selection?.kind === 'conflict' ? null : selection })}>
@@ -184,6 +193,15 @@ export default function App() {
           </button>
         </div>
         <div className="spacer" />
+        <div className="readouts" aria-label="Status readouts">
+          <Clock />
+          <span className="optional">
+            TRACKED <b>{CONFLICTS.length}</b> · BLOCS <b>{BLOCS.length}</b>
+          </span>
+          <span className="optional">
+            DATA <b>{formatMonth(DATA_ASOF).toUpperCase()}</b>
+          </span>
+        </div>
         <Search onPick={onPick} conflictColor={conflictColor} />
         <ThemeToggle />
       </header>

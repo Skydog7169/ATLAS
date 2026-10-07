@@ -2,8 +2,8 @@
 
 An interactive geopolitics map. Two views of the same world:
 
-- **Blocs** — who belongs to which alliance or organisation. Seventeen groupings from NATO and the EU to BRICS, the SCO, the African Union and the Alliance of Sahel States, with partner, observer, suspended and frozen memberships drawn distinctly.
-- **Conflicts** — 28 active wars, insurgencies and flashpoints, marked by intensity, each with the parties, background, the latest verified status and links to live trackers.
+- **Blocs** — who belongs to which alliance or organisation. Eighteen groupings from NATO and the EU to BRICS, the SCO, the African Union and the 2026 Mecca defence pact, with partner, observer, suspended and frozen memberships drawn distinctly.
+- **Conflicts** — 31 active wars, insurgencies and flashpoints, marked by intensity, each with the parties, background, the latest verified status and links to live trackers.
 
 Search any country, bloc or conflict. Every view is a shareable link.
 
@@ -42,7 +42,7 @@ scripts/       build-countries.mjs
 
 ## Data and its limits
 
-The datasets are a **snapshot**, not a feed. Each bloc and conflict carries an `updated` month that the panel shows. Treat anything older than a few months as background and follow the source links (CFR Global Conflict Tracker, ACLED, Crisis Group CrisisWatch, ISW) for current developments.
+The datasets are a **snapshot**, not a feed, last refreshed in October 2026 from the sources linked on each entry. Each bloc and conflict carries an `updated` month that the panel shows. Treat anything older than a few months as background and follow the source links (CFR Global Conflict Tracker, ACLED, Crisis Group CrisisWatch, ISW) for current developments.
 
 Conventions worth knowing:
 

@@ -14,7 +14,7 @@ const INTENSITIES: Intensity[] = ['high', 'medium', 'low', 'latent'];
 export default function Legend({ mode, bloc, overviewSteps }: Props) {
   if (mode === 'conflicts') {
     return (
-      <aside className="legend" aria-label="Legend">
+      <aside className="legend frame" aria-label="Legend">
         <h3>Conflict intensity</h3>
         <ul>
           {INTENSITIES.map((i) => (
@@ -33,7 +33,7 @@ export default function Legend({ mode, bloc, overviewSteps }: Props) {
   if (b) {
     const statuses = new Set(b.members.map((m) => m.status));
     return (
-      <aside className="legend" aria-label="Legend">
+      <aside className="legend frame" aria-label="Legend">
         <h3>{b.shortName}</h3>
         <ul>
           <li>
@@ -55,7 +55,7 @@ export default function Legend({ mode, bloc, overviewSteps }: Props) {
   }
 
   return (
-    <aside className="legend" aria-label="Legend">
+    <aside className="legend frame" aria-label="Legend">
       <h3>Bloc memberships</h3>
       <ul>
         {overviewSteps.map((color, i) => (

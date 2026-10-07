@@ -235,7 +235,7 @@ export default function DetailPanel(props: Props) {
   }
   if (!body) return null;
   return (
-    <section className="panel" aria-live="polite">
+    <section className="panel frame" aria-live="polite">
       {body}
     </section>
   );

@@ -1,4 +1,4 @@
-import { DEFAULT_CONFLICT_SOURCES, TRACKERS } from './sources';
+import { TRACKERS } from './sources';
 import type { Conflict } from './types';
 
 /**
@@ -19,9 +19,9 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'Russia seized Crimea and parts of the Donbas in 2014 and launched a full-scale invasion in February 2022. The war became the largest in Europe since 1945, with attritional ground fighting across the east and south and long-range strike campaigns by both sides.',
     status:
-      'Front lines moved slowly through 2025, mostly in Russia’s favour in Donetsk oblast, while Ukraine struck Russian refineries and airbases at depth. US-mediated talks in 2025 produced no settlement; fighting continued into 2026.',
-    sources: [TRACKERS.isw, TRACKERS.cfr, TRACKERS.acled],
-    updated: '2025-12',
+      'Russia’s 2026 summer offensive targeted Donetsk’s fortress belt: Moscow claimed Kostiantynivka in July 2026, a claim ISW disputed, and by September was pressing Druzhkivka, Kramatorsk and Sloviansk. Ukraine kept striking Russian refineries and the Moscow region, while Russia stepped up strikes on Kyiv in October 2026. US-led talks stalled after a trilateral round in January 2026; Washington proposed a new round for late October.',
+    sources: [{ name: 'ISW: Russian Offensive Campaign Assessment, 6 October 2026', url: 'https://www.criticalthreats.org/analysis/russian-offensive-campaign-assessment-october-6-2026' }, { name: 'Al Jazeera: Ukraine launches major drone attack on Moscow region (Oct 2026)', url: 'https://www.aljazeera.com/news/2026/10/6/ukraine-launches-major-drone-attack-on-russias-moscow-region-killing-two' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'sudan',
@@ -35,9 +35,9 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'A power struggle between the army and the paramilitary RSF erupted into open war in Khartoum in April 2023. It has produced the world’s largest displacement crisis, famine conditions, and mass atrocities in Darfur.',
     status:
-      'The army retook Khartoum in March 2025. The RSF captured El Fasher, the last army stronghold in Darfur, in October 2025 amid reports of mass killings, and declared a rival government. The country is effectively partitioned east–west.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'Fighting shifted to Kordofan in 2026: the RSF besieged El Obeid from mid-year while the army advanced on RSF positions, taking al-Mazroub in October 2026. The RSF and SPLM-N entered Kurmuk in Blue Nile in August 2026. Army chief al-Burhan rejected a US 90-day ceasefire plan put forward in September and in October 2026 vowed to retake all RSF-held territory; the RSF still holds almost all of Darfur.',
+    sources: [{ name: 'Al Jazeera: Al-Burhan rejects talks, vows to retake all territory from RSF (Oct 2026)', url: 'https://www.aljazeera.com/news/2026/10/7/sudans-al-burhan-rejects-talks-vows-to-retake-all-territory-from-rsf' }, { name: 'Al Jazeera: US reportedly holds al-Burhan’s UN visa over truce plan (Sep 2026)', url: 'https://www.aljazeera.com/news/2026/9/24/outcry-in-sudan-as-us-reportedly-holds-army-chiefs-un-visa-over-ceasefire' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'gaza',
@@ -51,15 +51,15 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'Hamas’s 7 October 2023 attack killed about 1,200 people in Israel and took some 250 hostages. Israel’s ensuing campaign devastated Gaza, killing tens of thousands and displacing most of the population, and triggered a wider regional confrontation.',
     status:
-      'A US-brokered ceasefire took effect in October 2025 with the release of the remaining living hostages. Later phases covering disarmament, governance and reconstruction remained contested, and Israeli strikes and localised fighting continued at a lower level.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'The October 2025 ceasefire formally holds but its second phase is stalled: Israel expanded control to more than half of Gaza and its strikes kept killing Palestinians weekly into October 2026. The Board of Peace issued a 15-point disarmament roadmap that Hamas conditionally accepted in July 2026, but Netanyahu rejected it in August, demanding full disarmament before any withdrawal. The planned stabilisation force had still not deployed by September 2026.',
+    sources: [{ name: 'Al Jazeera: Board of Peace announces Hamas disarmament agreement (Jul 2026)', url: 'https://www.aljazeera.com/news/2026/7/31/gaza-board-of-peace-announces-hamas-disarmament-agreement-what-we-know' }, { name: 'CBS News: Netanyahu rejects US-backed Gaza peace plan (Aug 2026)', url: 'https://www.cbsnews.com/news/benjamin-netanyahu-us-gaza-peace-plan-reject/' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'israel-lebanon',
-    name: 'Israel–Hezbollah conflict',
+    name: 'Israel–Lebanon war',
     type: 'asymmetric',
-    intensity: 'low',
+    intensity: 'medium',
     since: 2023,
     location: [35.5, 33.3],
     countries: ['LBN', 'ISR'],
@@ -67,31 +67,31 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'Hezbollah opened a front in support of Hamas in October 2023. Israel escalated in September 2024 with pager attacks, the killing of Hassan Nasrallah and a ground incursion into southern Lebanon.',
     status:
-      'A ceasefire in November 2024 largely held, though Israel kept five positions inside Lebanon and continued near-daily strikes. The Lebanese government adopted a plan in August 2025 to bring all weapons under state control.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'The 2024 ceasefire collapsed when Hezbollah joined the Iran war on 2 March 2026; Israel invaded southern Lebanon that month and now holds about a fifth of the country. A US-brokered truce began on 16 April 2026, and on 26 June Israel and Lebanon signed a framework tying Israeli withdrawal to Hezbollah disarmament, which Hezbollah rejects. Israeli strikes in the south continued near-daily into October 2026.',
+    sources: [{ name: 'Axios: Israel and Lebanon sign framework agreement (Jun 2026)', url: 'https://www.axios.com/2026/06/26/israel-lebanon-framework-agreement-hezbollah' }, { name: 'Security Council Report: Lebanon, October 2026', url: 'https://www.securitycouncilreport.org/monthly-forecast/2026-10/lebanon-40.php' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'iran-israel',
-    name: 'Iran–Israel confrontation',
+    name: 'US–Israel war with Iran',
     type: 'interstate',
-    intensity: 'latent',
+    intensity: 'high',
     since: 2024,
     location: [51.4, 33.6],
     countries: ['IRN', 'ISR', 'USA'],
-    parties: ['Iran', 'Israel', 'United States'],
+    parties: ['Iran and the IRGC', 'Israel', 'United States'],
     summary:
-      'Decades of shadow war became direct exchanges of missile and drone fire in April and October 2024. In June 2025 Israel launched a twelve-day air campaign against Iranian nuclear and military targets; the United States struck the Fordow, Natanz and Isfahan sites.',
+      'Decades of shadow war became direct exchanges of fire in 2024 and a twelve-day Israeli air campaign in June 2025. On 28 February 2026 the United States and Israel launched a full-scale war on Iran, striking its leadership, nuclear and military sites; Iran closed the Strait of Hormuz and fired on Gulf states hosting US forces.',
     status:
-      'A ceasefire took hold on 24 June 2025. European parties triggered the "snapback" of UN sanctions on Iran in September 2025. Iran’s nuclear programme status and the risk of renewed strikes remain the central uncertainty.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'The US blockaded Iranian ports from April 2026. An April ceasefire and a June memorandum collapsed in July when Iran hit ships in Hormuz and US strikes resumed; the memorandum expired in August 2026. In early October 2026 limited US–Iran strikes and attacks on Hormuz shipping continued while indirect talks on a seven-day ceasefire plan stalled.',
+    sources: [{ name: 'Al Jazeera: US sets new demands for Iran deal (Oct 2026)', url: 'https://www.aljazeera.com/news/2026/10/7/us-sets-new-demands-for-iran-deal-what-are-they' }, { name: 'Al Jazeera: US–Iran memorandum expires: how it fell apart (Aug 2026)', url: 'https://www.aljazeera.com/news/2026/8/17/us-iran-memorandum-of-understanding-expires-how-and-why-it-fell-apart' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'yemen',
-    name: 'Yemen war and Red Sea crisis',
+    name: 'Yemen war (Houthis–Saudi Arabia)',
     type: 'civil-war',
-    intensity: 'medium',
+    intensity: 'high',
     since: 2014,
     location: [44.2, 15.35],
     countries: ['YEM', 'SAU', 'ISR'],
@@ -99,15 +99,15 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'The Houthis seized Sanaa in 2014 and have fought a Saudi-led coalition since 2015. From late 2023 they attacked Red Sea shipping in solidarity with Gaza, prompting US, UK and Israeli strikes.',
     status:
-      'A US air campaign in March–May 2025 ended with a truce covering US ships only. Houthi–Israeli exchanges continued, including Israeli strikes that killed much of the Houthi cabinet in August 2025. The internal front is frozen under a 2022 de facto truce.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'The Houthis joined the Iran war with missile strikes on Israel from late March 2026, then largely paused. The internal truce then broke: a Houthi offensive in Taiz in September 2026 was followed by Houthi strikes on Saudi cities and oil sites from 8 September. In October 2026 the Saudi-backed government launched a major offensive to retake Houthi-held territory, and Türkiye and Pakistan agreed to send troops to Saudi Arabia.',
+    sources: [{ name: 'Al Jazeera: Saudi Arabia and Yemen’s Houthis trade attacks (Sep 2026)', url: 'https://www.aljazeera.com/news/2026/9/17/five-killed-as-saudi-arabia-and-yemens-houthis-trade-attacks' }, { name: 'CFR: Conflict in Yemen and the Red Sea', url: 'https://www.cfr.org/global-conflict-tracker/conflict/war-yemen' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'syria',
     name: 'Syria transition',
     type: 'civil-war',
-    intensity: 'medium',
+    intensity: 'low',
     since: 2011,
     location: [38.3, 35.0],
     countries: ['SYR', 'ISR', 'TUR'],
@@ -115,9 +115,9 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'A rebel offensive toppled Bashar al-Assad in December 2024, ending 13 years of civil war. The new government under Ahmed al-Sharaa faces sectarian violence, armed holdouts, and Israeli and Turkish military operations on its territory.',
     status:
-      'Mass killings of Alawites on the coast (March 2025) and Druze–Bedouin fighting in Sweida (July 2025) exposed weak state control. A March 2025 deal to integrate the Kurdish-led SDF was only partly implemented. Most Western sanctions were lifted during 2025.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'A government offensive in January 2026 forced the SDF to cede Raqqa and Deir ez-Zor and sign an integration deal; on 25 August 2026 SDF commander Mazloum Abdi announced the force’s merger into the Syrian army, though integration issues remain. Sweida stays outside state control under Druze leader Hikmat al-Hijri’s forces despite US-mediated talks. A US-brokered Israel–Syria security pact was still unsigned as of mid-2026.',
+    sources: [{ name: 'Al Jazeera: Kurdish-led SDF announces dissolution after merging with army (Aug 2026)', url: 'https://www.aljazeera.com/news/2026/8/25/kurdish-led-forces-in-syria-dissolve-after-merging-with-the-army' }, { name: 'Al Jazeera: Syria announces ceasefire with SDF after heavy fighting (Jan 2026)', url: 'https://www.aljazeera.com/news/2026/1/18/syria-announces-ceasefire-agreement-with-kurd-led-sdf-after-heavy-fighting' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'myanmar',
@@ -131,9 +131,9 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'The February 2021 coup triggered nationwide armed resistance. Ethnic armies and the opposition National Unity Government’s forces have taken large parts of the border regions, and the junta has responded with air strikes and mass conscription.',
     status:
-      'The junta lost further territory in 2024–2025 but regained some ground with Chinese pressure on northern ethnic groups. A devastating earthquake in March 2025 did not pause the fighting. The junta staged phased elections from December 2025 that the opposition boycotted.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'Phased elections ended in January 2026 with a landslide for the military-backed USDP, and Min Aung Hlaing was sworn in as president in April 2026. Fighting stayed intense, above all in Rakhine, where the Arakan Army holds most of the state and junta offensives on Sittwe and Kyaukphyu stalled in September 2026. A junta air strike on a market in Kyauktaw on 28 September 2026 killed about 50 people.',
+    sources: [{ name: 'Al Jazeera: Myanmar air strike on Rakhine market kills dozens (Sep 2026)', url: 'https://www.aljazeera.com/news/2026/9/28/myanmar-army-air-strike-kills-dozens-in-rakhine-state' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'sahel',
@@ -147,15 +147,15 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'Jihadist insurgencies that began in northern Mali in 2012 have spread across Burkina Faso and Niger and towards coastal West Africa. Military juntas expelled French and UN forces and brought in Russian contractors.',
     status:
-      'JNIM expanded its reach in 2025, besieging towns in Burkina Faso and imposing a fuel blockade on Bamako from September 2025 that strained the Malian capital. The three juntas formalised their confederation and left ECOWAS in January 2025.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'On 25 April 2026 JNIM and the Azawad Liberation Front staged coordinated attacks on Bamako, Kati, Mopti, Sévaré and Gao, reportedly killing Mali’s defence minister, and JNIM reimposed a full blockade on Bamako; by August 2026 fuel reached the capital only in escorted convoys. JNIM claimed a June 2026 attack on Niamey airport that killed 13, and attacks on army and militia positions continued across Burkina Faso through September 2026.',
+    sources: [{ name: 'France 24: Jihadists urge united front against Mali junta as Bamako blockade begins (Apr 2026)', url: 'https://www.france24.com/en/africa/20260430-jihadists-urge-united-front-against-mali-junta-as-bamako-blockade-begins' }, { name: 'Al Jazeera: Attack on Niamey airport kills soldiers and civilians (Jun 2026)', url: 'https://www.aljazeera.com/news/2026/6/18/niger-says-soldiers-civilians-killed-in-armed-attack-on-niamey-airport' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'drc-east',
     name: 'Eastern DR Congo (M23)',
     type: 'insurgency',
-    intensity: 'high',
+    intensity: 'medium',
     since: 2021,
     location: [29.2, -1.7],
     countries: ['COD', 'RWA', 'UGA', 'BDI'],
@@ -163,15 +163,15 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'The Rwanda-backed M23 rebellion resurged in 2021 and captured the provincial capitals Goma (January 2025) and Bukavu (February 2025), displacing millions in a region with over a hundred armed groups.',
     status:
-      'A US-brokered DRC–Rwanda agreement in June 2025 and a Qatar-mediated framework with M23 in July 2025 did not stop fighting on the ground. M23 consolidated a parallel administration in North and South Kivu.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'Fighting continued through 2026 in the South Kivu highlands and in Masisi and Walikale, largely between M23 and pro-government Wazalendo militias, despite the Doha framework. Kinshasa handed 15 prisoners to M23 in August 2026 and the sides agreed a negotiating roadmap in Switzerland on 23 August, with ceasefire observation teams deploying. M23 still administers Goma, Bukavu and much of the Kivus as of October 2026.',
+    sources: [{ name: 'Al Jazeera: DR Congo and M23 agree roadmap for peace talks (Aug 2026)', url: 'https://www.aljazeera.com/news/2026/8/23/dr-congo-m23-rebels-agree-on-roadmap-for-peace-talks' }, { name: 'UN News: progress in M23 talks but violence persists (Feb 2026)', url: 'https://news.un.org/en/story/2026/02/1166899' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'somalia',
     name: 'Somalia (al-Shabaab)',
     type: 'insurgency',
-    intensity: 'medium',
+    intensity: 'high',
     since: 2006,
     location: [45.3, 2.1],
     countries: ['SOM'],
@@ -179,25 +179,25 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'Al-Qaeda’s East African affiliate controls much of rural southern Somalia and stages attacks in Mogadishu. The AU mission was re-hatted as AUSSOM in January 2025 with uncertain funding.',
     status:
-      'Al-Shabaab retook ground in Middle and Lower Shabelle in 2025, reversing much of the 2022–2023 offensive. Disputes between Mogadishu and the Puntland and Jubaland administrations weakened the government’s position ahead of 2026 elections.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'Parliament extended President Hassan Sheikh Mohamud’s term to May 2027 while Puntland and Jubaland boycott the federal process, and government forces fought opposition militias in Mogadishu in June 2026. Al-Shabaab stepped up attacks in Lower Shabelle from June to August 2026, pressing the Afgooye road into the capital. In September 2026 the United States said it would end logistical support to the AU mission after December 2026.',
+    sources: [{ name: 'Al Jazeera: Fighting in Somalia’s capital over election delay (Jun 2026)', url: 'https://www.aljazeera.com/news/2026/6/4/fighting-in-somalias-capital-as-anger-over-election-delay-erupts' }, { name: 'Crisis Group: Somalia’s war with al-Shabaab (Jun 2026)', url: 'https://www.crisisgroup.org/brf/africa/somalia/b212-new-chapter-same-stalemate-somalias-war-al-shabaab' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'ethiopia',
-    name: 'Ethiopia internal conflicts',
-    type: 'insurgency',
-    intensity: 'medium',
+    name: 'Ethiopia: Tigray–Fano war',
+    type: 'civil-war',
+    intensity: 'high',
     since: 2023,
     location: [38.7, 11.6],
     countries: ['ETH', 'ERI'],
-    parties: ['Federal government', 'Fano militias (Amhara)', 'Oromo Liberation Army', 'TPLF factions'],
+    parties: ['Federal government and allied regional forces', 'TPLF (Tigray) allied with Amhara Fano militias', 'Oromo Liberation Army', 'Eritrea (accused of backing armed groups)'],
     summary:
       'After the 2020–2022 Tigray war ended, insurgencies by Amhara Fano militias and the Oromo Liberation Army spread. Tigray’s ruling party split in 2025, and tensions with Eritrea over access to the sea rose sharply.',
     status:
-      'Fighting in Amhara and Oromia continued through 2025 with drone strikes and mass detentions. Fears of a renewed Ethiopia–Eritrea war, possibly drawing in Tigray, grew in late 2025.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'Full-scale war returned to northern Ethiopia on 23 September 2026 when the TPLF, now allied with Amhara Fano militias, launched an offensive and seized the Mekelle, Axum and Shire airports. Federal forces retook Mekelle in early October 2026 as the TPLF withdrew, with heavy fighting in North Wollo and Afar and drone strikes reported in Addis Ababa. Eritrea severed diplomatic ties with Ethiopia on 1 October 2026.',
+    sources: [{ name: 'Al Jazeera: Government forces advance in Tigray as rebels retreat (Oct 2026)', url: 'https://www.aljazeera.com/news/2026/10/3/ethiopian-govt-forces-advance-in-tigray-as-rebels-retreat-what-to-know' }, { name: 'Al Jazeera: Eritrea severs diplomatic ties with Ethiopia (Oct 2026)', url: 'https://www.aljazeera.com/news/2026/10/1/eritrea-severs-diplomatic-ties-with-ethiopia-in-tit-for-tat-move' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'south-sudan',
@@ -211,9 +211,9 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'A 2018 peace deal paused the civil war but was never fully implemented. Clashes in Upper Nile in early 2025 and the arrest of First Vice-President Riek Machar in March 2025 put the agreement in jeopardy.',
     status:
-      'Government air strikes and ground offensives against SPLM-IO positions continued in 2025. Machar was put on trial in September 2025. Elections were postponed to December 2026.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'Clashes between the army and SPLA-IO and White Army forces intensified in Jonglei and Upper Nile from December 2025, and the army launched Operation Enduring Peace in January 2026 to retake territory, backed by air strikes. Riek Machar’s treason trial continued in Juba into October 2026 with no verdict. Elections remain scheduled for December 2026, the peace deal’s final deadline.',
+    sources: [{ name: 'Al Jazeera: South Sudan launches offensive against opposition forces (Jan 2026)', url: 'https://www.aljazeera.com/news/2026/1/28/south-sudan-launches-offensive-against-opposition-forces-what-to-know' }, { name: 'Crisis Group: A trial for South Sudan’s frail peace', url: 'https://www.crisisgroup.org/qna/africa/south-sudan/trial-south-sudans-frail-peace' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'haiti',
@@ -227,15 +227,15 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'Gangs control most of Port-au-Prince and major roads, and have displaced over a million people. A Kenya-led Multinational Security Support mission arrived in 2024 but was under-resourced.',
     status:
-      'The UN Security Council authorised a larger Gang Suppression Force in September 2025 to replace the Kenyan-led mission. Violence spread to the Artibonite and Centre departments, and the transitional government’s mandate runs to February 2026.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'The transitional council dissolved in February 2026 without a successor, leaving Prime Minister Alix Didier Fils-Aimé governing alone. The UN-authorised Gang Suppression Force began patrols in Port-au-Prince in June 2026 but had only about 1,500 of a planned 5,550 personnel by late September, when the Security Council extended its mandate to March 2027. Gangs still control most of the capital; elections are set for 13 December 2026.',
+    sources: [{ name: 'Al Jazeera: UN extends Gang Suppression Force mandate (Sep 2026)', url: 'https://www.aljazeera.com/news/2026/9/29/un-extends-mandate-of-gang-suppression-force-in-haiti-for-six-months' }, { name: 'UPI: UN extends mandate of Haiti anti-gang force (Sep 2026)', url: 'https://www.upi.com/Top_News/World-News/2026/09/29/latam-haiti-un-gang-supression-force-extended/3271790697449/' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'nigeria',
     name: 'Nigeria (north-east and north-west)',
     type: 'insurgency',
-    intensity: 'medium',
+    intensity: 'high',
     since: 2009,
     location: [13.2, 11.8],
     countries: ['NGA'],
@@ -243,15 +243,15 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'The Boko Haram insurgency and its Islamic State offshoot persist around Lake Chad, while mass-kidnapping bandit groups dominate the north-west and farmer–herder violence afflicts the Middle Belt.',
     status:
-      'ISWAP staged a series of overruns of army bases in Borno in 2025. Lakurawa, a new jihadist group, emerged in the north-west. Nigerian forces increased air strikes but security remained poor across the north.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'ISWAP’s March 2026 Ramadan offensive overran several bases in Borno and Yobe, and triple suicide bombings killed over 20 people in Maiduguri on 16 March. The US and Nigeria began joint air strikes in May 2026 that killed senior ISWAP leaders, but ISWAP assaults on bases, including Kukawa on 7 October 2026, and bandit and Lakurawa attacks in Katsina, Zamfara and Kebbi continued into October.',
+    sources: [{ name: 'AP via Washington Post: Nigeria says joint strikes with US killed 175 IS fighters (May 2026)', url: 'https://www.washingtonpost.com/world/2026/05/19/nigeria-us-joint-strikes-islamic-state/f25be54c-53a7-11f1-9c40-7a0a12d9e745_story.html' }, { name: 'France 24: Maiduguri bombings follow surge of jihadist violence (Mar 2026)', url: 'https://www.france24.com/en/live-news/20260318-maiduguri-bombings-follow-surge-of-jihadist-violence-in-nigeria' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'mozambique',
     name: 'Cabo Delgado insurgency',
     type: 'insurgency',
-    intensity: 'low',
+    intensity: 'medium',
     since: 2017,
     location: [40.3, -12.9],
     countries: ['MOZ'],
@@ -259,9 +259,9 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'An Islamic State-affiliated insurgency in the gas-rich northern province displaced hundreds of thousands and stalled multibillion-dollar LNG projects.',
     status:
-      'Attacks continued at a lower level in 2025 as Rwandan forces held key towns and the SADC mission withdrew. TotalEnergies moved to restart its Afungi LNG project.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'TotalEnergies lifted force majeure and restarted construction at Afungi on 29 January 2026, with the site guarded by Rwandan troops whose deployment was extended. Islamic State Mozambique kept up near-weekly attacks, abducting dozens of fishermen near Macomia in August 2026 and raiding villages in Mocímboa da Praia, Muidumbe and Nangade through September 2026, displacing hundreds at a time.',
+    sources: [{ name: 'ACLED: Mozambique Conflict Monitor', url: 'https://acleddata.com/monitor/mozambique-conflict-monitor' }, { name: 'allAfrica: Resumption of Cabo Delgado gas project reignites hope and resentment (Jun 2026)', url: 'https://allafrica.com/stories/202606150004.html' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'colombia',
@@ -275,9 +275,9 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'Armed groups that filled the vacuum after the 2016 FARC peace deal fight each other and the state over coca, mining and smuggling corridors. The "total peace" talks launched in 2022 largely collapsed.',
     status:
-      'ELN attacks on FARC dissidents in Catatumbo in January 2025 displaced tens of thousands and led the government to suspend talks. Violence in Cauca and the Pacific coast intensified ahead of the 2026 elections.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'Right-wing lawyer Abelardo de la Espriella narrowly won the 21 June 2026 run-off and took office on 7 August, ending the Petro government’s total-peace policy: he closed all talks with the ELN and Clan del Golfo on 11 September 2026. Air strikes on the ELN in Catatumbo began in August, ELN drone attacks hit security posts in Cesar and Norte de Santander, and a US-backed 1,200-strong task force launched in October 2026.',
+    sources: [{ name: 'Al Jazeera: De la Espriella wins Colombia’s tight presidential race (Jun 2026)', url: 'https://www.aljazeera.com/news/2026/6/22/colombian-right-wing-candidate-de-la-espriella-wins-tight-presidential-race' }, { name: 'NPR: Colombia’s new president vows to challenge rebel groups (Aug 2026)', url: 'https://www.npr.org/2026/08/07/nx-s1-5924775/colombias-new-president-vows-to-remake-the-country-and-challenge-its-fragile-peace' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'mexico',
@@ -291,9 +291,9 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'Rivalries among cartels and with the state produce tens of thousands of homicides a year. A war inside the Sinaloa Cartel began in September 2024 after the capture of Ismael "El Mayo" Zambada.',
     status:
-      'The United States designated major cartels as foreign terrorist organisations in February 2025 and pressed Mexico with tariff threats. Mexico extradited dozens of cartel figures and expanded army deployments, but fighting in Sinaloa continued.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'Mexican forces killed CJNG leader Nemesio Oseguera, El Mencho, in Jalisco on 22 February 2026 with US intelligence support, triggering days of nationwide cartel unrest. The government says homicides fell by roughly 40 to 50 percent from late 2024 to mid-2026, a figure analysts dispute, but the Sinaloa Cartel split keeps killing in Culiacán and Mazatlán. In September 2026 President Sheinbaum pledged to keep federal forces in Sinaloa indefinitely while rejecting US strikes on Mexican soil.',
+    sources: [{ name: 'Crisis Group: Sinaloa’s war of the splinters (Jul 2026)', url: 'https://www.crisisgroup.org/sites/default/files/2026-07/112-mexico-sinaloa.pdf' }, { name: 'ACLED: How the Sinaloa Cartel rift is redrawing Mexico’s criminal map', url: 'https://acleddata.com/report/how-sinaloa-cartel-rift-redrawing-mexicos-criminal-map' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'india-pakistan',
@@ -307,15 +307,15 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'Nuclear-armed rivals that have fought three wars over Kashmir. A militant attack on tourists at Pahalgam in April 2025 triggered the most serious crisis since 1999.',
     status:
-      'India struck targets in Pakistan on 7 May 2025 ("Operation Sindoor") and four days of missile, drone and air combat followed before a ceasefire on 10 May. India kept the Indus Waters Treaty in abeyance, and the line of control stayed tense.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'The May 2025 ceasefire has held but relations stayed frozen. A Hague arbitration court ruled on 31 August 2026 that the Indus Waters Treaty remains in force and India cannot hold it in abeyance; India rejected the award. Indian and Pakistani warships collided in the Arabian Sea on 15 September 2026, and an Indian border-force shooting of two Pakistani civilians near Kasur on 2 October drew mutual diplomatic protests.',
+    sources: [{ name: 'Al Jazeera: India rejects Hague order to restore Indus waters pact (Aug 2026)', url: 'https://www.aljazeera.com/news/2026/8/31/india-rejects-hague-court-order-to-restore-indus-waters-pact-with-pakistan' }, { name: 'The Diplomat: Indian and Pakistani naval vessels collide in Arabian Sea (Sep 2026)', url: 'https://thediplomat.com/2026/09/indian-pakistani-naval-vessels-collide-in-arabian-sea-prompting-diplomatic-tensions/' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'pakistan-afghanistan',
-    name: 'Pakistan insurgencies and Afghan border',
-    type: 'insurgency',
-    intensity: 'medium',
+    name: 'Pakistan–Afghanistan war',
+    type: 'interstate',
+    intensity: 'high',
     since: 2021,
     location: [70.0, 33.0],
     countries: ['PAK', 'AFG'],
@@ -323,9 +323,9 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'Militant violence in Pakistan surged after the Taliban’s 2021 takeover of Afghanistan gave the TTP a haven. Baloch separatists escalated with attacks such as the March 2025 hijacking of the Jaffar Express.',
     status:
-      'Pakistani air strikes in Afghanistan and Taliban retaliation produced the heaviest border fighting in years in October 2025, followed by a Qatar- and Türkiye-mediated ceasefire. Attacks in Khyber Pakhtunkhwa and Balochistan remained at record levels.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'After TTP attacks in February 2026, Pakistan bombed Kabul and Kandahar and declared open war on the Afghan Taliban on 27 February 2026; a March strike on a Kabul hospital killed hundreds. China-hosted talks in April failed and strikes continued, with the UN mission recording over 1,100 Afghan civilian casualties in 2026. Fresh Pakistani air strikes on 21 to 30 September 2026 and TTP attacks in Khyber Pakhtunkhwa kept the war active into October.',
+    sources: [{ name: 'Al Jazeera: Open war as Pakistan bombs Kabul (Feb 2026)', url: 'https://www.aljazeera.com/news/2026/2/27/pakistan-warplanes-bomb-kabul-as-clashes-with-afghanistan-intensify' }, { name: 'CBS News: UN says Pakistani air strikes killed 10 civilians, mostly children (Oct 2026)', url: 'https://www.cbsnews.com/news/afghanistan-pakistan-airstrikes-civilians-children-killed-unama/' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'libya',
@@ -339,9 +339,9 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'Libya has been split between rival governments in Tripoli and the east since 2014. A 2020 ceasefire holds between them, but Tripoli’s armed groups periodically fight each other.',
     status:
-      'The killing of a powerful militia leader in May 2025 set off the heaviest clashes in Tripoli in years and protests against the prime minister. UN efforts to agree an electoral roadmap continued without a breakthrough.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'Drone strikes on the Zawiya refinery in August 2026 and an armed shutdown of the Sharara pipeline in September disrupted western oil output, but Tripoli saw protests rather than major fighting. On 30 August 2026 rival camps signed a UN-brokered deal for elections within 24 months; the House of Representatives endorsed it on 14 September but the High State Council objected, and the House ousted speaker Aguila Saleh on 6 October 2026.',
+    sources: [{ name: 'Al Jazeera: Rival Libya factions sign deal to hold elections within two years (Aug 2026)', url: 'https://www.aljazeera.com/news/2026/8/30/rival-libya-factions-sign-deal-to-hold-national-elections-within-two-years' }, { name: 'Al Jazeera: Libya’s parliament removes speaker Saleh after 12 years (Oct 2026)', url: 'https://www.aljazeera.com/news/2026/10/7/libyas-parliament-removes-speaker-aguila-saleh-after-12-years' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'thailand-cambodia',
@@ -355,9 +355,9 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'A long-running dispute over temples along the border escalated into five days of artillery, rocket and air strikes in July 2025 that killed dozens and displaced hundreds of thousands.',
     status:
-      'A Malaysia-brokered ceasefire on 28 July 2025 was followed by a peace accord signed in Kuala Lumpur in October 2025. Landmine incidents and troop deployments kept the border tense.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'Fighting re-erupted in December 2025, killing over 100 and displacing close to a million people before a new truce. Land demarcation talks stayed frozen through 2026, Thailand ended the 2001 maritime memorandum in May and raised border defence spending, and around 24,000 Cambodians remain displaced. On 15 September 2026 both sides opened UN compulsory conciliation in Singapore on their Gulf of Thailand claims.',
+    sources: [{ name: 'AP: Thailand and Cambodia begin UN conciliation on maritime claims (Sep 2026)', url: 'https://abcnews.com/International/wireStory/thailand-cambodia-begin-conciliation-process-disputed-maritime-claims-136453110' }, { name: 'Al Jazeera: Thai army says Cambodia calls border strike an accident (Jan 2026)', url: 'https://www.aljazeera.com/news/2026/1/6/thai-army-says-cambodia-claims-new-border-strike-was-accident-amid-truce' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'taiwan-strait',
@@ -371,9 +371,9 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'Beijing claims Taiwan and has not renounced force. Chinese air and naval activity around the island has reached record levels, with large-scale exercises rehearsing a blockade.',
     status:
-      'The PLA staged "Strait Thunder-2025A" drills in April 2025 and continued near-daily incursions into Taiwan’s air-defence identification zone. Taiwan raised defence spending and held expanded Han Kuang exercises.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'Blockade-style PLA drills in late December 2025 were followed by a quieter 2026: air-defence zone incursions fell by about half in January to July compared with 2025 while naval presence held steady. Beijing ran combat-readiness patrols in late May 2026 after a Trump–Xi summit and live-fire drills off Fujian on 23–24 July. Taiwan’s September 2026 defence report flagged growing PLA landing capabilities, and activity spiked again in mid-September.',
+    sources: [{ name: 'Al Jazeera: Taiwan monitors Chinese combat patrol near island (May 2026)', url: 'https://www.aljazeera.com/news/2026/5/26/taiwan-monitors-unprovoked-chinese-combat-patrol-near-island' }, { name: 'Taipei Times: Defence report flags PLA landing capabilities (Sep 2026)', url: 'https://www.taipeitimes.com/News/taiwan/archives/2026/09/02/2003863545' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'korean-peninsula',
@@ -387,9 +387,9 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'The 1953 armistice was never replaced by a peace treaty. North Korea has an expanding nuclear and missile arsenal and declared the South a "hostile state" in 2024.',
     status:
-      'North Korea deepened its alliance with Russia, sending troops to fight in Kursk in 2024–2025. South Korea’s new government elected in June 2025 sought to lower tensions, but Pyongyang rejected dialogue.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'Pyongyang kept rebuffing dialogue with Seoul and Washington through 2026 while fortifying the demilitarised zone with mines and fences. In early October 2026 Seoul blamed North Korean mines for a border blast that seriously wounded two of its soldiers and demanded an apology; Kim Yo Jong dismissed the claim and the North test-fired an intermediate-range ballistic missile on 3 October. President Lee Jae-myung continued to urge a return to talks.',
+    sources: [{ name: 'France 24: North Korea fires ballistic missile amid border mine dispute (Oct 2026)', url: 'https://www.france24.com/en/asia-pacific/20261003-north-korea-fires-ballistic-missile-after-seoul-s-apology-demand' }, { name: 'Reuters via US News: South Korea blames North for border mine blast (Oct 2026)', url: 'https://usnews.com/news/world/articles/2026-10-05/south-korea-says-border-mine-blast-was-caused-by-north-korea' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'south-china-sea',
@@ -403,9 +403,9 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'Overlapping maritime claims and China’s militarised artificial islands produce regular confrontations, especially between Chinese coast guard vessels and Philippine resupply missions.',
     status:
-      'Chinese water-cannon and ramming incidents at Scarborough Shoal and Second Thomas Shoal continued through 2025, and Beijing declared a "nature reserve" at Scarborough in September 2025. The Philippines expanded joint patrols with the US, Japan and Australia.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'China tightened its hold on Scarborough Shoal in 2026, installing a floating barrier and militia cordon in April and staging a four-warship standoff with a Philippine Navy vessel in June. Coast guard clashes followed in July, a day after Wang Yi warned Manila of bitter consequences. On 3 October 2026 a Chinese J-16 shadowed a Philippine patrol aircraft over the shoal; Beijing called it an airspace intrusion.',
+    sources: [{ name: 'HKFP/AFP: China says Philippine plane intruded airspace over disputed waters (Oct 2026)', url: 'https://hongkongfp.com/2026/10/05/china-says-philippine-plane-intruded-airspace-over-disputed-waters' }, { name: 'SCMP: China and Philippines clash again at Scarborough Shoal (Jul 2026)', url: 'https://www.scmp.com/news/china/diplomacy/article/3361523/after-latest-clash-sea-china-warns-philippines-bitter-consequences' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'armenia-azerbaijan',
@@ -419,9 +419,9 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'Azerbaijan won the 2020 war and retook all of Nagorno-Karabakh in September 2023, prompting the exodus of its Armenian population. The two states then negotiated a peace treaty.',
     status:
-      'The leaders initialled a peace agreement at the White House in August 2025, including a US-managed transit corridor through southern Armenia. Signature awaited Armenian constitutional changes, and the border remained militarised.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'Nikol Pashinyan’s Civil Contract won the 7 June 2026 election with about half the vote, defeating the Russia-leaning Strong Armenia bloc, but fell short of the majority needed to call the constitutional referendum Baku demands before the treaty initialled in August 2025 is signed. Pashinyan said in October 2026 that a draft constitution would be published by year-end; construction of the US-backed TRIPP corridor is expected to begin in late 2026.',
+    sources: [{ name: 'Al Jazeera: Pashinyan’s party wins Armenia election (Jun 2026)', url: 'https://www.aljazeera.com/news/2026/6/8/pm-pashinyans-party-wins-armenia-election-preliminary-results-show' }, { name: 'Eurasianet: Armenia–Azerbaijan peace deal one year on (Aug 2026)', url: 'https://eurasianet.org/assessing-armenian-azerbaijani-peace-deal-one-year-later' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'venezuela-us',
@@ -435,9 +435,9 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'Washington declared an armed conflict with drug-trafficking cartels it links to Venezuela’s government, deployed a large naval force to the Caribbean and, from September 2025, struck boats it said were carrying narcotics.',
     status:
-      'The build-up and strikes continued through late 2025 alongside threats of action on Venezuelan soil. In early 2026 the United States carried out strikes in Caracas and removed Nicolás Maduro from power, opening a contested political transition.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2026-02',
+      'On 3 January 2026 US strikes on Caracas preceded a special-forces raid that captured Nicolás Maduro, who now faces drug charges in New York. Vice-President Delcy Rodríguez was sworn in as acting president on 5 January and governs under US pressure, purging the military leadership in March; no US ground troops are deployed. US strikes on suspected drug boats in the Caribbean and Pacific continued into September 2026, and Rodríguez told the UN on 24 September that elections would follow without naming a date.',
+    sources: [{ name: 'NBC News: Venezuela’s acting leader promises elections at UN (Sep 2026)', url: 'https://www.nbcnews.com/world/venezuela/venezuelas-acting-leader-un-first-address-promises-elections-right-mom-rcna599548' }, { name: 'CFR: Instability in Venezuela', url: 'https://www.cfr.org/global-conflict-tracker/conflict/instability-venezuela' }, TRACKERS.cfr],
+    updated: '2026-10',
   },
   {
     id: 'cameroon-anglophone',
@@ -451,9 +451,66 @@ export const CONFLICTS: Conflict[] = [
     summary:
       'Protests over the marginalisation of Cameroon’s English-speaking regions turned into a separatist insurgency in 2017. Both sides have been accused of atrocities, and schools and markets are frequent targets.',
     status:
-      'Low-intensity attacks and "ghost town" lockdowns continued in 2025. A disputed October 2025 presidential election that returned Paul Biya, 92, to office prompted protests across the country.',
-    sources: DEFAULT_CONFLICT_SOURCES,
-    updated: '2025-12',
+      'Paul Biya remained in office in 2026 as the conflict entered its ninth year with near-weekly ambushes and reprisals; in March the Supreme Court annulled the life sentences of ten separatist leaders. Separatists imposed school-year lockdowns in the Northwest and Southwest from 7 September 2026, killed a senior police officer and abducted teachers in Wum, and attacked Buea and Bamenda on 24–25 September. Violence spilled into the Littoral region, where three soldiers were killed.',
+    sources: [{ name: 'Al Jazeera: Attackers kill police officer, kidnap teachers in Cameroon’s northwest (Sep 2026)', url: 'https://www.aljazeera.com/news/2026/9/9/attackers-kill-police-officer-kidnap-teachers-in-cameroons-northwest' }, { name: 'Crisis Group: Cameroon', url: 'https://www.crisisgroup.org/africa/central-africa/cameroon' }, TRACKERS.cfr],
+    updated: '2026-10',
+  },
+  {
+    id: 'hormuz',
+    name: 'Strait of Hormuz crisis',
+    type: 'interstate',
+    intensity: 'medium',
+    since: 2026,
+    location: [56.3, 26.6],
+    countries: ['IRN', 'SAU', 'ARE', 'QAT', 'KWT', 'BHR', 'OMN', 'USA'],
+    parties: ['Iran and the IRGC Navy', 'Gulf Cooperation Council states', 'United States Navy'],
+    summary:
+      'From 1 March 2026 Iran retaliated for the US–Israeli campaign by firing hundreds of missiles and drones at Bahrain, Kuwait, Qatar, Saudi Arabia, the UAE and Oman, hitting Ras Tanura and Kuwaiti fuel storage. The IRGC closed the Strait of Hormuz, halting commercial traffic by 5 March and triggering a global fuel crisis.',
+    status:
+      'An April ceasefire collapsed on 8 July 2026 and the United States imposed a naval blockade of Iran from 14 July; Oman-mediated talks continue. As of early October 2026 Iran had not fired directly at a Gulf host state for about a month, but the strait remained effectively closed pending Iranian conditions and a tanker was hit by an unattributed projectile on 4 October.',
+    sources: [
+      { name: 'Crisis Group: A fragile ceasefire under threat: the future of the Strait of Hormuz', url: 'https://www.crisisgroup.org/qna/global/iran-israelpalestine-united-states/fragile-ceasefire-under-threat-what-future-strait-hormuz' },
+      TRACKERS.cfr,
+    ],
+    updated: '2026-10',
+  },
+  {
+    id: 'iraq-militias',
+    name: 'Iraq: US–militia confrontation',
+    type: 'asymmetric',
+    intensity: 'low',
+    since: 2026,
+    location: [44.36, 33.31],
+    countries: ['IRQ', 'USA'],
+    parties: ['Popular Mobilization Forces and Islamic Resistance in Iraq', 'United States and Israel (air strikes)', 'Iraqi government'],
+    summary:
+      'When the US and Israel attacked Iran on 28 February 2026, Iraq’s Iran-aligned Popular Mobilization Forces joined with drone and rocket attacks on US and Kurdish bases and on Baghdad’s diplomatic quarter. US and Israeli strikes on militia sites followed; Baghdad counted 138 US attacks by early April that killed 73 militia members, 13 security personnel and 6 civilians.',
+    status:
+      'After drones from Iraq targeted Saudi oil facilities, Saudi Arabia and US Central Command struck militia sites on 29 July 2026, killing about 20, reportedly with Baghdad’s approval. US forces have since withdrawn from Iraq, and Prime Minister Ali al-Zaidi is pressing factions to bring their weapons under state control by June 2027, with some resisting.',
+    sources: [
+      { name: 'Long War Journal: Militia disarmament dispute marks Iraq’s post-US-withdrawal era (Oct 2026)', url: 'https://longwarjournal.org/archives/2026/10/us-flag-trampling-militia-disarmament-dispute-mark-iraqs-post-us-withdrawal-era.php' },
+      TRACKERS.cfr,
+    ],
+    updated: '2026-10',
+  },
+  {
+    id: 'balochistan',
+    name: 'Balochistan insurgency',
+    type: 'insurgency',
+    intensity: 'medium',
+    since: 2004,
+    location: [67.0, 30.2],
+    countries: ['PAK'],
+    parties: ['Balochistan Liberation Army and allied separatist groups', 'Pakistani armed forces'],
+    summary:
+      'Baloch separatists have fought the Pakistani state for two decades, targeting security forces, Punjabi workers and Chinese-linked CPEC projects. In late January 2026 the BLA launched the second phase of Operation Herof, briefly seizing the town of Nushki and prompting Pakistan to deploy helicopters and drones.',
+    status:
+      'ACLED recorded more than 540 armed clashes between Baloch militants and security forces from January to August 2026, up from 299 in the same period of 2025, with rising attacks on mining and transport infrastructure. Fighting continued into autumn 2026 with no negotiation track.',
+    sources: [
+      { name: 'ACLED: Is there a new escalation in the Baloch insurgency?', url: 'https://acleddata.com/expert-comment/there-new-escalation-baloch-insurgency' },
+      TRACKERS.acled,
+    ],
+    updated: '2026-10',
   },
 ];
 

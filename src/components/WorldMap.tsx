@@ -272,6 +272,15 @@ export default function WorldMap({
             <path className="graticule" d={graticulePath} />
             <CountryLayer features={COUNTRY_FEATURES} paths={paths} fillFor={fillFor} selectedIso={selectedIso} onCountryClick={onCountryClick} onHover={onHover} />
           </g>
+          <defs>
+            <filter id="marker-glow" x="-100%" y="-100%" width="300%" height="300%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
           <g className="overlay">
             {showMicrostates &&
               MICROSTATES.map((m) => {
@@ -315,8 +324,14 @@ export default function WorldMap({
                   role="button"
                   aria-label={mk.label}
                 >
+                  {selected && (
+                    <g className="reticle">
+                      <circle r={r + 11} strokeDasharray="6 5" />
+                      <path d={`M0 ${-(r + 16)}v7M0 ${r + 16}v-7M${-(r + 16)} 0h7M${r + 16} 0h-7`} />
+                    </g>
+                  )}
                   <circle className="ring" r={r + 3} stroke={mk.color} />
-                  <circle className="core" r={r} fill={mk.color} />
+                  <circle className="core" r={r} fill={mk.color} filter="url(#marker-glow)" />
                 </g>
               );
             })}

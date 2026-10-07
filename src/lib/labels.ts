@@ -18,10 +18,10 @@ export const INTENSITY_LABEL: Record<Intensity, string> = {
 
 /** Sequential scale: colour carries intensity, so shape and label repeat it for colour-blind users. */
 export const INTENSITY_COLOR: Record<Intensity, string> = {
-  high: '#ff4d4d',
-  medium: '#ff9a3c',
-  low: '#f6d55c',
-  latent: '#9aa5b8',
+  high: '#ff3b3b',
+  medium: '#ff9a2e',
+  low: '#ffd84a',
+  latent: '#6f8aa6',
 };
 
 export const INTENSITY_RADIUS: Record<Intensity, number> = { high: 9, medium: 7, low: 5.5, latent: 4.5 };
