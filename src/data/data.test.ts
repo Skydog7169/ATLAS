@@ -6,6 +6,7 @@ import { COUNTRY_FEATURES, MICROSTATES, hasPolygon } from '../lib/geo';
 
 const ISO3 = /^[A-Z]{3}$/;
 const MONTH = /^\d{4}-(0[1-9]|1[0-2])$/;
+const DATE = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 
 describe('country reference data', () => {
   it('resolves every map polygon with an id to a country', () => {
@@ -36,6 +37,12 @@ describe('blocs', () => {
       expect(hasPolygon(m.iso) || MICROSTATES.some((x) => x.iso === m.iso), `${bloc.id}: ${m.iso} is not drawable`).toBe(true);
     }
     for (const s of bloc.sources) expect(s.url).toMatch(/^https:\/\//);
+    const dates = bloc.changes.map((c) => c.date);
+    expect(dates).toEqual([...dates].sort().reverse());
+    for (const ch of bloc.changes) {
+      expect(ch.date).toMatch(DATE);
+      expect(COUNTRY_BY_ISO.has(ch.iso), `${bloc.id}: unknown ISO ${ch.iso} in changes`).toBe(true);
+    }
   });
 
   it('has the expected headline member counts', () => {
@@ -56,7 +63,17 @@ describe('conflicts', () => {
   });
 
   it.each(CONFLICTS.map((c) => [c.id, c] as const))('%s is well-formed', (_id, c) => {
-    expect(c.updated).toMatch(MONTH);
+    expect(c.updated).toMatch(DATE);
+    expect(c.history.length).toBeGreaterThan(0);
+    const dates = c.history.map((h) => h.date);
+    expect(dates).toEqual([...dates].sort().reverse());
+    for (const h of c.history) {
+      expect(h.date).toMatch(DATE);
+      expect(h.status.length).toBeGreaterThan(40);
+      expect(h.sources.length).toBeGreaterThan(0);
+      for (const s of h.sources) expect(s.url).toMatch(/^https:\/\//);
+    }
+    expect(c.status).toBe(c.history[0]!.status);
     const [lon, lat] = c.location;
     expect(lon).toBeGreaterThanOrEqual(-180);
     expect(lon).toBeLessThanOrEqual(180);

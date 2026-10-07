@@ -1,4 +1,4 @@
-import type { BlocCategory, ConflictType, Intensity, MembershipStatus } from '../data/types';
+import type { BlocCategory, BlocChangeKind, ConflictType, Intensity, MembershipStatus } from '../data/types';
 
 export const CONFLICT_TYPE_LABEL: Record<ConflictType, string> = {
   interstate: 'Interstate',
@@ -47,3 +47,18 @@ export function formatMonth(yyyyMm: string): string {
   if (!y || !mo) return yyyyMm;
   return new Date(Date.UTC(y, mo - 1, 1)).toLocaleDateString(undefined, { month: 'short', year: 'numeric', timeZone: 'UTC' });
 }
+
+export function formatDate(iso: string): string {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return formatMonth(iso);
+  return new Date(iso + 'T00:00:00Z').toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+}
+
+export const CHANGE_LABEL: Record<BlocChangeKind, string> = {
+  joined: 'Joined',
+  left: 'Left',
+  suspended: 'Suspended',
+  reinstated: 'Reinstated',
+  frozen: 'Froze participation',
+  invited: 'Invited',
+  founded: 'Founding member',
+};

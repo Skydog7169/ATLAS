@@ -3,6 +3,8 @@ import { BLOCS, BLOC_BY_ID, blocsForCountry } from './data/blocs';
 import { CONFLICTS, CONFLICT_BY_ID, INTENSITY_ORDER, conflictsForCountry } from './data/conflicts';
 import type { Intensity } from './data/types';
 import { useAppState } from './hooks/useAppState';
+import { currentMonth, earliestMonth, entryAt, monthRange } from './lib/history';
+import Timeline from './components/Timeline';
 import { INTENSITY_COLOR, INTENSITY_RADIUS } from './lib/labels';
 import BlocChips from './components/BlocChips';
 import DetailPanel from './components/DetailPanel';
@@ -26,12 +28,17 @@ const DATA_ASOF = [...BLOCS.map((b) => b.updated), ...CONFLICTS.map((c) => c.upd
 const membershipCount = new Map<string, number>();
 for (const b of BLOCS) for (const m of b.members) if (m.status === 'member') membershipCount.set(m.iso, (membershipCount.get(m.iso) ?? 0) + 1);
 
-const maxIntensityByCountry = new Map<string, Intensity>();
-for (const c of CONFLICTS) {
-  for (const iso of c.countries) {
-    const cur = maxIntensityByCountry.get(iso);
-    if (!cur || INTENSITY_ORDER[c.intensity] > INTENSITY_ORDER[cur]) maxIntensityByCountry.set(iso, c.intensity);
+// Replay covers conflict assessments only; bloc events go back years and would stretch the scrubber.
+const TIMELINE_MONTHS = monthRange(earliestMonth(CONFLICTS, []), currentMonth());
+
+/** Conflicts with the assessment in force for the view month (live = newest). */
+function conflictsAt(month: string | null): Array<{ conflict: (typeof CONFLICTS)[number]; intensity: Intensity }> {
+  const out: Array<{ conflict: (typeof CONFLICTS)[number]; intensity: Intensity }> = [];
+  for (const c of CONFLICTS) {
+    const entry = month ? entryAt(c, month) : c.history[0];
+    if (entry) out.push({ conflict: c, intensity: entry.intensity });
   }
+  return out;
 }
 
 function Logo() {
@@ -58,7 +65,7 @@ function MapSkeleton() {
 
 export default function App() {
   const { state, update } = useAppState();
-  const { mode, bloc, selection } = state;
+  const { mode, bloc, selection, month } = state;
   const [hover, setHover] = useState<{ label: string; sub?: string; iso: string | null; x: number; y: number } | null>(null);
   const [focus, setFocus] = useState<Focus>(null);
   const zoomApi = useRef<{ zoomIn: () => void; zoomOut: () => void; reset: () => void } | null>(null);
@@ -76,6 +83,19 @@ export default function App() {
   }, [selection]);
 
   const activeBloc = bloc ? BLOC_BY_ID.get(bloc) : undefined;
+
+  const viewMonth = mode === 'conflicts' ? month : null;
+  const visible = useMemo(() => conflictsAt(viewMonth), [viewMonth]);
+  const maxIntensityByCountry = useMemo(() => {
+    const map = new Map<string, Intensity>();
+    for (const { conflict, intensity } of visible) {
+      for (const iso of conflict.countries) {
+        const cur = map.get(iso);
+        if (!cur || INTENSITY_ORDER[intensity] > INTENSITY_ORDER[cur]) map.set(iso, intensity);
+      }
+    }
+    return map;
+  }, [visible]);
 
   const fillFor = useCallback(
     (iso: string | null): CountryFill => {
@@ -96,22 +116,22 @@ export default function App() {
       const n = Math.min(membershipCount.get(iso) ?? 0, OVERVIEW_STEPS.length - 1);
       return { fill: OVERVIEW_STEPS[n] ?? 'var(--land)' };
     },
-    [mode, activeBloc],
+    [mode, activeBloc, maxIntensityByCountry],
   );
 
   const markers = useMemo<MapMarker[]>(() => {
     if (mode !== 'conflicts') return [];
-    return [...CONFLICTS]
+    return [...visible]
       .sort((a, b) => INTENSITY_ORDER[a.intensity] - INTENSITY_ORDER[b.intensity])
-      .map((c) => ({
+      .map(({ conflict: c, intensity }) => ({
         id: c.id,
         lonLat: c.location,
-        color: INTENSITY_COLOR[c.intensity],
-        radius: INTENSITY_RADIUS[c.intensity],
+        color: INTENSITY_COLOR[intensity],
+        radius: INTENSITY_RADIUS[intensity],
         label: c.name,
-        pulse: c.intensity === 'high',
+        pulse: intensity === 'high' && viewMonth === null,
       }));
-  }, [mode]);
+  }, [mode, visible, viewMonth]);
 
   const selectedIso = selection?.kind === 'country' ? selection.iso : null;
   const selectedMarkerId = selection?.kind === 'conflict' ? selection.id : null;
@@ -175,7 +195,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="app" data-panel-open={selection !== null}>
+    <div className="app" data-panel-open={selection !== null} data-mode={mode}>
       <header className="header">
         <a className="brand" href="#" onClick={(e) => { e.preventDefault(); update({ selection: null, bloc: null }); setFocus({ kind: 'reset' }); }}>
           <Logo />
@@ -198,11 +218,24 @@ export default function App() {
           <span className="optional">
             TRACKED <b>{CONFLICTS.length}</b> · BLOCS <b>{BLOCS.length}</b>
           </span>
-          <span className="optional">
+          <button className="readout-btn optional" onClick={() => update({ selection: { kind: 'changes' } })} title="Recent changes">
             DATA <b>{formatMonth(DATA_ASOF).toUpperCase()}</b>
-          </span>
+          </button>
         </div>
         <Search onPick={onPick} conflictColor={conflictColor} />
+        <button
+          className="icon-btn"
+          aria-label="Recent changes"
+          aria-pressed={selection?.kind === 'changes'}
+          title="Recent changes"
+          onClick={() => update({ selection: selection?.kind === 'changes' ? null : { kind: 'changes' } })}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <path d="M4 6h16M4 12h10M4 18h7" />
+            <circle cx="18" cy="17" r="3" />
+            <path d="M18 15.5V17l1 1" />
+          </svg>
+        </button>
         <ThemeToggle />
       </header>
 
@@ -237,6 +270,8 @@ export default function App() {
 
         <Legend mode={mode} bloc={bloc} overviewSteps={OVERVIEW_STEPS} />
 
+        {mode === 'conflicts' && <Timeline months={TIMELINE_MONTHS} value={month} onChange={(m) => update({ month: m })} />}
+
         <div className="map-controls">
           <button className="icon-btn" aria-label="Zoom in" onClick={() => zoomApi.current?.zoomIn()}>
             +
@@ -260,6 +295,7 @@ export default function App() {
           <ErrorBoundary>
             <DetailPanel
               selection={selection}
+              month={viewMonth}
               onClose={() => update({ selection: null })}
               onSelectCountry={selectCountry}
               onSelectBloc={selectBloc}
