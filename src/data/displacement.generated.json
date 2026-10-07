@@ -1,0 +1,1682 @@
+{
+ "source": {
+  "name": "UNHCR Refugee Data Finder (2025 figures, by country of origin)",
+  "url": "https://www.unhcr.org/refugee-statistics/"
+ },
+ "year": 2025,
+ "fetchedAt": "2026-10-07",
+ "rows": [
+  {
+   "iso": "SDN",
+   "refugees": 2820737,
+   "asylumSeekers": 940297,
+   "idps": 9139309,
+   "oip": 0,
+   "total": 12900343
+  },
+  {
+   "iso": "SYR",
+   "refugees": 4865764,
+   "asylumSeekers": 154355,
+   "idps": 5542227,
+   "oip": 0,
+   "total": 10562346
+  },
+  {
+   "iso": "UKR",
+   "refugees": 5224131,
+   "asylumSeekers": 26583,
+   "idps": 3712000,
+   "oip": 0,
+   "total": 8962714
+  },
+  {
+   "iso": "VEN",
+   "refugees": 417010,
+   "asylumSeekers": 1181156,
+   "idps": 0,
+   "oip": 6042706,
+   "total": 7640872
+  },
+  {
+   "iso": "COL",
+   "refugees": 79669,
+   "asylumSeekers": 303273,
+   "idps": 7157716,
+   "oip": 0,
+   "total": 7540658
+  },
+  {
+   "iso": "AFG",
+   "refugees": 2671560,
+   "asylumSeekers": 270007,
+   "idps": 3199023,
+   "oip": 1030958,
+   "total": 7171548
+  },
+  {
+   "iso": "COD",
+   "refugees": 1176489,
+   "asylumSeekers": 168421,
+   "idps": 5669479,
+   "oip": 0,
+   "total": 7014389
+  },
+  {
+   "iso": "MMR",
+   "refugees": 1524378,
+   "asylumSeekers": 67824,
+   "idps": 3628840,
+   "oip": 0,
+   "total": 5221042
+  },
+  {
+   "iso": "YEM",
+   "refugees": 57327,
+   "asylumSeekers": 25860,
+   "idps": 4795983,
+   "oip": 0,
+   "total": 4879170
+  },
+  {
+   "iso": "SOM",
+   "refugees": 892037,
+   "asylumSeekers": 236271,
+   "idps": 3347408,
+   "oip": 0,
+   "total": 4475716
+  },
+  {
+   "iso": "NGA",
+   "refugees": 478150,
+   "asylumSeekers": 56176,
+   "idps": 3544519,
+   "oip": 0,
+   "total": 4078845
+  },
+  {
+   "iso": "SSD",
+   "refugees": 2386499,
+   "asylumSeekers": 123984,
+   "idps": 1277527,
+   "oip": 0,
+   "total": 3788010
+  },
+  {
+   "iso": "ETH",
+   "refugees": 164215,
+   "asylumSeekers": 148616,
+   "idps": 2378000,
+   "oip": 0,
+   "total": 2690831
+  },
+  {
+   "iso": "BFA",
+   "refugees": 351209,
+   "asylumSeekers": 69817,
+   "idps": 2062534,
+   "oip": 0,
+   "total": 2483560
+  },
+  {
+   "iso": "HTI",
+   "refugees": 180702,
+   "asylumSeekers": 236318,
+   "idps": 1430903,
+   "oip": 0,
+   "total": 1847923
+  },
+  {
+   "iso": "UNK",
+   "refugees": 126784,
+   "asylumSeekers": 1572774,
+   "idps": 0,
+   "oip": 103809,
+   "total": 1803367
+  },
+  {
+   "iso": "IRQ",
+   "refugees": 270671,
+   "asylumSeekers": 96887,
+   "idps": 997334,
+   "oip": 0,
+   "total": 1364892
+  },
+  {
+   "iso": "CAF",
+   "refugees": 674222,
+   "asylumSeekers": 82600,
+   "idps": 427479,
+   "oip": 0,
+   "total": 1184301
+  },
+  {
+   "iso": "CMR",
+   "refugees": 140366,
+   "asylumSeekers": 37991,
+   "idps": 1004257,
+   "oip": 0,
+   "total": 1182614
+  },
+  {
+   "iso": "MLI",
+   "refugees": 519738,
+   "asylumSeekers": 23629,
+   "idps": 414524,
+   "oip": 0,
+   "total": 957891
+  },
+  {
+   "iso": "AZE",
+   "refugees": 130983,
+   "asylumSeekers": 6242,
+   "idps": 657155,
+   "oip": 0,
+   "total": 794380
+  },
+  {
+   "iso": "GTM",
+   "refugees": 34994,
+   "asylumSeekers": 138420,
+   "idps": 573000,
+   "oip": 0,
+   "total": 746414
+  },
+  {
+   "iso": "HND",
+   "refugees": 94449,
+   "asylumSeekers": 168464,
+   "idps": 423845,
+   "oip": 0,
+   "total": 686758
+  },
+  {
+   "iso": "ERI",
+   "refugees": 554891,
+   "asylumSeekers": 118444,
+   "idps": 0,
+   "oip": 0,
+   "total": 673335
+  },
+  {
+   "iso": "NER",
+   "refugees": 85591,
+   "asylumSeekers": 21662,
+   "idps": 459585,
+   "oip": 0,
+   "total": 566838
+  },
+  {
+   "iso": "MEX",
+   "refugees": 41307,
+   "asylumSeekers": 236810,
+   "idps": 262411,
+   "oip": 0,
+   "total": 540528
+  },
+  {
+   "iso": "KHM",
+   "refugees": 11332,
+   "asylumSeekers": 1646,
+   "idps": 517555,
+   "oip": 0,
+   "total": 530533
+  },
+  {
+   "iso": "MOZ",
+   "refugees": 119,
+   "asylumSeekers": 7207,
+   "idps": 461745,
+   "oip": 0,
+   "total": 469071
+  },
+  {
+   "iso": "BDI",
+   "refugees": 318291,
+   "asylumSeekers": 64899,
+   "idps": 6815,
+   "oip": 0,
+   "total": 390005
+  },
+  {
+   "iso": "GEO",
+   "refugees": 17302,
+   "asylumSeekers": 28902,
+   "idps": 300439,
+   "oip": 0,
+   "total": 346643
+  },
+  {
+   "iso": "CUB",
+   "refugees": 29395,
+   "asylumSeekers": 288050,
+   "idps": 0,
+   "oip": 0,
+   "total": 317445
+  },
+  {
+   "iso": "NIC",
+   "refugees": 35341,
+   "asylumSeekers": 269315,
+   "idps": 0,
+   "oip": 0,
+   "total": 304656
+  },
+  {
+   "iso": "TUR",
+   "refugees": 149405,
+   "asylumSeekers": 117576,
+   "idps": 0,
+   "oip": 0,
+   "total": 266981
+  },
+  {
+   "iso": "RWA",
+   "refugees": 244415,
+   "asylumSeekers": 20214,
+   "idps": 0,
+   "oip": 0,
+   "total": 264629
+  },
+  {
+   "iso": "CHN",
+   "refugees": 153962,
+   "asylumSeekers": 99716,
+   "idps": 0,
+   "oip": 0,
+   "total": 253678
+  },
+  {
+   "iso": "TCD",
+   "refugees": 15281,
+   "asylumSeekers": 17111,
+   "idps": 219595,
+   "oip": 0,
+   "total": 251987
+  },
+  {
+   "iso": "SLV",
+   "refugees": 68182,
+   "asylumSeekers": 108289,
+   "idps": 71500,
+   "oip": 0,
+   "total": 247971
+  },
+  {
+   "iso": "SRB",
+   "refugees": 29665,
+   "asylumSeekers": 3695,
+   "idps": 209453,
+   "oip": 0,
+   "total": 242813
+  },
+  {
+   "iso": "IND",
+   "refugees": 42610,
+   "asylumSeekers": 181121,
+   "idps": 0,
+   "oip": 0,
+   "total": 223731
+  },
+  {
+   "iso": "IRN",
+   "refugees": 157912,
+   "asylumSeekers": 49263,
+   "idps": 0,
+   "oip": 0,
+   "total": 207175
+  },
+  {
+   "iso": "RUS",
+   "refugees": 99360,
+   "asylumSeekers": 88310,
+   "idps": 0,
+   "oip": 0,
+   "total": 187670
+  },
+  {
+   "iso": "LKA",
+   "refugees": 148369,
+   "asylumSeekers": 33564,
+   "idps": 4099,
+   "oip": 0,
+   "total": 186032
+  },
+  {
+   "iso": "ESH",
+   "refugees": 174607,
+   "asylumSeekers": 943,
+   "idps": 0,
+   "oip": 0,
+   "total": 175550
+  },
+  {
+   "iso": "PAK",
+   "refugees": 90497,
+   "asylumSeekers": 65066,
+   "idps": 0,
+   "oip": 0,
+   "total": 155563
+  },
+  {
+   "iso": "ECU",
+   "refugees": 5723,
+   "asylumSeekers": 122060,
+   "idps": 0,
+   "oip": 0,
+   "total": 127783
+  },
+  {
+   "iso": "BGD",
+   "refugees": 31862,
+   "asylumSeekers": 92441,
+   "idps": 0,
+   "oip": 0,
+   "total": 124303
+  },
+  {
+   "iso": "PER",
+   "refugees": 7885,
+   "asylumSeekers": 113900,
+   "idps": 0,
+   "oip": 0,
+   "total": 121785
+  },
+  {
+   "iso": "BIH",
+   "refugees": 24653,
+   "asylumSeekers": 712,
+   "idps": 94796,
+   "oip": 0,
+   "total": 120161
+  },
+  {
+   "iso": "GIN",
+   "refugees": 47692,
+   "asylumSeekers": 56626,
+   "idps": 0,
+   "oip": 0,
+   "total": 104318
+  },
+  {
+   "iso": "LBN",
+   "refugees": 9568,
+   "asylumSeekers": 8798,
+   "idps": 64417,
+   "oip": 0,
+   "total": 82783
+  },
+  {
+   "iso": "BRA",
+   "refugees": 6306,
+   "asylumSeekers": 66672,
+   "idps": 0,
+   "oip": 0,
+   "total": 72978
+  },
+  {
+   "iso": "MRT",
+   "refugees": 43906,
+   "asylumSeekers": 28438,
+   "idps": 0,
+   "oip": 0,
+   "total": 72344
+  },
+  {
+   "iso": "PNG",
+   "refugees": 644,
+   "asylumSeekers": 1227,
+   "idps": 70124,
+   "oip": 0,
+   "total": 71995
+  },
+  {
+   "iso": "EGY",
+   "refugees": 23763,
+   "asylumSeekers": 46292,
+   "idps": 0,
+   "oip": 0,
+   "total": 70055
+  },
+  {
+   "iso": "PSE",
+   "refugees": 48323,
+   "asylumSeekers": 16726,
+   "idps": 0,
+   "oip": 0,
+   "total": 65049
+  },
+  {
+   "iso": "CIV",
+   "refugees": 32506,
+   "asylumSeekers": 24238,
+   "idps": 0,
+   "oip": 0,
+   "total": 56744
+  },
+  {
+   "iso": "LBY",
+   "refugees": 17161,
+   "asylumSeekers": 3802,
+   "idps": 32791,
+   "oip": 0,
+   "total": 53754
+  },
+  {
+   "iso": "SEN",
+   "refugees": 13028,
+   "asylumSeekers": 38978,
+   "idps": 0,
+   "oip": 0,
+   "total": 52006
+  },
+  {
+   "iso": "PHL",
+   "refugees": 807,
+   "asylumSeekers": 6088,
+   "idps": 43500,
+   "oip": 0,
+   "total": 50395
+  },
+  {
+   "iso": "VNM",
+   "refugees": 20636,
+   "asylumSeekers": 19253,
+   "idps": 0,
+   "oip": 0,
+   "total": 39889
+  },
+  {
+   "iso": "XXA",
+   "refugees": 34736,
+   "asylumSeekers": 3934,
+   "idps": 0,
+   "oip": 0,
+   "total": 38670
+  },
+  {
+   "iso": "GHA",
+   "refugees": 16030,
+   "asylumSeekers": 22470,
+   "idps": 0,
+   "oip": 0,
+   "total": 38500
+  },
+  {
+   "iso": "MAR",
+   "refugees": 10400,
+   "asylumSeekers": 22120,
+   "idps": 0,
+   "oip": 0,
+   "total": 32520
+  },
+  {
+   "iso": "BEN",
+   "refugees": 1279,
+   "asylumSeekers": 3408,
+   "idps": 27294,
+   "oip": 0,
+   "total": 31981
+  },
+  {
+   "iso": "AGO",
+   "refugees": 13433,
+   "asylumSeekers": 16983,
+   "idps": 0,
+   "oip": 0,
+   "total": 30416
+  },
+  {
+   "iso": "ARM",
+   "refugees": 15578,
+   "asylumSeekers": 14216,
+   "idps": 0,
+   "oip": 0,
+   "total": 29794
+  },
+  {
+   "iso": "ALB",
+   "refugees": 21447,
+   "asylumSeekers": 7643,
+   "idps": 0,
+   "oip": 0,
+   "total": 29090
+  },
+  {
+   "iso": "CHL",
+   "refugees": 5358,
+   "asylumSeekers": 23057,
+   "idps": 0,
+   "oip": 0,
+   "total": 28415
+  },
+  {
+   "iso": "TGO",
+   "refugees": 12661,
+   "asylumSeekers": 5334,
+   "idps": 10171,
+   "oip": 0,
+   "total": 28166
+  },
+  {
+   "iso": "BLR",
+   "refugees": 19462,
+   "asylumSeekers": 8119,
+   "idps": 0,
+   "oip": 0,
+   "total": 27581
+  },
+  {
+   "iso": "UGA",
+   "refugees": 12792,
+   "asylumSeekers": 11401,
+   "idps": 0,
+   "oip": 0,
+   "total": 24193
+  },
+  {
+   "iso": "NPL",
+   "refugees": 8019,
+   "asylumSeekers": 14564,
+   "idps": 0,
+   "oip": 0,
+   "total": 22583
+  },
+  {
+   "iso": "UZB",
+   "refugees": 5164,
+   "asylumSeekers": 17404,
+   "idps": 0,
+   "oip": 0,
+   "total": 22568
+  },
+  {
+   "iso": "COG",
+   "refugees": 13134,
+   "asylumSeekers": 9431,
+   "idps": 0,
+   "oip": 0,
+   "total": 22565
+  },
+  {
+   "iso": "DZA",
+   "refugees": 9174,
+   "asylumSeekers": 12949,
+   "idps": 0,
+   "oip": 0,
+   "total": 22123
+  },
+  {
+   "iso": "DOM",
+   "refugees": 1240,
+   "asylumSeekers": 20783,
+   "idps": 0,
+   "oip": 0,
+   "total": 22023
+  },
+  {
+   "iso": "KEN",
+   "refugees": 13325,
+   "asylumSeekers": 7773,
+   "idps": 0,
+   "oip": 0,
+   "total": 21098
+  },
+  {
+   "iso": "IDN",
+   "refugees": 9215,
+   "asylumSeekers": 8205,
+   "idps": 0,
+   "oip": 0,
+   "total": 17420
+  },
+  {
+   "iso": "SLE",
+   "refugees": 8925,
+   "asylumSeekers": 8342,
+   "idps": 0,
+   "oip": 0,
+   "total": 17267
+  },
+  {
+   "iso": "HRV",
+   "refugees": 17207,
+   "asylumSeekers": 43,
+   "idps": 0,
+   "oip": 0,
+   "total": 17250
+  },
+  {
+   "iso": "JOR",
+   "refugees": 5471,
+   "asylumSeekers": 10736,
+   "idps": 0,
+   "oip": 0,
+   "total": 16207
+  },
+  {
+   "iso": "TUN",
+   "refugees": 3711,
+   "asylumSeekers": 10338,
+   "idps": 0,
+   "oip": 0,
+   "total": 14049
+  },
+  {
+   "iso": "GMB",
+   "refugees": 6728,
+   "asylumSeekers": 6712,
+   "idps": 0,
+   "oip": 0,
+   "total": 13440
+  },
+  {
+   "iso": "ZWE",
+   "refugees": 6632,
+   "asylumSeekers": 6373,
+   "idps": 0,
+   "oip": 0,
+   "total": 13005
+  },
+  {
+   "iso": "TIB",
+   "refugees": 12581,
+   "asylumSeekers": 0,
+   "idps": 0,
+   "oip": 0,
+   "total": 12581
+  },
+  {
+   "iso": "KGZ",
+   "refugees": 3337,
+   "asylumSeekers": 8072,
+   "idps": 0,
+   "oip": 0,
+   "total": 11409
+  },
+  {
+   "iso": "ROU",
+   "refugees": 3130,
+   "asylumSeekers": 7877,
+   "idps": 0,
+   "oip": 0,
+   "total": 11007
+  },
+  {
+   "iso": "KAZ",
+   "refugees": 4144,
+   "asylumSeekers": 6611,
+   "idps": 0,
+   "oip": 0,
+   "total": 10755
+  },
+  {
+   "iso": "TJK",
+   "refugees": 4163,
+   "asylumSeekers": 6420,
+   "idps": 0,
+   "oip": 0,
+   "total": 10583
+  },
+  {
+   "iso": "JAM",
+   "refugees": 2642,
+   "asylumSeekers": 7541,
+   "idps": 0,
+   "oip": 0,
+   "total": 10183
+  },
+  {
+   "iso": "MDA",
+   "refugees": 5846,
+   "asylumSeekers": 3022,
+   "idps": 0,
+   "oip": 0,
+   "total": 8868
+  },
+  {
+   "iso": "LBR",
+   "refugees": 5117,
+   "asylumSeekers": 3725,
+   "idps": 0,
+   "oip": 0,
+   "total": 8842
+  },
+  {
+   "iso": "MYS",
+   "refugees": 2477,
+   "asylumSeekers": 5511,
+   "idps": 0,
+   "oip": 0,
+   "total": 7988
+  },
+  {
+   "iso": "BOL",
+   "refugees": 710,
+   "asylumSeekers": 6747,
+   "idps": 0,
+   "oip": 0,
+   "total": 7457
+  },
+  {
+   "iso": "USA",
+   "refugees": 3667,
+   "asylumSeekers": 3779,
+   "idps": 0,
+   "oip": 0,
+   "total": 7446
+  },
+  {
+   "iso": "BTN",
+   "refugees": 7257,
+   "asylumSeekers": 77,
+   "idps": 0,
+   "oip": 0,
+   "total": 7334
+  },
+  {
+   "iso": "LAO",
+   "refugees": 6489,
+   "asylumSeekers": 466,
+   "idps": 0,
+   "oip": 0,
+   "total": 6955
+  },
+  {
+   "iso": "MNG",
+   "refugees": 2403,
+   "asylumSeekers": 3679,
+   "idps": 0,
+   "oip": 0,
+   "total": 6082
+  },
+  {
+   "iso": "KWT",
+   "refugees": 3369,
+   "asylumSeekers": 2148,
+   "idps": 0,
+   "oip": 0,
+   "total": 5517
+  },
+  {
+   "iso": "ARG",
+   "refugees": 542,
+   "asylumSeekers": 4621,
+   "idps": 0,
+   "oip": 0,
+   "total": 5163
+  },
+  {
+   "iso": "TZA",
+   "refugees": 1592,
+   "asylumSeekers": 2777,
+   "idps": 0,
+   "oip": 0,
+   "total": 4369
+  },
+  {
+   "iso": "ZAF",
+   "refugees": 1319,
+   "asylumSeekers": 2575,
+   "idps": 0,
+   "oip": 0,
+   "total": 3894
+  },
+  {
+   "iso": "DJI",
+   "refugees": 2223,
+   "asylumSeekers": 1419,
+   "idps": 0,
+   "oip": 0,
+   "total": 3642
+  },
+  {
+   "iso": "TKM",
+   "refugees": 1864,
+   "asylumSeekers": 1663,
+   "idps": 0,
+   "oip": 0,
+   "total": 3527
+  },
+  {
+   "iso": "PAN",
+   "refugees": 375,
+   "asylumSeekers": 2993,
+   "idps": 0,
+   "oip": 0,
+   "total": 3368
+  },
+  {
+   "iso": "MKD",
+   "refugees": 1886,
+   "asylumSeekers": 1332,
+   "idps": 0,
+   "oip": 0,
+   "total": 3218
+  },
+  {
+   "iso": "GNB",
+   "refugees": 1800,
+   "asylumSeekers": 1355,
+   "idps": 0,
+   "oip": 0,
+   "total": 3155
+  },
+  {
+   "iso": "THA",
+   "refugees": 327,
+   "asylumSeekers": 2656,
+   "idps": 0,
+   "oip": 0,
+   "total": 2983
+  },
+  {
+   "iso": "HUN",
+   "refugees": 2055,
+   "asylumSeekers": 899,
+   "idps": 0,
+   "oip": 0,
+   "total": 2954
+  },
+  {
+   "iso": "SAU",
+   "refugees": 2368,
+   "asylumSeekers": 385,
+   "idps": 0,
+   "oip": 0,
+   "total": 2753
+  },
+  {
+   "iso": "COM",
+   "refugees": 2338,
+   "asylumSeekers": 401,
+   "idps": 0,
+   "oip": 0,
+   "total": 2739
+  },
+  {
+   "iso": "PRY",
+   "refugees": 162,
+   "asylumSeekers": 2398,
+   "idps": 0,
+   "oip": 0,
+   "total": 2560
+  },
+  {
+   "iso": "FJI",
+   "refugees": 343,
+   "asylumSeekers": 2058,
+   "idps": 0,
+   "oip": 0,
+   "total": 2401
+  },
+  {
+   "iso": "BHS",
+   "refugees": 1598,
+   "asylumSeekers": 760,
+   "idps": 0,
+   "oip": 0,
+   "total": 2358
+  },
+  {
+   "iso": "MWI",
+   "refugees": 551,
+   "asylumSeekers": 1779,
+   "idps": 0,
+   "oip": 0,
+   "total": 2330
+  },
+  {
+   "iso": "CRI",
+   "refugees": 367,
+   "asylumSeekers": 1820,
+   "idps": 0,
+   "oip": 0,
+   "total": 2187
+  },
+  {
+   "iso": "ISR",
+   "refugees": 1265,
+   "asylumSeekers": 897,
+   "idps": 0,
+   "oip": 0,
+   "total": 2162
+  },
+  {
+   "iso": "POL",
+   "refugees": 1368,
+   "asylumSeekers": 407,
+   "idps": 0,
+   "oip": 0,
+   "total": 1775
+  },
+  {
+   "iso": "TLS",
+   "refugees": 15,
+   "asylumSeekers": 1520,
+   "idps": 0,
+   "oip": 0,
+   "total": 1535
+  },
+  {
+   "iso": "BLZ",
+   "refugees": 108,
+   "asylumSeekers": 1382,
+   "idps": 0,
+   "oip": 0,
+   "total": 1490
+  },
+  {
+   "iso": "GUY",
+   "refugees": 342,
+   "asylumSeekers": 1092,
+   "idps": 0,
+   "oip": 0,
+   "total": 1434
+  },
+  {
+   "iso": "TON",
+   "refugees": 65,
+   "asylumSeekers": 1324,
+   "idps": 0,
+   "oip": 0,
+   "total": 1389
+  },
+  {
+   "iso": "GAB",
+   "refugees": 984,
+   "asylumSeekers": 402,
+   "idps": 0,
+   "oip": 0,
+   "total": 1386
+  },
+  {
+   "iso": "BRB",
+   "refugees": 577,
+   "asylumSeekers": 722,
+   "idps": 0,
+   "oip": 0,
+   "total": 1299
+  },
+  {
+   "iso": "TTO",
+   "refugees": 576,
+   "asylumSeekers": 704,
+   "idps": 0,
+   "oip": 0,
+   "total": 1280
+  },
+  {
+   "iso": "BWA",
+   "refugees": 384,
+   "asylumSeekers": 789,
+   "idps": 0,
+   "oip": 0,
+   "total": 1173
+  },
+  {
+   "iso": "NAM",
+   "refugees": 685,
+   "asylumSeekers": 358,
+   "idps": 0,
+   "oip": 0,
+   "total": 1043
+  },
+  {
+   "iso": "GBR",
+   "refugees": 517,
+   "asylumSeekers": 496,
+   "idps": 0,
+   "oip": 0,
+   "total": 1013
+  },
+  {
+   "iso": "MDG",
+   "refugees": 637,
+   "asylumSeekers": 362,
+   "idps": 0,
+   "oip": 0,
+   "total": 999
+  },
+  {
+   "iso": "VUT",
+   "refugees": 13,
+   "asylumSeekers": 961,
+   "idps": 0,
+   "oip": 0,
+   "total": 974
+  },
+  {
+   "iso": "DEU",
+   "refugees": 327,
+   "asylumSeekers": 626,
+   "idps": 0,
+   "oip": 0,
+   "total": 953
+  },
+  {
+   "iso": "CZE",
+   "refugees": 794,
+   "asylumSeekers": 158,
+   "idps": 0,
+   "oip": 0,
+   "total": 952
+  },
+  {
+   "iso": "ESP",
+   "refugees": 186,
+   "asylumSeekers": 713,
+   "idps": 0,
+   "oip": 0,
+   "total": 899
+  },
+  {
+   "iso": "ZMB",
+   "refugees": 346,
+   "asylumSeekers": 546,
+   "idps": 0,
+   "oip": 0,
+   "total": 892
+  },
+  {
+   "iso": "MNE",
+   "refugees": 696,
+   "asylumSeekers": 165,
+   "idps": 0,
+   "oip": 0,
+   "total": 861
+  },
+  {
+   "iso": "ITA",
+   "refugees": 266,
+   "asylumSeekers": 575,
+   "idps": 0,
+   "oip": 0,
+   "total": 841
+  },
+  {
+   "iso": "BGR",
+   "refugees": 533,
+   "asylumSeekers": 290,
+   "idps": 0,
+   "oip": 0,
+   "total": 823
+  },
+  {
+   "iso": "GNQ",
+   "refugees": 424,
+   "asylumSeekers": 351,
+   "idps": 0,
+   "oip": 0,
+   "total": 775
+  },
+  {
+   "iso": "SLB",
+   "refugees": 73,
+   "asylumSeekers": 701,
+   "idps": 0,
+   "oip": 0,
+   "total": 774
+  },
+  {
+   "iso": "KOR",
+   "refugees": 117,
+   "asylumSeekers": 630,
+   "idps": 0,
+   "oip": 0,
+   "total": 747
+  },
+  {
+   "iso": "DMA",
+   "refugees": 97,
+   "asylumSeekers": 642,
+   "idps": 0,
+   "oip": 0,
+   "total": 739
+  },
+  {
+   "iso": "MUS",
+   "refugees": 283,
+   "asylumSeekers": 440,
+   "idps": 0,
+   "oip": 0,
+   "total": 723
+  },
+  {
+   "iso": "SVK",
+   "refugees": 625,
+   "asylumSeekers": 91,
+   "idps": 0,
+   "oip": 0,
+   "total": 716
+  },
+  {
+   "iso": "SWZ",
+   "refugees": 220,
+   "asylumSeekers": 472,
+   "idps": 0,
+   "oip": 0,
+   "total": 692
+  },
+  {
+   "iso": "URY",
+   "refugees": 126,
+   "asylumSeekers": 536,
+   "idps": 0,
+   "oip": 0,
+   "total": 662
+  },
+  {
+   "iso": "HKG",
+   "refugees": 245,
+   "asylumSeekers": 411,
+   "idps": 0,
+   "oip": 0,
+   "total": 656
+  },
+  {
+   "iso": "FRA",
+   "refugees": 166,
+   "asylumSeekers": 455,
+   "idps": 0,
+   "oip": 0,
+   "total": 621
+  },
+  {
+   "iso": "CAN",
+   "refugees": 360,
+   "asylumSeekers": 215,
+   "idps": 0,
+   "oip": 0,
+   "total": 575
+  },
+  {
+   "iso": "WSM",
+   "refugees": 17,
+   "asylumSeekers": 496,
+   "idps": 0,
+   "oip": 0,
+   "total": 513
+  },
+  {
+   "iso": "PRT",
+   "refugees": 109,
+   "asylumSeekers": 376,
+   "idps": 0,
+   "oip": 0,
+   "total": 485
+  },
+  {
+   "iso": "LCA",
+   "refugees": 199,
+   "asylumSeekers": 242,
+   "idps": 0,
+   "oip": 0,
+   "total": 441
+  },
+  {
+   "iso": "GUF",
+   "refugees": 42,
+   "asylumSeekers": 382,
+   "idps": 0,
+   "oip": 0,
+   "total": 424
+  },
+  {
+   "iso": "IRL",
+   "refugees": 69,
+   "asylumSeekers": 330,
+   "idps": 0,
+   "oip": 0,
+   "total": 399
+  },
+  {
+   "iso": "BHR",
+   "refugees": 267,
+   "asylumSeekers": 130,
+   "idps": 0,
+   "oip": 0,
+   "total": 397
+  },
+  {
+   "iso": "NLD",
+   "refugees": 159,
+   "asylumSeekers": 179,
+   "idps": 0,
+   "oip": 0,
+   "total": 338
+  },
+  {
+   "iso": "SWE",
+   "refugees": 128,
+   "asylumSeekers": 195,
+   "idps": 0,
+   "oip": 0,
+   "total": 323
+  },
+  {
+   "iso": "VCT",
+   "refugees": 194,
+   "asylumSeekers": 129,
+   "idps": 0,
+   "oip": 0,
+   "total": 323
+  },
+  {
+   "iso": "PRK",
+   "refugees": 263,
+   "asylumSeekers": 45,
+   "idps": 0,
+   "oip": 0,
+   "total": 308
+  },
+  {
+   "iso": "ARE",
+   "refugees": 252,
+   "asylumSeekers": 45,
+   "idps": 0,
+   "oip": 0,
+   "total": 297
+  },
+  {
+   "iso": "LVA",
+   "refugees": 189,
+   "asylumSeekers": 91,
+   "idps": 0,
+   "oip": 0,
+   "total": 280
+  },
+  {
+   "iso": "SGP",
+   "refugees": 43,
+   "asylumSeekers": 212,
+   "idps": 0,
+   "oip": 0,
+   "total": 255
+  },
+  {
+   "iso": "GRC",
+   "refugees": 94,
+   "asylumSeekers": 121,
+   "idps": 0,
+   "oip": 0,
+   "total": 215
+  },
+  {
+   "iso": "SUR",
+   "refugees": 56,
+   "asylumSeekers": 152,
+   "idps": 0,
+   "oip": 0,
+   "total": 208
+  },
+  {
+   "iso": "GRD",
+   "refugees": 117,
+   "asylumSeekers": 76,
+   "idps": 0,
+   "oip": 0,
+   "total": 193
+  },
+  {
+   "iso": "BEL",
+   "refugees": 113,
+   "asylumSeekers": 69,
+   "idps": 0,
+   "oip": 0,
+   "total": 182
+  },
+  {
+   "iso": "LTU",
+   "refugees": 101,
+   "asylumSeekers": 78,
+   "idps": 0,
+   "oip": 0,
+   "total": 179
+  },
+  {
+   "iso": "OMN",
+   "refugees": 133,
+   "asylumSeekers": 43,
+   "idps": 0,
+   "oip": 0,
+   "total": 176
+  },
+  {
+   "iso": "BRN",
+   "refugees": 5,
+   "asylumSeekers": 170,
+   "idps": 0,
+   "oip": 0,
+   "total": 175
+  },
+  {
+   "iso": "JPN",
+   "refugees": 56,
+   "asylumSeekers": 91,
+   "idps": 0,
+   "oip": 0,
+   "total": 147
+  },
+  {
+   "iso": "EST",
+   "refugees": 86,
+   "asylumSeekers": 52,
+   "idps": 0,
+   "oip": 0,
+   "total": 138
+  },
+  {
+   "iso": "ATG",
+   "refugees": 97,
+   "asylumSeekers": 39,
+   "idps": 0,
+   "oip": 0,
+   "total": 136
+  },
+  {
+   "iso": "SVN",
+   "refugees": 12,
+   "asylumSeekers": 103,
+   "idps": 0,
+   "oip": 0,
+   "total": 115
+  },
+  {
+   "iso": "BMU",
+   "refugees": 6,
+   "asylumSeekers": 101,
+   "idps": 0,
+   "oip": 0,
+   "total": 107
+  },
+  {
+   "iso": "NZL",
+   "refugees": 58,
+   "asylumSeekers": 43,
+   "idps": 0,
+   "oip": 0,
+   "total": 101
+  },
+  {
+   "iso": "QAT",
+   "refugees": 73,
+   "asylumSeekers": 28,
+   "idps": 0,
+   "oip": 0,
+   "total": 101
+  },
+  {
+   "iso": "KNA",
+   "refugees": 36,
+   "asylumSeekers": 64,
+   "idps": 0,
+   "oip": 0,
+   "total": 100
+  },
+  {
+   "iso": "CPV",
+   "refugees": 15,
+   "asylumSeekers": 79,
+   "idps": 0,
+   "oip": 0,
+   "total": 94
+  },
+  {
+   "iso": "MDV",
+   "refugees": 62,
+   "asylumSeekers": 19,
+   "idps": 0,
+   "oip": 0,
+   "total": 81
+  },
+  {
+   "iso": "AUS",
+   "refugees": 41,
+   "asylumSeekers": 31,
+   "idps": 0,
+   "oip": 0,
+   "total": 72
+  },
+  {
+   "iso": "DNK",
+   "refugees": 21,
+   "asylumSeekers": 50,
+   "idps": 0,
+   "oip": 0,
+   "total": 71
+  },
+  {
+   "iso": "GLP",
+   "refugees": 17,
+   "asylumSeekers": 51,
+   "idps": 0,
+   "oip": 0,
+   "total": 68
+  },
+  {
+   "iso": "AND",
+   "refugees": 5,
+   "asylumSeekers": 57,
+   "idps": 0,
+   "oip": 0,
+   "total": 62
+  },
+  {
+   "iso": "LSO",
+   "refugees": 27,
+   "asylumSeekers": 31,
+   "idps": 0,
+   "oip": 0,
+   "total": 58
+  },
+  {
+   "iso": "KIR",
+   "refugees": 5,
+   "asylumSeekers": 52,
+   "idps": 0,
+   "oip": 0,
+   "total": 57
+  },
+  {
+   "iso": "NOR",
+   "refugees": 20,
+   "asylumSeekers": 32,
+   "idps": 0,
+   "oip": 0,
+   "total": 52
+  },
+  {
+   "iso": "AUT",
+   "refugees": 33,
+   "asylumSeekers": 16,
+   "idps": 0,
+   "oip": 0,
+   "total": 49
+  },
+  {
+   "iso": "CHE",
+   "refugees": 6,
+   "asylumSeekers": 33,
+   "idps": 0,
+   "oip": 0,
+   "total": 39
+  },
+  {
+   "iso": "SYC",
+   "refugees": 10,
+   "asylumSeekers": 21,
+   "idps": 0,
+   "oip": 0,
+   "total": 31
+  },
+  {
+   "iso": "MAC",
+   "refugees": 15,
+   "asylumSeekers": 15,
+   "idps": 0,
+   "oip": 0,
+   "total": 30
+  },
+  {
+   "iso": "STP",
+   "refugees": 8,
+   "asylumSeekers": 20,
+   "idps": 0,
+   "oip": 0,
+   "total": 28
+  },
+  {
+   "iso": "MLT",
+   "refugees": 11,
+   "asylumSeekers": 16,
+   "idps": 0,
+   "oip": 0,
+   "total": 27
+  },
+  {
+   "iso": "NRU",
+   "refugees": 5,
+   "asylumSeekers": 22,
+   "idps": 0,
+   "oip": 0,
+   "total": 27
+  },
+  {
+   "iso": "CYP",
+   "refugees": 15,
+   "asylumSeekers": 10,
+   "idps": 0,
+   "oip": 0,
+   "total": 25
+  },
+  {
+   "iso": "FIN",
+   "refugees": 5,
+   "asylumSeekers": 15,
+   "idps": 0,
+   "oip": 0,
+   "total": 20
+  },
+  {
+   "iso": "LUX",
+   "refugees": 20,
+   "asylumSeekers": 0,
+   "idps": 0,
+   "oip": 0,
+   "total": 20
+  },
+  {
+   "iso": "TCA",
+   "refugees": 14,
+   "asylumSeekers": 6,
+   "idps": 0,
+   "oip": 0,
+   "total": 20
+  },
+  {
+   "iso": "MHL",
+   "refugees": 0,
+   "asylumSeekers": 16,
+   "idps": 0,
+   "oip": 0,
+   "total": 16
+  },
+  {
+   "iso": "NIU",
+   "refugees": 5,
+   "asylumSeekers": 6,
+   "idps": 0,
+   "oip": 0,
+   "total": 11
+  },
+  {
+   "iso": "TUV",
+   "refugees": 0,
+   "asylumSeekers": 10,
+   "idps": 0,
+   "oip": 0,
+   "total": 10
+  },
+  {
+   "iso": "MTQ",
+   "refugees": 0,
+   "asylumSeekers": 9,
+   "idps": 0,
+   "oip": 0,
+   "total": 9
+  },
+  {
+   "iso": "CUW",
+   "refugees": 8,
+   "asylumSeekers": 0,
+   "idps": 0,
+   "oip": 0,
+   "total": 8
+  },
+  {
+   "iso": "VGB",
+   "refugees": 0,
+   "asylumSeekers": 7,
+   "idps": 0,
+   "oip": 0,
+   "total": 7
+  },
+  {
+   "iso": "ABW",
+   "refugees": 0,
+   "asylumSeekers": 5,
+   "idps": 0,
+   "oip": 0,
+   "total": 5
+  },
+  {
+   "iso": "AIA",
+   "refugees": 0,
+   "asylumSeekers": 5,
+   "idps": 0,
+   "oip": 0,
+   "total": 5
+  },
+  {
+   "iso": "CYM",
+   "refugees": 0,
+   "asylumSeekers": 5,
+   "idps": 0,
+   "oip": 0,
+   "total": 5
+  },
+  {
+   "iso": "COK",
+   "refugees": 0,
+   "asylumSeekers": 5,
+   "idps": 0,
+   "oip": 0,
+   "total": 5
+  },
+  {
+   "iso": "PYF",
+   "refugees": 0,
+   "asylumSeekers": 5,
+   "idps": 0,
+   "oip": 0,
+   "total": 5
+  },
+  {
+   "iso": "FSM",
+   "refugees": 0,
+   "asylumSeekers": 5,
+   "idps": 0,
+   "oip": 0,
+   "total": 5
+  },
+  {
+   "iso": "ISL",
+   "refugees": 0,
+   "asylumSeekers": 5,
+   "idps": 0,
+   "oip": 0,
+   "total": 5
+  }
+ ]
+}

@@ -1,17 +1,43 @@
 import { BLOC_BY_ID } from '../data/blocs';
 import { INTENSITY_COLOR, INTENSITY_LABEL } from '../lib/labels';
 import type { Intensity } from '../data/types';
-import type { Mode } from '../lib/urlState';
+import type { Layer, Mode } from '../lib/urlState';
+import { DISPLACEMENT, DISPLACEMENT_COLORS, binLabel } from '../lib/displacement';
+import { formatDate } from '../lib/labels';
 
 interface Props {
   mode: Mode;
   bloc: string | null;
   overviewSteps: string[];
+  layer: Layer;
 }
 
 const INTENSITIES: Intensity[] = ['high', 'medium', 'low', 'latent'];
 
-export default function Legend({ mode, bloc, overviewSteps }: Props) {
+export default function Legend({ mode, bloc, overviewSteps, layer }: Props) {
+  if (layer === 'displacement') {
+    return (
+      <aside className="legend frame" aria-label="Legend">
+        <h3>Forcibly displaced</h3>
+        <ul>
+          {DISPLACEMENT_COLORS.map((color, i) => (
+            <li key={i}>
+              <span className="swatch" style={{ background: color }} />
+              {binLabel(i)}
+            </li>
+          ))}
+        </ul>
+        <div className="note">
+          People displaced from each country: refugees, asylum seekers, IDPs and others in need of protection.{' '}
+          <a href={DISPLACEMENT.source.url} target="_blank" rel="noopener noreferrer">
+            UNHCR
+          </a>{' '}
+          {DISPLACEMENT.year} figures, fetched {formatDate(DISPLACEMENT.fetchedAt)}.
+          {mode === 'conflicts' ? ' Markers still show conflict intensity.' : ''}
+        </div>
+      </aside>
+    );
+  }
   if (mode === 'conflicts') {
     return (
       <aside className="legend frame" aria-label="Legend">

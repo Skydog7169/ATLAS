@@ -14,9 +14,13 @@ export interface AppState {
   selection: Selection;
   /** Conflicts mode: YYYY-MM being replayed, or null for the live view. */
   month: string | null;
+  /** Optional data overlay drawn instead of the mode's fill. */
+  layer: Layer;
 }
 
-export const DEFAULT_STATE: AppState = { mode: 'blocs', bloc: null, selection: null, month: null };
+export type Layer = 'displacement' | null;
+
+export const DEFAULT_STATE: AppState = { mode: 'blocs', bloc: null, selection: null, month: null, layer: null };
 
 const MONTH = /^\d{4}-(0[1-9]|1[0-2])$/;
 
@@ -26,6 +30,7 @@ export function serialize(state: AppState): string {
   p.set('mode', state.mode);
   if (state.bloc) p.set('bloc', state.bloc);
   if (state.month) p.set('t', state.month);
+  if (state.layer) p.set('layer', state.layer);
   if (state.selection) {
     if (state.selection.kind === 'country') p.set('country', state.selection.iso);
     else if (state.selection.kind === 'changes') p.set('changes', '1');
@@ -42,6 +47,7 @@ export function parse(hash: string, isValid: { bloc: (id: string) => boolean; co
 
   const t = p.get('t');
   const month = t && MONTH.test(t) ? t : null;
+  const layer: Layer = p.get('layer') === 'displacement' ? 'displacement' : null;
 
   let selection: Selection = null;
   const country = p.get('country');
@@ -53,5 +59,5 @@ export function parse(hash: string, isValid: { bloc: (id: string) => boolean; co
   else if (selBloc && isValid.bloc(selBloc)) selection = { kind: 'bloc', id: selBloc };
   else if (bloc && !country && !conflict) selection = { kind: 'bloc', id: bloc };
 
-  return { mode, bloc, selection, month };
+  return { mode, bloc, selection, month, layer };
 }

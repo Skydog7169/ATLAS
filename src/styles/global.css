@@ -1254,3 +1254,9 @@ a {
     width: min(520px, max(280px, calc(100% - var(--panel-w) - 24px - 300px)));
   }
 }
+
+.icon-btn[data-active='true'] {
+  color: var(--accent-fg);
+  background: var(--accent);
+  border-color: var(--accent);
+}

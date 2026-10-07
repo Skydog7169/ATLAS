@@ -5,6 +5,7 @@ import type { Intensity } from './data/types';
 import { useAppState } from './hooks/useAppState';
 import { currentMonth, earliestMonth, entryAt, monthRange } from './lib/history';
 import Timeline from './components/Timeline';
+import { DISPLACEMENT_BY_ISO, displacementColor, formatPeople } from './lib/displacement';
 import { INTENSITY_COLOR, INTENSITY_RADIUS } from './lib/labels';
 import BlocChips from './components/BlocChips';
 import DetailPanel from './components/DetailPanel';
@@ -65,7 +66,7 @@ function MapSkeleton() {
 
 export default function App() {
   const { state, update } = useAppState();
-  const { mode, bloc, selection, month } = state;
+  const { mode, bloc, selection, month, layer } = state;
   const [hover, setHover] = useState<{ label: string; sub?: string; iso: string | null; x: number; y: number } | null>(null);
   const [focus, setFocus] = useState<Focus>(null);
   const zoomApi = useRef<{ zoomIn: () => void; zoomOut: () => void; reset: () => void } | null>(null);
@@ -100,6 +101,7 @@ export default function App() {
   const fillFor = useCallback(
     (iso: string | null): CountryFill => {
       if (!iso) return { fill: 'var(--land-dim)' };
+      if (layer === 'displacement') return { fill: displacementColor(iso) };
       if (mode === 'conflicts') {
         const intensity = maxIntensityByCountry.get(iso);
         if (!intensity) return { fill: 'var(--land)' };
@@ -116,7 +118,7 @@ export default function App() {
       const n = Math.min(membershipCount.get(iso) ?? 0, OVERVIEW_STEPS.length - 1);
       return { fill: OVERVIEW_STEPS[n] ?? 'var(--land)' };
     },
-    [mode, activeBloc, maxIntensityByCountry],
+    [mode, activeBloc, maxIntensityByCountry, layer],
   );
 
   const markers = useMemo<MapMarker[]>(() => {
@@ -181,13 +183,17 @@ export default function App() {
     if (!hover) return null;
     if (hover.sub) return hover.sub;
     if (!hover.iso) return null;
+    if (layer === 'displacement') {
+      const row = DISPLACEMENT_BY_ISO.get(hover.iso);
+      return row ? `${formatPeople(row.total)} displaced · ${formatPeople(row.refugees)} refugees · ${formatPeople(row.idps)} IDPs` : 'No UNHCR displacement figure';
+    }
     if (mode === 'conflicts') {
       const list = conflictsForCountry(hover.iso).sort((a, b) => INTENSITY_ORDER[b.intensity] - INTENSITY_ORDER[a.intensity]);
       return list.length ? list.map((c) => c.name).join(' · ') : null;
     }
     const list = blocsForCountry(hover.iso).filter((x) => x.membership.status === 'member');
     return list.length ? list.map((x) => x.bloc.shortName).join(' · ') : 'No tracked bloc memberships';
-  }, [hover, mode]);
+  }, [hover, mode, layer]);
 
   const conflictColor = useCallback((id: string) => {
     const c = CONFLICT_BY_ID.get(id);
@@ -195,7 +201,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="app" data-panel-open={selection !== null} data-mode={mode}>
+    <div className="app" data-panel-open={selection !== null} data-mode={mode} data-layer={layer ?? undefined}>
       <header className="header">
         <a className="brand" href="#" onClick={(e) => { e.preventDefault(); update({ selection: null, bloc: null }); setFocus({ kind: 'reset' }); }}>
           <Logo />
@@ -268,11 +274,24 @@ export default function App() {
           />
         )}
 
-        <Legend mode={mode} bloc={bloc} overviewSteps={OVERVIEW_STEPS} />
+        <Legend mode={mode} bloc={bloc} overviewSteps={OVERVIEW_STEPS} layer={layer} />
 
         {mode === 'conflicts' && <Timeline months={TIMELINE_MONTHS} value={month} onChange={(m) => update({ month: m })} />}
 
         <div className="map-controls">
+          <button
+            className="icon-btn"
+            aria-label="Displacement layer"
+            aria-pressed={layer === 'displacement'}
+            title="Toggle UNHCR displacement layer"
+            data-active={layer === 'displacement'}
+            onClick={() => update({ layer: layer === 'displacement' ? null : 'displacement' })}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <path d="m12 3 9 5-9 5-9-5 9-5Z" />
+              <path d="m3 13 9 5 9-5" />
+            </svg>
+          </button>
           <button className="icon-btn" aria-label="Zoom in" onClick={() => zoomApi.current?.zoomIn()}>
             +
           </button>
