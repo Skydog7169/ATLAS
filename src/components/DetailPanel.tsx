@@ -279,7 +279,11 @@ function ConflictView({ conflict, props }: { conflict: Conflict; props: Props })
         <div className="panel-actions">
           <ShareButton />
         </div>
-        <div className="updated">Latest assessment verified {formatDate(conflict.updated)}. Check the linked sources for developments since then.</div>
+        <div className="updated">
+          Latest assessment verified {formatDate(conflict.updated)}.
+          {conflict.lastChecked && conflict.lastChecked > conflict.updated ? ` Re-checked ${formatDate(conflict.lastChecked)} with no material change.` : ''}
+          {' '}Check the linked sources for developments since then.
+        </div>
       </div>
     </>
   );

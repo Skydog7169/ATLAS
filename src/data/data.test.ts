@@ -3,6 +3,9 @@ import { BLOCS } from './blocs';
 import { CONFLICTS } from './conflicts';
 import { COUNTRY_BY_ISO } from '../lib/countries';
 import { COUNTRY_FEATURES, MICROSTATES, hasPolygon } from '../lib/geo';
+import { BlocsFileSchema, ConflictsFileSchema } from './schema';
+import conflictsJson from './conflicts.json';
+import blocsJson from './blocs.json';
 
 const ISO3 = /^[A-Z]{3}$/;
 const MONTH = /^\d{4}-(0[1-9]|1[0-2])$/;
@@ -18,6 +21,17 @@ describe('country reference data', () => {
     const isos = MICROSTATES.map((m) => m.iso);
     expect(isos).toEqual(expect.arrayContaining(['MLT', 'SGP', 'BHR']));
     for (const m of MICROSTATES) expect(hasPolygon(m.iso)).toBe(false);
+  });
+});
+
+describe('json files validate against the shared schema', () => {
+  it('conflicts.json', () => {
+    const r = ConflictsFileSchema.safeParse(conflictsJson);
+    expect(r.success, r.success ? '' : JSON.stringify(r.error.issues.slice(0, 3))).toBe(true);
+  });
+  it('blocs.json', () => {
+    const r = BlocsFileSchema.safeParse(blocsJson);
+    expect(r.success, r.success ? '' : JSON.stringify(r.error.issues.slice(0, 3))).toBe(true);
   });
 });
 

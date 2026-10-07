@@ -89,6 +89,8 @@ export interface ConflictInput {
   summary: string;
   /** Assessments, newest first. Must have at least one entry. */
   history: HistoryEntry[];
+  /** ISO date the entry was last re-checked without a material change, YYYY-MM-DD. */
+  lastChecked?: string;
 }
 
 export interface Conflict extends ConflictInput {
