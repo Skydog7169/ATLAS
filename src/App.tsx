@@ -66,7 +66,8 @@ function MapSkeleton() {
 
 export default function App() {
   const { state, update } = useAppState();
-  const { mode, bloc, selection, month, layer } = state;
+  const { mode, bloc, vs, selection, month, layer } = state;
+  const [picking, setPicking] = useState(false);
   const [hover, setHover] = useState<{ label: string; sub?: string; iso: string | null; x: number; y: number } | null>(null);
   const [focus, setFocus] = useState<Focus>(null);
   const zoomApi = useRef<{ zoomIn: () => void; zoomOut: () => void; reset: () => void } | null>(null);
@@ -84,6 +85,8 @@ export default function App() {
   }, [selection]);
 
   const activeBloc = bloc ? BLOC_BY_ID.get(bloc) : undefined;
+  const vsBloc = vs ? BLOC_BY_ID.get(vs) : undefined;
+  const compare = mode === 'blocs' && activeBloc && vsBloc ? { a: activeBloc, b: vsBloc } : null;
 
   const viewMonth = mode === 'conflicts' ? month : null;
   const visible = useMemo(() => conflictsAt(viewMonth), [viewMonth]);
@@ -108,6 +111,14 @@ export default function App() {
         const pct = intensity === 'high' ? 55 : intensity === 'medium' ? 42 : intensity === 'low' ? 30 : 22;
         return { fill: `color-mix(in srgb, ${INTENSITY_COLOR[intensity]} ${pct}%, var(--land))` };
       }
+      if (compare) {
+        const inA = compare.a.members.some((x) => x.iso === iso && x.status === 'member');
+        const inB = compare.b.members.some((x) => x.iso === iso && x.status === 'member');
+        if (inA && inB) return { fill: compare.a.color, stripes: [compare.a.color, compare.b.color] };
+        if (inA) return { fill: compare.a.color };
+        if (inB) return { fill: compare.b.color };
+        return { fill: 'var(--land)', dim: true };
+      }
       if (activeBloc) {
         const m = activeBloc.members.find((x) => x.iso === iso);
         if (!m) return { fill: 'var(--land)', dim: true };
@@ -118,7 +129,7 @@ export default function App() {
       const n = Math.min(membershipCount.get(iso) ?? 0, OVERVIEW_STEPS.length - 1);
       return { fill: OVERVIEW_STEPS[n] ?? 'var(--land)' };
     },
-    [mode, activeBloc, maxIntensityByCountry, layer],
+    [mode, activeBloc, compare, maxIntensityByCountry, layer],
   );
 
   const markers = useMemo<MapMarker[]>(() => {
@@ -157,7 +168,7 @@ export default function App() {
 
   const selectBloc = useCallback(
     (id: string) => {
-      update({ mode: 'blocs', bloc: id, selection: { kind: 'bloc', id } });
+      update({ mode: 'blocs', bloc: id, vs: null, selection: { kind: 'bloc', id } });
       setFocus({ kind: 'reset' });
     },
     [update],
@@ -267,14 +278,22 @@ export default function App() {
         {mode === 'blocs' && (
           <BlocChips
             active={bloc}
+            vs={vs}
+            picking={picking}
+            onPicking={setPicking}
             onChange={(id) => {
-              update({ bloc: id, selection: id ? { kind: 'bloc', id } : selection?.kind === 'bloc' ? null : selection });
+              setPicking(false);
+              update({ bloc: id, vs: null, selection: id ? { kind: 'bloc', id } : selection?.kind === 'bloc' || selection?.kind === 'compare' ? null : selection });
               if (!id) setFocus({ kind: 'reset' });
+            }}
+            onVs={(id) => {
+              update({ vs: id, selection: id ? { kind: 'compare' } : bloc ? { kind: 'bloc', id: bloc } : null });
+              setFocus({ kind: 'reset' });
             }}
           />
         )}
 
-        <Legend mode={mode} bloc={bloc} overviewSteps={OVERVIEW_STEPS} layer={layer} />
+        <Legend mode={mode} bloc={bloc} vs={mode === 'blocs' ? vs : null} overviewSteps={OVERVIEW_STEPS} layer={layer} />
 
         {mode === 'conflicts' && <Timeline months={TIMELINE_MONTHS} value={month} onChange={(m) => update({ month: m })} />}
 
@@ -315,6 +334,8 @@ export default function App() {
             <DetailPanel
               selection={selection}
               month={viewMonth}
+              compare={compare}
+              onStopCompare={() => update({ vs: null, selection: bloc ? { kind: 'bloc', id: bloc } : null })}
               onClose={() => update({ selection: null })}
               onSelectCountry={selectCountry}
               onSelectBloc={selectBloc}

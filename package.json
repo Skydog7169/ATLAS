@@ -16,7 +16,8 @@
     "check": "npm run typecheck && npm run lint && npm run test && npm run build",
     "data:research": "node scripts/research/update.mjs",
     "data:research:mock": "node scripts/research/update.mjs --mock --dry-run",
-    "data:displacement": "node scripts/build-displacement.mjs"
+    "data:displacement": "node scripts/build-displacement.mjs",
+    "data:worldbank": "node scripts/build-worldbank.mjs"
   },
   "dependencies": {
     "d3-geo": "^3.1.1",
