@@ -25,6 +25,8 @@ export interface CountryFill {
   fill: string;
   /** When set, the polygon is drawn with a hatched pattern in this colour (suspended / frozen members). */
   hatch?: string;
+  /** When set, alternating diagonal stripes of two colours (a country in both compared blocs). */
+  stripes?: [string, string];
   dim?: boolean;
 }
 
@@ -68,6 +70,10 @@ function hatchId(color: string) {
   return 'hatch-' + color.replace(/[^a-z0-9]/gi, '');
 }
 
+function stripesId(a: string, b: string) {
+  return 'stripes-' + (a + b).replace(/[^a-z0-9]/gi, '');
+}
+
 interface LayerProps {
   features: CountryFeature[];
   paths: string[];
@@ -80,11 +86,13 @@ interface LayerProps {
 /** Memoised so pan/zoom (which only mutates the parent <g> transform) never re-renders 177 paths. */
 const CountryLayer = memo(function CountryLayer({ features, paths, fillFor, selectedIso, onCountryClick, onHover }: LayerProps) {
   const hatches = new Set<string>();
+  const stripes = new Map<string, [string, string]>();
   const rendered = features.map((f, i) => {
     const iso = f.properties.iso;
     const style = fillFor(iso);
     if (style.hatch) hatches.add(style.hatch);
-    const fill = style.hatch ? `url(#${hatchId(style.hatch)})` : style.fill;
+    if (style.stripes) stripes.set(stripesId(...style.stripes), style.stripes);
+    const fill = style.stripes ? `url(#${stripesId(...style.stripes)})` : style.hatch ? `url(#${hatchId(style.hatch)})` : style.fill;
     const country = iso ? COUNTRY_BY_ISO.get(iso) : undefined;
     return (
       <path
@@ -109,6 +117,12 @@ const CountryLayer = memo(function CountryLayer({ features, paths, fillFor, sele
           <pattern key={color} id={hatchId(color)} width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
             <rect width="6" height="6" fill={color} opacity="0.35" />
             <rect width="3" height="6" fill={color} />
+          </pattern>
+        ))}
+        {[...stripes].map(([id, [a, b]]) => (
+          <pattern key={id} id={id} width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="8" height="8" fill={a} />
+            <rect width="4" height="8" fill={b} />
           </pattern>
         ))}
       </defs>
@@ -297,7 +311,7 @@ export default function WorldMap({
                     width={7}
                     height={7}
                     rx={1.5}
-                    fill={style.hatch ?? style.fill}
+                    fill={style.stripes ? style.stripes[0] : (style.hatch ?? style.fill)}
                     opacity={style.dim ? 0.6 : 1}
                     stroke={m.iso === selectedIso ? 'var(--fg)' : undefined}
                     onClick={() => onCountryClick(m.iso)}

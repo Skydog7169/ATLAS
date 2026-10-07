@@ -5,6 +5,7 @@ An interactive geopolitics map. Two views of the same world:
 - **Blocs** — who belongs to which alliance or organisation. Eighteen groupings from NATO and the EU to BRICS, the SCO, the African Union and the 2026 Mecca defence pact, with partner, observer, suspended and frozen memberships drawn distinctly.
 - **Conflicts** — 31 active wars, insurgencies and flashpoints, marked by intensity, each with the parties, background, the latest verified status and links to live trackers.
 
+- **Compare** — pick a bloc, press Compare, pick another: shared and exclusive members on the map and in a list, with combined population, GDP and military spending from the World Bank side by side.
 - **Displacement layer** — people forcibly displaced from each country (refugees, asylum seekers, IDPs and others in need of protection) from the UNHCR Refugee Data Finder, as an overlay on either mode.
 
 Search any country, bloc or conflict. Every view is a shareable link.
@@ -61,7 +62,7 @@ Every Monday the **Weekly data refresh** workflow runs `scripts/research/update.
 - every cited URL appeared in that run's search results or lives on a trusted tracker or wire-service host (invented links are dropped, and an update with no surviving source is rejected);
 - intensity moves at most one step per pass; larger jumps are clamped and flagged.
 
-The same run refreshes `src/data/displacement.generated.json` from the UNHCR API (`pnpm run data:displacement`); if UNHCR is unreachable the committed file stands, so the site never depends on it at runtime. It also reviews bloc memberships against the same rules and lists possible new conflicts for a human to consider, without adding them. The run opens a pull request whose body is the research report, so changes are reviewed before they reach the site. Conflicts checked without change get a `lastChecked` date, which the panel shows.
+The same run refreshes `src/data/displacement.generated.json` from the UNHCR API (`pnpm run data:displacement`) and `src/data/worldbank.generated.json` from the World Bank API (`pnpm run data:worldbank`); if UNHCR is unreachable the committed file stands, so the site never depends on it at runtime. It also reviews bloc memberships against the same rules and lists possible new conflicts for a human to consider, without adding them. The run opens a pull request whose body is the research report, so changes are reviewed before they reach the site. Conflicts checked without change get a `lastChecked` date, which the panel shows.
 
 Setup: add an `ANTHROPIC_API_KEY` repository secret (Settings → Secrets and variables → Actions). A full pass costs a few dollars. You can trigger it by hand from the Actions tab with an optional list of conflict ids or a limit. `pnpm run data:research:mock` exercises the pipeline offline, and CI runs that on every push.
 

@@ -50,6 +50,9 @@ jobs:
       - name: Refresh UNHCR displacement figures
         run: node scripts/build-displacement.mjs
 
+      - name: Refresh World Bank figures
+        run: node scripts/build-worldbank.mjs
+
       - name: Validate
         run: pnpm run test
 
@@ -63,6 +66,7 @@ jobs:
             src/data/conflicts.json
             src/data/blocs.json
             src/data/displacement.generated.json
+            src/data/worldbank.generated.json
           commit-message: 'Data refresh: automated weekly research pass'
           title: 'Data refresh ${{ github.run_started_at }}'
           body-path: research-report.md

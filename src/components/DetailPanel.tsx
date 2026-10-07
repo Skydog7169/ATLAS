@@ -6,11 +6,15 @@ import { COUNTRY_BY_ISO, countryName } from '../lib/countries';
 import { allChanges, changesSince, entryAt } from '../lib/history';
 import { CATEGORY_LABEL, CHANGE_LABEL, CONFLICT_TYPE_LABEL, INTENSITY_COLOR, INTENSITY_LABEL, STATUS_LABEL, formatDate, formatMonth } from '../lib/labels';
 import type { Selection } from '../lib/urlState';
+import { WORLD, WORLDBANK, blocFigures, formatCount, formatUsd, share, type Figures } from '../lib/worldbank';
 
 interface Props {
   selection: Exclude<Selection, null>;
   /** Conflicts-mode replay month, or null when live. */
   month: string | null;
+  /** Blocs being compared, when the selection is 'compare'. */
+  compare: { a: Bloc; b: Bloc } | null;
+  onStopCompare: () => void;
   onClose: () => void;
   onSelectCountry: (iso: string) => void;
   onSelectBloc: (id: string) => void;
@@ -125,6 +129,35 @@ function CountryView({ country, props }: { country: CountryRecord; props: Props 
 
 const STATUS_ORDER: MembershipStatus[] = ['member', 'frozen', 'suspended', 'invited', 'observer', 'partner'];
 
+function FigureTiles({ f, color }: { f: Figures; color?: string }) {
+  const tiles = [
+    { label: 'Population', value: formatCount(f.population), pct: share(f.population, WORLD.population), cov: f.coverage.population },
+    { label: 'GDP', value: formatUsd(f.gdpUsd), pct: share(f.gdpUsd, WORLD.gdpUsd), cov: f.coverage.gdpUsd },
+    { label: 'Military spend', value: formatUsd(f.militaryUsd), pct: share(f.militaryUsd, WORLD.militaryUsd), cov: f.coverage.militaryUsd },
+  ];
+  return (
+    <div className="tiles" style={color ? { ['--tile-color' as string]: color } : undefined}>
+      {tiles.map((t) => (
+        <div className="tile" key={t.label}>
+          <span className="label">{t.label}</span>
+          <strong>{t.value}</strong>
+          <span className="sub">
+            {t.pct} of world{t.cov < f.members ? ` · ${t.cov}/${f.members} reporting` : ''}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function FiguresNote() {
+  return (
+    <div className="updated">
+      Figures: <a href={WORLDBANK.source.url} target="_blank" rel="noopener noreferrer">World Bank</a>, latest available year per country, fetched {formatDate(WORLDBANK.fetchedAt)}. Full members only.
+    </div>
+  );
+}
+
 function BlocView({ bloc, props }: { bloc: Bloc; props: Props }) {
   const groups = STATUS_ORDER.map((status) => ({
     status,
@@ -148,6 +181,8 @@ function BlocView({ bloc, props }: { bloc: Bloc; props: Props }) {
           {bloc.headquarters && <span className="badge muted">{bloc.headquarters}</span>}
         </div>
         <p>{bloc.description}</p>
+        <h4>At a glance · {blocFigures(bloc).members} members</h4>
+        <FigureTiles f={blocFigures(bloc)} color={bloc.color} />
         <div className="panel-actions">
           <button className="text-btn primary" onClick={() => props.onHighlightBloc(bloc.id)}>
             Show on map
@@ -200,6 +235,7 @@ function BlocView({ bloc, props }: { bloc: Bloc; props: Props }) {
         )}
         <Sources sources={bloc.sources} />
         <div className="updated">Membership verified {formatMonth(bloc.updated)}.</div>
+        <FiguresNote />
       </div>
     </>
   );
@@ -342,6 +378,77 @@ function ChangesView({ props }: { props: Props }) {
   );
 }
 
+function CompareView({ a, b, props }: { a: Bloc; b: Bloc; props: Props }) {
+  const full = (x: Bloc) => x.members.filter((m) => m.status === 'member').map((m) => m.iso);
+  const setA = new Set(full(a));
+  const setB = new Set(full(b));
+  const both = [...setA].filter((iso) => setB.has(iso)).sort((x, y) => countryName(x).localeCompare(countryName(y)));
+  const onlyA = [...setA].filter((iso) => !setB.has(iso)).sort((x, y) => countryName(x).localeCompare(countryName(y)));
+  const onlyB = [...setB].filter((iso) => !setA.has(iso)).sort((x, y) => countryName(x).localeCompare(countryName(y)));
+  const list = (isos: string[]) =>
+    isos.length ? (
+      <ul className="link-list member-grid">
+        {isos.map((iso) => (
+          <li key={iso}>
+            <button onClick={() => props.onSelectCountry(iso)}>{countryName(iso)}</button>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p style={{ color: 'var(--fg-muted)' }}>None</p>
+    );
+  return (
+    <>
+      <div className="panel-head">
+        <h2>
+          <span className="eyebrow">Compare</span>
+          {a.shortName} <span style={{ color: 'var(--fg-muted)' }}>vs</span> {b.shortName}
+        </h2>
+        <CloseButton onClick={props.onClose} />
+      </div>
+      <div className="panel-body">
+        <div className="compare-grid">
+          <div>
+            <h4>
+              <span className="dot" style={{ width: 8, height: 8, background: a.color }} /> {a.shortName}
+            </h4>
+            <FigureTiles f={blocFigures(a)} color={a.color} />
+          </div>
+          <div>
+            <h4>
+              <span className="dot" style={{ width: 8, height: 8, background: b.color }} /> {b.shortName}
+            </h4>
+            <FigureTiles f={blocFigures(b)} color={b.color} />
+          </div>
+        </div>
+        <div className="panel-actions">
+          <button className="text-btn" onClick={() => props.onSelectBloc(a.id)}>
+            Open {a.shortName}
+          </button>
+          <button className="text-btn" onClick={() => props.onSelectBloc(b.id)}>
+            Open {b.shortName}
+          </button>
+          <button className="text-btn" onClick={props.onStopCompare}>
+            Stop comparing
+          </button>
+          <ShareButton />
+        </div>
+        <h4>In both · {both.length}</h4>
+        {list(both)}
+        <h4>
+          {a.shortName} only · {onlyA.length}
+        </h4>
+        {list(onlyA)}
+        <h4>
+          {b.shortName} only · {onlyB.length}
+        </h4>
+        {list(onlyB)}
+        <FiguresNote />
+      </div>
+    </>
+  );
+}
+
 export default function DetailPanel(props: Props) {
   const { selection } = props;
   let body: React.ReactNode = null;
@@ -353,6 +460,8 @@ export default function DetailPanel(props: Props) {
     body = b ? <BlocView bloc={b} props={props} /> : null;
   } else if (selection.kind === 'changes') {
     body = <ChangesView props={props} />;
+  } else if (selection.kind === 'compare') {
+    body = props.compare ? <CompareView a={props.compare.a} b={props.compare.b} props={props} /> : null;
   } else {
     const c = CONFLICT_BY_ID.get(selection.id);
     body = c ? <ConflictView conflict={c} props={props} /> : null;

@@ -8,13 +8,14 @@ import { formatDate } from '../lib/labels';
 interface Props {
   mode: Mode;
   bloc: string | null;
+  vs: string | null;
   overviewSteps: string[];
   layer: Layer;
 }
 
 const INTENSITIES: Intensity[] = ['high', 'medium', 'low', 'latent'];
 
-export default function Legend({ mode, bloc, overviewSteps, layer }: Props) {
+export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) {
   if (layer === 'displacement') {
     return (
       <aside className="legend frame" aria-label="Legend">
@@ -56,6 +57,32 @@ export default function Legend({ mode, bloc, overviewSteps, layer }: Props) {
   }
 
   const b = bloc ? BLOC_BY_ID.get(bloc) : undefined;
+  const v = vs ? BLOC_BY_ID.get(vs) : undefined;
+  if (b && v) {
+    const setA = new Set(b.members.filter((m) => m.status === 'member').map((m) => m.iso));
+    const setB = new Set(v.members.filter((m) => m.status === 'member').map((m) => m.iso));
+    let both = 0;
+    for (const iso of setA) if (setB.has(iso)) both += 1;
+    return (
+      <aside className="legend frame" aria-label="Legend">
+        <h3>
+          {b.shortName} vs {v.shortName}
+        </h3>
+        <ul>
+          <li>
+            <span className="swatch" style={{ background: b.color }} /> {b.shortName} only · {setA.size - both}
+          </li>
+          <li>
+            <span className="swatch" style={{ background: v.color }} /> {v.shortName} only · {setB.size - both}
+          </li>
+          <li>
+            <span className="swatch" style={{ background: `repeating-linear-gradient(45deg, ${b.color} 0 4px, ${v.color} 4px 8px)` }} /> Both · {both}
+          </li>
+        </ul>
+        <div className="note">Full members only. Open the panel for shared members and combined figures.</div>
+      </aside>
+    );
+  }
   if (b) {
     const statuses = new Set(b.members.map((m) => m.status));
     return (
