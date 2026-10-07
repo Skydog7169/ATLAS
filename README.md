@@ -30,7 +30,7 @@ Node 20 or newer. The project deploys to Vercel with no configuration beyond `ve
 | Country facts | Slim table derived from `world-countries` at build time | Keeps 20 MB of flags and translations out of the bundle; CI fails if the committed table drifts |
 | Data | JSON in `src/data/` with zod schemas | Reviewable in a diff, writable by the weekly research script; tests check every ISO code resolves and headline member counts hold |
 
-Vendor code is split into `react`, `d3` and `geo` chunks, and the map component loads lazily so the shell paints before the geometry arrives.
+Vendor code is split into `react`, `d3` and `geo` chunks, and the map component loads lazily so the shell paints before the geometry arrives. The 1:50m geometry is a further chunk fetched only when the map is zoomed in.
 
 ### Project layout
 
@@ -74,4 +74,13 @@ Setup: add an `ANTHROPIC_API_KEY` repository secret (Settings → Secrets and va
 
 ## Accessibility
 
-Keyboard users reach everything through search (`/` focuses it) and the detail panel's lists; the map itself is pointer-driven. Colour never carries meaning alone: intensity also sets marker size and is named in every label, and suspended memberships are hatched rather than merely paler. Light and dark themes follow the system and can be overridden. Animations stop under `prefers-reduced-motion`.
+Keyboard users reach everything: `/` focuses search, the map itself takes focus (arrows pan, `+` and `-` zoom, `0` resets), conflict markers are tabbable and open on Enter, and the detail panel's lists are plain buttons. Colour never carries meaning alone: intensity also sets marker size and is named in every label, suspended memberships are hatched, and compared blocs use stripes for overlap. Light and dark themes follow the system and can be overridden. Animations stop under `prefers-reduced-motion`. The Playwright suite runs axe-core scans and fails CI on serious or critical violations.
+
+## Testing
+
+```sh
+pnpm test                    # unit and data integrity tests (vitest)
+pnpm run build && pnpm run test:e2e   # Playwright: desktop + Pixel 7 against the production build
+```
+
+CI runs both on every push. To use a preinstalled Chromium locally, set `PW_CHROMIUM_PATH` to its binary.
