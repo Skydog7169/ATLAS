@@ -1171,15 +1171,15 @@ a {
 }
 
 .timeline {
+  /* Sits to the right of the legend (max 270px + gutters) so neither overlaps. */
   position: absolute;
-  left: 50%;
+  left: 300px;
   bottom: 12px;
-  transform: translateX(-50%);
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 8px 14px;
-  width: min(520px, calc(100% - 320px));
+  width: min(520px, calc(100% - 300px - 72px));
   background: color-mix(in srgb, var(--bg-elev) 88%, transparent);
   backdrop-filter: blur(8px);
   border: 1px solid var(--border-strong);
@@ -1250,8 +1250,7 @@ a {
 
 @media (min-width: 821px) {
   .app[data-panel-open='true'] .timeline {
-    left: calc((100% - var(--panel-w) - 24px) / 2);
-    width: min(520px, max(280px, calc(100% - var(--panel-w) - 24px - 300px)));
+    width: min(520px, max(260px, calc(100% - 300px - var(--panel-w) - 84px)));
   }
 }
 
