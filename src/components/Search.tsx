@@ -39,7 +39,7 @@ export default function Search({ onPick, conflictColor }: Props) {
   const showList = open && query.trim().length > 0;
 
   return (
-    <div className="search" role="combobox" aria-expanded={showList} aria-haspopup="listbox" aria-owns={listId}>
+    <div className="search" role="combobox" aria-expanded={showList} aria-haspopup="listbox" aria-controls={showList ? listId : undefined}>
       <svg className="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
         <circle cx="11" cy="11" r="7" />
         <path d="m20 20-3.5-3.5" />
@@ -50,7 +50,7 @@ export default function Search({ onPick, conflictColor }: Props) {
         placeholder="Search countries, blocs, conflicts"
         aria-label="Search countries, blocs and conflicts"
         aria-autocomplete="list"
-        aria-controls={listId}
+        aria-controls={showList ? listId : undefined}
         aria-activedescendant={showList && hits[active] ? `${listId}-${active}` : undefined}
         value={query}
         onChange={(e) => {

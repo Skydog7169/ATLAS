@@ -84,6 +84,18 @@ export default function App() {
     return () => mq.removeEventListener('change', apply);
   }, [selection]);
 
+  // A shared link that names a country or conflict should land zoomed on it.
+  const landed = useRef(false);
+  useEffect(() => {
+    if (landed.current) return;
+    landed.current = true;
+    if (selection?.kind === 'country') setFocus({ kind: 'country', iso: selection.iso });
+    else if (selection?.kind === 'conflict') {
+      const c = CONFLICT_BY_ID.get(selection.id);
+      if (c) setFocus({ kind: 'point', lonLat: c.location, scale: 3.5 });
+    }
+  }, [selection]);
+
   const activeBloc = bloc ? BLOC_BY_ID.get(bloc) : undefined;
   const vsBloc = vs ? BLOC_BY_ID.get(vs) : undefined;
   const compare = mode === 'blocs' && activeBloc && vsBloc ? { a: activeBloc, b: vsBloc } : null;
@@ -251,6 +263,18 @@ export default function App() {
             <path d="M4 6h16M4 12h10M4 18h7" />
             <circle cx="18" cy="17" r="3" />
             <path d="M18 15.5V17l1 1" />
+          </svg>
+        </button>
+        <button
+          className="icon-btn"
+          aria-label="About ATLAS"
+          aria-pressed={selection?.kind === 'about'}
+          title="About"
+          onClick={() => update({ selection: selection?.kind === 'about' ? null : { kind: 'about' } })}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 16v-5M12 8h.01" />
           </svg>
         </button>
         <ThemeToggle />

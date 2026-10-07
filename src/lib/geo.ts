@@ -11,14 +11,34 @@ export interface CountryFeatureProps {
 
 export type CountryFeature = Feature<Geometry, CountryFeatureProps>;
 
-const topology = topo as unknown as Topology<{ countries: GeometryCollection<{ name: string }> }>;
+type CountriesTopology = Topology<{ countries: GeometryCollection<{ name: string }> }>;
 
-const collection = feature(topology, topology.objects.countries) as FeatureCollection<Geometry, { name: string }>;
+function toFeatures(t: CountriesTopology): CountryFeature[] {
+  const collection = feature(t, t.objects.countries) as FeatureCollection<Geometry, { name: string }>;
+  return collection.features.map((f) => ({
+    ...f,
+    properties: { iso: isoForFeature(f.id, f.properties?.name), name: f.properties?.name ?? 'Unknown' },
+  }));
+}
 
-export const COUNTRY_FEATURES: CountryFeature[] = collection.features.map((f) => ({
-  ...f,
-  properties: { iso: isoForFeature(f.id, f.properties?.name), name: f.properties?.name ?? 'Unknown' },
-}));
+/** 1:110m polygons, bundled: small enough to ship on first load. */
+export const COUNTRY_FEATURES: CountryFeature[] = toFeatures(topo as unknown as CountriesTopology);
+
+let detailed: Promise<CountryFeature[]> | null = null;
+
+/**
+ * 1:50m polygons (about 250 KB gzipped), fetched once on demand when the user
+ * zooms in. Adds coastlines detail and real shapes for microstates.
+ */
+export function loadDetailedFeatures(): Promise<CountryFeature[]> {
+  detailed ??= import('../data/geo/countries-50m.json').then((m) => toFeatures((m.default ?? m) as unknown as CountriesTopology));
+  return detailed;
+}
+
+/** ISO codes that have a polygon in the given feature set. */
+export function drawnIsos(features: CountryFeature[]): Set<string> {
+  return new Set(features.map((f) => f.properties.iso).filter((x): x is string => Boolean(x)));
+}
 
 const DRAWN = new Set(COUNTRY_FEATURES.map((f) => f.properties.iso).filter((x): x is string => Boolean(x)));
 
