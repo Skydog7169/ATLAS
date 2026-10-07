@@ -15,7 +15,8 @@
     "data:countries": "node scripts/build-countries.mjs",
     "check": "npm run typecheck && npm run lint && npm run test && npm run build",
     "data:research": "node scripts/research/update.mjs",
-    "data:research:mock": "node scripts/research/update.mjs --mock --dry-run"
+    "data:research:mock": "node scripts/research/update.mjs --mock --dry-run",
+    "data:displacement": "node scripts/build-displacement.mjs"
   },
   "dependencies": {
     "d3-geo": "^3.1.1",

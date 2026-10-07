@@ -47,6 +47,9 @@ jobs:
           [ "${{ inputs.limit }}" != "0" ] && [ -n "${{ inputs.limit }}" ] && ARGS="$ARGS --limit ${{ inputs.limit }}"
           node scripts/research/update.mjs --report research-report.md $ARGS
 
+      - name: Refresh UNHCR displacement figures
+        run: node scripts/build-displacement.mjs
+
       - name: Validate
         run: pnpm run test
 
@@ -59,6 +62,7 @@ jobs:
           add-paths: |
             src/data/conflicts.json
             src/data/blocs.json
+            src/data/displacement.generated.json
           commit-message: 'Data refresh: automated weekly research pass'
           title: 'Data refresh ${{ github.run_started_at }}'
           body-path: research-report.md
