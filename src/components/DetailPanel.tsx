@@ -1,13 +1,16 @@
-import { useState } from 'react';
-import { BLOC_BY_ID, blocsForCountry } from '../data/blocs';
-import { CONFLICT_BY_ID, INTENSITY_ORDER, conflictsForCountry } from '../data/conflicts';
-import type { Bloc, Conflict, CountryRecord, MembershipStatus } from '../data/types';
+import { useMemo, useState } from 'react';
+import { BLOCS, BLOC_BY_ID, blocsForCountry } from '../data/blocs';
+import { CONFLICTS, CONFLICT_BY_ID, INTENSITY_ORDER, conflictsForCountry } from '../data/conflicts';
+import type { Bloc, Conflict, CountryRecord, HistoryEntry, MembershipStatus } from '../data/types';
 import { COUNTRY_BY_ISO, countryName } from '../lib/countries';
-import { CATEGORY_LABEL, CONFLICT_TYPE_LABEL, INTENSITY_COLOR, INTENSITY_LABEL, STATUS_LABEL, formatMonth } from '../lib/labels';
+import { allChanges, changesSince, entryAt } from '../lib/history';
+import { CATEGORY_LABEL, CHANGE_LABEL, CONFLICT_TYPE_LABEL, INTENSITY_COLOR, INTENSITY_LABEL, STATUS_LABEL, formatDate, formatMonth } from '../lib/labels';
 import type { Selection } from '../lib/urlState';
 
 interface Props {
   selection: Exclude<Selection, null>;
+  /** Conflicts-mode replay month, or null when live. */
+  month: string | null;
   onClose: () => void;
   onSelectCountry: (iso: string) => void;
   onSelectBloc: (id: string) => void;
@@ -168,6 +171,33 @@ function BlocView({ bloc, props }: { bloc: Bloc; props: Props }) {
             </ul>
           </div>
         ))}
+        {bloc.changes.length > 0 && (
+          <>
+            <h4>Membership changes</h4>
+            <ul className="history">
+              {bloc.changes.map((ch) => (
+                <li key={ch.date + ch.iso + ch.change}>
+                  <span className="when">{formatDate(ch.date)}</span>
+                  <span>
+                    <button className="inline-link" onClick={() => props.onSelectCountry(ch.iso)}>
+                      {countryName(ch.iso)}
+                    </button>{' '}
+                    <span className="label">{CHANGE_LABEL[ch.change]}</span>
+                    {ch.note && <span className="note"> · {ch.note}</span>}
+                    {ch.source && (
+                      <>
+                        {' '}
+                        <a href={ch.source.url} target="_blank" rel="noopener noreferrer" className="src">
+                          source ↗
+                        </a>
+                      </>
+                    )}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
         <Sources sources={bloc.sources} />
         <div className="updated">Membership verified {formatMonth(bloc.updated)}.</div>
       </div>
@@ -175,7 +205,41 @@ function BlocView({ bloc, props }: { bloc: Bloc; props: Props }) {
   );
 }
 
+function HistoryList({ history, highlight, onSelectEntry }: { history: HistoryEntry[]; highlight: HistoryEntry | null; onSelectEntry?: (h: HistoryEntry) => void }) {
+  return (
+    <ol className="history">
+      {history.map((h, i) => {
+        const open = highlight ? h === highlight : i === 0;
+        return (
+          <li key={h.date + i} data-current={open}>
+            <span className="when">
+              <span className="dot" style={{ background: INTENSITY_COLOR[h.intensity] }} aria-hidden="true" />
+              {formatDate(h.date)}
+            </span>
+            <details open={open} onToggle={onSelectEntry ? () => onSelectEntry(h) : undefined}>
+              <summary>
+                {INTENSITY_LABEL[h.intensity]}
+                {h.confidence && <span className="label"> · {h.confidence} confidence</span>}
+              </summary>
+              <p>{h.status}</p>
+              <p className="src-row">
+                {h.sources.map((s) => (
+                  <a key={s.url} href={s.url} target="_blank" rel="noopener noreferrer" className="src">
+                    {s.name} ↗
+                  </a>
+                ))}
+              </p>
+            </details>
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
 function ConflictView({ conflict, props }: { conflict: Conflict; props: Props }) {
+  const shown = props.month ? entryAt(conflict, props.month) : conflict.history[0] ?? null;
+  const replay = props.month !== null;
   return (
     <>
       <div className="panel-head">
@@ -187,10 +251,11 @@ function ConflictView({ conflict, props }: { conflict: Conflict; props: Props })
       </div>
       <div className="panel-body">
         <div className="badges">
-          <span className="badge" style={{ ['--badge-color' as string]: INTENSITY_COLOR[conflict.intensity] }}>
-            <span className="dot" /> {INTENSITY_LABEL[conflict.intensity]}
+          <span className="badge" style={{ ['--badge-color' as string]: INTENSITY_COLOR[(shown ?? conflict).intensity] }}>
+            <span className="dot" /> {INTENSITY_LABEL[(shown ?? conflict).intensity]}
           </span>
           <span className="badge muted">Since {conflict.since}</span>
+          {replay && props.month && <span className="badge muted">As of {formatMonth(props.month)}</span>}
         </div>
         <h4>Parties</h4>
         <ul style={{ margin: '0 0 8px', paddingLeft: 18 }}>
@@ -200,8 +265,9 @@ function ConflictView({ conflict, props }: { conflict: Conflict; props: Props })
         </ul>
         <h4>Background</h4>
         <p>{conflict.summary}</p>
-        <h4>Latest</h4>
-        <p>{conflict.status}</p>
+        <h4>Assessments</h4>
+        {replay && !shown && <p style={{ color: 'var(--fg-muted)' }}>No assessment on record for {props.month ? formatMonth(props.month) : ''}.</p>}
+        <HistoryList history={conflict.history} highlight={shown} />
         <h4>Countries</h4>
         <div className="badges">
           {conflict.countries.map((iso) => (
@@ -213,8 +279,60 @@ function ConflictView({ conflict, props }: { conflict: Conflict; props: Props })
         <div className="panel-actions">
           <ShareButton />
         </div>
-        <Sources sources={conflict.sources} />
-        <div className="updated">Entry verified {formatMonth(conflict.updated)}. Check the sources above for developments since then.</div>
+        <div className="updated">Latest assessment verified {formatDate(conflict.updated)}. Check the linked sources for developments since then.</div>
+      </div>
+    </>
+  );
+}
+
+const WINDOWS = [
+  { days: 30, label: '30 days' },
+  { days: 90, label: '90 days' },
+  { days: 0, label: 'All' },
+];
+
+function ChangesView({ props }: { props: Props }) {
+  const [days, setDays] = useState(90);
+  const items = useMemo(() => allChanges(CONFLICTS, BLOCS, countryName, (k) => CHANGE_LABEL[k]), []);
+  const shown = days ? changesSince(items, days) : items;
+  return (
+    <>
+      <div className="panel-head">
+        <h2>
+          <span className="eyebrow">Data feed</span>
+          Recent changes
+        </h2>
+        <CloseButton onClick={props.onClose} />
+      </div>
+      <div className="panel-body">
+        <div className="segmented small" role="group" aria-label="Time window">
+          {WINDOWS.map((w) => (
+            <button key={w.days} aria-pressed={days === w.days} onClick={() => setDays(w.days)}>
+              {w.label}
+            </button>
+          ))}
+        </div>
+        {shown.length === 0 && <p style={{ color: 'var(--fg-muted)', marginTop: 12 }}>No changes recorded in this window.</p>}
+        <ol className="history feed">
+          {shown.map((it, i) => (
+            <li key={it.kind + it.id + it.date + i}>
+              <span className="when">
+                <span className="dot" style={{ background: it.intensity ? INTENSITY_COLOR[it.intensity] : it.color }} aria-hidden="true" />
+                {formatDate(it.date)}
+              </span>
+              <span>
+                <button className="inline-link" onClick={() => (it.kind === 'conflict' ? props.onSelectConflict(it.id) : props.onSelectBloc(it.id))}>
+                  {it.title}
+                </button>
+                <span className="label"> · {it.kind === 'conflict' ? INTENSITY_LABEL[it.intensity!] : 'Membership'}</span>
+                <span className="note"> {it.detail.length > 180 ? it.detail.slice(0, 177).trimEnd() + '…' : it.detail}</span>
+              </span>
+            </li>
+          ))}
+        </ol>
+        <div className="panel-actions">
+          <ShareButton />
+        </div>
       </div>
     </>
   );
@@ -229,6 +347,8 @@ export default function DetailPanel(props: Props) {
   } else if (selection.kind === 'bloc') {
     const b = BLOC_BY_ID.get(selection.id);
     body = b ? <BlocView bloc={b} props={props} /> : null;
+  } else if (selection.kind === 'changes') {
+    body = <ChangesView props={props} />;
   } else {
     const c = CONFLICT_BY_ID.get(selection.id);
     body = c ? <ConflictView conflict={c} props={props} /> : null;

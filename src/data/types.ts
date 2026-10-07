@@ -22,6 +22,18 @@ export interface BlocMember {
   note?: string;
 }
 
+export type BlocChangeKind = 'joined' | 'left' | 'suspended' | 'reinstated' | 'frozen' | 'invited' | 'founded';
+
+/** One dated membership event, used for the changes feed and the bloc panel. */
+export interface BlocChange {
+  /** ISO date, YYYY-MM-DD. */
+  date: string;
+  iso: Iso3;
+  change: BlocChangeKind;
+  note?: string;
+  source?: Source;
+}
+
 export interface Bloc {
   id: string;
   name: string;
@@ -36,6 +48,8 @@ export interface Bloc {
   sources: Source[];
   /** Month the membership list was last verified, YYYY-MM. */
   updated: string;
+  /** Membership events, newest first. */
+  changes: BlocChange[];
 }
 
 export type ConflictType =
@@ -48,11 +62,23 @@ export type ConflictType =
 
 export type Intensity = 'high' | 'medium' | 'low' | 'latent';
 
-export interface Conflict {
+export type Confidence = 'high' | 'medium' | 'low';
+
+/** A dated, sourced assessment of a conflict's state. */
+export interface HistoryEntry {
+  /** ISO date the assessment was verified, YYYY-MM-DD. */
+  date: string;
+  intensity: Intensity;
+  status: string;
+  sources: Source[];
+  confidence?: Confidence;
+}
+
+/** What the data file declares. The exported Conflict adds the derived current fields. */
+export interface ConflictInput {
   id: string;
   name: string;
   type: ConflictType;
-  intensity: Intensity;
   /** Year the current phase began. */
   since: number;
   /** [longitude, latitude] of the marker. */
@@ -61,9 +87,16 @@ export interface Conflict {
   countries: Iso3[];
   parties: string[];
   summary: string;
+  /** Assessments, newest first. Must have at least one entry. */
+  history: HistoryEntry[];
+}
+
+export interface Conflict extends ConflictInput {
+  /** Mirrors the newest history entry. */
+  intensity: Intensity;
   status: string;
   sources: Source[];
-  /** Month the entry was last verified, YYYY-MM. */
+  /** ISO date of the newest history entry, YYYY-MM-DD. */
   updated: string;
 }
 

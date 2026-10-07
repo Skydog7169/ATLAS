@@ -4,6 +4,7 @@ export type Selection =
   | { kind: 'country'; iso: string }
   | { kind: 'bloc'; id: string }
   | { kind: 'conflict'; id: string }
+  | { kind: 'changes' }
   | null;
 
 export interface AppState {
@@ -11,17 +12,23 @@ export interface AppState {
   /** In blocs mode: the single bloc being highlighted, or null for the overview. */
   bloc: string | null;
   selection: Selection;
+  /** Conflicts mode: YYYY-MM being replayed, or null for the live view. */
+  month: string | null;
 }
 
-export const DEFAULT_STATE: AppState = { mode: 'blocs', bloc: null, selection: null };
+export const DEFAULT_STATE: AppState = { mode: 'blocs', bloc: null, selection: null, month: null };
+
+const MONTH = /^\d{4}-(0[1-9]|1[0-2])$/;
 
 /** Encodes state in the hash so links are shareable without a server. */
 export function serialize(state: AppState): string {
   const p = new URLSearchParams();
   p.set('mode', state.mode);
   if (state.bloc) p.set('bloc', state.bloc);
+  if (state.month) p.set('t', state.month);
   if (state.selection) {
     if (state.selection.kind === 'country') p.set('country', state.selection.iso);
+    else if (state.selection.kind === 'changes') p.set('changes', '1');
     else p.set(state.selection.kind, state.selection.id);
   }
   return '#' + p.toString();
@@ -33,14 +40,18 @@ export function parse(hash: string, isValid: { bloc: (id: string) => boolean; co
   const blocParam = p.get('bloc');
   const bloc = blocParam && isValid.bloc(blocParam) ? blocParam : null;
 
+  const t = p.get('t');
+  const month = t && MONTH.test(t) ? t : null;
+
   let selection: Selection = null;
   const country = p.get('country');
   const conflict = p.get('conflict');
   const selBloc = p.get('selbloc');
-  if (country && isValid.country(country.toUpperCase())) selection = { kind: 'country', iso: country.toUpperCase() };
+  if (p.get('changes') === '1') selection = { kind: 'changes' };
+  else if (country && isValid.country(country.toUpperCase())) selection = { kind: 'country', iso: country.toUpperCase() };
   else if (conflict && isValid.conflict(conflict)) selection = { kind: 'conflict', id: conflict };
   else if (selBloc && isValid.bloc(selBloc)) selection = { kind: 'bloc', id: selBloc };
   else if (bloc && !country && !conflict) selection = { kind: 'bloc', id: bloc };
 
-  return { mode, bloc, selection };
+  return { mode, bloc, selection, month };
 }

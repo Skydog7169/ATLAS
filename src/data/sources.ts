@@ -8,3 +8,5 @@ export const TRACKERS = {
   isw: { name: 'Institute for the Study of War', url: 'https://www.understandingwar.org/' },
 } satisfies Record<string, Source>;
 
+
+export const DEFAULT_CONFLICT_SOURCES: Source[] = [TRACKERS.cfr, TRACKERS.acled, TRACKERS.crisisWatch];

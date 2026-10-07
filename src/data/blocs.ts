@@ -21,6 +21,10 @@ export const BLOCS: Bloc[] = [
     `),
     sources: [{ name: 'NATO member countries', url: 'https://www.nato.int/cps/en/natohq/topics_52044.htm' }],
     updated: '2026-10',
+    changes: [
+      { date: '2024-03-07', iso: 'SWE', change: 'joined' },
+      { date: '2023-04-04', iso: 'FIN', change: 'joined' },
+    ],
   },
   {
     id: 'eu',
@@ -38,6 +42,7 @@ export const BLOCS: Bloc[] = [
     `),
     sources: [{ name: 'EU country profiles', url: 'https://european-union.europa.eu/principles-countries-history/eu-countries_en' }],
     updated: '2026-10',
+    changes: [{ date: '2020-01-31', iso: 'GBR', change: 'left' }],
   },
   {
     id: 'brics',
@@ -62,6 +67,14 @@ export const BLOCS: Bloc[] = [
     ],
     sources: [{ name: 'BRICS Brasil 2025', url: 'https://brics.br/en' }],
     updated: '2026-10',
+    changes: [
+      { date: '2025-01-06', iso: 'IDN', change: 'joined' },
+      { date: '2024-01-01', iso: 'EGY', change: 'joined' },
+      { date: '2024-01-01', iso: 'ETH', change: 'joined' },
+      { date: '2024-01-01', iso: 'IRN', change: 'joined' },
+      { date: '2024-01-01', iso: 'ARE', change: 'joined' },
+      { date: '2023-08-24', iso: 'SAU', change: 'invited', note: 'Has not formally confirmed membership' },
+    ],
   },
   {
     id: 'sco',
@@ -81,6 +94,10 @@ export const BLOCS: Bloc[] = [
     ],
     sources: [{ name: 'SCO Secretariat', url: 'https://eng.sectsco.org/' }],
     updated: '2026-10',
+    changes: [
+      { date: '2024-07-04', iso: 'BLR', change: 'joined' },
+      { date: '2023-07-04', iso: 'IRN', change: 'joined' },
+    ],
   },
   {
     id: 'csto',
@@ -98,6 +115,7 @@ export const BLOCS: Bloc[] = [
     ],
     sources: [{ name: 'CSTO', url: 'https://en.odkb-csto.org/' }],
     updated: '2026-10',
+    changes: [{ date: '2024-02-23', iso: 'ARM', change: 'frozen', note: 'Participation frozen after the alliance declined to act over Nagorno-Karabakh' }],
   },
   {
     id: 'five-eyes',
@@ -111,6 +129,7 @@ export const BLOCS: Bloc[] = [
     members: members('USA GBR CAN AUS NZL'),
     sources: [{ name: 'GCHQ: UKUSA Agreement', url: 'https://www.gchq.gov.uk/information/ukusa-agreement' }],
     updated: '2026-10',
+    changes: [],
   },
   {
     id: 'quad',
@@ -124,6 +143,7 @@ export const BLOCS: Bloc[] = [
     members: members('USA JPN IND AUS'),
     sources: [{ name: 'US State Department: Quad', url: 'https://www.state.gov/quad/' }],
     updated: '2026-10',
+    changes: [],
   },
   {
     id: 'aukus',
@@ -137,6 +157,11 @@ export const BLOCS: Bloc[] = [
     members: members('AUS GBR USA'),
     sources: [{ name: 'Australian Department of Defence: AUKUS', url: 'https://www.defence.gov.au/about/taskforces/aukus' }],
     updated: '2026-10',
+    changes: [
+      { date: '2021-09-15', iso: 'AUS', change: 'founded' },
+      { date: '2021-09-15', iso: 'GBR', change: 'founded' },
+      { date: '2021-09-15', iso: 'USA', change: 'founded' },
+    ],
   },
   {
     id: 'g7',
@@ -150,6 +175,7 @@ export const BLOCS: Bloc[] = [
     members: members('CAN FRA DEU ITA JPN GBR USA'),
     sources: [{ name: 'G7 Canada 2025', url: 'https://g7.canada.ca/en/' }],
     updated: '2026-10',
+    changes: [],
   },
   {
     id: 'asean',
@@ -168,6 +194,7 @@ export const BLOCS: Bloc[] = [
     ],
     sources: [{ name: 'ASEAN member states', url: 'https://asean.org/member-states/' }],
     updated: '2026-10',
+    changes: [{ date: '2025-10-26', iso: 'TLS', change: 'joined', note: 'Admitted as the 11th member at the Kuala Lumpur summit' }],
   },
   {
     id: 'au',
@@ -195,6 +222,14 @@ export const BLOCS: Bloc[] = [
     ],
     sources: [{ name: 'AU member states', url: 'https://au.int/en/member_states/countryprofiles2' }],
     updated: '2026-10',
+    changes: [
+      { date: '2026-01-22', iso: 'GIN', change: 'reinstated', note: 'Suspension lifted after the December 2025 election', source: { name: 'AU Peace and Security Council', url: 'https://au.int/en/pressreleases/20260122/auc-chairperson-informed-aupsc-guinea-has-reached-decisive-milestone' } },
+      { date: '2025-11-28', iso: 'GNB', change: 'suspended', note: 'After the 26 November 2025 coup', source: { name: 'allAfrica', url: 'https://allafrica.com/stories/202512010764.html' } },
+      { date: '2025-10-15', iso: 'MDG', change: 'suspended', note: 'After the October 2025 military takeover', source: { name: 'Ecofin Agency', url: 'https://www.ecofinagency.com/news/1710-49635-au-suspends-madagascar-after-military-takeover' } },
+      { date: '2025-04-30', iso: 'GAB', change: 'reinstated', note: 'Suspension lifted after the April 2025 election' },
+      { date: '2023-08-31', iso: 'GAB', change: 'suspended', note: 'After the August 2023 coup' },
+      { date: '2023-08-22', iso: 'NER', change: 'suspended', note: 'After the July 2023 coup' },
+    ],
   },
   {
     id: 'arab-league',
@@ -209,6 +244,7 @@ export const BLOCS: Bloc[] = [
     members: members('DZA BHR COM DJI EGY IRQ JOR KWT LBN LBY MRT MAR OMN PSE QAT SAU SOM SDN SYR TUN ARE YEM'),
     sources: [{ name: 'League of Arab States', url: 'https://www.lasportal.org/' }],
     updated: '2026-10',
+    changes: [{ date: '2023-05-07', iso: 'SYR', change: 'reinstated', note: 'Membership restored after suspension since 2011' }],
   },
   {
     id: 'gcc',
@@ -222,6 +258,7 @@ export const BLOCS: Bloc[] = [
     members: members('BHR KWT OMN QAT SAU ARE'),
     sources: [{ name: 'GCC Secretariat', url: 'https://www.gcc-sg.org/' }],
     updated: '2026-10',
+    changes: [],
   },
   {
     id: 'mercosur',
@@ -240,6 +277,7 @@ export const BLOCS: Bloc[] = [
     ],
     sources: [{ name: 'Mercosur', url: 'https://www.mercosur.int/en/' }],
     updated: '2026-10',
+    changes: [{ date: '2024-07-08', iso: 'BOL', change: 'joined', note: 'Full membership after ratification' }],
   },
   {
     id: 'opec',
@@ -254,6 +292,10 @@ export const BLOCS: Bloc[] = [
     members: members('DZA COG GNQ GAB IRN IRQ KWT LBY NGA SAU VEN'),
     sources: [{ name: 'OPEC member countries', url: 'https://www.opec.org/member-countries.html' }],
     updated: '2026-10',
+    changes: [
+      { date: '2026-05-01', iso: 'ARE', change: 'left', note: 'Withdrew from OPEC and OPEC+', source: { name: 'WAM: UAE announces decision to exit OPEC and OPEC+', url: 'https://www.wam.ae/en/article/bzxzuh7-uae-announces-decision-exit-opec-opec+' } },
+      { date: '2024-01-01', iso: 'AGO', change: 'left' },
+    ],
   },
   {
     id: 'ecowas',
@@ -272,6 +314,13 @@ export const BLOCS: Bloc[] = [
     ],
     sources: [{ name: 'ECOWAS member states', url: 'https://ecowas.int/member-states/' }],
     updated: '2026-10',
+    changes: [
+      { date: '2026-01-29', iso: 'GIN', change: 'reinstated', note: 'All sanctions lifted', source: { name: 'Africanews: ECOWAS lifts all sanctions against Guinea', url: 'https://www.africanews.com/2026/01/29/ecowas-lifts-all-sanctions-against-guinea/' } },
+      { date: '2025-11-28', iso: 'GNB', change: 'suspended', note: 'Suspended from decision-making bodies after the coup' },
+      { date: '2025-01-29', iso: 'MLI', change: 'left' },
+      { date: '2025-01-29', iso: 'BFA', change: 'left' },
+      { date: '2025-01-29', iso: 'NER', change: 'left' },
+    ],
   },
   {
     id: 'mecca-pact',
@@ -288,6 +337,11 @@ export const BLOCS: Bloc[] = [
       { name: 'IISS: Pakistan, Saudi Arabia and T\u00fcrkiye: a new defence pact', url: 'https://www.iiss.org/online-analysis/online-analysis/2026/08/pakistan-saudi-arabia-and-turkiye-a-new-defence-pact/' },
     ],
     updated: '2026-10',
+    changes: [
+      { date: '2026-08-07', iso: 'SAU', change: 'founded' },
+      { date: '2026-08-07', iso: 'TUR', change: 'founded' },
+      { date: '2026-08-07', iso: 'PAK', change: 'founded' },
+    ],
   },
   {
     id: 'aes',
@@ -301,6 +355,11 @@ export const BLOCS: Bloc[] = [
     members: members('MLI BFA NER'),
     sources: [{ name: 'Crisis Group: the Alliance of Sahel States', url: 'https://www.crisisgroup.org/africa/sahel' }],
     updated: '2026-10',
+    changes: [
+      { date: '2023-09-16', iso: 'MLI', change: 'founded' },
+      { date: '2023-09-16', iso: 'BFA', change: 'founded' },
+      { date: '2023-09-16', iso: 'NER', change: 'founded' },
+    ],
   },
 ];
 
