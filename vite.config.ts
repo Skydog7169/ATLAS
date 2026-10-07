@@ -13,6 +13,7 @@ export default defineConfig({
         // only re-download what changed. Map geometry gets its own chunk
         // because it is the largest asset and changes least often.
         manualChunks(id) {
+          if (id.includes('countries-50m')) return 'geo-50m';
           if (id.includes('world-atlas') || id.includes('/src/data/geo/')) return 'geo';
           if (id.includes('node_modules/react') || id.includes('node_modules/scheduler')) return 'react';
           if (id.includes('node_modules/d3-') || id.includes('node_modules/topojson')) return 'd3';

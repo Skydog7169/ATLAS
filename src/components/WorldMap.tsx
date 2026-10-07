@@ -3,7 +3,7 @@ import { geoGraticule10, geoNaturalEarth1, geoPath, type GeoPath } from 'd3-geo'
 import { select } from 'd3-selection';
 import { zoom as d3zoom, zoomIdentity, type ZoomBehavior, type ZoomTransform } from 'd3-zoom';
 import 'd3-transition';
-import { COUNTRY_FEATURES, MICROSTATES, type CountryFeature } from '../lib/geo';
+import { COUNTRY_FEATURES, MICROSTATES, drawnIsos, loadDetailedFeatures, type CountryFeature } from '../lib/geo';
 import { COUNTRY_BY_ISO } from '../lib/countries';
 
 export interface MapMarker {
@@ -49,6 +49,9 @@ interface Props {
 const PAD = 8;
 const MIN_SCALE = 1;
 const MAX_SCALE = 16;
+/** Zoom factor at which the 1:50m geometry loads and country labels appear. */
+const DETAIL_SCALE = 2.5;
+const KEY_PAN = 80;
 
 function useSize(ref: RefObject<HTMLDivElement | null>) {
   const [size, setSize] = useState({ width: 0, height: 0 });
@@ -152,6 +155,21 @@ export default function WorldMap({
   const [transform, setTransform] = useState<ZoomTransform>(zoomIdentity);
   const onHoverRef = useRef(onHover);
   onHoverRef.current = onHover;
+  const [detail, setDetail] = useState<CountryFeature[] | null>(null);
+  const loadingDetail = useRef(false);
+  const features = detail ?? COUNTRY_FEATURES;
+  const drawn = useMemo(() => drawnIsos(features), [features]);
+
+  // Fetch the detailed geometry the first time the user zooms in far enough.
+  useEffect(() => {
+    if (transform.k < DETAIL_SCALE || detail || loadingDetail.current) return;
+    loadingDetail.current = true;
+    loadDetailedFeatures()
+      .then(setDetail)
+      .catch(() => {
+        loadingDetail.current = false; // allow a retry on the next zoom
+      });
+  }, [transform.k, detail]);
 
   // Portrait screens (phones) would otherwise show a thin strip of map with
   // empty space above and below, so the globe is fitted to a wider virtual
@@ -173,7 +191,18 @@ export default function WorldMap({
 
   const path: GeoPath | null = useMemo(() => (projection ? geoPath(projection) : null), [projection]);
 
-  const paths = useMemo(() => (path ? COUNTRY_FEATURES.map((f) => path(f) ?? '') : []), [path]);
+  const paths = useMemo(() => (path ? features.map((f) => path(f) ?? '') : []), [path, features]);
+
+  // Label anchors: centroid plus on-screen width at k=1, so labels appear only when a country is wide enough.
+  const labelAnchors = useMemo(() => {
+    if (!path) return [];
+    return features.map((f) => {
+      if (!f.properties.iso) return null;
+      const [[x0], [x1]] = path.bounds(f);
+      const [cx, cy] = path.centroid(f);
+      return Number.isFinite(cx) && Number.isFinite(cy) ? { iso: f.properties.iso, name: COUNTRY_BY_ISO.get(f.properties.iso)?.name ?? f.properties.name, cx, cy, width: x1 - x0 } : null;
+    });
+  }, [path, features]);
 
   const sphereBounds = useMemo(() => (path ? path.bounds({ type: 'Sphere' }) : null), [path]);
 
@@ -246,7 +275,7 @@ export default function WorldMap({
     if (focus.kind === 'reset') {
       target = initialRef.current;
     } else if (focus.kind === 'country') {
-      const f = COUNTRY_FEATURES.find((x) => x.properties.iso === focus.iso);
+      const f = features.find((x) => x.properties.iso === focus.iso);
       if (f) {
         const [[x0, y0], [x1, y1]] = path.bounds(f);
         const dx = x1 - x0;
@@ -273,18 +302,45 @@ export default function WorldMap({
     if (reduce) zoomRef.current.transform(sel, target);
     else zoomRef.current.transform(sel.transition().duration(650) as never, target);
     // insetRight is read when focus changes; a panel opening on its own should not move the map.
-  }, [focus, projection, path, width, height]);
+  }, [focus, projection, path, width, height, features]);
 
   const scaleAdjust = 1 / Math.sqrt(transform.k);
+  const showLabels = transform.k >= DETAIL_SCALE;
+
+  const onKeyDown = (e: React.KeyboardEvent<SVGSVGElement>) => {
+    const svg = svgRef.current;
+    const z = zoomRef.current;
+    if (!svg || !z) return;
+    const sel = select(svg).transition().duration(150) as never;
+    const pan: Record<string, [number, number]> = { ArrowLeft: [KEY_PAN, 0], ArrowRight: [-KEY_PAN, 0], ArrowUp: [0, KEY_PAN], ArrowDown: [0, -KEY_PAN] };
+    if (pan[e.key]) {
+      const [dx, dy] = pan[e.key]!;
+      z.translateBy(sel, dx / transform.k, dy / transform.k);
+    } else if (e.key === '+' || e.key === '=') z.scaleBy(sel, 1.5);
+    else if (e.key === '-' || e.key === '_') z.scaleBy(sel, 1 / 1.5);
+    else if (e.key === '0' || e.key === 'Home') z.transform(sel, initialRef.current);
+    else if (e.key === 'Escape') onHover(null, 0, 0);
+    else return;
+    e.preventDefault();
+  };
 
   return (
-    <div ref={rootRef} className="map-root" role="img" aria-label="World map">
+    <div ref={rootRef} className="map-root">
       {projection && path && (
-        <svg ref={svgRef} viewBox={`0 0 ${width} ${height}`} width={width} height={height}>
+        <svg
+          ref={svgRef}
+          viewBox={`0 0 ${width} ${height}`}
+          width={width}
+          height={height}
+          tabIndex={0}
+          role="application"
+          aria-label="World map. Arrow keys pan, plus and minus zoom, 0 resets. Use search to jump to a country."
+          onKeyDown={onKeyDown}
+        >
           <g ref={layerRef}>
             <path className="sphere" d={spherePath} />
             <path className="graticule" d={graticulePath} />
-            <CountryLayer features={COUNTRY_FEATURES} paths={paths} fillFor={fillFor} selectedIso={selectedIso} onCountryClick={onCountryClick} onHover={onHover} />
+            <CountryLayer features={features} paths={paths} fillFor={fillFor} selectedIso={selectedIso} onCountryClick={onCountryClick} onHover={onHover} />
           </g>
           <defs>
             <filter id="marker-glow" x="-100%" y="-100%" width="300%" height="300%">
@@ -297,7 +353,7 @@ export default function WorldMap({
           </defs>
           <g className="overlay">
             {showMicrostates &&
-              MICROSTATES.map((m) => {
+              MICROSTATES.filter((m) => !drawn.has(m.iso)).map((m) => {
                 const p = projection(m.lonLat);
                 if (!p) return null;
                 const style = fillFor(m.iso);
@@ -320,6 +376,17 @@ export default function WorldMap({
                   />
                 );
               })}
+            {showLabels &&
+              labelAnchors.map((a) => {
+                if (!a || a.width * transform.k < 70) return null;
+                const [x, y] = transform.apply([a.cx, a.cy]);
+                if (x < -50 || y < -20 || x > width + 50 || y > height + 20) return null;
+                return (
+                  <text key={a.iso} className="country-label" x={x} y={y} textAnchor="middle" dominantBaseline="middle" aria-hidden="true">
+                    {a.name.toUpperCase()}
+                  </text>
+                );
+              })}
             {markers.map((mk) => {
               const p = projection(mk.lonLat);
               if (!p) return null;
@@ -332,6 +399,15 @@ export default function WorldMap({
                   className={'marker' + (mk.pulse ? ' pulse' : '')}
                   data-selected={selected}
                   transform={`translate(${x},${y})`}
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      onMarkerClick(mk.id);
+                    }
+                  }}
+                  onFocus={(e) => onHover({ label: mk.label }, e.currentTarget.getBoundingClientRect().left, e.currentTarget.getBoundingClientRect().top)}
+                  onBlur={() => onHover(null, 0, 0)}
                   onClick={() => onMarkerClick(mk.id)}
                   onPointerEnter={(e) => onHover({ label: mk.label }, e.clientX, e.clientY)}
                   onPointerLeave={() => onHover(null, 0, 0)}

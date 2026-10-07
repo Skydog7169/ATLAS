@@ -7,6 +7,8 @@ import { allChanges, changesSince, entryAt } from '../lib/history';
 import { CATEGORY_LABEL, CHANGE_LABEL, CONFLICT_TYPE_LABEL, INTENSITY_COLOR, INTENSITY_LABEL, STATUS_LABEL, formatDate, formatMonth } from '../lib/labels';
 import type { Selection } from '../lib/urlState';
 import { WORLD, WORLDBANK, blocFigures, formatCount, formatUsd, share, type Figures } from '../lib/worldbank';
+import { DISPLACEMENT } from '../lib/displacement';
+import { TRUSTED_HOSTS } from '../data/guards';
 
 interface Props {
   selection: Exclude<Selection, null>;
@@ -449,6 +451,68 @@ function CompareView({ a, b, props }: { a: Bloc; b: Bloc; props: Props }) {
   );
 }
 
+function AboutView({ props }: { props: Props }) {
+  const newest = [...CONFLICTS.map((c) => c.updated), ...BLOCS.flatMap((b) => b.changes.map((c) => c.date))].sort().at(-1) ?? '';
+  return (
+    <>
+      <div className="panel-head">
+        <h2>
+          <span className="eyebrow">About</span>
+          How ATLAS works
+        </h2>
+        <CloseButton onClick={props.onClose} />
+      </div>
+      <div className="panel-body">
+        <p>
+          ATLAS is an open geopolitics map: who belongs to which bloc, where armed conflicts are and how intense they are, and how many people they have displaced.
+          It is built for orientation, not operations. Every claim links to a source, and every assessment carries the date it was verified.
+        </p>
+        <h4>Freshness</h4>
+        <ul className="history">
+          <li>
+            <span className="when">{formatDate(newest)}</span>
+            <span>Newest conflict assessment or bloc membership change</span>
+          </li>
+          <li>
+            <span className="when">{formatDate(DISPLACEMENT.fetchedAt)}</span>
+            <span>UNHCR displacement figures ({DISPLACEMENT.year} data)</span>
+          </li>
+          <li>
+            <span className="when">{formatDate(WORLDBANK.fetchedAt)}</span>
+            <span>World Bank population, GDP and military spending (latest year per country)</span>
+          </li>
+        </ul>
+        <h4>How assessments are made</h4>
+        <p>
+          Each conflict has a dated history of assessments. A weekly automated pass searches the web for developments, drafts an update and proposes it in a pull request that a person reviews before it goes live. The pass is held to three rules: it may only cite pages that appeared in its own search results or that live on a short list of trusted trackers and wire services; it may not move intensity by more than one step at a time; and it must leave an entry alone when nothing material changed. Intensity is a judgement on a four-step scale: high means large-scale sustained combat, medium regular deadly fighting, low sporadic violence, latent a ceasefire or standoff.
+        </p>
+        <h4>Sources</h4>
+        <p>
+          Conflict trackers: CFR Global Conflict Tracker, ACLED, Crisis Group CrisisWatch, ISW. Memberships: the organisations' own sites. Displacement: UNHCR Refugee Data Finder, by country of origin. Figures: World Bank Open Data. Geometry: Natural Earth via world-atlas. Trusted hosts for automated citations: {TRUSTED_HOSTS.join(', ')}.
+        </p>
+        <h4>Caveats</h4>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li>Borders follow Natural Earth and imply no position on disputes. Kosovo uses the code UNK; Northern Cyprus and Somaliland are drawn as neutral territory.</li>
+          <li>Conflict tinting uses the most intense conflict on a country's territory, including conflicts where it is an external party.</li>
+          <li>Bloc figures count full members only and skip countries without a World Bank value; the tiles say when coverage is partial.</li>
+          <li>Displacement figures are UNHCR mid-year or end-year stocks, not flows, and lag events by months.</li>
+          <li>An assessment is a dated snapshot. Check the linked sources before relying on it.</li>
+        </ul>
+        <h4>Keyboard</h4>
+        <p className="mono" style={{ fontSize: 12 }}>
+          / search · arrows pan · + − zoom · 0 reset · Tab through conflict markers, Enter opens · Esc closes the tooltip
+        </p>
+        <div className="panel-actions">
+          <ShareButton />
+          <a className="text-btn" href="https://github.com/Skydog7169/ATLAS" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit', display: 'inline-block' }}>
+            Source on GitHub
+          </a>
+        </div>
+      </div>
+    </>
+  );
+}
+
 export default function DetailPanel(props: Props) {
   const { selection } = props;
   let body: React.ReactNode = null;
@@ -460,6 +524,8 @@ export default function DetailPanel(props: Props) {
     body = b ? <BlocView bloc={b} props={props} /> : null;
   } else if (selection.kind === 'changes') {
     body = <ChangesView props={props} />;
+  } else if (selection.kind === 'about') {
+    body = <AboutView props={props} />;
   } else if (selection.kind === 'compare') {
     body = props.compare ? <CompareView a={props.compare.a} b={props.compare.b} props={props} /> : null;
   } else {
