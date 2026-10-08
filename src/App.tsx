@@ -15,6 +15,7 @@ import Search, { type SearchHit } from './components/Search';
 import ThemeToggle from './components/ThemeToggle';
 import Clock from './components/Clock';
 import Ticker from './components/Ticker';
+import SinceLastVisit from './components/SinceLastVisit';
 import { useWatchlist } from './hooks/useWatchlist';
 import { formatMonth } from './lib/labels';
 import type { CountryFill, Focus, MapMarker } from './components/WorldMap';
@@ -296,6 +297,7 @@ export default function App() {
       </header>
 
       <main className="stage" ref={stageRef}>
+        <SinceLastVisit onSelectConflict={selectConflict} onSelectBloc={selectBloc} onOpenChanges={() => update({ selection: { kind: 'changes' } })} />
         <ErrorBoundary>
           <Suspense fallback={<MapSkeleton />}>
             <WorldMap

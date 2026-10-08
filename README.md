@@ -12,6 +12,8 @@ An interactive geopolitics map. Two views of the same world:
 - **Event ticker** — the strip along the bottom cycles the ten newest dated assessments and membership changes. Hover or focus pauses it; each item opens its panel.
 - **Watchlist** — star any country, bloc or conflict from its panel. Stars live in this browser's localStorage only (every read and write is guarded, so a blocked store just means an empty list), and the ticker and the changes feed can be filtered to what you follow.
 
+- **Alerts** — a strip under the header lists what changed since you last pressed "Mark read" (the date lives in this browser only). RSS and JSON feeds at `/feed.xml` and `/feed.json` are generated on every build. An email digest goes out after each merged weekly refresh.
+
 Search any country, bloc or conflict. Every view is a shareable link.
 
 ## Running it
@@ -44,7 +46,7 @@ src/
   lib/         countries, geo, search, labels, url state, feed, dossier, watchlist
   components/  WorldMap, Search, DetailPanel, Legend, BlocChips, Ticker, StarButton, ErrorBoundary, ThemeToggle
   hooks/       useAppState (hash-synced), useWatchlist (localStorage-backed store)
-scripts/       build-countries.mjs, research/update.mjs (weekly Claude research pass)
+scripts/       build-countries.mjs, build-feeds.mjs, send-digest.mjs, research/update.mjs (weekly Claude research pass)
 ```
 
 ## Data and its limits
@@ -67,6 +69,10 @@ Every Monday the **Weekly data refresh** workflow runs `scripts/research/update.
 - intensity moves at most one step per pass; larger jumps are clamped and flagged.
 
 The same run refreshes `src/data/displacement.generated.json` from the UNHCR API (`pnpm run data:displacement`) and `src/data/worldbank.generated.json` from the World Bank API (`pnpm run data:worldbank`); if UNHCR is unreachable the committed file stands, so the site never depends on it at runtime. It also reviews bloc memberships against the same rules and lists possible new conflicts for a human to consider, without adding them. The run opens a pull request whose body is the research report, so changes are reviewed before they reach the site. Conflicts checked without change get a `lastChecked` date, which the panel shows.
+
+### Feeds and the email digest
+
+`scripts/build-feeds.mjs` runs at the start of `pnpm run build` and writes `public/feed.xml` (RSS 2.0) and `public/feed.json` (JSON Feed 1.1) from the same dated entries the changes feed shows; the files are build artefacts, not committed. `.github/workflows/digest.yml` runs `scripts/send-digest.mjs` when a pull request labelled `data-refresh` merges into `main` (or on demand), and emails the last eight days of changes through [Resend](https://resend.com). It needs a `RESEND_API_KEY` repository secret and a `DIGEST_RECIPIENTS` repository variable (comma-separated addresses); an optional `DIGEST_FROM` variable sets the sender once a domain is verified in Resend, otherwise Resend's onboarding sender is used, which only delivers to the Resend account owner. Without the secret or recipients the workflow prints the digest and exits cleanly. No browser push notifications are used.
 
 Setup: add an `ANTHROPIC_API_KEY` repository secret (Settings → Secrets and variables → Actions). A full pass costs a few dollars. You can trigger it by hand from the Actions tab with an optional list of conflict ids or a limit. `pnpm run data:research:mock` exercises the pipeline offline, and CI runs that on every push.
 
