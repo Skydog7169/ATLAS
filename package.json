@@ -18,6 +18,8 @@
     "data:research:mock": "node scripts/research/update.mjs --mock --dry-run",
     "data:displacement": "node scripts/build-displacement.mjs",
     "data:worldbank": "node scripts/build-worldbank.mjs",
+    "data:sanctions": "node scripts/build-sanctions.mjs",
+    "data:elections": "node scripts/build-elections.mjs",
     "test:e2e": "playwright test"
   },
   "dependencies": {

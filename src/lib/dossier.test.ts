@@ -38,14 +38,26 @@ describe('country dossier', () => {
     expect(countryDossier('FRA')!.memberships.some((m) => m.bloc.id === 'nato')).toBe(true);
   });
 
+  it('registers the sanctions, elections and nuclear providers in order', () => {
+    const irn = countryDossier('IRN')!;
+    expect(irn.extras.map((x) => x.id)).toEqual(['sanctions', 'elections', 'nuclear']);
+    expect(irn.sections.slice(0, 6)).toEqual(['profile', 'memberships', 'conflicts', 'sanctions', 'elections', 'nuclear']);
+    expect(irn.extras[0]!.rows.length).toBeGreaterThanOrEqual(3);
+    // A country with no nuclear role gets no nuclear section but still an (empty) sanctions one.
+    const bra = countryDossier('BRA')!;
+    expect(bra.extras.map((x) => x.id)).toEqual(['sanctions', 'elections']);
+    expect(bra.extras[0]!.rows).toEqual([]);
+    expect(bra.extras[0]!.empty).toBeTruthy();
+  });
+
   it('lets later datasets add sections through a provider', () => {
-    DOSSIER_PROVIDERS.push((iso) => (iso === 'IRN' ? { id: 'sanctions', title: 'Sanctions', rows: [{ label: 'OFAC', value: '1 programme' }] } : null));
+    const before = DOSSIER_PROVIDERS.length;
+    DOSSIER_PROVIDERS.push((iso) => (iso === 'IRN' ? { id: 'nuclear', title: 'Test section', rows: [{ label: 'x', value: 'y' }] } : null));
     try {
-      expect(countryDossier('IRN')!.sections).toContain('sanctions');
-      expect(countryDossier('IRN')!.extras[0]!.rows).toHaveLength(1);
-      expect(countryDossier('FRA')!.sections).not.toContain('sanctions');
+      expect(countryDossier('IRN')!.extras.some((x) => x.title === 'Test section')).toBe(true);
+      expect(countryDossier('FRA')!.extras.some((x) => x.title === 'Test section')).toBe(false);
     } finally {
-      DOSSIER_PROVIDERS.pop();
+      DOSSIER_PROVIDERS.splice(before);
     }
   });
 
