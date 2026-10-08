@@ -16,6 +16,11 @@ import { CHANGES, watchlistOnly } from '../lib/feed';
 import { countryDossier, profileLine, type CountryDossier } from '../lib/dossier';
 import { useWatchlist } from '../hooks/useWatchlist';
 import StarButton from './StarButton';
+import ActorsGraph from './ActorsGraph';
+import { PEACE_KIND_LABEL, backersOf, SUPPORT_LABEL } from '../lib/actors';
+import { CHOKEPOINTS_FILE, CHOKEPOINT_BY_ID, CHOKEPOINT_COLOR, CHOKEPOINT_STATUS_LABEL, currentStatus, linkedConflicts, type Chokepoint } from '../lib/chokepoints';
+import { MILITARY } from '../lib/military';
+import { TRADE } from '../lib/trade';
 
 interface Props {
   selection: Exclude<Selection, null>;
@@ -180,7 +185,15 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
               <ul className="link-list">
                 {x.rows.map((r, i) => (
                   <li key={r.label + i}>
-                    {r.href ? (
+                    {r.conflictId ? (
+                      <button onClick={() => props.onSelectConflict(r.conflictId!)}>
+                        <span>
+                          {r.label}
+                          {r.note && <span className="row-note">{r.note}</span>}
+                        </span>
+                        <span className="meta">{r.value}</span>
+                      </button>
+                    ) : r.href ? (
                       <a href={r.href} target="_blank" rel="noopener noreferrer" title={r.note}>
                         <span>
                           {r.label}
@@ -441,6 +454,58 @@ function ConflictView({ conflict, props }: { conflict: Conflict; props: Props })
         </ul>
         <h4>Background</h4>
         <p>{conflict.summary}</p>
+        {conflict.actors && conflict.actors.length > 0 && (
+          <>
+            <h4 id="conflict-actors">Who backs whom</h4>
+            <ActorsGraph conflict={conflict} onSelectCountry={props.onSelectCountry} />
+            {backersOf(conflict).length > 0 && (
+              <div className="badges">
+                {backersOf(conflict).map((b) => (
+                  <button key={b.iso} className="badge" style={{ cursor: 'pointer' }} onClick={() => props.onSelectCountry(b.iso)} title={`${b.support.map((k) => SUPPORT_LABEL[k]).join(', ')} for ${b.actors.join(', ')}`}>
+                    {b.name}
+                    <span className="meta">{b.support.map((k) => SUPPORT_LABEL[k].toLowerCase()).join(', ')}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+            {conflict.actorsSources && (
+              <p className="src-row">
+                {conflict.actorsSources.map((s) => (
+                  <a key={s.url} href={s.url} target="_blank" rel="noopener noreferrer" className="src">
+                    {s.name} ↗
+                  </a>
+                ))}
+                {conflict.actorsUpdated && <span className="src" style={{ color: 'var(--fg-faint)' }}>reviewed {formatMonth(conflict.actorsUpdated)}</span>}
+              </p>
+            )}
+          </>
+        )}
+        <h4 id="conflict-peace">Peace process · {conflict.peace?.length ?? 0}</h4>
+        {!conflict.peace?.length ? (
+          <p style={{ color: 'var(--fg-muted)' }}>No negotiation track on record.</p>
+        ) : (
+          <ol className="history peace">
+            {conflict.peace.map((e, i) => (
+              <li key={e.date + i} data-kind={e.kind}>
+                <span className="when">
+                  <span className="dot" aria-hidden="true" />
+                  {formatDate(e.date)}
+                </span>
+                <span>
+                  <span className="label">{PEACE_KIND_LABEL[e.kind]}</span>
+                  <span className="note"> {e.summary}</span>
+                  <span className="src-row" style={{ marginTop: 2 }}>
+                    {e.sources.map((s) => (
+                      <a key={s.url} href={s.url} target="_blank" rel="noopener noreferrer" className="src">
+                        {s.name} ↗
+                      </a>
+                    ))}
+                  </span>
+                </span>
+              </li>
+            ))}
+          </ol>
+        )}
         <h4>Assessments</h4>
         {replay && !shown && <p style={{ color: 'var(--fg-muted)' }}>No assessment on record for {props.month ? formatMonth(props.month) : ''}.</p>}
         <HistoryList history={conflict.history} highlight={shown} />

@@ -23,6 +23,33 @@ export const HistoryEntrySchema = z.object({
   confidence: ConfidenceSchema.optional(),
 });
 
+export const BackerSchema = z.object({
+  name: z.string().min(2),
+  iso: z.string().regex(ISO3).optional(),
+  support: z.enum(['troops', 'arms', 'funding', 'political', 'basing', 'intelligence']),
+});
+
+export const ActorSchema = z.object({
+  id: z.string().regex(/^[a-z0-9-]+$/),
+  name: z.string().min(2),
+  type: z.enum(['state', 'armed-group', 'coalition', 'international']),
+  side: z.string().min(2),
+  iso: z.string().regex(ISO3).optional(),
+  backers: z.array(BackerSchema).optional(),
+});
+
+/** YYYY-MM-DD or YYYY-MM: peace events are sometimes known only to the month. */
+export const MONTH_OR_DATE = /^\d{4}-(0[1-9]|1[0-2])(-(0[1-9]|[12]\d|3[01]))?$/;
+
+export const PeaceEventKindSchema = z.enum(['ceasefire', 'agreement', 'talks', 'roadmap', 'mediation', 'collapse']);
+
+export const PeaceEventSchema = z.object({
+  date: z.string().regex(MONTH_OR_DATE),
+  kind: PeaceEventKindSchema,
+  summary: z.string().min(20).max(400),
+  sources: z.array(SourceSchema).min(1).max(4),
+});
+
 export const ConflictInputSchema = z.object({
   id: z.string().regex(/^[a-z0-9-]+$/),
   name: z.string().min(3),
@@ -32,6 +59,10 @@ export const ConflictInputSchema = z.object({
   countries: z.array(z.string().regex(ISO3)).min(1),
   parties: z.array(z.string().min(2)).min(1),
   summary: z.string().min(40),
+  actors: z.array(ActorSchema).min(1).optional(),
+  actorsSources: z.array(SourceSchema).min(1).optional(),
+  actorsUpdated: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/).optional(),
+  peace: z.array(PeaceEventSchema).optional(),
   history: z.array(HistoryEntrySchema).min(1),
   lastChecked: z.string().regex(ISO_DATE).optional(),
 });
@@ -76,6 +107,16 @@ export const AssessmentOutputSchema = z.object({
   sources: z.array(z.object({ name: z.string(), url: z.string() })).describe('1-3 specific articles or tracker pages found in the search results'),
   confidence: ConfidenceSchema,
   note: z.string().describe('one line for the reviewer: anything surprising, disputed or worth a human look; empty string if none'),
+  peaceEvents: z
+    .array(
+      z.object({
+        date: z.string().describe('YYYY-MM-DD, or YYYY-MM when only the month is known'),
+        kind: PeaceEventKindSchema,
+        summary: z.string().describe('one sentence, 20-300 characters'),
+        source: z.object({ name: z.string(), url: z.string() }),
+      }),
+    )
+    .describe('new ceasefires, agreements, talks, roadmaps, mediation steps or collapses since the previous assessment; empty if none'),
 });
 
 export const BlocReviewOutputSchema = z.object({

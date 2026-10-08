@@ -9,8 +9,11 @@ import { WORLDBANK_BY_ISO, type WorldBankRow } from './worldbank';
 import { sanctionsDossier } from './sanctions';
 import { electionsDossier } from './elections';
 import { nuclearDossier } from './nuclear';
+import { sponsorshipDossier } from './actors';
+import { militaryDossier } from './military';
+import { tradeDossier } from './trade';
 
-export type DossierSectionId = 'profile' | 'memberships' | 'conflicts' | 'displacement' | 'figures' | 'changes' | 'sanctions' | 'elections' | 'nuclear';
+export type DossierSectionId = 'profile' | 'memberships' | 'conflicts' | 'sponsorship' | 'military' | 'displacement' | 'figures' | 'trade' | 'changes' | 'sanctions' | 'elections' | 'nuclear';
 
 /**
  * A section contributed by a later dataset (sanctions, elections). Each row is
@@ -18,9 +21,10 @@ export type DossierSectionId = 'profile' | 'memberships' | 'conflicts' | 'displa
  * without touching the panel component.
  */
 export interface DossierExtra {
-  id: Extract<DossierSectionId, 'sanctions' | 'elections' | 'nuclear'>;
+  id: Extract<DossierSectionId, 'sanctions' | 'elections' | 'nuclear' | 'sponsorship' | 'military' | 'trade'>;
   title: string;
-  rows: Array<{ label: string; value: string; href?: string; note?: string }>;
+  /** A row links out (`href`), into a conflict panel (`conflictId`) or into a country dossier (`countryIso`). */
+  rows: Array<{ label: string; value: string; href?: string; note?: string; conflictId?: string; countryIso?: string }>;
   /** Shown when `rows` is empty. */
   empty?: string;
   /** Source and fetch date shown under the section. */
@@ -34,7 +38,7 @@ export type DossierProvider = (iso: string) => DossierExtra | null;
  * null to skip the section (nuclear status only exists for a few countries)
  * or an extra with no rows to show its `empty` text.
  */
-export const DOSSIER_PROVIDERS: DossierProvider[] = [sanctionsDossier, electionsDossier, nuclearDossier];
+export const DOSSIER_PROVIDERS: DossierProvider[] = [sponsorshipDossier, militaryDossier, sanctionsDossier, electionsDossier, nuclearDossier, tradeDossier];
 
 export interface CountryDossier {
   country: CountryRecord;

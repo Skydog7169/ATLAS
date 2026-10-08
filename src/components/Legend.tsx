@@ -7,6 +7,10 @@ import { formatDate } from '../lib/labels';
 import { SANCTIONS, SANCTIONS_COLORS, sanctionsBinLabel } from '../lib/sanctions';
 import { ELECTIONS, ELECTIONS_VERIFIED, ELECTION_COLORS, electionBinLabel } from '../lib/elections';
 import { NUCLEAR, NUCLEAR_COLOR, NUCLEAR_STATUSES, NUCLEAR_STATUS_LABEL, nuclearCount } from '../lib/nuclear';
+import { ACLED, ACLED_COLORS, acledBinLabel, acledNote } from '../lib/acled';
+import { MILITARY, MILITARY_COLORS, militaryBinLabel } from '../lib/military';
+import { TRADE, TRADE_COLOR, TRADE_PARTNERS, TRADE_PARTNER_LABEL } from '../lib/trade';
+import { CHOKEPOINTS_FILE, CHOKEPOINT_COLOR, CHOKEPOINT_STATUSES, CHOKEPOINT_STATUS_LABEL } from '../lib/chokepoints';
 
 interface Props {
   mode: Mode;
@@ -38,6 +42,99 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           </a>{' '}
           {DISPLACEMENT.year} figures, fetched {formatDate(DISPLACEMENT.fetchedAt)}.
           {mode === 'conflicts' ? ' Markers still show conflict intensity.' : ''}
+        </div>
+      </aside>
+    );
+  }
+  if (layer === 'military') {
+    return (
+      <aside className="legend frame" aria-label="Legend">
+        <h3>Foreign military presence</h3>
+        <ul>
+          {MILITARY_COLORS.map((color, i) => (
+            <li key={i}>
+              <span className="swatch" style={{ background: color }} />
+              {militaryBinLabel(i)}
+            </li>
+          ))}
+        </ul>
+        <div className="note">
+          Host countries tinted by how many foreign states or organisations keep bases, deployments or peace operations there. Curated from{' '}
+          {MILITARY.sources.slice(0, 2).map((s, i) => (
+            <span key={s.url}>
+              {i > 0 ? ' and ' : ''}
+              <a href={s.url} target="_blank" rel="noopener noreferrer">
+                {s.name.replace(/^Wikipedia: /, '')}
+              </a>
+            </span>
+          ))}
+          ; verified {formatDate(MILITARY.verified)}.
+        </div>
+      </aside>
+    );
+  }
+  if (layer === 'trade') {
+    return (
+      <aside className="legend frame" aria-label="Legend">
+        <h3>Export dependence</h3>
+        <ul>
+          {TRADE_PARTNERS.map((p) => (
+            <li key={p}>
+              <span className="swatch" style={{ background: TRADE_COLOR[p] }} />
+              Mostly to {TRADE_PARTNER_LABEL[p]}
+            </li>
+          ))}
+          <li>
+            <span className="swatch" style={{ background: 'var(--land-dim)' }} />
+            None above 10%
+          </li>
+        </ul>
+        <div className="note">
+          Hue is the largest of the three export destinations; a stronger tint means a larger share (60% of exports and up reads as full colour).{' '}
+          <a href={TRADE.source.url} target="_blank" rel="noopener noreferrer">
+            {TRADE.source.name}
+          </a>
+          , fetched {formatDate(TRADE.fetchedAt)}.
+        </div>
+      </aside>
+    );
+  }
+  if (layer === 'chokepoints') {
+    return (
+      <aside className="legend frame" aria-label="Legend">
+        <h3>Maritime chokepoints</h3>
+        <ul>
+          {CHOKEPOINT_STATUSES.map((st) => (
+            <li key={st}>
+              <span className="swatch diamond" style={{ background: CHOKEPOINT_COLOR[st] }} />
+              {CHOKEPOINT_STATUS_LABEL[st]}
+            </li>
+          ))}
+        </ul>
+        <div className="note">
+          Eight passages with a dated status and the conflicts that bear on them. Curated; verified {formatDate(CHOKEPOINTS_FILE.verified)}.{mode === 'conflicts' ? ' Round markers are still conflicts.' : ''}
+        </div>
+      </aside>
+    );
+  }
+  if (layer === 'acled') {
+    return (
+      <aside className="legend frame" aria-label="Legend">
+        <h3>Political violence</h3>
+        <ul>
+          {ACLED_COLORS.map((color, i) => (
+            <li key={i}>
+              <span className="swatch" style={{ background: color }} />
+              {acledBinLabel(i)}
+            </li>
+          ))}
+        </ul>
+        <div className="note">
+          {acledNote()}{' '}
+          <a href={ACLED.source.url} target="_blank" rel="noopener noreferrer">
+            ACLED
+          </a>
+          .
         </div>
       </aside>
     );

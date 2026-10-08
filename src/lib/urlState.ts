@@ -24,7 +24,7 @@ export interface AppState {
   layer: Layer;
 }
 
-export const LAYERS = ['displacement', 'sanctions', 'elections', 'nuclear'] as const;
+export const LAYERS = ['displacement', 'sanctions', 'elections', 'nuclear', 'acled', 'military', 'trade', 'chokepoints'] as const;
 export type Layer = (typeof LAYERS)[number] | null;
 
 export const DEFAULT_STATE: AppState = { mode: 'blocs', bloc: null, vs: null, selection: null, month: null, layer: null };

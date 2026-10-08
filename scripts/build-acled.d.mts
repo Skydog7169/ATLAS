@@ -1,0 +1,1 @@
+export function aggregate(rows: Array<{ iso3?: string; iso?: string; fatalities?: number | string | null }>, into?: Map<string, { iso: string; events: number; fatalities: number }>): Map<string, { iso: string; events: number; fatalities: number }>;
