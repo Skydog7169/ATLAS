@@ -62,8 +62,9 @@ test('conflicts mode: markers, panel, timeline replay and changes feed', async (
   await page.keyboard.press('Home');
   await expect(page).toHaveURL(/t=\d{4}-\d{2}/);
   expect(await page.locator('g.marker').count()).toBeLessThan(31);
-  await page.getByRole('button', { name: 'Now' }).click();
+  await page.getByRole('button', { name: 'Now', exact: true }).click();
   await expect(page.locator('g.marker')).toHaveCount(31);
+  await noSeriousA11yIssues(page);
 
   await page.getByRole('button', { name: 'Recent changes' }).click();
   await expect(page.locator('.panel h2')).toContainText('Recent changes');
