@@ -13,7 +13,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Anthropic from '@anthropic-ai/sdk';
 import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod';
-import { AssessmentOutputSchema, BlocReviewOutputSchema, BlocsFileSchema, ConflictsFileSchema, NewConflictsOutputSchema } from '../../src/data/schema.ts';
+import { AssessmentOutputSchema, BlocReviewOutputSchema, BlocsFileSchema, ConflictsFileSchema, ElectionOutputSchema, ElectionsFileSchema, NewConflictsOutputSchema, PARTIAL_DATE } from '../../src/data/schema.ts';
 import { clampIntensity, isMaterialChange, verifySources } from '../../src/data/guards.ts';
 import { mockClient } from './mock.mjs';
 
@@ -21,6 +21,11 @@ const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '../..');
 const CONFLICTS_PATH = resolve(root, 'src/data/conflicts.json');
 const BLOCS_PATH = resolve(root, 'src/data/blocs.json');
+const ELECTIONS_PATH = resolve(root, 'src/data/elections.json');
+const COUNTRIES = JSON.parse(readFileSync(resolve(root, 'src/data/countries.generated.json'), 'utf8'));
+/** Election entries re-checked per pass: those past or due within this many days, plus a few of the oldest-verified. */
+const ELECTION_DUE_DAYS = 60;
+const ELECTION_BUDGET = 12;
 
 const MODEL = 'claude-opus-5-5';
 const PRICE = { input: 4 / 1e6, output: 20 / 1e6, cacheRead: 0.2 / 1e6 }; // USD per token
@@ -30,10 +35,11 @@ const today = args.date ?? new Date().toISOString().slice(0, 10);
 
 const conflicts = ConflictsFileSchema.parse(JSON.parse(readFileSync(CONFLICTS_PATH, 'utf8')));
 const blocs = BlocsFileSchema.parse(JSON.parse(readFileSync(BLOCS_PATH, 'utf8')));
+const elections = ElectionsFileSchema.parse(JSON.parse(readFileSync(ELECTIONS_PATH, 'utf8')));
 
 const client = args.mock ? mockClient() : new Anthropic();
 const usage = { input: 0, output: 0, cacheRead: 0, calls: 0 };
-const report = { updated: [], unchanged: [], clamped: [], droppedSources: [], errors: [], blocChanges: [], blocNote: '', candidates: [] };
+const report = { updated: [], unchanged: [], clamped: [], droppedSources: [], errors: [], blocChanges: [], blocNote: '', candidates: [], elections: [] };
 
 const SYSTEM = `You are a research analyst maintaining a public geopolitics map. Today is ${today}.
 Write in plain, neutral English with specific dates. Never invent events or URLs: every source you return must be a URL that appeared in your web search results. Prefer wire services, UN bodies and established conflict trackers (CFR, ACLED, Crisis Group, ISW). If nothing material happened since the previous assessment, say so by setting changed=false and restating the current situation briefly.`;
@@ -61,15 +67,22 @@ if (!args.only) {
   } catch (err) {
     report.errors.push(`new-conflicts: ${describeError(err)}`);
   }
+  try {
+    await reviewElections();
+  } catch (err) {
+    report.errors.push(`elections: ${describeError(err)}`);
+  }
 }
 
 // Validate before writing; a schema failure means a bug above, not bad data.
 ConflictsFileSchema.parse(conflicts);
 BlocsFileSchema.parse(blocs);
+ElectionsFileSchema.parse(elections);
 
 if (!args.dryRun) {
   writeFileSync(CONFLICTS_PATH, JSON.stringify(conflicts, null, 2) + '\n');
   writeFileSync(BLOCS_PATH, JSON.stringify(blocs, null, 2) + '\n');
+  writeFileSync(ELECTIONS_PATH, JSON.stringify(elections, null, 2) + '\n');
 }
 
 const md = renderReport();
@@ -209,6 +222,66 @@ async function scanForNewConflicts() {
   }
 }
 
+/**
+ * Keeps the elections table current. Each pass re-checks entries whose date
+ * has passed, is unset, or falls within ELECTION_DUE_DAYS, then the entries
+ * verified longest ago, up to ELECTION_BUDGET countries. An entry changes
+ * only when the model cites a page from its own search results (or a trusted
+ * host) and returns a well-formed date.
+ */
+export function electionsDue(rows, today, budget = ELECTION_BUDGET, dueDays = ELECTION_DUE_DAYS) {
+  const horizon = new Date(new Date(today + 'T00:00:00Z').getTime() + dueDays * 86400000).toISOString().slice(0, 10);
+  const due = rows.filter((r) => !r.date || r.date.padEnd(10, '0') <= horizon);
+  const rest = rows.filter((r) => !due.includes(r)).sort((a, b) => a.verified.localeCompare(b.verified));
+  return [...due, ...rest].slice(0, budget);
+}
+
+async function reviewElections() {
+  const name = (iso) => COUNTRIES.find((c) => c.cca3 === iso)?.name ?? iso;
+  for (const row of electionsDue(elections.rows, today)) {
+    const prompt = [
+      `Country: ${name(row.iso)} (${row.iso}).`,
+      `Current entry: ${row.date ? `${row.type} election ${row.date}${row.deadline ? ' (deadline)' : ''}` : 'no date set'}${row.note ? `; note: ${row.note}` : ''}, last verified ${row.verified}.`,
+      '',
+      `Task: find the date of the next national election (presidential or legislative, whichever comes first) as of ${today}. If the listed date has passed, find the following one. Return the most precise date known (YYYY-MM-DD, YYYY-MM or YYYY) and cite the page in your search results that states it. If no election is scheduled, set known=false.`,
+    ].join('\n');
+    let response;
+    try {
+      response = await client.messages.parse({
+        model: MODEL,
+        max_tokens: 4000,
+        system: SYSTEM,
+        output_config: { effort: 'low', format: zodOutputFormat(ElectionOutputSchema) },
+        tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 4 }],
+        messages: [{ role: 'user', content: prompt }],
+      });
+    } catch (err) {
+      report.errors.push(`elections/${row.iso}: ${describeError(err)}`);
+      continue;
+    }
+    track(response);
+    const out = response.parsed_output ?? parseTextFallback(response, ElectionOutputSchema);
+    if (!out) continue;
+    const { kept } = verifySources([out.source], collectSearchUrls(response));
+    if (!kept.length) {
+      report.droppedSources.push({ id: `elections/${row.iso}`, dropped: [out.source.url] });
+      continue;
+    }
+    const date = out.known && PARTIAL_DATE.test(out.date) ? out.date : null;
+    if (date && date.padEnd(10, '0') < today) continue; // a past date is not "next"
+    const changed = date !== row.date || out.type !== row.type;
+    row.date = date;
+    row.type = out.type;
+    if (out.deadline && date) row.deadline = true;
+    else delete row.deadline;
+    if (out.note) row.note = out.note.slice(0, 200);
+    else delete row.note;
+    row.sources = [kept[0], ...row.sources.filter((s) => s.url !== kept[0].url)].slice(0, 4);
+    row.verified = today;
+    report.elections.push({ iso: row.iso, name: name(row.iso), date, type: out.type, changed });
+  }
+}
+
 // ---------------------------------------------------------------------------
 
 function collectSearchUrls(response) {
@@ -269,6 +342,10 @@ function renderReport() {
   for (const b of report.blocChanges) lines.push(`- ${b.bloc}: ${b.iso} ${b.change} on ${b.date}${b.note ? ` — ${b.note}` : ''}`);
   if (!report.blocChanges.length) lines.push('- none');
   if (report.blocNote) lines.push(`- _${report.blocNote}_`);
+  const changedElections = report.elections.filter((e) => e.changed);
+  lines.push('', `### Elections re-checked (${report.elections.length}, ${changedElections.length} changed)`);
+  for (const e of report.elections) lines.push(`- ${e.name}: ${e.date ? `${e.type} ${e.date}` : 'no date set'}${e.changed ? ' (changed)' : ''}`);
+  if (!report.elections.length) lines.push('- none');
   if (report.candidates.length) {
     lines.push('', '### Possible new conflicts (not added; needs a human)');
     for (const c of report.candidates) lines.push(`- **${c.name}** (${c.countries.join(', ')}; ${c.type}, ${c.intensity}) — ${c.why} [source](${c.source.url})`);

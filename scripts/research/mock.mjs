@@ -29,6 +29,8 @@ export function mockClient() {
           };
         } else if (prompt.startsWith('Here are the current membership lists')) {
           parsed = { changes: [], note: 'mock: no sourced membership changes found' };
+        } else if (prompt.startsWith('Country:')) {
+          parsed = { known: true, date: '2027-05-15', deadline: false, type: 'legislative', note: 'mock', source: { name: 'Al Jazeera: mock article', url: seenUrl } };
         } else {
           parsed = { candidates: [] };
         }

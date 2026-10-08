@@ -83,7 +83,8 @@ test('search jumps to a conflict and to a microstate', async ({ page }) => {
 
 test('displacement layer tints countries and explains itself', async ({ page }) => {
   await open(page);
-  await page.getByRole('button', { name: 'Displacement layer' }).click();
+  await page.locator('.map-controls .icon-btn[aria-label="Data layers"]').click();
+  await page.locator('.layer-list button[data-layer="displacement"]').click();
   await expect(page).toHaveURL(/layer=displacement/);
   await expect(page.locator('path.country[data-iso="SDN"]')).toHaveAttribute('fill', '#dd8bff');
   await expect(page.locator('.legend')).toContainText('Forcibly displaced');
@@ -193,4 +194,43 @@ test('watchlist: stars survive reload and filter the ticker and feed', async ({ 
   await page.locator('.panel .watch-row .star').click();
   await expect(page.locator('.panel')).toContainText('Nothing starred yet');
   await noSeriousA11yIssues(page);
+});
+
+test('data layers: sanctions, elections and nuclear tint the map with legends', async ({ page }) => {
+  await open(page);
+  await page.locator('.map-controls .icon-btn[aria-label="Data layers"]').click();
+  await page.locator('.layer-list button[data-layer="sanctions"]').click();
+  await expect(page).toHaveURL(/layer=sanctions/);
+  await expect(page.locator('path.country[data-iso="RUS"]')).toHaveAttribute('fill', '#ffd166');
+  await expect(page.locator('path.country[data-iso="FRA"]')).toHaveAttribute('fill', 'var(--land)');
+  await expect(page.locator('.legend')).toContainText('Sanctions regimes');
+  await expect(page.locator('.legend')).toContainText('fetched');
+
+  await open(page, '#layer=elections');
+  await expect(page.locator('.legend')).toContainText('Next national election');
+  await expect(page.locator('path.country[data-iso="USA"]')).toHaveAttribute('fill', /#8cff7a|#3fb04a/);
+
+  await open(page, '#layer=nuclear');
+  await expect(page.locator('.legend')).toContainText('Nuclear-armed · 9');
+  await expect(page.locator('path.country[data-iso="CHN"]')).toHaveAttribute('fill', '#ff4fd8');
+  await expect(page.locator('path.country[data-iso="POL"]')).toHaveAttribute('fill', '#3b7dd8');
+  await expect(page.locator('path.country[data-iso="BRA"]')).toHaveAttribute('fill', 'var(--land)');
+
+  // Off returns to the mode colours and clears the URL.
+  await page.locator('.map-controls .icon-btn[aria-label="Data layers"]').click();
+  await page.getByRole('menuitemradio', { name: /^Off/ }).click();
+  await expect(page).not.toHaveURL(/layer=/);
+  await noSeriousA11yIssues(page);
+});
+
+test('dossier lists sanctions regimes, the next election and nuclear status', async ({ page }) => {
+  await open(page, '#country=IRN');
+  const panel = page.locator('.panel');
+  await expect(panel.locator('#dossier-sanctions')).toContainText(/Sanctions · [3-9]/);
+  await expect(panel.locator('#dossier-sanctions + ul a').first()).toHaveAttribute('href', /^https:\/\//);
+  await expect(panel.locator('#dossier-elections + ul')).toContainText(/election/i);
+  await expect(panel.locator('#dossier-nuclear + ul')).toContainText('Threshold state');
+  await open(page, '#country=BRA');
+  await expect(panel.locator('#dossier-sanctions + p')).toContainText('No UN, US or EU regime');
+  await expect(panel.locator('#dossier-nuclear')).toHaveCount(0);
 });

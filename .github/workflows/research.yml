@@ -53,6 +53,12 @@ jobs:
       - name: Refresh World Bank figures
         run: node scripts/build-worldbank.mjs
 
+      - name: Refresh sanctions regimes
+        run: node scripts/build-sanctions.mjs
+
+      - name: Fill any countries missing from the elections table
+        run: node scripts/build-elections.mjs
+
       - name: Validate
         run: pnpm run test
 
@@ -67,6 +73,8 @@ jobs:
             src/data/blocs.json
             src/data/displacement.generated.json
             src/data/worldbank.generated.json
+            src/data/sanctions.generated.json
+            src/data/elections.json
           commit-message: 'Data refresh: automated weekly research pass'
           title: 'Data refresh ${{ github.run_started_at }}'
           body-path: research-report.md
