@@ -13,6 +13,8 @@ export interface MapMarker {
   radius: number;
   label: string;
   pulse?: boolean;
+  /** Diamonds mark chokepoints so they read apart from round conflict markers. */
+  shape?: 'circle' | 'diamond';
 }
 
 export type Focus =
@@ -396,8 +398,9 @@ export default function WorldMap({
               return (
                 <g
                   key={mk.id}
-                  className={'marker' + (mk.pulse ? ' pulse' : '')}
+                  className={'marker' + (mk.pulse ? ' pulse' : '') + (mk.shape === 'diamond' ? ' diamond' : '')}
                   data-selected={selected}
+                  data-shape={mk.shape ?? 'circle'}
                   transform={`translate(${x},${y})`}
                   tabIndex={0}
                   onKeyDown={(e) => {
@@ -420,8 +423,17 @@ export default function WorldMap({
                       <path d={`M0 ${-(r + 16)}v7M0 ${r + 16}v-7M${-(r + 16)} 0h7M${r + 16} 0h-7`} />
                     </g>
                   )}
-                  <circle className="ring" r={r + 3} stroke={mk.color} />
-                  <circle className="core" r={r} fill={mk.color} filter="url(#marker-glow)" />
+                  {mk.shape === 'diamond' ? (
+                    <>
+                      <rect className="ring" x={-(r + 3)} y={-(r + 3)} width={2 * (r + 3)} height={2 * (r + 3)} transform="rotate(45)" stroke={mk.color} />
+                      <rect className="core" x={-r} y={-r} width={2 * r} height={2 * r} transform="rotate(45)" fill={mk.color} filter="url(#marker-glow)" />
+                    </>
+                  ) : (
+                    <>
+                      <circle className="ring" r={r + 3} stroke={mk.color} />
+                      <circle className="core" r={r} fill={mk.color} filter="url(#marker-glow)" />
+                    </>
+                  )}
                 </g>
               );
             })}

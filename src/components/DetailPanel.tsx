@@ -18,6 +18,9 @@ import { useWatchlist } from '../hooks/useWatchlist';
 import StarButton from './StarButton';
 import ActorsGraph from './ActorsGraph';
 import { PEACE_KIND_LABEL, backersOf, SUPPORT_LABEL } from '../lib/actors';
+import { CHOKEPOINTS_FILE, CHOKEPOINT_BY_ID, CHOKEPOINT_COLOR, CHOKEPOINT_STATUS_LABEL, currentStatus, linkedConflicts, type Chokepoint } from '../lib/chokepoints';
+import { MILITARY } from '../lib/military';
+import { TRADE } from '../lib/trade';
 
 interface Props {
   selection: Exclude<Selection, null>;
@@ -32,6 +35,7 @@ interface Props {
   onSelectConflict: (id: string) => void;
   onHighlightBloc: (id: string) => void;
   onOpenChanges: () => void;
+  onSelectChokepoint: (id: string) => void;
 }
 
 function CloseButton({ onClick }: { onClick: () => void }) {
@@ -632,6 +636,85 @@ function WatchlistView({ props }: { props: Props }) {
   );
 }
 
+function ChokepointView({ cp, props }: { cp: Chokepoint; props: Props }) {
+  const now = currentStatus(cp);
+  const conflicts = linkedConflicts(cp);
+  return (
+    <>
+      <div className="panel-head">
+        <h2>
+          <span className="eyebrow">Maritime chokepoint</span>
+          {cp.name}
+        </h2>
+        <CloseButton onClick={props.onClose} />
+      </div>
+      <div className="panel-body">
+        <div className="badges">
+          <span className="badge" style={{ ['--badge-color' as string]: CHOKEPOINT_COLOR[now.status] }}>
+            <span className="dot" /> {CHOKEPOINT_STATUS_LABEL[now.status]}
+          </span>
+          <span className="badge muted">As of {formatDate(now.date)}</span>
+        </div>
+        <Muted>{cp.between}</Muted>
+        <h4>What passes through</h4>
+        <p>{cp.carries}</p>
+        <h4 id="chokepoint-status">Status</h4>
+        <ol className="history peace">
+          {cp.history.map((e, i) => (
+            <li key={e.date + i} data-current={i === 0}>
+              <span className="when">
+                <span className="dot" style={{ background: CHOKEPOINT_COLOR[e.status] }} aria-hidden="true" />
+                {formatDate(e.date)}
+              </span>
+              <span>
+                <span className="label">{CHOKEPOINT_STATUS_LABEL[e.status]}</span>
+                <span className="note"> {e.summary}</span>
+                <span className="src-row" style={{ marginTop: 2 }}>
+                  {e.sources.map((s) => (
+                    <a key={s.url} href={s.url} target="_blank" rel="noopener noreferrer" className="src">
+                      {s.name} ↗
+                    </a>
+                  ))}
+                </span>
+              </span>
+            </li>
+          ))}
+        </ol>
+        <h4 id="chokepoint-conflicts">Linked conflicts · {conflicts.length}</h4>
+        {conflicts.length === 0 ? (
+          <Muted>No tracked conflict bears on this passage.</Muted>
+        ) : (
+          <ul className="link-list">
+            {conflicts.map((c) => (
+              <li key={c.id}>
+                <button onClick={() => props.onSelectConflict(c.id)}>
+                  <span className="dot" style={{ width: 10, height: 10, borderRadius: '50%', background: INTENSITY_COLOR[c.intensity] }} />
+                  {c.name}
+                  <span className="meta">{INTENSITY_LABEL[c.intensity]}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+        <h4>Other chokepoints</h4>
+        <div className="badges">
+          {CHOKEPOINTS_FILE.chokepoints
+            .filter((x) => x.id !== cp.id)
+            .map((x) => (
+              <button key={x.id} className="badge" style={{ cursor: 'pointer', ['--badge-color' as string]: CHOKEPOINT_COLOR[currentStatus(CHOKEPOINT_BY_ID.get(x.id)!).status] }} onClick={() => props.onSelectChokepoint(x.id)}>
+                <span className="dot" /> {x.name}
+              </button>
+            ))}
+        </div>
+        <div className="panel-actions">
+          <ShareButton />
+        </div>
+        <div className="updated">Curated; verified {formatDate(CHOKEPOINTS_FILE.verified)}. Sources: {CHOKEPOINTS_FILE.sources.map((s) => s.name).join('; ')}.</div>
+      </div>
+    </>
+  );
+}
+
 function CompareView({ a, b, props }: { a: Bloc; b: Bloc; props: Props }) {
   const full = (x: Bloc) => x.members.filter((m) => m.status === 'member').map((m) => m.iso);
   const setA = new Set(full(a));
@@ -745,6 +828,14 @@ function AboutView({ props }: { props: Props }) {
             <span className="when">{formatDate(NUCLEAR.verified)}</span>
             <span>Nuclear status, curated</span>
           </li>
+          <li>
+            <span className="when">{formatDate(CHOKEPOINTS_FILE.verified)}</span>
+            <span>Chokepoint status and foreign military presence, curated (presence verified {formatDate(MILITARY.verified)})</span>
+          </li>
+          <li>
+            <span className="when">{formatDate(TRADE.fetchedAt)}</span>
+            <span>Export shares to the US, China and the EU (World Bank WITS, newest year per country)</span>
+          </li>
         </ul>
         <h4>How assessments are made</h4>
         <p>
@@ -796,6 +887,9 @@ export default function DetailPanel(props: Props) {
     body = <AboutView props={props} />;
   } else if (selection.kind === 'watchlist') {
     body = <WatchlistView props={props} />;
+  } else if (selection.kind === 'chokepoint') {
+    const cp = CHOKEPOINT_BY_ID.get(selection.id);
+    body = cp ? <ChokepointView cp={cp} props={props} /> : null;
   } else if (selection.kind === 'compare') {
     body = props.compare ? <CompareView a={props.compare.a} b={props.compare.b} props={props} /> : null;
   } else {

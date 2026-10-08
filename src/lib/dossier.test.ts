@@ -40,12 +40,12 @@ describe('country dossier', () => {
 
   it('registers the sponsorship, sanctions, elections and nuclear providers in order', () => {
     const irn = countryDossier('IRN')!;
-    expect(irn.extras.map((x) => x.id)).toEqual(['sponsorship', 'sanctions', 'elections', 'nuclear']);
-    expect(irn.sections.slice(0, 7)).toEqual(['profile', 'memberships', 'conflicts', 'sponsorship', 'sanctions', 'elections', 'nuclear']);
+    expect(irn.extras.map((x) => x.id)).toEqual(['sponsorship', 'sanctions', 'elections', 'nuclear', 'trade']);
+    expect(irn.sections.slice(0, 8)).toEqual(['profile', 'memberships', 'conflicts', 'sponsorship', 'sanctions', 'elections', 'nuclear', 'trade']);
     expect(irn.extras[1]!.rows.length).toBeGreaterThanOrEqual(3);
     // A country with no nuclear role gets no nuclear section but still an (empty) sanctions one.
     const bra = countryDossier('BRA')!;
-    expect(bra.extras.map((x) => x.id)).toEqual(['sanctions', 'elections']);
+    expect(bra.extras.map((x) => x.id)).toEqual(['sanctions', 'elections', 'trade']);
     expect(bra.extras[0]!.rows).toEqual([]);
     expect(bra.extras[0]!.empty).toBeTruthy();
   });
