@@ -29,6 +29,7 @@ export default function Timeline({ months, value, onChange }: Props) {
         max={last}
         step={1}
         value={idx}
+        aria-label="Replay month"
         aria-valuetext={live ? 'Live' : formatMonth(months[idx] ?? '')}
         onChange={(e) => {
           const i = Number(e.target.value);
