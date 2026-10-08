@@ -8,6 +8,10 @@ An interactive geopolitics map. Two views of the same world:
 - **Compare** — pick a bloc, press Compare, pick another: shared and exclusive members on the map and in a list, with combined population, GDP and military spending from the World Bank side by side.
 - **Displacement layer** — people forcibly displaced from each country (refugees, asylum seekers, IDPs and others in need of protection) from the UNHCR Refugee Data Finder, as an overlay on either mode.
 
+- **Country dossiers** — every country has a page at `#country=XXX` with its bloc memberships, conflicts on its territory, UNHCR displacement, World Bank figures and the dated changes that concern it. Later datasets (sanctions, elections) plug in as extra sections.
+- **Event ticker** — the strip along the bottom cycles the ten newest dated assessments and membership changes. Hover or focus pauses it; each item opens its panel.
+- **Watchlist** — star any country, bloc or conflict from its panel. Stars live in this browser's localStorage only (every read and write is guarded, so a blocked store just means an empty list), and the ticker and the changes feed can be filtered to what you follow.
+
 Search any country, bloc or conflict. Every view is a shareable link.
 
 ## Running it
@@ -37,9 +41,9 @@ Vendor code is split into `react`, `d3` and `geo` chunks, and the map component 
 ```
 src/
   data/        conflicts.json, blocs.json, schema.ts, guards.ts, types.ts, countries.generated.json, geo/
-  lib/         countries, geo, search, labels, url state
-  components/  WorldMap, Search, DetailPanel, Legend, BlocChips, ErrorBoundary, ThemeToggle
-  hooks/       useAppState (hash-synced)
+  lib/         countries, geo, search, labels, url state, feed, dossier, watchlist
+  components/  WorldMap, Search, DetailPanel, Legend, BlocChips, Ticker, StarButton, ErrorBoundary, ThemeToggle
+  hooks/       useAppState (hash-synced), useWatchlist (localStorage-backed store)
 scripts/       build-countries.mjs, research/update.mjs (weekly Claude research pass)
 ```
 

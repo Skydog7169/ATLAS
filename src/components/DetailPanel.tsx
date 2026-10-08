@@ -1,14 +1,18 @@
 import { useMemo, useState } from 'react';
-import { BLOCS, BLOC_BY_ID, blocsForCountry } from '../data/blocs';
-import { CONFLICTS, CONFLICT_BY_ID, INTENSITY_ORDER, conflictsForCountry } from '../data/conflicts';
-import type { Bloc, Conflict, CountryRecord, HistoryEntry, MembershipStatus } from '../data/types';
-import { COUNTRY_BY_ISO, countryName } from '../lib/countries';
-import { allChanges, changesSince, entryAt } from '../lib/history';
+import { BLOCS, BLOC_BY_ID } from '../data/blocs';
+import { CONFLICTS, CONFLICT_BY_ID } from '../data/conflicts';
+import type { Bloc, Conflict, HistoryEntry, MembershipStatus } from '../data/types';
+import { countryName } from '../lib/countries';
+import { changesSince, entryAt, type ChangeItem } from '../lib/history';
 import { CATEGORY_LABEL, CHANGE_LABEL, CONFLICT_TYPE_LABEL, INTENSITY_COLOR, INTENSITY_LABEL, STATUS_LABEL, formatDate, formatMonth } from '../lib/labels';
 import type { Selection } from '../lib/urlState';
 import { WORLD, WORLDBANK, blocFigures, formatCount, formatUsd, share, type Figures } from '../lib/worldbank';
-import { DISPLACEMENT } from '../lib/displacement';
+import { DISPLACEMENT, formatPeople } from '../lib/displacement';
 import { TRUSTED_HOSTS } from '../data/guards';
+import { CHANGES, watchlistOnly } from '../lib/feed';
+import { countryDossier, profileLine, type CountryDossier } from '../lib/dossier';
+import { useWatchlist } from '../hooks/useWatchlist';
+import StarButton from './StarButton';
 
 interface Props {
   selection: Exclude<Selection, null>;
@@ -22,6 +26,7 @@ interface Props {
   onSelectBloc: (id: string) => void;
   onSelectConflict: (id: string) => void;
   onHighlightBloc: (id: string) => void;
+  onOpenChanges: () => void;
 }
 
 function CloseButton({ onClick }: { onClick: () => void }) {
@@ -72,26 +77,65 @@ function Sources({ sources }: { sources: Array<{ name: string; url: string }> })
   );
 }
 
-function CountryView({ country, props }: { country: CountryRecord; props: Props }) {
-  const memberships = blocsForCountry(country.cca3);
-  const conflicts = conflictsForCountry(country.cca3).sort((a, b) => INTENSITY_ORDER[b.intensity] - INTENSITY_ORDER[a.intensity]);
+function Muted({ children }: { children: React.ReactNode }) {
+  return <p style={{ color: 'var(--fg-muted)' }}>{children}</p>;
+}
+
+/** One feed entry: date, linked title, kind tag and clipped detail. Shared by the changes feed and the dossier. */
+function FeedList({ items, props, compact }: { items: ChangeItem[]; props: Props; compact?: boolean }) {
+  const max = compact ? 140 : 180;
+  return (
+    <ol className="history feed">
+      {items.map((it, i) => (
+        <li key={it.kind + it.id + it.date + i}>
+          <span className="when">
+            <span className="dot" style={{ background: it.intensity ? INTENSITY_COLOR[it.intensity] : it.color }} aria-hidden="true" />
+            {formatDate(it.date)}
+          </span>
+          <span>
+            <button className="inline-link" onClick={() => (it.kind === 'conflict' ? props.onSelectConflict(it.id) : props.onSelectBloc(it.id))}>
+              {it.title}
+            </button>
+            <span className="label"> · {it.kind === 'conflict' ? INTENSITY_LABEL[it.intensity!] : 'Membership'}</span>
+            <span className="note"> {it.detail.length > max ? it.detail.slice(0, max - 3).trimEnd() + '…' : it.detail}</span>
+          </span>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+function yearNote(year: number | null) {
+  return year ? String(year) : '';
+}
+
+function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props }) {
+  const { country, memberships, conflicts, displacement, figures, changes, extras } = dossier;
   return (
     <>
       <div className="panel-head">
         <h2>
-          <span className="eyebrow">{country.subregion ?? country.region}</span>
+          <span className="eyebrow">Country dossier · {country.subregion ?? country.region}</span>
           {country.name}
         </h2>
+        <StarButton item={{ kind: 'country', id: country.cca3 }} name={country.name} />
         <CloseButton onClick={props.onClose} />
       </div>
-      <div className="panel-body">
-        <p style={{ color: 'var(--fg-muted)' }}>
-          {country.official}
-          {country.capital ? ` · Capital: ${country.capital}` : ''}
-        </p>
-        <h4>Bloc memberships</h4>
+      <div className="panel-body dossier" data-sections={dossier.sections.join(' ')}>
+        <Muted>{profileLine(country)}</Muted>
+        <div className="badges">
+          <span className="badge muted">{country.cca3}</span>
+          <span className="badge muted">{country.region}</span>
+          {conflicts.length > 0 && (
+            <span className="badge" style={{ ['--badge-color' as string]: INTENSITY_COLOR[conflicts[0]!.intensity] }}>
+              <span className="dot" /> {INTENSITY_LABEL[conflicts[0]!.intensity]}
+            </span>
+          )}
+        </div>
+
+        <h4 id="dossier-memberships">Bloc memberships · {memberships.filter((m) => m.membership.status === 'member').length}</h4>
         {memberships.length === 0 ? (
-          <p style={{ color: 'var(--fg-muted)' }}>Not a member of any bloc tracked here.</p>
+          <Muted>Not a member of any bloc tracked here.</Muted>
         ) : (
           <ul className="link-list">
             {memberships.map(({ bloc, membership }) => (
@@ -105,9 +149,10 @@ function CountryView({ country, props }: { country: CountryRecord; props: Props 
             ))}
           </ul>
         )}
-        <h4>Conflicts</h4>
+
+        <h4 id="dossier-conflicts">Conflicts · {conflicts.length}</h4>
         {conflicts.length === 0 ? (
-          <p style={{ color: 'var(--fg-muted)' }}>No tracked conflict on this territory.</p>
+          <Muted>No tracked conflict on this territory.</Muted>
         ) : (
           <ul className="link-list">
             {conflicts.map((c) => (
@@ -121,8 +166,89 @@ function CountryView({ country, props }: { country: CountryRecord; props: Props 
             ))}
           </ul>
         )}
+
+        {extras.map((x) => (
+          <div key={x.id}>
+            <h4 id={`dossier-${x.id}`}>{x.title}</h4>
+            {x.rows.length === 0 ? (
+              <Muted>None recorded.</Muted>
+            ) : (
+              <ul className="link-list">
+                {x.rows.map((r, i) => (
+                  <li key={r.label + i}>
+                    {r.href ? (
+                      <a href={r.href} target="_blank" rel="noopener noreferrer">
+                        {r.label}
+                        <span className="meta">{r.value} ↗</span>
+                      </a>
+                    ) : (
+                      <span className="row">
+                        {r.label}
+                        <span className="meta">{r.value}</span>
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {x.footnote && <div className="updated">{x.footnote}</div>}
+          </div>
+        ))}
+
+        <h4 id="dossier-displacement">Displacement</h4>
+        {displacement && displacement.total > 0 ? (
+          <div className="tiles" style={{ ['--tile-color' as string]: '#a35be6' }}>
+            <div className="tile">
+              <span className="label">Displaced</span>
+              <strong>{formatPeople(displacement.total)}</strong>
+              <span className="sub">from {country.name}</span>
+            </div>
+            <div className="tile">
+              <span className="label">Refugees</span>
+              <strong>{formatPeople(displacement.refugees)}</strong>
+              <span className="sub">{formatPeople(displacement.asylumSeekers)} asylum seekers</span>
+            </div>
+            <div className="tile">
+              <span className="label">IDPs</span>
+              <strong>{formatPeople(displacement.idps)}</strong>
+              <span className="sub">{displacement.oip > 0 ? `${formatPeople(displacement.oip)} others in need` : 'internally displaced'}</span>
+            </div>
+          </div>
+        ) : (
+          <Muted>No UNHCR displacement figure for people from {country.name}.</Muted>
+        )}
+
+        <h4 id="dossier-figures">Figures</h4>
+        {figures && (figures.population !== null || figures.gdpUsd !== null || figures.militaryUsd !== null) ? (
+          <div className="tiles">
+            <div className="tile">
+              <span className="label">Population</span>
+              <strong>{figures.population !== null ? formatCount(figures.population) : '—'}</strong>
+              <span className="sub">{figures.population !== null ? `${share(figures.population, WORLD.population)} of world · ${yearNote(figures.populationYear)}` : 'not reported'}</span>
+            </div>
+            <div className="tile">
+              <span className="label">GDP</span>
+              <strong>{figures.gdpUsd !== null ? formatUsd(figures.gdpUsd) : '—'}</strong>
+              <span className="sub">{figures.gdpUsd !== null ? `${share(figures.gdpUsd, WORLD.gdpUsd)} of world · ${yearNote(figures.gdpYear)}` : 'not reported'}</span>
+            </div>
+            <div className="tile">
+              <span className="label">Military spend</span>
+              <strong>{figures.militaryUsd !== null ? formatUsd(figures.militaryUsd) : '—'}</strong>
+              <span className="sub">{figures.militaryUsd !== null ? `${share(figures.militaryUsd, WORLD.militaryUsd)} of world · ${yearNote(figures.militaryYear)}` : 'not reported'}</span>
+            </div>
+          </div>
+        ) : (
+          <Muted>No World Bank figures for {country.name}.</Muted>
+        )}
+
+        <h4 id="dossier-changes">Recent changes · {changes.length}</h4>
+        {changes.length === 0 ? <Muted>No dated assessment or membership change on record for {country.name}.</Muted> : <FeedList items={changes} props={props} compact />}
+
         <div className="panel-actions">
           <ShareButton />
+        </div>
+        <div className="updated">
+          Displacement: <a href={DISPLACEMENT.source.url} target="_blank" rel="noopener noreferrer">UNHCR</a> {DISPLACEMENT.year}, fetched {formatDate(DISPLACEMENT.fetchedAt)}. Figures: <a href={WORLDBANK.source.url} target="_blank" rel="noopener noreferrer">World Bank</a>, latest year per country, fetched {formatDate(WORLDBANK.fetchedAt)}.
         </div>
       </div>
     </>
@@ -172,6 +298,7 @@ function BlocView({ bloc, props }: { bloc: Bloc; props: Props }) {
           <span className="eyebrow">{CATEGORY_LABEL[bloc.category]} bloc</span>
           {bloc.name}
         </h2>
+        <StarButton item={{ kind: 'bloc', id: bloc.id }} name={bloc.shortName} />
         <CloseButton onClick={props.onClose} />
       </div>
       <div className="panel-body">
@@ -285,6 +412,7 @@ function ConflictView({ conflict, props }: { conflict: Conflict; props: Props })
           <span className="eyebrow">{CONFLICT_TYPE_LABEL[conflict.type]}</span>
           {conflict.name}
         </h2>
+        <StarButton item={{ kind: 'conflict', id: conflict.id }} name={conflict.name} />
         <CloseButton onClick={props.onClose} />
       </div>
       <div className="panel-body">
@@ -335,8 +463,11 @@ const WINDOWS = [
 
 function ChangesView({ props }: { props: Props }) {
   const [days, setDays] = useState(90);
-  const items = useMemo(() => allChanges(CONFLICTS, BLOCS, countryName, (k) => CHANGE_LABEL[k]), []);
-  const shown = days ? changesSince(items, days) : items;
+  const { only, keys, items: starred, setOnly } = useWatchlist();
+  const shown = useMemo(() => {
+    const pool = only ? watchlistOnly(CHANGES, keys) : [...CHANGES];
+    return days ? changesSince(pool, days) : pool;
+  }, [days, only, keys]);
   return (
     <>
       <div className="panel-head">
@@ -347,33 +478,83 @@ function ChangesView({ props }: { props: Props }) {
         <CloseButton onClick={props.onClose} />
       </div>
       <div className="panel-body">
-        <div className="segmented small" role="group" aria-label="Time window">
-          {WINDOWS.map((w) => (
-            <button key={w.days} aria-pressed={days === w.days} onClick={() => setDays(w.days)}>
-              {w.label}
-            </button>
-          ))}
+        <div className="filter-row">
+          <div className="segmented small" role="group" aria-label="Time window">
+            {WINDOWS.map((w) => (
+              <button key={w.days} aria-pressed={days === w.days} onClick={() => setDays(w.days)}>
+                {w.label}
+              </button>
+            ))}
+          </div>
+          <button className={'text-btn watch-toggle' + (only ? ' on' : '')} aria-pressed={only} onClick={() => setOnly(!only)}>
+            ★ Watchlist{starred.length ? ` · ${starred.length}` : ''}
+          </button>
         </div>
-        {shown.length === 0 && <p style={{ color: 'var(--fg-muted)', marginTop: 12 }}>No changes recorded in this window.</p>}
-        <ol className="history feed">
-          {shown.map((it, i) => (
-            <li key={it.kind + it.id + it.date + i}>
-              <span className="when">
-                <span className="dot" style={{ background: it.intensity ? INTENSITY_COLOR[it.intensity] : it.color }} aria-hidden="true" />
-                {formatDate(it.date)}
-              </span>
-              <span>
-                <button className="inline-link" onClick={() => (it.kind === 'conflict' ? props.onSelectConflict(it.id) : props.onSelectBloc(it.id))}>
-                  {it.title}
-                </button>
-                <span className="label"> · {it.kind === 'conflict' ? INTENSITY_LABEL[it.intensity!] : 'Membership'}</span>
-                <span className="note"> {it.detail.length > 180 ? it.detail.slice(0, 177).trimEnd() + '…' : it.detail}</span>
-              </span>
-            </li>
-          ))}
-        </ol>
+        {shown.length === 0 && (
+          <p style={{ color: 'var(--fg-muted)', marginTop: 12 }}>
+            {only && starred.length === 0 ? 'Your watchlist is empty. Star a country, bloc or conflict from its panel.' : only ? 'No changes for your watchlist in this window.' : 'No changes recorded in this window.'}
+          </p>
+        )}
+        <FeedList items={shown} props={props} />
         <div className="panel-actions">
           <ShareButton />
+        </div>
+      </div>
+    </>
+  );
+}
+
+function WatchlistView({ props }: { props: Props }) {
+  const { items, toggle } = useWatchlist();
+  const groups = [
+    { kind: 'country' as const, title: 'Countries', name: (id: string) => countryName(id), open: props.onSelectCountry },
+    { kind: 'bloc' as const, title: 'Blocs', name: (id: string) => BLOC_BY_ID.get(id)?.shortName ?? id, open: props.onSelectBloc },
+    { kind: 'conflict' as const, title: 'Conflicts', name: (id: string) => CONFLICT_BY_ID.get(id)?.name ?? id, open: props.onSelectConflict },
+  ].map((g) => ({ ...g, rows: items.filter((it) => it.kind === g.kind) }));
+  return (
+    <>
+      <div className="panel-head">
+        <h2>
+          <span className="eyebrow">Saved on this device</span>
+          Watchlist
+        </h2>
+        <CloseButton onClick={props.onClose} />
+      </div>
+      <div className="panel-body">
+        {items.length === 0 ? (
+          <Muted>Nothing starred yet. Open any country, bloc or conflict and press the star to follow it. The ticker and the changes feed can then be filtered to what you follow.</Muted>
+        ) : (
+          <Muted>Stars are kept in this browser only. Use the ★ Watchlist toggle on the ticker or the changes feed to see only these.</Muted>
+        )}
+        {groups
+          .filter((g) => g.rows.length > 0)
+          .map((g) => (
+            <div key={g.kind}>
+              <h4>
+                {g.title} · {g.rows.length}
+              </h4>
+              <ul className="link-list">
+                {g.rows.map((it) => (
+                  <li key={it.id} className="watch-row">
+                    <button onClick={() => g.open(it.id)}>
+                      {g.kind === 'conflict' && <span className="dot" style={{ width: 10, height: 10, borderRadius: '50%', background: INTENSITY_COLOR[CONFLICT_BY_ID.get(it.id)?.intensity ?? 'latent'] }} />}
+                      {g.kind === 'bloc' && <span className="dot" style={{ width: 10, height: 10, borderRadius: '50%', background: BLOC_BY_ID.get(it.id)?.color }} />}
+                      {g.name(it.id)}
+                    </button>
+                    <button className="icon-btn star small" aria-pressed="true" aria-label={`Remove ${g.name(it.id)} from watchlist`} onClick={() => toggle(it)}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden="true">
+                        <path d="m12 3 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.4l-5.7 3.1 1.2-6.4L2.8 9.7l6.4-.8L12 3Z" />
+                      </svg>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        <div className="panel-actions">
+          <button className="text-btn" onClick={() => props.onOpenChanges()}>
+            Open changes feed
+          </button>
         </div>
       </div>
     </>
@@ -498,6 +679,10 @@ function AboutView({ props }: { props: Props }) {
           <li>Displacement figures are UNHCR mid-year or end-year stocks, not flows, and lag events by months.</li>
           <li>An assessment is a dated snapshot. Check the linked sources before relying on it.</li>
         </ul>
+        <h4>Following things</h4>
+        <p>
+          Every country has a dossier (memberships, conflicts, displacement, figures and its recent changes) at a link you can share. The strip along the bottom cycles the ten newest dated changes and pauses while you hover it. Press the star on any panel to add it to a watchlist kept in this browser; the ticker and the changes feed can be filtered to it.
+        </p>
         <h4>Keyboard</h4>
         <p className="mono" style={{ fontSize: 12 }}>
           / search · arrows pan · + − zoom · 0 reset · Tab through conflict markers, Enter opens · Esc closes the tooltip
@@ -517,8 +702,8 @@ export default function DetailPanel(props: Props) {
   const { selection } = props;
   let body: React.ReactNode = null;
   if (selection.kind === 'country') {
-    const c = COUNTRY_BY_ISO.get(selection.iso);
-    body = c ? <CountryView country={c} props={props} /> : null;
+    const d = countryDossier(selection.iso);
+    body = d ? <CountryView dossier={d} props={props} /> : null;
   } else if (selection.kind === 'bloc') {
     const b = BLOC_BY_ID.get(selection.id);
     body = b ? <BlocView bloc={b} props={props} /> : null;
@@ -526,6 +711,8 @@ export default function DetailPanel(props: Props) {
     body = <ChangesView props={props} />;
   } else if (selection.kind === 'about') {
     body = <AboutView props={props} />;
+  } else if (selection.kind === 'watchlist') {
+    body = <WatchlistView props={props} />;
   } else if (selection.kind === 'compare') {
     body = props.compare ? <CompareView a={props.compare.a} b={props.compare.b} props={props} /> : null;
   } else {
