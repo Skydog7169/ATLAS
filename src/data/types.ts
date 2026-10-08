@@ -20,6 +20,15 @@ export interface BlocMember {
   iso: Iso3;
   status: MembershipStatus;
   note?: string;
+  /** Year the membership (or partner status) began; drives the trend charts. */
+  since?: number;
+}
+
+/** A past membership spell, for the trend charts. */
+export interface FormerMember {
+  iso: Iso3;
+  since: number;
+  until: number;
 }
 
 export type BlocChangeKind = 'joined' | 'left' | 'suspended' | 'reinstated' | 'frozen' | 'invited' | 'founded';
@@ -50,6 +59,7 @@ export interface Bloc {
   updated: string;
   /** Membership events, newest first. */
   changes: BlocChange[];
+  former?: FormerMember[];
 }
 
 export type ConflictType =

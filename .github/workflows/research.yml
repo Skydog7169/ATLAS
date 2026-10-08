@@ -56,8 +56,11 @@ jobs:
       - name: Refresh sanctions regimes
         run: node scripts/build-sanctions.mjs
 
-      - name: Refresh WITS export shares
+      - name: Refresh WITS export shares and partner lists
         run: node scripts/build-trade.mjs
+
+      - name: Refresh World Bank GDP history
+        run: node scripts/build-worldbank-history.mjs
 
       - name: Fill any countries missing from the elections table
         run: node scripts/build-elections.mjs
@@ -89,6 +92,7 @@ jobs:
             src/data/elections.json
             src/data/acled.generated.json
             src/data/trade.generated.json
+            src/data/worldbank-history.generated.json
           commit-message: 'Data refresh: automated weekly research pass'
           title: 'Data refresh ${{ github.run_started_at }}'
           body-path: research-report.md
