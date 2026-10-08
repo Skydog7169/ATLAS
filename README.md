@@ -15,6 +15,8 @@ An interactive geopolitics map. Two views of the same world:
 - **Alerts** — a strip under the header lists what changed since you last pressed "Mark read" (the date lives in this browser only). RSS and JSON feeds at `/feed.xml` and `/feed.json` are generated on every build. An email digest goes out after each merged weekly refresh.
 - **Data layers** — the layers button offers four overlays on either mode: displacement, **sanctions** (countries tinted by how many UN, US and EU country-level regimes target them, with each regime linked from the dossier), **elections** (months to the next national election) and **nuclear status** (armed, threshold, hosting allied weapons, under an umbrella). Each legend names its source and fetch date.
 
+- **Power and trade layers** — eight maritime chokepoints (Hormuz, Bab el-Mandeb, Suez, Malacca, Taiwan Strait, Turkish Straits, Panama, GIUK) drawn as diamonds with a dated status and linked conflicts; foreign military presence by host country (bases, deployments and peace operations, curated and sourced); and export dependence as a three-way tint by the largest of the US, China and the EU from World Bank WITS, with the shares in each dossier.
+
 Search any country, bloc or conflict. Every view is a shareable link.
 
 ## Running it

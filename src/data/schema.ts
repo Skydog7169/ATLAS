@@ -176,3 +176,70 @@ export const ElectionOutputSchema = z.object({
   note: z.string().describe('one short line of context, e.g. "Second round", "Postponed from May 2026"; empty if none'),
   source: z.object({ name: z.string(), url: z.string() }).describe('the page in the search results that states the date'),
 });
+
+// ---------------------------------------------------------------------------
+// Batch 5 datasets: chokepoints (curated), military presence (curated), trade dependence (generated).
+
+export const ChokepointStatusSchema = z.enum(['open', 'recovering', 'restricted', 'disrupted', 'closed']);
+
+export const ChokepointSchema = z.object({
+  id: z.string().regex(/^[a-z0-9-]+$/),
+  name: z.string().min(3),
+  location: z.tuple([z.number().min(-180).max(180), z.number().min(-90).max(90)]),
+  between: z.string().min(3),
+  carries: z.string().min(10),
+  /** Conflict ids whose course affects this passage. */
+  conflicts: z.array(z.string().regex(/^[a-z0-9-]+$/)),
+  /** Dated status entries, newest first. */
+  history: z
+    .array(
+      z.object({
+        date: z.string().regex(PARTIAL_DATE),
+        status: ChokepointStatusSchema,
+        summary: z.string().min(20).max(500),
+        sources: z.array(SourceSchema).min(1).max(4),
+      }),
+    )
+    .min(1),
+});
+
+export const ChokepointsFileSchema = z.object({
+  verified: z.string().regex(ISO_DATE),
+  sources: z.array(SourceSchema).min(1),
+  chokepoints: z.array(ChokepointSchema).min(1),
+});
+
+export const PresenceKindSchema = z.enum(['base', 'deployment', 'mission']);
+
+export const PresenceSchema = z.object({
+  host: z.string().regex(ISO3),
+  /** ISO code of the operating state, or an organisation code such as UN or AU. */
+  operator: z.string().regex(/^[A-Z]{2,3}$/),
+  kind: PresenceKindSchema,
+  name: z.string().min(3),
+  note: z.string().min(10).max(400),
+  source: SourceSchema,
+  /** Month the presence ended, YYYY-MM; an ended row is kept for the record but not counted. */
+  ended: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/).optional(),
+});
+
+export const MilitaryFileSchema = z.object({
+  verified: z.string().regex(ISO_DATE),
+  sources: z.array(SourceSchema).min(1),
+  presence: z.array(PresenceSchema).min(1),
+});
+
+export const TradeRowSchema = z.object({
+  iso: z.string().regex(ISO3),
+  year: z.number().int().min(2000).max(2100),
+  exportsUsd: z.number().nonnegative(),
+  us: z.number().min(0).max(1),
+  china: z.number().min(0).max(1),
+  eu: z.number().min(0).max(1),
+});
+
+export const TradeFileSchema = z.object({
+  source: SourceSchema,
+  fetchedAt: z.string().regex(ISO_DATE),
+  rows: z.array(TradeRowSchema).min(100),
+});

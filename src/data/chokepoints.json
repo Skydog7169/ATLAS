@@ -1,0 +1,104 @@
+{
+  "verified": "2026-10-08",
+  "sources": [
+    { "name": "EIA: World oil transit chokepoints", "url": "https://www.eia.gov/international/analysis/special-topics/World_Oil_Transit_Chokepoints" },
+    { "name": "Lloyd's List Intelligence: Red Sea briefs", "url": "https://www.lloydslistintelligence.com/resources/blog/red-sea-brief-18-september-2026" }
+  ],
+  "chokepoints": [
+    {
+      "id": "hormuz",
+      "name": "Strait of Hormuz",
+      "location": [56.3, 26.6],
+      "between": "Persian Gulf and Gulf of Oman",
+      "carries": "About a fifth of global oil consumption and a fifth of LNG trade in normal years (EIA).",
+      "conflicts": ["hormuz", "iran-israel"],
+      "history": [
+        { "date": "2026-10-07", "status": "closed", "summary": "The strait remained effectively closed pending Iranian conditions under the US naval blockade in force since 14 July 2026; a tanker was hit by an unattributed projectile on 4 October.", "sources": [{ "name": "Crisis Group: the future of the Strait of Hormuz", "url": "https://www.crisisgroup.org/qna/global/iran-israelpalestine-united-states/fragile-ceasefire-under-threat-what-future-strait-hormuz" }] },
+        { "date": "2026-04", "status": "disrupted", "summary": "An April 2026 ceasefire paused attacks on shipping after Iran hit vessels during the US–Israel war with Iran; it collapsed on 8 July.", "sources": [{ "name": "Crisis Group: the future of the Strait of Hormuz", "url": "https://www.crisisgroup.org/qna/global/iran-israelpalestine-united-states/fragile-ceasefire-under-threat-what-future-strait-hormuz" }] }
+      ]
+    },
+    {
+      "id": "bab-el-mandeb",
+      "name": "Bab el-Mandeb",
+      "location": [43.3, 12.6],
+      "between": "Red Sea and Gulf of Aden",
+      "carries": "Oil and LNG between the Gulf and Europe, and all Suez-routed container traffic.",
+      "conflicts": ["yemen"],
+      "history": [
+        { "date": "2026-09-18", "status": "disrupted", "summary": "Houthi strikes on Saudi-linked tankers from July 2026 and a declared blockade of Saudi Arabia cut transits by about a quarter; traffic stabilised at roughly 70% below pre-crisis levels.", "sources": [{ "name": "Lloyd's List Intelligence: Red Sea brief, 18 September 2026", "url": "https://www.lloydslistintelligence.com/resources/blog/red-sea-brief-18-september-2026" }, { "name": "Al Jazeera: Houthis deny plan to charge ships (Aug 2026)", "url": "https://www.aljazeera.com/news/2026/8/1/yemens-houthis-deny-plan-to-charge-ships-transiting-red-sea" }] },
+        { "date": "2025-05-06", "status": "disrupted", "summary": "A US–Houthi ceasefire announced by Oman covered US ships only; most container lines kept routing around the Cape.", "sources": [{ "name": "Wikipedia: 2025 United States–Houthi ceasefire", "url": "https://en.wikipedia.org/wiki/2025_United_States%E2%80%93Houthi_ceasefire" }] },
+        { "date": "2023-11-19", "status": "disrupted", "summary": "Houthi attacks on commercial shipping began with the seizure of the Galaxy Leader, diverting most Asia–Europe traffic around Africa.", "sources": [{ "name": "Wikipedia: Red Sea crisis", "url": "https://en.wikipedia.org/wiki/Red_Sea_crisis" }] }
+      ]
+    },
+    {
+      "id": "suez",
+      "name": "Suez Canal",
+      "location": [32.35, 30.45],
+      "between": "Mediterranean and Red Sea",
+      "carries": "Around 12% of global trade before 2023; the shortest Asia–Europe route.",
+      "conflicts": ["yemen", "gaza"],
+      "history": [
+        { "date": "2026-09-18", "status": "recovering", "summary": "August 2026 saw 1,232 transits, the busiest month since December 2023 but still 39% below pre-crisis levels, as MSC and COSCO began partial returns to the route.", "sources": [{ "name": "Lloyd's List Intelligence: Red Sea brief, 18 September 2026", "url": "https://www.lloydslistintelligence.com/resources/blog/red-sea-brief-18-september-2026" }] },
+        { "date": "2024-01", "status": "disrupted", "summary": "Transits roughly halved as carriers diverted around the Cape of Good Hope in response to Houthi attacks.", "sources": [{ "name": "Wikipedia: Red Sea crisis", "url": "https://en.wikipedia.org/wiki/Red_Sea_crisis" }] }
+      ]
+    },
+    {
+      "id": "malacca",
+      "name": "Strait of Malacca",
+      "location": [100.8, 2.6],
+      "between": "Indian Ocean and South China Sea",
+      "carries": "The world's busiest oil chokepoint by volume, feeding China, Japan and South Korea (EIA).",
+      "conflicts": ["south-china-sea"],
+      "history": [
+        { "date": "2026-10-08", "status": "open", "summary": "Open and heavily used; piracy and armed robbery in the Singapore Strait remain the main risk, not state action.", "sources": [{ "name": "EIA: World oil transit chokepoints", "url": "https://www.eia.gov/international/analysis/special-topics/World_Oil_Transit_Chokepoints" }] }
+      ]
+    },
+    {
+      "id": "taiwan-strait",
+      "name": "Taiwan Strait",
+      "location": [119.5, 24.5],
+      "between": "East China Sea and South China Sea",
+      "carries": "A large share of container traffic between North-East Asia and the rest of the world, and most of the world's advanced semiconductors by origin.",
+      "conflicts": ["taiwan-strait"],
+      "history": [
+        { "date": "2026-09", "status": "open", "summary": "Open; PLA combat-readiness patrols in May and live-fire drills off Fujian in July 2026 did not interrupt commercial traffic, and activity spiked again in mid-September.", "sources": [{ "name": "Al Jazeera: Taiwan monitors Chinese combat patrol (May 2026)", "url": "https://www.aljazeera.com/news/2026/5/26/taiwan-monitors-unprovoked-chinese-combat-patrol-near-island" }, { "name": "Taipei Times: defence report flags PLA landing capabilities (Sep 2026)", "url": "https://www.taipeitimes.com/News/taiwan/archives/2026/09/02/2003863545" }] },
+        { "date": "2025-12", "status": "disrupted", "summary": "Blockade-style PLA drills in late December 2025 briefly constrained shipping lanes around Taiwan.", "sources": [{ "name": "CFR Global Conflict Tracker", "url": "https://www.cfr.org/global-conflict-tracker" }] }
+      ]
+    },
+    {
+      "id": "bosporus",
+      "name": "Turkish Straits (Bosporus and Dardanelles)",
+      "location": [29.05, 41.1],
+      "between": "Black Sea and Mediterranean",
+      "carries": "Black Sea grain, Russian and Kazakh oil exports; governed by the 1936 Montreux Convention.",
+      "conflicts": ["russia-ukraine"],
+      "history": [
+        { "date": "2026-07", "status": "restricted", "summary": "Türkiye reaffirmed the Montreux Convention on its 90th anniversary: closed to Russian and Ukrainian warships since 2022, open to civilian traffic, with over 84,000 transits in 2025.", "sources": [{ "name": "Daily Sabah: Türkiye reiterates commitment to Montreux Convention", "url": "https://www.dailysabah.com/politics/turkiye-reiterates-commitment-to-montreux-convention/news" }, { "name": "Carleton University: The Black Sea in 2026", "url": "https://carleton.ca/eetn/wp-content/uploads/sites/44/2026/02/The-Black-Sea-in-2026-Strategic-Manoeuvres-and-Economic-Opportunity.pdf" }] },
+        { "date": "2023-07-17", "status": "restricted", "summary": "Russia terminated the Black Sea Grain Initiative; Ukraine opened a coastal corridor hugging Romanian and Bulgarian waters.", "sources": [{ "name": "Wikipedia: Black Sea Grain Initiative", "url": "https://en.wikipedia.org/wiki/Black_Sea_Grain_Initiative" }] }
+      ]
+    },
+    {
+      "id": "panama",
+      "name": "Panama Canal",
+      "location": [-79.9, 9.1],
+      "between": "Atlantic and Pacific",
+      "carries": "About 5% of world maritime trade, including US Gulf LNG and grain to Asia.",
+      "conflicts": [],
+      "history": [
+        { "date": "2026-09-15", "status": "restricted", "summary": "Drought cut daily transits to 32 from 15 September 2026 and lowered the draft to 14.48 m from 1 October, after rainfall 34% below average; FY2026 transits had been running 5% above the prior year.", "sources": [{ "name": "gCaptain: Panama Canal to cut daily transits as water outlook fades", "url": "https://gcaptain.com/panama-canal-to-cut-daily-transits-as-optimistic-water-outlook-fades/" }, { "name": "Panama Canal Authority: monthly operations summary, June 2026", "url": "https://pancanal.com/wp-content/uploads/2026/07/ADV-23-2026-Monthly-Canal-Operations-Summary-June-2026.pdf" }] },
+        { "date": "2026-01", "status": "open", "summary": "Panama's Supreme Court annulled CK Hutchison's concession for the Balboa and Cristóbal terminals, and the state took control of the ports that US pressure had targeted since 2025.", "sources": [{ "name": "Baird Maritime: CK Hutchison ports sale to proceed without Panama terminals", "url": "https://www.bairdmaritime.com/shipping/ports/ck-hutchison-ports-sale-to-push-through-without-two-panama-terminals-reports-say" }] }
+      ]
+    },
+    {
+      "id": "giuk",
+      "name": "GIUK gap",
+      "location": [-15, 62],
+      "between": "Greenland, Iceland and the United Kingdom",
+      "carries": "The North Atlantic transit route for Russia's Northern Fleet submarines and transatlantic cables.",
+      "conflicts": ["russia-ukraine"],
+      "history": [
+        { "date": "2026-10-08", "status": "open", "summary": "Open; NATO maritime patrols and anti-submarine deployments have intensified since 2022, with Iceland and the UK hosting rotating P-8 patrols.", "sources": [{ "name": "Wikipedia: GIUK gap", "url": "https://en.wikipedia.org/wiki/GIUK_gap" }] }
+      ]
+    }
+  ]
+}

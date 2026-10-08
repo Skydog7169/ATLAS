@@ -2,12 +2,14 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { BLOC_BY_ID } from '../data/blocs';
 import { CONFLICT_BY_ID } from '../data/conflicts';
 import { COUNTRY_BY_ISO } from '../lib/countries';
+import { CHOKEPOINT_BY_ID } from '../lib/chokepoints';
 import { DEFAULT_STATE, parse, serialize, type AppState } from '../lib/urlState';
 
 const validators = {
   bloc: (id: string) => BLOC_BY_ID.has(id),
   conflict: (id: string) => CONFLICT_BY_ID.has(id),
   country: (iso: string) => COUNTRY_BY_ISO.has(iso),
+  chokepoint: (id: string) => CHOKEPOINT_BY_ID.has(id),
 };
 
 function read(): AppState {

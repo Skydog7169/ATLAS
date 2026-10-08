@@ -108,6 +108,9 @@ export default function App() {
     else if (selection?.kind === 'conflict') {
       const c = CONFLICT_BY_ID.get(selection.id);
       if (c) setFocus({ kind: 'point', lonLat: c.location, scale: 3.5 });
+    } else if (selection?.kind === 'chokepoint') {
+      const cp = CHOKEPOINT_BY_ID.get(selection.id);
+      if (cp) setFocus({ kind: 'point', lonLat: cp.location, scale: 3 });
     }
   }, [selection]);
 
@@ -163,21 +166,23 @@ export default function App() {
   );
 
   const markers = useMemo<MapMarker[]>(() => {
-    if (mode !== 'conflicts') return [];
-    return [...visible]
-      .sort((a, b) => INTENSITY_ORDER[a.intensity] - INTENSITY_ORDER[b.intensity])
-      .map(({ conflict: c, intensity }) => ({
-        id: c.id,
-        lonLat: c.location,
-        color: INTENSITY_COLOR[intensity],
-        radius: INTENSITY_RADIUS[intensity],
-        label: c.name,
-        pulse: intensity === 'high' && viewMonth === null,
-      }));
-  }, [mode, visible, viewMonth]);
+    const out: MapMarker[] = [];
+    if (mode === 'conflicts') {
+      for (const { conflict: c, intensity } of [...visible].sort((a, b) => INTENSITY_ORDER[a.intensity] - INTENSITY_ORDER[b.intensity])) {
+        out.push({ id: c.id, lonLat: c.location, color: INTENSITY_COLOR[intensity], radius: INTENSITY_RADIUS[intensity], label: c.name, pulse: intensity === 'high' && viewMonth === null });
+      }
+    }
+    if (layer === 'chokepoints') {
+      for (const cp of CHOKEPOINTS) {
+        const st = currentStatus(cp).status;
+        out.push({ id: CHOKEPOINT_MARKER_PREFIX + cp.id, lonLat: cp.location, color: CHOKEPOINT_COLOR[st], radius: 7, label: `${cp.name}: ${CHOKEPOINT_STATUS_LABEL[st]}`, shape: 'diamond' });
+      }
+    }
+    return out;
+  }, [mode, visible, viewMonth, layer]);
 
   const selectedIso = selection?.kind === 'country' ? selection.iso : null;
-  const selectedMarkerId = selection?.kind === 'conflict' ? selection.id : null;
+  const selectedMarkerId = selection?.kind === 'conflict' ? selection.id : selection?.kind === 'chokepoint' ? CHOKEPOINT_MARKER_PREFIX + selection.id : null;
 
   const selectCountry = useCallback(
     (iso: string) => {
@@ -194,6 +199,20 @@ export default function App() {
       if (c) setFocus({ kind: 'point', lonLat: c.location, scale: 3.5 });
     },
     [update],
+  );
+
+  const selectChokepoint = useCallback(
+    (id: string) => {
+      const cp = CHOKEPOINT_BY_ID.get(id);
+      update({ layer: 'chokepoints', selection: { kind: 'chokepoint', id } });
+      if (cp) setFocus({ kind: 'point', lonLat: cp.location, scale: 3 });
+    },
+    [update],
+  );
+
+  const onMarkerClick = useCallback(
+    (id: string) => (id.startsWith(CHOKEPOINT_MARKER_PREFIX) ? selectChokepoint(id.slice(CHOKEPOINT_MARKER_PREFIX.length)) : selectConflict(id)),
+    [selectChokepoint, selectConflict],
   );
 
   const selectBloc = useCallback(
@@ -329,7 +348,7 @@ export default function App() {
               focus={focus}
               insetRight={insetRight}
               onCountryClick={selectCountry}
-              onMarkerClick={selectConflict}
+              onMarkerClick={onMarkerClick}
               onHover={onHover}
               zoomApiRef={zoomApi}
             />
@@ -396,6 +415,7 @@ export default function App() {
                 setFocus({ kind: 'reset' });
               }}
               onOpenChanges={() => update({ selection: { kind: 'changes' } })}
+              onSelectChokepoint={selectChokepoint}
             />
           </ErrorBoundary>
         )}
