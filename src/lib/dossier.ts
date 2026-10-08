@@ -6,8 +6,11 @@ import { DISPLACEMENT_BY_ISO, type DisplacementRow } from './displacement';
 import { CHANGES, changesForCountry } from './feed';
 import type { ChangeItem } from './history';
 import { WORLDBANK_BY_ISO, type WorldBankRow } from './worldbank';
+import { sanctionsDossier } from './sanctions';
+import { electionsDossier } from './elections';
+import { nuclearDossier } from './nuclear';
 
-export type DossierSectionId = 'profile' | 'memberships' | 'conflicts' | 'displacement' | 'figures' | 'changes' | 'sanctions' | 'elections';
+export type DossierSectionId = 'profile' | 'memberships' | 'conflicts' | 'displacement' | 'figures' | 'changes' | 'sanctions' | 'elections' | 'nuclear';
 
 /**
  * A section contributed by a later dataset (sanctions, elections). Each row is
@@ -15,17 +18,23 @@ export type DossierSectionId = 'profile' | 'memberships' | 'conflicts' | 'displa
  * without touching the panel component.
  */
 export interface DossierExtra {
-  id: Extract<DossierSectionId, 'sanctions' | 'elections'>;
+  id: Extract<DossierSectionId, 'sanctions' | 'elections' | 'nuclear'>;
   title: string;
   rows: Array<{ label: string; value: string; href?: string; note?: string }>;
+  /** Shown when `rows` is empty. */
+  empty?: string;
   /** Source and fetch date shown under the section. */
   footnote?: string;
 }
 
 export type DossierProvider = (iso: string) => DossierExtra | null;
 
-/** Datasets register a provider here; Batch 2 adds sanctions and elections. */
-export const DOSSIER_PROVIDERS: DossierProvider[] = [];
+/**
+ * Datasets register a provider here, in display order. A provider returns
+ * null to skip the section (nuclear status only exists for a few countries)
+ * or an extra with no rows to show its `empty` text.
+ */
+export const DOSSIER_PROVIDERS: DossierProvider[] = [sanctionsDossier, electionsDossier, nuclearDossier];
 
 export interface CountryDossier {
   country: CountryRecord;

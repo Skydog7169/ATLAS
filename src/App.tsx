@@ -6,6 +6,10 @@ import { useAppState } from './hooks/useAppState';
 import { currentMonth, earliestMonth, entryAt, monthRange } from './lib/history';
 import Timeline from './components/Timeline';
 import { DISPLACEMENT_BY_ISO, displacementColor, formatPeople } from './lib/displacement';
+import { sanctionsColor, sanctionsSummary } from './lib/sanctions';
+import { electionColor, electionSummary } from './lib/elections';
+import { nuclearColor, nuclearSummary } from './lib/nuclear';
+import LayerMenu, { type LayerOption } from './components/LayerMenu';
 import { INTENSITY_COLOR, INTENSITY_RADIUS } from './lib/labels';
 import BlocChips from './components/BlocChips';
 import DetailPanel from './components/DetailPanel';
@@ -25,6 +29,13 @@ import type { CountryFill, Focus, MapMarker } from './components/WorldMap';
 const WorldMap = lazy(() => import('./components/WorldMap'));
 
 const OVERVIEW_STEPS = ['var(--land)', '#123a4a', '#17607a', '#1f8fb3', '#35e0ff'];
+
+const LAYER_OPTIONS: LayerOption[] = [
+  { id: 'displacement', label: 'Displacement', hint: 'People displaced from each country (UNHCR)' },
+  { id: 'sanctions', label: 'Sanctions', hint: 'UN, US and EU regimes targeting the country' },
+  { id: 'elections', label: 'Elections', hint: 'Months to the next national election' },
+  { id: 'nuclear', label: 'Nuclear', hint: 'Armed, threshold, hosting and umbrella states' },
+];
 
 /** Newest `updated` month across both datasets, shown in the header readouts. */
 const DATA_ASOF = [...BLOCS.map((b) => b.updated), ...CONFLICTS.map((c) => c.updated)].sort().at(-1) ?? '';
@@ -121,6 +132,9 @@ export default function App() {
     (iso: string | null): CountryFill => {
       if (!iso) return { fill: 'var(--land-dim)' };
       if (layer === 'displacement') return { fill: displacementColor(iso) };
+      if (layer === 'sanctions') return { fill: sanctionsColor(iso) };
+      if (layer === 'elections') return { fill: electionColor(iso) };
+      if (layer === 'nuclear') return { fill: nuclearColor(iso) };
       if (mode === 'conflicts') {
         const intensity = maxIntensityByCountry.get(iso);
         if (!intensity) return { fill: 'var(--land)' };
@@ -214,6 +228,12 @@ export default function App() {
       const row = DISPLACEMENT_BY_ISO.get(hover.iso);
       return row ? `${formatPeople(row.total)} displaced · ${formatPeople(row.refugees)} refugees · ${formatPeople(row.idps)} IDPs` : 'No UNHCR displacement figure';
     }
+    if (layer === 'sanctions') {
+      const s = sanctionsSummary(hover.iso);
+      return s ? `Sanctions: ${s}` : 'No country-level sanctions regime';
+    }
+    if (layer === 'elections') return electionSummary(hover.iso) ?? 'No election on record';
+    if (layer === 'nuclear') return nuclearSummary(hover.iso) ?? 'No nuclear role recorded';
     if (mode === 'conflicts') {
       const list = conflictsForCountry(hover.iso).sort((a, b) => INTENSITY_ORDER[b.intensity] - INTENSITY_ORDER[a.intensity]);
       return list.length ? list.map((c) => c.name).join(' · ') : null;
@@ -339,19 +359,7 @@ export default function App() {
         {mode === 'conflicts' && <Timeline months={TIMELINE_MONTHS} value={month} onChange={(m) => update({ month: m })} />}
 
         <div className="map-controls">
-          <button
-            className="icon-btn"
-            aria-label="Displacement layer"
-            aria-pressed={layer === 'displacement'}
-            title="Toggle UNHCR displacement layer"
-            data-active={layer === 'displacement'}
-            onClick={() => update({ layer: layer === 'displacement' ? null : 'displacement' })}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-              <path d="m12 3 9 5-9 5-9-5 9-5Z" />
-              <path d="m3 13 9 5 9-5" />
-            </svg>
-          </button>
+          <LayerMenu options={LAYER_OPTIONS} value={layer} onChange={(l) => update({ layer: l })} />
           <button className="icon-btn" aria-label="Zoom in" onClick={() => zoomApi.current?.zoomIn()}>
             +
           </button>

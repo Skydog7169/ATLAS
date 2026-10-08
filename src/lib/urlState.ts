@@ -23,7 +23,8 @@ export interface AppState {
   layer: Layer;
 }
 
-export type Layer = 'displacement' | null;
+export const LAYERS = ['displacement', 'sanctions', 'elections', 'nuclear'] as const;
+export type Layer = (typeof LAYERS)[number] | null;
 
 export const DEFAULT_STATE: AppState = { mode: 'blocs', bloc: null, vs: null, selection: null, month: null, layer: null };
 
@@ -58,7 +59,8 @@ export function parse(hash: string, isValid: { bloc: (id: string) => boolean; co
 
   const t = p.get('t');
   const month = t && MONTH.test(t) ? t : null;
-  const layer: Layer = p.get('layer') === 'displacement' ? 'displacement' : null;
+  const layerParam = p.get('layer');
+  const layer: Layer = (LAYERS as readonly string[]).includes(layerParam ?? '') ? (layerParam as Layer) : null;
 
   let selection: Selection = null;
   const country = p.get('country');

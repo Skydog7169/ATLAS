@@ -1,0 +1,603 @@
+{
+ "sources": [
+  {
+   "name": "OFAC sanctions programmes",
+   "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information"
+  },
+  {
+   "name": "EU Sanctions Map",
+   "url": "https://www.sanctionsmap.eu/"
+  },
+  {
+   "name": "UN Security Council sanctions",
+   "url": "https://main.un.org/securitycouncil/en/sanctions/information"
+  }
+ ],
+ "fetchedAt": "2026-10-08",
+ "unmapped": [],
+ "unReview": [
+  "SYR"
+ ],
+ "rows": [
+  {
+   "iso": "AFG",
+   "regimes": [
+    {
+     "authority": "UN",
+     "name": "Taliban (res. 1988)",
+     "url": "https://main.un.org/securitycouncil/en/sanctions/1988"
+    },
+    {
+     "authority": "US",
+     "name": "Afghanistan-Related Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/afghanistan-related-sanctions"
+    }
+   ]
+  },
+  {
+   "iso": "ALB",
+   "regimes": [
+    {
+     "authority": "US",
+     "name": "Balkans-Related Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/balkans-related-sanctions"
+    }
+   ]
+  },
+  {
+   "iso": "BDI",
+   "regimes": [
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of the situation in Burundi",
+     "url": "https://www.sanctionsmap.eu/#/main/details/7/"
+    }
+   ]
+  },
+  {
+   "iso": "BIH",
+   "regimes": [
+    {
+     "authority": "US",
+     "name": "Balkans-Related Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/balkans-related-sanctions"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of the situation in Bosnia and Herzegovina",
+     "url": "https://www.sanctionsmap.eu/#/main/details/4/"
+    }
+   ]
+  },
+  {
+   "iso": "BLR",
+   "regimes": [
+    {
+     "authority": "US",
+     "name": "Belarus Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/belarus-sanctions"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of the situation in Belarus and the involvement of Belarus in the Russian aggression against Ukraine",
+     "url": "https://www.sanctionsmap.eu/#/main/details/2/"
+    }
+   ]
+  },
+  {
+   "iso": "CAF",
+   "regimes": [
+    {
+     "authority": "UN",
+     "name": "Central African Republic (res. 2127)",
+     "url": "https://main.un.org/securitycouncil/en/sanctions/2127"
+    },
+    {
+     "authority": "US",
+     "name": "Central African Republic Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/central-african-republic-sanctions"
+    }
+   ]
+  },
+  {
+   "iso": "CHN",
+   "regimes": [
+    {
+     "authority": "US",
+     "name": "Chinese Military Companies Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/chinese-military-companies-sanctions"
+    },
+    {
+     "authority": "EU",
+     "name": "Specific restrictive measures in relation to the events at the Tiananmen Square protests of 1989",
+     "url": "https://www.sanctionsmap.eu/#/main/details/10/"
+    }
+   ]
+  },
+  {
+   "iso": "COD",
+   "regimes": [
+    {
+     "authority": "UN",
+     "name": "Democratic Republic of the Congo (res. 1533)",
+     "url": "https://main.un.org/securitycouncil/en/sanctions/1533"
+    },
+    {
+     "authority": "US",
+     "name": "Democratic Republic of the Congo-Related Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/democratic-republic-of-the-congo-related-sanctions"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of the situation in the Democratic Republic of the Congo",
+     "url": "https://www.sanctionsmap.eu/#/main/details/11/"
+    }
+   ]
+  },
+  {
+   "iso": "CUB",
+   "regimes": [
+    {
+     "authority": "US",
+     "name": "Cuba Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/cuba-sanctions"
+    }
+   ]
+  },
+  {
+   "iso": "GIN",
+   "regimes": [
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of the situation in Guinea",
+     "url": "https://www.sanctionsmap.eu/#/main/details/14/"
+    }
+   ]
+  },
+  {
+   "iso": "GNB",
+   "regimes": [
+    {
+     "authority": "UN",
+     "name": "Guinea-Bissau (res. 2048)",
+     "url": "https://main.un.org/securitycouncil/en/sanctions/2048"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of the situation in Guinea-Bissau",
+     "url": "https://www.sanctionsmap.eu/#/main/details/15/"
+    }
+   ]
+  },
+  {
+   "iso": "GTM",
+   "regimes": [
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of the situation in Guatemala",
+     "url": "https://www.sanctionsmap.eu/#/main/details/59/"
+    }
+   ]
+  },
+  {
+   "iso": "HKG",
+   "regimes": [
+    {
+     "authority": "US",
+     "name": "Hong Kong-Related Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/hong-kong-related-sanctions"
+    }
+   ]
+  },
+  {
+   "iso": "HTI",
+   "regimes": [
+    {
+     "authority": "UN",
+     "name": "Haiti (res. 2653)",
+     "url": "https://main.un.org/securitycouncil/en/sanctions/2653"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of the situation in Haiti",
+     "url": "https://www.sanctionsmap.eu/#/main/details/54/"
+    }
+   ]
+  },
+  {
+   "iso": "IRN",
+   "regimes": [
+    {
+     "authority": "UN",
+     "name": "Iran (res. 1737, restored by snapback in September 2025)",
+     "url": "https://main.un.org/securitycouncil/en/sanctions/1737"
+    },
+    {
+     "authority": "US",
+     "name": "Iran Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/iran-sanctions"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in relation to serious human rights violations in Iran",
+     "url": "https://www.sanctionsmap.eu/#/main/details/17/"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in relation to the non-proliferation of weapons of mass destruction",
+     "url": "https://www.sanctionsmap.eu/#/main/details/18/"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of Iran’s military support to Russia’s war of aggression against Ukraine and to armed groups and entities in the Middle East and the Red Sea region",
+     "url": "https://www.sanctionsmap.eu/#/main/details/56/"
+    }
+   ]
+  },
+  {
+   "iso": "IRQ",
+   "regimes": [
+    {
+     "authority": "UN",
+     "name": "Iraq (res. 1518)",
+     "url": "https://main.un.org/securitycouncil/en/sanctions/1518"
+    },
+    {
+     "authority": "US",
+     "name": "Iraq-Related Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/iraq-related-sanctions"
+    }
+   ]
+  },
+  {
+   "iso": "LBN",
+   "regimes": [
+    {
+     "authority": "UN",
+     "name": "Lebanon (res. 1636)",
+     "url": "https://main.un.org/securitycouncil/en/sanctions/1636"
+    },
+    {
+     "authority": "US",
+     "name": "Lebanon-Related Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/lebanon-related-sanctions"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of the situation in Lebanon",
+     "url": "https://www.sanctionsmap.eu/#/main/details/51/"
+    }
+   ]
+  },
+  {
+   "iso": "LBY",
+   "regimes": [
+    {
+     "authority": "UN",
+     "name": "Libya (res. 1970)",
+     "url": "https://main.un.org/securitycouncil/en/sanctions/1970"
+    },
+    {
+     "authority": "US",
+     "name": "Libya Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/libya-sanctions"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of the situation in Libya",
+     "url": "https://www.sanctionsmap.eu/#/main/details/23/"
+    }
+   ]
+  },
+  {
+   "iso": "MDA",
+   "regimes": [
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in relation to the campaign against Latinscript schools in the Transnistrian region",
+     "url": "https://www.sanctionsmap.eu/#/main/details/25/"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of actions destabilising the Republic of Moldova",
+     "url": "https://www.sanctionsmap.eu/#/main/details/55/"
+    }
+   ]
+  },
+  {
+   "iso": "MKD",
+   "regimes": [
+    {
+     "authority": "US",
+     "name": "Balkans-Related Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/balkans-related-sanctions"
+    }
+   ]
+  },
+  {
+   "iso": "MLI",
+   "regimes": [
+    {
+     "authority": "US",
+     "name": "Mali-Related Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/mali-related-sanctions"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of the situation in Mali",
+     "url": "https://www.sanctionsmap.eu/#/main/details/42/"
+    }
+   ]
+  },
+  {
+   "iso": "MMR",
+   "regimes": [
+    {
+     "authority": "US",
+     "name": "Burma-Related Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/burma"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of the situation in Myanmar/Burma",
+     "url": "https://www.sanctionsmap.eu/#/main/details/8/"
+    }
+   ]
+  },
+  {
+   "iso": "MNE",
+   "regimes": [
+    {
+     "authority": "US",
+     "name": "Balkans-Related Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/balkans-related-sanctions"
+    }
+   ]
+  },
+  {
+   "iso": "NER",
+   "regimes": [
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of the situation in Niger",
+     "url": "https://www.sanctionsmap.eu/#/main/details/58/"
+    }
+   ]
+  },
+  {
+   "iso": "NIC",
+   "regimes": [
+    {
+     "authority": "US",
+     "name": "Nicaragua-related Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/nicaragua-related-sanctions"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of the situation in Nicaragua",
+     "url": "https://www.sanctionsmap.eu/#/main/details/48/"
+    }
+   ]
+  },
+  {
+   "iso": "PRK",
+   "regimes": [
+    {
+     "authority": "UN",
+     "name": "DPRK (res. 1718)",
+     "url": "https://main.un.org/securitycouncil/en/sanctions/1718"
+    },
+    {
+     "authority": "US",
+     "name": "North Korea Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/north-korea-sanctions"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in relation to the non-proliferation of the weapons of mass destruction",
+     "url": "https://www.sanctionsmap.eu/#/main/details/20/"
+    }
+   ]
+  },
+  {
+   "iso": "RUS",
+   "regimes": [
+    {
+     "authority": "US",
+     "name": "Russia-related Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/russia-related-sanctions"
+    },
+    {
+     "authority": "US",
+     "name": "Russian Harmful Foreign Activities Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/russian-harmful-foreign-activities-sanctions"
+    },
+    {
+     "authority": "US",
+     "name": "Ukraine-/Russia-related Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/ukraine-russia-related-sanctions"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of Russia's actions destabilising the situation in Ukraine (sectoral restrictive measures)",
+     "url": "https://www.sanctionsmap.eu/#/main/details/26/"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of Russia's destabilising activities",
+     "url": "https://www.sanctionsmap.eu/#/main/details/63/"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of the situation in Russia",
+     "url": "https://www.sanctionsmap.eu/#/main/details/61/"
+    }
+   ]
+  },
+  {
+   "iso": "SDN",
+   "regimes": [
+    {
+     "authority": "UN",
+     "name": "Sudan (res. 1591)",
+     "url": "https://main.un.org/securitycouncil/en/sanctions/1591"
+    },
+    {
+     "authority": "US",
+     "name": "Sudan and Darfur Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/sudan-and-darfur-sanctions"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of activities undermining the stability and the political transition of Sudan",
+     "url": "https://www.sanctionsmap.eu/#/main/details/57/"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of the situation in Sudan",
+     "url": "https://www.sanctionsmap.eu/#/main/details/31/"
+    }
+   ]
+  },
+  {
+   "iso": "SOM",
+   "regimes": [
+    {
+     "authority": "UN",
+     "name": "Somalia (res. 751)",
+     "url": "https://main.un.org/securitycouncil/en/sanctions/751"
+    },
+    {
+     "authority": "US",
+     "name": "Somalia Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/somalia-sanctions"
+    }
+   ]
+  },
+  {
+   "iso": "SRB",
+   "regimes": [
+    {
+     "authority": "US",
+     "name": "Balkans-Related Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/balkans-related-sanctions"
+    }
+   ]
+  },
+  {
+   "iso": "SSD",
+   "regimes": [
+    {
+     "authority": "UN",
+     "name": "South Sudan (res. 2206)",
+     "url": "https://main.un.org/securitycouncil/en/sanctions/2206"
+    },
+    {
+     "authority": "US",
+     "name": "South Sudan-Related Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/south-sudan-related-sanctions"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of the situation in South Sudan",
+     "url": "https://www.sanctionsmap.eu/#/main/details/30/"
+    }
+   ]
+  },
+  {
+   "iso": "SYR",
+   "regimes": [
+    {
+     "authority": "US",
+     "name": "Promoting Accountability for Assad and Regional Stabilization Sanctions (PAARSS)",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/paarss"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures against Syria",
+     "url": "https://www.sanctionsmap.eu/#/main/details/32/"
+    }
+   ]
+  },
+  {
+   "iso": "TUR",
+   "regimes": [
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of Türkiye’s  unauthorised drilling activities in the Eastern Mediterranean",
+     "url": "https://www.sanctionsmap.eu/#/main/details/49/"
+    }
+   ]
+  },
+  {
+   "iso": "UKR",
+   "regimes": [
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in respect of actions undermining or threatening the territorial integrity, sovereignty and independence of Ukraine",
+     "url": "https://www.sanctionsmap.eu/#/main/details/36/"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in response to the illegal annexation of Crimea and Sevastopol",
+     "url": "https://www.sanctionsmap.eu/#/main/details/37/"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in response to the illegal recognition, occupation or annexation by the Russian Federation of certain non-government controlled areas of Ukraine",
+     "url": "https://www.sanctionsmap.eu/#/main/details/52/"
+    }
+   ]
+  },
+  {
+   "iso": "UNK",
+   "regimes": [
+    {
+     "authority": "US",
+     "name": "Balkans-Related Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/balkans-related-sanctions"
+    }
+   ]
+  },
+  {
+   "iso": "VEN",
+   "regimes": [
+    {
+     "authority": "US",
+     "name": "Venezuela-related Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/venezuela-related-sanctions"
+    },
+    {
+     "authority": "EU",
+     "name": "Restrictive measures in view of the situation in Venezuela",
+     "url": "https://www.sanctionsmap.eu/#/main/details/44/"
+    }
+   ]
+  },
+  {
+   "iso": "YEM",
+   "regimes": [
+    {
+     "authority": "UN",
+     "name": "Yemen (res. 2140)",
+     "url": "https://main.un.org/securitycouncil/en/sanctions/2140"
+    },
+    {
+     "authority": "US",
+     "name": "Yemen-related Sanctions",
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/yemen-related-sanctions"
+    }
+   ]
+  },
+  {
+   "iso": "ZWE",
+   "regimes": [
+    {
+     "authority": "EU",
+     "name": "Restrictive measures concerning an arms embargo in view of the situation in Zimbabwe",
+     "url": "https://www.sanctionsmap.eu/#/main/details/40/"
+    }
+   ]
+  }
+ ]
+}

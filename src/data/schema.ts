@@ -104,3 +104,75 @@ export const NewConflictsOutputSchema = z.object({
     }),
   ),
 });
+
+// ---------------------------------------------------------------------------
+// Batch 2 datasets: sanctions (generated), elections (research-maintained), nuclear (curated).
+
+export const SanctionsAuthoritySchema = z.enum(['UN', 'US', 'EU']);
+
+export const SanctionsRegimeSchema = z.object({
+  authority: SanctionsAuthoritySchema,
+  name: z.string().min(3),
+  url: z.string().url().startsWith('https://'),
+});
+
+export const SanctionsFileSchema = z.object({
+  sources: z.array(SourceSchema).min(1),
+  fetchedAt: z.string().regex(ISO_DATE),
+  /** OFAC programme slugs the build script could not map to a country; for a human to review. */
+  unmapped: z.array(z.string()),
+  /** Countries the EU map flags as under UN measures that the curated UN list lacks. */
+  unReview: z.array(z.string().regex(ISO3)),
+  rows: z.array(z.object({ iso: z.string().regex(ISO3), regimes: z.array(SanctionsRegimeSchema).min(1) })),
+});
+
+/** YYYY, YYYY-MM or YYYY-MM-DD: elections are often known only to the month or year. */
+export const PARTIAL_DATE = /^\d{4}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\d|3[01]))?)?$/;
+
+export const ElectionTypeSchema = z.enum(['general', 'legislative', 'presidential']);
+
+export const ElectionSchema = z.object({
+  iso: z.string().regex(ISO3),
+  /** Next national election, or null when none is scheduled (suspended, postponed indefinitely). */
+  date: z.string().regex(PARTIAL_DATE).nullable(),
+  type: ElectionTypeSchema,
+  /** True when `date` is the constitutional deadline rather than a fixed date. */
+  deadline: z.boolean().optional(),
+  note: z.string().max(200).optional(),
+  sources: z.array(SourceSchema).min(1).max(4),
+  /** Date the entry was last checked, YYYY-MM-DD. */
+  verified: z.string().regex(ISO_DATE),
+});
+
+export const ElectionsFileSchema = z.object({
+  source: SourceSchema,
+  rows: z.array(ElectionSchema),
+});
+
+export const NuclearStatusSchema = z.enum(['armed', 'threshold', 'hosting', 'umbrella']);
+
+export const NuclearFileSchema = z.object({
+  verified: z.string().regex(ISO_DATE),
+  sources: z.array(SourceSchema).min(1),
+  statuses: z.array(
+    z.object({
+      iso: z.string().regex(ISO3),
+      status: NuclearStatusSchema,
+      note: z.string().min(10).max(400),
+      sources: z.array(SourceSchema).min(1),
+    }),
+  ),
+  /** Every full member of this bloc without its own status is under its nuclear umbrella. */
+  umbrellaBloc: z.string().regex(/^[a-z0-9-]+$/),
+  tests: z.array(z.object({ iso: z.string().regex(ISO3), date: z.string().regex(ISO_DATE), note: z.string().min(3), source: SourceSchema })),
+});
+
+/** What the research model returns when asked for a country's next national election. */
+export const ElectionOutputSchema = z.object({
+  known: z.boolean().describe('false if no date has been set or announced'),
+  date: z.string().describe('YYYY-MM-DD, or YYYY-MM when only the month is known, or YYYY; empty string if unknown'),
+  deadline: z.boolean().describe('true if the date is a legal deadline rather than a scheduled date'),
+  type: ElectionTypeSchema,
+  note: z.string().describe('one short line of context, e.g. "Second round", "Postponed from May 2026"; empty if none'),
+  source: z.object({ name: z.string(), url: z.string() }).describe('the page in the search results that states the date'),
+});

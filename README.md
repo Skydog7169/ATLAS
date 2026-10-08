@@ -13,6 +13,7 @@ An interactive geopolitics map. Two views of the same world:
 - **Watchlist** — star any country, bloc or conflict from its panel. Stars live in this browser's localStorage only (every read and write is guarded, so a blocked store just means an empty list), and the ticker and the changes feed can be filtered to what you follow.
 
 - **Alerts** — a strip under the header lists what changed since you last pressed "Mark read" (the date lives in this browser only). RSS and JSON feeds at `/feed.xml` and `/feed.json` are generated on every build. An email digest goes out after each merged weekly refresh.
+- **Data layers** — the layers button offers four overlays on either mode: displacement, **sanctions** (countries tinted by how many UN, US and EU country-level regimes target them, with each regime linked from the dossier), **elections** (months to the next national election) and **nuclear status** (armed, threshold, hosting allied weapons, under an umbrella). Each legend names its source and fetch date.
 
 Search any country, bloc or conflict. Every view is a shareable link.
 
@@ -42,11 +43,12 @@ Vendor code is split into `react`, `d3` and `geo` chunks, and the map component 
 
 ```
 src/
-  data/        conflicts.json, blocs.json, schema.ts, guards.ts, types.ts, countries.generated.json, geo/
+  data/        conflicts.json, blocs.json, elections.json, nuclear.json, schema.ts, guards.ts, types.ts, *.generated.json, geo/
   lib/         countries, geo, search, labels, url state, feed, dossier, watchlist
   components/  WorldMap, Search, DetailPanel, Legend, BlocChips, Ticker, StarButton, ErrorBoundary, ThemeToggle
   hooks/       useAppState (hash-synced), useWatchlist (localStorage-backed store)
 scripts/       build-countries.mjs, build-feeds.mjs, send-digest.mjs, research/update.mjs (weekly Claude research pass)
+scripts/       build-countries.mjs, build-displacement.mjs, build-worldbank.mjs, build-sanctions.mjs, build-elections.mjs, research/update.mjs (weekly Claude research pass)
 ```
 
 ## Data and its limits
@@ -68,7 +70,7 @@ Every Monday the **Weekly data refresh** workflow runs `scripts/research/update.
 - every cited URL appeared in that run's search results or lives on a trusted tracker or wire-service host (invented links are dropped, and an update with no surviving source is rejected);
 - intensity moves at most one step per pass; larger jumps are clamped and flagged.
 
-The same run refreshes `src/data/displacement.generated.json` from the UNHCR API (`pnpm run data:displacement`) and `src/data/worldbank.generated.json` from the World Bank API (`pnpm run data:worldbank`); if UNHCR is unreachable the committed file stands, so the site never depends on it at runtime. It also reviews bloc memberships against the same rules and lists possible new conflicts for a human to consider, without adding them. The run opens a pull request whose body is the research report, so changes are reviewed before they reach the site. Conflicts checked without change get a `lastChecked` date, which the panel shows.
+The same run refreshes `src/data/displacement.generated.json` from the UNHCR API (`pnpm run data:displacement`), `src/data/worldbank.generated.json` from the World Bank API (`pnpm run data:worldbank`) and `src/data/sanctions.generated.json` from OFAC's programme index and the EU Sanctions Map API (`pnpm run data:sanctions`; UN Security Council regimes are a curated table in the script, cross-checked against the EU map's "adopted by UN" flag). If a source is unreachable the committed file stands, so the site never depends on it at runtime. The pass also keeps `src/data/elections.json` current: each week it re-checks up to twelve entries (those past, unset or due within 60 days first, then the longest-unverified) with web search under the same citation rule, and `pnpm run data:elections` bootstraps any country still missing a row from Wikipedia's list of next general elections. `src/data/nuclear.json` is curated by hand with a source per entry and a verification date. It also reviews bloc memberships against the same rules and lists possible new conflicts for a human to consider, without adding them. The run opens a pull request whose body is the research report, so changes are reviewed before they reach the site. Conflicts checked without change get a `lastChecked` date, which the panel shows.
 
 ### Feeds and the email digest
 

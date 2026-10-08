@@ -8,6 +8,9 @@ import { CATEGORY_LABEL, CHANGE_LABEL, CONFLICT_TYPE_LABEL, INTENSITY_COLOR, INT
 import type { Selection } from '../lib/urlState';
 import { WORLD, WORLDBANK, blocFigures, formatCount, formatUsd, share, type Figures } from '../lib/worldbank';
 import { DISPLACEMENT, formatPeople } from '../lib/displacement';
+import { SANCTIONS } from '../lib/sanctions';
+import { ELECTIONS_VERIFIED } from '../lib/elections';
+import { NUCLEAR } from '../lib/nuclear';
 import { TRUSTED_HOSTS } from '../data/guards';
 import { CHANGES, watchlistOnly } from '../lib/feed';
 import { countryDossier, profileLine, type CountryDossier } from '../lib/dossier';
@@ -171,19 +174,25 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
           <div key={x.id}>
             <h4 id={`dossier-${x.id}`}>{x.title}</h4>
             {x.rows.length === 0 ? (
-              <Muted>None recorded.</Muted>
+              <Muted>{x.empty ?? 'None recorded.'}</Muted>
             ) : (
               <ul className="link-list">
                 {x.rows.map((r, i) => (
                   <li key={r.label + i}>
                     {r.href ? (
-                      <a href={r.href} target="_blank" rel="noopener noreferrer">
-                        {r.label}
-                        <span className="meta">{r.value} ↗</span>
+                      <a href={r.href} target="_blank" rel="noopener noreferrer" title={r.note}>
+                        <span>
+                          {r.label}
+                          {r.note && <span className="row-note">{r.note}</span>}
+                        </span>
+                        <span className="meta">{r.value ? `${r.value} ↗` : '↗'}</span>
                       </a>
                     ) : (
                       <span className="row">
-                        {r.label}
+                        <span>
+                          {r.label}
+                          {r.note && <span className="row-note">{r.note}</span>}
+                        </span>
                         <span className="meta">{r.value}</span>
                       </span>
                     )}
@@ -662,6 +671,18 @@ function AboutView({ props }: { props: Props }) {
             <span className="when">{formatDate(WORLDBANK.fetchedAt)}</span>
             <span>World Bank population, GDP and military spending (latest year per country)</span>
           </li>
+          <li>
+            <span className="when">{formatDate(SANCTIONS.fetchedAt)}</span>
+            <span>Sanctions regimes from OFAC, the EU Sanctions Map and the UN Security Council</span>
+          </li>
+          <li>
+            <span className="when">{formatDate(ELECTIONS_VERIFIED)}</span>
+            <span>Next national elections (newest verification)</span>
+          </li>
+          <li>
+            <span className="when">{formatDate(NUCLEAR.verified)}</span>
+            <span>Nuclear status, curated</span>
+          </li>
         </ul>
         <h4>How assessments are made</h4>
         <p>
@@ -669,7 +690,7 @@ function AboutView({ props }: { props: Props }) {
         </p>
         <h4>Sources</h4>
         <p>
-          Conflict trackers: CFR Global Conflict Tracker, ACLED, Crisis Group CrisisWatch, ISW. Memberships: the organisations' own sites. Displacement: UNHCR Refugee Data Finder, by country of origin. Figures: World Bank Open Data. Geometry: Natural Earth via world-atlas. Trusted hosts for automated citations: {TRUSTED_HOSTS.join(', ')}.
+          Conflict trackers: CFR Global Conflict Tracker, ACLED, Crisis Group CrisisWatch, ISW. Memberships: the organisations' own sites. Displacement: UNHCR Refugee Data Finder, by country of origin. Figures: World Bank Open Data. Sanctions: OFAC's programme index, the EU Sanctions Map and UN Security Council committees (country-level regimes only). Elections: seeded from Wikipedia's list of next general elections and IFES ElectionGuide, then re-checked weekly by the research pass. Nuclear status: SIPRI, the Arms Control Association and NATO, curated by hand. Geometry: Natural Earth via world-atlas. Trusted hosts for automated citations: {TRUSTED_HOSTS.join(', ')}.
         </p>
         <h4>Caveats</h4>
         <ul style={{ margin: 0, paddingLeft: 18 }}>
