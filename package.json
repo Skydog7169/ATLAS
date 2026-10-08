@@ -22,6 +22,7 @@
     "data:sanctions": "node scripts/build-sanctions.mjs",
     "data:elections": "node scripts/build-elections.mjs",
     "data:acled": "node scripts/build-acled.mjs",
+    "data:trade": "node scripts/build-trade.mjs",
     "test:e2e": "playwright test"
   },
   "dependencies": {

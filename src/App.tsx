@@ -10,6 +10,9 @@ import { sanctionsColor, sanctionsSummary } from './lib/sanctions';
 import { electionColor, electionSummary } from './lib/elections';
 import { nuclearColor, nuclearSummary } from './lib/nuclear';
 import { ACLED, acledColor, acledSummary } from './lib/acled';
+import { militaryColor, militarySummary } from './lib/military';
+import { tradeColor, tradeSummary } from './lib/trade';
+import { CHOKEPOINTS, CHOKEPOINT_BY_ID, CHOKEPOINT_COLOR, CHOKEPOINT_MARKER_PREFIX, CHOKEPOINT_STATUS_LABEL, currentStatus } from './lib/chokepoints';
 import LayerMenu, { type LayerOption } from './components/LayerMenu';
 import { INTENSITY_COLOR, INTENSITY_RADIUS } from './lib/labels';
 import BlocChips from './components/BlocChips';
@@ -36,6 +39,9 @@ const LAYER_OPTIONS: LayerOption[] = [
   { id: 'sanctions', label: 'Sanctions', hint: 'UN, US and EU regimes targeting the country' },
   { id: 'elections', label: 'Elections', hint: 'Months to the next national election' },
   { id: 'nuclear', label: 'Nuclear', hint: 'Armed, threshold, hosting and umbrella states' },
+  { id: 'military', label: 'Military presence', hint: 'Foreign bases, deployments and peace operations by host' },
+  { id: 'trade', label: 'Trade dependence', hint: 'Export share to the US, China or the EU (WITS)' },
+  { id: 'chokepoints', label: 'Chokepoints', hint: 'Eight maritime passages with dated status' },
   // The ACLED slot only appears when the weekly build had credentials for the API.
   ...(ACLED.available ? [{ id: 'acled' as const, label: 'Violence events', hint: `ACLED political-violence events, last ${ACLED.days} days` }] : []),
 ];
@@ -111,6 +117,9 @@ export default function App() {
     else if (selection?.kind === 'conflict') {
       const c = CONFLICT_BY_ID.get(selection.id);
       if (c) setFocus({ kind: 'point', lonLat: c.location, scale: 3.5 });
+    } else if (selection?.kind === 'chokepoint') {
+      const cp = CHOKEPOINT_BY_ID.get(selection.id);
+      if (cp) setFocus({ kind: 'point', lonLat: cp.location, scale: 3 });
     }
   }, [selection]);
 
@@ -139,6 +148,8 @@ export default function App() {
       if (layer === 'elections') return { fill: electionColor(iso) };
       if (layer === 'nuclear') return { fill: nuclearColor(iso) };
       if (layer === 'acled') return { fill: acledColor(iso) };
+      if (layer === 'military') return { fill: militaryColor(iso) };
+      if (layer === 'trade') return { fill: tradeColor(iso) };
       if (mode === 'conflicts') {
         const intensity = maxIntensityByCountry.get(iso);
         if (!intensity) return { fill: 'var(--land)' };
@@ -167,21 +178,23 @@ export default function App() {
   );
 
   const markers = useMemo<MapMarker[]>(() => {
-    if (mode !== 'conflicts') return [];
-    return [...visible]
-      .sort((a, b) => INTENSITY_ORDER[a.intensity] - INTENSITY_ORDER[b.intensity])
-      .map(({ conflict: c, intensity }) => ({
-        id: c.id,
-        lonLat: c.location,
-        color: INTENSITY_COLOR[intensity],
-        radius: INTENSITY_RADIUS[intensity],
-        label: c.name,
-        pulse: intensity === 'high' && viewMonth === null,
-      }));
-  }, [mode, visible, viewMonth]);
+    const out: MapMarker[] = [];
+    if (mode === 'conflicts') {
+      for (const { conflict: c, intensity } of [...visible].sort((a, b) => INTENSITY_ORDER[a.intensity] - INTENSITY_ORDER[b.intensity])) {
+        out.push({ id: c.id, lonLat: c.location, color: INTENSITY_COLOR[intensity], radius: INTENSITY_RADIUS[intensity], label: c.name, pulse: intensity === 'high' && viewMonth === null });
+      }
+    }
+    if (layer === 'chokepoints') {
+      for (const cp of CHOKEPOINTS) {
+        const st = currentStatus(cp).status;
+        out.push({ id: CHOKEPOINT_MARKER_PREFIX + cp.id, lonLat: cp.location, color: CHOKEPOINT_COLOR[st], radius: 7, label: `${cp.name}: ${CHOKEPOINT_STATUS_LABEL[st]}`, shape: 'diamond' });
+      }
+    }
+    return out;
+  }, [mode, visible, viewMonth, layer]);
 
   const selectedIso = selection?.kind === 'country' ? selection.iso : null;
-  const selectedMarkerId = selection?.kind === 'conflict' ? selection.id : null;
+  const selectedMarkerId = selection?.kind === 'conflict' ? selection.id : selection?.kind === 'chokepoint' ? CHOKEPOINT_MARKER_PREFIX + selection.id : null;
 
   const selectCountry = useCallback(
     (iso: string) => {
@@ -198,6 +211,20 @@ export default function App() {
       if (c) setFocus({ kind: 'point', lonLat: c.location, scale: 3.5 });
     },
     [update],
+  );
+
+  const selectChokepoint = useCallback(
+    (id: string) => {
+      const cp = CHOKEPOINT_BY_ID.get(id);
+      update({ layer: 'chokepoints', selection: { kind: 'chokepoint', id } });
+      if (cp) setFocus({ kind: 'point', lonLat: cp.location, scale: 3 });
+    },
+    [update],
+  );
+
+  const onMarkerClick = useCallback(
+    (id: string) => (id.startsWith(CHOKEPOINT_MARKER_PREFIX) ? selectChokepoint(id.slice(CHOKEPOINT_MARKER_PREFIX.length)) : selectConflict(id)),
+    [selectChokepoint, selectConflict],
   );
 
   const selectBloc = useCallback(
@@ -239,6 +266,8 @@ export default function App() {
     if (layer === 'elections') return electionSummary(hover.iso) ?? 'No election on record';
     if (layer === 'nuclear') return nuclearSummary(hover.iso) ?? 'No nuclear role recorded';
     if (layer === 'acled') return acledSummary(hover.iso) ?? 'No ACLED events in the window';
+    if (layer === 'military') return militarySummary(hover.iso) ?? 'No foreign military presence recorded';
+    if (layer === 'trade') return tradeSummary(hover.iso) ?? 'No WITS export data';
     if (mode === 'conflicts') {
       const list = conflictsForCountry(hover.iso).sort((a, b) => INTENSITY_ORDER[b.intensity] - INTENSITY_ORDER[a.intensity]);
       return list.length ? list.map((c) => c.name).join(' · ') : null;
@@ -334,7 +363,7 @@ export default function App() {
               focus={focus}
               insetRight={insetRight}
               onCountryClick={selectCountry}
-              onMarkerClick={selectConflict}
+              onMarkerClick={onMarkerClick}
               onHover={onHover}
               zoomApiRef={zoomApi}
             />
@@ -401,6 +430,7 @@ export default function App() {
                 setFocus({ kind: 'reset' });
               }}
               onOpenChanges={() => update({ selection: { kind: 'changes' } })}
+              onSelectChokepoint={selectChokepoint}
             />
           </ErrorBoundary>
         )}

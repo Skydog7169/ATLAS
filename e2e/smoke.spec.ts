@@ -264,6 +264,31 @@ test('dossier lists sanctions regimes, the next election and nuclear status', as
   await expect(panel.locator('#dossier-nuclear')).toHaveCount(0);
 });
 
+test('power and trade layers: chokepoint diamonds open a panel, military and trade tints have legends', async ({ page }) => {
+  await open(page, '#layer=chokepoints');
+  await expect(page.locator('.legend')).toContainText('Maritime chokepoints');
+  await expect(page.locator('g.marker[data-shape="diamond"]')).toHaveCount(8);
+  await page.locator('g.marker[aria-label^="Strait of Hormuz"]').click({ force: true });
+  await expect(page).toHaveURL(/chokepoint=hormuz/);
+  const panel = page.locator('.panel');
+  await expect(panel.locator('h2')).toContainText('Strait of Hormuz');
+  await expect(panel.locator('#chokepoint-status + ol li')).not.toHaveCount(0);
+  await panel.locator('#chokepoint-conflicts + ul button').first().click();
+  await expect(page).toHaveURL(/conflict=/);
+
+  await open(page, '#layer=military');
+  await expect(page.locator('.legend')).toContainText('Foreign military presence');
+  await expect(page.locator('path.country[data-iso="DJI"]')).toHaveAttribute('fill', '#9fc0ff');
+  await expect(page.locator('path.country[data-iso="BRA"]')).toHaveAttribute('fill', 'var(--land)');
+
+  await open(page, '#layer=trade&country=MEX');
+  await expect(page.locator('.legend')).toContainText('Export dependence');
+  await expect(page.locator('path.country[data-iso="MEX"]')).toHaveAttribute('fill', /#4f8cff/);
+  await expect(panel.locator('#dossier-trade + ul')).toContainText('United States');
+  await open(page, '#country=DJI');
+  await expect(panel.locator('#dossier-military')).toContainText(/Military presence · [1-9]/);
+});
+
 test('conflict panel shows who backs whom and the peace process; dossier lists sponsorship abroad', async ({ page }) => {
   await open(page, '#mode=conflicts&conflict=drc-east');
   const panel = page.locator('.panel');

@@ -56,8 +56,14 @@ jobs:
       - name: Refresh sanctions regimes
         run: node scripts/build-sanctions.mjs
 
+      - name: Refresh WITS export shares
+        run: node scripts/build-trade.mjs
+
       - name: Fill any countries missing from the elections table
         run: node scripts/build-elections.mjs
+
+      - name: Refresh WITS export shares
+        run: node scripts/build-trade.mjs
 
       - name: Refresh ACLED event counts (skipped without credentials)
         env:
@@ -82,6 +88,7 @@ jobs:
             src/data/sanctions.generated.json
             src/data/elections.json
             src/data/acled.generated.json
+            src/data/trade.generated.json
           commit-message: 'Data refresh: automated weekly research pass'
           title: 'Data refresh ${{ github.run_started_at }}'
           body-path: research-report.md
