@@ -272,8 +272,9 @@ test('conflict panel shows who backs whom and the peace process; dossier lists s
   await expect(panel.locator('.actors .actor')).not.toHaveCount(0);
   await expect(panel.locator('#conflict-peace')).toContainText(/Peace process · [1-9]/);
   await expect(panel.locator('.peace li').first()).toContainText(/Roadmap|Talks|Agreement|Ceasefire|Setback|Mediation/);
-  // A clickable backer opens that country's dossier.
-  await panel.locator('.actors .backer.clickable').first().click();
+  // A backer (listed as a badge under the diagram) opens that country's dossier.
+  await expect(panel.locator('.actors .backer.clickable')).not.toHaveCount(0);
+  await panel.locator('#conflict-actors ~ .badges .badge').first().click();
   await expect(panel.locator('.eyebrow')).toContainText('Country dossier');
   await open(page, '#country=RWA');
   await expect(panel.locator('#dossier-sponsorship')).toContainText(/Backs parties abroad · [1-9]/);
