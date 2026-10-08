@@ -1,0 +1,40 @@
+name: Email digest
+
+# Sends a Resend email summarising the dataset changes after a merged weekly
+# refresh. Skips quietly when the RESEND_API_KEY secret or the
+# DIGEST_RECIPIENTS repository variable is missing.
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      since:
+        description: 'Include changes dated after this day (YYYY-MM-DD; blank = last 8 days)'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  digest:
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'data-refresh'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Send digest
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          DIGEST_RECIPIENTS: ${{ vars.DIGEST_RECIPIENTS }}
+          DIGEST_FROM: ${{ vars.DIGEST_FROM }}
+        run: |
+          ARGS=""
+          [ -n "${{ inputs.since }}" ] && ARGS="--since ${{ inputs.since }}"
+          node scripts/send-digest.mjs $ARGS
