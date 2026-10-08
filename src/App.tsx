@@ -14,6 +14,8 @@ import Legend from './components/Legend';
 import Search, { type SearchHit } from './components/Search';
 import ThemeToggle from './components/ThemeToggle';
 import Clock from './components/Clock';
+import Ticker from './components/Ticker';
+import { useWatchlist } from './hooks/useWatchlist';
 import { formatMonth } from './lib/labels';
 import type { CountryFill, Focus, MapMarker } from './components/WorldMap';
 
@@ -73,6 +75,7 @@ export default function App() {
   const zoomApi = useRef<{ zoomIn: () => void; zoomOut: () => void; reset: () => void } | null>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const [insetRight, setInsetRight] = useState(0);
+  const watchlist = useWatchlist();
 
   // On wide screens the detail panel floats over the right edge; tell the map
   // so fly-to animations centre targets in the uncovered area.
@@ -267,6 +270,18 @@ export default function App() {
         </button>
         <button
           className="icon-btn"
+          aria-label="Watchlist"
+          aria-pressed={selection?.kind === 'watchlist'}
+          title="Watchlist"
+          data-count={watchlist.items.length || undefined}
+          onClick={() => update({ selection: selection?.kind === 'watchlist' ? null : { kind: 'watchlist' } })}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill={watchlist.items.length ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden="true">
+            <path d="m12 3 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.4l-5.7 3.1 1.2-6.4L2.8 9.7l6.4-.8L12 3Z" />
+          </svg>
+        </button>
+        <button
+          className="icon-btn"
           aria-label="About ATLAS"
           aria-pressed={selection?.kind === 'about'}
           title="About"
@@ -346,6 +361,8 @@ export default function App() {
           </button>
         </div>
 
+        <Ticker onSelectConflict={selectConflict} onSelectBloc={selectBloc} />
+
         {hover && (
           <div className="tooltip" style={{ left: hover.x, top: hover.y }}>
             <div>{hover.label}</div>
@@ -368,6 +385,7 @@ export default function App() {
                 update({ mode: 'blocs', bloc: id });
                 setFocus({ kind: 'reset' });
               }}
+              onOpenChanges={() => update({ selection: { kind: 'changes' } })}
             />
           </ErrorBoundary>
         )}

@@ -7,6 +7,7 @@ export type Selection =
   | { kind: 'changes' }
   | { kind: 'compare' }
   | { kind: 'about' }
+  | { kind: 'watchlist' }
   | null;
 
 export interface AppState {
@@ -41,6 +42,7 @@ export function serialize(state: AppState): string {
     else if (state.selection.kind === 'changes') p.set('changes', '1');
     else if (state.selection.kind === 'compare') p.set('compare', '1');
     else if (state.selection.kind === 'about') p.set('about', '1');
+    else if (state.selection.kind === 'watchlist') p.set('watchlist', '1');
     else p.set(state.selection.kind, state.selection.id);
   }
   return '#' + p.toString();
@@ -63,6 +65,7 @@ export function parse(hash: string, isValid: { bloc: (id: string) => boolean; co
   const conflict = p.get('conflict');
   const selBloc = p.get('selbloc');
   if (p.get('about') === '1') selection = { kind: 'about' };
+  else if (p.get('watchlist') === '1') selection = { kind: 'watchlist' };
   else if (p.get('changes') === '1') selection = { kind: 'changes' };
   else if (vs && p.get('compare') === '1') selection = { kind: 'compare' };
   else if (country && isValid.country(country.toUpperCase())) selection = { kind: 'country', iso: country.toUpperCase() };
