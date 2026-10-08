@@ -7,6 +7,7 @@ import { formatDate } from '../lib/labels';
 import { SANCTIONS, SANCTIONS_COLORS, sanctionsBinLabel } from '../lib/sanctions';
 import { ELECTIONS, ELECTIONS_VERIFIED, ELECTION_COLORS, electionBinLabel } from '../lib/elections';
 import { NUCLEAR, NUCLEAR_COLOR, NUCLEAR_STATUSES, NUCLEAR_STATUS_LABEL, nuclearCount } from '../lib/nuclear';
+import { ACLED, ACLED_COLORS, acledBinLabel, acledNote } from '../lib/acled';
 
 interface Props {
   mode: Mode;
@@ -38,6 +39,28 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           </a>{' '}
           {DISPLACEMENT.year} figures, fetched {formatDate(DISPLACEMENT.fetchedAt)}.
           {mode === 'conflicts' ? ' Markers still show conflict intensity.' : ''}
+        </div>
+      </aside>
+    );
+  }
+  if (layer === 'acled') {
+    return (
+      <aside className="legend frame" aria-label="Legend">
+        <h3>Political violence</h3>
+        <ul>
+          {ACLED_COLORS.map((color, i) => (
+            <li key={i}>
+              <span className="swatch" style={{ background: color }} />
+              {acledBinLabel(i)}
+            </li>
+          ))}
+        </ul>
+        <div className="note">
+          {acledNote()}{' '}
+          <a href={ACLED.source.url} target="_blank" rel="noopener noreferrer">
+            ACLED
+          </a>
+          .
         </div>
       </aside>
     );

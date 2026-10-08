@@ -20,6 +20,7 @@
     "data:worldbank": "node scripts/build-worldbank.mjs",
     "data:sanctions": "node scripts/build-sanctions.mjs",
     "data:elections": "node scripts/build-elections.mjs",
+    "data:acled": "node scripts/build-acled.mjs",
     "test:e2e": "playwright test"
   },
   "dependencies": {

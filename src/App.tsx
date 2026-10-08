@@ -9,6 +9,7 @@ import { DISPLACEMENT_BY_ISO, displacementColor, formatPeople } from './lib/disp
 import { sanctionsColor, sanctionsSummary } from './lib/sanctions';
 import { electionColor, electionSummary } from './lib/elections';
 import { nuclearColor, nuclearSummary } from './lib/nuclear';
+import { ACLED, acledColor, acledSummary } from './lib/acled';
 import LayerMenu, { type LayerOption } from './components/LayerMenu';
 import { INTENSITY_COLOR, INTENSITY_RADIUS } from './lib/labels';
 import BlocChips from './components/BlocChips';
@@ -34,6 +35,8 @@ const LAYER_OPTIONS: LayerOption[] = [
   { id: 'sanctions', label: 'Sanctions', hint: 'UN, US and EU regimes targeting the country' },
   { id: 'elections', label: 'Elections', hint: 'Months to the next national election' },
   { id: 'nuclear', label: 'Nuclear', hint: 'Armed, threshold, hosting and umbrella states' },
+  // The ACLED slot only appears when the weekly build had credentials for the API.
+  ...(ACLED.available ? [{ id: 'acled' as const, label: 'Violence events', hint: `ACLED political-violence events, last ${ACLED.days} days` }] : []),
 ];
 
 /** Newest `updated` month across both datasets, shown in the header readouts. */
@@ -134,6 +137,7 @@ export default function App() {
       if (layer === 'sanctions') return { fill: sanctionsColor(iso) };
       if (layer === 'elections') return { fill: electionColor(iso) };
       if (layer === 'nuclear') return { fill: nuclearColor(iso) };
+      if (layer === 'acled') return { fill: acledColor(iso) };
       if (mode === 'conflicts') {
         const intensity = maxIntensityByCountry.get(iso);
         if (!intensity) return { fill: 'var(--land)' };
@@ -233,6 +237,7 @@ export default function App() {
     }
     if (layer === 'elections') return electionSummary(hover.iso) ?? 'No election on record';
     if (layer === 'nuclear') return nuclearSummary(hover.iso) ?? 'No nuclear role recorded';
+    if (layer === 'acled') return acledSummary(hover.iso) ?? 'No ACLED events in the window';
     if (mode === 'conflicts') {
       const list = conflictsForCountry(hover.iso).sort((a, b) => INTENSITY_ORDER[b.intensity] - INTENSITY_ORDER[a.intensity]);
       return list.length ? list.map((c) => c.name).join(' · ') : null;

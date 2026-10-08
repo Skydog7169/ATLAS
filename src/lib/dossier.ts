@@ -9,8 +9,9 @@ import { WORLDBANK_BY_ISO, type WorldBankRow } from './worldbank';
 import { sanctionsDossier } from './sanctions';
 import { electionsDossier } from './elections';
 import { nuclearDossier } from './nuclear';
+import { sponsorshipDossier } from './actors';
 
-export type DossierSectionId = 'profile' | 'memberships' | 'conflicts' | 'displacement' | 'figures' | 'changes' | 'sanctions' | 'elections' | 'nuclear';
+export type DossierSectionId = 'profile' | 'memberships' | 'conflicts' | 'sponsorship' | 'displacement' | 'figures' | 'changes' | 'sanctions' | 'elections' | 'nuclear';
 
 /**
  * A section contributed by a later dataset (sanctions, elections). Each row is
@@ -18,9 +19,10 @@ export type DossierSectionId = 'profile' | 'memberships' | 'conflicts' | 'displa
  * without touching the panel component.
  */
 export interface DossierExtra {
-  id: Extract<DossierSectionId, 'sanctions' | 'elections' | 'nuclear'>;
+  id: Extract<DossierSectionId, 'sanctions' | 'elections' | 'nuclear' | 'sponsorship'>;
   title: string;
-  rows: Array<{ label: string; value: string; href?: string; note?: string }>;
+  /** A row links out (`href`) or into a conflict panel (`conflictId`). */
+  rows: Array<{ label: string; value: string; href?: string; note?: string; conflictId?: string }>;
   /** Shown when `rows` is empty. */
   empty?: string;
   /** Source and fetch date shown under the section. */
@@ -34,7 +36,7 @@ export type DossierProvider = (iso: string) => DossierExtra | null;
  * null to skip the section (nuclear status only exists for a few countries)
  * or an extra with no rows to show its `empty` text.
  */
-export const DOSSIER_PROVIDERS: DossierProvider[] = [sanctionsDossier, electionsDossier, nuclearDossier];
+export const DOSSIER_PROVIDERS: DossierProvider[] = [sponsorshipDossier, sanctionsDossier, electionsDossier, nuclearDossier];
 
 export interface CountryDossier {
   country: CountryRecord;
