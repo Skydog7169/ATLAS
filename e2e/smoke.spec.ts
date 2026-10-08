@@ -196,6 +196,35 @@ test('watchlist: stars survive reload and filter the ticker and feed', async ({ 
   await noSeriousA11yIssues(page);
 });
 
+test('since-your-last-visit strip appears for returning visitors and clears when read', async ({ page }) => {
+  await open(page);
+  await expect(page.locator('.since')).toHaveCount(0);
+  const stored = await page.evaluate(() => localStorage.getItem('atlas.lastVisit.v1'));
+  expect(stored).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  await page.evaluate(() => localStorage.setItem('atlas.lastVisit.v1', '2020-01-01'));
+  await page.reload({ waitUntil: 'networkidle' });
+  await page.waitForSelector('path.country');
+  const strip = page.locator('.since');
+  await expect(strip).toBeVisible();
+  await expect(strip).toContainText(/Since Jan 1, 2020 · \d+ changes/);
+  await strip.locator('.since-list button').first().click();
+  await expect(page.locator('.panel')).toBeVisible();
+  await strip.getByRole('button', { name: 'Mark read' }).click();
+  await expect(page.locator('.since')).toHaveCount(0);
+  await page.reload({ waitUntil: 'networkidle' });
+  await page.waitForSelector('path.country');
+  await expect(page.locator('.since')).toHaveCount(0);
+});
+
+test('feeds are served alongside the app', async ({ request }) => {
+  const rss = await request.get('/feed.xml');
+  expect(rss.ok()).toBe(true);
+  expect(await rss.text()).toContain('<rss version="2.0"');
+  const json = await request.get('/feed.json');
+  expect(json.ok()).toBe(true);
+  expect((await json.json()).version).toBe('https://jsonfeed.org/version/1.1');
+});
+
 test('data layers: sanctions, elections and nuclear tint the map with legends', async ({ page }) => {
   await open(page);
   await page.locator('.map-controls .icon-btn[aria-label="Data layers"]').click();
