@@ -263,3 +263,22 @@ test('dossier lists sanctions regimes, the next election and nuclear status', as
   await expect(panel.locator('#dossier-sanctions + p')).toContainText('No UN, US or EU regime');
   await expect(panel.locator('#dossier-nuclear')).toHaveCount(0);
 });
+
+test('conflict panel shows who backs whom and the peace process; dossier lists sponsorship abroad', async ({ page }) => {
+  await open(page, '#mode=conflicts&conflict=drc-east');
+  const panel = page.locator('.panel');
+  await expect(panel.locator('#conflict-actors')).toBeVisible();
+  await expect(panel.locator('.actors svg')).toBeVisible();
+  await expect(panel.locator('.actors .actor')).not.toHaveCount(0);
+  await expect(panel.locator('#conflict-peace')).toContainText(/Peace process · [1-9]/);
+  await expect(panel.locator('.peace li').first()).toContainText(/Roadmap|Talks|Agreement|Ceasefire|Setback|Mediation/);
+  // A backer (listed as a badge under the diagram) opens that country's dossier.
+  await expect(panel.locator('.actors .backer.clickable')).not.toHaveCount(0);
+  await panel.locator('#conflict-actors ~ .badges .badge').first().click();
+  await expect(panel.locator('.eyebrow')).toContainText('Country dossier');
+  await open(page, '#country=RWA');
+  await expect(panel.locator('#dossier-sponsorship')).toContainText(/Backs parties abroad · [1-9]/);
+  await panel.locator('#dossier-sponsorship + ul button').first().click();
+  await expect(page).toHaveURL(/conflict=/);
+  await noSeriousA11yIssues(page);
+});

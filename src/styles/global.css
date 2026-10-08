@@ -1860,3 +1860,110 @@ a {
     width: min(250px, calc(100vw - 70px));
   }
 }
+
+/* ---------- actors graph & peace process ---------- */
+.actors {
+  margin: 6px 0 4px;
+  overflow-x: auto;
+}
+
+.actors svg {
+  display: block;
+  min-width: 300px;
+  font-family: var(--mono);
+}
+
+.actors .side {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  fill: var(--accent);
+}
+
+.actors .actor {
+  fill: var(--bg-elev-2);
+  stroke: var(--border-strong);
+  stroke-width: 1;
+}
+
+.actors .actor-state {
+  stroke: var(--accent-dim);
+}
+
+.actors .actor-armed-group {
+  stroke: var(--alert);
+}
+
+.actors .actor-coalition {
+  stroke: var(--warn);
+}
+
+.actors .actor.mediator,
+.actors .actor-international {
+  stroke-dasharray: 3 2;
+}
+
+.actors .actor-name {
+  font-size: 10px;
+  fill: var(--fg);
+}
+
+.actors .actor-type {
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  fill: var(--fg-faint);
+}
+
+.actors .link {
+  fill: none;
+  stroke: var(--border-strong);
+  stroke-width: 1;
+}
+
+.actors .backer-name {
+  font-size: 9px;
+  fill: var(--fg-muted);
+}
+
+.actors .backer.clickable {
+  cursor: pointer;
+}
+
+.actors .backer.clickable:hover .backer-name,
+.actors .backer.clickable:focus-visible .backer-name {
+  fill: var(--accent);
+}
+
+.actors .backer.clickable:focus-visible {
+  outline: none;
+}
+
+.badges .badge .meta {
+  margin-left: 6px;
+  color: var(--fg-muted);
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+.peace li .when .dot {
+  background: var(--fg-faint);
+}
+
+.peace li[data-kind='ceasefire'] .when .dot,
+.peace li[data-kind='agreement'] .when .dot {
+  background: #3fb04a;
+}
+
+.peace li[data-kind='talks'] .when .dot,
+.peace li[data-kind='roadmap'] .when .dot,
+.peace li[data-kind='mediation'] .when .dot {
+  background: var(--accent);
+}
+
+.peace li[data-kind='collapse'] .when .dot {
+  background: var(--alert);
+}
+
+.peace .src-row {
+  display: flex;
+}

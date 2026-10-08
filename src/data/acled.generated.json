@@ -1,0 +1,13 @@
+{
+ "source": {
+  "name": "ACLED",
+  "url": "https://acleddata.com/"
+ },
+ "available": false,
+ "reason": "ACLED_EMAIL and ACLED_PASSWORD secrets are not set",
+ "fetchedAt": "2026-10-08",
+ "days": 0,
+ "from": null,
+ "to": null,
+ "rows": []
+}

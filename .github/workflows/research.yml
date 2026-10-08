@@ -59,6 +59,12 @@ jobs:
       - name: Fill any countries missing from the elections table
         run: node scripts/build-elections.mjs
 
+      - name: Refresh ACLED event counts (skipped without credentials)
+        env:
+          ACLED_EMAIL: ${{ secrets.ACLED_EMAIL }}
+          ACLED_PASSWORD: ${{ secrets.ACLED_PASSWORD }}
+        run: node scripts/build-acled.mjs
+
       - name: Validate
         run: pnpm run test
 
@@ -75,6 +81,7 @@ jobs:
             src/data/worldbank.generated.json
             src/data/sanctions.generated.json
             src/data/elections.json
+            src/data/acled.generated.json
           commit-message: 'Data refresh: automated weekly research pass'
           title: 'Data refresh ${{ github.run_started_at }}'
           body-path: research-report.md

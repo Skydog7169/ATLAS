@@ -74,6 +74,39 @@ export interface HistoryEntry {
   confidence?: Confidence;
 }
 
+export type ActorType = 'state' | 'armed-group' | 'coalition' | 'international';
+
+export type SupportKind = 'troops' | 'arms' | 'funding' | 'political' | 'basing' | 'intelligence';
+
+/** An outside sponsor of an actor: a state (with ISO code) or a named organisation. */
+export interface Backer {
+  name: string;
+  iso?: Iso3;
+  support: SupportKind;
+}
+
+/** A party to a conflict, grouped by `side` for the who-backs-whom diagram. */
+export interface Actor {
+  id: string;
+  name: string;
+  type: ActorType;
+  /** Label shared by actors on the same side; mediators use a 'Mediators' side. */
+  side: string;
+  iso?: Iso3;
+  backers?: Backer[];
+}
+
+export type PeaceEventKind = 'ceasefire' | 'agreement' | 'talks' | 'roadmap' | 'mediation' | 'collapse';
+
+/** One dated step in a conflict's peace process, newest first. */
+export interface PeaceEvent {
+  /** YYYY-MM-DD or YYYY-MM. */
+  date: string;
+  kind: PeaceEventKind;
+  summary: string;
+  sources: Source[];
+}
+
 /** What the data file declares. The exported Conflict adds the derived current fields. */
 export interface ConflictInput {
   id: string;
@@ -87,6 +120,13 @@ export interface ConflictInput {
   countries: Iso3[];
   parties: string[];
   summary: string;
+  /** Structured parties with their outside backers. */
+  actors?: Actor[];
+  actorsSources?: Source[];
+  /** Month the actor list was last reviewed, YYYY-MM. */
+  actorsUpdated?: string;
+  /** Peace-process events, newest first; maintained by the weekly pass. */
+  peace?: PeaceEvent[];
   /** Assessments, newest first. Must have at least one entry. */
   history: HistoryEntry[];
   /** ISO date the entry was last re-checked without a material change, YYYY-MM-DD. */

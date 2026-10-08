@@ -26,6 +26,12 @@ export function mockClient() {
             ],
             confidence: 'medium',
             note: changed ? 'mock note for reviewer' : '',
+            peaceEvents: changed
+              ? [
+                  { date: '2026-10-01', kind: 'talks', summary: 'Mock: mediators convened a first round of talks in Doha on 1 October 2026.', source: { name: 'Al Jazeera: mock article', url: seenUrl } },
+                  { date: '2026-10-02', kind: 'ceasefire', summary: 'Mock: an unsourced claim that must be dropped.', source: { name: 'Invented', url: 'https://not-in-results.example/y' } },
+                ]
+              : [],
           };
         } else if (prompt.startsWith('Here are the current membership lists')) {
           parsed = { changes: [], note: 'mock: no sourced membership changes found' };

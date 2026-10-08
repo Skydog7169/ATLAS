@@ -13,7 +13,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Anthropic from '@anthropic-ai/sdk';
 import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod';
-import { AssessmentOutputSchema, BlocReviewOutputSchema, BlocsFileSchema, ConflictsFileSchema, ElectionOutputSchema, ElectionsFileSchema, NewConflictsOutputSchema, PARTIAL_DATE } from '../../src/data/schema.ts';
+import { AssessmentOutputSchema, BlocReviewOutputSchema, BlocsFileSchema, ConflictsFileSchema, ElectionOutputSchema, ElectionsFileSchema, MONTH_OR_DATE, NewConflictsOutputSchema, PARTIAL_DATE } from '../../src/data/schema.ts';
 import { clampIntensity, isMaterialChange, verifySources } from '../../src/data/guards.ts';
 import { mockClient } from './mock.mjs';
 
@@ -39,7 +39,7 @@ const elections = ElectionsFileSchema.parse(JSON.parse(readFileSync(ELECTIONS_PA
 
 const client = args.mock ? mockClient() : new Anthropic();
 const usage = { input: 0, output: 0, cacheRead: 0, calls: 0 };
-const report = { updated: [], unchanged: [], clamped: [], droppedSources: [], errors: [], blocChanges: [], blocNote: '', candidates: [], elections: [] };
+const report = { updated: [], unchanged: [], clamped: [], droppedSources: [], errors: [], blocChanges: [], blocNote: '', candidates: [], elections: [], peace: [] };
 
 const SYSTEM = `You are a research analyst maintaining a public geopolitics map. Today is ${today}.
 Write in plain, neutral English with specific dates. Never invent events or URLs: every source you return must be a URL that appeared in your web search results. Prefer wire services, UN bodies and established conflict trackers (CFR, ACLED, Crisis Group, ISW). If nothing material happened since the previous assessment, say so by setting changed=false and restating the current situation briefly.`;
@@ -100,6 +100,7 @@ async function assessConflict(conflict) {
     `Background: ${conflict.summary}`,
     `Previous assessment (${previous.date}, intensity ${previous.intensity}): ${previous.status}`,
     conflict.history[1] ? `Earlier assessment (${conflict.history[1].date}, intensity ${conflict.history[1].intensity}): ${conflict.history[1].status}` : '',
+    conflict.peace?.length ? `Peace process so far (newest first): ${conflict.peace.slice(0, 3).map((e) => `${e.date} ${e.kind}: ${e.summary}`).join(' | ')}` : 'Peace process: nothing on record.',
     '',
     `Task: search for developments between ${previous.date} and ${today}. Then return the structured assessment. Intensity scale: high = large-scale sustained combat; medium = regular deadly fighting; low = sporadic violence; latent = ceasefire or standoff. Keep status to 2-3 sentences (150-600 characters).`,
   ]
@@ -122,6 +123,7 @@ async function assessConflict(conflict) {
   const seenUrls = collectSearchUrls(response);
   const { kept, dropped } = verifySources(out.sources, seenUrls);
   if (dropped.length) report.droppedSources.push({ id: conflict.id, dropped: dropped.map((s) => s.url) });
+  applyPeaceEvents(conflict, out.peaceEvents ?? [], seenUrls);
 
   const material = out.changed && isMaterialChange(previous, out.status, out.intensity);
   if (!material) {
@@ -138,6 +140,26 @@ async function assessConflict(conflict) {
   else conflict.history.unshift(entry);
   delete conflict.lastChecked;
   report.updated.push({ id: conflict.id, name: conflict.name, from: previous.intensity, to: intensity, confidence: out.confidence, note: out.note, status: entry.status });
+}
+
+/** Appends sourced peace-process events the model found, skipping duplicates and unverifiable citations. */
+export function applyPeaceEvents(conflict, events, seenUrls, log = report) {
+  for (const e of events) {
+    if (!MONTH_OR_DATE.test(e.date) || e.date.slice(0, 10) > today) continue;
+    const summary = String(e.summary ?? '').trim();
+    if (summary.length < 20) continue;
+    const { kept } = verifySources([e.source], seenUrls);
+    if (!kept.length) {
+      log.droppedSources.push({ id: `${conflict.id}/peace`, dropped: [e.source?.url ?? '?'] });
+      continue;
+    }
+    conflict.peace ??= [];
+    const dup = conflict.peace.some((x) => x.date === e.date && (x.kind === e.kind || x.summary === summary));
+    if (dup) continue;
+    conflict.peace.unshift({ date: e.date, kind: e.kind, summary: summary.slice(0, 400), sources: kept.slice(0, 2) });
+    conflict.peace.sort((a, b) => b.date.localeCompare(a.date));
+    log.peace.push({ id: conflict.id, name: conflict.name, date: e.date, kind: e.kind, summary });
+  }
 }
 
 async function reviewBlocs() {
@@ -338,6 +360,9 @@ function renderReport() {
     lines.push('', '### Intensity moves clamped to one step (review)');
     for (const c of report.clamped) lines.push(`- ${c.id}: ${c.from} → proposed ${c.proposed}, applied ${c.applied}`);
   }
+  lines.push('', `### Peace-process events added (${report.peace.length})`);
+  for (const p of report.peace) lines.push(`- **${p.name}** ${p.date} ${p.kind}: ${p.summary}`);
+  if (!report.peace.length) lines.push('- none');
   lines.push('', `### Bloc membership changes (${report.blocChanges.length})`);
   for (const b of report.blocChanges) lines.push(`- ${b.bloc}: ${b.iso} ${b.change} on ${b.date}${b.note ? ` — ${b.note}` : ''}`);
   if (!report.blocChanges.length) lines.push('- none');

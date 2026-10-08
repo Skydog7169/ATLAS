@@ -17,6 +17,135 @@
       "Ukraine (backed by NATO members and the EU)"
     ],
     "summary": "Russia seized Crimea and parts of the Donbas in 2014 and launched a full-scale invasion in February 2022. The war became the largest in Europe since 1945, with attritional ground fighting across the east and south and long-range strike campaigns by both sides.",
+    "actors": [
+      {
+        "id": "ukraine",
+        "name": "Ukraine",
+        "type": "state",
+        "side": "Ukraine",
+        "iso": "UKR",
+        "backers": [
+          {
+            "name": "United States",
+            "support": "arms",
+            "iso": "USA"
+          },
+          {
+            "name": "European Union",
+            "support": "funding"
+          },
+          {
+            "name": "United Kingdom",
+            "support": "arms",
+            "iso": "GBR"
+          },
+          {
+            "name": "Germany",
+            "support": "arms",
+            "iso": "DEU"
+          },
+          {
+            "name": "Poland",
+            "support": "basing",
+            "iso": "POL"
+          }
+        ]
+      },
+      {
+        "id": "russia",
+        "name": "Russia",
+        "type": "state",
+        "side": "Russia",
+        "iso": "RUS",
+        "backers": [
+          {
+            "name": "North Korea",
+            "support": "troops",
+            "iso": "PRK"
+          },
+          {
+            "name": "Iran",
+            "support": "arms",
+            "iso": "IRN"
+          },
+          {
+            "name": "Belarus",
+            "support": "basing",
+            "iso": "BLR"
+          },
+          {
+            "name": "China",
+            "support": "political",
+            "iso": "CHN"
+          }
+        ]
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: Russian invasion of Ukraine",
+        "url": "https://en.wikipedia.org/wiki/Russian_invasion_of_Ukraine"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-01",
+        "kind": "talks",
+        "summary": "A US-led trilateral round in January 2026 ended without agreement; Washington proposed a new round for late October 2026.",
+        "sources": [
+          {
+            "name": "ISW: Russian Offensive Campaign Assessment, 6 October 2026",
+            "url": "https://www.criticalthreats.org/analysis/russian-offensive-campaign-assessment-october-6-2026"
+          },
+          {
+            "name": "CFR Global Conflict Tracker",
+            "url": "https://www.cfr.org/global-conflict-tracker"
+          }
+        ]
+      },
+      {
+        "date": "2025-08-15",
+        "kind": "talks",
+        "summary": "Trump–Putin summit in Anchorage produced no ceasefire; follow-up talks with Ukraine and European leaders in Washington on 18 August.",
+        "sources": [
+          {
+            "name": "Wikipedia: 2025 Russia–United States summit",
+            "url": "https://en.wikipedia.org/wiki/2025_Russia%E2%80%93United_States_summit"
+          },
+          {
+            "name": "CFR Global Conflict Tracker",
+            "url": "https://www.cfr.org/global-conflict-tracker"
+          }
+        ]
+      },
+      {
+        "date": "2025-05-16",
+        "kind": "talks",
+        "summary": "First direct Russia–Ukraine talks since 2022, in Istanbul, agreed prisoner exchanges but no ceasefire.",
+        "sources": [
+          {
+            "name": "Wikipedia: 2025 Russia–Ukraine peace negotiations",
+            "url": "https://en.wikipedia.org/wiki/2025_Russia%E2%80%93Ukraine_peace_negotiations"
+          }
+        ]
+      },
+      {
+        "date": "2022-03-29",
+        "kind": "collapse",
+        "summary": "Istanbul talks on a draft neutrality treaty broke down in April 2022 as fighting continued.",
+        "sources": [
+          {
+            "name": "Wikipedia: 2022 Russia–Ukraine peace negotiations",
+            "url": "https://en.wikipedia.org/wiki/2022_Russia%E2%80%93Ukraine_peace_negotiations"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -75,6 +204,97 @@
       "Rapid Support Forces (RSF)"
     ],
     "summary": "A power struggle between the army and the paramilitary RSF erupted into open war in Khartoum in April 2023. It has produced the world’s largest displacement crisis, famine conditions, and mass atrocities in Darfur.",
+    "actors": [
+      {
+        "id": "saf",
+        "name": "Sudanese Armed Forces",
+        "type": "state",
+        "side": "Army",
+        "iso": "SDN",
+        "backers": [
+          {
+            "name": "Egypt",
+            "support": "political",
+            "iso": "EGY"
+          },
+          {
+            "name": "Iran",
+            "support": "arms",
+            "iso": "IRN"
+          },
+          {
+            "name": "Türkiye",
+            "support": "arms",
+            "iso": "TUR"
+          }
+        ]
+      },
+      {
+        "id": "rsf",
+        "name": "Rapid Support Forces",
+        "type": "armed-group",
+        "side": "RSF",
+        "backers": [
+          {
+            "name": "United Arab Emirates",
+            "support": "arms",
+            "iso": "ARE"
+          }
+        ]
+      },
+      {
+        "id": "splmn",
+        "name": "SPLM-North (al-Hilu)",
+        "type": "armed-group",
+        "side": "RSF"
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: Sudanese civil war (2023–present)",
+        "url": "https://en.wikipedia.org/wiki/Sudanese_civil_war_(2023%E2%80%93present)"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-10-07",
+        "kind": "collapse",
+        "summary": "Army chief al-Burhan rejected talks and vowed to retake all RSF-held territory.",
+        "sources": [
+          {
+            "name": "Al Jazeera: Al-Burhan rejects talks, vows to retake all territory from RSF (Oct 2026)",
+            "url": "https://www.aljazeera.com/news/2026/10/7/sudans-al-burhan-rejects-talks-vows-to-retake-all-territory-from-rsf"
+          }
+        ]
+      },
+      {
+        "date": "2026-09",
+        "kind": "mediation",
+        "summary": "The United States put forward a 90-day humanitarian ceasefire plan, which the army rejected.",
+        "sources": [
+          {
+            "name": "Al Jazeera: US reportedly holds al-Burhan’s UN visa over truce plan (Sep 2026)",
+            "url": "https://www.aljazeera.com/news/2026/9/24/outcry-in-sudan-as-us-reportedly-holds-army-chiefs-un-visa-over-ceasefire"
+          }
+        ]
+      },
+      {
+        "date": "2023-05-20",
+        "kind": "agreement",
+        "summary": "Jeddah Declaration: SAF and RSF commit to protect civilians; later ceasefires under the Saudi–US process collapsed.",
+        "sources": [
+          {
+            "name": "Wikipedia: Jeddah Declaration",
+            "url": "https://en.wikipedia.org/wiki/Jeddah_Declaration_of_Commitment_to_Protect_the_Civilians_of_Sudan"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -134,6 +354,129 @@
       "Hamas and allied Palestinian factions"
     ],
     "summary": "Hamas’s 7 October 2023 attack killed about 1,200 people in Israel and took some 250 hostages. Israel’s ensuing campaign devastated Gaza, killing tens of thousands and displacing most of the population, and triggered a wider regional confrontation.",
+    "actors": [
+      {
+        "id": "israel",
+        "name": "Israel",
+        "type": "state",
+        "side": "Israel",
+        "iso": "ISR",
+        "backers": [
+          {
+            "name": "United States",
+            "support": "arms",
+            "iso": "USA"
+          }
+        ]
+      },
+      {
+        "id": "hamas",
+        "name": "Hamas and allied factions",
+        "type": "armed-group",
+        "side": "Hamas",
+        "backers": [
+          {
+            "name": "Iran",
+            "support": "arms",
+            "iso": "IRN"
+          },
+          {
+            "name": "Qatar",
+            "support": "political",
+            "iso": "QAT"
+          }
+        ]
+      },
+      {
+        "id": "board",
+        "name": "Board of Peace / stabilisation force",
+        "type": "international",
+        "side": "Mediators",
+        "backers": [
+          {
+            "name": "United States",
+            "support": "political",
+            "iso": "USA"
+          },
+          {
+            "name": "Egypt",
+            "support": "political",
+            "iso": "EGY"
+          },
+          {
+            "name": "Qatar",
+            "support": "political",
+            "iso": "QAT"
+          },
+          {
+            "name": "Türkiye",
+            "support": "political",
+            "iso": "TUR"
+          }
+        ]
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: Gaza war",
+        "url": "https://en.wikipedia.org/wiki/Gaza_war"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-08",
+        "kind": "collapse",
+        "summary": "Netanyahu rejected the Board of Peace disarmament roadmap, demanding full disarmament before withdrawal.",
+        "sources": [
+          {
+            "name": "CBS News: Netanyahu rejects US-backed Gaza peace plan (Aug 2026)",
+            "url": "https://www.cbsnews.com/news/benjamin-netanyahu-us-gaza-peace-plan-reject/"
+          }
+        ]
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "roadmap",
+        "summary": "The Board of Peace issued a 15-point disarmament roadmap that Hamas conditionally accepted.",
+        "sources": [
+          {
+            "name": "Al Jazeera: Board of Peace announces Hamas disarmament agreement (Jul 2026)",
+            "url": "https://www.aljazeera.com/news/2026/7/31/gaza-board-of-peace-announces-hamas-disarmament-agreement-what-we-know"
+          }
+        ]
+      },
+      {
+        "date": "2025-10-10",
+        "kind": "ceasefire",
+        "summary": "US-brokered ceasefire took effect with the release of the remaining living hostages; later phases on disarmament and governance stalled.",
+        "sources": [
+          {
+            "name": "Wikipedia: 2025 Gaza peace plan",
+            "url": "https://en.wikipedia.org/wiki/2025_Gaza_peace_plan"
+          },
+          {
+            "name": "CFR Global Conflict Tracker",
+            "url": "https://www.cfr.org/global-conflict-tracker"
+          }
+        ]
+      },
+      {
+        "date": "2025-01-19",
+        "kind": "ceasefire",
+        "summary": "A three-phase ceasefire and hostage deal took effect; Israel resumed strikes on 18 March 2025.",
+        "sources": [
+          {
+            "name": "Wikipedia: 2025 Gaza war ceasefire",
+            "url": "https://en.wikipedia.org/wiki/2025_Gaza_war_ceasefire"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -193,6 +536,111 @@
       "Hezbollah"
     ],
     "summary": "Hezbollah opened a front in support of Hamas in October 2023. Israel escalated in September 2024 with pager attacks, the killing of Hassan Nasrallah and a ground incursion into southern Lebanon.",
+    "actors": [
+      {
+        "id": "israel",
+        "name": "Israel",
+        "type": "state",
+        "side": "Israel",
+        "iso": "ISR",
+        "backers": [
+          {
+            "name": "United States",
+            "support": "arms",
+            "iso": "USA"
+          }
+        ]
+      },
+      {
+        "id": "hezbollah",
+        "name": "Hezbollah",
+        "type": "armed-group",
+        "side": "Hezbollah",
+        "backers": [
+          {
+            "name": "Iran",
+            "support": "arms",
+            "iso": "IRN"
+          }
+        ]
+      },
+      {
+        "id": "lebanon",
+        "name": "Lebanese government and army",
+        "type": "state",
+        "side": "Lebanon",
+        "iso": "LBN",
+        "backers": [
+          {
+            "name": "United States",
+            "support": "political",
+            "iso": "USA"
+          },
+          {
+            "name": "France",
+            "support": "political",
+            "iso": "FRA"
+          }
+        ]
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: Israel–Hezbollah conflict (2023–present)",
+        "url": "https://en.wikipedia.org/wiki/Israel%E2%80%93Hezbollah_conflict_(2023%E2%80%93present)"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-06-26",
+        "kind": "agreement",
+        "summary": "Israel and Lebanon signed a framework tying Israeli withdrawal to Hezbollah disarmament; Hezbollah rejects it.",
+        "sources": [
+          {
+            "name": "Axios: Israel and Lebanon sign framework agreement (Jun 2026)",
+            "url": "https://www.axios.com/2026/06/26/israel-lebanon-framework-agreement-hezbollah"
+          }
+        ]
+      },
+      {
+        "date": "2026-04-16",
+        "kind": "ceasefire",
+        "summary": "A US-brokered truce began after Israel’s March 2026 invasion of southern Lebanon.",
+        "sources": [
+          {
+            "name": "Security Council Report: Lebanon, October 2026",
+            "url": "https://www.securitycouncilreport.org/monthly-forecast/2026-10/lebanon-40.php"
+          }
+        ]
+      },
+      {
+        "date": "2026-03-02",
+        "kind": "collapse",
+        "summary": "The 2024 ceasefire collapsed when Hezbollah joined the Iran war.",
+        "sources": [
+          {
+            "name": "Security Council Report: Lebanon, October 2026",
+            "url": "https://www.securitycouncilreport.org/monthly-forecast/2026-10/lebanon-40.php"
+          }
+        ]
+      },
+      {
+        "date": "2024-11-27",
+        "kind": "ceasefire",
+        "summary": "A 60-day ceasefire brokered by the US and France took effect and was later extended.",
+        "sources": [
+          {
+            "name": "Wikipedia: 2024 Israel–Lebanon ceasefire agreement",
+            "url": "https://en.wikipedia.org/wiki/2024_Israel%E2%80%93Lebanon_ceasefire_agreement"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -254,6 +702,114 @@
       "United States"
     ],
     "summary": "Decades of shadow war became direct exchanges of fire in 2024 and a twelve-day Israeli air campaign in June 2025. On 28 February 2026 the United States and Israel launched a full-scale war on Iran, striking its leadership, nuclear and military sites; Iran closed the Strait of Hormuz and fired on Gulf states hosting US forces.",
+    "actors": [
+      {
+        "id": "iran",
+        "name": "Iran and the IRGC",
+        "type": "state",
+        "side": "Iran",
+        "iso": "IRN",
+        "backers": [
+          {
+            "name": "Russia",
+            "support": "political",
+            "iso": "RUS"
+          },
+          {
+            "name": "China",
+            "support": "political",
+            "iso": "CHN"
+          }
+        ]
+      },
+      {
+        "id": "israel",
+        "name": "Israel",
+        "type": "state",
+        "side": "US–Israel",
+        "iso": "ISR"
+      },
+      {
+        "id": "usa",
+        "name": "United States",
+        "type": "state",
+        "side": "US–Israel",
+        "iso": "USA",
+        "backers": [
+          {
+            "name": "Gulf host states",
+            "support": "basing"
+          }
+        ]
+      },
+      {
+        "id": "oman",
+        "name": "Oman (mediator)",
+        "type": "international",
+        "side": "Mediators"
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: 2026 Iran war",
+        "url": "https://en.wikipedia.org/wiki/2026_Iran_war"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-10",
+        "kind": "talks",
+        "summary": "Indirect talks on a seven-day ceasefire plan stalled as the US set new demands on enrichment.",
+        "sources": [
+          {
+            "name": "Al Jazeera: US sets new demands for Iran deal (Oct 2026)",
+            "url": "https://www.aljazeera.com/news/2026/10/7/us-sets-new-demands-for-iran-deal-what-are-they"
+          }
+        ]
+      },
+      {
+        "date": "2026-08-17",
+        "kind": "collapse",
+        "summary": "The June US–Iran memorandum expired after fighting resumed in July.",
+        "sources": [
+          {
+            "name": "Al Jazeera: US–Iran memorandum expires: how it fell apart (Aug 2026)",
+            "url": "https://www.aljazeera.com/news/2026/8/17/us-iran-memorandum-of-understanding-expires-how-and-why-it-fell-apart"
+          }
+        ]
+      },
+      {
+        "date": "2026-04",
+        "kind": "ceasefire",
+        "summary": "An April 2026 ceasefire and a June memorandum of understanding paused strikes until July.",
+        "sources": [
+          {
+            "name": "Al Jazeera: US–Iran memorandum expires: how it fell apart (Aug 2026)",
+            "url": "https://www.aljazeera.com/news/2026/8/17/us-iran-memorandum-of-understanding-expires-how-and-why-it-fell-apart"
+          }
+        ]
+      },
+      {
+        "date": "2025-06-24",
+        "kind": "ceasefire",
+        "summary": "A ceasefire ended the twelve-day war of June 2025.",
+        "sources": [
+          {
+            "name": "Wikipedia: 2025 Iran–Israel war",
+            "url": "https://en.wikipedia.org/wiki/2025_Iran%E2%80%93Israel_war"
+          },
+          {
+            "name": "CFR Global Conflict Tracker",
+            "url": "https://www.cfr.org/global-conflict-tracker"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -315,6 +871,112 @@
       "United States and Israel (air campaigns)"
     ],
     "summary": "The Houthis seized Sanaa in 2014 and have fought a Saudi-led coalition since 2015. From late 2023 they attacked Red Sea shipping in solidarity with Gaza, prompting US, UK and Israeli strikes.",
+    "actors": [
+      {
+        "id": "houthis",
+        "name": "Houthis (Ansar Allah)",
+        "type": "armed-group",
+        "side": "Houthis",
+        "backers": [
+          {
+            "name": "Iran",
+            "support": "arms",
+            "iso": "IRN"
+          }
+        ]
+      },
+      {
+        "id": "government",
+        "name": "Internationally recognised government and Saudi-led coalition",
+        "type": "coalition",
+        "side": "Government and coalition",
+        "backers": [
+          {
+            "name": "Saudi Arabia",
+            "support": "troops",
+            "iso": "SAU"
+          },
+          {
+            "name": "United Arab Emirates",
+            "support": "arms",
+            "iso": "ARE"
+          },
+          {
+            "name": "Türkiye",
+            "support": "troops",
+            "iso": "TUR"
+          },
+          {
+            "name": "Pakistan",
+            "support": "troops",
+            "iso": "PAK"
+          }
+        ]
+      },
+      {
+        "id": "usisrael",
+        "name": "United States and Israel",
+        "type": "coalition",
+        "side": "External strikes"
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: Yemeni civil war (2014–present)",
+        "url": "https://en.wikipedia.org/wiki/Yemeni_civil_war_(2014%E2%80%93present)"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-09-08",
+        "kind": "collapse",
+        "summary": "The 2022 de facto truce broke as the Houthis struck Saudi cities and oil sites.",
+        "sources": [
+          {
+            "name": "Al Jazeera: Saudi Arabia and Yemen’s Houthis trade attacks (Sep 2026)",
+            "url": "https://www.aljazeera.com/news/2026/9/17/five-killed-as-saudi-arabia-and-yemens-houthis-trade-attacks"
+          }
+        ]
+      },
+      {
+        "date": "2025-05-06",
+        "kind": "ceasefire",
+        "summary": "Oman announced a US–Houthi ceasefire covering US ships in the Red Sea.",
+        "sources": [
+          {
+            "name": "Wikipedia: 2025 United States–Houthi ceasefire",
+            "url": "https://en.wikipedia.org/wiki/2025_United_States%E2%80%93Houthi_ceasefire"
+          }
+        ]
+      },
+      {
+        "date": "2023-12-23",
+        "kind": "roadmap",
+        "summary": "The UN envoy announced Houthi and government commitments to a nationwide ceasefire and a roadmap, never implemented.",
+        "sources": [
+          {
+            "name": "Wikipedia: Yemeni peace process",
+            "url": "https://en.wikipedia.org/wiki/Yemeni_peace_process"
+          }
+        ]
+      },
+      {
+        "date": "2022-04-02",
+        "kind": "ceasefire",
+        "summary": "A UN-brokered two-month truce began and, though it lapsed in October 2022, largely held as a de facto truce.",
+        "sources": [
+          {
+            "name": "Wikipedia: 2022 Yemen truce",
+            "url": "https://en.wikipedia.org/wiki/2022_Yemen_truce"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -377,6 +1039,109 @@
       "Israel and Türkiye (external operations)"
     ],
     "summary": "A rebel offensive toppled Bashar al-Assad in December 2024, ending 13 years of civil war. The new government under Ahmed al-Sharaa faces sectarian violence, armed holdouts, and Israeli and Turkish military operations on its territory.",
+    "actors": [
+      {
+        "id": "government",
+        "name": "Transitional government (former HTS)",
+        "type": "state",
+        "side": "Government",
+        "iso": "SYR",
+        "backers": [
+          {
+            "name": "Türkiye",
+            "support": "arms",
+            "iso": "TUR"
+          },
+          {
+            "name": "Qatar",
+            "support": "funding",
+            "iso": "QAT"
+          },
+          {
+            "name": "Saudi Arabia",
+            "support": "funding",
+            "iso": "SAU"
+          },
+          {
+            "name": "United States",
+            "support": "political",
+            "iso": "USA"
+          }
+        ]
+      },
+      {
+        "id": "sdf",
+        "name": "Syrian Democratic Forces (merged into the army, Aug 2026)",
+        "type": "armed-group",
+        "side": "SDF",
+        "backers": [
+          {
+            "name": "United States",
+            "support": "arms",
+            "iso": "USA"
+          }
+        ]
+      },
+      {
+        "id": "druze",
+        "name": "Druze forces in Sweida (al-Hijri)",
+        "type": "armed-group",
+        "side": "Local armed groups"
+      },
+      {
+        "id": "israel",
+        "name": "Israel (external operations)",
+        "type": "state",
+        "side": "External",
+        "iso": "ISR"
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: Syrian transitional government",
+        "url": "https://en.wikipedia.org/wiki/Syrian_transitional_government"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-08-25",
+        "kind": "agreement",
+        "summary": "The SDF announced its merger into the Syrian army.",
+        "sources": [
+          {
+            "name": "Al Jazeera: Kurdish-led SDF announces dissolution after merging with army (Aug 2026)",
+            "url": "https://www.aljazeera.com/news/2026/8/25/kurdish-led-forces-in-syria-dissolve-after-merging-with-the-army"
+          }
+        ]
+      },
+      {
+        "date": "2026-01-18",
+        "kind": "ceasefire",
+        "summary": "Damascus announced a ceasefire with the SDF after a government offensive, followed by an integration deal.",
+        "sources": [
+          {
+            "name": "Al Jazeera: Syria announces ceasefire with SDF after heavy fighting (Jan 2026)",
+            "url": "https://www.aljazeera.com/news/2026/1/18/syria-announces-ceasefire-agreement-with-kurd-led-sdf-after-heavy-fighting"
+          }
+        ]
+      },
+      {
+        "date": "2025-03-10",
+        "kind": "agreement",
+        "summary": "President al-Sharaa and SDF commander Mazloum Abdi signed an agreement to integrate the SDF into state institutions.",
+        "sources": [
+          {
+            "name": "Wikipedia: 2025 Syrian Democratic Forces–Syrian transitional government agreement",
+            "url": "https://en.wikipedia.org/wiki/2025_Syrian_Democratic_Forces%E2%80%93Syrian_transitional_government_agreement"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -435,6 +1200,74 @@
       "People’s Defence Forces and ethnic armed organisations"
     ],
     "summary": "The February 2021 coup triggered nationwide armed resistance. Ethnic armies and the opposition National Unity Government’s forces have taken large parts of the border regions, and the junta has responded with air strikes and mass conscription.",
+    "actors": [
+      {
+        "id": "junta",
+        "name": "Military government (SAC) and USDP",
+        "type": "state",
+        "side": "Military",
+        "iso": "MMR",
+        "backers": [
+          {
+            "name": "Russia",
+            "support": "arms",
+            "iso": "RUS"
+          },
+          {
+            "name": "China",
+            "support": "political",
+            "iso": "CHN"
+          }
+        ]
+      },
+      {
+        "id": "resistance",
+        "name": "National Unity Government and People’s Defence Forces",
+        "type": "armed-group",
+        "side": "Resistance"
+      },
+      {
+        "id": "eaos",
+        "name": "Ethnic armed organisations (Arakan Army, KIA, KNU and others)",
+        "type": "armed-group",
+        "side": "Resistance"
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: Myanmar civil war (2021–present)",
+        "url": "https://en.wikipedia.org/wiki/Myanmar_civil_war_(2021%E2%80%93present)"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-04",
+        "kind": "collapse",
+        "summary": "Min Aung Hlaing was sworn in as president after junta-run elections boycotted by the opposition; fighting stayed intense.",
+        "sources": [
+          {
+            "name": "Al Jazeera: Myanmar air strike on Rakhine market kills dozens (Sep 2026)",
+            "url": "https://www.aljazeera.com/news/2026/9/28/myanmar-army-air-strike-kills-dozens-in-rakhine-state"
+          }
+        ]
+      },
+      {
+        "date": "2025-01-18",
+        "kind": "ceasefire",
+        "summary": "China-brokered Haikou ceasefire between the junta and the MNDAA covering Lashio.",
+        "sources": [
+          {
+            "name": "Wikipedia: Myanmar civil war (2021–present)",
+            "url": "https://en.wikipedia.org/wiki/Myanmar_civil_war_(2021%E2%80%93present)"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -492,6 +1325,79 @@
       "Mali, Burkina Faso and Niger armed forces with Russia’s Africa Corps"
     ],
     "summary": "Jihadist insurgencies that began in northern Mali in 2012 have spread across Burkina Faso and Niger and towards coastal West Africa. Military juntas expelled French and UN forces and brought in Russian contractors.",
+    "actors": [
+      {
+        "id": "jnim",
+        "name": "JNIM (al-Qaeda affiliate)",
+        "type": "armed-group",
+        "side": "Jihadists"
+      },
+      {
+        "id": "isgs",
+        "name": "Islamic State Sahel Province",
+        "type": "armed-group",
+        "side": "Jihadists"
+      },
+      {
+        "id": "fla",
+        "name": "Azawad Liberation Front (Tuareg)",
+        "type": "armed-group",
+        "side": "Separatists"
+      },
+      {
+        "id": "aes",
+        "name": "Mali, Burkina Faso and Niger armed forces (AES)",
+        "type": "coalition",
+        "side": "Juntas",
+        "backers": [
+          {
+            "name": "Russia (Africa Corps)",
+            "support": "troops",
+            "iso": "RUS"
+          },
+          {
+            "name": "Türkiye",
+            "support": "arms",
+            "iso": "TUR"
+          }
+        ]
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: Jihadist insurgency in the Sahel",
+        "url": "https://en.wikipedia.org/wiki/Jihadist_insurgency_in_the_Sahel"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-04-30",
+        "kind": "collapse",
+        "summary": "JNIM reimposed a full blockade on Bamako after the April 2026 attacks; no negotiation track exists.",
+        "sources": [
+          {
+            "name": "France 24: Jihadists urge united front against Mali junta as Bamako blockade begins (Apr 2026)",
+            "url": "https://www.france24.com/en/africa/20260430-jihadists-urge-united-front-against-mali-junta-as-bamako-blockade-begins"
+          }
+        ]
+      },
+      {
+        "date": "2024-01-25",
+        "kind": "collapse",
+        "summary": "Mali’s junta terminated the 2015 Algiers peace agreement with northern armed groups.",
+        "sources": [
+          {
+            "name": "Wikipedia: Algiers Agreement (2015)",
+            "url": "https://en.wikipedia.org/wiki/Algiers_Agreement_(2015)"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -554,6 +1460,115 @@
       "Burundian and Ugandan forces"
     ],
     "summary": "The Rwanda-backed M23 rebellion resurged in 2021 and captured the provincial capitals Goma (January 2025) and Bukavu (February 2025), displacing millions in a region with over a hundred armed groups.",
+    "actors": [
+      {
+        "id": "m23",
+        "name": "M23 / Congo River Alliance",
+        "type": "armed-group",
+        "side": "M23",
+        "backers": [
+          {
+            "name": "Rwanda",
+            "support": "troops",
+            "iso": "RWA"
+          }
+        ]
+      },
+      {
+        "id": "fardc",
+        "name": "DRC armed forces and Wazalendo militias",
+        "type": "state",
+        "side": "Government",
+        "iso": "COD",
+        "backers": [
+          {
+            "name": "Burundi",
+            "support": "troops",
+            "iso": "BDI"
+          },
+          {
+            "name": "Uganda",
+            "support": "troops",
+            "iso": "UGA"
+          }
+        ]
+      },
+      {
+        "id": "mediators",
+        "name": "United States and Qatar (mediators)",
+        "type": "international",
+        "side": "Mediators",
+        "backers": [
+          {
+            "name": "United States",
+            "support": "political",
+            "iso": "USA"
+          },
+          {
+            "name": "Qatar",
+            "support": "political",
+            "iso": "QAT"
+          }
+        ]
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: M23 campaign (2022–present)",
+        "url": "https://en.wikipedia.org/wiki/M23_campaign_(2022%E2%80%93present)"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-08-23",
+        "kind": "roadmap",
+        "summary": "Kinshasa and M23 agreed a negotiating roadmap in Switzerland; ceasefire observation teams deployed.",
+        "sources": [
+          {
+            "name": "Al Jazeera: DR Congo and M23 agree roadmap for peace talks (Aug 2026)",
+            "url": "https://www.aljazeera.com/news/2026/8/23/dr-congo-m23-rebels-agree-on-roadmap-for-peace-talks"
+          }
+        ]
+      },
+      {
+        "date": "2026-02",
+        "kind": "talks",
+        "summary": "UN reported progress in M23 talks while violence persisted.",
+        "sources": [
+          {
+            "name": "UN News: progress in M23 talks but violence persists (Feb 2026)",
+            "url": "https://news.un.org/en/story/2026/02/1166899"
+          }
+        ]
+      },
+      {
+        "date": "2025-07-19",
+        "kind": "agreement",
+        "summary": "Doha Declaration of Principles between the DRC and M23, mediated by Qatar.",
+        "sources": [
+          {
+            "name": "Wikipedia: 2025 Doha Declaration",
+            "url": "https://en.wikipedia.org/wiki/2025_Democratic_Republic_of_the_Congo%E2%80%93M23_peace_process"
+          }
+        ]
+      },
+      {
+        "date": "2025-06-27",
+        "kind": "agreement",
+        "summary": "Washington peace agreement between the DRC and Rwanda.",
+        "sources": [
+          {
+            "name": "Wikipedia: 2025 Democratic Republic of the Congo–Rwanda peace agreement",
+            "url": "https://en.wikipedia.org/wiki/2025_Democratic_Republic_of_the_Congo%E2%80%93Rwanda_peace_agreement"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -612,6 +1627,67 @@
       "Federal Government of Somalia with AU mission (AUSSOM) and US air support"
     ],
     "summary": "Al-Qaeda’s East African affiliate controls much of rural southern Somalia and stages attacks in Mogadishu. The AU mission was re-hatted as AUSSOM in January 2025 with uncertain funding.",
+    "actors": [
+      {
+        "id": "alshabaab",
+        "name": "Al-Shabaab",
+        "type": "armed-group",
+        "side": "Al-Shabaab"
+      },
+      {
+        "id": "fgs",
+        "name": "Federal Government of Somalia",
+        "type": "state",
+        "side": "Government",
+        "iso": "SOM",
+        "backers": [
+          {
+            "name": "African Union mission (AUSSOM)",
+            "support": "troops"
+          },
+          {
+            "name": "United States",
+            "support": "troops",
+            "iso": "USA"
+          },
+          {
+            "name": "Türkiye",
+            "support": "arms",
+            "iso": "TUR"
+          }
+        ]
+      },
+      {
+        "id": "states",
+        "name": "Puntland and Jubaland administrations",
+        "type": "armed-group",
+        "side": "Federal member states"
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: Somali Civil War (2009–present)",
+        "url": "https://en.wikipedia.org/wiki/Somali_Civil_War_(2009%E2%80%93present)"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-06",
+        "kind": "collapse",
+        "summary": "Government forces fought opposition militias in Mogadishu over the election delay; no talks with al-Shabaab.",
+        "sources": [
+          {
+            "name": "Al Jazeera: Fighting in Somalia’s capital over election delay (Jun 2026)",
+            "url": "https://www.aljazeera.com/news/2026/6/4/fighting-in-somalias-capital-as-anger-over-election-delay-erupts"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -673,6 +1749,69 @@
       "Eritrea (accused of backing armed groups)"
     ],
     "summary": "After the 2020–2022 Tigray war ended, insurgencies by Amhara Fano militias and the Oromo Liberation Army spread. Tigray’s ruling party split in 2025, and tensions with Eritrea over access to the sea rose sharply.",
+    "actors": [
+      {
+        "id": "federal",
+        "name": "Federal government and allied regional forces",
+        "type": "state",
+        "side": "Government",
+        "iso": "ETH"
+      },
+      {
+        "id": "tplf",
+        "name": "TPLF (Tigray) allied with Amhara Fano militias",
+        "type": "armed-group",
+        "side": "TPLF–Fano",
+        "backers": [
+          {
+            "name": "Eritrea",
+            "support": "political",
+            "iso": "ERI"
+          }
+        ]
+      },
+      {
+        "id": "ola",
+        "name": "Oromo Liberation Army",
+        "type": "armed-group",
+        "side": "OLA"
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: Ethiopian civil conflict (2018–present)",
+        "url": "https://en.wikipedia.org/wiki/Ethiopian_civil_conflict_(2018%E2%80%93present)"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-09-23",
+        "kind": "collapse",
+        "summary": "The TPLF–Fano offensive ended the Pretoria settlement in practice; Eritrea cut ties on 1 October.",
+        "sources": [
+          {
+            "name": "Al Jazeera: Government forces advance in Tigray as rebels retreat (Oct 2026)",
+            "url": "https://www.aljazeera.com/news/2026/10/3/ethiopian-govt-forces-advance-in-tigray-as-rebels-retreat-what-to-know"
+          }
+        ]
+      },
+      {
+        "date": "2022-11-02",
+        "kind": "agreement",
+        "summary": "Pretoria Agreement ended the Tigray war between the federal government and the TPLF.",
+        "sources": [
+          {
+            "name": "Wikipedia: Pretoria Agreement",
+            "url": "https://en.wikipedia.org/wiki/Pretoria_Agreement"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -732,6 +1871,80 @@
       "White Army and other militias"
     ],
     "summary": "A 2018 peace deal paused the civil war but was never fully implemented. Clashes in Upper Nile in early 2025 and the arrest of First Vice-President Riek Machar in March 2025 put the agreement in jeopardy.",
+    "actors": [
+      {
+        "id": "splm",
+        "name": "Government (SPLM) under Salva Kiir",
+        "type": "state",
+        "side": "Government",
+        "iso": "SSD",
+        "backers": [
+          {
+            "name": "Uganda",
+            "support": "troops",
+            "iso": "UGA"
+          }
+        ]
+      },
+      {
+        "id": "splmio",
+        "name": "SPLM-IO under Riek Machar",
+        "type": "armed-group",
+        "side": "Opposition"
+      },
+      {
+        "id": "whitearmy",
+        "name": "White Army and other militias",
+        "type": "armed-group",
+        "side": "Opposition"
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: South Sudanese Civil War",
+        "url": "https://en.wikipedia.org/wiki/South_Sudanese_Civil_War"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-01-28",
+        "kind": "collapse",
+        "summary": "The army launched Operation Enduring Peace against SPLA-IO and White Army positions.",
+        "sources": [
+          {
+            "name": "Al Jazeera: South Sudan launches offensive against opposition forces (Jan 2026)",
+            "url": "https://www.aljazeera.com/news/2026/1/28/south-sudan-launches-offensive-against-opposition-forces-what-to-know"
+          }
+        ]
+      },
+      {
+        "date": "2025-09",
+        "kind": "collapse",
+        "summary": "Riek Machar was put on trial for treason, hollowing out the 2018 deal.",
+        "sources": [
+          {
+            "name": "Crisis Group: A trial for South Sudan’s frail peace",
+            "url": "https://www.crisisgroup.org/qna/africa/south-sudan/trial-south-sudans-frail-peace"
+          }
+        ]
+      },
+      {
+        "date": "2018-09-12",
+        "kind": "agreement",
+        "summary": "Revitalised peace agreement (R-ARCSS) signed in Addis Ababa; its transition has been extended repeatedly.",
+        "sources": [
+          {
+            "name": "Wikipedia: South Sudanese Civil War",
+            "url": "https://en.wikipedia.org/wiki/South_Sudanese_Civil_War"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -790,6 +2003,65 @@
       "Haitian National Police and the multinational force"
     ],
     "summary": "Gangs control most of Port-au-Prince and major roads, and have displaced over a million people. A Kenya-led Multinational Security Support mission arrived in 2024 but was under-resourced.",
+    "actors": [
+      {
+        "id": "vivansanm",
+        "name": "Viv Ansanm gang coalition",
+        "type": "armed-group",
+        "side": "Gangs"
+      },
+      {
+        "id": "police",
+        "name": "Haitian National Police and government",
+        "type": "state",
+        "side": "Government",
+        "iso": "HTI",
+        "backers": [
+          {
+            "name": "United States",
+            "support": "funding",
+            "iso": "USA"
+          }
+        ]
+      },
+      {
+        "id": "gsf",
+        "name": "UN-authorised Gang Suppression Force",
+        "type": "international",
+        "side": "Government",
+        "backers": [
+          {
+            "name": "Kenya",
+            "support": "troops",
+            "iso": "KEN"
+          }
+        ]
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: Haitian crisis (2018–present)",
+        "url": "https://en.wikipedia.org/wiki/Haitian_crisis_(2018%E2%80%93present)"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-09-29",
+        "kind": "mediation",
+        "summary": "The Security Council extended the Gang Suppression Force to March 2027; elections set for 13 December 2026.",
+        "sources": [
+          {
+            "name": "Al Jazeera: UN extends Gang Suppression Force mandate (Sep 2026)",
+            "url": "https://www.aljazeera.com/news/2026/9/29/un-extends-mandate-of-gang-suppression-force-in-haiti-for-six-months"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -850,6 +2122,64 @@
       "Nigerian armed forces"
     ],
     "summary": "The Boko Haram insurgency and its Islamic State offshoot persist around Lake Chad, while mass-kidnapping bandit groups dominate the north-west and farmer–herder violence afflicts the Middle Belt.",
+    "actors": [
+      {
+        "id": "iswap",
+        "name": "Islamic State West Africa Province",
+        "type": "armed-group",
+        "side": "Jihadists"
+      },
+      {
+        "id": "bokoharam",
+        "name": "Boko Haram (JAS)",
+        "type": "armed-group",
+        "side": "Jihadists"
+      },
+      {
+        "id": "bandits",
+        "name": "Armed bandit groups and Lakurawa",
+        "type": "armed-group",
+        "side": "Bandits"
+      },
+      {
+        "id": "army",
+        "name": "Nigerian armed forces",
+        "type": "state",
+        "side": "Government",
+        "iso": "NGA",
+        "backers": [
+          {
+            "name": "United States",
+            "support": "intelligence",
+            "iso": "USA"
+          }
+        ]
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: Boko Haram insurgency",
+        "url": "https://en.wikipedia.org/wiki/Boko_Haram_insurgency"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-05",
+        "kind": "mediation",
+        "summary": "The US and Nigeria began joint air strikes; no negotiation track with ISWAP.",
+        "sources": [
+          {
+            "name": "AP via Washington Post: Nigeria says joint strikes with US killed 175 IS fighters (May 2026)",
+            "url": "https://www.washingtonpost.com/world/2026/05/19/nigeria-us-joint-strikes-islamic-state/f25be54c-53a7-11f1-9c40-7a0a12d9e745_story.html"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -908,6 +2238,56 @@
       "Mozambican forces with Rwandan troops"
     ],
     "summary": "An Islamic State-affiliated insurgency in the gas-rich northern province displaced hundreds of thousands and stalled multibillion-dollar LNG projects.",
+    "actors": [
+      {
+        "id": "ism",
+        "name": "Islamic State Mozambique",
+        "type": "armed-group",
+        "side": "Insurgents"
+      },
+      {
+        "id": "fadm",
+        "name": "Mozambican forces",
+        "type": "state",
+        "side": "Government",
+        "iso": "MOZ",
+        "backers": [
+          {
+            "name": "Rwanda",
+            "support": "troops",
+            "iso": "RWA"
+          },
+          {
+            "name": "European Union",
+            "support": "funding"
+          }
+        ]
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: Insurgency in Cabo Delgado",
+        "url": "https://en.wikipedia.org/wiki/Insurgency_in_Cabo_Delgado"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-01-29",
+        "kind": "mediation",
+        "summary": "TotalEnergies restarted the Afungi project under Rwandan guard; no talks with the insurgents.",
+        "sources": [
+          {
+            "name": "allAfrica: Resumption of Cabo Delgado gas project reignites hope and resentment (Jun 2026)",
+            "url": "https://allafrica.com/stories/202606150004.html"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -968,6 +2348,93 @@
       "Colombian armed forces"
     ],
     "summary": "Armed groups that filled the vacuum after the 2016 FARC peace deal fight each other and the state over coca, mining and smuggling corridors. The \"total peace\" talks launched in 2022 largely collapsed.",
+    "actors": [
+      {
+        "id": "eln",
+        "name": "ELN",
+        "type": "armed-group",
+        "side": "Armed groups",
+        "backers": [
+          {
+            "name": "Venezuela",
+            "support": "basing",
+            "iso": "VEN"
+          }
+        ]
+      },
+      {
+        "id": "farcd",
+        "name": "FARC dissident factions",
+        "type": "armed-group",
+        "side": "Armed groups"
+      },
+      {
+        "id": "clan",
+        "name": "Clan del Golfo",
+        "type": "armed-group",
+        "side": "Armed groups"
+      },
+      {
+        "id": "state",
+        "name": "Colombian armed forces",
+        "type": "state",
+        "side": "Government",
+        "iso": "COL",
+        "backers": [
+          {
+            "name": "United States",
+            "support": "funding",
+            "iso": "USA"
+          }
+        ]
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: Colombian conflict",
+        "url": "https://en.wikipedia.org/wiki/Colombian_conflict"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-09-11",
+        "kind": "collapse",
+        "summary": "President de la Espriella closed all talks with the ELN and Clan del Golfo.",
+        "sources": [
+          {
+            "name": "NPR: Colombia’s new president vows to challenge rebel groups (Aug 2026)",
+            "url": "https://www.npr.org/2026/08/07/nx-s1-5924775/colombias-new-president-vows-to-remake-the-country-and-challenge-its-fragile-peace"
+          }
+        ]
+      },
+      {
+        "date": "2025-01-17",
+        "kind": "collapse",
+        "summary": "The Petro government suspended ELN talks after the Catatumbo offensive.",
+        "sources": [
+          {
+            "name": "Wikipedia: Colombian peace process",
+            "url": "https://en.wikipedia.org/wiki/Colombian_peace_process"
+          }
+        ]
+      },
+      {
+        "date": "2016-11-24",
+        "kind": "agreement",
+        "summary": "Final peace agreement between the government and FARC-EP.",
+        "sources": [
+          {
+            "name": "Wikipedia: Colombian peace agreement",
+            "url": "https://en.wikipedia.org/wiki/Colombian_peace_agreement"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -1027,6 +2494,46 @@
       "Mexican security forces"
     ],
     "summary": "Rivalries among cartels and with the state produce tens of thousands of homicides a year. A war inside the Sinaloa Cartel began in September 2024 after the capture of Ismael \"El Mayo\" Zambada.",
+    "actors": [
+      {
+        "id": "sinaloa",
+        "name": "Sinaloa Cartel factions (Chapitos vs. Mayiza)",
+        "type": "armed-group",
+        "side": "Cartels"
+      },
+      {
+        "id": "cjng",
+        "name": "Jalisco New Generation Cartel",
+        "type": "armed-group",
+        "side": "Cartels"
+      },
+      {
+        "id": "state",
+        "name": "Mexican security forces",
+        "type": "state",
+        "side": "Government",
+        "iso": "MEX",
+        "backers": [
+          {
+            "name": "United States",
+            "support": "intelligence",
+            "iso": "USA"
+          }
+        ]
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: Mexican drug war",
+        "url": "https://en.wikipedia.org/wiki/Mexican_drug_war"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [],
     "history": [
       {
         "date": "2026-10-07",
@@ -1086,6 +2593,68 @@
       "Pakistan"
     ],
     "summary": "Nuclear-armed rivals that have fought three wars over Kashmir. A militant attack on tourists at Pahalgam in April 2025 triggered the most serious crisis since 1999.",
+    "actors": [
+      {
+        "id": "india",
+        "name": "India",
+        "type": "state",
+        "side": "India",
+        "iso": "IND"
+      },
+      {
+        "id": "pakistan",
+        "name": "Pakistan",
+        "type": "state",
+        "side": "Pakistan",
+        "iso": "PAK",
+        "backers": [
+          {
+            "name": "China",
+            "support": "arms",
+            "iso": "CHN"
+          }
+        ]
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: 2025 India–Pakistan conflict",
+        "url": "https://en.wikipedia.org/wiki/2025_India%E2%80%93Pakistan_conflict"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-08-31",
+        "kind": "mediation",
+        "summary": "A Hague arbitration court ruled the Indus Waters Treaty remains in force; India rejected the award.",
+        "sources": [
+          {
+            "name": "Al Jazeera: India rejects Hague order to restore Indus waters pact (Aug 2026)",
+            "url": "https://www.aljazeera.com/news/2026/8/31/india-rejects-hague-court-order-to-restore-indus-waters-pact-with-pakistan"
+          }
+        ]
+      },
+      {
+        "date": "2025-05-10",
+        "kind": "ceasefire",
+        "summary": "Ceasefire after four days of missile, drone and air combat.",
+        "sources": [
+          {
+            "name": "Wikipedia: 2025 India–Pakistan conflict",
+            "url": "https://en.wikipedia.org/wiki/2025_India%E2%80%93Pakistan_conflict"
+          },
+          {
+            "name": "CFR Global Conflict Tracker",
+            "url": "https://www.cfr.org/global-conflict-tracker"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -1147,6 +2716,91 @@
       "Taliban government of Afghanistan"
     ],
     "summary": "Militant violence in Pakistan surged after the Taliban’s 2021 takeover of Afghanistan gave the TTP a haven. Baloch separatists escalated with attacks such as the March 2025 hijacking of the Jaffar Express.",
+    "actors": [
+      {
+        "id": "pakistan",
+        "name": "Pakistani armed forces",
+        "type": "state",
+        "side": "Pakistan",
+        "iso": "PAK",
+        "backers": [
+          {
+            "name": "China",
+            "support": "arms",
+            "iso": "CHN"
+          }
+        ]
+      },
+      {
+        "id": "taliban",
+        "name": "Taliban government of Afghanistan",
+        "type": "state",
+        "side": "Afghanistan",
+        "iso": "AFG"
+      },
+      {
+        "id": "ttp",
+        "name": "Tehrik-i-Taliban Pakistan",
+        "type": "armed-group",
+        "side": "Afghanistan"
+      },
+      {
+        "id": "bla",
+        "name": "Baloch Liberation Army",
+        "type": "armed-group",
+        "side": "Afghanistan"
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: Afghanistan–Pakistan conflict",
+        "url": "https://en.wikipedia.org/wiki/Afghanistan%E2%80%93Pakistan_conflict"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-04",
+        "kind": "collapse",
+        "summary": "China-hosted talks failed and Pakistani strikes continued.",
+        "sources": [
+          {
+            "name": "CBS News: UN says Pakistani air strikes killed 10 civilians, mostly children (Oct 2026)",
+            "url": "https://www.cbsnews.com/news/afghanistan-pakistan-airstrikes-civilians-children-killed-unama/"
+          }
+        ]
+      },
+      {
+        "date": "2026-02-27",
+        "kind": "collapse",
+        "summary": "Pakistan declared open war on the Afghan Taliban after bombing Kabul and Kandahar.",
+        "sources": [
+          {
+            "name": "Al Jazeera: Open war as Pakistan bombs Kabul (Feb 2026)",
+            "url": "https://www.aljazeera.com/news/2026/2/27/pakistan-warplanes-bomb-kabul-as-clashes-with-afghanistan-intensify"
+          }
+        ]
+      },
+      {
+        "date": "2025-10-19",
+        "kind": "ceasefire",
+        "summary": "Qatar- and Türkiye-mediated ceasefire in Doha after the October 2025 border fighting.",
+        "sources": [
+          {
+            "name": "Wikipedia: 2025 Afghanistan–Pakistan conflict",
+            "url": "https://en.wikipedia.org/wiki/2025_Afghanistan%E2%80%93Pakistan_conflict"
+          },
+          {
+            "name": "CFR Global Conflict Tracker",
+            "url": "https://www.cfr.org/global-conflict-tracker"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -1206,6 +2860,86 @@
       "Tripoli militias"
     ],
     "summary": "Libya has been split between rival governments in Tripoli and the east since 2014. A 2020 ceasefire holds between them, but Tripoli’s armed groups periodically fight each other.",
+    "actors": [
+      {
+        "id": "gnu",
+        "name": "Government of National Unity (Tripoli)",
+        "type": "state",
+        "side": "West",
+        "iso": "LBY",
+        "backers": [
+          {
+            "name": "Türkiye",
+            "support": "troops",
+            "iso": "TUR"
+          }
+        ]
+      },
+      {
+        "id": "lna",
+        "name": "Libyan National Army and House of Representatives (east)",
+        "type": "armed-group",
+        "side": "East",
+        "backers": [
+          {
+            "name": "Russia (Africa Corps)",
+            "support": "troops",
+            "iso": "RUS"
+          },
+          {
+            "name": "Egypt",
+            "support": "political",
+            "iso": "EGY"
+          },
+          {
+            "name": "United Arab Emirates",
+            "support": "arms",
+            "iso": "ARE"
+          }
+        ]
+      },
+      {
+        "id": "unsmil",
+        "name": "UN Support Mission (mediator)",
+        "type": "international",
+        "side": "Mediators"
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: Libyan crisis (2011–present)",
+        "url": "https://en.wikipedia.org/wiki/Libyan_crisis_(2011%E2%80%93present)"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-08-30",
+        "kind": "agreement",
+        "summary": "Rival camps signed a UN-brokered deal for elections within 24 months; the High State Council objected.",
+        "sources": [
+          {
+            "name": "Al Jazeera: Rival Libya factions sign deal to hold elections within two years (Aug 2026)",
+            "url": "https://www.aljazeera.com/news/2026/8/30/rival-libya-factions-sign-deal-to-hold-national-elections-within-two-years"
+          }
+        ]
+      },
+      {
+        "date": "2020-10-23",
+        "kind": "ceasefire",
+        "summary": "Permanent ceasefire agreement signed in Geneva under UN auspices.",
+        "sources": [
+          {
+            "name": "Wikipedia: Second Libyan Civil War",
+            "url": "https://en.wikipedia.org/wiki/Second_Libyan_Civil_War"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -1265,6 +2999,103 @@
       "Cambodia"
     ],
     "summary": "A long-running dispute over temples along the border escalated into five days of artillery, rocket and air strikes in July 2025 that killed dozens and displaced hundreds of thousands.",
+    "actors": [
+      {
+        "id": "thailand",
+        "name": "Thailand",
+        "type": "state",
+        "side": "Thailand",
+        "iso": "THA"
+      },
+      {
+        "id": "cambodia",
+        "name": "Cambodia",
+        "type": "state",
+        "side": "Cambodia",
+        "iso": "KHM",
+        "backers": [
+          {
+            "name": "China",
+            "support": "arms",
+            "iso": "CHN"
+          }
+        ]
+      },
+      {
+        "id": "asean",
+        "name": "Malaysia as ASEAN chair (mediator)",
+        "type": "international",
+        "side": "Mediators",
+        "backers": [
+          {
+            "name": "United States",
+            "support": "political",
+            "iso": "USA"
+          }
+        ]
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: 2025 Cambodia–Thailand conflict",
+        "url": "https://en.wikipedia.org/wiki/2025_Cambodia%E2%80%93Thailand_conflict"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-09-15",
+        "kind": "mediation",
+        "summary": "Both sides opened UN compulsory conciliation in Singapore on their Gulf of Thailand claims.",
+        "sources": [
+          {
+            "name": "AP: Thailand and Cambodia begin UN conciliation on maritime claims (Sep 2026)",
+            "url": "https://abcnews.com/International/wireStory/thailand-cambodia-begin-conciliation-process-disputed-maritime-claims-136453110"
+          }
+        ]
+      },
+      {
+        "date": "2025-12",
+        "kind": "ceasefire",
+        "summary": "A new truce followed renewed fighting in December 2025 that killed over 100.",
+        "sources": [
+          {
+            "name": "Al Jazeera: Thai army says Cambodia calls border strike an accident (Jan 2026)",
+            "url": "https://www.aljazeera.com/news/2026/1/6/thai-army-says-cambodia-claims-new-border-strike-was-accident-amid-truce"
+          }
+        ]
+      },
+      {
+        "date": "2025-10-26",
+        "kind": "agreement",
+        "summary": "Kuala Lumpur peace accord signed under Malaysian and US auspices.",
+        "sources": [
+          {
+            "name": "Wikipedia: 2025 Cambodia–Thailand conflict",
+            "url": "https://en.wikipedia.org/wiki/2025_Cambodia%E2%80%93Thailand_conflict"
+          }
+        ]
+      },
+      {
+        "date": "2025-07-28",
+        "kind": "ceasefire",
+        "summary": "Malaysia-brokered ceasefire after five days of fighting.",
+        "sources": [
+          {
+            "name": "Wikipedia: 2025 Cambodia–Thailand conflict",
+            "url": "https://en.wikipedia.org/wiki/2025_Cambodia%E2%80%93Thailand_conflict"
+          },
+          {
+            "name": "CFR Global Conflict Tracker",
+            "url": "https://www.cfr.org/global-conflict-tracker"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -1325,6 +3156,58 @@
       "United States (security partner)"
     ],
     "summary": "Beijing claims Taiwan and has not renounced force. Chinese air and naval activity around the island has reached record levels, with large-scale exercises rehearsing a blockade.",
+    "actors": [
+      {
+        "id": "prc",
+        "name": "People’s Republic of China",
+        "type": "state",
+        "side": "China",
+        "iso": "CHN"
+      },
+      {
+        "id": "taiwan",
+        "name": "Taiwan (Republic of China)",
+        "type": "state",
+        "side": "Taiwan",
+        "iso": "TWN",
+        "backers": [
+          {
+            "name": "United States",
+            "support": "arms",
+            "iso": "USA"
+          },
+          {
+            "name": "Japan",
+            "support": "political",
+            "iso": "JPN"
+          }
+        ]
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: Cross-Strait relations",
+        "url": "https://en.wikipedia.org/wiki/Cross-Strait_relations"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-05",
+        "kind": "talks",
+        "summary": "A Trump–Xi summit was followed by PLA combat-readiness patrols; no cross-strait dialogue.",
+        "sources": [
+          {
+            "name": "Al Jazeera: Taiwan monitors Chinese combat patrol near island (May 2026)",
+            "url": "https://www.aljazeera.com/news/2026/5/26/taiwan-monitors-unprovoked-chinese-combat-patrol-near-island"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -1385,6 +3268,81 @@
       "United States"
     ],
     "summary": "The 1953 armistice was never replaced by a peace treaty. North Korea has an expanding nuclear and missile arsenal and declared the South a \"hostile state\" in 2024.",
+    "actors": [
+      {
+        "id": "dprk",
+        "name": "North Korea",
+        "type": "state",
+        "side": "North",
+        "iso": "PRK",
+        "backers": [
+          {
+            "name": "Russia",
+            "support": "arms",
+            "iso": "RUS"
+          },
+          {
+            "name": "China",
+            "support": "funding",
+            "iso": "CHN"
+          }
+        ]
+      },
+      {
+        "id": "rok",
+        "name": "South Korea",
+        "type": "state",
+        "side": "South",
+        "iso": "KOR",
+        "backers": [
+          {
+            "name": "United States",
+            "support": "troops",
+            "iso": "USA"
+          },
+          {
+            "name": "Japan",
+            "support": "political",
+            "iso": "JPN"
+          }
+        ]
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: Korean conflict",
+        "url": "https://en.wikipedia.org/wiki/Korean_conflict"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-10",
+        "kind": "collapse",
+        "summary": "Pyongyang rebuffed dialogue and test-fired an IRBM amid a border mine dispute.",
+        "sources": [
+          {
+            "name": "France 24: North Korea fires ballistic missile amid border mine dispute (Oct 2026)",
+            "url": "https://www.france24.com/en/asia-pacific/20261003-north-korea-fires-ballistic-missile-after-seoul-s-apology-demand"
+          }
+        ]
+      },
+      {
+        "date": "2018-09-19",
+        "kind": "agreement",
+        "summary": "Pyongyang Joint Declaration and the inter-Korean military agreement, since suspended by both sides.",
+        "sources": [
+          {
+            "name": "Wikipedia: September 2018 inter-Korean summit",
+            "url": "https://en.wikipedia.org/wiki/September_2018_inter-Korean_summit"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -1447,6 +3405,70 @@
       "United States (treaty ally of the Philippines)"
     ],
     "summary": "Overlapping maritime claims and China’s militarised artificial islands produce regular confrontations, especially between Chinese coast guard vessels and Philippine resupply missions.",
+    "actors": [
+      {
+        "id": "china",
+        "name": "China",
+        "type": "state",
+        "side": "China",
+        "iso": "CHN"
+      },
+      {
+        "id": "philippines",
+        "name": "Philippines",
+        "type": "state",
+        "side": "Claimants",
+        "iso": "PHL",
+        "backers": [
+          {
+            "name": "United States",
+            "support": "troops",
+            "iso": "USA"
+          },
+          {
+            "name": "Japan",
+            "support": "arms",
+            "iso": "JPN"
+          },
+          {
+            "name": "Australia",
+            "support": "political",
+            "iso": "AUS"
+          }
+        ]
+      },
+      {
+        "id": "vietnam",
+        "name": "Vietnam and other claimants",
+        "type": "state",
+        "side": "Claimants",
+        "iso": "VNM"
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: South China Sea disputes",
+        "url": "https://en.wikipedia.org/wiki/Territorial_disputes_in_the_South_China_Sea"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2016-07-12",
+        "kind": "agreement",
+        "summary": "Permanent Court of Arbitration ruled against China’s nine-dash-line claims; Beijing rejects the award. ASEAN–China code of conduct talks continue.",
+        "sources": [
+          {
+            "name": "Wikipedia: Philippines v. China",
+            "url": "https://en.wikipedia.org/wiki/Philippines_v._China"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -1506,6 +3528,95 @@
       "Azerbaijan"
     ],
     "summary": "Azerbaijan won the 2020 war and retook all of Nagorno-Karabakh in September 2023, prompting the exodus of its Armenian population. The two states then negotiated a peace treaty.",
+    "actors": [
+      {
+        "id": "armenia",
+        "name": "Armenia",
+        "type": "state",
+        "side": "Armenia",
+        "iso": "ARM",
+        "backers": [
+          {
+            "name": "European Union",
+            "support": "political"
+          },
+          {
+            "name": "France",
+            "support": "arms",
+            "iso": "FRA"
+          },
+          {
+            "name": "India",
+            "support": "arms",
+            "iso": "IND"
+          }
+        ]
+      },
+      {
+        "id": "azerbaijan",
+        "name": "Azerbaijan",
+        "type": "state",
+        "side": "Azerbaijan",
+        "iso": "AZE",
+        "backers": [
+          {
+            "name": "Türkiye",
+            "support": "arms",
+            "iso": "TUR"
+          },
+          {
+            "name": "Israel",
+            "support": "arms",
+            "iso": "ISR"
+          }
+        ]
+      },
+      {
+        "id": "usa",
+        "name": "United States (TRIPP corridor)",
+        "type": "international",
+        "side": "Mediators"
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: Armenia–Azerbaijan peace process",
+        "url": "https://en.wikipedia.org/wiki/Armenia%E2%80%93Azerbaijan_peace_process"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-10",
+        "kind": "talks",
+        "summary": "Pashinyan said a draft constitution would be published by year-end, a precondition Baku sets for signing.",
+        "sources": [
+          {
+            "name": "Eurasianet: Armenia–Azerbaijan peace deal one year on (Aug 2026)",
+            "url": "https://eurasianet.org/assessing-armenian-azerbaijani-peace-deal-one-year-later"
+          }
+        ]
+      },
+      {
+        "date": "2025-08-08",
+        "kind": "agreement",
+        "summary": "Leaders initialled a peace agreement at the White House, including the TRIPP transit corridor.",
+        "sources": [
+          {
+            "name": "Wikipedia: 2025 Armenia–Azerbaijan peace agreement",
+            "url": "https://en.wikipedia.org/wiki/Armenia%E2%80%93Azerbaijan_peace_process"
+          },
+          {
+            "name": "CFR Global Conflict Tracker",
+            "url": "https://www.cfr.org/global-conflict-tracker"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -1565,6 +3676,58 @@
       "Venezuelan government and armed forces"
     ],
     "summary": "Washington declared an armed conflict with drug-trafficking cartels it links to Venezuela’s government, deployed a large naval force to the Caribbean and, from September 2025, struck boats it said were carrying narcotics.",
+    "actors": [
+      {
+        "id": "usa",
+        "name": "United States",
+        "type": "state",
+        "side": "United States",
+        "iso": "USA"
+      },
+      {
+        "id": "venezuela",
+        "name": "Venezuelan government under Delcy Rodríguez",
+        "type": "state",
+        "side": "Venezuela",
+        "iso": "VEN",
+        "backers": [
+          {
+            "name": "Russia",
+            "support": "political",
+            "iso": "RUS"
+          },
+          {
+            "name": "Cuba",
+            "support": "intelligence",
+            "iso": "CUB"
+          }
+        ]
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: 2026 United States intervention in Venezuela",
+        "url": "https://en.wikipedia.org/wiki/Venezuela%E2%80%93United_States_relations"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-09-24",
+        "kind": "talks",
+        "summary": "Acting president Rodríguez told the UN that elections would follow, without a date.",
+        "sources": [
+          {
+            "name": "NBC News: Venezuela’s acting leader promises elections at UN (Sep 2026)",
+            "url": "https://www.nbcnews.com/world/venezuela/venezuelas-acting-leader-un-first-address-promises-elections-right-mom-rcna599548"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -1623,6 +3786,56 @@
       "Cameroonian armed forces"
     ],
     "summary": "Protests over the marginalisation of Cameroon’s English-speaking regions turned into a separatist insurgency in 2017. Both sides have been accused of atrocities, and schools and markets are frequent targets.",
+    "actors": [
+      {
+        "id": "ambazonia",
+        "name": "Ambazonian separatist groups",
+        "type": "armed-group",
+        "side": "Separatists"
+      },
+      {
+        "id": "cameroon",
+        "name": "Cameroonian armed forces",
+        "type": "state",
+        "side": "Government",
+        "iso": "CMR"
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Wikipedia: Anglophone Crisis",
+        "url": "https://en.wikipedia.org/wiki/Anglophone_Crisis"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-03",
+        "kind": "mediation",
+        "summary": "The Supreme Court annulled life sentences of ten separatist leaders; no formal talks.",
+        "sources": [
+          {
+            "name": "Crisis Group: Cameroon",
+            "url": "https://www.crisisgroup.org/africa/central-africa/cameroon"
+          }
+        ]
+      },
+      {
+        "date": "2019-09-30",
+        "kind": "talks",
+        "summary": "Major National Dialogue in Yaoundé granted special status to the two Anglophone regions; separatists boycotted.",
+        "sources": [
+          {
+            "name": "Wikipedia: Anglophone Crisis",
+            "url": "https://en.wikipedia.org/wiki/Anglophone_Crisis"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -1689,6 +3902,69 @@
       "United States Navy"
     ],
     "summary": "From 1 March 2026 Iran retaliated for the US–Israeli campaign by firing hundreds of missiles and drones at Bahrain, Kuwait, Qatar, Saudi Arabia, the UAE and Oman, hitting Ras Tanura and Kuwaiti fuel storage. The IRGC closed the Strait of Hormuz, halting commercial traffic by 5 March and triggering a global fuel crisis.",
+    "actors": [
+      {
+        "id": "iran",
+        "name": "Iran and the IRGC Navy",
+        "type": "state",
+        "side": "Iran",
+        "iso": "IRN"
+      },
+      {
+        "id": "gcc",
+        "name": "Gulf Cooperation Council states",
+        "type": "coalition",
+        "side": "Gulf states and US"
+      },
+      {
+        "id": "usn",
+        "name": "United States Navy",
+        "type": "state",
+        "side": "Gulf states and US",
+        "iso": "USA"
+      },
+      {
+        "id": "oman",
+        "name": "Oman (mediator)",
+        "type": "international",
+        "side": "Mediators"
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Crisis Group: A fragile ceasefire under threat: the future of the Strait of Hormuz",
+        "url": "https://www.crisisgroup.org/qna/global/iran-israelpalestine-united-states/fragile-ceasefire-under-threat-what-future-strait-hormuz"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-07-14",
+        "kind": "collapse",
+        "summary": "The United States imposed a naval blockade of Iran after the April ceasefire collapsed on 8 July.",
+        "sources": [
+          {
+            "name": "Crisis Group: A fragile ceasefire under threat: the future of the Strait of Hormuz",
+            "url": "https://www.crisisgroup.org/qna/global/iran-israelpalestine-united-states/fragile-ceasefire-under-threat-what-future-strait-hormuz"
+          }
+        ]
+      },
+      {
+        "date": "2026-04",
+        "kind": "ceasefire",
+        "summary": "An April 2026 ceasefire paused attacks on shipping; Oman-mediated talks continue.",
+        "sources": [
+          {
+            "name": "Crisis Group: A fragile ceasefire under threat: the future of the Strait of Hormuz",
+            "url": "https://www.crisisgroup.org/qna/global/iran-israelpalestine-united-states/fragile-ceasefire-under-threat-what-future-strait-hormuz"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -1726,6 +4002,65 @@
       "Iraqi government"
     ],
     "summary": "When the US and Israel attacked Iran on 28 February 2026, Iraq’s Iran-aligned Popular Mobilization Forces joined with drone and rocket attacks on US and Kurdish bases and on Baghdad’s diplomatic quarter. US and Israeli strikes on militia sites followed; Baghdad counted 138 US attacks by early April that killed 73 militia members, 13 security personnel and 6 civilians.",
+    "actors": [
+      {
+        "id": "pmf",
+        "name": "Popular Mobilization Forces and Islamic Resistance in Iraq",
+        "type": "armed-group",
+        "side": "Militias",
+        "backers": [
+          {
+            "name": "Iran",
+            "support": "arms",
+            "iso": "IRN"
+          }
+        ]
+      },
+      {
+        "id": "iraq",
+        "name": "Iraqi government",
+        "type": "state",
+        "side": "Government",
+        "iso": "IRQ"
+      },
+      {
+        "id": "usisrael",
+        "name": "United States and Israel (air strikes)",
+        "type": "coalition",
+        "side": "External",
+        "backers": [
+          {
+            "name": "Saudi Arabia",
+            "support": "troops",
+            "iso": "SAU"
+          }
+        ]
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "Long War Journal: Militia disarmament dispute marks Iraq’s post-US-withdrawal era (Oct 2026)",
+        "url": "https://longwarjournal.org/archives/2026/10/us-flag-trampling-militia-disarmament-dispute-mark-iraqs-post-us-withdrawal-era.php"
+      },
+      {
+        "name": "CFR Global Conflict Tracker",
+        "url": "https://www.cfr.org/global-conflict-tracker"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [
+      {
+        "date": "2026-10",
+        "kind": "talks",
+        "summary": "Prime Minister al-Zaidi pressed factions to bring weapons under state control by June 2027.",
+        "sources": [
+          {
+            "name": "Long War Journal: Militia disarmament dispute marks Iraq’s post-US-withdrawal era (Oct 2026)",
+            "url": "https://longwarjournal.org/archives/2026/10/us-flag-trampling-militia-disarmament-dispute-mark-iraqs-post-us-withdrawal-era.php"
+          }
+        ]
+      }
+    ],
     "history": [
       {
         "date": "2026-10-07",
@@ -1761,6 +4096,36 @@
       "Pakistani armed forces"
     ],
     "summary": "Baloch separatists have fought the Pakistani state for two decades, targeting security forces, Punjabi workers and Chinese-linked CPEC projects. In late January 2026 the BLA launched the second phase of Operation Herof, briefly seizing the town of Nushki and prompting Pakistan to deploy helicopters and drones.",
+    "actors": [
+      {
+        "id": "bla",
+        "name": "Balochistan Liberation Army and allied separatists",
+        "type": "armed-group",
+        "side": "Separatists"
+      },
+      {
+        "id": "pakistan",
+        "name": "Pakistani armed forces",
+        "type": "state",
+        "side": "Government",
+        "iso": "PAK",
+        "backers": [
+          {
+            "name": "China",
+            "support": "funding",
+            "iso": "CHN"
+          }
+        ]
+      }
+    ],
+    "actorsSources": [
+      {
+        "name": "ACLED: Is there a new escalation in the Baloch insurgency?",
+        "url": "https://acleddata.com/expert-comment/there-new-escalation-baloch-insurgency"
+      }
+    ],
+    "actorsUpdated": "2026-10",
+    "peace": [],
     "history": [
       {
         "date": "2026-10-07",
