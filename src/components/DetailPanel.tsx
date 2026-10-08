@@ -19,8 +19,14 @@ import StarButton from './StarButton';
 import ActorsGraph from './ActorsGraph';
 import { PEACE_KIND_LABEL, backersOf, SUPPORT_LABEL } from '../lib/actors';
 import { CHOKEPOINTS_FILE, CHOKEPOINT_BY_ID, CHOKEPOINT_COLOR, CHOKEPOINT_STATUS_LABEL, currentStatus, linkedConflicts, type Chokepoint } from '../lib/chokepoints';
-import { MILITARY } from '../lib/military';
-import { TRADE } from '../lib/trade';
+import { MILITARY, PRESENCE_KIND_LABEL, operatorName } from '../lib/military';
+import { TRADE, pct } from '../lib/trade';
+import { relationship, relationshipSummary } from '../lib/relationship';
+import { blocTrend, trendComplete } from '../lib/trends';
+import { WB_HISTORY } from '../lib/worldbankHistory';
+import { search } from '../lib/search';
+import TrendChart from './TrendChart';
+import AskPanel, { ASK_ENABLED } from './AskPanel';
 
 interface Props {
   selection: Exclude<Selection, null>;
@@ -36,6 +42,7 @@ interface Props {
   onHighlightBloc: (id: string) => void;
   onOpenChanges: () => void;
   onSelectChokepoint: (id: string) => void;
+  onSelectPair: (a: string, b: string | null) => void;
 }
 
 function CloseButton({ onClick }: { onClick: () => void }) {
@@ -268,6 +275,9 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
         {changes.length === 0 ? <Muted>No dated assessment or membership change on record for {country.name}.</Muted> : <FeedList items={changes} props={props} compact />}
 
         <div className="panel-actions">
+          <button className="text-btn primary" onClick={() => props.onSelectPair(country.cca3, null)}>
+            Relationship with…
+          </button>
           <ShareButton />
         </div>
         <div className="updated">
@@ -335,6 +345,7 @@ function BlocView({ bloc, props }: { bloc: Bloc; props: Props }) {
         <p>{bloc.description}</p>
         <h4>At a glance · {blocFigures(bloc).members} members</h4>
         <FigureTiles f={blocFigures(bloc)} color={bloc.color} />
+        <BlocTrends bloc={bloc} />
         <div className="panel-actions">
           <button className="text-btn primary" onClick={() => props.onHighlightBloc(bloc.id)}>
             Show on map
@@ -388,6 +399,199 @@ function BlocView({ bloc, props }: { bloc: Bloc; props: Props }) {
         <Sources sources={bloc.sources} />
         <div className="updated">Membership verified {formatMonth(bloc.updated)}.</div>
         <FiguresNote />
+      </div>
+    </>
+  );
+}
+
+function BlocTrends({ bloc }: { bloc: Bloc }) {
+  const points = useMemo(() => blocTrend(bloc), [bloc]);
+  if (points.length < 2) return null;
+  const last = points.at(-1)!;
+  return (
+    <>
+      <h4 id="bloc-trends">Since {points[0]!.year}</h4>
+      <div className="trends">
+        <TrendChart points={points} color={bloc.color} series="members" label="Members" />
+        <TrendChart points={points} color={bloc.color} series="gdpUsd" label="Combined GDP" />
+      </div>
+      <div className="updated">
+        Membership from accession years{bloc.former?.length ? ', including past members' : ''}{trendComplete(bloc) ? '' : ' (incomplete)'}; GDP in current US$ from the{' '}
+        <a href={WB_HISTORY.source.url} target="_blank" rel="noopener noreferrer">
+          World Bank
+        </a>{' '}
+        ({last.covered}/{last.members} members reporting in {last.year}; fetched {formatDate(WB_HISTORY.fetchedAt)}).
+      </div>
+    </>
+  );
+}
+
+function PairPicker({ a, props }: { a: string; props: Props }) {
+  const [q, setQ] = useState('');
+  const hits = useMemo(() => search(q).filter((h) => h.kind === 'country' && h.id !== a).slice(0, 8), [q, a]);
+  return (
+    <>
+      <Muted>Pick a second country to compare ties with {countryName(a)}: shared blocs, conflicts, sanctions, military presence and trade both ways.</Muted>
+      <label className="sr-only" htmlFor="pair-q">
+        Second country
+      </label>
+      <input id="pair-q" className="pair-input" autoFocus value={q} onChange={(e) => setQ(e.target.value)} placeholder="Type a country name" />
+      {hits.length > 0 && (
+        <ul className="link-list">
+          {hits.map((h) => (
+            <li key={h.id}>
+              <button onClick={() => props.onSelectPair(a, h.id)}>{h.label}</button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </>
+  );
+}
+
+function RelationshipView({ a, b, props }: { a: string; b: string | null; props: Props }) {
+  const r = useMemo(() => (b ? relationship(a, b) : null), [a, b]);
+  const na = countryName(a);
+  const nb = b ? countryName(b) : null;
+  return (
+    <>
+      <div className="panel-head">
+        <h2>
+          <span className="eyebrow">Relationship</span>
+          {na} {nb ? <span style={{ color: 'var(--fg-muted)' }}>and</span> : ''} {nb ?? ''}
+        </h2>
+        <CloseButton onClick={props.onClose} />
+      </div>
+      <div className="panel-body" data-pair={b ? `${a},${b}` : a}>
+        {!r || !b ? (
+          <PairPicker a={a} props={props} />
+        ) : (
+          <>
+            <div className="badges">
+              <span className="badge muted">{relationshipSummary(r)}</span>
+            </div>
+            <h4 id="pair-blocs">Shared blocs · {r.sharedBlocs.length}</h4>
+            {r.sharedBlocs.length === 0 ? (
+              <Muted>No bloc tracked here has both as members.</Muted>
+            ) : (
+              <ul className="link-list">
+                {r.sharedBlocs.map(({ bloc, a: ma, b: mb }) => (
+                  <li key={bloc.id}>
+                    <button onClick={() => props.onSelectBloc(bloc.id)}>
+                      <span className="dot" style={{ width: 10, height: 10, borderRadius: '50%', background: bloc.color }} />
+                      {bloc.shortName}
+                      <span className="meta">{ma.status === 'member' && mb.status === 'member' ? 'both members' : `${STATUS_LABEL[ma.status]} / ${STATUS_LABEL[mb.status]}`}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <h4 id="pair-conflicts">Conflicts · {r.conflicts.length}</h4>
+            {r.conflicts.length === 0 ? (
+              <Muted>No tracked conflict links them.</Muted>
+            ) : (
+              <ul className="link-list">
+                {r.conflicts.map((c, i) => (
+                  <li key={c.conflict.id + i}>
+                    <button onClick={() => props.onSelectConflict(c.conflict.id)}>
+                      <span className="dot" style={{ width: 10, height: 10, borderRadius: '50%', background: INTENSITY_COLOR[c.conflict.intensity] }} />
+                      <span>
+                        {c.conflict.name}
+                        <span className="row-note">{c.how === 'both-parties' ? c.detail : `${c.how === 'a-backs' ? na : nb}: ${c.detail}`}</span>
+                      </span>
+                      <span className="meta">{INTENSITY_LABEL[c.conflict.intensity]}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <h4 id="pair-sanctions">Sanctions between them</h4>
+            {r.sanctions.length === 0 ? (
+              <Muted>Neither applies a country-level regime to the other (UN measures are not counted as bilateral).</Muted>
+            ) : (
+              <ul className="link-list">
+                {r.sanctions.flatMap((s) =>
+                  s.regimes.map((x) => (
+                    <li key={s.from + x.url}>
+                      <a href={x.url} target="_blank" rel="noopener noreferrer">
+                        <span>
+                          {x.name}
+                          <span className="row-note">
+                            {countryName(s.from)} → {countryName(s.to)}
+                          </span>
+                        </span>
+                        <span className="meta">{x.authority} ↗</span>
+                      </a>
+                    </li>
+                  )),
+                )}
+              </ul>
+            )}
+            <h4 id="pair-military">Military presence</h4>
+            {r.presence.aInB.length + r.presence.bInA.length === 0 ? (
+              <Muted>Neither keeps forces in the other.</Muted>
+            ) : (
+              <ul className="link-list">
+                {[...r.presence.aInB, ...r.presence.bInA].map((p) => (
+                  <li key={p.operator + p.host + p.name}>
+                    <a href={p.source.url} target="_blank" rel="noopener noreferrer">
+                      <span>
+                        {operatorName(p.operator)} in {countryName(p.host)}: {p.name}
+                        <span className="row-note">{p.note}</span>
+                      </span>
+                      <span className="meta">{PRESENCE_KIND_LABEL[p.kind]} ↗</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <h4 id="pair-trade">Trade both ways</h4>
+            <div className="tiles two">
+              <div className="tile">
+                <span className="label">{na} → {nb}</span>
+                <strong>{r.trade.aToB === null ? '—' : pct(r.trade.aToB)}</strong>
+                <span className="sub">{r.trade.aToB === null ? (r.trade.yearA ? 'not among its 15 largest destinations' : 'no WITS data') : `of ${na}'s goods exports, ${r.trade.yearA}`}</span>
+              </div>
+              <div className="tile">
+                <span className="label">{nb} → {na}</span>
+                <strong>{r.trade.bToA === null ? '—' : pct(r.trade.bToA)}</strong>
+                <span className="sub">{r.trade.bToA === null ? (r.trade.yearB ? 'not among its 15 largest destinations' : 'no WITS data') : `of ${nb}'s goods exports, ${r.trade.yearB}`}</span>
+              </div>
+            </div>
+            <h4>Status</h4>
+            <ul className="link-list">
+              <li>
+                <span className="row">
+                  <span>
+                    {na}
+                    <span className="row-note">{[r.nuclear.a, r.elections.a].filter(Boolean).join(' · ') || 'No nuclear role or election on record'}</span>
+                  </span>
+                </span>
+              </li>
+              <li>
+                <span className="row">
+                  <span>
+                    {nb}
+                    <span className="row-note">{[r.nuclear.b, r.elections.b].filter(Boolean).join(' · ') || 'No nuclear role or election on record'}</span>
+                  </span>
+                </span>
+              </li>
+            </ul>
+            <div className="panel-actions">
+              <button className="text-btn" onClick={() => props.onSelectCountry(a)}>
+                Open {na}
+              </button>
+              <button className="text-btn" onClick={() => props.onSelectCountry(b)}>
+                Open {nb}
+              </button>
+              <button className="text-btn" onClick={() => props.onSelectPair(a, null)}>
+                Change
+              </button>
+              <ShareButton />
+            </div>
+            <div className="updated">Trade shares from {TRADE.source.name}, fetched {formatDate(TRADE.fetchedAt)}. Other rows come from the datasets shown on their own panels.</div>
+          </>
+        )}
       </div>
     </>
   );
@@ -834,7 +1038,11 @@ function AboutView({ props }: { props: Props }) {
           </li>
           <li>
             <span className="when">{formatDate(TRADE.fetchedAt)}</span>
-            <span>Export shares to the US, China and the EU (World Bank WITS, newest year per country)</span>
+            <span>Export shares to the US, China and the EU and each country's largest partners (World Bank WITS, newest year per country)</span>
+          </li>
+          <li>
+            <span className="when">{formatDate(WB_HISTORY.fetchedAt)}</span>
+            <span>GDP by year since {WB_HISTORY.from} for the bloc trend charts (World Bank)</span>
           </li>
         </ul>
         <h4>How assessments are made</h4>
@@ -856,6 +1064,11 @@ function AboutView({ props }: { props: Props }) {
         <h4>Following things</h4>
         <p>
           Every country has a dossier (memberships, conflicts, displacement, figures and its recent changes) at a link you can share. The strip along the bottom cycles the ten newest dated changes and pauses while you hover it. Press the star on any panel to add it to a watchlist kept in this browser; the ticker and the changes feed can be filtered to it. A strip under the header lists what changed since you last pressed "Mark read". The same changes are available as <a href="/feed.xml">RSS</a> and <a href="/feed.json">JSON Feed</a>.
+        </p>
+        <h4>Analysis</h4>
+        <p>
+          Any country dossier offers "Relationship with…": pick a second country to see shared blocs, the conflicts that link them, sanctions one applies to the other, forces either keeps in the other, and each side's export share to the other. Bloc panels chart membership and combined GDP since 1990 from accession years and World Bank data.
+          {ASK_ENABLED ? ' Ask ATLAS answers questions strictly from this dataset with citations; it is rate-limited and capped per day.' : ''}
         </p>
         <h4>Keyboard</h4>
         <p className="mono" style={{ fontSize: 12 }}>
@@ -890,9 +1103,25 @@ export default function DetailPanel(props: Props) {
   } else if (selection.kind === 'chokepoint') {
     const cp = CHOKEPOINT_BY_ID.get(selection.id);
     body = cp ? <ChokepointView cp={cp} props={props} /> : null;
+  } else if (selection.kind === 'pair') {
+    body = <RelationshipView a={selection.a} b={selection.b} props={props} />;
+  } else if (selection.kind === 'ask') {
+    body = (
+      <AskPanel
+        onClose={props.onClose}
+        onOpenId={(id) => {
+          const [kind, ...rest] = id.split(':');
+          const key = rest.join(':');
+          if (kind === 'conflict') props.onSelectConflict(key);
+          else if (kind === 'bloc') props.onSelectBloc(key);
+          else if (kind === 'chokepoint') props.onSelectChokepoint(key);
+          else if (kind && /^[A-Z]{3}$/.test(key)) props.onSelectCountry(key);
+        }}
+      />
+    );
   } else if (selection.kind === 'compare') {
     body = props.compare ? <CompareView a={props.compare.a} b={props.compare.b} props={props} /> : null;
-  } else {
+  } else if (selection.kind === 'conflict') {
     const c = CONFLICT_BY_ID.get(selection.id);
     body = c ? <ConflictView conflict={c} props={props} /> : null;
   }

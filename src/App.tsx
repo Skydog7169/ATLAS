@@ -24,6 +24,7 @@ import ThemeToggle from './components/ThemeToggle';
 import Clock from './components/Clock';
 import Ticker from './components/Ticker';
 import SinceLastVisit from './components/SinceLastVisit';
+import { ASK_ENABLED } from './components/AskPanel';
 import { useWatchlist } from './hooks/useWatchlist';
 import { formatMonth } from './lib/labels';
 import type { CountryFill, Focus, MapMarker } from './components/WorldMap';
@@ -227,6 +228,14 @@ export default function App() {
     [selectChokepoint, selectConflict],
   );
 
+  const selectPair = useCallback(
+    (a: string, b: string | null) => {
+      update({ selection: { kind: 'pair', a, b } });
+      if (b) setFocus({ kind: 'reset' });
+    },
+    [update],
+  );
+
   const selectBloc = useCallback(
     (id: string) => {
       update({ mode: 'blocs', bloc: id, vs: null, selection: { kind: 'bloc', id } });
@@ -335,6 +344,21 @@ export default function App() {
             <path d="m12 3 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.4l-5.7 3.1 1.2-6.4L2.8 9.7l6.4-.8L12 3Z" />
           </svg>
         </button>
+        {ASK_ENABLED && (
+          <button
+            className="icon-btn"
+            aria-label="Ask ATLAS"
+            aria-pressed={selection?.kind === 'ask'}
+            title="Ask ATLAS"
+            onClick={() => update({ selection: selection?.kind === 'ask' ? null : { kind: 'ask' } })}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <path d="M4 5h16v11H9l-5 4V5Z" />
+              <path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.4" />
+              <path d="M12 15.5h.01" />
+            </svg>
+          </button>
+        )}
         <button
           className="icon-btn"
           aria-label="About ATLAS"
@@ -431,6 +455,7 @@ export default function App() {
               }}
               onOpenChanges={() => update({ selection: { kind: 'changes' } })}
               onSelectChokepoint={selectChokepoint}
+              onSelectPair={selectPair}
             />
           </ErrorBoundary>
         )}

@@ -1983,3 +1983,101 @@ a {
 .peace .src-row {
   display: flex;
 }
+
+/* ---------- trends, relationship, ask ---------- */
+.trends {
+  display: grid;
+  gap: 8px;
+  margin: 6px 0 4px;
+}
+
+@media (min-width: 821px) {
+  .trends {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.trend {
+  margin: 0;
+  padding: 8px 10px 4px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev-2);
+}
+
+.trend-cap {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.trend-now {
+  font-family: var(--mono);
+  font-size: 14px;
+}
+
+.trend-sub {
+  font-size: 10px;
+  color: var(--fg-muted);
+  letter-spacing: 0.06em;
+}
+
+.trend svg {
+  display: block;
+}
+
+.trend-tick {
+  font-family: var(--mono);
+  font-size: 9px;
+  fill: var(--fg-faint);
+}
+
+.tiles.two {
+  grid-template-columns: 1fr 1fr;
+}
+
+.pair-input,
+.ask-form input {
+  width: 100%;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg);
+  font-family: var(--mono);
+  font-size: 13px;
+  border-radius: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 6px 0;
+}
+
+.pair-input:focus,
+.ask-form input:focus {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 50%, transparent);
+}
+
+.ask-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.ask-form input {
+  flex: 1;
+  min-width: 0;
+}
+
+.ask-off {
+  color: var(--warn);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.ask-answer p:first-child {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-left: 2px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}

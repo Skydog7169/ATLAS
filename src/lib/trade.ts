@@ -11,6 +11,8 @@ export interface TradeRow {
   us: number;
   china: number;
   eu: number;
+  /** Largest export destinations, share of goods exports, largest first (up to 15). */
+  partners?: Array<{ iso: string; share: number }>;
 }
 
 interface TradeFile {
@@ -43,6 +45,13 @@ export function tradeColor(iso: string): string {
   if (!lead) return 'var(--land-dim)';
   const pct = Math.round(Math.min(1, (row[lead] - 0.1) / 0.5) * 70 + 30);
   return `color-mix(in srgb, ${TRADE_COLOR[lead]} ${pct}%, var(--land))`;
+}
+
+/** Share of `from`'s goods exports that go to `to`, or null when `to` is not among its listed partners. */
+export function exportShare(from: string, to: string): number | null {
+  const row = TRADE_BY_ISO.get(from);
+  if (!row?.partners) return null;
+  return row.partners.find((p) => p.iso === to)?.share ?? null;
 }
 
 export function pct(x: number): string {
