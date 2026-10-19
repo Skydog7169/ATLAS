@@ -5,7 +5,11 @@
 // and scans for conflicts the map is missing (reported, never auto-added).
 //
 // Usage:
-//   node scripts/research/update.mjs [--only id,id] [--limit N] [--dry-run] [--mock] [--report path]
+//   node scripts/research/update.mjs [--only id,id] [--limit N] [--hot] [--dry-run] [--mock] [--report path]
+//
+// --hot re-checks only the hot list (high intensity, recently updated, or
+// longest unchecked) and skips the bloc, election and candidate scans; the
+// daily workflow uses it.
 //
 // Needs Anthropic credentials unless --mock: ANTHROPIC_API_KEY, an `ant auth login` profile, or
 // Workload Identity Federation env vars (ANTHROPIC_FEDERATION_RULE_ID, ANTHROPIC_ORGANIZATION_ID,
@@ -15,7 +19,8 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Anthropic from '@anthropic-ai/sdk';
 import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod';
-import { AssessmentOutputSchema, BlocReviewOutputSchema, BlocsFileSchema, ConflictsFileSchema, ElectionOutputSchema, ElectionsFileSchema, MONTH_OR_DATE, NewConflictsOutputSchema, PARTIAL_DATE, UnrestFileSchema } from '../../src/data/schema.ts';
+import { AssessmentOutputSchema, BlocReviewOutputSchema, BlocsFileSchema, ConflictsFileSchema, ElectionOutputSchema, ElectionsFileSchema, MONTH_OR_DATE, NewConflictsOutputSchema, NewUnrestOutputSchema, PARTIAL_DATE, UnrestFileSchema } from '../../src/data/schema.ts';
+import { hotSelection } from './select.mjs';
 import { clampIntensity, isMaterialChange, verifySources } from '../../src/data/guards.ts';
 import { mockClient } from './mock.mjs';
 
@@ -43,13 +48,14 @@ const unrest = UnrestFileSchema.parse(JSON.parse(readFileSync(UNREST_PATH, 'utf8
 
 const client = args.mock ? mockClient() : new Anthropic();
 const usage = { input: 0, output: 0, cacheRead: 0, calls: 0 };
-const report = { updated: [], unchanged: [], clamped: [], droppedSources: [], errors: [], blocChanges: [], blocNote: '', candidates: [], elections: [], peace: [] };
+const report = { updated: [], unchanged: [], clamped: [], droppedSources: [], errors: [], blocChanges: [], blocNote: '', candidates: [], unrestCandidates: [], elections: [], peace: [] };
 
 const SYSTEM = `You are a research analyst maintaining a public geopolitics map. Today is ${today}.
 Write in plain, neutral English with specific dates. Never invent events or URLs: every source you return must be a URL that appeared in your web search results. Prefer wire services, UN bodies and established conflict trackers (CFR, ACLED, Crisis Group, ISW). If nothing material happened since the previous assessment, say so by setting changed=false and restating the current situation briefly.`;
 
 let selected = conflicts;
 if (args.only) selected = conflicts.filter((c) => args.only.includes(c.id));
+if (args.hot) selected = hotSelection(selected, today, { cap: 8 });
 if (args.limit) selected = selected.slice(0, args.limit);
 
 for (const conflict of selected) {
@@ -62,6 +68,7 @@ for (const conflict of selected) {
 
 let selectedUnrest = unrest;
 if (args.only) selectedUnrest = unrest.filter((u) => args.only.includes(u.id));
+if (args.hot) selectedUnrest = hotSelection(selectedUnrest, today, { cap: 6 });
 if (args.limit) selectedUnrest = selectedUnrest.slice(0, args.limit);
 for (const episode of selectedUnrest) {
   try {
@@ -71,7 +78,7 @@ for (const episode of selectedUnrest) {
   }
 }
 
-if (!args.only) {
+if (!args.only && !args.hot) {
   try {
     await reviewBlocs();
   } catch (err) {
@@ -81,6 +88,11 @@ if (!args.only) {
     await scanForNewConflicts();
   } catch (err) {
     report.errors.push(`new-conflicts: ${describeError(err)}`);
+  }
+  try {
+    await scanForNewUnrest();
+  } catch (err) {
+    report.errors.push(`new-unrest: ${describeError(err)}`);
   }
   try {
     await reviewElections();
@@ -267,6 +279,32 @@ async function scanForNewConflicts() {
   }
 }
 
+/** Lists unrest episodes the tracker may be missing; reported for a human, never auto-added. */
+async function scanForNewUnrest() {
+  const known = unrest.map((u) => `${u.id}: ${u.name}`).join('\n');
+  const response = await client.messages.parse({
+    model: MODEL,
+    max_tokens: 16000,
+    system: SYSTEM,
+    output_config: { effort: 'medium', format: zodOutputFormat(NewUnrestOutputSchema) },
+    tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 6 }],
+    messages: [
+      {
+        role: 'user',
+        content: `The map already tracks these unrest episodes:\n${known}\n\nSearch for mass protest movements, riot waves, uprisings, coups or coup attempts, mutinies and violent crackdowns that began or escalated sharply in the last 60 days, are not armed conflicts, and are NOT covered above. Return up to 3 candidates with one source each, or an empty list.`,
+      },
+    ],
+  });
+  track(response);
+  const out = response.parsed_output ?? parseTextFallback(response, NewUnrestOutputSchema);
+  if (!out) return;
+  const seen = collectSearchUrls(response);
+  for (const c of out.candidates) {
+    const { kept } = verifySources([c.source], seen);
+    if (kept.length) report.unrestCandidates.push({ ...c, source: kept[0] });
+  }
+}
+
 /**
  * Keeps the elections table current. Each pass re-checks entries whose date
  * has passed, is unset, or falls within ELECTION_DUE_DAYS, then the entries
@@ -368,7 +406,7 @@ function describeError(err) {
 
 function renderReport() {
   const lines = [];
-  lines.push(`## Data refresh ${today}`, '');
+  lines.push(args.hot ? `## Daily research pass ${today}` : `## Data refresh ${today}`, '');
   lines.push(`Model: ${MODEL}. Calls: ${usage.calls}. Tokens in/out: ${usage.input}/${usage.output}. Estimated cost: $${estimatedCost().toFixed(2)}.${args.mock ? ' (mock run)' : ''}`, '');
   lines.push(`### Updated assessments (${report.updated.length})`);
   for (const u of report.updated) {
@@ -398,6 +436,10 @@ function renderReport() {
     lines.push('', '### Possible new conflicts (not added; needs a human)');
     for (const c of report.candidates) lines.push(`- **${c.name}** (${c.countries.join(', ')}; ${c.type}, ${c.intensity}) — ${c.why} [source](${c.source.url})`);
   }
+  if (report.unrestCandidates.length) {
+    lines.push('', '### Possible new unrest episodes (not added; needs a human)');
+    for (const c of report.unrestCandidates) lines.push(`- **${c.name}** (${c.countries.join(', ')}; ${c.kind}, ${c.intensity}) — ${c.why} [source](${c.source.url})`);
+  }
   if (report.droppedSources.length) {
     lines.push('', '### Sources dropped as unverifiable');
     for (const d of report.droppedSources) lines.push(`- ${d.id}: ${d.dropped.join(', ')}`);
@@ -410,11 +452,12 @@ function renderReport() {
 }
 
 function parseArgs(argv) {
-  const out = { only: null, limit: 0, dryRun: false, mock: false, report: null, date: null };
+  const out = { only: null, limit: 0, hot: false, dryRun: false, mock: false, report: null, date: null };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--only') out.only = (argv[++i] ?? '').split(',').filter(Boolean);
     else if (a === '--limit') out.limit = Number(argv[++i]);
+    else if (a === '--hot') out.hot = true;
     else if (a === '--dry-run') out.dryRun = true;
     else if (a === '--mock') out.mock = true;
     else if (a === '--report') out.report = argv[++i];
