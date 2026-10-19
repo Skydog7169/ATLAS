@@ -857,9 +857,13 @@ function AboutView({ props }: { props: Props }) {
         <p>
           Every country has a dossier (memberships, conflicts, displacement, figures and its recent changes) at a link you can share. The strip along the bottom cycles the ten newest dated changes and pauses while you hover it. Press the star on any panel to add it to a watchlist kept in this browser; the ticker and the changes feed can be filtered to it. A strip under the header lists what changed since you last pressed "Mark read". The same changes are available as <a href="/feed.xml">RSS</a> and <a href="/feed.json">JSON Feed</a>.
         </p>
+        <h4>Globe, briefing, embed and export</h4>
+        <p>
+          The globe button in the map controls switches to an orthographic globe you can spin by dragging (it keeps turning briefly when released) and the centre travels in the link. The briefing button goes full screen, hides the chrome and cycles through the live high-intensity conflicts and your watchlist, nine seconds each; Space pauses, arrows step, Escape exits. Add <span className="mono">embed=1</span> to any link to get a chrome-less view for an iframe, and the download button saves the map you are looking at as a PNG with its legend and a date stamp.
+        </p>
         <h4>Keyboard</h4>
         <p className="mono" style={{ fontSize: 12 }}>
-          / search · arrows pan · + − zoom · 0 reset · Tab through conflict markers, Enter opens · Esc closes the tooltip
+          / search · arrows pan or rotate · + − zoom · 0 reset · Tab through conflict markers, Enter opens · Esc closes the tooltip · briefing: Space pauses, arrows step, Esc exits
         </p>
         <div className="panel-actions">
           <ShareButton />

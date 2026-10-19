@@ -10,7 +10,8 @@ async function open(page: Page, hash = '') {
     if (m.type() === 'error') errors.push(m.text());
   });
   await page.goto('/' + hash, { waitUntil: 'networkidle' });
-  await page.waitForSelector('path.country');
+  // On the globe, countries on the far side have an empty path, so wait for one that is drawn.
+  await page.waitForSelector('path.country[d^="M"]');
   return errors;
 }
 
@@ -170,7 +171,8 @@ test('watchlist: stars survive reload and filter the ticker and feed', async ({ 
   await expect(page.locator('.header .icon-btn[aria-label="Watchlist"]')).toHaveAttribute('data-count', '1');
 
   await page.reload({ waitUntil: 'networkidle' });
-  await page.waitForSelector('path.country');
+  // On the globe, countries on the far side have an empty path, so wait for one that is drawn.
+  await page.waitForSelector('path.country[d^="M"]');
   await expect(page.locator('.panel .icon-btn.star')).toHaveAttribute('aria-pressed', 'true');
 
   // On phones the ticker yields to an open panel, so close it before using the filter.
@@ -203,7 +205,8 @@ test('since-your-last-visit strip appears for returning visitors and clears when
   expect(stored).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   await page.evaluate(() => localStorage.setItem('atlas.lastVisit.v1', '2020-01-01'));
   await page.reload({ waitUntil: 'networkidle' });
-  await page.waitForSelector('path.country');
+  // On the globe, countries on the far side have an empty path, so wait for one that is drawn.
+  await page.waitForSelector('path.country[d^="M"]');
   const strip = page.locator('.since');
   await expect(strip).toBeVisible();
   await expect(strip).toContainText(/Since Jan 1, 2020 · \d+ changes/);
@@ -212,7 +215,8 @@ test('since-your-last-visit strip appears for returning visitors and clears when
   await strip.getByRole('button', { name: 'Mark read' }).click();
   await expect(page.locator('.since')).toHaveCount(0);
   await page.reload({ waitUntil: 'networkidle' });
-  await page.waitForSelector('path.country');
+  // On the globe, countries on the far side have an empty path, so wait for one that is drawn.
+  await page.waitForSelector('path.country[d^="M"]');
   await expect(page.locator('.since')).toHaveCount(0);
 });
 
@@ -306,4 +310,77 @@ test('conflict panel shows who backs whom and the peace process; dossier lists s
   await panel.locator('#dossier-sponsorship + ul button').first().click();
   await expect(page).toHaveURL(/conflict=/);
   await noSeriousA11yIssues(page);
+});
+
+test('globe view: renders an orthographic globe, rotates with the keyboard and keeps the centre in the link', async ({ page }) => {
+  await open(page, '#view=globe');
+  const globe = page.locator('.map-root.globe[data-view="globe"]');
+  await expect(globe).toBeVisible();
+  await expect(globe.locator('path.sphere')).toBeVisible();
+  expect(await globe.locator('path.country').count()).toBeGreaterThan(100);
+  await expect(globe).toHaveAttribute('data-rotation', '15,20');
+  await globe.locator('svg').focus();
+  await page.keyboard.press('ArrowRight');
+  await expect(globe).toHaveAttribute('data-rotation', '27,20');
+  await expect(page).toHaveURL(/view=globe/);
+  await expect(page).toHaveURL(/rot=27(,|%2C)20/);
+  // A dragged globe reports its new centre when the pointer lifts.
+  const box = (await globe.locator('svg').boundingBox())!;
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(box.x + box.width / 2 - 120, box.y + box.height / 2, { steps: 8 });
+  await page.mouse.up();
+  await expect.poll(async () => (await globe.getAttribute('data-rotation'))?.split(',')[0]).not.toBe('27');
+  // Flat map button switches back and drops the globe parameters.
+  await page.getByRole('button', { name: 'Flat map' }).click();
+  await expect(page.locator('.map-root:not(.globe)')).toBeVisible();
+  await expect(page).not.toHaveURL(/view=globe/);
+  await noSeriousA11yIssues(page);
+});
+
+test('briefing mode hides the chrome and cycles captions; embed hides the chrome and links back', async ({ page }) => {
+  await open(page, '#brief=1');
+  await expect(page.locator('.app[data-brief="true"]')).toBeVisible();
+  await expect(page.locator('.header')).toBeHidden();
+  await expect(page.locator('.ticker')).toBeHidden();
+  const card = page.getByRole('region', { name: 'Briefing' });
+  await expect(card).toBeVisible();
+  await expect(card.locator('.eyebrow')).toContainText('High intensity');
+  await expect(card.locator('.brief-count')).toContainText(/^1 \/ \d+$/);
+  await expect(page).toHaveURL(/mode=conflicts/);
+  await card.getByRole('button', { name: 'Next' }).click();
+  await expect(card.locator('.brief-count')).toContainText(/^2 \/ \d+$/);
+  await page.keyboard.press('Escape');
+  await expect(page.locator('.app[data-brief="false"]')).toBeVisible();
+  await expect(page.locator('.header')).toBeVisible();
+  await expect(page).not.toHaveURL(/brief=1/);
+  // Opening an item leaves the briefing in that item's panel.
+  await page.getByRole('button', { name: 'Start briefing' }).click();
+  await page.getByRole('region', { name: 'Briefing' }).getByRole('button', { name: 'Open' }).click();
+  await expect(page.locator('.panel h2')).toBeVisible();
+  await expect(page).toHaveURL(/conflict=/);
+
+  await open(page, '#embed=1&layer=sanctions');
+  await expect(page.locator('.app[data-embed="true"]')).toBeVisible();
+  await expect(page.locator('.header')).toBeHidden();
+  await expect(page.locator('.legend')).toBeVisible();
+  const badge = page.getByRole('link', { name: 'Open this view in ATLAS' });
+  await expect(badge).toBeVisible();
+  expect(await badge.getAttribute('href')).toMatch(/layer=sanctions/);
+  expect(await badge.getAttribute('href')).not.toMatch(/embed/);
+  await expect(page.getByRole('button', { name: 'Start briefing' })).toHaveCount(0);
+  await noSeriousA11yIssues(page);
+});
+
+test('one-tap PNG export downloads a stamped image', async ({ page }) => {
+  await open(page, '#layer=displacement');
+  const download = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Export PNG' }).click();
+  const file = await download;
+  expect(file.suggestedFilename()).toMatch(/^atlas-displacement-\d{4}-\d{2}-\d{2}\.png$/);
+  const path = await file.path();
+  const { statSync, readFileSync } = await import('node:fs');
+  expect(statSync(path).size).toBeGreaterThan(10_000);
+  // PNG signature.
+  expect(readFileSync(path).subarray(0, 4).toString('hex')).toBe('89504e47');
 });

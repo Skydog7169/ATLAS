@@ -18,3 +18,20 @@ describe('url state', () => {
     expect(parse('#conflict=nope', valid).selection).toBeNull();
   });
 });
+
+describe('presentation state', () => {
+  it('round-trips globe view and rotation, briefing and embed flags', () => {
+    const hash = serialize({ ...DEFAULT_STATE, view: 'globe', rotation: [-74, 41], brief: true, embed: true });
+    expect(hash).toContain('view=globe');
+    expect(hash).toContain('rot=-74%2C41');
+    const s = parse(hash, valid);
+    expect(s.view).toBe('globe');
+    expect(s.rotation).toEqual([-74, 41]);
+    expect(s.brief).toBe(true);
+    expect(s.embed).toBe(true);
+    expect(serialize({ ...DEFAULT_STATE, view: 'globe' })).not.toContain('rot=');
+    expect(parse('#view=globe&rot=200,95', valid).rotation).toEqual([-160, 89]);
+    expect(parse('#view=globe&rot=junk', valid).rotation).toEqual(DEFAULT_STATE.rotation);
+    expect(parse('#', valid).view).toBe('flat');
+  });
+});

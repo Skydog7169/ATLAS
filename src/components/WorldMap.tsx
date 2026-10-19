@@ -55,7 +55,7 @@ const MAX_SCALE = 16;
 const DETAIL_SCALE = 2.5;
 const KEY_PAN = 80;
 
-function useSize(ref: RefObject<HTMLDivElement | null>) {
+export function useSize(ref: RefObject<HTMLDivElement | null>) {
   const [size, setSize] = useState({ width: 0, height: 0 });
   useLayoutEffect(() => {
     const el = ref.current;
@@ -71,15 +71,15 @@ function useSize(ref: RefObject<HTMLDivElement | null>) {
   return size;
 }
 
-function hatchId(color: string) {
+export function hatchId(color: string) {
   return 'hatch-' + color.replace(/[^a-z0-9]/gi, '');
 }
 
-function stripesId(a: string, b: string) {
+export function stripesId(a: string, b: string) {
   return 'stripes-' + (a + b).replace(/[^a-z0-9]/gi, '');
 }
 
-interface LayerProps {
+export interface LayerProps {
   features: CountryFeature[];
   paths: string[];
   fillFor: Props['fillFor'];
@@ -89,7 +89,7 @@ interface LayerProps {
 }
 
 /** Memoised so pan/zoom (which only mutates the parent <g> transform) never re-renders 177 paths. */
-const CountryLayer = memo(function CountryLayer({ features, paths, fillFor, selectedIso, onCountryClick, onHover }: LayerProps) {
+export const CountryLayer = memo(function CountryLayer({ features, paths, fillFor, selectedIso, onCountryClick, onHover }: LayerProps) {
   const hatches = new Set<string>();
   const stripes = new Map<string, [string, string]>();
   const rendered = features.map((f, i) => {

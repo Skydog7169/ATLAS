@@ -47,8 +47,8 @@ Vendor code is split into `react`, `d3` and `geo` chunks, and the map component 
 ```
 src/
   data/        conflicts.json, blocs.json, elections.json, nuclear.json, schema.ts, guards.ts, types.ts, *.generated.json, geo/
-  lib/         countries, geo, search, labels, url state, feed, dossier, watchlist
-  components/  WorldMap, Search, DetailPanel, Legend, BlocChips, Ticker, StarButton, ErrorBoundary, ThemeToggle
+  lib/         countries, geo, search, labels, url state, feed, dossier, watchlist, exportPng
+  components/  WorldMap, GlobeMap, Briefing, Search, DetailPanel, Legend, BlocChips, Ticker, StarButton, ErrorBoundary, ThemeToggle
   hooks/       useAppState (hash-synced), useWatchlist (localStorage-backed store)
 scripts/       build-countries.mjs, build-feeds.mjs, send-digest.mjs, research/update.mjs (weekly Claude research pass)
 scripts/       build-countries.mjs, build-displacement.mjs, build-worldbank.mjs, build-sanctions.mjs, build-elections.mjs, research/update.mjs (weekly Claude research pass)
@@ -86,6 +86,16 @@ Setup: add an `ANTHROPIC_API_KEY` repository secret (Settings → Secrets and va
 1. Edit `src/data/conflicts.json` or `src/data/blocs.json`. Add a new dated entry to `history` or `changes` rather than editing old ones.
 2. Run `pnpm test`. The schema and integrity tests catch bad dates, unknown ISO codes, missing sources and broken member counts.
 3. After bumping `world-countries`, run `pnpm run data:countries` and commit the regenerated table.
+
+## Globe, briefing, embed and export
+
+The globe button in the map controls swaps the flat Natural Earth projection for an orthographic globe (`#view=globe`). Dragging rotates it with a short inertial glide on release, pinch and wheel zoom, and arrow keys rotate in 12° steps; the centre is written to the URL as `rot=lon,lat` so a shared link reopens on the same face of the planet. The globe always uses the 1:110m geometry because every path is re-projected on each frame.
+
+Briefing mode (`#brief=1`, or the grid button in the map controls) asks for browser full screen, hides every piece of chrome and cycles through the live high-intensity conflicts followed by the watchlist, flying the map to each and showing a caption with the latest assessment. Space pauses, arrows step, Escape exits, and "Open" drops out of the briefing into that item's panel. Auto-advance is off under `prefers-reduced-motion`.
+
+Adding `embed=1` to any link gives a chrome-less view for an iframe: no header, ticker or chips, just the map, legend, controls and a small badge linking back to the full app. The `Content-Security-Policy: frame-ancestors *` header in `vercel.json` allows framing from any site.
+
+The download button rasterises the live SVG to a PNG (at up to 2× device pixel ratio) with the current legend and a strip naming the data month, the export date and the site. Computed styles are inlined first because the fills lean on CSS variables and `color-mix()`.
 
 ## Accessibility
 

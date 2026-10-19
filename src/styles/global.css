@@ -1983,3 +1983,179 @@ a {
 .peace .src-row {
   display: flex;
 }
+
+/* ---------- globe ---------- */
+.map-root.globe svg {
+  cursor: grab;
+  touch-action: none;
+}
+
+.map-root.globe svg:active {
+  cursor: grabbing;
+}
+
+.globe-shade {
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* ---------- briefing ---------- */
+.app[data-brief='true'] .header,
+.app[data-brief='true'] .ticker,
+.app[data-brief='true'] .since,
+.app[data-brief='true'] .chip-row,
+.app[data-brief='true'] .timeline,
+.app[data-brief='true'] .map-controls,
+.app[data-brief='true'] .legend,
+.app[data-brief='true'] .panel {
+  display: none !important;
+}
+
+.app[data-brief='true'] {
+  grid-template-rows: 1fr;
+}
+
+.brief-card {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  width: min(520px, calc(100% - 48px));
+  padding: 18px 20px 16px;
+  background: color-mix(in srgb, var(--bg-elev) 92%, transparent);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow);
+  z-index: 5;
+  overflow: hidden;
+}
+
+.brief-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.brief-card .eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.brief-count {
+  font-size: 11px;
+  color: var(--fg-faint);
+}
+
+.brief-card h2 {
+  margin: 4px 0 8px;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.brief-card p {
+  margin: 0 0 12px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.brief-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.brief-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--accent);
+  width: 0;
+  animation: brief-fill linear forwards;
+}
+
+@keyframes brief-fill {
+  to {
+    width: 100%;
+  }
+}
+
+/* ---------- embed ---------- */
+.app[data-embed='true'] .header,
+.app[data-embed='true'] .ticker,
+.app[data-embed='true'] .since,
+.app[data-embed='true'] .chip-row,
+.app[data-embed='true'] .timeline {
+  display: none !important;
+}
+
+.app[data-embed='true'] {
+  grid-template-rows: 1fr;
+}
+
+.embed-badge {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 9px;
+  background: color-mix(in srgb, var(--bg-elev) 90%, transparent);
+  border: 1px solid var(--border-strong);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  color: var(--fg);
+}
+
+.embed-badge:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.app[data-embed='true'] .map-controls {
+  bottom: 12px;
+}
+
+.app[data-embed='true'] .legend {
+  bottom: 12px;
+}
+
+@media (max-width: 820px) {
+  .brief-card {
+    left: 12px;
+    bottom: 12px;
+    width: calc(100% - 24px);
+    padding: 14px 14px 12px;
+  }
+
+  .brief-card h2 {
+    font-size: 20px;
+  }
+}
+
+.icon-btn[data-busy='true'] {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.embed-badge svg {
+  width: 14px;
+  height: 14px;
+}
+
+@media (max-width: 820px) {
+  /* Long assessments would push the card off a phone screen. */
+  .brief-card p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+    overflow: hidden;
+  }
+}
