@@ -42,18 +42,24 @@ jobs:
       #     exchanges it for a short-lived Anthropic token; nothing long-lived is stored anywhere.
       #  2. A classic ANTHROPIC_API_KEY repository secret.
       #  3. Neither: the pass is skipped with a warning and the generated datasets are still refreshed.
+      # The identifiers below are this repository's federation rule, organization, service account and
+      # workspace in the Claude Console. They are not secrets; repository variables of the same names override them.
       - name: Fetch GitHub OIDC token for Anthropic
-        if: ${{ vars.ANTHROPIC_FEDERATION_RULE_ID != '' }}
+        env:
+          RULE_ID: ${{ vars.ANTHROPIC_FEDERATION_RULE_ID || 'fdrl_01AJtJ6PTveRW95sgzfHygNe' }}
+          ORG_ID: ${{ vars.ANTHROPIC_ORGANIZATION_ID || '727213a0-ed97-4716-ab97-d0aab0d7bba6' }}
+          SVAC_ID: ${{ vars.ANTHROPIC_SERVICE_ACCOUNT_ID || 'svac_01FGteXTqd19q3STqFGFKcSY' }}
+          WRKSPC_ID: ${{ vars.ANTHROPIC_WORKSPACE_ID || 'wrkspc_015ZWRDjvrKs8EZqEmmyRqCp' }}
         run: |
           curl -sS --fail -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
             "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=https://api.anthropic.com" \
             | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>process.stdout.write(JSON.parse(s).value))' \
             > "$RUNNER_TEMP/anthropic-oidc.jwt"
           echo "ANTHROPIC_IDENTITY_TOKEN_FILE=$RUNNER_TEMP/anthropic-oidc.jwt" >> "$GITHUB_ENV"
-          echo "ANTHROPIC_FEDERATION_RULE_ID=${{ vars.ANTHROPIC_FEDERATION_RULE_ID }}" >> "$GITHUB_ENV"
-          echo "ANTHROPIC_ORGANIZATION_ID=${{ vars.ANTHROPIC_ORGANIZATION_ID }}" >> "$GITHUB_ENV"
-          echo "ANTHROPIC_SERVICE_ACCOUNT_ID=${{ vars.ANTHROPIC_SERVICE_ACCOUNT_ID }}" >> "$GITHUB_ENV"
-          if [ -n "${{ vars.ANTHROPIC_WORKSPACE_ID }}" ]; then echo "ANTHROPIC_WORKSPACE_ID=${{ vars.ANTHROPIC_WORKSPACE_ID }}" >> "$GITHUB_ENV"; fi
+          echo "ANTHROPIC_FEDERATION_RULE_ID=$RULE_ID" >> "$GITHUB_ENV"
+          echo "ANTHROPIC_ORGANIZATION_ID=$ORG_ID" >> "$GITHUB_ENV"
+          echo "ANTHROPIC_SERVICE_ACCOUNT_ID=$SVAC_ID" >> "$GITHUB_ENV"
+          echo "ANTHROPIC_WORKSPACE_ID=$WRKSPC_ID" >> "$GITHUB_ENV"
 
       - name: Research pass
         env:
