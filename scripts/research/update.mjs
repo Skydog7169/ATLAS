@@ -7,7 +7,9 @@
 // Usage:
 //   node scripts/research/update.mjs [--only id,id] [--limit N] [--dry-run] [--mock] [--report path]
 //
-// Needs ANTHROPIC_API_KEY (or an `ant auth login` profile) unless --mock.
+// Needs Anthropic credentials unless --mock: ANTHROPIC_API_KEY, an `ant auth login` profile, or
+// Workload Identity Federation env vars (ANTHROPIC_FEDERATION_RULE_ID, ANTHROPIC_ORGANIZATION_ID,
+// ANTHROPIC_SERVICE_ACCOUNT_ID, ANTHROPIC_IDENTITY_TOKEN_FILE), which the SDK picks up on its own.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
