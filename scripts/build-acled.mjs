@@ -22,10 +22,19 @@ function unavailable(reason) {
   return { source: SOURCE, available: false, reason, fetchedAt: new Date().toISOString().slice(0, 10), days: 0, from: null, to: null, rows: [] };
 }
 
+/** First line of an error body, so a 403 "Access denied" (account lacks API access) is distinguishable in the logs. */
+async function snippet(res) {
+  try {
+    return (await res.text()).replace(/\s+/g, ' ').slice(0, 160);
+  } catch {
+    return '';
+  }
+}
+
 async function token(email, password) {
   const body = new URLSearchParams({ username: email, password, grant_type: 'password', client_id: 'acled', scope: 'authenticated' });
   const res = await fetch(TOKEN_URL, { method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded' }, body, signal: AbortSignal.timeout(30000) });
-  if (!res.ok) throw new Error(`ACLED token: ${res.status}`);
+  if (!res.ok) throw new Error(`ACLED token: ${res.status} ${await snippet(res)}`);
   const json = await res.json();
   if (!json.access_token) throw new Error('ACLED token: no access_token in response');
   return json.access_token;
@@ -69,7 +78,7 @@ async function fetchWindow(accessToken, from, to) {
       page: String(page),
     });
     const res = await fetch(`${READ_URL}?${params}`, { headers: { authorization: `Bearer ${accessToken}` }, signal: AbortSignal.timeout(60000) });
-    if (!res.ok) throw new Error(`ACLED read: ${res.status}`);
+    if (!res.ok) throw new Error(`ACLED read: ${res.status} ${await snippet(res)}`);
     const json = await res.json();
     const data = Array.isArray(json.data) ? json.data : [];
     aggregate(data, counts);
