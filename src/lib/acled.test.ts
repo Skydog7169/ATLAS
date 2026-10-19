@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ACLED, acledBin, acledBinLabel, acledColor, acledNote, acledSummary } from './acled';
+import { ACLED, acledBin, acledBinLabel, acledColor, acledDossier, acledNote, acledSummary, acledUnrestColor, acledUnrestEvents, acledUnrestSummary } from './acled';
 import { aggregate } from '../../scripts/build-acled.mjs';
 
 describe('acled layer slot', () => {
@@ -23,6 +23,20 @@ describe('acled layer slot', () => {
     expect(acledSummary('ZZZ')).toBeNull();
   });
 
+  it('counts events by type and derives the protests-and-riots view', () => {
+    const m = aggregate([
+      { iso3: 'KEN', event_type: 'Protests', fatalities: 0 },
+      { iso3: 'KEN', event_type: 'Riots', fatalities: 2 },
+      { iso3: 'KEN', event_type: 'Battles', fatalities: 5 },
+      { iso3: 'KEN', event_type: 'Something new', fatalities: 0 },
+    ]);
+    expect(m.get('KEN')).toEqual({ iso: 'KEN', events: 4, fatalities: 7, byType: { battles: 1, explosions: 0, civilians: 0, protests: 1, riots: 1, strategic: 0 } });
+    expect(acledUnrestEvents('ZZZ')).toBe(0);
+    expect(acledUnrestColor('ZZZ')).toBe('var(--land)');
+    expect(acledUnrestSummary('ZZZ')).toBeNull();
+    expect(acledDossier('ZZZ')).toBeNull();
+  });
+
   it('aggregates API rows per known country', () => {
     const m = aggregate([
       { iso3: 'SDN', fatalities: '3' },
@@ -30,9 +44,10 @@ describe('acled layer slot', () => {
       { iso3: 'XXX', fatalities: 9 },
       { iso3: 'FRA', fatalities: null },
     ]);
+    const none = { battles: 0, explosions: 0, civilians: 0, protests: 0, riots: 0, strategic: 0 };
     expect([...m.values()]).toEqual([
-      { iso: 'SDN', events: 2, fatalities: 5 },
-      { iso: 'FRA', events: 1, fatalities: 0 },
+      { iso: 'SDN', events: 2, fatalities: 5, byType: none },
+      { iso: 'FRA', events: 1, fatalities: 0, byType: none },
     ]);
   });
 });

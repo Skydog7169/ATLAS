@@ -1,5 +1,6 @@
 import { memo, useEffect, useMemo, useRef, useState, type RefObject } from 'react';
 import { useSize } from '../hooks/useSize';
+import { triPath } from '../lib/shapes';
 import { geoGraticule10, geoNaturalEarth1, geoPath, type GeoPath } from 'd3-geo';
 import { select } from 'd3-selection';
 import { zoom as d3zoom, zoomIdentity, type ZoomBehavior, type ZoomTransform } from 'd3-zoom';
@@ -15,7 +16,7 @@ export interface MapMarker {
   label: string;
   pulse?: boolean;
   /** Diamonds mark chokepoints so they read apart from round conflict markers. */
-  shape?: 'circle' | 'diamond';
+  shape?: 'circle' | 'diamond' | 'triangle';
 }
 
 export type Focus =
@@ -383,7 +384,7 @@ export default function WorldMap({
               return (
                 <g
                   key={mk.id}
-                  className={'marker' + (mk.pulse ? ' pulse' : '') + (mk.shape === 'diamond' ? ' diamond' : '')}
+                  className={'marker' + (mk.pulse ? ' pulse' : '') + (mk.shape && mk.shape !== 'circle' ? ' ' + mk.shape : '')}
                   data-selected={selected}
                   data-shape={mk.shape ?? 'circle'}
                   transform={`translate(${x},${y})`}
@@ -408,7 +409,12 @@ export default function WorldMap({
                       <path d={`M0 ${-(r + 16)}v7M0 ${r + 16}v-7M${-(r + 16)} 0h7M${r + 16} 0h-7`} />
                     </g>
                   )}
-                  {mk.shape === 'diamond' ? (
+                  {mk.shape === 'triangle' ? (
+                    <>
+                      <path className="ring" d={triPath(r + 3)} stroke={mk.color} />
+                      <path className="core" d={triPath(r)} fill={mk.color} filter="url(#marker-glow)" />
+                    </>
+                  ) : mk.shape === 'diamond' ? (
                     <>
                       <rect className="ring" x={-(r + 3)} y={-(r + 3)} width={2 * (r + 3)} height={2 * (r + 3)} transform="rotate(45)" stroke={mk.color} />
                       <rect className="core" x={-r} y={-r} width={2 * r} height={2 * r} transform="rotate(45)" fill={mk.color} filter="url(#marker-glow)" />

@@ -1,11 +1,14 @@
 import { BLOCS } from '../data/blocs';
 import { CONFLICTS } from '../data/conflicts';
+import { UNREST } from '../data/unrest';
+import { UNREST_KIND_LABEL } from './unrest';
 import { COUNTRIES } from '../lib/countries';
 
 export type SearchHit =
   | { kind: 'country'; id: string; label: string; sub: string }
   | { kind: 'bloc'; id: string; label: string; sub: string; color: string }
-  | { kind: 'conflict'; id: string; label: string; sub: string; color: string };
+  | { kind: 'conflict'; id: string; label: string; sub: string; color: string }
+  | { kind: 'unrest'; id: string; label: string; sub: string; color: string };
 
 /** Non-sovereign entries that still need to be findable because they appear on the map or in the data. */
 const EXTRA_TERRITORIES = new Set(['TWN', 'PSE', 'UNK', 'ESH']);
@@ -26,6 +29,14 @@ const INDEX: Array<SearchHit & { keys: string[] }> = [
     sub: 'Conflict',
     color: '',
     keys: [c.name, ...c.parties].map((s) => s.toLowerCase()),
+  })),
+  ...UNREST.map((u) => ({
+    kind: 'unrest' as const,
+    id: u.id,
+    label: u.name,
+    sub: UNREST_KIND_LABEL[u.kind],
+    color: '',
+    keys: [u.name, ...u.parties, 'unrest', 'protest', UNREST_KIND_LABEL[u.kind]].map((s) => s.toLowerCase()),
   })),
   ...COUNTRIES.filter((c) => c.independent || EXTRA_TERRITORIES.has(c.cca3)).map((c) => ({
     kind: 'country' as const,

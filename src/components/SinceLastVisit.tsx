@@ -7,6 +7,7 @@ import { changesSinceVisit, readLastVisit, writeLastVisit } from '../lib/lastVis
 interface Props {
   onSelectConflict: (id: string) => void;
   onSelectBloc: (id: string) => void;
+  onSelectUnrest: (id: string) => void;
   onOpenChanges: () => void;
 }
 
@@ -17,7 +18,7 @@ const SHOWN = 4;
  * "Mark read". The timestamp lives in localStorage; a first visit stores
  * today's date silently so the next visit has a baseline.
  */
-export default function SinceLastVisit({ onSelectConflict, onSelectBloc, onOpenChanges }: Props) {
+export default function SinceLastVisit({ onSelectConflict, onSelectBloc, onSelectUnrest, onOpenChanges }: Props) {
   const today = new Date().toISOString().slice(0, 10);
   const [lastVisit, setLastVisit] = useState<string | null>(() => {
     const v = readLastVisit();
@@ -26,7 +27,7 @@ export default function SinceLastVisit({ onSelectConflict, onSelectBloc, onOpenC
   });
   const items = useMemo(() => changesSinceVisit(CHANGES, lastVisit), [lastVisit]);
   if (!lastVisit || items.length === 0) return null;
-  const open = (it: ChangeItem) => (it.kind === 'conflict' ? onSelectConflict(it.id) : onSelectBloc(it.id));
+  const open = (it: ChangeItem) => (it.kind === 'conflict' ? onSelectConflict(it.id) : it.kind === 'unrest' ? onSelectUnrest(it.id) : onSelectBloc(it.id));
   const markRead = () => {
     writeLastVisit(today);
     setLastVisit(today);

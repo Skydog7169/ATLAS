@@ -152,6 +152,31 @@ export interface Conflict extends ConflictInput {
   updated: string;
 }
 
+export type UnrestKind = 'protests' | 'riots' | 'uprising' | 'coup' | 'mutiny' | 'crackdown';
+
+/** A curated civil-unrest episode; mirrors unrest.json, validated by UnrestInputSchema. */
+export interface UnrestInput {
+  id: string;
+  name: string;
+  kind: UnrestKind;
+  /** YYYY-MM the episode began. */
+  since: string;
+  location: [number, number];
+  countries: Iso3[];
+  parties: string[];
+  trigger: string;
+  summary: string;
+  history: HistoryEntry[];
+  lastChecked?: string;
+}
+
+export interface Unrest extends UnrestInput {
+  intensity: Intensity;
+  status: string;
+  sources: Source[];
+  updated: string;
+}
+
 export interface CountryRecord {
   cca3: Iso3;
   cca2: string;

@@ -11,14 +11,17 @@ export function mockClient() {
         const searchBlock = { type: 'web_search_tool_result', content: [{ type: 'web_search_result', url: seenUrl, title: 'Mock result' }] };
         const usage = { input_tokens: 12000, output_tokens: 600, cache_read_input_tokens: 0 };
         let parsed;
-        if (prompt.startsWith('Conflict:')) {
+        if (prompt.startsWith('Conflict:') || prompt.startsWith('Unrest:')) {
+          const unrestPrompt = prompt.startsWith('Unrest:');
           // Every other conflict reports a material change so both branches run.
           const changed = n % 2 === 1;
           parsed = {
             changed,
-            intensity: 'high',
+            intensity: unrestPrompt ? 'medium' : 'high',
             status: changed
-              ? 'Mock development: on 1 October 2026 fighting intensified around the capital after talks collapsed, and both sides reported heavy casualties. Humanitarian access remained blocked through the first week of October.'
+              ? unrestPrompt
+                ? 'Mock development: on 1 October 2026 renewed protests drew tens of thousands to the capital after a disputed court ruling, and police made several hundred arrests. Organisers called further marches for the following weekend.'
+                : 'Mock development: on 1 October 2026 fighting intensified around the capital after talks collapsed, and both sides reported heavy casualties. Humanitarian access remained blocked through the first week of October.'
               : 'No material change since the previous assessment; positions and diplomacy as previously described.',
             sources: [
               { name: 'Al Jazeera: mock article', url: seenUrl },
@@ -26,7 +29,7 @@ export function mockClient() {
             ],
             confidence: 'medium',
             note: changed ? 'mock note for reviewer' : '',
-            peaceEvents: changed
+            peaceEvents: changed && !unrestPrompt
               ? [
                   { date: '2026-10-01', kind: 'talks', summary: 'Mock: mediators convened a first round of talks in Doha on 1 October 2026.', source: { name: 'Al Jazeera: mock article', url: seenUrl } },
                   { date: '2026-10-02', kind: 'ceasefire', summary: 'Mock: an unsourced claim that must be dropped.', source: { name: 'Invented', url: 'https://not-in-results.example/y' } },

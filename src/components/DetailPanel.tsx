@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
 import { BLOCS, BLOC_BY_ID } from '../data/blocs';
 import { CONFLICTS, CONFLICT_BY_ID } from '../data/conflicts';
-import type { Bloc, Conflict, HistoryEntry, MembershipStatus } from '../data/types';
+import { UNREST_BY_ID } from '../data/unrest';
+import { UNREST_COLOR, UNREST_KIND_LABEL } from '../lib/unrest';
+import type { Bloc, Conflict, HistoryEntry, MembershipStatus, Unrest } from '../data/types';
 import { countryName } from '../lib/countries';
 import { changesSince, entryAt, type ChangeItem } from '../lib/history';
 import { CATEGORY_LABEL, CHANGE_LABEL, CONFLICT_TYPE_LABEL, INTENSITY_COLOR, INTENSITY_LABEL, STATUS_LABEL, formatDate, formatMonth } from '../lib/labels';
@@ -43,6 +45,7 @@ interface Props {
   onOpenChanges: () => void;
   onSelectChokepoint: (id: string) => void;
   onSelectPair: (a: string, b: string | null) => void;
+  onSelectUnrest: (id: string) => void;
 }
 
 function CloseButton({ onClick }: { onClick: () => void }) {
@@ -109,10 +112,10 @@ function FeedList({ items, props, compact }: { items: ChangeItem[]; props: Props
             {formatDate(it.date)}
           </span>
           <span>
-            <button className="inline-link" onClick={() => (it.kind === 'conflict' ? props.onSelectConflict(it.id) : props.onSelectBloc(it.id))}>
+            <button className="inline-link" onClick={() => (it.kind === 'conflict' ? props.onSelectConflict(it.id) : it.kind === 'unrest' ? props.onSelectUnrest(it.id) : props.onSelectBloc(it.id))}>
               {it.title}
             </button>
-            <span className="label"> · {it.kind === 'conflict' ? INTENSITY_LABEL[it.intensity!] : 'Membership'}</span>
+            <span className="label"> · {it.intensity ? INTENSITY_LABEL[it.intensity] : 'Membership'}{it.kind === 'unrest' ? ' (unrest)' : ''}</span>
             <span className="note"> {it.detail.length > max ? it.detail.slice(0, max - 3).trimEnd() + '…' : it.detail}</span>
           </span>
         </li>
@@ -192,8 +195,8 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
               <ul className="link-list">
                 {x.rows.map((r, i) => (
                   <li key={r.label + i}>
-                    {r.conflictId ? (
-                      <button onClick={() => props.onSelectConflict(r.conflictId!)}>
+                    {r.conflictId || r.unrestId ? (
+                      <button onClick={() => (r.conflictId ? props.onSelectConflict(r.conflictId) : props.onSelectUnrest(r.unrestId!))}>
                         <span>
                           {r.label}
                           {r.note && <span className="row-note">{r.note}</span>}
@@ -734,6 +737,57 @@ function ConflictView({ conflict, props }: { conflict: Conflict; props: Props })
   );
 }
 
+function UnrestView({ unrest, props }: { unrest: Unrest; props: Props }) {
+  return (
+    <>
+      <div className="panel-head">
+        <h2>
+          <span className="eyebrow">{UNREST_KIND_LABEL[unrest.kind]}</span>
+          {unrest.name}
+        </h2>
+        <StarButton item={{ kind: 'unrest', id: unrest.id }} name={unrest.name} />
+        <CloseButton onClick={props.onClose} />
+      </div>
+      <div className="panel-body">
+        <div className="badges">
+          <span className="badge" style={{ ['--badge-color' as string]: UNREST_COLOR[unrest.intensity] }}>
+            <span className="dot" /> {INTENSITY_LABEL[unrest.intensity]}
+          </span>
+          <span className="badge muted">Since {formatMonth(unrest.since)}</span>
+        </div>
+        <h4>Parties</h4>
+        <ul style={{ margin: '0 0 8px', paddingLeft: 18 }}>
+          {unrest.parties.map((p) => (
+            <li key={p}>{p}</li>
+          ))}
+        </ul>
+        <h4 id="unrest-trigger">Trigger</h4>
+        <p>{unrest.trigger}</p>
+        <h4>Background</h4>
+        <p>{unrest.summary}</p>
+        <h4 id="unrest-assessments">Assessments</h4>
+        <HistoryList history={unrest.history} highlight={null} />
+        <h4>Countries</h4>
+        <div className="badges">
+          {unrest.countries.map((iso) => (
+            <button key={iso} className="badge" onClick={() => props.onSelectCountry(iso)} style={{ cursor: 'pointer' }}>
+              {countryName(iso)}
+            </button>
+          ))}
+        </div>
+        <div className="panel-actions">
+          <ShareButton />
+        </div>
+        <div className="updated">
+          Latest assessment verified {formatDate(unrest.updated)}.
+          {unrest.lastChecked && unrest.lastChecked > unrest.updated ? ` Re-checked ${formatDate(unrest.lastChecked)} with no material change.` : ''}
+          {' '}Intensity here means scale of mobilisation and lethality of the response, not armed combat. Check the linked sources for developments since then.
+        </div>
+      </div>
+    </>
+  );
+}
+
 const WINDOWS = [
   { days: 30, label: '30 days' },
   { days: 90, label: '90 days' },
@@ -789,6 +843,7 @@ function WatchlistView({ props }: { props: Props }) {
     { kind: 'country' as const, title: 'Countries', name: (id: string) => countryName(id), open: props.onSelectCountry },
     { kind: 'bloc' as const, title: 'Blocs', name: (id: string) => BLOC_BY_ID.get(id)?.shortName ?? id, open: props.onSelectBloc },
     { kind: 'conflict' as const, title: 'Conflicts', name: (id: string) => CONFLICT_BY_ID.get(id)?.name ?? id, open: props.onSelectConflict },
+    { kind: 'unrest' as const, title: 'Unrest', name: (id: string) => UNREST_BY_ID.get(id)?.name ?? id, open: props.onSelectUnrest },
   ].map((g) => ({ ...g, rows: items.filter((it) => it.kind === g.kind) }));
   return (
     <>
@@ -818,6 +873,7 @@ function WatchlistView({ props }: { props: Props }) {
                     <button onClick={() => g.open(it.id)}>
                       {g.kind === 'conflict' && <span className="dot" style={{ width: 10, height: 10, borderRadius: '50%', background: INTENSITY_COLOR[CONFLICT_BY_ID.get(it.id)?.intensity ?? 'latent'] }} />}
                       {g.kind === 'bloc' && <span className="dot" style={{ width: 10, height: 10, borderRadius: '50%', background: BLOC_BY_ID.get(it.id)?.color }} />}
+                      {g.kind === 'unrest' && <span className="dot" style={{ width: 10, height: 10, borderRadius: '50%', background: UNREST_COLOR[UNREST_BY_ID.get(it.id)?.intensity ?? 'latent'] }} />}
                       {g.name(it.id)}
                     </button>
                     <button className="icon-btn star small" aria-pressed="true" aria-label={`Remove ${g.name(it.id)} from watchlist`} onClick={() => toggle(it)}>
@@ -1003,7 +1059,7 @@ function AboutView({ props }: { props: Props }) {
       </div>
       <div className="panel-body">
         <p>
-          ATLAS is an open geopolitics map: who belongs to which bloc, where armed conflicts are and how intense they are, and how many people they have displaced.
+          ATLAS is an open geopolitics map: who belongs to which bloc, where armed conflicts and civil unrest are and how intense they are, and how many people they have displaced.
           It is built for orientation, not operations. Every claim links to a source, and every assessment carries the date it was verified.
         </p>
         <h4>Freshness</h4>
@@ -1051,7 +1107,7 @@ function AboutView({ props }: { props: Props }) {
         </p>
         <h4>Sources</h4>
         <p>
-          Conflict trackers: CFR Global Conflict Tracker, ACLED, Crisis Group CrisisWatch, ISW. Memberships: the organisations' own sites. Displacement: UNHCR Refugee Data Finder, by country of origin. Figures: World Bank Open Data. Sanctions: OFAC's programme index, the EU Sanctions Map and UN Security Council committees (country-level regimes only). Elections: seeded from Wikipedia's list of next general elections and IFES ElectionGuide, then re-checked weekly by the research pass. Nuclear status: SIPRI, the Arms Control Association and NATO, curated by hand. Geometry: Natural Earth via world-atlas. Trusted hosts for automated citations: {TRUSTED_HOSTS.join(', ')}.
+          Conflict trackers: CFR Global Conflict Tracker, ACLED, Crisis Group CrisisWatch, ISW. Civil unrest: curated from wire services, Crisis Group, ACLED, the Carnegie Global Protest Tracker, HRW and Amnesty, then reassessed weekly by the same research pass; organised-violence deaths from the UCDP Georeferenced Event Dataset when a token is configured. Memberships: the organisations' own sites. Displacement: UNHCR Refugee Data Finder, by country of origin. Figures: World Bank Open Data. Sanctions: OFAC's programme index, the EU Sanctions Map and UN Security Council committees (country-level regimes only). Elections: seeded from Wikipedia's list of next general elections and IFES ElectionGuide, then re-checked weekly by the research pass. Nuclear status: SIPRI, the Arms Control Association and NATO, curated by hand. Geometry: Natural Earth via world-atlas. Trusted hosts for automated citations: {TRUSTED_HOSTS.join(', ')}.
         </p>
         <h4>Caveats</h4>
         <ul style={{ margin: 0, paddingLeft: 18 }}>
@@ -1119,6 +1175,7 @@ export default function DetailPanel(props: Props) {
           if (kind === 'conflict') props.onSelectConflict(key);
           else if (kind === 'bloc') props.onSelectBloc(key);
           else if (kind === 'chokepoint') props.onSelectChokepoint(key);
+          else if (kind === 'unrest') props.onSelectUnrest(key);
           else if (kind && /^[A-Z]{3}$/.test(key)) props.onSelectCountry(key);
         }}
       />
@@ -1128,6 +1185,9 @@ export default function DetailPanel(props: Props) {
   } else if (selection.kind === 'conflict') {
     const c = CONFLICT_BY_ID.get(selection.id);
     body = c ? <ConflictView conflict={c} props={props} /> : null;
+  } else if (selection.kind === 'unrest') {
+    const u = UNREST_BY_ID.get(selection.id);
+    body = u ? <UnrestView unrest={u} props={props} /> : null;
   }
   if (!body) return null;
   return (

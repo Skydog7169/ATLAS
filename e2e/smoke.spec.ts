@@ -410,3 +410,42 @@ test('analysis: bloc trend charts and the relationship view', async ({ page }) =
   await expect(panel.locator('#pair-blocs')).toContainText(/Shared blocs · [3-9]/);
   await noSeriousA11yIssues(page);
 });
+
+test('civil unrest: layer tints and marks episodes, panel, dossier row, search and ticker', async ({ page }) => {
+  await open(page);
+  await page.locator('.map-controls .icon-btn[aria-label="Data layers"]').click();
+  await page.locator('.layer-list button[data-layer="unrest"]').click();
+  await expect(page).toHaveURL(/layer=unrest/);
+  await expect(page.locator('.legend')).toContainText(/Civil unrest · \d+/);
+  await expect(page.locator('.legend .swatch.triangle')).toHaveCount(4);
+  const triangles = page.locator('g.marker[data-shape="triangle"]');
+  expect(await triangles.count()).toBeGreaterThanOrEqual(25);
+  await expect(page.locator('path.country[data-iso="KEN"]')).toHaveAttribute('fill', /color-mix/);
+  await expect(page.locator('path.country[data-iso="BRA"]')).toHaveAttribute('fill', 'var(--land)');
+
+  await page.locator('g.marker[aria-label^="Kenya Gen Z protests"]').click({ force: true });
+  await expect(page).toHaveURL(/unrest=kenya-gen-z-protests/);
+  const panel = page.locator('.panel');
+  await expect(panel.locator('h2')).toContainText('Kenya Gen Z protests');
+  await expect(panel.locator('.eyebrow')).toContainText('Protest movement');
+  await expect(panel.locator('#unrest-trigger + p')).toContainText(/Finance Bill/);
+  await expect(panel.locator('#unrest-assessments + ol li')).not.toHaveCount(0);
+  await panel.getByRole('button', { name: /Add Kenya Gen Z protests to watchlist/ }).click();
+  await expect(panel.getByRole('button', { name: /Remove Kenya Gen Z protests from watchlist/ })).toBeVisible();
+
+  // The country badge opens the dossier, which lists the episode and links back.
+  await panel.locator('.badges button', { hasText: 'Kenya' }).click();
+  await expect(panel.locator('.eyebrow')).toContainText('Country dossier');
+  await expect(panel.locator('#dossier-unrest')).toContainText('Civil unrest');
+  await panel.locator('#dossier-unrest + ul button').first().click();
+  await expect(page).toHaveURL(/unrest=kenya-gen-z-protests/);
+
+  // Search finds episodes and labels them by kind; the watchlist panel groups them.
+  await page.getByRole('searchbox').fill('serbia anti');
+  await expect(page.locator('.search-results, [role="listbox"]').first()).toContainText('Protest movement');
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL(/unrest=serbia-anti-corruption-protests/);
+  await open(page, '#watchlist=1');
+  await expect(page.locator('.panel')).toContainText('Unrest · 1');
+  await noSeriousA11yIssues(page);
+});

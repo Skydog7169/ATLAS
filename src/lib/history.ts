@@ -1,13 +1,13 @@
-import type { Bloc, Conflict, ConflictInput, HistoryEntry, Intensity } from '../data/types';
+import type { Bloc, Conflict, HistoryEntry, Intensity, Source, Unrest } from '../data/types';
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 /** Sorts history newest-first and mirrors the newest entry onto the record. */
-export function withCurrent(input: ConflictInput): Conflict {
+export function withCurrent<T extends { id: string; history: HistoryEntry[] }>(input: T): T & { intensity: Intensity; status: string; sources: Source[]; updated: string } {
   const history = [...input.history].sort((a, b) => b.date.localeCompare(a.date));
   const current = history[0];
-  if (!current) throw new Error(`Conflict ${input.id} has no history entries`);
-  for (const h of history) if (!ISO_DATE.test(h.date)) throw new Error(`Conflict ${input.id}: bad date ${h.date}`);
+  if (!current) throw new Error(`${input.id} has no history entries`);
+  for (const h of history) if (!ISO_DATE.test(h.date)) throw new Error(`${input.id}: bad date ${h.date}`);
   return { ...input, history, intensity: current.intensity, status: current.status, sources: current.sources, updated: current.date };
 }
 
@@ -51,7 +51,7 @@ export function earliestMonth(conflicts: Conflict[], blocs: Bloc[]): string {
 
 export interface ChangeItem {
   date: string;
-  kind: 'conflict' | 'bloc';
+  kind: 'conflict' | 'bloc' | 'unrest';
   id: string;
   title: string;
   detail: string;
@@ -60,11 +60,14 @@ export interface ChangeItem {
   iso?: string;
 }
 
-/** Flattens conflict assessments and bloc membership events into one feed, newest first. */
-export function allChanges(conflicts: Conflict[], blocs: Bloc[], countryName: (iso: string) => string, changeLabel: (k: Bloc['changes'][number]['change']) => string): ChangeItem[] {
+/** Flattens conflict and unrest assessments and bloc membership events into one feed, newest first. */
+export function allChanges(conflicts: Conflict[], blocs: Bloc[], countryName: (iso: string) => string, changeLabel: (k: Bloc['changes'][number]['change']) => string, unrest: Unrest[] = []): ChangeItem[] {
   const items: ChangeItem[] = [];
   for (const c of conflicts) {
     for (const h of c.history) items.push({ date: h.date, kind: 'conflict', id: c.id, title: c.name, detail: h.status, intensity: h.intensity });
+  }
+  for (const u of unrest) {
+    for (const h of u.history) items.push({ date: h.date, kind: 'unrest', id: u.id, title: u.name, detail: h.status, intensity: h.intensity });
   }
   for (const b of blocs) {
     for (const ch of b.changes) {

@@ -31,12 +31,24 @@ async function token(email, password) {
   return json.access_token;
 }
 
-/** Aggregates one page of events into per-country counts. Exported for tests. */
+/** ACLED event types, keyed as the app stores them. */
+export const EVENT_TYPES = {
+  Battles: 'battles',
+  'Explosions/Remote violence': 'explosions',
+  'Violence against civilians': 'civilians',
+  Protests: 'protests',
+  Riots: 'riots',
+  'Strategic developments': 'strategic',
+};
+
+/** Aggregates one page of events into per-country counts, overall and by event type. Exported for tests. */
 export function aggregate(rows, into = new Map()) {
   for (const r of rows) {
     const iso = r.iso3 ?? r.iso;
     if (!iso || !KNOWN.has(iso)) continue;
-    const cur = into.get(iso) ?? { iso, events: 0, fatalities: 0 };
+    const cur = into.get(iso) ?? { iso, events: 0, fatalities: 0, byType: { battles: 0, explosions: 0, civilians: 0, protests: 0, riots: 0, strategic: 0 } };
+    const type = EVENT_TYPES[r.event_type];
+    if (type) cur.byType[type] += 1;
     cur.events += 1;
     cur.fatalities += Number(r.fatalities) || 0;
     into.set(iso, cur);

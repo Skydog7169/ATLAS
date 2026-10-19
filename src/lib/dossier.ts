@@ -12,8 +12,11 @@ import { nuclearDossier } from './nuclear';
 import { sponsorshipDossier } from './actors';
 import { militaryDossier } from './military';
 import { tradeDossier } from './trade';
+import { unrestDossier } from './unrest';
+import { acledDossier } from './acled';
+import { ucdpDossier } from './ucdp';
 
-export type DossierSectionId = 'profile' | 'memberships' | 'conflicts' | 'sponsorship' | 'military' | 'displacement' | 'figures' | 'trade' | 'changes' | 'sanctions' | 'elections' | 'nuclear';
+export type DossierSectionId = 'profile' | 'memberships' | 'conflicts' | 'unrest' | 'acled' | 'ucdp' | 'sponsorship' | 'military' | 'displacement' | 'figures' | 'trade' | 'changes' | 'sanctions' | 'elections' | 'nuclear';
 
 /**
  * A section contributed by a later dataset (sanctions, elections). Each row is
@@ -21,10 +24,10 @@ export type DossierSectionId = 'profile' | 'memberships' | 'conflicts' | 'sponso
  * without touching the panel component.
  */
 export interface DossierExtra {
-  id: Extract<DossierSectionId, 'sanctions' | 'elections' | 'nuclear' | 'sponsorship' | 'military' | 'trade'>;
+  id: Extract<DossierSectionId, 'sanctions' | 'elections' | 'nuclear' | 'sponsorship' | 'military' | 'trade' | 'unrest' | 'acled' | 'ucdp'>;
   title: string;
-  /** A row links out (`href`), into a conflict panel (`conflictId`) or into a country dossier (`countryIso`). */
-  rows: Array<{ label: string; value: string; href?: string; note?: string; conflictId?: string; countryIso?: string }>;
+  /** A row links out (`href`), into a conflict panel (`conflictId`), an unrest panel (`unrestId`) or a country dossier (`countryIso`). */
+  rows: Array<{ label: string; value: string; href?: string; note?: string; conflictId?: string; unrestId?: string; countryIso?: string }>;
   /** Shown when `rows` is empty. */
   empty?: string;
   /** Source and fetch date shown under the section. */
@@ -38,7 +41,7 @@ export type DossierProvider = (iso: string) => DossierExtra | null;
  * null to skip the section (nuclear status only exists for a few countries)
  * or an extra with no rows to show its `empty` text.
  */
-export const DOSSIER_PROVIDERS: DossierProvider[] = [sponsorshipDossier, militaryDossier, sanctionsDossier, electionsDossier, nuclearDossier, tradeDossier];
+export const DOSSIER_PROVIDERS: DossierProvider[] = [unrestDossier, acledDossier, ucdpDossier, sponsorshipDossier, militaryDossier, sanctionsDossier, electionsDossier, nuclearDossier, tradeDossier];
 
 export interface CountryDossier {
   country: CountryRecord;

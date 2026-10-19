@@ -14,6 +14,6 @@ export interface FeedItem {
 }
 export const SITE: string;
 export const FEED_LIMIT: number;
-export function collectItems(conflicts: unknown[], blocs: unknown[], countryName: (iso: string) => string): FeedItem[];
+export function collectItems(conflicts: unknown[], blocs: unknown[], countryName: (iso: string) => string, unrest?: Array<{ id: string; name: string; history: Array<{ date: string; intensity: string; status: string; sources?: FeedSource[] }> }>): FeedItem[];
 export function renderRss(items: FeedItem[], opts?: { now?: Date; limit?: number }): string;
 export function renderJsonFeed(items: FeedItem[], opts?: { limit?: number }): string;

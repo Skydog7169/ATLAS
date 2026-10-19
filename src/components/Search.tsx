@@ -101,7 +101,7 @@ export default function Search({ onPick, conflictColor }: Props) {
                 {hit.label}
                 {hit.kind === 'country' && <span style={{ color: 'var(--fg-muted)' }}> · {hit.sub}</span>}
               </span>
-              <span className="kind">{hit.kind === 'bloc' ? hit.sub : hit.kind}</span>
+              <span className="kind">{hit.kind === 'bloc' || hit.kind === 'unrest' ? hit.sub : hit.kind}</span>
             </li>
           ))}
         </ul>

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// Weekly research pass. For each conflict, asks Claude (with web search) for
-// a fresh assessment; appends it to conflicts.json only when it is material,
+// Weekly research pass. For each conflict and unrest episode, asks Claude (with
+// web search) for a fresh assessment; appends it to the JSON only when it is material,
 // sourced and within the intensity guardrail. Also reviews bloc memberships
 // and scans for conflicts the map is missing (reported, never auto-added).
 //
@@ -13,7 +13,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Anthropic from '@anthropic-ai/sdk';
 import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod';
-import { AssessmentOutputSchema, BlocReviewOutputSchema, BlocsFileSchema, ConflictsFileSchema, ElectionOutputSchema, ElectionsFileSchema, MONTH_OR_DATE, NewConflictsOutputSchema, PARTIAL_DATE } from '../../src/data/schema.ts';
+import { AssessmentOutputSchema, BlocReviewOutputSchema, BlocsFileSchema, ConflictsFileSchema, ElectionOutputSchema, ElectionsFileSchema, MONTH_OR_DATE, NewConflictsOutputSchema, PARTIAL_DATE, UnrestFileSchema } from '../../src/data/schema.ts';
 import { clampIntensity, isMaterialChange, verifySources } from '../../src/data/guards.ts';
 import { mockClient } from './mock.mjs';
 
@@ -22,6 +22,7 @@ const root = resolve(here, '../..');
 const CONFLICTS_PATH = resolve(root, 'src/data/conflicts.json');
 const BLOCS_PATH = resolve(root, 'src/data/blocs.json');
 const ELECTIONS_PATH = resolve(root, 'src/data/elections.json');
+const UNREST_PATH = resolve(root, 'src/data/unrest.json');
 const COUNTRIES = JSON.parse(readFileSync(resolve(root, 'src/data/countries.generated.json'), 'utf8'));
 /** Election entries re-checked per pass: those past or due within this many days, plus a few of the oldest-verified. */
 const ELECTION_DUE_DAYS = 60;
@@ -36,6 +37,7 @@ const today = args.date ?? new Date().toISOString().slice(0, 10);
 const conflicts = ConflictsFileSchema.parse(JSON.parse(readFileSync(CONFLICTS_PATH, 'utf8')));
 const blocs = BlocsFileSchema.parse(JSON.parse(readFileSync(BLOCS_PATH, 'utf8')));
 const elections = ElectionsFileSchema.parse(JSON.parse(readFileSync(ELECTIONS_PATH, 'utf8')));
+const unrest = UnrestFileSchema.parse(JSON.parse(readFileSync(UNREST_PATH, 'utf8')));
 
 const client = args.mock ? mockClient() : new Anthropic();
 const usage = { input: 0, output: 0, cacheRead: 0, calls: 0 };
@@ -53,6 +55,17 @@ for (const conflict of selected) {
     await assessConflict(conflict);
   } catch (err) {
     report.errors.push(`${conflict.id}: ${describeError(err)}`);
+  }
+}
+
+let selectedUnrest = unrest;
+if (args.only) selectedUnrest = unrest.filter((u) => args.only.includes(u.id));
+if (args.limit) selectedUnrest = selectedUnrest.slice(0, args.limit);
+for (const episode of selectedUnrest) {
+  try {
+    await assessConflict(episode, 'unrest');
+  } catch (err) {
+    report.errors.push(`${episode.id}: ${describeError(err)}`);
   }
 }
 
@@ -78,11 +91,13 @@ if (!args.only) {
 ConflictsFileSchema.parse(conflicts);
 BlocsFileSchema.parse(blocs);
 ElectionsFileSchema.parse(elections);
+UnrestFileSchema.parse(unrest);
 
 if (!args.dryRun) {
   writeFileSync(CONFLICTS_PATH, JSON.stringify(conflicts, null, 2) + '\n');
   writeFileSync(BLOCS_PATH, JSON.stringify(blocs, null, 2) + '\n');
   writeFileSync(ELECTIONS_PATH, JSON.stringify(elections, null, 2) + '\n');
+  writeFileSync(UNREST_PATH, JSON.stringify(unrest, null, 2) + '\n');
 }
 
 const md = renderReport();
@@ -92,17 +107,23 @@ if (report.errors.length && !report.updated.length && !report.blocChanges.length
 
 // ---------------------------------------------------------------------------
 
-async function assessConflict(conflict) {
+/** Reassesses one conflict or (with kind 'unrest') one civil-unrest episode under the same guards. */
+async function assessConflict(conflict, kind = 'conflict') {
   const previous = conflict.history[0];
+  const scale =
+    kind === 'unrest'
+      ? 'Intensity scale: high = nationwide mass mobilisation with lethal force or the government\'s survival in question; medium = sustained or recurring protests or riots with violence, or a coup consolidating; low = sporadic, localised or largely peaceful; latent = suppressed or dormant but unresolved.'
+      : 'Intensity scale: high = large-scale sustained combat; medium = regular deadly fighting; low = sporadic violence; latent = ceasefire or standoff.';
   const context = [
-    `Conflict: ${conflict.name} (id ${conflict.id})`,
-    `Type: ${conflict.type}. Countries: ${conflict.countries.join(', ')}. Parties: ${conflict.parties.join('; ')}.`,
+    kind === 'unrest' ? `Unrest: ${conflict.name} (id ${conflict.id})` : `Conflict: ${conflict.name} (id ${conflict.id})`,
+    kind === 'unrest' ? `Kind: ${conflict.kind}, since ${conflict.since}. Countries: ${conflict.countries.join(', ')}. Parties: ${conflict.parties.join('; ')}.` : `Type: ${conflict.type}. Countries: ${conflict.countries.join(', ')}. Parties: ${conflict.parties.join('; ')}.`,
+    kind === 'unrest' ? `Trigger: ${conflict.trigger}` : '',
     `Background: ${conflict.summary}`,
     `Previous assessment (${previous.date}, intensity ${previous.intensity}): ${previous.status}`,
     conflict.history[1] ? `Earlier assessment (${conflict.history[1].date}, intensity ${conflict.history[1].intensity}): ${conflict.history[1].status}` : '',
-    conflict.peace?.length ? `Peace process so far (newest first): ${conflict.peace.slice(0, 3).map((e) => `${e.date} ${e.kind}: ${e.summary}`).join(' | ')}` : 'Peace process: nothing on record.',
+    kind === 'unrest' ? 'Peace process: not applicable; return an empty peaceEvents list.' : conflict.peace?.length ? `Peace process so far (newest first): ${conflict.peace.slice(0, 3).map((e) => `${e.date} ${e.kind}: ${e.summary}`).join(' | ')}` : 'Peace process: nothing on record.',
     '',
-    `Task: search for developments between ${previous.date} and ${today}. Then return the structured assessment. Intensity scale: high = large-scale sustained combat; medium = regular deadly fighting; low = sporadic violence; latent = ceasefire or standoff. Keep status to 2-3 sentences (150-600 characters).`,
+    `Task: search for developments between ${previous.date} and ${today}. Then return the structured assessment. ${scale} Keep status to 2-3 sentences (150-600 characters).`,
   ]
     .filter(Boolean)
     .join('\n');
@@ -123,12 +144,12 @@ async function assessConflict(conflict) {
   const seenUrls = collectSearchUrls(response);
   const { kept, dropped } = verifySources(out.sources, seenUrls);
   if (dropped.length) report.droppedSources.push({ id: conflict.id, dropped: dropped.map((s) => s.url) });
-  applyPeaceEvents(conflict, out.peaceEvents ?? [], seenUrls);
+  if (kind === 'conflict') applyPeaceEvents(conflict, out.peaceEvents ?? [], seenUrls);
 
   const material = out.changed && isMaterialChange(previous, out.status, out.intensity);
   if (!material) {
     conflict.lastChecked = today;
-    report.unchanged.push({ id: conflict.id, name: conflict.name, note: out.note });
+    report.unchanged.push({ id: conflict.id, name: kind === 'unrest' ? `${conflict.name} (unrest)` : conflict.name, note: out.note });
     return;
   }
   if (kept.length === 0) throw new Error('assessment changed but no verifiable sources survived');
@@ -139,7 +160,7 @@ async function assessConflict(conflict) {
   if (previous.date === today) conflict.history[0] = entry;
   else conflict.history.unshift(entry);
   delete conflict.lastChecked;
-  report.updated.push({ id: conflict.id, name: conflict.name, from: previous.intensity, to: intensity, confidence: out.confidence, note: out.note, status: entry.status });
+  report.updated.push({ id: conflict.id, name: kind === 'unrest' ? `${conflict.name} (unrest)` : conflict.name, from: previous.intensity, to: intensity, confidence: out.confidence, note: out.note, status: entry.status });
 }
 
 /** Appends sourced peace-process events the model found, skipping duplicates and unverifiable citations. */

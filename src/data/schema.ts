@@ -105,6 +105,47 @@ export const BlocSchema = z.object({
 });
 
 export const ConflictsFileSchema = z.array(ConflictInputSchema);
+
+// ---------------------------------------------------------------------------
+// Batch 8: civil unrest (curated, research-maintained) and UCDP organised violence (generated).
+
+export const UnrestKindSchema = z.enum(['protests', 'riots', 'uprising', 'coup', 'mutiny', 'crackdown']);
+
+/** A protest movement, riot wave, uprising, coup, mutiny or crackdown that is not tracked as an armed conflict. */
+export const UnrestInputSchema = z.object({
+  id: z.string().regex(/^[a-z0-9-]+$/),
+  name: z.string().min(3),
+  kind: UnrestKindSchema,
+  /** YYYY-MM the episode began. */
+  since: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/),
+  location: z.tuple([z.number().min(-180).max(180), z.number().min(-90).max(90)]),
+  countries: z.array(z.string().regex(ISO3)).min(1),
+  parties: z.array(z.string().min(2)).min(1).max(4),
+  trigger: z.string().min(20).max(300),
+  summary: z.string().min(40),
+  history: z.array(HistoryEntrySchema).min(1),
+  lastChecked: z.string().regex(ISO_DATE).optional(),
+});
+export const UnrestFileSchema = z.array(UnrestInputSchema);
+
+export const UcdpRowSchema = z.object({
+  iso: z.string().regex(ISO3),
+  /** Best-estimate fatalities by UCDP type of violence over the window. */
+  stateBased: z.number().int().min(0),
+  nonState: z.number().int().min(0),
+  oneSided: z.number().int().min(0),
+  events: z.number().int().min(0),
+});
+export const UcdpFileSchema = z.object({
+  source: SourceSchema,
+  available: z.boolean(),
+  reason: z.string().optional(),
+  fetchedAt: z.string().regex(ISO_DATE),
+  version: z.string(),
+  from: z.string().regex(ISO_DATE).nullable(),
+  to: z.string().regex(ISO_DATE).nullable(),
+  rows: z.array(UcdpRowSchema),
+});
 export const BlocsFileSchema = z.array(BlocSchema);
 
 /** What the research model returns for one conflict. Kept flat and enum-only so it compiles as a structured-output schema. */

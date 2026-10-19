@@ -1,0 +1,13 @@
+{
+ "source": {
+  "name": "UCDP Georeferenced Event Dataset",
+  "url": "https://ucdp.uu.se/downloads/"
+ },
+ "available": false,
+ "reason": "UCDP_TOKEN secret is not set",
+ "fetchedAt": "2026-10-19",
+ "version": "26.1",
+ "from": null,
+ "to": null,
+ "rows": []
+}

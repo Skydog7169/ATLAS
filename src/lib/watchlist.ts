@@ -1,7 +1,7 @@
-import type { Conflict } from '../data/types';
+import type { Conflict, Unrest } from '../data/types';
 import type { ChangeItem } from './history';
 
-export type WatchKind = 'country' | 'bloc' | 'conflict';
+export type WatchKind = 'country' | 'bloc' | 'conflict' | 'unrest';
 
 export interface WatchItem {
   kind: WatchKind;
@@ -18,7 +18,7 @@ export function watchKey(item: WatchItem): string {
 function isWatchItem(x: unknown): x is WatchItem {
   if (!x || typeof x !== 'object') return false;
   const { kind, id } = x as Record<string, unknown>;
-  return (kind === 'country' || kind === 'bloc' || kind === 'conflict') && typeof id === 'string' && id.length > 0 && id.length < 64;
+  return (kind === 'country' || kind === 'bloc' || kind === 'conflict' || kind === 'unrest') && typeof id === 'string' && id.length > 0 && id.length < 64;
 }
 
 /**
@@ -98,11 +98,11 @@ export function hasItem(items: WatchItem[], item: WatchItem): boolean {
  * territory; a membership change matches the starred bloc or the country
  * whose membership changed.
  */
-export function matchesWatchlist(item: ChangeItem, keys: ReadonlySet<string>, conflictById: ReadonlyMap<string, Conflict>): boolean {
+export function matchesWatchlist(item: ChangeItem, keys: ReadonlySet<string>, conflictById: ReadonlyMap<string, Conflict>, unrestById?: ReadonlyMap<string, Unrest>): boolean {
   if (keys.size === 0) return false;
-  if (item.kind === 'conflict') {
-    if (keys.has(`conflict:${item.id}`)) return true;
-    const c = conflictById.get(item.id);
+  if (item.kind === 'conflict' || item.kind === 'unrest') {
+    if (keys.has(`${item.kind}:${item.id}`)) return true;
+    const c = item.kind === 'unrest' ? unrestById?.get(item.id) : conflictById.get(item.id);
     return c ? c.countries.some((iso) => keys.has(`country:${iso}`)) : false;
   }
   if (keys.has(`bloc:${item.id}`)) return true;
