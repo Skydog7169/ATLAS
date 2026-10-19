@@ -11,7 +11,33 @@
    "exportsUsd": 111004914,
    "us": 0.159,
    "china": 0,
-   "eu": 0.025
+   "eu": 0.025,
+   "partners": [
+    {
+     "iso": "COL",
+     "share": 0.46
+    },
+    {
+     "iso": "USA",
+     "share": 0.159
+    },
+    {
+     "iso": "CUW",
+     "share": 0.039
+    },
+    {
+     "iso": "NLD",
+     "share": 0.025
+    },
+    {
+     "iso": "PAN",
+     "share": 0.015
+    },
+    {
+     "iso": "VEN",
+     "share": 0
+    }
+   ]
   },
   {
    "iso": "AGO",
@@ -19,7 +45,69 @@
    "exportsUsd": 39505783209,
    "us": 0.01,
    "china": 0.466,
-   "eu": 0.238
+   "eu": 0.238,
+   "partners": [
+    {
+     "iso": "CHN",
+     "share": 0.466
+    },
+    {
+     "iso": "ESP",
+     "share": 0.075
+    },
+    {
+     "iso": "NLD",
+     "share": 0.061
+    },
+    {
+     "iso": "IND",
+     "share": 0.059
+    },
+    {
+     "iso": "FRA",
+     "share": 0.048
+    },
+    {
+     "iso": "COG",
+     "share": 0.031
+    },
+    {
+     "iso": "IDN",
+     "share": 0.031
+    },
+    {
+     "iso": "ARE",
+     "share": 0.03
+    },
+    {
+     "iso": "ITA",
+     "share": 0.024
+    },
+    {
+     "iso": "MYS",
+     "share": 0.019
+    },
+    {
+     "iso": "CAN",
+     "share": 0.018
+    },
+    {
+     "iso": "SGP",
+     "share": 0.017
+    },
+    {
+     "iso": "BEL",
+     "share": 0.014
+    },
+    {
+     "iso": "BRA",
+     "share": 0.013
+    },
+    {
+     "iso": "GBR",
+     "share": 0.012
+    }
+   ]
   },
   {
    "iso": "ALB",
@@ -27,7 +115,69 @@
    "exportsUsd": 4374857212,
    "us": 0.022,
    "china": 0.023,
-   "eu": 0.709
+   "eu": 0.709,
+   "partners": [
+    {
+     "iso": "ITA",
+     "share": 0.429
+    },
+    {
+     "iso": "GRC",
+     "share": 0.065
+    },
+    {
+     "iso": "DEU",
+     "share": 0.052
+    },
+    {
+     "iso": "ESP",
+     "share": 0.043
+    },
+    {
+     "iso": "MKD",
+     "share": 0.036
+    },
+    {
+     "iso": "CHN",
+     "share": 0.023
+    },
+    {
+     "iso": "USA",
+     "share": 0.022
+    },
+    {
+     "iso": "SVK",
+     "share": 0.015
+    },
+    {
+     "iso": "CZE",
+     "share": 0.014
+    },
+    {
+     "iso": "GBR",
+     "share": 0.014
+    },
+    {
+     "iso": "SWE",
+     "share": 0.013
+    },
+    {
+     "iso": "CHE",
+     "share": 0.012
+    },
+    {
+     "iso": "TUR",
+     "share": 0.012
+    },
+    {
+     "iso": "HRV",
+     "share": 0.011
+    },
+    {
+     "iso": "FRA",
+     "share": 0.01
+    }
+   ]
   },
   {
    "iso": "AND",
@@ -35,7 +185,69 @@
    "exportsUsd": 252365105,
    "us": 0,
    "china": 0.001,
-   "eu": 0.613
+   "eu": 0.613,
+   "partners": [
+    {
+     "iso": "ESP",
+     "share": 0.44
+    },
+    {
+     "iso": "FRA",
+     "share": 0.125
+    },
+    {
+     "iso": "GBR",
+     "share": 0.041
+    },
+    {
+     "iso": "ARE",
+     "share": 0.026
+    },
+    {
+     "iso": "NOR",
+     "share": 0.017
+    },
+    {
+     "iso": "HKG",
+     "share": 0.015
+    },
+    {
+     "iso": "TUR",
+     "share": 0.015
+    },
+    {
+     "iso": "ITA",
+     "share": 0.01
+    },
+    {
+     "iso": "NLD",
+     "share": 0.01
+    },
+    {
+     "iso": "DEU",
+     "share": 0.008
+    },
+    {
+     "iso": "DZA",
+     "share": 0.008
+    },
+    {
+     "iso": "SLV",
+     "share": 0.008
+    },
+    {
+     "iso": "BEL",
+     "share": 0.004
+    },
+    {
+     "iso": "CHE",
+     "share": 0.004
+    },
+    {
+     "iso": "HND",
+     "share": 0.004
+    }
+   ]
   },
   {
    "iso": "ARE",
@@ -43,7 +255,69 @@
    "exportsUsd": 570245383585,
    "us": 0.024,
    "china": 0.016,
-   "eu": 0.028
+   "eu": 0.028,
+   "partners": [
+    {
+     "iso": "SAU",
+     "share": 0.052
+    },
+    {
+     "iso": "IND",
+     "share": 0.044
+    },
+    {
+     "iso": "IRQ",
+     "share": 0.04
+    },
+    {
+     "iso": "TUR",
+     "share": 0.033
+    },
+    {
+     "iso": "HKG",
+     "share": 0.025
+    },
+    {
+     "iso": "USA",
+     "share": 0.024
+    },
+    {
+     "iso": "CHE",
+     "share": 0.019
+    },
+    {
+     "iso": "OMN",
+     "share": 0.019
+    },
+    {
+     "iso": "KWT",
+     "share": 0.017
+    },
+    {
+     "iso": "CHN",
+     "share": 0.016
+    },
+    {
+     "iso": "QAT",
+     "share": 0.014
+    },
+    {
+     "iso": "IRN",
+     "share": 0.01
+    },
+    {
+     "iso": "BHR",
+     "share": 0.008
+    },
+    {
+     "iso": "EGY",
+     "share": 0.008
+    },
+    {
+     "iso": "RUS",
+     "share": 0.008
+    }
+   ]
   },
   {
    "iso": "ARG",
@@ -51,7 +325,69 @@
    "exportsUsd": 66788515986,
    "us": 0.085,
    "china": 0.077,
-   "eu": 0.102
+   "eu": 0.102,
+   "partners": [
+    {
+     "iso": "BRA",
+     "share": 0.178
+    },
+    {
+     "iso": "USA",
+     "share": 0.085
+    },
+    {
+     "iso": "CHN",
+     "share": 0.077
+    },
+    {
+     "iso": "CHL",
+     "share": 0.074
+    },
+    {
+     "iso": "PER",
+     "share": 0.038
+    },
+    {
+     "iso": "IND",
+     "share": 0.037
+    },
+    {
+     "iso": "VNM",
+     "share": 0.031
+    },
+    {
+     "iso": "URY",
+     "share": 0.025
+    },
+    {
+     "iso": "NLD",
+     "share": 0.023
+    },
+    {
+     "iso": "ESP",
+     "share": 0.022
+    },
+    {
+     "iso": "COL",
+     "share": 0.019
+    },
+    {
+     "iso": "MYS",
+     "share": 0.019
+    },
+    {
+     "iso": "CHE",
+     "share": 0.018
+    },
+    {
+     "iso": "KOR",
+     "share": 0.018
+    },
+    {
+     "iso": "PRY",
+     "share": 0.018
+    }
+   ]
   },
   {
    "iso": "ARM",
@@ -59,7 +395,69 @@
    "exportsUsd": 8508041376,
    "us": 0.006,
    "china": 0.05,
-   "eu": 0.083
+   "eu": 0.083,
+   "partners": [
+    {
+     "iso": "RUS",
+     "share": 0.412
+    },
+    {
+     "iso": "ARE",
+     "share": 0.261
+    },
+    {
+     "iso": "HKG",
+     "share": 0.079
+    },
+    {
+     "iso": "CHN",
+     "share": 0.05
+    },
+    {
+     "iso": "NLD",
+     "share": 0.028
+    },
+    {
+     "iso": "IRQ",
+     "share": 0.021
+    },
+    {
+     "iso": "GEO",
+     "share": 0.016
+    },
+    {
+     "iso": "BEL",
+     "share": 0.011
+    },
+    {
+     "iso": "BGR",
+     "share": 0.011
+    },
+    {
+     "iso": "BLR",
+     "share": 0.011
+    },
+    {
+     "iso": "IRN",
+     "share": 0.011
+    },
+    {
+     "iso": "CHE",
+     "share": 0.01
+    },
+    {
+     "iso": "DEU",
+     "share": 0.01
+    },
+    {
+     "iso": "KAZ",
+     "share": 0.009
+    },
+    {
+     "iso": "ITA",
+     "share": 0.008
+    }
+   ]
   },
   {
    "iso": "ATG",
@@ -67,7 +465,69 @@
    "exportsUsd": 30496874,
    "us": 0.253,
    "china": 0.094,
-   "eu": 0.14
+   "eu": 0.14,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.253
+    },
+    {
+     "iso": "SXM",
+     "share": 0.136
+    },
+    {
+     "iso": "CHN",
+     "share": 0.094
+    },
+    {
+     "iso": "NLD",
+     "share": 0.09
+    },
+    {
+     "iso": "MSR",
+     "share": 0.064
+    },
+    {
+     "iso": "DMA",
+     "share": 0.052
+    },
+    {
+     "iso": "KNA",
+     "share": 0.052
+    },
+    {
+     "iso": "LCA",
+     "share": 0.046
+    },
+    {
+     "iso": "GBR",
+     "share": 0.033
+    },
+    {
+     "iso": "FRA",
+     "share": 0.029
+    },
+    {
+     "iso": "BRB",
+     "share": 0.017
+    },
+    {
+     "iso": "ESP",
+     "share": 0.014
+    },
+    {
+     "iso": "VGB",
+     "share": 0.012
+    },
+    {
+     "iso": "SUR",
+     "share": 0.011
+    },
+    {
+     "iso": "MLI",
+     "share": 0.01
+    }
+   ]
   },
   {
    "iso": "AUS",
@@ -75,7 +535,69 @@
    "exportsUsd": 369235124159,
    "us": 0.034,
    "china": 0.326,
-   "eu": 0.029
+   "eu": 0.029,
+   "partners": [
+    {
+     "iso": "CHN",
+     "share": 0.326
+    },
+    {
+     "iso": "JPN",
+     "share": 0.098
+    },
+    {
+     "iso": "KOR",
+     "share": 0.057
+    },
+    {
+     "iso": "IND",
+     "share": 0.044
+    },
+    {
+     "iso": "USA",
+     "share": 0.034
+    },
+    {
+     "iso": "NZL",
+     "share": 0.022
+    },
+    {
+     "iso": "VNM",
+     "share": 0.021
+    },
+    {
+     "iso": "IDN",
+     "share": 0.02
+    },
+    {
+     "iso": "SGP",
+     "share": 0.018
+    },
+    {
+     "iso": "HKG",
+     "share": 0.017
+    },
+    {
+     "iso": "MYS",
+     "share": 0.016
+    },
+    {
+     "iso": "THA",
+     "share": 0.012
+    },
+    {
+     "iso": "GBR",
+     "share": 0.01
+    },
+    {
+     "iso": "NLD",
+     "share": 0.009
+    },
+    {
+     "iso": "ARE",
+     "share": 0.008
+    }
+   ]
   },
   {
    "iso": "AUT",
@@ -83,7 +605,69 @@
    "exportsUsd": 216176589470,
    "us": 0.072,
    "china": 0.025,
-   "eu": 0.66
+   "eu": 0.66,
+   "partners": [
+    {
+     "iso": "DEU",
+     "share": 0.29
+    },
+    {
+     "iso": "USA",
+     "share": 0.072
+    },
+    {
+     "iso": "ITA",
+     "share": 0.061
+    },
+    {
+     "iso": "CHE",
+     "share": 0.052
+    },
+    {
+     "iso": "BEL",
+     "share": 0.038
+    },
+    {
+     "iso": "CZE",
+     "share": 0.036
+    },
+    {
+     "iso": "FRA",
+     "share": 0.036
+    },
+    {
+     "iso": "HUN",
+     "share": 0.036
+    },
+    {
+     "iso": "POL",
+     "share": 0.036
+    },
+    {
+     "iso": "GBR",
+     "share": 0.027
+    },
+    {
+     "iso": "CHN",
+     "share": 0.025
+    },
+    {
+     "iso": "SVN",
+     "share": 0.021
+    },
+    {
+     "iso": "SVK",
+     "share": 0.019
+    },
+    {
+     "iso": "NLD",
+     "share": 0.018
+    },
+    {
+     "iso": "ESP",
+     "share": 0.016
+    }
+   ]
   },
   {
    "iso": "AZE",
@@ -91,7 +675,69 @@
    "exportsUsd": 33898554855,
    "us": 0,
    "china": 0.002,
-   "eu": 0.626
+   "eu": 0.626,
+   "partners": [
+    {
+     "iso": "ITA",
+     "share": 0.449
+    },
+    {
+     "iso": "TUR",
+     "share": 0.158
+    },
+    {
+     "iso": "ISR",
+     "share": 0.041
+    },
+    {
+     "iso": "GRC",
+     "share": 0.04
+    },
+    {
+     "iso": "IND",
+     "share": 0.036
+    },
+    {
+     "iso": "RUS",
+     "share": 0.035
+    },
+    {
+     "iso": "DEU",
+     "share": 0.027
+    },
+    {
+     "iso": "ESP",
+     "share": 0.023
+    },
+    {
+     "iso": "GEO",
+     "share": 0.022
+    },
+    {
+     "iso": "CZE",
+     "share": 0.02
+    },
+    {
+     "iso": "HRV",
+     "share": 0.017
+    },
+    {
+     "iso": "BGR",
+     "share": 0.014
+    },
+    {
+     "iso": "GBR",
+     "share": 0.013
+    },
+    {
+     "iso": "IRL",
+     "share": 0.011
+    },
+    {
+     "iso": "VNM",
+     "share": 0.01
+    }
+   ]
   },
   {
    "iso": "BDI",
@@ -99,7 +745,69 @@
    "exportsUsd": 217474261,
    "us": 0.01,
    "china": 0.018,
-   "eu": 0.073
+   "eu": 0.073,
+   "partners": [
+    {
+     "iso": "ARE",
+     "share": 0.37
+    },
+    {
+     "iso": "CHE",
+     "share": 0.064
+    },
+    {
+     "iso": "BEL",
+     "share": 0.041
+    },
+    {
+     "iso": "PAK",
+     "share": 0.03
+    },
+    {
+     "iso": "TZA",
+     "share": 0.028
+    },
+    {
+     "iso": "RWA",
+     "share": 0.027
+    },
+    {
+     "iso": "DEU",
+     "share": 0.025
+    },
+    {
+     "iso": "UGA",
+     "share": 0.023
+    },
+    {
+     "iso": "OMN",
+     "share": 0.02
+    },
+    {
+     "iso": "CHN",
+     "share": 0.018
+    },
+    {
+     "iso": "EGY",
+     "share": 0.013
+    },
+    {
+     "iso": "GBR",
+     "share": 0.011
+    },
+    {
+     "iso": "USA",
+     "share": 0.01
+    },
+    {
+     "iso": "ZMB",
+     "share": 0.008
+    },
+    {
+     "iso": "ETH",
+     "share": 0.006
+    }
+   ]
   },
   {
    "iso": "BEL",
@@ -107,7 +815,69 @@
    "exportsUsd": 393157732896,
    "us": 0.07,
    "china": 0.017,
-   "eu": 0.632
+   "eu": 0.632,
+   "partners": [
+    {
+     "iso": "DEU",
+     "share": 0.163
+    },
+    {
+     "iso": "NLD",
+     "share": 0.135
+    },
+    {
+     "iso": "FRA",
+     "share": 0.127
+    },
+    {
+     "iso": "USA",
+     "share": 0.07
+    },
+    {
+     "iso": "GBR",
+     "share": 0.059
+    },
+    {
+     "iso": "ITA",
+     "share": 0.046
+    },
+    {
+     "iso": "ESP",
+     "share": 0.028
+    },
+    {
+     "iso": "POL",
+     "share": 0.026
+    },
+    {
+     "iso": "LUX",
+     "share": 0.019
+    },
+    {
+     "iso": "SWE",
+     "share": 0.018
+    },
+    {
+     "iso": "CHN",
+     "share": 0.017
+    },
+    {
+     "iso": "CHE",
+     "share": 0.013
+    },
+    {
+     "iso": "NGA",
+     "share": 0.013
+    },
+    {
+     "iso": "TUR",
+     "share": 0.013
+    },
+    {
+     "iso": "IND",
+     "share": 0.012
+    }
+   ]
   },
   {
    "iso": "BEN",
@@ -115,7 +885,69 @@
    "exportsUsd": 1052210914,
    "us": 0.01,
    "china": 0.053,
-   "eu": 0.042
+   "eu": 0.042,
+   "partners": [
+    {
+     "iso": "BGD",
+     "share": 0.372
+    },
+    {
+     "iso": "IND",
+     "share": 0.154
+    },
+    {
+     "iso": "PAK",
+     "share": 0.072
+    },
+    {
+     "iso": "TGO",
+     "share": 0.054
+    },
+    {
+     "iso": "CHN",
+     "share": 0.053
+    },
+    {
+     "iso": "ARE",
+     "share": 0.043
+    },
+    {
+     "iso": "TCD",
+     "share": 0.035
+    },
+    {
+     "iso": "EGY",
+     "share": 0.025
+    },
+    {
+     "iso": "VNM",
+     "share": 0.017
+    },
+    {
+     "iso": "NGA",
+     "share": 0.015
+    },
+    {
+     "iso": "MYS",
+     "share": 0.014
+    },
+    {
+     "iso": "CIV",
+     "share": 0.012
+    },
+    {
+     "iso": "NLD",
+     "share": 0.012
+    },
+    {
+     "iso": "NER",
+     "share": 0.011
+    },
+    {
+     "iso": "DNK",
+     "share": 0.01
+    }
+   ]
   },
   {
    "iso": "BFA",
@@ -123,7 +955,69 @@
    "exportsUsd": 4458757137,
    "us": 0.007,
    "china": 0.003,
-   "eu": 0.034
+   "eu": 0.034,
+   "partners": [
+    {
+     "iso": "CHE",
+     "share": 0.676
+    },
+    {
+     "iso": "ARE",
+     "share": 0.085
+    },
+    {
+     "iso": "MLI",
+     "share": 0.06
+    },
+    {
+     "iso": "CIV",
+     "share": 0.03
+    },
+    {
+     "iso": "IND",
+     "share": 0.019
+    },
+    {
+     "iso": "GHA",
+     "share": 0.018
+    },
+    {
+     "iso": "SGP",
+     "share": 0.018
+    },
+    {
+     "iso": "TGO",
+     "share": 0.015
+    },
+    {
+     "iso": "DNK",
+     "share": 0.008
+    },
+    {
+     "iso": "FRA",
+     "share": 0.008
+    },
+    {
+     "iso": "USA",
+     "share": 0.007
+    },
+    {
+     "iso": "MUS",
+     "share": 0.006
+    },
+    {
+     "iso": "SEN",
+     "share": 0.006
+    },
+    {
+     "iso": "NER",
+     "share": 0.005
+    },
+    {
+     "iso": "NLD",
+     "share": 0.005
+    }
+   ]
   },
   {
    "iso": "BGR",
@@ -131,7 +1025,69 @@
    "exportsUsd": 47900556830,
    "us": 0.024,
    "china": 0.023,
-   "eu": 0.505
+   "eu": 0.505,
+   "partners": [
+    {
+     "iso": "DEU",
+     "share": 0.137
+    },
+    {
+     "iso": "ITA",
+     "share": 0.072
+    },
+    {
+     "iso": "TUR",
+     "share": 0.058
+    },
+    {
+     "iso": "GRC",
+     "share": 0.055
+    },
+    {
+     "iso": "FRA",
+     "share": 0.033
+    },
+    {
+     "iso": "BEL",
+     "share": 0.031
+    },
+    {
+     "iso": "ESP",
+     "share": 0.026
+    },
+    {
+     "iso": "USA",
+     "share": 0.024
+    },
+    {
+     "iso": "CHN",
+     "share": 0.023
+    },
+    {
+     "iso": "POL",
+     "share": 0.023
+    },
+    {
+     "iso": "AUT",
+     "share": 0.021
+    },
+    {
+     "iso": "NLD",
+     "share": 0.02
+    },
+    {
+     "iso": "CZE",
+     "share": 0.019
+    },
+    {
+     "iso": "MKD",
+     "share": 0.019
+    },
+    {
+     "iso": "UKR",
+     "share": 0.019
+    }
+   ]
   },
   {
    "iso": "BHR",
@@ -139,7 +1095,69 @@
    "exportsUsd": 12406927759,
    "us": 0.084,
    "china": 0.003,
-   "eu": 0.134
+   "eu": 0.134,
+   "partners": [
+    {
+     "iso": "SAU",
+     "share": 0.235
+    },
+    {
+     "iso": "ARE",
+     "share": 0.143
+    },
+    {
+     "iso": "USA",
+     "share": 0.084
+    },
+    {
+     "iso": "NLD",
+     "share": 0.044
+    },
+    {
+     "iso": "EGY",
+     "share": 0.037
+    },
+    {
+     "iso": "IND",
+     "share": 0.031
+    },
+    {
+     "iso": "OMN",
+     "share": 0.031
+    },
+    {
+     "iso": "TUR",
+     "share": 0.03
+    },
+    {
+     "iso": "KWT",
+     "share": 0.025
+    },
+    {
+     "iso": "DZA",
+     "share": 0.024
+    },
+    {
+     "iso": "ITA",
+     "share": 0.021
+    },
+    {
+     "iso": "KOR",
+     "share": 0.019
+    },
+    {
+     "iso": "ESP",
+     "share": 0.017
+    },
+    {
+     "iso": "MAR",
+     "share": 0.015
+    },
+    {
+     "iso": "MYS",
+     "share": 0.015
+    }
+   ]
   },
   {
    "iso": "BHS",
@@ -147,7 +1165,69 @@
    "exportsUsd": 700601581,
    "us": 0.802,
    "china": 0.002,
-   "eu": 0.003
+   "eu": 0.003,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.802
+    },
+    {
+     "iso": "CHN",
+     "share": 0.002
+    },
+    {
+     "iso": "CAN",
+     "share": 0.001
+    },
+    {
+     "iso": "DEU",
+     "share": 0.001
+    },
+    {
+     "iso": "ITA",
+     "share": 0.001
+    },
+    {
+     "iso": "JAM",
+     "share": 0.001
+    },
+    {
+     "iso": "JPN",
+     "share": 0.001
+    },
+    {
+     "iso": "NLD",
+     "share": 0.001
+    },
+    {
+     "iso": "AFG",
+     "share": 0
+    },
+    {
+     "iso": "AUS",
+     "share": 0
+    },
+    {
+     "iso": "AUT",
+     "share": 0
+    },
+    {
+     "iso": "BEL",
+     "share": 0
+    },
+    {
+     "iso": "BRA",
+     "share": 0
+    },
+    {
+     "iso": "CHE",
+     "share": 0
+    },
+    {
+     "iso": "COL",
+     "share": 0
+    }
+   ]
   },
   {
    "iso": "BIH",
@@ -155,7 +1235,69 @@
    "exportsUsd": 9228185850,
    "us": 0.012,
    "china": 0.002,
-   "eu": 0.719
+   "eu": 0.719,
+   "partners": [
+    {
+     "iso": "DEU",
+     "share": 0.16
+    },
+    {
+     "iso": "HRV",
+     "share": 0.153
+    },
+    {
+     "iso": "AUT",
+     "share": 0.103
+    },
+    {
+     "iso": "ITA",
+     "share": 0.087
+    },
+    {
+     "iso": "SVN",
+     "share": 0.081
+    },
+    {
+     "iso": "NLD",
+     "share": 0.025
+    },
+    {
+     "iso": "FRA",
+     "share": 0.02
+    },
+    {
+     "iso": "HUN",
+     "share": 0.017
+    },
+    {
+     "iso": "TUR",
+     "share": 0.016
+    },
+    {
+     "iso": "CHE",
+     "share": 0.015
+    },
+    {
+     "iso": "CZE",
+     "share": 0.014
+    },
+    {
+     "iso": "POL",
+     "share": 0.014
+    },
+    {
+     "iso": "USA",
+     "share": 0.012
+    },
+    {
+     "iso": "MKD",
+     "share": 0.011
+    },
+    {
+     "iso": "SVK",
+     "share": 0.01
+    }
+   ]
   },
   {
    "iso": "BLZ",
@@ -163,7 +1305,69 @@
    "exportsUsd": 253373382,
    "us": 0.28,
    "china": 0.001,
-   "eu": 0.175
+   "eu": 0.175,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.28
+    },
+    {
+     "iso": "GBR",
+     "share": 0.173
+    },
+    {
+     "iso": "GTM",
+     "share": 0.087
+    },
+    {
+     "iso": "ESP",
+     "share": 0.074
+    },
+    {
+     "iso": "TTO",
+     "share": 0.061
+    },
+    {
+     "iso": "HND",
+     "share": 0.056
+    },
+    {
+     "iso": "JAM",
+     "share": 0.042
+    },
+    {
+     "iso": "POL",
+     "share": 0.04
+    },
+    {
+     "iso": "IRL",
+     "share": 0.036
+    },
+    {
+     "iso": "MEX",
+     "share": 0.027
+    },
+    {
+     "iso": "BRB",
+     "share": 0.015
+    },
+    {
+     "iso": "GUY",
+     "share": 0.009
+    },
+    {
+     "iso": "DEU",
+     "share": 0.007
+    },
+    {
+     "iso": "PRT",
+     "share": 0.007
+    },
+    {
+     "iso": "ATG",
+     "share": 0.006
+    }
+   ]
   },
   {
    "iso": "BMU",
@@ -171,7 +1375,69 @@
    "exportsUsd": 22284774,
    "us": 0.899,
    "china": 0,
-   "eu": 0.049
+   "eu": 0.049,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.899
+    },
+    {
+     "iso": "CAN",
+     "share": 0.025
+    },
+    {
+     "iso": "GBR",
+     "share": 0.023
+    },
+    {
+     "iso": "NLD",
+     "share": 0.015
+    },
+    {
+     "iso": "FIN",
+     "share": 0.014
+    },
+    {
+     "iso": "DEU",
+     "share": 0.01
+    },
+    {
+     "iso": "DNK",
+     "share": 0.002
+    },
+    {
+     "iso": "ESP",
+     "share": 0.002
+    },
+    {
+     "iso": "IRL",
+     "share": 0.002
+    },
+    {
+     "iso": "FRA",
+     "share": 0.001
+    },
+    {
+     "iso": "ITA",
+     "share": 0.001
+    },
+    {
+     "iso": "PRT",
+     "share": 0.001
+    },
+    {
+     "iso": "AUT",
+     "share": 0
+    },
+    {
+     "iso": "BEL",
+     "share": 0
+    },
+    {
+     "iso": "BHR",
+     "share": 0
+    }
+   ]
   },
   {
    "iso": "BOL",
@@ -179,7 +1445,69 @@
    "exportsUsd": 10918688057,
    "us": 0.023,
    "china": 0.107,
-   "eu": 0.059
+   "eu": 0.059,
+   "partners": [
+    {
+     "iso": "BRA",
+     "share": 0.144
+    },
+    {
+     "iso": "IND",
+     "share": 0.121
+    },
+    {
+     "iso": "CHN",
+     "share": 0.107
+    },
+    {
+     "iso": "ARG",
+     "share": 0.091
+    },
+    {
+     "iso": "COL",
+     "share": 0.088
+    },
+    {
+     "iso": "ARE",
+     "share": 0.082
+    },
+    {
+     "iso": "JPN",
+     "share": 0.061
+    },
+    {
+     "iso": "PER",
+     "share": 0.054
+    },
+    {
+     "iso": "KOR",
+     "share": 0.037
+    },
+    {
+     "iso": "HKG",
+     "share": 0.029
+    },
+    {
+     "iso": "ECU",
+     "share": 0.024
+    },
+    {
+     "iso": "NLD",
+     "share": 0.023
+    },
+    {
+     "iso": "USA",
+     "share": 0.023
+    },
+    {
+     "iso": "BEL",
+     "share": 0.018
+    },
+    {
+     "iso": "CHL",
+     "share": 0.016
+    }
+   ]
   },
   {
    "iso": "BRA",
@@ -187,7 +1515,69 @@
    "exportsUsd": 339695766008,
    "us": 0.11,
    "china": 0.307,
-   "eu": 0.135
+   "eu": 0.135,
+   "partners": [
+    {
+     "iso": "CHN",
+     "share": 0.307
+    },
+    {
+     "iso": "USA",
+     "share": 0.11
+    },
+    {
+     "iso": "ARG",
+     "share": 0.049
+    },
+    {
+     "iso": "NLD",
+     "share": 0.036
+    },
+    {
+     "iso": "MEX",
+     "share": 0.025
+    },
+    {
+     "iso": "CHL",
+     "share": 0.023
+    },
+    {
+     "iso": "ESP",
+     "share": 0.023
+    },
+    {
+     "iso": "SGP",
+     "share": 0.022
+    },
+    {
+     "iso": "JPN",
+     "share": 0.019
+    },
+    {
+     "iso": "CAN",
+     "share": 0.017
+    },
+    {
+     "iso": "DEU",
+     "share": 0.017
+    },
+    {
+     "iso": "KOR",
+     "share": 0.017
+    },
+    {
+     "iso": "IND",
+     "share": 0.014
+    },
+    {
+     "iso": "IDN",
+     "share": 0.012
+    },
+    {
+     "iso": "ITA",
+     "share": 0.012
+    }
+   ]
   },
   {
    "iso": "BRB",
@@ -195,7 +1585,69 @@
    "exportsUsd": 475842549,
    "us": 0.185,
    "china": 0.002,
-   "eu": 0.035
+   "eu": 0.035,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.185
+    },
+    {
+     "iso": "JAM",
+     "share": 0.072
+    },
+    {
+     "iso": "TTO",
+     "share": 0.071
+    },
+    {
+     "iso": "GUY",
+     "share": 0.055
+    },
+    {
+     "iso": "LCA",
+     "share": 0.041
+    },
+    {
+     "iso": "CAN",
+     "share": 0.04
+    },
+    {
+     "iso": "VCT",
+     "share": 0.027
+    },
+    {
+     "iso": "GBR",
+     "share": 0.023
+    },
+    {
+     "iso": "GRD",
+     "share": 0.022
+    },
+    {
+     "iso": "ATG",
+     "share": 0.021
+    },
+    {
+     "iso": "FRA",
+     "share": 0.02
+    },
+    {
+     "iso": "DMA",
+     "share": 0.013
+    },
+    {
+     "iso": "KNA",
+     "share": 0.011
+    },
+    {
+     "iso": "BHS",
+     "share": 0.008
+    },
+    {
+     "iso": "SUR",
+     "share": 0.007
+    }
+   ]
   },
   {
    "iso": "BRN",
@@ -203,7 +1655,69 @@
    "exportsUsd": 11240624705,
    "us": 0.009,
    "china": 0.167,
-   "eu": 0.001
+   "eu": 0.001,
+   "partners": [
+    {
+     "iso": "AUS",
+     "share": 0.216
+    },
+    {
+     "iso": "SGP",
+     "share": 0.171
+    },
+    {
+     "iso": "CHN",
+     "share": 0.167
+    },
+    {
+     "iso": "JPN",
+     "share": 0.139
+    },
+    {
+     "iso": "MYS",
+     "share": 0.068
+    },
+    {
+     "iso": "THA",
+     "share": 0.049
+    },
+    {
+     "iso": "IDN",
+     "share": 0.029
+    },
+    {
+     "iso": "KOR",
+     "share": 0.027
+    },
+    {
+     "iso": "BRA",
+     "share": 0.023
+    },
+    {
+     "iso": "PHL",
+     "share": 0.023
+    },
+    {
+     "iso": "IND",
+     "share": 0.016
+    },
+    {
+     "iso": "VNM",
+     "share": 0.015
+    },
+    {
+     "iso": "USA",
+     "share": 0.009
+    },
+    {
+     "iso": "MEX",
+     "share": 0.008
+    },
+    {
+     "iso": "NZL",
+     "share": 0.005
+    }
+   ]
   },
   {
    "iso": "BTN",
@@ -211,7 +1725,69 @@
    "exportsUsd": 435625880,
    "us": 0.001,
    "china": 0.008,
-   "eu": 0.051
+   "eu": 0.051,
+   "partners": [
+    {
+     "iso": "IND",
+     "share": 0.776
+    },
+    {
+     "iso": "BGD",
+     "share": 0.14
+    },
+    {
+     "iso": "ITA",
+     "share": 0.042
+    },
+    {
+     "iso": "NPL",
+     "share": 0.02
+    },
+    {
+     "iso": "CHN",
+     "share": 0.008
+    },
+    {
+     "iso": "ESP",
+     "share": 0.003
+    },
+    {
+     "iso": "NLD",
+     "share": 0.003
+    },
+    {
+     "iso": "ARE",
+     "share": 0.001
+    },
+    {
+     "iso": "FRA",
+     "share": 0.001
+    },
+    {
+     "iso": "JPN",
+     "share": 0.001
+    },
+    {
+     "iso": "POL",
+     "share": 0.001
+    },
+    {
+     "iso": "SGP",
+     "share": 0.001
+    },
+    {
+     "iso": "USA",
+     "share": 0.001
+    },
+    {
+     "iso": "VNM",
+     "share": 0.001
+    },
+    {
+     "iso": "AUS",
+     "share": 0
+    }
+   ]
   },
   {
    "iso": "BWA",
@@ -219,7 +1795,69 @@
    "exportsUsd": 5502716524,
    "us": 0.02,
    "china": 0.064,
-   "eu": 0.18
+   "eu": 0.18,
+   "partners": [
+    {
+     "iso": "ARE",
+     "share": 0.298
+    },
+    {
+     "iso": "BEL",
+     "share": 0.179
+    },
+    {
+     "iso": "IND",
+     "share": 0.123
+    },
+    {
+     "iso": "ZAF",
+     "share": 0.119
+    },
+    {
+     "iso": "CHN",
+     "share": 0.064
+    },
+    {
+     "iso": "HKG",
+     "share": 0.059
+    },
+    {
+     "iso": "ISR",
+     "share": 0.039
+    },
+    {
+     "iso": "AUS",
+     "share": 0.022
+    },
+    {
+     "iso": "USA",
+     "share": 0.02
+    },
+    {
+     "iso": "SGP",
+     "share": 0.018
+    },
+    {
+     "iso": "ZWE",
+     "share": 0.015
+    },
+    {
+     "iso": "NAM",
+     "share": 0.011
+    },
+    {
+     "iso": "AIA",
+     "share": 0.006
+    },
+    {
+     "iso": "KHM",
+     "share": 0.006
+    },
+    {
+     "iso": "LKA",
+     "share": 0.005
+    }
+   ]
   },
   {
    "iso": "CAF",
@@ -227,7 +1865,69 @@
    "exportsUsd": 113284670,
    "us": 0,
    "china": 0.038,
-   "eu": 0.161
+   "eu": 0.161,
+   "partners": [
+    {
+     "iso": "ARE",
+     "share": 0.694
+    },
+    {
+     "iso": "ITA",
+     "share": 0.071
+    },
+    {
+     "iso": "FRA",
+     "share": 0.057
+    },
+    {
+     "iso": "CHN",
+     "share": 0.038
+    },
+    {
+     "iso": "GAB",
+     "share": 0.037
+    },
+    {
+     "iso": "VNM",
+     "share": 0.018
+    },
+    {
+     "iso": "DEU",
+     "share": 0.016
+    },
+    {
+     "iso": "CMR",
+     "share": 0.013
+    },
+    {
+     "iso": "ESP",
+     "share": 0.012
+    },
+    {
+     "iso": "IND",
+     "share": 0.006
+    },
+    {
+     "iso": "TUR",
+     "share": 0.006
+    },
+    {
+     "iso": "CAN",
+     "share": 0.003
+    },
+    {
+     "iso": "COG",
+     "share": 0.003
+    },
+    {
+     "iso": "NGA",
+     "share": 0.003
+    },
+    {
+     "iso": "TCA",
+     "share": 0.003
+    }
+   ]
   },
   {
    "iso": "CAN",
@@ -235,7 +1935,69 @@
    "exportsUsd": 567344538003,
    "us": 0.773,
    "china": 0.04,
-   "eu": 0.045
+   "eu": 0.045,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.773
+    },
+    {
+     "iso": "CHN",
+     "share": 0.04
+    },
+    {
+     "iso": "JPN",
+     "share": 0.021
+    },
+    {
+     "iso": "GBR",
+     "share": 0.02
+    },
+    {
+     "iso": "MEX",
+     "share": 0.012
+    },
+    {
+     "iso": "NLD",
+     "share": 0.01
+    },
+    {
+     "iso": "DEU",
+     "share": 0.009
+    },
+    {
+     "iso": "KOR",
+     "share": 0.009
+    },
+    {
+     "iso": "IND",
+     "share": 0.007
+    },
+    {
+     "iso": "CHE",
+     "share": 0.006
+    },
+    {
+     "iso": "FRA",
+     "share": 0.006
+    },
+    {
+     "iso": "HKG",
+     "share": 0.006
+    },
+    {
+     "iso": "BEL",
+     "share": 0.005
+    },
+    {
+     "iso": "BRA",
+     "share": 0.005
+    },
+    {
+     "iso": "AUS",
+     "share": 0.004
+    }
+   ]
   },
   {
    "iso": "CHE",
@@ -243,7 +2005,69 @@
    "exportsUsd": 419922543424,
    "us": 0.15,
    "china": 0.108,
-   "eu": 0.395
+   "eu": 0.395,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.15
+    },
+    {
+     "iso": "DEU",
+     "share": 0.122
+    },
+    {
+     "iso": "CHN",
+     "share": 0.108
+    },
+    {
+     "iso": "ITA",
+     "share": 0.064
+    },
+    {
+     "iso": "FRA",
+     "share": 0.048
+    },
+    {
+     "iso": "SVN",
+     "share": 0.042
+    },
+    {
+     "iso": "IND",
+     "share": 0.04
+    },
+    {
+     "iso": "TUR",
+     "share": 0.039
+    },
+    {
+     "iso": "HKG",
+     "share": 0.036
+    },
+    {
+     "iso": "GBR",
+     "share": 0.035
+    },
+    {
+     "iso": "ARE",
+     "share": 0.026
+    },
+    {
+     "iso": "AUT",
+     "share": 0.026
+    },
+    {
+     "iso": "ESP",
+     "share": 0.02
+    },
+    {
+     "iso": "JPN",
+     "share": 0.02
+    },
+    {
+     "iso": "SGP",
+     "share": 0.02
+    }
+   ]
   },
   {
    "iso": "CHL",
@@ -251,7 +2075,69 @@
    "exportsUsd": 94935525008,
    "us": 0.151,
    "china": 0.394,
-   "eu": 0.08
+   "eu": 0.08,
+   "partners": [
+    {
+     "iso": "CHN",
+     "share": 0.394
+    },
+    {
+     "iso": "USA",
+     "share": 0.151
+    },
+    {
+     "iso": "JPN",
+     "share": 0.072
+    },
+    {
+     "iso": "KOR",
+     "share": 0.063
+    },
+    {
+     "iso": "BRA",
+     "share": 0.045
+    },
+    {
+     "iso": "MEX",
+     "share": 0.018
+    },
+    {
+     "iso": "NLD",
+     "share": 0.017
+    },
+    {
+     "iso": "IND",
+     "share": 0.016
+    },
+    {
+     "iso": "PER",
+     "share": 0.016
+    },
+    {
+     "iso": "BOL",
+     "share": 0.015
+    },
+    {
+     "iso": "CAN",
+     "share": 0.014
+    },
+    {
+     "iso": "ESP",
+     "share": 0.013
+    },
+    {
+     "iso": "DEU",
+     "share": 0.011
+    },
+    {
+     "iso": "BEL",
+     "share": 0.01
+    },
+    {
+     "iso": "FRA",
+     "share": 0.01
+    }
+   ]
   },
   {
    "iso": "CHN",
@@ -259,7 +2145,69 @@
    "exportsUsd": 3379747834884,
    "us": 0.148,
    "china": 0,
-   "eu": 0.146
+   "eu": 0.146,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.148
+    },
+    {
+     "iso": "HKG",
+     "share": 0.081
+    },
+    {
+     "iso": "JPN",
+     "share": 0.047
+    },
+    {
+     "iso": "KOR",
+     "share": 0.044
+    },
+    {
+     "iso": "VNM",
+     "share": 0.041
+    },
+    {
+     "iso": "IND",
+     "share": 0.035
+    },
+    {
+     "iso": "RUS",
+     "share": 0.033
+    },
+    {
+     "iso": "DEU",
+     "share": 0.03
+    },
+    {
+     "iso": "NLD",
+     "share": 0.03
+    },
+    {
+     "iso": "MYS",
+     "share": 0.026
+    },
+    {
+     "iso": "MEX",
+     "share": 0.024
+    },
+    {
+     "iso": "GBR",
+     "share": 0.023
+    },
+    {
+     "iso": "SGP",
+     "share": 0.023
+    },
+    {
+     "iso": "AUS",
+     "share": 0.022
+    },
+    {
+     "iso": "THA",
+     "share": 0.022
+    }
+   ]
   },
   {
    "iso": "CIV",
@@ -267,7 +2215,69 @@
    "exportsUsd": 18350163618,
    "us": 0.042,
    "china": 0.042,
-   "eu": 0.287
+   "eu": 0.287,
+   "partners": [
+    {
+     "iso": "NLD",
+     "share": 0.115
+    },
+    {
+     "iso": "CHE",
+     "share": 0.106
+    },
+    {
+     "iso": "MLI",
+     "share": 0.087
+    },
+    {
+     "iso": "MYS",
+     "share": 0.05
+    },
+    {
+     "iso": "VNM",
+     "share": 0.05
+    },
+    {
+     "iso": "BFA",
+     "share": 0.043
+    },
+    {
+     "iso": "CHN",
+     "share": 0.042
+    },
+    {
+     "iso": "USA",
+     "share": 0.042
+    },
+    {
+     "iso": "FRA",
+     "share": 0.037
+    },
+    {
+     "iso": "DEU",
+     "share": 0.035
+    },
+    {
+     "iso": "BEL",
+     "share": 0.033
+    },
+    {
+     "iso": "GBR",
+     "share": 0.027
+    },
+    {
+     "iso": "ZAF",
+     "share": 0.024
+    },
+    {
+     "iso": "ESP",
+     "share": 0.021
+    },
+    {
+     "iso": "AGO",
+     "share": 0.02
+    }
+   ]
   },
   {
    "iso": "CMR",
@@ -275,7 +2285,69 @@
    "exportsUsd": 4967511896,
    "us": 0.011,
    "china": 0.078,
-   "eu": 0.51
+   "eu": 0.51,
+   "partners": [
+    {
+     "iso": "NLD",
+     "share": 0.232
+    },
+    {
+     "iso": "FRA",
+     "share": 0.124
+    },
+    {
+     "iso": "IND",
+     "share": 0.096
+    },
+    {
+     "iso": "CHN",
+     "share": 0.078
+    },
+    {
+     "iso": "TCD",
+     "share": 0.05
+    },
+    {
+     "iso": "ITA",
+     "share": 0.044
+    },
+    {
+     "iso": "BGD",
+     "share": 0.043
+    },
+    {
+     "iso": "IDN",
+     "share": 0.039
+    },
+    {
+     "iso": "BEL",
+     "share": 0.033
+    },
+    {
+     "iso": "ESP",
+     "share": 0.033
+    },
+    {
+     "iso": "TUR",
+     "share": 0.03
+    },
+    {
+     "iso": "DEU",
+     "share": 0.027
+    },
+    {
+     "iso": "GBR",
+     "share": 0.026
+    },
+    {
+     "iso": "MYS",
+     "share": 0.018
+    },
+    {
+     "iso": "ZAF",
+     "share": 0.016
+    }
+   ]
   },
   {
    "iso": "COG",
@@ -283,7 +2355,69 @@
    "exportsUsd": 9465032955,
    "us": 0.036,
    "china": 0.544,
-   "eu": 0.15
+   "eu": 0.15,
+   "partners": [
+    {
+     "iso": "CHN",
+     "share": 0.544
+    },
+    {
+     "iso": "NLD",
+     "share": 0.106
+    },
+    {
+     "iso": "IND",
+     "share": 0.055
+    },
+    {
+     "iso": "USA",
+     "share": 0.036
+    },
+    {
+     "iso": "MYS",
+     "share": 0.027
+    },
+    {
+     "iso": "PRT",
+     "share": 0.024
+    },
+    {
+     "iso": "NAM",
+     "share": 0.021
+    },
+    {
+     "iso": "CHE",
+     "share": 0.02
+    },
+    {
+     "iso": "CAN",
+     "share": 0.018
+    },
+    {
+     "iso": "GBR",
+     "share": 0.018
+    },
+    {
+     "iso": "TGO",
+     "share": 0.016
+    },
+    {
+     "iso": "BRA",
+     "share": 0.015
+    },
+    {
+     "iso": "GAB",
+     "share": 0.011
+    },
+    {
+     "iso": "AGO",
+     "share": 0.008
+    },
+    {
+     "iso": "HRV",
+     "share": 0.008
+    }
+   ]
   },
   {
    "iso": "COL",
@@ -291,7 +2425,69 @@
    "exportsUsd": 49769114432,
    "us": 0.284,
    "china": 0.05,
-   "eu": 0.137
+   "eu": 0.137,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.284
+    },
+    {
+     "iso": "PAN",
+     "share": 0.094
+    },
+    {
+     "iso": "CHN",
+     "share": 0.05
+    },
+    {
+     "iso": "IND",
+     "share": 0.048
+    },
+    {
+     "iso": "NLD",
+     "share": 0.041
+    },
+    {
+     "iso": "ECU",
+     "share": 0.04
+    },
+    {
+     "iso": "BRA",
+     "share": 0.038
+    },
+    {
+     "iso": "MEX",
+     "share": 0.038
+    },
+    {
+     "iso": "ESP",
+     "share": 0.023
+    },
+    {
+     "iso": "PER",
+     "share": 0.023
+    },
+    {
+     "iso": "CHL",
+     "share": 0.021
+    },
+    {
+     "iso": "POL",
+     "share": 0.019
+    },
+    {
+     "iso": "KOR",
+     "share": 0.017
+    },
+    {
+     "iso": "TUR",
+     "share": 0.017
+    },
+    {
+     "iso": "ITA",
+     "share": 0.016
+    }
+   ]
   },
   {
    "iso": "CPV",
@@ -299,7 +2495,69 @@
    "exportsUsd": 281684067,
    "us": 0.012,
    "china": 0.011,
-   "eu": 0.458
+   "eu": 0.458,
+   "partners": [
+    {
+     "iso": "ESP",
+     "share": 0.192
+    },
+    {
+     "iso": "PRT",
+     "share": 0.147
+    },
+    {
+     "iso": "TGO",
+     "share": 0.041
+    },
+    {
+     "iso": "NLD",
+     "share": 0.039
+    },
+    {
+     "iso": "ITA",
+     "share": 0.034
+    },
+    {
+     "iso": "FRA",
+     "share": 0.026
+    },
+    {
+     "iso": "ARE",
+     "share": 0.023
+    },
+    {
+     "iso": "IND",
+     "share": 0.02
+    },
+    {
+     "iso": "BEL",
+     "share": 0.016
+    },
+    {
+     "iso": "GHA",
+     "share": 0.012
+    },
+    {
+     "iso": "MYS",
+     "share": 0.012
+    },
+    {
+     "iso": "USA",
+     "share": 0.012
+    },
+    {
+     "iso": "CHN",
+     "share": 0.011
+    },
+    {
+     "iso": "GIB",
+     "share": 0.01
+    },
+    {
+     "iso": "DEU",
+     "share": 0.002
+    }
+   ]
   },
   {
    "iso": "CRI",
@@ -307,7 +2565,69 @@
    "exportsUsd": 18105904674,
    "us": 0.461,
    "china": 0.023,
-   "eu": 0.185
+   "eu": 0.185,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.461
+    },
+    {
+     "iso": "NLD",
+     "share": 0.084
+    },
+    {
+     "iso": "GTM",
+     "share": 0.049
+    },
+    {
+     "iso": "BEL",
+     "share": 0.046
+    },
+    {
+     "iso": "NIC",
+     "share": 0.038
+    },
+    {
+     "iso": "PAN",
+     "share": 0.035
+    },
+    {
+     "iso": "HND",
+     "share": 0.033
+    },
+    {
+     "iso": "SLV",
+     "share": 0.025
+    },
+    {
+     "iso": "CHN",
+     "share": 0.023
+    },
+    {
+     "iso": "JPN",
+     "share": 0.021
+    },
+    {
+     "iso": "DOM",
+     "share": 0.018
+    },
+    {
+     "iso": "ESP",
+     "share": 0.017
+    },
+    {
+     "iso": "MEX",
+     "share": 0.017
+    },
+    {
+     "iso": "GBR",
+     "share": 0.014
+    },
+    {
+     "iso": "ITA",
+     "share": 0.012
+    }
+   ]
   },
   {
    "iso": "CUB",
@@ -315,7 +2635,69 @@
    "exportsUsd": 2170008998,
    "us": 0,
    "china": 0.081,
-   "eu": 0.235
+   "eu": 0.235,
+   "partners": [
+    {
+     "iso": "ESP",
+     "share": 0.16
+    },
+    {
+     "iso": "CHN",
+     "share": 0.081
+    },
+    {
+     "iso": "DEU",
+     "share": 0.019
+    },
+    {
+     "iso": "FRA",
+     "share": 0.013
+    },
+    {
+     "iso": "VEN",
+     "share": 0.012
+    },
+    {
+     "iso": "CAN",
+     "share": 0.011
+    },
+    {
+     "iso": "HKG",
+     "share": 0.011
+    },
+    {
+     "iso": "CYP",
+     "share": 0.008
+    },
+    {
+     "iso": "BEL",
+     "share": 0.007
+    },
+    {
+     "iso": "ITA",
+     "share": 0.006
+    },
+    {
+     "iso": "MEX",
+     "share": 0.006
+    },
+    {
+     "iso": "CHE",
+     "share": 0.005
+    },
+    {
+     "iso": "CUW",
+     "share": 0.005
+    },
+    {
+     "iso": "GRC",
+     "share": 0.005
+    },
+    {
+     "iso": "PRT",
+     "share": 0.005
+    }
+   ]
   },
   {
    "iso": "CYM",
@@ -323,7 +2705,21 @@
    "exportsUsd": 45326280,
    "us": 0.812,
    "china": 0,
-   "eu": 0
+   "eu": 0,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.812
+    },
+    {
+     "iso": "GBR",
+     "share": 0.109
+    },
+    {
+     "iso": "JAM",
+     "share": 0.079
+    }
+   ]
   },
   {
    "iso": "CYP",
@@ -331,7 +2727,69 @@
    "exportsUsd": 5132376196,
    "us": 0.029,
    "china": 0.005,
-   "eu": 0.181
+   "eu": 0.181,
+   "partners": [
+    {
+     "iso": "LBY",
+     "share": 0.151
+    },
+    {
+     "iso": "LBN",
+     "share": 0.094
+    },
+    {
+     "iso": "BMU",
+     "share": 0.079
+    },
+    {
+     "iso": "GRC",
+     "share": 0.062
+    },
+    {
+     "iso": "MHL",
+     "share": 0.057
+    },
+    {
+     "iso": "GBR",
+     "share": 0.046
+    },
+    {
+     "iso": "LBR",
+     "share": 0.044
+    },
+    {
+     "iso": "HKG",
+     "share": 0.036
+    },
+    {
+     "iso": "NGA",
+     "share": 0.03
+    },
+    {
+     "iso": "USA",
+     "share": 0.029
+    },
+    {
+     "iso": "ISR",
+     "share": 0.016
+    },
+    {
+     "iso": "DEU",
+     "share": 0.014
+    },
+    {
+     "iso": "ESP",
+     "share": 0.013
+    },
+    {
+     "iso": "FRA",
+     "share": 0.012
+    },
+    {
+     "iso": "NOR",
+     "share": 0.011
+    }
+   ]
   },
   {
    "iso": "CZE",
@@ -339,7 +2797,69 @@
    "exportsUsd": 253327521218,
    "us": 0.023,
    "china": 0.01,
-   "eu": 0.798
+   "eu": 0.798,
+   "partners": [
+    {
+     "iso": "DEU",
+     "share": 0.328
+    },
+    {
+     "iso": "SVK",
+     "share": 0.077
+    },
+    {
+     "iso": "POL",
+     "share": 0.073
+    },
+    {
+     "iso": "FRA",
+     "share": 0.049
+    },
+    {
+     "iso": "AUT",
+     "share": 0.042
+    },
+    {
+     "iso": "ITA",
+     "share": 0.04
+    },
+    {
+     "iso": "GBR",
+     "share": 0.038
+    },
+    {
+     "iso": "HUN",
+     "share": 0.036
+    },
+    {
+     "iso": "NLD",
+     "share": 0.034
+    },
+    {
+     "iso": "ESP",
+     "share": 0.027
+    },
+    {
+     "iso": "USA",
+     "share": 0.023
+    },
+    {
+     "iso": "BEL",
+     "share": 0.022
+    },
+    {
+     "iso": "SWE",
+     "share": 0.016
+    },
+    {
+     "iso": "CHE",
+     "share": 0.015
+    },
+    {
+     "iso": "TUR",
+     "share": 0.014
+    }
+   ]
   },
   {
    "iso": "DEU",
@@ -347,7 +2867,69 @@
    "exportsUsd": 1725527288355,
    "us": 0.1,
    "china": 0.062,
-   "eu": 0.526
+   "eu": 0.526,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.1
+    },
+    {
+     "iso": "FRA",
+     "share": 0.076
+    },
+    {
+     "iso": "NLD",
+     "share": 0.07
+    },
+    {
+     "iso": "CHN",
+     "share": 0.062
+    },
+    {
+     "iso": "POL",
+     "share": 0.057
+    },
+    {
+     "iso": "ITA",
+     "share": 0.054
+    },
+    {
+     "iso": "GBR",
+     "share": 0.05
+    },
+    {
+     "iso": "AUT",
+     "share": 0.049
+    },
+    {
+     "iso": "CHE",
+     "share": 0.044
+    },
+    {
+     "iso": "BEL",
+     "share": 0.038
+    },
+    {
+     "iso": "ESP",
+     "share": 0.034
+    },
+    {
+     "iso": "CZE",
+     "share": 0.033
+    },
+    {
+     "iso": "HUN",
+     "share": 0.021
+    },
+    {
+     "iso": "TUR",
+     "share": 0.02
+    },
+    {
+     "iso": "SWE",
+     "share": 0.019
+    }
+   ]
   },
   {
    "iso": "DJI",
@@ -355,7 +2937,69 @@
    "exportsUsd": 4784715682,
    "us": 0.016,
    "china": 0.024,
-   "eu": 0.02
+   "eu": 0.02,
+   "partners": [
+    {
+     "iso": "ETH",
+     "share": 0.835
+    },
+    {
+     "iso": "ARE",
+     "share": 0.046
+    },
+    {
+     "iso": "CHN",
+     "share": 0.024
+    },
+    {
+     "iso": "FRA",
+     "share": 0.018
+    },
+    {
+     "iso": "USA",
+     "share": 0.016
+    },
+    {
+     "iso": "YEM",
+     "share": 0.014
+    },
+    {
+     "iso": "SOM",
+     "share": 0.011
+    },
+    {
+     "iso": "OMN",
+     "share": 0.008
+    },
+    {
+     "iso": "TUR",
+     "share": 0.007
+    },
+    {
+     "iso": "CAN",
+     "share": 0.005
+    },
+    {
+     "iso": "KEN",
+     "share": 0.003
+    },
+    {
+     "iso": "ESP",
+     "share": 0.002
+    },
+    {
+     "iso": "NGA",
+     "share": 0.001
+    },
+    {
+     "iso": "SAU",
+     "share": 0.001
+    },
+    {
+     "iso": "TCD",
+     "share": 0.001
+    }
+   ]
   },
   {
    "iso": "DMA",
@@ -363,7 +3007,69 @@
    "exportsUsd": 22042230,
    "us": 0.08,
    "china": 0,
-   "eu": 0.1
+   "eu": 0.1,
+   "partners": [
+    {
+     "iso": "ISL",
+     "share": 0.214
+    },
+    {
+     "iso": "ATG",
+     "share": 0.179
+    },
+    {
+     "iso": "FRA",
+     "share": 0.094
+    },
+    {
+     "iso": "USA",
+     "share": 0.08
+    },
+    {
+     "iso": "LCA",
+     "share": 0.071
+    },
+    {
+     "iso": "BRB",
+     "share": 0.065
+    },
+    {
+     "iso": "GUY",
+     "share": 0.049
+    },
+    {
+     "iso": "KNA",
+     "share": 0.043
+    },
+    {
+     "iso": "VGB",
+     "share": 0.024
+    },
+    {
+     "iso": "AIA",
+     "share": 0.017
+    },
+    {
+     "iso": "TTO",
+     "share": 0.017
+    },
+    {
+     "iso": "VCT",
+     "share": 0.014
+    },
+    {
+     "iso": "GBR",
+     "share": 0.013
+    },
+    {
+     "iso": "MSR",
+     "share": 0.013
+    },
+    {
+     "iso": "JAM",
+     "share": 0.009
+    }
+   ]
   },
   {
    "iso": "DNK",
@@ -371,7 +3077,69 @@
    "exportsUsd": 128600488398,
    "us": 0.05,
    "china": 0.026,
-   "eu": 0.478
+   "eu": 0.478,
+   "partners": [
+    {
+     "iso": "DEU",
+     "share": 0.137
+    },
+    {
+     "iso": "SWE",
+     "share": 0.083
+    },
+    {
+     "iso": "NLD",
+     "share": 0.058
+    },
+    {
+     "iso": "NOR",
+     "share": 0.053
+    },
+    {
+     "iso": "USA",
+     "share": 0.05
+    },
+    {
+     "iso": "GBR",
+     "share": 0.046
+    },
+    {
+     "iso": "POL",
+     "share": 0.041
+    },
+    {
+     "iso": "FRA",
+     "share": 0.034
+    },
+    {
+     "iso": "CHN",
+     "share": 0.026
+    },
+    {
+     "iso": "ITA",
+     "share": 0.022
+    },
+    {
+     "iso": "ESP",
+     "share": 0.018
+    },
+    {
+     "iso": "FIN",
+     "share": 0.018
+    },
+    {
+     "iso": "BEL",
+     "share": 0.016
+    },
+    {
+     "iso": "JPN",
+     "share": 0.01
+    },
+    {
+     "iso": "TUR",
+     "share": 0.01
+    }
+   ]
   },
   {
    "iso": "DOM",
@@ -379,7 +3147,69 @@
    "exportsUsd": 11931953786,
    "us": 0.6,
    "china": 0.024,
-   "eu": 0.077
+   "eu": 0.077,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.6
+    },
+    {
+     "iso": "HTI",
+     "share": 0.072
+    },
+    {
+     "iso": "CHE",
+     "share": 0.068
+    },
+    {
+     "iso": "IND",
+     "share": 0.031
+    },
+    {
+     "iso": "NLD",
+     "share": 0.029
+    },
+    {
+     "iso": "CHN",
+     "share": 0.024
+    },
+    {
+     "iso": "KOR",
+     "share": 0.02
+    },
+    {
+     "iso": "DEU",
+     "share": 0.012
+    },
+    {
+     "iso": "BEL",
+     "share": 0.009
+    },
+    {
+     "iso": "JAM",
+     "share": 0.009
+    },
+    {
+     "iso": "ESP",
+     "share": 0.008
+    },
+    {
+     "iso": "GBR",
+     "share": 0.008
+    },
+    {
+     "iso": "FRA",
+     "share": 0.006
+    },
+    {
+     "iso": "CAN",
+     "share": 0.005
+    },
+    {
+     "iso": "COL",
+     "share": 0.005
+    }
+   ]
   },
   {
    "iso": "ECU",
@@ -387,7 +3217,69 @@
    "exportsUsd": 31126424076,
    "us": 0.238,
    "china": 0.182,
-   "eu": 0.136
+   "eu": 0.136,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.238
+    },
+    {
+     "iso": "CHN",
+     "share": 0.182
+    },
+    {
+     "iso": "PAN",
+     "share": 0.144
+    },
+    {
+     "iso": "CHL",
+     "share": 0.031
+    },
+    {
+     "iso": "PER",
+     "share": 0.031
+    },
+    {
+     "iso": "RUS",
+     "share": 0.03
+    },
+    {
+     "iso": "ESP",
+     "share": 0.027
+    },
+    {
+     "iso": "NLD",
+     "share": 0.027
+    },
+    {
+     "iso": "COL",
+     "share": 0.025
+    },
+    {
+     "iso": "ITA",
+     "share": 0.02
+    },
+    {
+     "iso": "ARE",
+     "share": 0.019
+    },
+    {
+     "iso": "DEU",
+     "share": 0.013
+    },
+    {
+     "iso": "IND",
+     "share": 0.013
+    },
+    {
+     "iso": "CAN",
+     "share": 0.011
+    },
+    {
+     "iso": "CHE",
+     "share": 0.011
+    }
+   ]
   },
   {
    "iso": "EGY",
@@ -395,7 +3287,69 @@
    "exportsUsd": 42553243151,
    "us": 0.047,
    "china": 0.026,
-   "eu": 0.264
+   "eu": 0.264,
+   "partners": [
+    {
+     "iso": "TUR",
+     "share": 0.086
+    },
+    {
+     "iso": "ITA",
+     "share": 0.076
+    },
+    {
+     "iso": "SAU",
+     "share": 0.063
+    },
+    {
+     "iso": "ARE",
+     "share": 0.052
+    },
+    {
+     "iso": "USA",
+     "share": 0.047
+    },
+    {
+     "iso": "LBY",
+     "share": 0.043
+    },
+    {
+     "iso": "ESP",
+     "share": 0.038
+    },
+    {
+     "iso": "GRC",
+     "share": 0.033
+    },
+    {
+     "iso": "GBR",
+     "share": 0.028
+    },
+    {
+     "iso": "IND",
+     "share": 0.027
+    },
+    {
+     "iso": "CHN",
+     "share": 0.026
+    },
+    {
+     "iso": "NLD",
+     "share": 0.022
+    },
+    {
+     "iso": "DZA",
+     "share": 0.02
+    },
+    {
+     "iso": "FRA",
+     "share": 0.02
+    },
+    {
+     "iso": "DEU",
+     "share": 0.019
+    }
+   ]
   },
   {
    "iso": "ESP",
@@ -403,7 +3357,69 @@
    "exportsUsd": 420169591003,
    "us": 0.047,
    "china": 0.019,
-   "eu": 0.583
+   "eu": 0.583,
+   "partners": [
+    {
+     "iso": "FRA",
+     "share": 0.15
+    },
+    {
+     "iso": "DEU",
+     "share": 0.101
+    },
+    {
+     "iso": "ITA",
+     "share": 0.083
+    },
+    {
+     "iso": "PRT",
+     "share": 0.08
+    },
+    {
+     "iso": "GBR",
+     "share": 0.058
+    },
+    {
+     "iso": "USA",
+     "share": 0.047
+    },
+    {
+     "iso": "BEL",
+     "share": 0.038
+    },
+    {
+     "iso": "MAR",
+     "share": 0.031
+    },
+    {
+     "iso": "NLD",
+     "share": 0.031
+    },
+    {
+     "iso": "POL",
+     "share": 0.023
+    },
+    {
+     "iso": "TUR",
+     "share": 0.022
+    },
+    {
+     "iso": "CHN",
+     "share": 0.019
+    },
+    {
+     "iso": "CHE",
+     "share": 0.017
+    },
+    {
+     "iso": "MEX",
+     "share": 0.014
+    },
+    {
+     "iso": "CZE",
+     "share": 0.009
+    }
+   ]
   },
   {
    "iso": "EST",
@@ -411,7 +3427,69 @@
    "exportsUsd": 20108196603,
    "us": 0.027,
    "china": 0.014,
-   "eu": 0.697
+   "eu": 0.697,
+   "partners": [
+    {
+     "iso": "FIN",
+     "share": 0.154
+    },
+    {
+     "iso": "LVA",
+     "share": 0.116
+    },
+    {
+     "iso": "SWE",
+     "share": 0.091
+    },
+    {
+     "iso": "LTU",
+     "share": 0.081
+    },
+    {
+     "iso": "DEU",
+     "share": 0.064
+    },
+    {
+     "iso": "RUS",
+     "share": 0.059
+    },
+    {
+     "iso": "NLD",
+     "share": 0.038
+    },
+    {
+     "iso": "NOR",
+     "share": 0.033
+    },
+    {
+     "iso": "POL",
+     "share": 0.033
+    },
+    {
+     "iso": "DNK",
+     "share": 0.028
+    },
+    {
+     "iso": "USA",
+     "share": 0.027
+    },
+    {
+     "iso": "GBR",
+     "share": 0.021
+    },
+    {
+     "iso": "FRA",
+     "share": 0.019
+    },
+    {
+     "iso": "BEL",
+     "share": 0.017
+    },
+    {
+     "iso": "CHN",
+     "share": 0.014
+    }
+   ]
   },
   {
    "iso": "ETH",
@@ -419,7 +3497,69 @@
    "exportsUsd": 2859456866,
    "us": 0.097,
    "china": 0.046,
-   "eu": 0.208
+   "eu": 0.208,
+   "partners": [
+    {
+     "iso": "SAU",
+     "share": 0.104
+    },
+    {
+     "iso": "USA",
+     "share": 0.097
+    },
+    {
+     "iso": "NLD",
+     "share": 0.076
+    },
+    {
+     "iso": "ARE",
+     "share": 0.057
+    },
+    {
+     "iso": "SOM",
+     "share": 0.05
+    },
+    {
+     "iso": "IND",
+     "share": 0.049
+    },
+    {
+     "iso": "DEU",
+     "share": 0.047
+    },
+    {
+     "iso": "CHN",
+     "share": 0.046
+    },
+    {
+     "iso": "KOR",
+     "share": 0.041
+    },
+    {
+     "iso": "ISR",
+     "share": 0.036
+    },
+    {
+     "iso": "JPN",
+     "share": 0.036
+    },
+    {
+     "iso": "DJI",
+     "share": 0.034
+    },
+    {
+     "iso": "BEL",
+     "share": 0.032
+    },
+    {
+     "iso": "SGP",
+     "share": 0.026
+    },
+    {
+     "iso": "KEN",
+     "share": 0.023
+    }
+   ]
   },
   {
    "iso": "FIN",
@@ -427,7 +3567,69 @@
    "exportsUsd": 82567752673,
    "us": 0.11,
    "china": 0.045,
-   "eu": 0.538
+   "eu": 0.538,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.11
+    },
+    {
+     "iso": "DEU",
+     "share": 0.105
+    },
+    {
+     "iso": "SWE",
+     "share": 0.105
+    },
+    {
+     "iso": "NLD",
+     "share": 0.08
+    },
+    {
+     "iso": "CHN",
+     "share": 0.045
+    },
+    {
+     "iso": "EST",
+     "share": 0.037
+    },
+    {
+     "iso": "GBR",
+     "share": 0.034
+    },
+    {
+     "iso": "POL",
+     "share": 0.034
+    },
+    {
+     "iso": "FRA",
+     "share": 0.033
+    },
+    {
+     "iso": "BEL",
+     "share": 0.03
+    },
+    {
+     "iso": "NOR",
+     "share": 0.029
+    },
+    {
+     "iso": "ITA",
+     "share": 0.028
+    },
+    {
+     "iso": "CHE",
+     "share": 0.019
+    },
+    {
+     "iso": "DNK",
+     "share": 0.016
+    },
+    {
+     "iso": "ESP",
+     "share": 0.016
+    }
+   ]
   },
   {
    "iso": "FJI",
@@ -435,7 +3637,69 @@
    "exportsUsd": 1067689698,
    "us": 0.199,
    "china": 0.031,
-   "eu": 0.038
+   "eu": 0.038,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.199
+    },
+    {
+     "iso": "AUS",
+     "share": 0.097
+    },
+    {
+     "iso": "TON",
+     "share": 0.069
+    },
+    {
+     "iso": "NZL",
+     "share": 0.053
+    },
+    {
+     "iso": "VUT",
+     "share": 0.041
+    },
+    {
+     "iso": "WSM",
+     "share": 0.038
+    },
+    {
+     "iso": "CHN",
+     "share": 0.031
+    },
+    {
+     "iso": "ASM",
+     "share": 0.025
+    },
+    {
+     "iso": "NLD",
+     "share": 0.024
+    },
+    {
+     "iso": "KIR",
+     "share": 0.023
+    },
+    {
+     "iso": "TUV",
+     "share": 0.022
+    },
+    {
+     "iso": "GBR",
+     "share": 0.021
+    },
+    {
+     "iso": "JPN",
+     "share": 0.02
+    },
+    {
+     "iso": "COK",
+     "share": 0.018
+    },
+    {
+     "iso": "WLF",
+     "share": 0.017
+    }
+   ]
   },
   {
    "iso": "FRA",
@@ -443,7 +3707,69 @@
    "exportsUsd": 640201369780,
    "us": 0.071,
    "china": 0.042,
-   "eu": 0.545
+   "eu": 0.545,
+   "partners": [
+    {
+     "iso": "DEU",
+     "share": 0.135
+    },
+    {
+     "iso": "ITA",
+     "share": 0.09
+    },
+    {
+     "iso": "BEL",
+     "share": 0.082
+    },
+    {
+     "iso": "ESP",
+     "share": 0.075
+    },
+    {
+     "iso": "USA",
+     "share": 0.071
+    },
+    {
+     "iso": "GBR",
+     "share": 0.06
+    },
+    {
+     "iso": "CHN",
+     "share": 0.042
+    },
+    {
+     "iso": "NLD",
+     "share": 0.038
+    },
+    {
+     "iso": "CHE",
+     "share": 0.034
+    },
+    {
+     "iso": "POL",
+     "share": 0.024
+    },
+    {
+     "iso": "TUR",
+     "share": 0.02
+    },
+    {
+     "iso": "SGP",
+     "share": 0.016
+    },
+    {
+     "iso": "IND",
+     "share": 0.012
+    },
+    {
+     "iso": "IRL",
+     "share": 0.012
+    },
+    {
+     "iso": "PRT",
+     "share": 0.012
+    }
+   ]
   },
   {
    "iso": "GAB",
@@ -451,7 +3777,69 @@
    "exportsUsd": 12694967529,
    "us": 0.013,
    "china": 0.277,
-   "eu": 0.295
+   "eu": 0.295,
+   "partners": [
+    {
+     "iso": "CHN",
+     "share": 0.277
+    },
+    {
+     "iso": "FRA",
+     "share": 0.106
+    },
+    {
+     "iso": "ESP",
+     "share": 0.059
+    },
+    {
+     "iso": "NLD",
+     "share": 0.057
+    },
+    {
+     "iso": "ISR",
+     "share": 0.054
+    },
+    {
+     "iso": "MYS",
+     "share": 0.05
+    },
+    {
+     "iso": "ITA",
+     "share": 0.047
+    },
+    {
+     "iso": "IND",
+     "share": 0.046
+    },
+    {
+     "iso": "COG",
+     "share": 0.045
+    },
+    {
+     "iso": "IDN",
+     "share": 0.045
+    },
+    {
+     "iso": "BRA",
+     "share": 0.033
+    },
+    {
+     "iso": "NOR",
+     "share": 0.017
+    },
+    {
+     "iso": "USA",
+     "share": 0.013
+    },
+    {
+     "iso": "SGP",
+     "share": 0.012
+    },
+    {
+     "iso": "DEU",
+     "share": 0.011
+    }
+   ]
   },
   {
    "iso": "GBR",
@@ -459,7 +3847,69 @@
    "exportsUsd": 521207222955,
    "us": 0.138,
    "china": 0.066,
-   "eu": 0.409
+   "eu": 0.409,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.138
+    },
+    {
+     "iso": "DEU",
+     "share": 0.076
+    },
+    {
+     "iso": "NLD",
+     "share": 0.071
+    },
+    {
+     "iso": "CHE",
+     "share": 0.068
+    },
+    {
+     "iso": "CHN",
+     "share": 0.066
+    },
+    {
+     "iso": "FRA",
+     "share": 0.056
+    },
+    {
+     "iso": "IRL",
+     "share": 0.055
+    },
+    {
+     "iso": "BEL",
+     "share": 0.04
+    },
+    {
+     "iso": "HKG",
+     "share": 0.031
+    },
+    {
+     "iso": "IND",
+     "share": 0.025
+    },
+    {
+     "iso": "ITA",
+     "share": 0.023
+    },
+    {
+     "iso": "ESP",
+     "share": 0.022
+    },
+    {
+     "iso": "ARE",
+     "share": 0.018
+    },
+    {
+     "iso": "POL",
+     "share": 0.016
+    },
+    {
+     "iso": "TUR",
+     "share": 0.016
+    }
+   ]
   },
   {
    "iso": "GEO",
@@ -467,7 +3917,69 @@
    "exportsUsd": 6086325965,
    "us": 0.016,
    "china": 0.051,
-   "eu": 0.112
+   "eu": 0.112,
+   "partners": [
+    {
+     "iso": "AZE",
+     "share": 0.142
+    },
+    {
+     "iso": "ARM",
+     "share": 0.129
+    },
+    {
+     "iso": "KAZ",
+     "share": 0.116
+    },
+    {
+     "iso": "KGZ",
+     "share": 0.114
+    },
+    {
+     "iso": "RUS",
+     "share": 0.108
+    },
+    {
+     "iso": "TUR",
+     "share": 0.067
+    },
+    {
+     "iso": "CHN",
+     "share": 0.051
+    },
+    {
+     "iso": "BGR",
+     "share": 0.041
+    },
+    {
+     "iso": "UZB",
+     "share": 0.019
+    },
+    {
+     "iso": "UKR",
+     "share": 0.017
+    },
+    {
+     "iso": "USA",
+     "share": 0.016
+    },
+    {
+     "iso": "CHE",
+     "share": 0.015
+    },
+    {
+     "iso": "ESP",
+     "share": 0.013
+    },
+    {
+     "iso": "IRQ",
+     "share": 0.012
+    },
+    {
+     "iso": "PER",
+     "share": 0.011
+    }
+   ]
   },
   {
    "iso": "GHA",
@@ -475,7 +3987,69 @@
    "exportsUsd": 16874662286,
    "us": 0.047,
    "china": 0.082,
-   "eu": 0.146
+   "eu": 0.146,
+   "partners": [
+    {
+     "iso": "CHE",
+     "share": 0.182
+    },
+    {
+     "iso": "ZAF",
+     "share": 0.117
+    },
+    {
+     "iso": "ARE",
+     "share": 0.102
+    },
+    {
+     "iso": "CHN",
+     "share": 0.082
+    },
+    {
+     "iso": "IND",
+     "share": 0.07
+    },
+    {
+     "iso": "CAN",
+     "share": 0.051
+    },
+    {
+     "iso": "USA",
+     "share": 0.047
+    },
+    {
+     "iso": "NLD",
+     "share": 0.039
+    },
+    {
+     "iso": "ITA",
+     "share": 0.037
+    },
+    {
+     "iso": "BRA",
+     "share": 0.031
+    },
+    {
+     "iso": "BFA",
+     "share": 0.026
+    },
+    {
+     "iso": "TUR",
+     "share": 0.02
+    },
+    {
+     "iso": "GBR",
+     "share": 0.018
+    },
+    {
+     "iso": "BEL",
+     "share": 0.016
+    },
+    {
+     "iso": "MYS",
+     "share": 0.016
+    }
+   ]
   },
   {
    "iso": "GMB",
@@ -483,7 +4057,69 @@
    "exportsUsd": 83449802,
    "us": 0,
    "china": 0.069,
-   "eu": 0.021
+   "eu": 0.021,
+   "partners": [
+    {
+     "iso": "GNB",
+     "share": 0.71
+    },
+    {
+     "iso": "MLI",
+     "share": 0.106
+    },
+    {
+     "iso": "CHN",
+     "share": 0.069
+    },
+    {
+     "iso": "IND",
+     "share": 0.028
+    },
+    {
+     "iso": "SEN",
+     "share": 0.016
+    },
+    {
+     "iso": "GBR",
+     "share": 0.014
+    },
+    {
+     "iso": "VNM",
+     "share": 0.01
+    },
+    {
+     "iso": "ESP",
+     "share": 0.009
+    },
+    {
+     "iso": "KOR",
+     "share": 0.007
+    },
+    {
+     "iso": "TUR",
+     "share": 0.007
+    },
+    {
+     "iso": "ITA",
+     "share": 0.006
+    },
+    {
+     "iso": "GIN",
+     "share": 0.003
+    },
+    {
+     "iso": "BEL",
+     "share": 0.002
+    },
+    {
+     "iso": "NLD",
+     "share": 0.002
+    },
+    {
+     "iso": "ARE",
+     "share": 0.001
+    }
+   ]
   },
   {
    "iso": "GRC",
@@ -491,7 +4127,69 @@
    "exportsUsd": 55051586784,
    "us": 0.042,
    "china": 0.008,
-   "eu": 0.525
+   "eu": 0.525,
+   "partners": [
+    {
+     "iso": "ITA",
+     "share": 0.115
+    },
+    {
+     "iso": "BGR",
+     "share": 0.068
+    },
+    {
+     "iso": "DEU",
+     "share": 0.066
+    },
+    {
+     "iso": "CYP",
+     "share": 0.061
+    },
+    {
+     "iso": "USA",
+     "share": 0.042
+    },
+    {
+     "iso": "ESP",
+     "share": 0.04
+    },
+    {
+     "iso": "GBR",
+     "share": 0.038
+    },
+    {
+     "iso": "TUR",
+     "share": 0.036
+    },
+    {
+     "iso": "FRA",
+     "share": 0.035
+    },
+    {
+     "iso": "LBY",
+     "share": 0.031
+    },
+    {
+     "iso": "LBN",
+     "share": 0.028
+    },
+    {
+     "iso": "MKD",
+     "share": 0.027
+    },
+    {
+     "iso": "NLD",
+     "share": 0.025
+    },
+    {
+     "iso": "GIB",
+     "share": 0.023
+    },
+    {
+     "iso": "POL",
+     "share": 0.018
+    }
+   ]
   },
   {
    "iso": "GRD",
@@ -499,7 +4197,69 @@
    "exportsUsd": 46055094,
    "us": 0.088,
    "china": 0,
-   "eu": 0.014
+   "eu": 0.014,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.088
+    },
+    {
+     "iso": "VCT",
+     "share": 0.086
+    },
+    {
+     "iso": "TTO",
+     "share": 0.068
+    },
+    {
+     "iso": "KNA",
+     "share": 0.062
+    },
+    {
+     "iso": "LCA",
+     "share": 0.038
+    },
+    {
+     "iso": "ATG",
+     "share": 0.03
+    },
+    {
+     "iso": "GUY",
+     "share": 0.021
+    },
+    {
+     "iso": "JAM",
+     "share": 0.018
+    },
+    {
+     "iso": "BRB",
+     "share": 0.013
+    },
+    {
+     "iso": "NLD",
+     "share": 0.011
+    },
+    {
+     "iso": "CAN",
+     "share": 0.009
+    },
+    {
+     "iso": "GBR",
+     "share": 0.006
+    },
+    {
+     "iso": "SWZ",
+     "share": 0.006
+    },
+    {
+     "iso": "DMA",
+     "share": 0.005
+    },
+    {
+     "iso": "JPN",
+     "share": 0.004
+    }
+   ]
   },
   {
    "iso": "GTM",
@@ -507,7 +4267,69 @@
    "exportsUsd": 14261032628,
    "us": 0.323,
    "china": 0.006,
-   "eu": 0.095
+   "eu": 0.095,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.323
+    },
+    {
+     "iso": "SLV",
+     "share": 0.131
+    },
+    {
+     "iso": "HND",
+     "share": 0.114
+    },
+    {
+     "iso": "NIC",
+     "share": 0.069
+    },
+    {
+     "iso": "MEX",
+     "share": 0.047
+    },
+    {
+     "iso": "CRI",
+     "share": 0.045
+    },
+    {
+     "iso": "NLD",
+     "share": 0.044
+    },
+    {
+     "iso": "PAN",
+     "share": 0.022
+    },
+    {
+     "iso": "ESP",
+     "share": 0.02
+    },
+    {
+     "iso": "DOM",
+     "share": 0.017
+    },
+    {
+     "iso": "BLZ",
+     "share": 0.011
+    },
+    {
+     "iso": "CAN",
+     "share": 0.01
+    },
+    {
+     "iso": "JPN",
+     "share": 0.01
+    },
+    {
+     "iso": "CHL",
+     "share": 0.009
+    },
+    {
+     "iso": "ITA",
+     "share": 0.009
+    }
+   ]
   },
   {
    "iso": "GUY",
@@ -515,7 +4337,69 @@
    "exportsUsd": 10811756230,
    "us": 0.165,
    "china": 0.004,
-   "eu": 0.224
+   "eu": 0.224,
+   "partners": [
+    {
+     "iso": "TTO",
+     "share": 0.176
+    },
+    {
+     "iso": "USA",
+     "share": 0.165
+    },
+    {
+     "iso": "SGP",
+     "share": 0.152
+    },
+    {
+     "iso": "NLD",
+     "share": 0.093
+    },
+    {
+     "iso": "GBR",
+     "share": 0.077
+    },
+    {
+     "iso": "PAN",
+     "share": 0.048
+    },
+    {
+     "iso": "ESP",
+     "share": 0.046
+    },
+    {
+     "iso": "ARE",
+     "share": 0.045
+    },
+    {
+     "iso": "ITA",
+     "share": 0.03
+    },
+    {
+     "iso": "IND",
+     "share": 0.029
+    },
+    {
+     "iso": "GRC",
+     "share": 0.028
+    },
+    {
+     "iso": "SUR",
+     "share": 0.015
+    },
+    {
+     "iso": "BRB",
+     "share": 0.011
+    },
+    {
+     "iso": "DEU",
+     "share": 0.01
+    },
+    {
+     "iso": "CAN",
+     "share": 0.009
+    }
+   ]
   },
   {
    "iso": "HKG",
@@ -523,7 +4407,69 @@
    "exportsUsd": 575044377646,
    "us": 0.061,
    "china": 0.574,
-   "eu": 0.06
+   "eu": 0.06,
+   "partners": [
+    {
+     "iso": "CHN",
+     "share": 0.574
+    },
+    {
+     "iso": "USA",
+     "share": 0.061
+    },
+    {
+     "iso": "IND",
+     "share": 0.038
+    },
+    {
+     "iso": "ARE",
+     "share": 0.027
+    },
+    {
+     "iso": "VNM",
+     "share": 0.025
+    },
+    {
+     "iso": "JPN",
+     "share": 0.019
+    },
+    {
+     "iso": "THA",
+     "share": 0.018
+    },
+    {
+     "iso": "KOR",
+     "share": 0.017
+    },
+    {
+     "iso": "MAC",
+     "share": 0.017
+    },
+    {
+     "iso": "NLD",
+     "share": 0.017
+    },
+    {
+     "iso": "SGP",
+     "share": 0.015
+    },
+    {
+     "iso": "GBR",
+     "share": 0.014
+    },
+    {
+     "iso": "DEU",
+     "share": 0.011
+    },
+    {
+     "iso": "CHE",
+     "share": 0.009
+    },
+    {
+     "iso": "MEX",
+     "share": 0.008
+    }
+   ]
   },
   {
    "iso": "HND",
@@ -531,7 +4477,69 @@
    "exportsUsd": 7170970774,
    "us": 0.45,
    "china": 0.003,
-   "eu": 0.165
+   "eu": 0.165,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.45
+    },
+    {
+     "iso": "SLV",
+     "share": 0.065
+    },
+    {
+     "iso": "NIC",
+     "share": 0.059
+    },
+    {
+     "iso": "GTM",
+     "share": 0.057
+    },
+    {
+     "iso": "DEU",
+     "share": 0.048
+    },
+    {
+     "iso": "MEX",
+     "share": 0.041
+    },
+    {
+     "iso": "NLD",
+     "share": 0.028
+    },
+    {
+     "iso": "DOM",
+     "share": 0.026
+    },
+    {
+     "iso": "BEL",
+     "share": 0.025
+    },
+    {
+     "iso": "ITA",
+     "share": 0.023
+    },
+    {
+     "iso": "CRI",
+     "share": 0.022
+    },
+    {
+     "iso": "ESP",
+     "share": 0.018
+    },
+    {
+     "iso": "GBR",
+     "share": 0.016
+    },
+    {
+     "iso": "CAN",
+     "share": 0.012
+    },
+    {
+     "iso": "FRA",
+     "share": 0.008
+    }
+   ]
   },
   {
    "iso": "HRV",
@@ -539,7 +4547,69 @@
    "exportsUsd": 24670430758,
    "us": 0.026,
    "china": 0.003,
-   "eu": 0.662
+   "eu": 0.662,
+   "partners": [
+    {
+     "iso": "DEU",
+     "share": 0.122
+    },
+    {
+     "iso": "ITA",
+     "share": 0.122
+    },
+    {
+     "iso": "SVN",
+     "share": 0.112
+    },
+    {
+     "iso": "BIH",
+     "share": 0.101
+    },
+    {
+     "iso": "HUN",
+     "share": 0.069
+    },
+    {
+     "iso": "AUT",
+     "share": 0.056
+    },
+    {
+     "iso": "USA",
+     "share": 0.026
+    },
+    {
+     "iso": "FRA",
+     "share": 0.025
+    },
+    {
+     "iso": "POL",
+     "share": 0.025
+    },
+    {
+     "iso": "ESP",
+     "share": 0.018
+    },
+    {
+     "iso": "CZE",
+     "share": 0.017
+    },
+    {
+     "iso": "NLD",
+     "share": 0.016
+    },
+    {
+     "iso": "CHE",
+     "share": 0.014
+    },
+    {
+     "iso": "MLT",
+     "share": 0.013
+    },
+    {
+     "iso": "TUR",
+     "share": 0.013
+    }
+   ]
   },
   {
    "iso": "HUN",
@@ -547,7 +4617,69 @@
    "exportsUsd": 158563412727,
    "us": 0.037,
    "china": 0.012,
-   "eu": 0.716
+   "eu": 0.716,
+   "partners": [
+    {
+     "iso": "DEU",
+     "share": 0.263
+    },
+    {
+     "iso": "ITA",
+     "share": 0.058
+    },
+    {
+     "iso": "SVK",
+     "share": 0.05
+    },
+    {
+     "iso": "POL",
+     "share": 0.046
+    },
+    {
+     "iso": "CZE",
+     "share": 0.045
+    },
+    {
+     "iso": "FRA",
+     "share": 0.042
+    },
+    {
+     "iso": "AUT",
+     "share": 0.04
+    },
+    {
+     "iso": "USA",
+     "share": 0.037
+    },
+    {
+     "iso": "GBR",
+     "share": 0.035
+    },
+    {
+     "iso": "NLD",
+     "share": 0.031
+    },
+    {
+     "iso": "ESP",
+     "share": 0.03
+    },
+    {
+     "iso": "BEL",
+     "share": 0.026
+    },
+    {
+     "iso": "UKR",
+     "share": 0.018
+    },
+    {
+     "iso": "HRV",
+     "share": 0.016
+    },
+    {
+     "iso": "TUR",
+     "share": 0.016
+    }
+   ]
   },
   {
    "iso": "IDN",
@@ -555,7 +4687,69 @@
    "exportsUsd": 258774386645,
    "us": 0.09,
    "china": 0.251,
-   "eu": 0.064
+   "eu": 0.064,
+   "partners": [
+    {
+     "iso": "CHN",
+     "share": 0.251
+    },
+    {
+     "iso": "USA",
+     "share": 0.09
+    },
+    {
+     "iso": "JPN",
+     "share": 0.08
+    },
+    {
+     "iso": "IND",
+     "share": 0.078
+    },
+    {
+     "iso": "SGP",
+     "share": 0.049
+    },
+    {
+     "iso": "MYS",
+     "share": 0.048
+    },
+    {
+     "iso": "PHL",
+     "share": 0.043
+    },
+    {
+     "iso": "KOR",
+     "share": 0.04
+    },
+    {
+     "iso": "VNM",
+     "share": 0.029
+    },
+    {
+     "iso": "THA",
+     "share": 0.028
+    },
+    {
+     "iso": "NLD",
+     "share": 0.015
+    },
+    {
+     "iso": "BGD",
+     "share": 0.014
+    },
+    {
+     "iso": "AUS",
+     "share": 0.012
+    },
+    {
+     "iso": "PAK",
+     "share": 0.012
+    },
+    {
+     "iso": "ARE",
+     "share": 0.01
+    }
+   ]
   },
   {
    "iso": "IND",
@@ -563,7 +4757,69 @@
    "exportsUsd": 431411977211,
    "us": 0.176,
    "china": 0.038,
-   "eu": 0.171
+   "eu": 0.171,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.176
+    },
+    {
+     "iso": "ARE",
+     "share": 0.077
+    },
+    {
+     "iso": "NLD",
+     "share": 0.054
+    },
+    {
+     "iso": "CHN",
+     "share": 0.038
+    },
+    {
+     "iso": "GBR",
+     "share": 0.029
+    },
+    {
+     "iso": "SGP",
+     "share": 0.028
+    },
+    {
+     "iso": "BGD",
+     "share": 0.026
+    },
+    {
+     "iso": "SAU",
+     "share": 0.025
+    },
+    {
+     "iso": "DEU",
+     "share": 0.022
+    },
+    {
+     "iso": "HKG",
+     "share": 0.02
+    },
+    {
+     "iso": "ITA",
+     "share": 0.019
+    },
+    {
+     "iso": "ZAF",
+     "share": 0.019
+    },
+    {
+     "iso": "AUS",
+     "share": 0.018
+    },
+    {
+     "iso": "BEL",
+     "share": 0.018
+    },
+    {
+     "iso": "TUR",
+     "share": 0.018
+    }
+   ]
   },
   {
    "iso": "IRL",
@@ -571,7 +4827,69 @@
    "exportsUsd": 212869514241,
    "us": 0.276,
    "china": 0.045,
-   "eu": 0.408
+   "eu": 0.408,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.276
+    },
+    {
+     "iso": "GBR",
+     "share": 0.114
+    },
+    {
+     "iso": "DEU",
+     "share": 0.104
+    },
+    {
+     "iso": "BEL",
+     "share": 0.094
+    },
+    {
+     "iso": "NLD",
+     "share": 0.085
+    },
+    {
+     "iso": "CHN",
+     "share": 0.045
+    },
+    {
+     "iso": "FRA",
+     "share": 0.035
+    },
+    {
+     "iso": "ITA",
+     "share": 0.031
+    },
+    {
+     "iso": "CAN",
+     "share": 0.021
+    },
+    {
+     "iso": "CHE",
+     "share": 0.021
+    },
+    {
+     "iso": "JPN",
+     "share": 0.019
+    },
+    {
+     "iso": "ESP",
+     "share": 0.015
+    },
+    {
+     "iso": "MEX",
+     "share": 0.013
+    },
+    {
+     "iso": "POL",
+     "share": 0.009
+    },
+    {
+     "iso": "MYS",
+     "share": 0.008
+    }
+   ]
   },
   {
    "iso": "IRN",
@@ -579,7 +4897,69 @@
    "exportsUsd": 80900398252,
    "us": 0,
    "china": 0.277,
-   "eu": 0.009
+   "eu": 0.009,
+   "partners": [
+    {
+     "iso": "CHN",
+     "share": 0.277
+    },
+    {
+     "iso": "IRQ",
+     "share": 0.091
+    },
+    {
+     "iso": "ARE",
+     "share": 0.074
+    },
+    {
+     "iso": "TUR",
+     "share": 0.071
+    },
+    {
+     "iso": "IND",
+     "share": 0.023
+    },
+    {
+     "iso": "AFG",
+     "share": 0.02
+    },
+    {
+     "iso": "PAK",
+     "share": 0.017
+    },
+    {
+     "iso": "OMN",
+     "share": 0.014
+    },
+    {
+     "iso": "IDN",
+     "share": 0.012
+    },
+    {
+     "iso": "RUS",
+     "share": 0.009
+    },
+    {
+     "iso": "THA",
+     "share": 0.009
+    },
+    {
+     "iso": "AZE",
+     "share": 0.006
+    },
+    {
+     "iso": "ARM",
+     "share": 0.005
+    },
+    {
+     "iso": "TKM",
+     "share": 0.005
+    },
+    {
+     "iso": "ZAF",
+     "share": 0.005
+    }
+   ]
   },
   {
    "iso": "ISL",
@@ -587,7 +4967,69 @@
    "exportsUsd": 6807539977,
    "us": 0.097,
    "china": 0.022,
-   "eu": 0.631
+   "eu": 0.631,
+   "partners": [
+    {
+     "iso": "NLD",
+     "share": 0.358
+    },
+    {
+     "iso": "USA",
+     "share": 0.097
+    },
+    {
+     "iso": "GBR",
+     "share": 0.087
+    },
+    {
+     "iso": "FRA",
+     "share": 0.064
+    },
+    {
+     "iso": "NOR",
+     "share": 0.057
+    },
+    {
+     "iso": "DEU",
+     "share": 0.048
+    },
+    {
+     "iso": "ESP",
+     "share": 0.039
+    },
+    {
+     "iso": "DNK",
+     "share": 0.028
+    },
+    {
+     "iso": "CHN",
+     "share": 0.022
+    },
+    {
+     "iso": "POL",
+     "share": 0.022
+    },
+    {
+     "iso": "JPN",
+     "share": 0.018
+    },
+    {
+     "iso": "PRT",
+     "share": 0.017
+    },
+    {
+     "iso": "CAN",
+     "share": 0.011
+    },
+    {
+     "iso": "GRL",
+     "share": 0.011
+    },
+    {
+     "iso": "LTU",
+     "share": 0.011
+    }
+   ]
   },
   {
    "iso": "ISR",
@@ -595,7 +5037,69 @@
    "exportsUsd": 58904608000,
    "us": 0.294,
    "china": 0.058,
-   "eu": 0.283
+   "eu": 0.283,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.294
+    },
+    {
+     "iso": "CHN",
+     "share": 0.058
+    },
+    {
+     "iso": "IRL",
+     "share": 0.058
+    },
+    {
+     "iso": "NLD",
+     "share": 0.041
+    },
+    {
+     "iso": "IND",
+     "share": 0.038
+    },
+    {
+     "iso": "DEU",
+     "share": 0.036
+    },
+    {
+     "iso": "GBR",
+     "share": 0.036
+    },
+    {
+     "iso": "HKG",
+     "share": 0.031
+    },
+    {
+     "iso": "BEL",
+     "share": 0.027
+    },
+    {
+     "iso": "TUR",
+     "share": 0.025
+    },
+    {
+     "iso": "FRA",
+     "share": 0.024
+    },
+    {
+     "iso": "BRA",
+     "share": 0.023
+    },
+    {
+     "iso": "ITA",
+     "share": 0.019
+    },
+    {
+     "iso": "KOR",
+     "share": 0.018
+    },
+    {
+     "iso": "ESP",
+     "share": 0.016
+    }
+   ]
   },
   {
    "iso": "ITA",
@@ -603,7 +5107,69 @@
    "exportsUsd": 677095229001,
    "us": 0.107,
    "china": 0.031,
-   "eu": 0.497
+   "eu": 0.497,
+   "partners": [
+    {
+     "iso": "DEU",
+     "share": 0.119
+    },
+    {
+     "iso": "USA",
+     "share": 0.107
+    },
+    {
+     "iso": "FRA",
+     "share": 0.101
+    },
+    {
+     "iso": "ESP",
+     "share": 0.053
+    },
+    {
+     "iso": "CHE",
+     "share": 0.049
+    },
+    {
+     "iso": "GBR",
+     "share": 0.042
+    },
+    {
+     "iso": "POL",
+     "share": 0.032
+    },
+    {
+     "iso": "BEL",
+     "share": 0.031
+    },
+    {
+     "iso": "CHN",
+     "share": 0.031
+    },
+    {
+     "iso": "NLD",
+     "share": 0.03
+    },
+    {
+     "iso": "AUT",
+     "share": 0.023
+    },
+    {
+     "iso": "TUR",
+     "share": 0.023
+    },
+    {
+     "iso": "CZE",
+     "share": 0.013
+    },
+    {
+     "iso": "JPN",
+     "share": 0.013
+    },
+    {
+     "iso": "ARE",
+     "share": 0.011
+    }
+   ]
   },
   {
    "iso": "JAM",
@@ -611,7 +5177,69 @@
    "exportsUsd": 2001802217,
    "us": 0.505,
    "china": 0.004,
-   "eu": 0.114
+   "eu": 0.114,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.505
+    },
+    {
+     "iso": "RUS",
+     "share": 0.069
+    },
+    {
+     "iso": "LVA",
+     "share": 0.065
+    },
+    {
+     "iso": "ISL",
+     "share": 0.047
+    },
+    {
+     "iso": "GBR",
+     "share": 0.034
+    },
+    {
+     "iso": "NLD",
+     "share": 0.029
+    },
+    {
+     "iso": "GUY",
+     "share": 0.026
+    },
+    {
+     "iso": "CAN",
+     "share": 0.023
+    },
+    {
+     "iso": "CYM",
+     "share": 0.018
+    },
+    {
+     "iso": "TTO",
+     "share": 0.018
+    },
+    {
+     "iso": "HTI",
+     "share": 0.016
+    },
+    {
+     "iso": "BRB",
+     "share": 0.014
+    },
+    {
+     "iso": "GHA",
+     "share": 0.013
+    },
+    {
+     "iso": "FRA",
+     "share": 0.009
+    },
+    {
+     "iso": "PAN",
+     "share": 0.009
+    }
+   ]
   },
   {
    "iso": "JOR",
@@ -619,7 +5247,69 @@
    "exportsUsd": 12589565488,
    "us": 0.229,
    "china": 0.028,
-   "eu": 0.047
+   "eu": 0.047,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.229
+    },
+    {
+     "iso": "IND",
+     "share": 0.137
+    },
+    {
+     "iso": "SAU",
+     "share": 0.115
+    },
+    {
+     "iso": "IRQ",
+     "share": 0.075
+    },
+    {
+     "iso": "ARE",
+     "share": 0.043
+    },
+    {
+     "iso": "CHN",
+     "share": 0.028
+    },
+    {
+     "iso": "PSE",
+     "share": 0.027
+    },
+    {
+     "iso": "EGY",
+     "share": 0.018
+    },
+    {
+     "iso": "IDN",
+     "share": 0.015
+    },
+    {
+     "iso": "KWT",
+     "share": 0.015
+    },
+    {
+     "iso": "QAT",
+     "share": 0.013
+    },
+    {
+     "iso": "CHE",
+     "share": 0.012
+    },
+    {
+     "iso": "CAN",
+     "share": 0.01
+    },
+    {
+     "iso": "DZA",
+     "share": 0.01
+    },
+    {
+     "iso": "TUR",
+     "share": 0.01
+    }
+   ]
   },
   {
    "iso": "JPN",
@@ -627,7 +5317,69 @@
    "exportsUsd": 717946392139,
    "us": 0.202,
    "china": 0.176,
-   "eu": 0.102
+   "eu": 0.102,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.202
+    },
+    {
+     "iso": "CHN",
+     "share": 0.176
+    },
+    {
+     "iso": "KOR",
+     "share": 0.065
+    },
+    {
+     "iso": "HKG",
+     "share": 0.045
+    },
+    {
+     "iso": "THA",
+     "share": 0.041
+    },
+    {
+     "iso": "DEU",
+     "share": 0.027
+    },
+    {
+     "iso": "SGP",
+     "share": 0.026
+    },
+    {
+     "iso": "VNM",
+     "share": 0.024
+    },
+    {
+     "iso": "AUS",
+     "share": 0.023
+    },
+    {
+     "iso": "IND",
+     "share": 0.022
+    },
+    {
+     "iso": "IDN",
+     "share": 0.02
+    },
+    {
+     "iso": "MYS",
+     "share": 0.019
+    },
+    {
+     "iso": "NLD",
+     "share": 0.019
+    },
+    {
+     "iso": "MEX",
+     "share": 0.018
+    },
+    {
+     "iso": "GBR",
+     "share": 0.017
+    }
+   ]
   },
   {
    "iso": "KAZ",
@@ -635,7 +5387,69 @@
    "exportsUsd": 78735590867,
    "us": 0.019,
    "china": 0.187,
-   "eu": 0.359
+   "eu": 0.359,
+   "partners": [
+    {
+     "iso": "ITA",
+     "share": 0.188
+    },
+    {
+     "iso": "CHN",
+     "share": 0.187
+    },
+    {
+     "iso": "RUS",
+     "share": 0.124
+    },
+    {
+     "iso": "NLD",
+     "share": 0.052
+    },
+    {
+     "iso": "TUR",
+     "share": 0.05
+    },
+    {
+     "iso": "KOR",
+     "share": 0.048
+    },
+    {
+     "iso": "UZB",
+     "share": 0.04
+    },
+    {
+     "iso": "FRA",
+     "share": 0.037
+    },
+    {
+     "iso": "GRC",
+     "share": 0.028
+    },
+    {
+     "iso": "SGP",
+     "share": 0.022
+    },
+    {
+     "iso": "ESP",
+     "share": 0.019
+    },
+    {
+     "iso": "USA",
+     "share": 0.019
+    },
+    {
+     "iso": "KGZ",
+     "share": 0.014
+    },
+    {
+     "iso": "CHE",
+     "share": 0.011
+    },
+    {
+     "iso": "TJK",
+     "share": 0.011
+    }
+   ]
   },
   {
    "iso": "KEN",
@@ -643,7 +5457,69 @@
    "exportsUsd": 7158109333,
    "us": 0.064,
    "china": 0.029,
-   "eu": 0.149
+   "eu": 0.149,
+   "partners": [
+    {
+     "iso": "UGA",
+     "share": 0.125
+    },
+    {
+     "iso": "PAK",
+     "share": 0.079
+    },
+    {
+     "iso": "NLD",
+     "share": 0.076
+    },
+    {
+     "iso": "TZA",
+     "share": 0.068
+    },
+    {
+     "iso": "USA",
+     "share": 0.064
+    },
+    {
+     "iso": "ARE",
+     "share": 0.056
+    },
+    {
+     "iso": "GBR",
+     "share": 0.055
+    },
+    {
+     "iso": "RWA",
+     "share": 0.042
+    },
+    {
+     "iso": "SSD",
+     "share": 0.032
+    },
+    {
+     "iso": "EGY",
+     "share": 0.031
+    },
+    {
+     "iso": "CHN",
+     "share": 0.029
+    },
+    {
+     "iso": "SOM",
+     "share": 0.022
+    },
+    {
+     "iso": "SAU",
+     "share": 0.018
+    },
+    {
+     "iso": "DEU",
+     "share": 0.016
+    },
+    {
+     "iso": "ETH",
+     "share": 0.016
+    }
+   ]
   },
   {
    "iso": "KGZ",
@@ -651,7 +5527,69 @@
    "exportsUsd": 3384855970,
    "us": 0.001,
    "china": 0.024,
-   "eu": 0.01
+   "eu": 0.01,
+   "partners": [
+    {
+     "iso": "CHE",
+     "share": 0.322
+    },
+    {
+     "iso": "RUS",
+     "share": 0.243
+    },
+    {
+     "iso": "KAZ",
+     "share": 0.133
+    },
+    {
+     "iso": "UZB",
+     "share": 0.086
+    },
+    {
+     "iso": "ARE",
+     "share": 0.056
+    },
+    {
+     "iso": "TUR",
+     "share": 0.036
+    },
+    {
+     "iso": "HKG",
+     "share": 0.035
+    },
+    {
+     "iso": "CHN",
+     "share": 0.024
+    },
+    {
+     "iso": "BLR",
+     "share": 0.01
+    },
+    {
+     "iso": "IRN",
+     "share": 0.008
+    },
+    {
+     "iso": "AFG",
+     "share": 0.004
+    },
+    {
+     "iso": "BEL",
+     "share": 0.003
+    },
+    {
+     "iso": "DEU",
+     "share": 0.002
+    },
+    {
+     "iso": "AZE",
+     "share": 0.001
+    },
+    {
+     "iso": "GEO",
+     "share": 0.001
+    }
+   ]
   },
   {
    "iso": "KHM",
@@ -659,7 +5597,69 @@
    "exportsUsd": 21676660006,
    "us": 0.415,
    "china": 0.07,
-   "eu": 0.169
+   "eu": 0.169,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.415
+    },
+    {
+     "iso": "CHN",
+     "share": 0.07
+    },
+    {
+     "iso": "VNM",
+     "share": 0.062
+    },
+    {
+     "iso": "JPN",
+     "share": 0.054
+    },
+    {
+     "iso": "CAN",
+     "share": 0.04
+    },
+    {
+     "iso": "DEU",
+     "share": 0.038
+    },
+    {
+     "iso": "GBR",
+     "share": 0.037
+    },
+    {
+     "iso": "ESP",
+     "share": 0.033
+    },
+    {
+     "iso": "SGP",
+     "share": 0.029
+    },
+    {
+     "iso": "NLD",
+     "share": 0.026
+    },
+    {
+     "iso": "THA",
+     "share": 0.025
+    },
+    {
+     "iso": "BEL",
+     "share": 0.02
+    },
+    {
+     "iso": "AUS",
+     "share": 0.017
+    },
+    {
+     "iso": "FRA",
+     "share": 0.017
+    },
+    {
+     "iso": "IND",
+     "share": 0.014
+    }
+   ]
   },
   {
    "iso": "KOR",
@@ -667,7 +5667,69 @@
    "exportsUsd": 631804230615,
    "us": 0.184,
    "china": 0.197,
-   "eu": 0.107
+   "eu": 0.107,
+   "partners": [
+    {
+     "iso": "CHN",
+     "share": 0.197
+    },
+    {
+     "iso": "USA",
+     "share": 0.184
+    },
+    {
+     "iso": "VNM",
+     "share": 0.085
+    },
+    {
+     "iso": "JPN",
+     "share": 0.046
+    },
+    {
+     "iso": "HKG",
+     "share": 0.04
+    },
+    {
+     "iso": "SGP",
+     "share": 0.03
+    },
+    {
+     "iso": "AUS",
+     "share": 0.028
+    },
+    {
+     "iso": "IND",
+     "share": 0.028
+    },
+    {
+     "iso": "MEX",
+     "share": 0.019
+    },
+    {
+     "iso": "DEU",
+     "share": 0.016
+    },
+    {
+     "iso": "MYS",
+     "share": 0.015
+    },
+    {
+     "iso": "IDN",
+     "share": 0.014
+    },
+    {
+     "iso": "PHL",
+     "share": 0.014
+    },
+    {
+     "iso": "POL",
+     "share": 0.014
+    },
+    {
+     "iso": "TUR",
+     "share": 0.014
+    }
+   ]
   },
   {
    "iso": "KWT",
@@ -675,7 +5737,69 @@
    "exportsUsd": 83979908828,
    "us": 0.001,
    "china": 0.007,
-   "eu": 0.002
+   "eu": 0.002,
+   "partners": [
+    {
+     "iso": "ARE",
+     "share": 0.015
+    },
+    {
+     "iso": "IND",
+     "share": 0.013
+    },
+    {
+     "iso": "SAU",
+     "share": 0.008
+    },
+    {
+     "iso": "CHN",
+     "share": 0.007
+    },
+    {
+     "iso": "IRQ",
+     "share": 0.005
+    },
+    {
+     "iso": "PAK",
+     "share": 0.004
+    },
+    {
+     "iso": "QAT",
+     "share": 0.003
+    },
+    {
+     "iso": "BHR",
+     "share": 0.001
+    },
+    {
+     "iso": "EGY",
+     "share": 0.001
+    },
+    {
+     "iso": "ITA",
+     "share": 0.001
+    },
+    {
+     "iso": "JOR",
+     "share": 0.001
+    },
+    {
+     "iso": "MYS",
+     "share": 0.001
+    },
+    {
+     "iso": "OMN",
+     "share": 0.001
+    },
+    {
+     "iso": "TUR",
+     "share": 0.001
+    },
+    {
+     "iso": "USA",
+     "share": 0.001
+    }
+   ]
   },
   {
    "iso": "LAO",
@@ -683,7 +5807,69 @@
    "exportsUsd": 6042417592,
    "us": 0.016,
    "china": 0.382,
-   "eu": 0.044
+   "eu": 0.044,
+   "partners": [
+    {
+     "iso": "CHN",
+     "share": 0.382
+    },
+    {
+     "iso": "VNM",
+     "share": 0.199
+    },
+    {
+     "iso": "THA",
+     "share": 0.131
+    },
+    {
+     "iso": "AUS",
+     "share": 0.057
+    },
+    {
+     "iso": "DEU",
+     "share": 0.016
+    },
+    {
+     "iso": "JPN",
+     "share": 0.016
+    },
+    {
+     "iso": "USA",
+     "share": 0.016
+    },
+    {
+     "iso": "IND",
+     "share": 0.014
+    },
+    {
+     "iso": "SGP",
+     "share": 0.014
+    },
+    {
+     "iso": "HKG",
+     "share": 0.012
+    },
+    {
+     "iso": "CHE",
+     "share": 0.01
+    },
+    {
+     "iso": "DNK",
+     "share": 0.006
+    },
+    {
+     "iso": "NLD",
+     "share": 0.006
+    },
+    {
+     "iso": "BEL",
+     "share": 0.005
+    },
+    {
+     "iso": "PHL",
+     "share": 0.005
+    }
+   ]
   },
   {
    "iso": "LBN",
@@ -691,7 +5877,69 @@
    "exportsUsd": 4560693573,
    "us": 0.047,
    "china": 0.005,
-   "eu": 0.14
+   "eu": 0.14,
+   "partners": [
+    {
+     "iso": "ARE",
+     "share": 0.222
+    },
+    {
+     "iso": "TUR",
+     "share": 0.079
+    },
+    {
+     "iso": "IRQ",
+     "share": 0.052
+    },
+    {
+     "iso": "EGY",
+     "share": 0.05
+    },
+    {
+     "iso": "USA",
+     "share": 0.047
+    },
+    {
+     "iso": "CHE",
+     "share": 0.033
+    },
+    {
+     "iso": "FRA",
+     "share": 0.028
+    },
+    {
+     "iso": "SYR",
+     "share": 0.028
+    },
+    {
+     "iso": "CYP",
+     "share": 0.024
+    },
+    {
+     "iso": "QAT",
+     "share": 0.024
+    },
+    {
+     "iso": "GRC",
+     "share": 0.023
+    },
+    {
+     "iso": "JOR",
+     "share": 0.023
+    },
+    {
+     "iso": "CIV",
+     "share": 0.015
+    },
+    {
+     "iso": "COG",
+     "share": 0.015
+    },
+    {
+     "iso": "ESP",
+     "share": 0.015
+    }
+   ]
   },
   {
    "iso": "LBR",
@@ -699,7 +5947,69 @@
    "exportsUsd": 153702571,
    "us": 0.374,
    "china": 0.001,
-   "eu": 0.277
+   "eu": 0.277,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.374
+    },
+    {
+     "iso": "BEL",
+     "share": 0.214
+    },
+    {
+     "iso": "CMR",
+     "share": 0.069
+    },
+    {
+     "iso": "GHA",
+     "share": 0.049
+    },
+    {
+     "iso": "SGP",
+     "share": 0.044
+    },
+    {
+     "iso": "GBR",
+     "share": 0.029
+    },
+    {
+     "iso": "MYS",
+     "share": 0.026
+    },
+    {
+     "iso": "ARE",
+     "share": 0.024
+    },
+    {
+     "iso": "ESP",
+     "share": 0.021
+    },
+    {
+     "iso": "MAR",
+     "share": 0.018
+    },
+    {
+     "iso": "CIV",
+     "share": 0.017
+    },
+    {
+     "iso": "NLD",
+     "share": 0.016
+    },
+    {
+     "iso": "DEU",
+     "share": 0.015
+    },
+    {
+     "iso": "IND",
+     "share": 0.011
+    },
+    {
+     "iso": "ZAF",
+     "share": 0.01
+    }
+   ]
   },
   {
    "iso": "LKA",
@@ -707,7 +6017,69 @@
    "exportsUsd": 12052497549,
    "us": 0.232,
    "china": 0.022,
-   "eu": 0.229
+   "eu": 0.229,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.232
+    },
+    {
+     "iso": "GBR",
+     "share": 0.071
+    },
+    {
+     "iso": "IND",
+     "share": 0.071
+    },
+    {
+     "iso": "ITA",
+     "share": 0.057
+    },
+    {
+     "iso": "DEU",
+     "share": 0.05
+    },
+    {
+     "iso": "ARE",
+     "share": 0.032
+    },
+    {
+     "iso": "NLD",
+     "share": 0.029
+    },
+    {
+     "iso": "FRA",
+     "share": 0.026
+    },
+    {
+     "iso": "CAN",
+     "share": 0.025
+    },
+    {
+     "iso": "CHN",
+     "share": 0.022
+    },
+    {
+     "iso": "AUS",
+     "share": 0.019
+    },
+    {
+     "iso": "BEL",
+     "share": 0.019
+    },
+    {
+     "iso": "CHE",
+     "share": 0.016
+    },
+    {
+     "iso": "JPN",
+     "share": 0.016
+    },
+    {
+     "iso": "TUR",
+     "share": 0.016
+    }
+   ]
   },
   {
    "iso": "LSO",
@@ -715,7 +6087,69 @@
    "exportsUsd": 829902339,
    "us": 0.189,
    "china": 0,
-   "eu": 0.243
+   "eu": 0.243,
+   "partners": [
+    {
+     "iso": "ZAF",
+     "share": 0.536
+    },
+    {
+     "iso": "BEL",
+     "share": 0.236
+    },
+    {
+     "iso": "USA",
+     "share": 0.189
+    },
+    {
+     "iso": "SWZ",
+     "share": 0.009
+    },
+    {
+     "iso": "DEU",
+     "share": 0.007
+    },
+    {
+     "iso": "CAN",
+     "share": 0.006
+    },
+    {
+     "iso": "GBR",
+     "share": 0.004
+    },
+    {
+     "iso": "EGY",
+     "share": 0.003
+    },
+    {
+     "iso": "BWA",
+     "share": 0.002
+    },
+    {
+     "iso": "AUS",
+     "share": 0.001
+    },
+    {
+     "iso": "ISR",
+     "share": 0.001
+    },
+    {
+     "iso": "MEX",
+     "share": 0.001
+    },
+    {
+     "iso": "MOZ",
+     "share": 0.001
+    },
+    {
+     "iso": "ARE",
+     "share": 0
+    },
+    {
+     "iso": "AUT",
+     "share": 0
+    }
+   ]
   },
   {
    "iso": "LTU",
@@ -723,7 +6157,69 @@
    "exportsUsd": 42625691925,
    "us": 0.048,
    "china": 0.004,
-   "eu": 0.599
+   "eu": 0.599,
+   "partners": [
+    {
+     "iso": "LVA",
+     "share": 0.108
+    },
+    {
+     "iso": "POL",
+     "share": 0.093
+    },
+    {
+     "iso": "DEU",
+     "share": 0.078
+    },
+    {
+     "iso": "NLD",
+     "share": 0.059
+    },
+    {
+     "iso": "EST",
+     "share": 0.055
+    },
+    {
+     "iso": "RUS",
+     "share": 0.054
+    },
+    {
+     "iso": "USA",
+     "share": 0.048
+    },
+    {
+     "iso": "BLR",
+     "share": 0.043
+    },
+    {
+     "iso": "SWE",
+     "share": 0.04
+    },
+    {
+     "iso": "GBR",
+     "share": 0.038
+    },
+    {
+     "iso": "UKR",
+     "share": 0.031
+    },
+    {
+     "iso": "FRA",
+     "share": 0.026
+    },
+    {
+     "iso": "NOR",
+     "share": 0.025
+    },
+    {
+     "iso": "DNK",
+     "share": 0.023
+    },
+    {
+     "iso": "ITA",
+     "share": 0.022
+    }
+   ]
   },
   {
    "iso": "LUX",
@@ -731,7 +6227,69 @@
    "exportsUsd": 16367613412,
    "us": 0.031,
    "china": 0.013,
-   "eu": 0.787
+   "eu": 0.787,
+   "partners": [
+    {
+     "iso": "DEU",
+     "share": 0.255
+    },
+    {
+     "iso": "FRA",
+     "share": 0.156
+    },
+    {
+     "iso": "BEL",
+     "share": 0.123
+    },
+    {
+     "iso": "NLD",
+     "share": 0.068
+    },
+    {
+     "iso": "ITA",
+     "share": 0.044
+    },
+    {
+     "iso": "USA",
+     "share": 0.031
+    },
+    {
+     "iso": "ESP",
+     "share": 0.028
+    },
+    {
+     "iso": "GBR",
+     "share": 0.025
+    },
+    {
+     "iso": "POL",
+     "share": 0.024
+    },
+    {
+     "iso": "AUT",
+     "share": 0.019
+    },
+    {
+     "iso": "CHE",
+     "share": 0.018
+    },
+    {
+     "iso": "TUR",
+     "share": 0.014
+    },
+    {
+     "iso": "CHN",
+     "share": 0.013
+    },
+    {
+     "iso": "CZE",
+     "share": 0.012
+    },
+    {
+     "iso": "SWE",
+     "share": 0.011
+    }
+   ]
   },
   {
    "iso": "LVA",
@@ -739,7 +6297,69 @@
    "exportsUsd": 20539978432,
    "us": 0.027,
    "china": 0.01,
-   "eu": 0.681
+   "eu": 0.681,
+   "partners": [
+    {
+     "iso": "LTU",
+     "share": 0.18
+    },
+    {
+     "iso": "EST",
+     "share": 0.115
+    },
+    {
+     "iso": "DEU",
+     "share": 0.066
+    },
+    {
+     "iso": "RUS",
+     "share": 0.06
+    },
+    {
+     "iso": "SWE",
+     "share": 0.06
+    },
+    {
+     "iso": "GBR",
+     "share": 0.047
+    },
+    {
+     "iso": "DNK",
+     "share": 0.042
+    },
+    {
+     "iso": "POL",
+     "share": 0.039
+    },
+    {
+     "iso": "FIN",
+     "share": 0.037
+    },
+    {
+     "iso": "NLD",
+     "share": 0.03
+    },
+    {
+     "iso": "USA",
+     "share": 0.027
+    },
+    {
+     "iso": "UKR",
+     "share": 0.026
+    },
+    {
+     "iso": "FRA",
+     "share": 0.024
+    },
+    {
+     "iso": "NOR",
+     "share": 0.018
+    },
+    {
+     "iso": "ESP",
+     "share": 0.016
+    }
+   ]
   },
   {
    "iso": "MAC",
@@ -747,7 +6367,69 @@
    "exportsUsd": 1221552447,
    "us": 0.048,
    "china": 0.078,
-   "eu": 0.003
+   "eu": 0.003,
+   "partners": [
+    {
+     "iso": "HKG",
+     "share": 0.844
+    },
+    {
+     "iso": "CHN",
+     "share": 0.078
+    },
+    {
+     "iso": "USA",
+     "share": 0.048
+    },
+    {
+     "iso": "VNM",
+     "share": 0.011
+    },
+    {
+     "iso": "SGP",
+     "share": 0.005
+    },
+    {
+     "iso": "CAN",
+     "share": 0.001
+    },
+    {
+     "iso": "FRA",
+     "share": 0.001
+    },
+    {
+     "iso": "GBR",
+     "share": 0.001
+    },
+    {
+     "iso": "IND",
+     "share": 0.001
+    },
+    {
+     "iso": "NLD",
+     "share": 0.001
+    },
+    {
+     "iso": "PHL",
+     "share": 0.001
+    },
+    {
+     "iso": "ARE",
+     "share": 0
+    },
+    {
+     "iso": "AUS",
+     "share": 0
+    },
+    {
+     "iso": "BEL",
+     "share": 0
+    },
+    {
+     "iso": "CHE",
+     "share": 0
+    }
+   ]
   },
   {
    "iso": "MAR",
@@ -755,7 +6437,69 @@
    "exportsUsd": 42462806870,
    "us": 0.03,
    "china": 0.008,
-   "eu": 0.623
+   "eu": 0.623,
+   "partners": [
+    {
+     "iso": "ESP",
+     "share": 0.225
+    },
+    {
+     "iso": "FRA",
+     "share": 0.205
+    },
+    {
+     "iso": "ITA",
+     "share": 0.052
+    },
+    {
+     "iso": "GBR",
+     "share": 0.045
+    },
+    {
+     "iso": "DEU",
+     "share": 0.043
+    },
+    {
+     "iso": "USA",
+     "share": 0.03
+    },
+    {
+     "iso": "IND",
+     "share": 0.029
+    },
+    {
+     "iso": "BRA",
+     "share": 0.028
+    },
+    {
+     "iso": "TUR",
+     "share": 0.028
+    },
+    {
+     "iso": "NLD",
+     "share": 0.022
+    },
+    {
+     "iso": "PRT",
+     "share": 0.016
+    },
+    {
+     "iso": "BEL",
+     "share": 0.013
+    },
+    {
+     "iso": "DJI",
+     "share": 0.013
+    },
+    {
+     "iso": "PAK",
+     "share": 0.012
+    },
+    {
+     "iso": "CIV",
+     "share": 0.011
+    }
+   ]
   },
   {
    "iso": "MDA",
@@ -763,7 +6507,69 @@
    "exportsUsd": 4048616803,
    "us": 0.015,
    "china": 0.002,
-   "eu": 0.303
+   "eu": 0.303,
+   "partners": [
+    {
+     "iso": "UKR",
+     "share": 0.147
+    },
+    {
+     "iso": "ITA",
+     "share": 0.064
+    },
+    {
+     "iso": "DEU",
+     "share": 0.055
+    },
+    {
+     "iso": "CZE",
+     "share": 0.04
+    },
+    {
+     "iso": "RUS",
+     "share": 0.036
+    },
+    {
+     "iso": "TUR",
+     "share": 0.035
+    },
+    {
+     "iso": "POL",
+     "share": 0.033
+    },
+    {
+     "iso": "BGR",
+     "share": 0.021
+    },
+    {
+     "iso": "BLR",
+     "share": 0.021
+    },
+    {
+     "iso": "USA",
+     "share": 0.015
+    },
+    {
+     "iso": "ESP",
+     "share": 0.014
+    },
+    {
+     "iso": "NLD",
+     "share": 0.012
+    },
+    {
+     "iso": "HUN",
+     "share": 0.011
+    },
+    {
+     "iso": "FRA",
+     "share": 0.01
+    },
+    {
+     "iso": "GBR",
+     "share": 0.01
+    }
+   ]
   },
   {
    "iso": "MDG",
@@ -771,7 +6577,69 @@
    "exportsUsd": 3282849544,
    "us": 0.126,
    "china": 0.081,
-   "eu": 0.292
+   "eu": 0.292,
+   "partners": [
+    {
+     "iso": "FRA",
+     "share": 0.145
+    },
+    {
+     "iso": "USA",
+     "share": 0.126
+    },
+    {
+     "iso": "JPN",
+     "share": 0.082
+    },
+    {
+     "iso": "KOR",
+     "share": 0.082
+    },
+    {
+     "iso": "CHN",
+     "share": 0.081
+    },
+    {
+     "iso": "NLD",
+     "share": 0.063
+    },
+    {
+     "iso": "IND",
+     "share": 0.041
+    },
+    {
+     "iso": "TUR",
+     "share": 0.041
+    },
+    {
+     "iso": "CAN",
+     "share": 0.034
+    },
+    {
+     "iso": "IDN",
+     "share": 0.031
+    },
+    {
+     "iso": "DEU",
+     "share": 0.029
+    },
+    {
+     "iso": "ZAF",
+     "share": 0.028
+    },
+    {
+     "iso": "ESP",
+     "share": 0.017
+    },
+    {
+     "iso": "GBR",
+     "share": 0.016
+    },
+    {
+     "iso": "SGP",
+     "share": 0.015
+    }
+   ]
   },
   {
    "iso": "MDV",
@@ -779,7 +6647,69 @@
    "exportsUsd": 162055102,
    "us": 0.013,
    "china": 0,
-   "eu": 0.153
+   "eu": 0.153,
+   "partners": [
+    {
+     "iso": "THA",
+     "share": 0.539
+    },
+    {
+     "iso": "GBR",
+     "share": 0.137
+    },
+    {
+     "iso": "DEU",
+     "share": 0.078
+    },
+    {
+     "iso": "FRA",
+     "share": 0.034
+    },
+    {
+     "iso": "IND",
+     "share": 0.032
+    },
+    {
+     "iso": "BGD",
+     "share": 0.02
+    },
+    {
+     "iso": "ITA",
+     "share": 0.019
+    },
+    {
+     "iso": "VNM",
+     "share": 0.018
+    },
+    {
+     "iso": "JPN",
+     "share": 0.014
+    },
+    {
+     "iso": "USA",
+     "share": 0.013
+    },
+    {
+     "iso": "CHE",
+     "share": 0.011
+    },
+    {
+     "iso": "MUS",
+     "share": 0.01
+    },
+    {
+     "iso": "NLD",
+     "share": 0.01
+    },
+    {
+     "iso": "LKA",
+     "share": 0.008
+    },
+    {
+     "iso": "ESP",
+     "share": 0.006
+    }
+   ]
   },
   {
    "iso": "MEX",
@@ -787,7 +6717,69 @@
    "exportsUsd": 593707208904,
    "us": 0.8,
    "china": 0.016,
-   "eu": 0.032
+   "eu": 0.032,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.8
+    },
+    {
+     "iso": "CAN",
+     "share": 0.03
+    },
+    {
+     "iso": "CHN",
+     "share": 0.016
+    },
+    {
+     "iso": "DEU",
+     "share": 0.015
+    },
+    {
+     "iso": "BRA",
+     "share": 0.007
+    },
+    {
+     "iso": "JPN",
+     "share": 0.007
+    },
+    {
+     "iso": "KOR",
+     "share": 0.006
+    },
+    {
+     "iso": "COL",
+     "share": 0.005
+    },
+    {
+     "iso": "GBR",
+     "share": 0.005
+    },
+    {
+     "iso": "GTM",
+     "share": 0.005
+    },
+    {
+     "iso": "NLD",
+     "share": 0.004
+    },
+    {
+     "iso": "CHE",
+     "share": 0.003
+    },
+    {
+     "iso": "ESP",
+     "share": 0.003
+    },
+    {
+     "iso": "ARG",
+     "share": 0.002
+    },
+    {
+     "iso": "AUS",
+     "share": 0.002
+    }
+   ]
   },
   {
    "iso": "MKD",
@@ -795,7 +6787,69 @@
    "exportsUsd": 8994857557,
    "us": 0.006,
    "china": 0.012,
-   "eu": 0.77
+   "eu": 0.77,
+   "partners": [
+    {
+     "iso": "DEU",
+     "share": 0.441
+    },
+    {
+     "iso": "BGR",
+     "share": 0.044
+    },
+    {
+     "iso": "GRC",
+     "share": 0.037
+    },
+    {
+     "iso": "BEL",
+     "share": 0.036
+    },
+    {
+     "iso": "HUN",
+     "share": 0.036
+    },
+    {
+     "iso": "CZE",
+     "share": 0.025
+    },
+    {
+     "iso": "ITA",
+     "share": 0.025
+    },
+    {
+     "iso": "SVK",
+     "share": 0.023
+    },
+    {
+     "iso": "TUR",
+     "share": 0.022
+    },
+    {
+     "iso": "ESP",
+     "share": 0.02
+    },
+    {
+     "iso": "GBR",
+     "share": 0.015
+    },
+    {
+     "iso": "HRV",
+     "share": 0.014
+    },
+    {
+     "iso": "SVN",
+     "share": 0.014
+    },
+    {
+     "iso": "BIH",
+     "share": 0.013
+    },
+    {
+     "iso": "NLD",
+     "share": 0.013
+    }
+   ]
   },
   {
    "iso": "MLT",
@@ -803,7 +6857,69 @@
    "exportsUsd": 3466576103,
    "us": 0.039,
    "china": 0.011,
-   "eu": 0.484
+   "eu": 0.484,
+   "partners": [
+    {
+     "iso": "DEU",
+     "share": 0.269
+    },
+    {
+     "iso": "JPN",
+     "share": 0.06
+    },
+    {
+     "iso": "ITA",
+     "share": 0.054
+    },
+    {
+     "iso": "HKG",
+     "share": 0.045
+    },
+    {
+     "iso": "SGP",
+     "share": 0.045
+    },
+    {
+     "iso": "USA",
+     "share": 0.039
+    },
+    {
+     "iso": "GBR",
+     "share": 0.031
+    },
+    {
+     "iso": "ESP",
+     "share": 0.023
+    },
+    {
+     "iso": "GHA",
+     "share": 0.022
+    },
+    {
+     "iso": "FRA",
+     "share": 0.019
+    },
+    {
+     "iso": "HRV",
+     "share": 0.019
+    },
+    {
+     "iso": "NLD",
+     "share": 0.015
+    },
+    {
+     "iso": "POL",
+     "share": 0.015
+    },
+    {
+     "iso": "ARG",
+     "share": 0.013
+    },
+    {
+     "iso": "HUN",
+     "share": 0.012
+    }
+   ]
   },
   {
    "iso": "MMR",
@@ -811,7 +6927,69 @@
    "exportsUsd": 14752993057,
    "us": 0.04,
    "china": 0.232,
-   "eu": 0.187
+   "eu": 0.187,
+   "partners": [
+    {
+     "iso": "THA",
+     "share": 0.243
+    },
+    {
+     "iso": "CHN",
+     "share": 0.232
+    },
+    {
+     "iso": "JPN",
+     "share": 0.081
+    },
+    {
+     "iso": "IND",
+     "share": 0.057
+    },
+    {
+     "iso": "USA",
+     "share": 0.04
+    },
+    {
+     "iso": "DEU",
+     "share": 0.035
+    },
+    {
+     "iso": "POL",
+     "share": 0.032
+    },
+    {
+     "iso": "ESP",
+     "share": 0.03
+    },
+    {
+     "iso": "KOR",
+     "share": 0.027
+    },
+    {
+     "iso": "GBR",
+     "share": 0.023
+    },
+    {
+     "iso": "NLD",
+     "share": 0.02
+    },
+    {
+     "iso": "ITA",
+     "share": 0.019
+    },
+    {
+     "iso": "BEL",
+     "share": 0.016
+    },
+    {
+     "iso": "MYS",
+     "share": 0.012
+    },
+    {
+     "iso": "FRA",
+     "share": 0.011
+    }
+   ]
   },
   {
    "iso": "MNG",
@@ -819,7 +6997,69 @@
    "exportsUsd": 12557706706,
    "us": 0.001,
    "china": 0.843,
-   "eu": 0.011
+   "eu": 0.011,
+   "partners": [
+    {
+     "iso": "CHN",
+     "share": 0.843
+    },
+    {
+     "iso": "CHE",
+     "share": 0.082
+    },
+    {
+     "iso": "SGP",
+     "share": 0.028
+    },
+    {
+     "iso": "KOR",
+     "share": 0.02
+    },
+    {
+     "iso": "RUS",
+     "share": 0.009
+    },
+    {
+     "iso": "ITA",
+     "share": 0.007
+    },
+    {
+     "iso": "DEU",
+     "share": 0.002
+    },
+    {
+     "iso": "FRA",
+     "share": 0.001
+    },
+    {
+     "iso": "GBR",
+     "share": 0.001
+    },
+    {
+     "iso": "HKG",
+     "share": 0.001
+    },
+    {
+     "iso": "IRN",
+     "share": 0.001
+    },
+    {
+     "iso": "JPN",
+     "share": 0.001
+    },
+    {
+     "iso": "KAZ",
+     "share": 0.001
+    },
+    {
+     "iso": "USA",
+     "share": 0.001
+    },
+    {
+     "iso": "ARE",
+     "share": 0
+    }
+   ]
   },
   {
    "iso": "MOZ",
@@ -827,7 +7067,69 @@
    "exportsUsd": 8275973000,
    "us": 0.014,
    "china": 0.142,
-   "eu": 0.124
+   "eu": 0.124,
+   "partners": [
+    {
+     "iso": "IND",
+     "share": 0.156
+    },
+    {
+     "iso": "CHN",
+     "share": 0.142
+    },
+    {
+     "iso": "ZAF",
+     "share": 0.14
+    },
+    {
+     "iso": "KOR",
+     "share": 0.056
+    },
+    {
+     "iso": "GBR",
+     "share": 0.048
+    },
+    {
+     "iso": "SGP",
+     "share": 0.047
+    },
+    {
+     "iso": "THA",
+     "share": 0.046
+    },
+    {
+     "iso": "VNM",
+     "share": 0.039
+    },
+    {
+     "iso": "NLD",
+     "share": 0.037
+    },
+    {
+     "iso": "ITA",
+     "share": 0.029
+    },
+    {
+     "iso": "ARE",
+     "share": 0.022
+    },
+    {
+     "iso": "ZWE",
+     "share": 0.021
+    },
+    {
+     "iso": "JPN",
+     "share": 0.016
+    },
+    {
+     "iso": "HKG",
+     "share": 0.015
+    },
+    {
+     "iso": "HRV",
+     "share": 0.014
+    }
+   ]
   },
   {
    "iso": "MRT",
@@ -835,7 +7137,69 @@
    "exportsUsd": 4065189554,
    "us": 0.001,
    "china": 0.227,
-   "eu": 0.154
+   "eu": 0.154,
+   "partners": [
+    {
+     "iso": "CAN",
+     "share": 0.244
+    },
+    {
+     "iso": "CHN",
+     "share": 0.227
+    },
+    {
+     "iso": "DZA",
+     "share": 0.082
+    },
+    {
+     "iso": "CHE",
+     "share": 0.074
+    },
+    {
+     "iso": "ESP",
+     "share": 0.062
+    },
+    {
+     "iso": "ARE",
+     "share": 0.056
+    },
+    {
+     "iso": "ITA",
+     "share": 0.038
+    },
+    {
+     "iso": "JPN",
+     "share": 0.035
+    },
+    {
+     "iso": "AUS",
+     "share": 0.026
+    },
+    {
+     "iso": "NLD",
+     "share": 0.021
+    },
+    {
+     "iso": "CIV",
+     "share": 0.017
+    },
+    {
+     "iso": "FRA",
+     "share": 0.017
+    },
+    {
+     "iso": "BEN",
+     "share": 0.008
+    },
+    {
+     "iso": "DEU",
+     "share": 0.008
+    },
+    {
+     "iso": "GBR",
+     "share": 0.008
+    }
+   ]
   },
   {
    "iso": "MSR",
@@ -843,7 +7207,8 @@
    "exportsUsd": 5765684,
    "us": 0,
    "china": 0,
-   "eu": 0
+   "eu": 0,
+   "partners": []
   },
   {
    "iso": "MUS",
@@ -851,7 +7216,69 @@
    "exportsUsd": 1854239182,
    "us": 0.094,
    "china": 0.014,
-   "eu": 0.371
+   "eu": 0.371,
+   "partners": [
+    {
+     "iso": "FRA",
+     "share": 0.147
+    },
+    {
+     "iso": "ZAF",
+     "share": 0.108
+    },
+    {
+     "iso": "USA",
+     "share": 0.094
+    },
+    {
+     "iso": "GBR",
+     "share": 0.093
+    },
+    {
+     "iso": "MDG",
+     "share": 0.073
+    },
+    {
+     "iso": "ESP",
+     "share": 0.068
+    },
+    {
+     "iso": "ITA",
+     "share": 0.046
+    },
+    {
+     "iso": "VNM",
+     "share": 0.039
+    },
+    {
+     "iso": "NLD",
+     "share": 0.037
+    },
+    {
+     "iso": "IND",
+     "share": 0.03
+    },
+    {
+     "iso": "KEN",
+     "share": 0.023
+    },
+    {
+     "iso": "DEU",
+     "share": 0.02
+    },
+    {
+     "iso": "BEL",
+     "share": 0.018
+    },
+    {
+     "iso": "ARE",
+     "share": 0.014
+    },
+    {
+     "iso": "CHE",
+     "share": 0.014
+    }
+   ]
   },
   {
    "iso": "MWI",
@@ -859,7 +7286,69 @@
    "exportsUsd": 965509352,
    "us": 0.042,
    "china": 0.056,
-   "eu": 0.308
+   "eu": 0.308,
+   "partners": [
+    {
+     "iso": "BEL",
+     "share": 0.159
+    },
+    {
+     "iso": "TZA",
+     "share": 0.108
+    },
+    {
+     "iso": "CHN",
+     "share": 0.056
+    },
+    {
+     "iso": "ZAF",
+     "share": 0.054
+    },
+    {
+     "iso": "ZWE",
+     "share": 0.053
+    },
+    {
+     "iso": "ZMB",
+     "share": 0.047
+    },
+    {
+     "iso": "IND",
+     "share": 0.046
+    },
+    {
+     "iso": "USA",
+     "share": 0.042
+    },
+    {
+     "iso": "GBR",
+     "share": 0.04
+    },
+    {
+     "iso": "KEN",
+     "share": 0.032
+    },
+    {
+     "iso": "FRA",
+     "share": 0.031
+    },
+    {
+     "iso": "MOZ",
+     "share": 0.029
+    },
+    {
+     "iso": "DEU",
+     "share": 0.026
+    },
+    {
+     "iso": "CHE",
+     "share": 0.023
+    },
+    {
+     "iso": "KOR",
+     "share": 0.021
+    }
+   ]
   },
   {
    "iso": "MYS",
@@ -867,7 +7356,69 @@
    "exportsUsd": 312605385582,
    "us": 0.113,
    "china": 0.135,
-   "eu": 0.079
+   "eu": 0.079,
+   "partners": [
+    {
+     "iso": "SGP",
+     "share": 0.154
+    },
+    {
+     "iso": "CHN",
+     "share": 0.135
+    },
+    {
+     "iso": "USA",
+     "share": 0.113
+    },
+    {
+     "iso": "HKG",
+     "share": 0.063
+    },
+    {
+     "iso": "JPN",
+     "share": 0.06
+    },
+    {
+     "iso": "THA",
+     "share": 0.041
+    },
+    {
+     "iso": "KOR",
+     "share": 0.039
+    },
+    {
+     "iso": "IDN",
+     "share": 0.036
+    },
+    {
+     "iso": "VNM",
+     "share": 0.036
+    },
+    {
+     "iso": "AUS",
+     "share": 0.035
+    },
+    {
+     "iso": "IND",
+     "share": 0.032
+    },
+    {
+     "iso": "NLD",
+     "share": 0.025
+    },
+    {
+     "iso": "DEU",
+     "share": 0.021
+    },
+    {
+     "iso": "PHL",
+     "share": 0.019
+    },
+    {
+     "iso": "MEX",
+     "share": 0.013
+    }
+   ]
   },
   {
    "iso": "NAM",
@@ -875,7 +7426,69 @@
    "exportsUsd": 5526025508,
    "us": 0.011,
    "china": 0.123,
-   "eu": 0.197
+   "eu": 0.197,
+   "partners": [
+    {
+     "iso": "ZAF",
+     "share": 0.198
+    },
+    {
+     "iso": "BWA",
+     "share": 0.192
+    },
+    {
+     "iso": "CHN",
+     "share": 0.123
+    },
+    {
+     "iso": "ZMB",
+     "share": 0.088
+    },
+    {
+     "iso": "BEL",
+     "share": 0.053
+    },
+    {
+     "iso": "ESP",
+     "share": 0.051
+    },
+    {
+     "iso": "ARE",
+     "share": 0.042
+    },
+    {
+     "iso": "NLD",
+     "share": 0.036
+    },
+    {
+     "iso": "FRA",
+     "share": 0.027
+    },
+    {
+     "iso": "CAN",
+     "share": 0.023
+    },
+    {
+     "iso": "HKG",
+     "share": 0.014
+    },
+    {
+     "iso": "USA",
+     "share": 0.011
+    },
+    {
+     "iso": "ZWE",
+     "share": 0.011
+    },
+    {
+     "iso": "ITA",
+     "share": 0.01
+    },
+    {
+     "iso": "IND",
+     "share": 0.009
+    }
+   ]
   },
   {
    "iso": "NER",
@@ -883,7 +7496,69 @@
    "exportsUsd": 467426222,
    "us": 0,
    "china": 0.005,
-   "eu": 0.461
+   "eu": 0.461,
+   "partners": [
+    {
+     "iso": "FRA",
+     "share": 0.443
+    },
+    {
+     "iso": "ARE",
+     "share": 0.213
+    },
+    {
+     "iso": "MLI",
+     "share": 0.109
+    },
+    {
+     "iso": "BFA",
+     "share": 0.076
+    },
+    {
+     "iso": "TCD",
+     "share": 0.035
+    },
+    {
+     "iso": "NGA",
+     "share": 0.031
+    },
+    {
+     "iso": "ZAF",
+     "share": 0.025
+    },
+    {
+     "iso": "GHA",
+     "share": 0.024
+    },
+    {
+     "iso": "DEU",
+     "share": 0.012
+    },
+    {
+     "iso": "BEN",
+     "share": 0.011
+    },
+    {
+     "iso": "CHN",
+     "share": 0.005
+    },
+    {
+     "iso": "CIV",
+     "share": 0.003
+    },
+    {
+     "iso": "CZE",
+     "share": 0.003
+    },
+    {
+     "iso": "ESP",
+     "share": 0.002
+    },
+    {
+     "iso": "SEN",
+     "share": 0.002
+    }
+   ]
   },
   {
    "iso": "NGA",
@@ -891,7 +7566,69 @@
    "exportsUsd": 65129007548,
    "us": 0.075,
    "china": 0.025,
-   "eu": 0.4
+   "eu": 0.4,
+   "partners": [
+    {
+     "iso": "NLD",
+     "share": 0.126
+    },
+    {
+     "iso": "ESP",
+     "share": 0.094
+    },
+    {
+     "iso": "IND",
+     "share": 0.084
+    },
+    {
+     "iso": "USA",
+     "share": 0.075
+    },
+    {
+     "iso": "FRA",
+     "share": 0.065
+    },
+    {
+     "iso": "IDN",
+     "share": 0.065
+    },
+    {
+     "iso": "CAN",
+     "share": 0.059
+    },
+    {
+     "iso": "CIV",
+     "share": 0.04
+    },
+    {
+     "iso": "GBR",
+     "share": 0.039
+    },
+    {
+     "iso": "ITA",
+     "share": 0.039
+    },
+    {
+     "iso": "ZAF",
+     "share": 0.036
+    },
+    {
+     "iso": "PRT",
+     "share": 0.026
+    },
+    {
+     "iso": "CHN",
+     "share": 0.025
+    },
+    {
+     "iso": "TUR",
+     "share": 0.019
+    },
+    {
+     "iso": "DEU",
+     "share": 0.015
+    }
+   ]
   },
   {
    "iso": "NIC",
@@ -899,7 +7636,69 @@
    "exportsUsd": 7378486427,
    "us": 0.502,
    "china": 0.003,
-   "eu": 0.05
+   "eu": 0.05,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.502
+    },
+    {
+     "iso": "MEX",
+     "share": 0.137
+    },
+    {
+     "iso": "SLV",
+     "share": 0.065
+    },
+    {
+     "iso": "CAN",
+     "share": 0.058
+    },
+    {
+     "iso": "HND",
+     "share": 0.05
+    },
+    {
+     "iso": "CRI",
+     "share": 0.033
+    },
+    {
+     "iso": "GTM",
+     "share": 0.022
+    },
+    {
+     "iso": "BEL",
+     "share": 0.012
+    },
+    {
+     "iso": "PAN",
+     "share": 0.011
+    },
+    {
+     "iso": "GBR",
+     "share": 0.009
+    },
+    {
+     "iso": "CHE",
+     "share": 0.008
+    },
+    {
+     "iso": "ITA",
+     "share": 0.008
+    },
+    {
+     "iso": "DEU",
+     "share": 0.007
+    },
+    {
+     "iso": "NLD",
+     "share": 0.007
+    },
+    {
+     "iso": "ESP",
+     "share": 0.006
+    }
+   ]
   },
   {
    "iso": "NLD",
@@ -907,7 +7706,69 @@
    "exportsUsd": 734008093375,
    "us": 0.05,
    "china": 0.026,
-   "eu": 0.643
+   "eu": 0.643,
+   "partners": [
+    {
+     "iso": "DEU",
+     "share": 0.228
+    },
+    {
+     "iso": "BEL",
+     "share": 0.117
+    },
+    {
+     "iso": "FRA",
+     "share": 0.081
+    },
+    {
+     "iso": "GBR",
+     "share": 0.063
+    },
+    {
+     "iso": "USA",
+     "share": 0.05
+    },
+    {
+     "iso": "ITA",
+     "share": 0.041
+    },
+    {
+     "iso": "ESP",
+     "share": 0.032
+    },
+    {
+     "iso": "POL",
+     "share": 0.028
+    },
+    {
+     "iso": "CHN",
+     "share": 0.026
+    },
+    {
+     "iso": "SWE",
+     "share": 0.022
+    },
+    {
+     "iso": "KOR",
+     "share": 0.014
+    },
+    {
+     "iso": "CHE",
+     "share": 0.013
+    },
+    {
+     "iso": "CZE",
+     "share": 0.013
+    },
+    {
+     "iso": "DNK",
+     "share": 0.013
+    },
+    {
+     "iso": "AUT",
+     "share": 0.012
+    }
+   ]
   },
   {
    "iso": "NOR",
@@ -915,7 +7776,69 @@
    "exportsUsd": 177196076821,
    "us": 0.032,
    "china": 0.02,
-   "eu": 0.672
+   "eu": 0.672,
+   "partners": [
+    {
+     "iso": "DEU",
+     "share": 0.19
+    },
+    {
+     "iso": "GBR",
+     "share": 0.19
+    },
+    {
+     "iso": "NLD",
+     "share": 0.083
+    },
+    {
+     "iso": "SWE",
+     "share": 0.077
+    },
+    {
+     "iso": "POL",
+     "share": 0.061
+    },
+    {
+     "iso": "FRA",
+     "share": 0.059
+    },
+    {
+     "iso": "BEL",
+     "share": 0.055
+    },
+    {
+     "iso": "DNK",
+     "share": 0.05
+    },
+    {
+     "iso": "FIN",
+     "share": 0.033
+    },
+    {
+     "iso": "USA",
+     "share": 0.032
+    },
+    {
+     "iso": "CHN",
+     "share": 0.02
+    },
+    {
+     "iso": "ITA",
+     "share": 0.017
+    },
+    {
+     "iso": "ESP",
+     "share": 0.013
+    },
+    {
+     "iso": "LTU",
+     "share": 0.009
+    },
+    {
+     "iso": "KOR",
+     "share": 0.007
+    }
+   ]
   },
   {
    "iso": "NPL",
@@ -923,7 +7846,69 @@
    "exportsUsd": 1300469756,
    "us": 0.113,
    "china": 0.004,
-   "eu": 0.067
+   "eu": 0.067,
+   "partners": [
+    {
+     "iso": "IND",
+     "share": 0.719
+    },
+    {
+     "iso": "USA",
+     "share": 0.113
+    },
+    {
+     "iso": "DEU",
+     "share": 0.025
+    },
+    {
+     "iso": "TUR",
+     "share": 0.02
+    },
+    {
+     "iso": "GBR",
+     "share": 0.018
+    },
+    {
+     "iso": "FRA",
+     "share": 0.01
+    },
+    {
+     "iso": "AUS",
+     "share": 0.008
+    },
+    {
+     "iso": "CAN",
+     "share": 0.008
+    },
+    {
+     "iso": "ITA",
+     "share": 0.008
+    },
+    {
+     "iso": "JPN",
+     "share": 0.008
+    },
+    {
+     "iso": "DNK",
+     "share": 0.006
+    },
+    {
+     "iso": "NLD",
+     "share": 0.006
+    },
+    {
+     "iso": "BGD",
+     "share": 0.004
+    },
+    {
+     "iso": "CHN",
+     "share": 0.004
+    },
+    {
+     "iso": "ARE",
+     "share": 0.003
+    }
+   ]
   },
   {
    "iso": "NZL",
@@ -931,7 +7916,69 @@
    "exportsUsd": 42124240556,
    "us": 0.12,
    "china": 0.269,
-   "eu": 0.055
+   "eu": 0.055,
+   "partners": [
+    {
+     "iso": "CHN",
+     "share": 0.269
+    },
+    {
+     "iso": "AUS",
+     "share": 0.129
+    },
+    {
+     "iso": "USA",
+     "share": 0.12
+    },
+    {
+     "iso": "JPN",
+     "share": 0.055
+    },
+    {
+     "iso": "KOR",
+     "share": 0.035
+    },
+    {
+     "iso": "SGP",
+     "share": 0.025
+    },
+    {
+     "iso": "IDN",
+     "share": 0.023
+    },
+    {
+     "iso": "GBR",
+     "share": 0.021
+    },
+    {
+     "iso": "MYS",
+     "share": 0.019
+    },
+    {
+     "iso": "THA",
+     "share": 0.018
+    },
+    {
+     "iso": "HKG",
+     "share": 0.016
+    },
+    {
+     "iso": "NLD",
+     "share": 0.015
+    },
+    {
+     "iso": "SAU",
+     "share": 0.015
+    },
+    {
+     "iso": "ARE",
+     "share": 0.014
+    },
+    {
+     "iso": "CAN",
+     "share": 0.014
+    }
+   ]
   },
   {
    "iso": "OMN",
@@ -939,7 +7986,69 @@
    "exportsUsd": 59010531458,
    "us": 0.023,
    "china": 0.01,
-   "eu": 0.019
+   "eu": 0.019,
+   "partners": [
+    {
+     "iso": "ARE",
+     "share": 0.064
+    },
+    {
+     "iso": "SAU",
+     "share": 0.05
+    },
+    {
+     "iso": "IND",
+     "share": 0.038
+    },
+    {
+     "iso": "ZAF",
+     "share": 0.024
+    },
+    {
+     "iso": "USA",
+     "share": 0.023
+    },
+    {
+     "iso": "EGY",
+     "share": 0.017
+    },
+    {
+     "iso": "QAT",
+     "share": 0.013
+    },
+    {
+     "iso": "CHN",
+     "share": 0.01
+    },
+    {
+     "iso": "IRN",
+     "share": 0.009
+    },
+    {
+     "iso": "SGP",
+     "share": 0.008
+    },
+    {
+     "iso": "KWT",
+     "share": 0.007
+    },
+    {
+     "iso": "MOZ",
+     "share": 0.007
+    },
+    {
+     "iso": "KEN",
+     "share": 0.006
+    },
+    {
+     "iso": "KOR",
+     "share": 0.006
+    },
+    {
+     "iso": "MDG",
+     "share": 0.006
+    }
+   ]
   },
   {
    "iso": "PAK",
@@ -947,7 +8056,69 @@
    "exportsUsd": 28746392444,
    "us": 0.174,
    "china": 0.095,
-   "eu": 0.286
+   "eu": 0.286,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.174
+    },
+    {
+     "iso": "CHN",
+     "share": 0.095
+    },
+    {
+     "iso": "GBR",
+     "share": 0.069
+    },
+    {
+     "iso": "DEU",
+     "share": 0.053
+    },
+    {
+     "iso": "NLD",
+     "share": 0.05
+    },
+    {
+     "iso": "ARE",
+     "share": 0.049
+    },
+    {
+     "iso": "ESP",
+     "share": 0.049
+    },
+    {
+     "iso": "ITA",
+     "share": 0.04
+    },
+    {
+     "iso": "AFG",
+     "share": 0.034
+    },
+    {
+     "iso": "BEL",
+     "share": 0.024
+    },
+    {
+     "iso": "BGD",
+     "share": 0.024
+    },
+    {
+     "iso": "SAU",
+     "share": 0.022
+    },
+    {
+     "iso": "FRA",
+     "share": 0.017
+    },
+    {
+     "iso": "MYS",
+     "share": 0.016
+    },
+    {
+     "iso": "CAN",
+     "share": 0.013
+    }
+   ]
   },
   {
    "iso": "PAN",
@@ -955,7 +8126,69 @@
    "exportsUsd": 3366820480,
    "us": 0.045,
    "china": 0.391,
-   "eu": 0.175
+   "eu": 0.175,
+   "partners": [
+    {
+     "iso": "CHN",
+     "share": 0.391
+    },
+    {
+     "iso": "JPN",
+     "share": 0.131
+    },
+    {
+     "iso": "KOR",
+     "share": 0.069
+    },
+    {
+     "iso": "ESP",
+     "share": 0.061
+    },
+    {
+     "iso": "IND",
+     "share": 0.052
+    },
+    {
+     "iso": "USA",
+     "share": 0.045
+    },
+    {
+     "iso": "DEU",
+     "share": 0.042
+    },
+    {
+     "iso": "BGR",
+     "share": 0.032
+    },
+    {
+     "iso": "NLD",
+     "share": 0.027
+    },
+    {
+     "iso": "CRI",
+     "share": 0.014
+    },
+    {
+     "iso": "MEX",
+     "share": 0.014
+    },
+    {
+     "iso": "GBR",
+     "share": 0.011
+    },
+    {
+     "iso": "DNK",
+     "share": 0.005
+    },
+    {
+     "iso": "HND",
+     "share": 0.005
+    },
+    {
+     "iso": "THA",
+     "share": 0.005
+    }
+   ]
   },
   {
    "iso": "PER",
@@ -963,7 +8196,69 @@
    "exportsUsd": 64355040435,
    "us": 0.143,
    "china": 0.36,
-   "eu": 0.106
+   "eu": 0.106,
+   "partners": [
+    {
+     "iso": "CHN",
+     "share": 0.36
+    },
+    {
+     "iso": "USA",
+     "share": 0.143
+    },
+    {
+     "iso": "CAN",
+     "share": 0.046
+    },
+    {
+     "iso": "IND",
+     "share": 0.039
+    },
+    {
+     "iso": "KOR",
+     "share": 0.036
+    },
+    {
+     "iso": "JPN",
+     "share": 0.034
+    },
+    {
+     "iso": "CHL",
+     "share": 0.03
+    },
+    {
+     "iso": "ESP",
+     "share": 0.029
+    },
+    {
+     "iso": "NLD",
+     "share": 0.028
+    },
+    {
+     "iso": "BRA",
+     "share": 0.027
+    },
+    {
+     "iso": "CHE",
+     "share": 0.026
+    },
+    {
+     "iso": "GBR",
+     "share": 0.02
+    },
+    {
+     "iso": "ECU",
+     "share": 0.018
+    },
+    {
+     "iso": "ARE",
+     "share": 0.016
+    },
+    {
+     "iso": "DEU",
+     "share": 0.015
+    }
+   ]
   },
   {
    "iso": "PHL",
@@ -971,7 +8266,69 @@
    "exportsUsd": 72923284860,
    "us": 0.157,
    "china": 0.146,
-   "eu": 0.113
+   "eu": 0.113,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.157
+    },
+    {
+     "iso": "CHN",
+     "share": 0.146
+    },
+    {
+     "iso": "JPN",
+     "share": 0.143
+    },
+    {
+     "iso": "HKG",
+     "share": 0.12
+    },
+    {
+     "iso": "KOR",
+     "share": 0.048
+    },
+    {
+     "iso": "SGP",
+     "share": 0.048
+    },
+    {
+     "iso": "NLD",
+     "share": 0.042
+    },
+    {
+     "iso": "THA",
+     "share": 0.04
+    },
+    {
+     "iso": "DEU",
+     "share": 0.034
+    },
+    {
+     "iso": "MYS",
+     "share": 0.03
+    },
+    {
+     "iso": "VNM",
+     "share": 0.023
+    },
+    {
+     "iso": "IND",
+     "share": 0.015
+    },
+    {
+     "iso": "MEX",
+     "share": 0.012
+    },
+    {
+     "iso": "IDN",
+     "share": 0.01
+    },
+    {
+     "iso": "FRA",
+     "share": 0.009
+    }
+   ]
   },
   {
    "iso": "POL",
@@ -979,7 +8336,69 @@
    "exportsUsd": 381932840227,
    "us": 0.031,
    "china": 0.009,
-   "eu": 0.726
+   "eu": 0.726,
+   "partners": [
+    {
+     "iso": "DEU",
+     "share": 0.279
+    },
+    {
+     "iso": "CZE",
+     "share": 0.063
+    },
+    {
+     "iso": "FRA",
+     "share": 0.061
+    },
+    {
+     "iso": "GBR",
+     "share": 0.05
+    },
+    {
+     "iso": "ITA",
+     "share": 0.046
+    },
+    {
+     "iso": "NLD",
+     "share": 0.045
+    },
+    {
+     "iso": "UKR",
+     "share": 0.032
+    },
+    {
+     "iso": "USA",
+     "share": 0.031
+    },
+    {
+     "iso": "ESP",
+     "share": 0.028
+    },
+    {
+     "iso": "SVK",
+     "share": 0.027
+    },
+    {
+     "iso": "SWE",
+     "share": 0.025
+    },
+    {
+     "iso": "BEL",
+     "share": 0.024
+    },
+    {
+     "iso": "HUN",
+     "share": 0.024
+    },
+    {
+     "iso": "AUT",
+     "share": 0.021
+    },
+    {
+     "iso": "DNK",
+     "share": 0.016
+    }
+   ]
   },
   {
    "iso": "PRT",
@@ -987,7 +8406,69 @@
    "exportsUsd": 83624882358,
    "us": 0.068,
    "china": 0.01,
-   "eu": 0.684
+   "eu": 0.684,
+   "partners": [
+    {
+     "iso": "ESP",
+     "share": 0.257
+    },
+    {
+     "iso": "FRA",
+     "share": 0.131
+    },
+    {
+     "iso": "DEU",
+     "share": 0.107
+    },
+    {
+     "iso": "USA",
+     "share": 0.068
+    },
+    {
+     "iso": "GBR",
+     "share": 0.047
+    },
+    {
+     "iso": "ITA",
+     "share": 0.043
+    },
+    {
+     "iso": "NLD",
+     "share": 0.035
+    },
+    {
+     "iso": "BEL",
+     "share": 0.025
+    },
+    {
+     "iso": "AGO",
+     "share": 0.016
+    },
+    {
+     "iso": "POL",
+     "share": 0.014
+    },
+    {
+     "iso": "SWE",
+     "share": 0.014
+    },
+    {
+     "iso": "BRA",
+     "share": 0.013
+    },
+    {
+     "iso": "MAR",
+     "share": 0.013
+    },
+    {
+     "iso": "TUR",
+     "share": 0.012
+    },
+    {
+     "iso": "CHE",
+     "share": 0.01
+    }
+   ]
   },
   {
    "iso": "PRY",
@@ -995,7 +8476,69 @@
    "exportsUsd": 11890536802,
    "us": 0.023,
    "china": 0.002,
-   "eu": 0.042
+   "eu": 0.042,
+   "partners": [
+    {
+     "iso": "ARG",
+     "share": 0.361
+    },
+    {
+     "iso": "BRA",
+     "share": 0.253
+    },
+    {
+     "iso": "CHL",
+     "share": 0.097
+    },
+    {
+     "iso": "USA",
+     "share": 0.023
+    },
+    {
+     "iso": "RUS",
+     "share": 0.022
+    },
+    {
+     "iso": "URY",
+     "share": 0.022
+    },
+    {
+     "iso": "IND",
+     "share": 0.018
+    },
+    {
+     "iso": "NLD",
+     "share": 0.018
+    },
+    {
+     "iso": "PER",
+     "share": 0.018
+    },
+    {
+     "iso": "HKG",
+     "share": 0.011
+    },
+    {
+     "iso": "VNM",
+     "share": 0.011
+    },
+    {
+     "iso": "GBR",
+     "share": 0.01
+    },
+    {
+     "iso": "KOR",
+     "share": 0.009
+    },
+    {
+     "iso": "BGD",
+     "share": 0.008
+    },
+    {
+     "iso": "BOL",
+     "share": 0.008
+    }
+   ]
   },
   {
    "iso": "PSE",
@@ -1003,7 +8546,69 @@
    "exportsUsd": 1521387920,
    "us": 0.014,
    "china": 0,
-   "eu": 0.012
+   "eu": 0.012,
+   "partners": [
+    {
+     "iso": "ISR",
+     "share": 0.84
+    },
+    {
+     "iso": "JOR",
+     "share": 0.069
+    },
+    {
+     "iso": "ARE",
+     "share": 0.016
+    },
+    {
+     "iso": "TUR",
+     "share": 0.015
+    },
+    {
+     "iso": "USA",
+     "share": 0.014
+    },
+    {
+     "iso": "SAU",
+     "share": 0.007
+    },
+    {
+     "iso": "GBR",
+     "share": 0.006
+    },
+    {
+     "iso": "KWT",
+     "share": 0.005
+    },
+    {
+     "iso": "DEU",
+     "share": 0.003
+    },
+    {
+     "iso": "QAT",
+     "share": 0.003
+    },
+    {
+     "iso": "DZA",
+     "share": 0.002
+    },
+    {
+     "iso": "FRA",
+     "share": 0.002
+    },
+    {
+     "iso": "MYS",
+     "share": 0.002
+    },
+    {
+     "iso": "AUS",
+     "share": 0.001
+    },
+    {
+     "iso": "CAN",
+     "share": 0.001
+    }
+   ]
   },
   {
    "iso": "PYF",
@@ -1011,7 +8616,21 @@
    "exportsUsd": 244186132,
    "us": 0.004,
    "china": 0.001,
-   "eu": 0.004
+   "eu": 0.004,
+   "partners": [
+    {
+     "iso": "FRA",
+     "share": 0.004
+    },
+    {
+     "iso": "USA",
+     "share": 0.004
+    },
+    {
+     "iso": "CHN",
+     "share": 0.001
+    }
+   ]
   },
   {
    "iso": "QAT",
@@ -1019,7 +8638,69 @@
    "exportsUsd": 97751493996,
    "us": 0.015,
    "china": 0.197,
-   "eu": 0.11
+   "eu": 0.11,
+   "partners": [
+    {
+     "iso": "CHN",
+     "share": 0.197
+    },
+    {
+     "iso": "KOR",
+     "share": 0.126
+    },
+    {
+     "iso": "IND",
+     "share": 0.12
+    },
+    {
+     "iso": "JPN",
+     "share": 0.08
+    },
+    {
+     "iso": "SGP",
+     "share": 0.072
+    },
+    {
+     "iso": "ARE",
+     "share": 0.043
+    },
+    {
+     "iso": "ITA",
+     "share": 0.035
+    },
+    {
+     "iso": "PAK",
+     "share": 0.034
+    },
+    {
+     "iso": "BEL",
+     "share": 0.026
+    },
+    {
+     "iso": "THA",
+     "share": 0.025
+    },
+    {
+     "iso": "BGD",
+     "share": 0.021
+    },
+    {
+     "iso": "KWT",
+     "share": 0.02
+    },
+    {
+     "iso": "GBR",
+     "share": 0.017
+    },
+    {
+     "iso": "FRA",
+     "share": 0.016
+    },
+    {
+     "iso": "USA",
+     "share": 0.015
+    }
+   ]
   },
   {
    "iso": "RWA",
@@ -1027,7 +8708,69 @@
    "exportsUsd": 2019269802,
    "us": 0.012,
    "china": 0.048,
-   "eu": 0.041
+   "eu": 0.041,
+   "partners": [
+    {
+     "iso": "ARE",
+     "share": 0.292
+    },
+    {
+     "iso": "CHN",
+     "share": 0.048
+    },
+    {
+     "iso": "IND",
+     "share": 0.035
+    },
+    {
+     "iso": "GBR",
+     "share": 0.023
+    },
+    {
+     "iso": "HKG",
+     "share": 0.02
+    },
+    {
+     "iso": "PAK",
+     "share": 0.019
+    },
+    {
+     "iso": "ETH",
+     "share": 0.018
+    },
+    {
+     "iso": "SGP",
+     "share": 0.016
+    },
+    {
+     "iso": "USA",
+     "share": 0.012
+    },
+    {
+     "iso": "SSD",
+     "share": 0.011
+    },
+    {
+     "iso": "UGA",
+     "share": 0.011
+    },
+    {
+     "iso": "COG",
+     "share": 0.01
+    },
+    {
+     "iso": "CHE",
+     "share": 0.008
+    },
+    {
+     "iso": "EGY",
+     "share": 0.008
+    },
+    {
+     "iso": "BEL",
+     "share": 0.007
+    }
+   ]
   },
   {
    "iso": "SAU",
@@ -1035,7 +8778,69 @@
    "exportsUsd": 320018426729,
    "us": 0.009,
    "china": 0.024,
-   "eu": 0.02
+   "eu": 0.02,
+   "partners": [
+    {
+     "iso": "ARE",
+     "share": 0.043
+    },
+    {
+     "iso": "CHN",
+     "share": 0.024
+    },
+    {
+     "iso": "IND",
+     "share": 0.019
+    },
+    {
+     "iso": "TUR",
+     "share": 0.01
+    },
+    {
+     "iso": "USA",
+     "share": 0.009
+    },
+    {
+     "iso": "EGY",
+     "share": 0.008
+    },
+    {
+     "iso": "SGP",
+     "share": 0.008
+    },
+    {
+     "iso": "BEL",
+     "share": 0.007
+    },
+    {
+     "iso": "BHR",
+     "share": 0.007
+    },
+    {
+     "iso": "KWT",
+     "share": 0.007
+    },
+    {
+     "iso": "JOR",
+     "share": 0.006
+    },
+    {
+     "iso": "IRQ",
+     "share": 0.004
+    },
+    {
+     "iso": "KOR",
+     "share": 0.004
+    },
+    {
+     "iso": "OMN",
+     "share": 0.004
+    },
+    {
+     "iso": "YEM",
+     "share": 0.004
+    }
+   ]
   },
   {
    "iso": "SEN",
@@ -1043,7 +8848,69 @@
    "exportsUsd": 5316892834,
    "us": 0.029,
    "china": 0.042,
-   "eu": 0.092
+   "eu": 0.092,
+   "partners": [
+    {
+     "iso": "MLI",
+     "share": 0.229
+    },
+    {
+     "iso": "CHE",
+     "share": 0.121
+    },
+    {
+     "iso": "IND",
+     "share": 0.102
+    },
+    {
+     "iso": "CHN",
+     "share": 0.042
+    },
+    {
+     "iso": "GMB",
+     "share": 0.035
+    },
+    {
+     "iso": "CIV",
+     "share": 0.033
+    },
+    {
+     "iso": "AUS",
+     "share": 0.032
+    },
+    {
+     "iso": "ESP",
+     "share": 0.031
+    },
+    {
+     "iso": "GNB",
+     "share": 0.03
+    },
+    {
+     "iso": "GIN",
+     "share": 0.029
+    },
+    {
+     "iso": "USA",
+     "share": 0.029
+    },
+    {
+     "iso": "GBR",
+     "share": 0.018
+    },
+    {
+     "iso": "ARE",
+     "share": 0.017
+    },
+    {
+     "iso": "FRA",
+     "share": 0.016
+    },
+    {
+     "iso": "MRT",
+     "share": 0.016
+    }
+   ]
   },
   {
    "iso": "SGP",
@@ -1051,7 +8918,69 @@
    "exportsUsd": 475348541127,
    "us": 0.095,
    "china": 0.138,
-   "eu": 0.073
+   "eu": 0.073,
+   "partners": [
+    {
+     "iso": "CHN",
+     "share": 0.138
+    },
+    {
+     "iso": "HKG",
+     "share": 0.106
+    },
+    {
+     "iso": "USA",
+     "share": 0.095
+    },
+    {
+     "iso": "MYS",
+     "share": 0.094
+    },
+    {
+     "iso": "IDN",
+     "share": 0.074
+    },
+    {
+     "iso": "KOR",
+     "share": 0.043
+    },
+    {
+     "iso": "JPN",
+     "share": 0.041
+    },
+    {
+     "iso": "THA",
+     "share": 0.04
+    },
+    {
+     "iso": "VNM",
+     "share": 0.035
+    },
+    {
+     "iso": "AUS",
+     "share": 0.032
+    },
+    {
+     "iso": "IND",
+     "share": 0.03
+    },
+    {
+     "iso": "PHL",
+     "share": 0.021
+    },
+    {
+     "iso": "NLD",
+     "share": 0.018
+    },
+    {
+     "iso": "DEU",
+     "share": 0.017
+    },
+    {
+     "iso": "ARE",
+     "share": 0.011
+    }
+   ]
   },
   {
    "iso": "SLV",
@@ -1059,7 +8988,69 @@
    "exportsUsd": 6498092242,
    "us": 0.36,
    "china": 0.002,
-   "eu": 0.035
+   "eu": 0.035,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.36
+    },
+    {
+     "iso": "GTM",
+     "share": 0.184
+    },
+    {
+     "iso": "HND",
+     "share": 0.163
+    },
+    {
+     "iso": "NIC",
+     "share": 0.078
+    },
+    {
+     "iso": "CRI",
+     "share": 0.048
+    },
+    {
+     "iso": "MEX",
+     "share": 0.034
+    },
+    {
+     "iso": "PAN",
+     "share": 0.02
+    },
+    {
+     "iso": "CAN",
+     "share": 0.017
+    },
+    {
+     "iso": "DOM",
+     "share": 0.017
+    },
+    {
+     "iso": "ESP",
+     "share": 0.012
+    },
+    {
+     "iso": "DEU",
+     "share": 0.007
+    },
+    {
+     "iso": "KOR",
+     "share": 0.006
+    },
+    {
+     "iso": "BEL",
+     "share": 0.004
+    },
+    {
+     "iso": "GBR",
+     "share": 0.004
+    },
+    {
+     "iso": "ITA",
+     "share": 0.004
+    }
+   ]
   },
   {
    "iso": "STP",
@@ -1067,7 +9058,69 @@
    "exportsUsd": 16554569,
    "us": 0.005,
    "china": 0,
-   "eu": 0.962
+   "eu": 0.962,
+   "partners": [
+    {
+     "iso": "NLD",
+     "share": 0.603
+    },
+    {
+     "iso": "BEL",
+     "share": 0.207
+    },
+    {
+     "iso": "PRT",
+     "share": 0.047
+    },
+    {
+     "iso": "DEU",
+     "share": 0.032
+    },
+    {
+     "iso": "ESP",
+     "share": 0.032
+    },
+    {
+     "iso": "CMR",
+     "share": 0.019
+    },
+    {
+     "iso": "FRA",
+     "share": 0.018
+    },
+    {
+     "iso": "BGR",
+     "share": 0.012
+    },
+    {
+     "iso": "EST",
+     "share": 0.008
+    },
+    {
+     "iso": "USA",
+     "share": 0.005
+    },
+    {
+     "iso": "AGO",
+     "share": 0.004
+    },
+    {
+     "iso": "GNQ",
+     "share": 0.003
+    },
+    {
+     "iso": "ITA",
+     "share": 0.003
+    },
+    {
+     "iso": "NGA",
+     "share": 0.003
+    },
+    {
+     "iso": "BRA",
+     "share": 0.002
+    }
+   ]
   },
   {
    "iso": "SUR",
@@ -1075,7 +9128,69 @@
    "exportsUsd": 2310899798,
    "us": 0.032,
    "china": 0.003,
-   "eu": 0.009
+   "eu": 0.009,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.032
+    },
+    {
+     "iso": "ARE",
+     "share": 0.007
+    },
+    {
+     "iso": "PRY",
+     "share": 0.006
+    },
+    {
+     "iso": "TTO",
+     "share": 0.005
+    },
+    {
+     "iso": "NLD",
+     "share": 0.004
+    },
+    {
+     "iso": "CHN",
+     "share": 0.003
+    },
+    {
+     "iso": "FRA",
+     "share": 0.003
+    },
+    {
+     "iso": "GBR",
+     "share": 0.002
+    },
+    {
+     "iso": "ABW",
+     "share": 0.001
+    },
+    {
+     "iso": "BRA",
+     "share": 0.001
+    },
+    {
+     "iso": "CAN",
+     "share": 0.001
+    },
+    {
+     "iso": "ITA",
+     "share": 0.001
+    },
+    {
+     "iso": "JAM",
+     "share": 0.001
+    },
+    {
+     "iso": "KOR",
+     "share": 0.001
+    },
+    {
+     "iso": "MEX",
+     "share": 0.001
+    }
+   ]
   },
   {
    "iso": "SVK",
@@ -1083,7 +9198,69 @@
    "exportsUsd": 117250176701,
    "us": 0.045,
    "china": 0.026,
-   "eu": 0.748
+   "eu": 0.748,
+   "partners": [
+    {
+     "iso": "DEU",
+     "share": 0.21
+    },
+    {
+     "iso": "CZE",
+     "share": 0.12
+    },
+    {
+     "iso": "POL",
+     "share": 0.073
+    },
+    {
+     "iso": "HUN",
+     "share": 0.072
+    },
+    {
+     "iso": "FRA",
+     "share": 0.055
+    },
+    {
+     "iso": "AUT",
+     "share": 0.051
+    },
+    {
+     "iso": "ITA",
+     "share": 0.045
+    },
+    {
+     "iso": "USA",
+     "share": 0.045
+    },
+    {
+     "iso": "GBR",
+     "share": 0.043
+    },
+    {
+     "iso": "CHN",
+     "share": 0.026
+    },
+    {
+     "iso": "ESP",
+     "share": 0.023
+    },
+    {
+     "iso": "NLD",
+     "share": 0.02
+    },
+    {
+     "iso": "UKR",
+     "share": 0.017
+    },
+    {
+     "iso": "BEL",
+     "share": 0.015
+    },
+    {
+     "iso": "CHE",
+     "share": 0.013
+    }
+   ]
   },
   {
    "iso": "SVN",
@@ -1091,7 +9268,69 @@
    "exportsUsd": 59506954978,
    "us": 0.014,
    "china": 0.005,
-   "eu": 0.543
+   "eu": 0.543,
+   "partners": [
+    {
+     "iso": "CHE",
+     "share": 0.272
+    },
+    {
+     "iso": "DEU",
+     "share": 0.135
+    },
+    {
+     "iso": "ITA",
+     "share": 0.086
+    },
+    {
+     "iso": "HRV",
+     "share": 0.078
+    },
+    {
+     "iso": "AUT",
+     "share": 0.057
+    },
+    {
+     "iso": "FRA",
+     "share": 0.033
+    },
+    {
+     "iso": "POL",
+     "share": 0.024
+    },
+    {
+     "iso": "HUN",
+     "share": 0.022
+    },
+    {
+     "iso": "RUS",
+     "share": 0.02
+    },
+    {
+     "iso": "CZE",
+     "share": 0.019
+    },
+    {
+     "iso": "BIH",
+     "share": 0.018
+    },
+    {
+     "iso": "GBR",
+     "share": 0.014
+    },
+    {
+     "iso": "NLD",
+     "share": 0.014
+    },
+    {
+     "iso": "USA",
+     "share": 0.014
+    },
+    {
+     "iso": "ESP",
+     "share": 0.013
+    }
+   ]
   },
   {
    "iso": "SWE",
@@ -1099,7 +9338,69 @@
    "exportsUsd": 197533884155,
    "us": 0.087,
    "china": 0.036,
-   "eu": 0.535
+   "eu": 0.535,
+   "partners": [
+    {
+     "iso": "DEU",
+     "share": 0.102
+    },
+    {
+     "iso": "NOR",
+     "share": 0.092
+    },
+    {
+     "iso": "USA",
+     "share": 0.087
+    },
+    {
+     "iso": "DNK",
+     "share": 0.07
+    },
+    {
+     "iso": "FIN",
+     "share": 0.069
+    },
+    {
+     "iso": "NLD",
+     "share": 0.054
+    },
+    {
+     "iso": "GBR",
+     "share": 0.053
+    },
+    {
+     "iso": "FRA",
+     "share": 0.044
+    },
+    {
+     "iso": "BEL",
+     "share": 0.043
+    },
+    {
+     "iso": "POL",
+     "share": 0.038
+    },
+    {
+     "iso": "CHN",
+     "share": 0.036
+    },
+    {
+     "iso": "ITA",
+     "share": 0.029
+    },
+    {
+     "iso": "ESP",
+     "share": 0.022
+    },
+    {
+     "iso": "CAN",
+     "share": 0.012
+    },
+    {
+     "iso": "AUT",
+     "share": 0.011
+    }
+   ]
   },
   {
    "iso": "SWZ",
@@ -1107,7 +9408,69 @@
    "exportsUsd": 2095601709,
    "us": 0.014,
    "china": 0,
-   "eu": 0.063
+   "eu": 0.063,
+   "partners": [
+    {
+     "iso": "ZAF",
+     "share": 0.675
+    },
+    {
+     "iso": "KEN",
+     "share": 0.043
+    },
+    {
+     "iso": "MOZ",
+     "share": 0.039
+    },
+    {
+     "iso": "NGA",
+     "share": 0.033
+    },
+    {
+     "iso": "ZWE",
+     "share": 0.023
+    },
+    {
+     "iso": "TZA",
+     "share": 0.017
+    },
+    {
+     "iso": "BWA",
+     "share": 0.016
+    },
+    {
+     "iso": "ITA",
+     "share": 0.016
+    },
+    {
+     "iso": "UGA",
+     "share": 0.016
+    },
+    {
+     "iso": "USA",
+     "share": 0.014
+    },
+    {
+     "iso": "PRT",
+     "share": 0.013
+    },
+    {
+     "iso": "BGR",
+     "share": 0.008
+    },
+    {
+     "iso": "ZMB",
+     "share": 0.008
+    },
+    {
+     "iso": "NAM",
+     "share": 0.007
+    },
+    {
+     "iso": "GBR",
+     "share": 0.006
+    }
+   ]
   },
   {
    "iso": "SYC",
@@ -1115,7 +9478,69 @@
    "exportsUsd": 548099877,
    "us": 0.005,
    "china": 0,
-   "eu": 0.395
+   "eu": 0.395,
+   "partners": [
+    {
+     "iso": "ARE",
+     "share": 0.359
+    },
+    {
+     "iso": "FRA",
+     "share": 0.231
+    },
+    {
+     "iso": "GBR",
+     "share": 0.101
+    },
+    {
+     "iso": "ITA",
+     "share": 0.074
+    },
+    {
+     "iso": "SGP",
+     "share": 0.069
+    },
+    {
+     "iso": "DEU",
+     "share": 0.051
+    },
+    {
+     "iso": "CIV",
+     "share": 0.014
+    },
+    {
+     "iso": "HKG",
+     "share": 0.012
+    },
+    {
+     "iso": "ESP",
+     "share": 0.011
+    },
+    {
+     "iso": "NLD",
+     "share": 0.01
+    },
+    {
+     "iso": "IRL",
+     "share": 0.008
+    },
+    {
+     "iso": "JPN",
+     "share": 0.005
+    },
+    {
+     "iso": "USA",
+     "share": 0.005
+    },
+    {
+     "iso": "TUR",
+     "share": 0.004
+    },
+    {
+     "iso": "FIN",
+     "share": 0.003
+    }
+   ]
   },
   {
    "iso": "TGO",
@@ -1123,7 +9548,69 @@
    "exportsUsd": 1455558435,
    "us": 0.042,
    "china": 0.008,
-   "eu": 0.114
+   "eu": 0.114,
+   "partners": [
+    {
+     "iso": "IND",
+     "share": 0.225
+    },
+    {
+     "iso": "BFA",
+     "share": 0.092
+    },
+    {
+     "iso": "BEN",
+     "share": 0.084
+    },
+    {
+     "iso": "MLI",
+     "share": 0.078
+    },
+    {
+     "iso": "CIV",
+     "share": 0.068
+    },
+    {
+     "iso": "FRA",
+     "share": 0.065
+    },
+    {
+     "iso": "GHA",
+     "share": 0.054
+    },
+    {
+     "iso": "USA",
+     "share": 0.042
+    },
+    {
+     "iso": "NER",
+     "share": 0.036
+    },
+    {
+     "iso": "SEN",
+     "share": 0.035
+    },
+    {
+     "iso": "AUS",
+     "share": 0.027
+    },
+    {
+     "iso": "NLD",
+     "share": 0.017
+    },
+    {
+     "iso": "PAK",
+     "share": 0.017
+    },
+    {
+     "iso": "PRK",
+     "share": 0.017
+    },
+    {
+     "iso": "NGA",
+     "share": 0.016
+    }
+   ]
   },
   {
    "iso": "THA",
@@ -1131,7 +9618,69 @@
    "exportsUsd": 285074082029,
    "us": 0.17,
    "china": 0.12,
-   "eu": 0.076
+   "eu": 0.076,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.17
+    },
+    {
+     "iso": "CHN",
+     "share": 0.12
+    },
+    {
+     "iso": "JPN",
+     "share": 0.086
+    },
+    {
+     "iso": "AUS",
+     "share": 0.043
+    },
+    {
+     "iso": "MYS",
+     "share": 0.042
+    },
+    {
+     "iso": "HKG",
+     "share": 0.039
+    },
+    {
+     "iso": "VNM",
+     "share": 0.039
+    },
+    {
+     "iso": "SGP",
+     "share": 0.036
+    },
+    {
+     "iso": "IDN",
+     "share": 0.035
+    },
+    {
+     "iso": "IND",
+     "share": 0.035
+    },
+    {
+     "iso": "PHL",
+     "share": 0.028
+    },
+    {
+     "iso": "KHM",
+     "share": 0.023
+    },
+    {
+     "iso": "KOR",
+     "share": 0.021
+    },
+    {
+     "iso": "NLD",
+     "share": 0.02
+    },
+    {
+     "iso": "DEU",
+     "share": 0.016
+    }
+   ]
   },
   {
    "iso": "TJK",
@@ -1139,7 +9688,69 @@
    "exportsUsd": 1260585220,
    "us": 0,
    "china": 0.248,
-   "eu": 0.022
+   "eu": 0.022,
+   "partners": [
+    {
+     "iso": "CHN",
+     "share": 0.248
+    },
+    {
+     "iso": "KAZ",
+     "share": 0.202
+    },
+    {
+     "iso": "TUR",
+     "share": 0.131
+    },
+    {
+     "iso": "RUS",
+     "share": 0.107
+    },
+    {
+     "iso": "UZB",
+     "share": 0.107
+    },
+    {
+     "iso": "IRN",
+     "share": 0.079
+    },
+    {
+     "iso": "AFG",
+     "share": 0.051
+    },
+    {
+     "iso": "ARE",
+     "share": 0.019
+    },
+    {
+     "iso": "ITA",
+     "share": 0.012
+    },
+    {
+     "iso": "VGB",
+     "share": 0.011
+    },
+    {
+     "iso": "SGP",
+     "share": 0.008
+    },
+    {
+     "iso": "BLR",
+     "share": 0.005
+    },
+    {
+     "iso": "HRV",
+     "share": 0.004
+    },
+    {
+     "iso": "PAK",
+     "share": 0.003
+    },
+    {
+     "iso": "BEL",
+     "share": 0.002
+    }
+   ]
   },
   {
    "iso": "TTO",
@@ -1147,7 +9758,69 @@
    "exportsUsd": 7863534523,
    "us": 0.342,
    "china": 0.049,
-   "eu": 0.173
+   "eu": 0.173,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.342
+    },
+    {
+     "iso": "CHN",
+     "share": 0.049
+    },
+    {
+     "iso": "GUY",
+     "share": 0.048
+    },
+    {
+     "iso": "BEL",
+     "share": 0.045
+    },
+    {
+     "iso": "MAR",
+     "share": 0.041
+    },
+    {
+     "iso": "NLD",
+     "share": 0.039
+    },
+    {
+     "iso": "KOR",
+     "share": 0.033
+    },
+    {
+     "iso": "JAM",
+     "share": 0.029
+    },
+    {
+     "iso": "ESP",
+     "share": 0.028
+    },
+    {
+     "iso": "BRA",
+     "share": 0.027
+    },
+    {
+     "iso": "FRA",
+     "share": 0.024
+    },
+    {
+     "iso": "BRB",
+     "share": 0.023
+    },
+    {
+     "iso": "DEU",
+     "share": 0.023
+    },
+    {
+     "iso": "MEX",
+     "share": 0.023
+    },
+    {
+     "iso": "THA",
+     "share": 0.021
+    }
+   ]
   },
   {
    "iso": "TUN",
@@ -1155,7 +9828,69 @@
    "exportsUsd": 20039655623,
    "us": 0.031,
    "china": 0.001,
-   "eu": 0.698
+   "eu": 0.698,
+   "partners": [
+    {
+     "iso": "FRA",
+     "share": 0.228
+    },
+    {
+     "iso": "ITA",
+     "share": 0.183
+    },
+    {
+     "iso": "DEU",
+     "share": 0.132
+    },
+    {
+     "iso": "ESP",
+     "share": 0.053
+    },
+    {
+     "iso": "LBY",
+     "share": 0.043
+    },
+    {
+     "iso": "USA",
+     "share": 0.031
+    },
+    {
+     "iso": "NLD",
+     "share": 0.023
+    },
+    {
+     "iso": "DZA",
+     "share": 0.02
+    },
+    {
+     "iso": "BEL",
+     "share": 0.017
+    },
+    {
+     "iso": "CHE",
+     "share": 0.016
+    },
+    {
+     "iso": "GBR",
+     "share": 0.016
+    },
+    {
+     "iso": "IND",
+     "share": 0.013
+    },
+    {
+     "iso": "MAR",
+     "share": 0.013
+    },
+    {
+     "iso": "TUR",
+     "share": 0.011
+    },
+    {
+     "iso": "POL",
+     "share": 0.01
+    }
+   ]
   },
   {
    "iso": "TUR",
@@ -1163,7 +9898,69 @@
    "exportsUsd": 255627429011,
    "us": 0.058,
    "china": 0.013,
-   "eu": 0.39
+   "eu": 0.39,
+   "partners": [
+    {
+     "iso": "DEU",
+     "share": 0.082
+    },
+    {
+     "iso": "USA",
+     "share": 0.058
+    },
+    {
+     "iso": "IRQ",
+     "share": 0.05
+    },
+    {
+     "iso": "GBR",
+     "share": 0.049
+    },
+    {
+     "iso": "ITA",
+     "share": 0.048
+    },
+    {
+     "iso": "RUS",
+     "share": 0.043
+    },
+    {
+     "iso": "FRA",
+     "share": 0.04
+    },
+    {
+     "iso": "ESP",
+     "share": 0.038
+    },
+    {
+     "iso": "ARE",
+     "share": 0.034
+    },
+    {
+     "iso": "NLD",
+     "share": 0.031
+    },
+    {
+     "iso": "POL",
+     "share": 0.023
+    },
+    {
+     "iso": "ISR",
+     "share": 0.021
+    },
+    {
+     "iso": "BEL",
+     "share": 0.017
+    },
+    {
+     "iso": "BGR",
+     "share": 0.017
+    },
+    {
+     "iso": "GRC",
+     "share": 0.016
+    }
+   ]
   },
   {
    "iso": "TZA",
@@ -1171,7 +9968,69 @@
    "exportsUsd": 7274328788,
    "us": 0.013,
    "china": 0.059,
-   "eu": 0.086
+   "eu": 0.086,
+   "partners": [
+    {
+     "iso": "IND",
+     "share": 0.214
+    },
+    {
+     "iso": "ZAF",
+     "share": 0.154
+    },
+    {
+     "iso": "ARE",
+     "share": 0.094
+    },
+    {
+     "iso": "CHE",
+     "share": 0.064
+    },
+    {
+     "iso": "CHN",
+     "share": 0.059
+    },
+    {
+     "iso": "UGA",
+     "share": 0.043
+    },
+    {
+     "iso": "BEL",
+     "share": 0.028
+    },
+    {
+     "iso": "RWA",
+     "share": 0.026
+    },
+    {
+     "iso": "BDI",
+     "share": 0.024
+    },
+    {
+     "iso": "KEN",
+     "share": 0.024
+    },
+    {
+     "iso": "SGP",
+     "share": 0.02
+    },
+    {
+     "iso": "VNM",
+     "share": 0.018
+    },
+    {
+     "iso": "NLD",
+     "share": 0.016
+    },
+    {
+     "iso": "ZMB",
+     "share": 0.014
+    },
+    {
+     "iso": "USA",
+     "share": 0.013
+    }
+   ]
   },
   {
    "iso": "UGA",
@@ -1179,7 +10038,69 @@
    "exportsUsd": 6305023286,
    "us": 0.014,
    "china": 0.017,
-   "eu": 0.135
+   "eu": 0.135,
+   "partners": [
+    {
+     "iso": "ARE",
+     "share": 0.217
+    },
+    {
+     "iso": "KEN",
+     "share": 0.117
+    },
+    {
+     "iso": "IND",
+     "share": 0.116
+    },
+    {
+     "iso": "SSD",
+     "share": 0.085
+    },
+    {
+     "iso": "HKG",
+     "share": 0.051
+    },
+    {
+     "iso": "RWA",
+     "share": 0.044
+    },
+    {
+     "iso": "ITA",
+     "share": 0.041
+    },
+    {
+     "iso": "DEU",
+     "share": 0.034
+    },
+    {
+     "iso": "TZA",
+     "share": 0.027
+    },
+    {
+     "iso": "NLD",
+     "share": 0.02
+    },
+    {
+     "iso": "CHN",
+     "share": 0.017
+    },
+    {
+     "iso": "USA",
+     "share": 0.014
+    },
+    {
+     "iso": "BDI",
+     "share": 0.011
+    },
+    {
+     "iso": "BEL",
+     "share": 0.01
+    },
+    {
+     "iso": "ESP",
+     "share": 0.01
+    }
+   ]
   },
   {
    "iso": "UKR",
@@ -1187,7 +10108,69 @@
    "exportsUsd": 36185539499,
    "us": 0.014,
    "china": 0.067,
-   "eu": 0.543
+   "eu": 0.543,
+   "partners": [
+    {
+     "iso": "POL",
+     "share": 0.132
+    },
+    {
+     "iso": "CHN",
+     "share": 0.067
+    },
+    {
+     "iso": "TUR",
+     "share": 0.065
+    },
+    {
+     "iso": "DEU",
+     "share": 0.056
+    },
+    {
+     "iso": "ESP",
+     "share": 0.055
+    },
+    {
+     "iso": "ITA",
+     "share": 0.042
+    },
+    {
+     "iso": "NLD",
+     "share": 0.041
+    },
+    {
+     "iso": "HUN",
+     "share": 0.033
+    },
+    {
+     "iso": "EGY",
+     "share": 0.03
+    },
+    {
+     "iso": "SVK",
+     "share": 0.03
+    },
+    {
+     "iso": "CZE",
+     "share": 0.028
+    },
+    {
+     "iso": "BGR",
+     "share": 0.025
+    },
+    {
+     "iso": "MDA",
+     "share": 0.023
+    },
+    {
+     "iso": "AUT",
+     "share": 0.017
+    },
+    {
+     "iso": "LTU",
+     "share": 0.017
+    }
+   ]
   },
   {
    "iso": "URY",
@@ -1195,7 +10178,69 @@
    "exportsUsd": 9192776209,
    "us": 0.081,
    "china": 0.168,
-   "eu": 0.09
+   "eu": 0.09,
+   "partners": [
+    {
+     "iso": "BRA",
+     "share": 0.205
+    },
+    {
+     "iso": "CHN",
+     "share": 0.168
+    },
+    {
+     "iso": "USA",
+     "share": 0.081
+    },
+    {
+     "iso": "ARG",
+     "share": 0.05
+    },
+    {
+     "iso": "TUR",
+     "share": 0.028
+    },
+    {
+     "iso": "CHL",
+     "share": 0.027
+    },
+    {
+     "iso": "NLD",
+     "share": 0.023
+    },
+    {
+     "iso": "MEX",
+     "share": 0.018
+    },
+    {
+     "iso": "DZA",
+     "share": 0.013
+    },
+    {
+     "iso": "PRY",
+     "share": 0.013
+    },
+    {
+     "iso": "ESP",
+     "share": 0.012
+    },
+    {
+     "iso": "PRT",
+     "share": 0.012
+    },
+    {
+     "iso": "DEU",
+     "share": 0.01
+    },
+    {
+     "iso": "ITA",
+     "share": 0.01
+    },
+    {
+     "iso": "PER",
+     "share": 0.01
+    }
+   ]
   },
   {
    "iso": "USA",
@@ -1203,7 +10248,69 @@
    "exportsUsd": 2018542583771,
    "us": 0,
    "china": 0.073,
-   "eu": 0.182
+   "eu": 0.182,
+   "partners": [
+    {
+     "iso": "CAN",
+     "share": 0.175
+    },
+    {
+     "iso": "MEX",
+     "share": 0.16
+    },
+    {
+     "iso": "CHN",
+     "share": 0.073
+    },
+    {
+     "iso": "NLD",
+     "share": 0.041
+    },
+    {
+     "iso": "DEU",
+     "share": 0.038
+    },
+    {
+     "iso": "JPN",
+     "share": 0.038
+    },
+    {
+     "iso": "GBR",
+     "share": 0.037
+    },
+    {
+     "iso": "KOR",
+     "share": 0.032
+    },
+    {
+     "iso": "BRA",
+     "share": 0.022
+    },
+    {
+     "iso": "FRA",
+     "share": 0.022
+    },
+    {
+     "iso": "SGP",
+     "share": 0.021
+    },
+    {
+     "iso": "IND",
+     "share": 0.02
+    },
+    {
+     "iso": "BEL",
+     "share": 0.019
+    },
+    {
+     "iso": "AUS",
+     "share": 0.017
+    },
+    {
+     "iso": "CHE",
+     "share": 0.014
+    }
+   ]
   },
   {
    "iso": "UZB",
@@ -1211,7 +10318,69 @@
    "exportsUsd": 21016916974,
    "us": 0.003,
    "china": 0.084,
-   "eu": 0.032
+   "eu": 0.032,
+   "partners": [
+    {
+     "iso": "RUS",
+     "share": 0.144
+    },
+    {
+     "iso": "CHN",
+     "share": 0.084
+    },
+    {
+     "iso": "KAZ",
+     "share": 0.064
+    },
+    {
+     "iso": "TUR",
+     "share": 0.063
+    },
+    {
+     "iso": "AFG",
+     "share": 0.036
+    },
+    {
+     "iso": "KGZ",
+     "share": 0.036
+    },
+    {
+     "iso": "TJK",
+     "share": 0.023
+    },
+    {
+     "iso": "PAK",
+     "share": 0.011
+    },
+    {
+     "iso": "IRN",
+     "share": 0.009
+    },
+    {
+     "iso": "ARE",
+     "share": 0.008
+    },
+    {
+     "iso": "TKM",
+     "share": 0.008
+    },
+    {
+     "iso": "AZE",
+     "share": 0.007
+    },
+    {
+     "iso": "BLR",
+     "share": 0.007
+    },
+    {
+     "iso": "LTU",
+     "share": 0.005
+    },
+    {
+     "iso": "POL",
+     "share": 0.005
+    }
+   ]
   },
   {
    "iso": "VCT",
@@ -1219,7 +10388,69 @@
    "exportsUsd": 40799282,
    "us": 0.113,
    "china": 0,
-   "eu": 0.024
+   "eu": 0.024,
+   "partners": [
+    {
+     "iso": "BRB",
+     "share": 0.208
+    },
+    {
+     "iso": "LCA",
+     "share": 0.151
+    },
+    {
+     "iso": "KNA",
+     "share": 0.133
+    },
+    {
+     "iso": "DMA",
+     "share": 0.116
+    },
+    {
+     "iso": "USA",
+     "share": 0.113
+    },
+    {
+     "iso": "ATG",
+     "share": 0.091
+    },
+    {
+     "iso": "TTO",
+     "share": 0.058
+    },
+    {
+     "iso": "GRD",
+     "share": 0.048
+    },
+    {
+     "iso": "VGB",
+     "share": 0.014
+    },
+    {
+     "iso": "BEL",
+     "share": 0.013
+    },
+    {
+     "iso": "GBR",
+     "share": 0.011
+    },
+    {
+     "iso": "CUB",
+     "share": 0.006
+    },
+    {
+     "iso": "CUW",
+     "share": 0.006
+    },
+    {
+     "iso": "MSR",
+     "share": 0.006
+    },
+    {
+     "iso": "NLD",
+     "share": 0.006
+    }
+   ]
   },
   {
    "iso": "VNM",
@@ -1227,7 +10458,69 @@
    "exportsUsd": 353077513296,
    "us": 0.275,
    "china": 0.172,
-   "eu": 0.123
+   "eu": 0.123,
+   "partners": [
+    {
+     "iso": "USA",
+     "share": 0.275
+    },
+    {
+     "iso": "CHN",
+     "share": 0.172
+    },
+    {
+     "iso": "JPN",
+     "share": 0.066
+    },
+    {
+     "iso": "KOR",
+     "share": 0.066
+    },
+    {
+     "iso": "NLD",
+     "share": 0.029
+    },
+    {
+     "iso": "HKG",
+     "share": 0.027
+    },
+    {
+     "iso": "IND",
+     "share": 0.024
+    },
+    {
+     "iso": "DEU",
+     "share": 0.021
+    },
+    {
+     "iso": "THA",
+     "share": 0.02
+    },
+    {
+     "iso": "GBR",
+     "share": 0.018
+    },
+    {
+     "iso": "CAN",
+     "share": 0.016
+    },
+    {
+     "iso": "AUS",
+     "share": 0.015
+    },
+    {
+     "iso": "PHL",
+     "share": 0.015
+    },
+    {
+     "iso": "IDN",
+     "share": 0.014
+    },
+    {
+     "iso": "MYS",
+     "share": 0.014
+    }
+   ]
   },
   {
    "iso": "WSM",
@@ -1235,7 +10528,69 @@
    "exportsUsd": 42913094,
    "us": 0.121,
    "china": 0.027,
-   "eu": 0.002
+   "eu": 0.002,
+   "partners": [
+    {
+     "iso": "NZL",
+     "share": 0.209
+    },
+    {
+     "iso": "ASM",
+     "share": 0.197
+    },
+    {
+     "iso": "AUS",
+     "share": 0.13
+    },
+    {
+     "iso": "USA",
+     "share": 0.121
+    },
+    {
+     "iso": "TKL",
+     "share": 0.101
+    },
+    {
+     "iso": "SGP",
+     "share": 0.055
+    },
+    {
+     "iso": "FJI",
+     "share": 0.037
+    },
+    {
+     "iso": "CHN",
+     "share": 0.027
+    },
+    {
+     "iso": "COK",
+     "share": 0.017
+    },
+    {
+     "iso": "GBR",
+     "share": 0.016
+    },
+    {
+     "iso": "JPN",
+     "share": 0.01
+    },
+    {
+     "iso": "KOR",
+     "share": 0.006
+    },
+    {
+     "iso": "ARE",
+     "share": 0.004
+    },
+    {
+     "iso": "BGD",
+     "share": 0.004
+    },
+    {
+     "iso": "CHE",
+     "share": 0.003
+    }
+   ]
   },
   {
    "iso": "ZAF",
@@ -1243,7 +10598,69 @@
    "exportsUsd": 110607523885,
    "us": 0.075,
    "china": 0.113,
-   "eu": 0.186
+   "eu": 0.186,
+   "partners": [
+    {
+     "iso": "CHN",
+     "share": 0.113
+    },
+    {
+     "iso": "USA",
+     "share": 0.075
+    },
+    {
+     "iso": "DEU",
+     "share": 0.068
+    },
+    {
+     "iso": "MOZ",
+     "share": 0.056
+    },
+    {
+     "iso": "JPN",
+     "share": 0.052
+    },
+    {
+     "iso": "GBR",
+     "share": 0.048
+    },
+    {
+     "iso": "IND",
+     "share": 0.046
+    },
+    {
+     "iso": "NLD",
+     "share": 0.039
+    },
+    {
+     "iso": "BWA",
+     "share": 0.038
+    },
+    {
+     "iso": "BEL",
+     "share": 0.034
+    },
+    {
+     "iso": "ZWE",
+     "share": 0.031
+    },
+    {
+     "iso": "NAM",
+     "share": 0.03
+    },
+    {
+     "iso": "ZMB",
+     "share": 0.025
+    },
+    {
+     "iso": "ARE",
+     "share": 0.023
+    },
+    {
+     "iso": "KOR",
+     "share": 0.019
+    }
+   ]
   },
   {
    "iso": "ZMB",
@@ -1251,7 +10668,69 @@
    "exportsUsd": 10431183716,
    "us": 0.005,
    "china": 0.177,
-   "eu": 0.013
+   "eu": 0.013,
+   "partners": [
+    {
+     "iso": "CHE",
+     "share": 0.414
+    },
+    {
+     "iso": "CHN",
+     "share": 0.177
+    },
+    {
+     "iso": "SGP",
+     "share": 0.054
+    },
+    {
+     "iso": "ZAF",
+     "share": 0.037
+    },
+    {
+     "iso": "ZWE",
+     "share": 0.028
+    },
+    {
+     "iso": "BWA",
+     "share": 0.017
+    },
+    {
+     "iso": "NAM",
+     "share": 0.014
+    },
+    {
+     "iso": "MWI",
+     "share": 0.013
+    },
+    {
+     "iso": "TZA",
+     "share": 0.013
+    },
+    {
+     "iso": "HKG",
+     "share": 0.01
+    },
+    {
+     "iso": "IND",
+     "share": 0.009
+    },
+    {
+     "iso": "CAN",
+     "share": 0.005
+    },
+    {
+     "iso": "KEN",
+     "share": 0.005
+    },
+    {
+     "iso": "USA",
+     "share": 0.005
+    },
+    {
+     "iso": "ARE",
+     "share": 0.004
+    }
+   ]
   },
   {
    "iso": "ZWE",
@@ -1259,7 +10738,69 @@
    "exportsUsd": 7225585953,
    "us": 0.004,
    "china": 0.177,
-   "eu": 0.051
+   "eu": 0.051,
+   "partners": [
+    {
+     "iso": "ZAF",
+     "share": 0.309
+    },
+    {
+     "iso": "ARE",
+     "share": 0.264
+    },
+    {
+     "iso": "CHN",
+     "share": 0.177
+    },
+    {
+     "iso": "MOZ",
+     "share": 0.055
+    },
+    {
+     "iso": "BEL",
+     "share": 0.029
+    },
+    {
+     "iso": "HKG",
+     "share": 0.024
+    },
+    {
+     "iso": "ZMB",
+     "share": 0.02
+    },
+    {
+     "iso": "NLD",
+     "share": 0.01
+    },
+    {
+     "iso": "IDN",
+     "share": 0.007
+    },
+    {
+     "iso": "ITA",
+     "share": 0.007
+    },
+    {
+     "iso": "VNM",
+     "share": 0.007
+    },
+    {
+     "iso": "CAN",
+     "share": 0.006
+    },
+    {
+     "iso": "IND",
+     "share": 0.005
+    },
+    {
+     "iso": "BWA",
+     "share": 0.004
+    },
+    {
+     "iso": "KEN",
+     "share": 0.004
+    }
+   ]
   }
  ]
 }

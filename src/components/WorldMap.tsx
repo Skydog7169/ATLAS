@@ -1,4 +1,5 @@
-import { memo, useEffect, useLayoutEffect, useMemo, useRef, useState, type RefObject } from 'react';
+import { memo, useEffect, useMemo, useRef, useState, type RefObject } from 'react';
+import { useSize } from '../hooks/useSize';
 import { geoGraticule10, geoNaturalEarth1, geoPath, type GeoPath } from 'd3-geo';
 import { select } from 'd3-selection';
 import { zoom as d3zoom, zoomIdentity, type ZoomBehavior, type ZoomTransform } from 'd3-zoom';
@@ -55,27 +56,11 @@ const MAX_SCALE = 16;
 const DETAIL_SCALE = 2.5;
 const KEY_PAN = 80;
 
-export function useSize(ref: RefObject<HTMLDivElement | null>) {
-  const [size, setSize] = useState({ width: 0, height: 0 });
-  useLayoutEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const ro = new ResizeObserver(([entry]) => {
-      if (!entry) return;
-      const { width, height } = entry.contentRect;
-      setSize((s) => (s.width === width && s.height === height ? s : { width, height }));
-    });
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, [ref]);
-  return size;
-}
-
-export function hatchId(color: string) {
+function hatchId(color: string) {
   return 'hatch-' + color.replace(/[^a-z0-9]/gi, '');
 }
 
-export function stripesId(a: string, b: string) {
+function stripesId(a: string, b: string) {
   return 'stripes-' + (a + b).replace(/[^a-z0-9]/gi, '');
 }
 

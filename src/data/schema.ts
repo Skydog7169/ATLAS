@@ -71,6 +71,13 @@ export const BlocMemberSchema = z.object({
   iso: z.string().regex(ISO3),
   status: z.enum(['member', 'suspended', 'frozen', 'partner', 'observer', 'invited']),
   note: z.string().optional(),
+  since: z.number().int().min(1940).max(2100).optional(),
+});
+
+export const FormerMemberSchema = z.object({
+  iso: z.string().regex(ISO3),
+  since: z.number().int().min(1940).max(2100),
+  until: z.number().int().min(1940).max(2100),
 });
 
 export const BlocChangeSchema = z.object({
@@ -94,6 +101,7 @@ export const BlocSchema = z.object({
   sources: z.array(SourceSchema).min(1),
   updated: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/),
   changes: z.array(BlocChangeSchema),
+  former: z.array(FormerMemberSchema).optional(),
 });
 
 export const ConflictsFileSchema = z.array(ConflictInputSchema);

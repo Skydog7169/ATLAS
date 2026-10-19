@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { geoCentroid, geoDistance, geoGraticule10, geoOrthographic, geoPath } from 'd3-geo';
 import { COUNTRY_FEATURES, MICROSTATES, drawnIsos } from '../lib/geo';
-import { CountryLayer, useSize, type Focus, type MapMarker, type CountryFill } from './WorldMap';
+import { useSize } from '../hooks/useSize';
+import { CountryLayer, type Focus, type MapMarker, type CountryFill } from './WorldMap';
 
 interface Props {
   fillFor: (iso: string | null) => CountryFill;
@@ -47,7 +48,6 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
   useEffect(() => {
     if (rotation[0] !== rotRef.current[0] || rotation[1] !== rotRef.current[1]) setRot(rotation);
     // Only external changes (URL, fly-to) should overwrite the live rotation.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rotation[0], rotation[1]]);
 
   const base = useMemo(() => {
@@ -213,7 +213,6 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
       if (c) tweenTo([c[0], c[1]], f ? 2.2 : 4);
     } else tweenTo([focus.lonLat[0], focus.lonLat[1]], Math.min(MAX_K, (focus.scale ?? 4) / 1.4));
     // tweenTo captures k; re-running on k changes would restart the tween.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focus]);
 
   useEffect(() => {
