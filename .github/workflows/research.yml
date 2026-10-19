@@ -40,7 +40,9 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           if [ -z "$ANTHROPIC_API_KEY" ]; then
-            echo "::error::ANTHROPIC_API_KEY secret is not set. Add it under Settings → Secrets and variables → Actions." && exit 1
+            echo "::warning::ANTHROPIC_API_KEY secret is not set; skipping the research pass. The generated datasets below are still refreshed."
+            printf '## Data refresh %s\n\nResearch pass skipped: the ANTHROPIC_API_KEY secret is not set. Generated datasets were refreshed from their APIs.\n' "$(date -u +%F)" > research-report.md
+            exit 0
           fi
           ARGS=""
           [ -n "${{ inputs.only }}" ] && ARGS="$ARGS --only ${{ inputs.only }}"
@@ -90,6 +92,7 @@ jobs:
           base: main
           add-paths: |
             src/data/conflicts.json
+            src/data/unrest.json
             src/data/blocs.json
             src/data/displacement.generated.json
             src/data/worldbank.generated.json
@@ -98,6 +101,7 @@ jobs:
             src/data/acled.generated.json
             src/data/trade.generated.json
             src/data/worldbank-history.generated.json
+            src/data/ucdp.generated.json
           commit-message: 'Data refresh: automated weekly research pass'
           title: 'Data refresh ${{ github.run_started_at }}'
           body-path: research-report.md
