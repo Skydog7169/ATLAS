@@ -7,6 +7,7 @@ import { INTENSITY_COLOR, INTENSITY_LABEL, formatDate } from '../lib/labels';
 interface Props {
   onSelectConflict: (id: string) => void;
   onSelectBloc: (id: string) => void;
+  onSelectUnrest: (id: string) => void;
 }
 
 export const TICKER_COUNT = 10;
@@ -21,10 +22,10 @@ function clip(s: string, n: number): string {
  * assistive tech. Hover or keyboard focus pauses the motion (CSS), and
  * reduced-motion users get a plain horizontal scroller instead.
  */
-export default function Ticker({ onSelectConflict, onSelectBloc }: Props) {
+export default function Ticker({ onSelectConflict, onSelectBloc, onSelectUnrest }: Props) {
   const { filter, only, items: starred, setOnly } = useWatchlist();
   const items = useMemo(() => tickerItems(CHANGES, filter, TICKER_COUNT), [filter]);
-  const open = (it: ChangeItem) => (it.kind === 'conflict' ? onSelectConflict(it.id) : onSelectBloc(it.id));
+  const open = (it: ChangeItem) => (it.kind === 'conflict' ? onSelectConflict(it.id) : it.kind === 'unrest' ? onSelectUnrest(it.id) : onSelectBloc(it.id));
   const duration = `${Math.max(30, items.length * 7)}s`;
 
   const render = (hidden: boolean) => (
@@ -35,7 +36,7 @@ export default function Ticker({ onSelectConflict, onSelectBloc }: Props) {
             <span className="dot" style={{ background: it.intensity ? INTENSITY_COLOR[it.intensity] : it.color }} aria-hidden="true" />
             <span className="when">{formatDate(it.date)}</span>
             <span className="title">{it.title}</span>
-            <span className="tag">{it.kind === 'conflict' ? INTENSITY_LABEL[it.intensity!] : 'Membership'}</span>
+            <span className="tag">{it.intensity ? INTENSITY_LABEL[it.intensity] : 'Membership'}</span>
             <span className="detail">{clip(it.detail, 110)}</span>
           </button>
         </li>

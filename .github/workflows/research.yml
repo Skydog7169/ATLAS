@@ -74,6 +74,11 @@ jobs:
           ACLED_PASSWORD: ${{ secrets.ACLED_PASSWORD }}
         run: node scripts/build-acled.mjs
 
+      - name: Refresh UCDP organised-violence deaths (skipped without token)
+        env:
+          UCDP_TOKEN: ${{ secrets.UCDP_TOKEN }}
+        run: node scripts/build-ucdp.mjs
+
       - name: Validate
         run: pnpm run test
 

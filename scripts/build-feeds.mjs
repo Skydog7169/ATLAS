@@ -1,5 +1,5 @@
 // Writes public/feed.xml (RSS 2.0) and public/feed.json (JSON Feed 1.1) from
-// the dated conflict assessments and bloc membership changes, so readers and
+// the dated conflict and unrest assessments and bloc membership changes, so readers and
 // automations can follow ATLAS without the browser. Runs before every build;
 // the files are build artefacts and are not committed.
 //
@@ -17,9 +17,22 @@ export const FEED_LIMIT = 50;
 const CHANGE_LABEL = { joined: 'Joined', left: 'Left', suspended: 'Suspended', reinstated: 'Reinstated', frozen: 'Froze participation', invited: 'Invited', founded: 'Founding member' };
 const INTENSITY_LABEL = { high: 'High intensity', medium: 'Medium intensity', low: 'Low intensity', latent: 'Latent / ceasefire' };
 
-/** Flattens both datasets into feed items, newest first. Mirrors src/lib/history.ts allChanges without importing the app. */
-export function collectItems(conflicts, blocs, countryName) {
+/** Flattens the datasets into feed items, newest first. Mirrors src/lib/history.ts allChanges without importing the app. */
+export function collectItems(conflicts, blocs, countryName, unrest = []) {
   const items = [];
+  for (const u of unrest) {
+    for (const h of u.history) {
+      items.push({
+        id: `unrest:${u.id}:${h.date}`,
+        date: h.date,
+        title: `${u.name}: ${INTENSITY_LABEL[h.intensity] ?? h.intensity} (unrest)`,
+        summary: h.status,
+        url: `${SITE}/#layer=unrest&unrest=${encodeURIComponent(u.id)}`,
+        tags: ['unrest', h.intensity],
+        sources: h.sources ?? [],
+      });
+    }
+  }
   for (const c of conflicts) {
     for (const h of c.history) {
       items.push({
@@ -124,7 +137,7 @@ function main() {
   const limit = argv.includes('--limit') ? Number(argv[argv.indexOf('--limit') + 1]) : FEED_LIMIT;
   const read = (p) => JSON.parse(readFileSync(resolve(root, p), 'utf8'));
   const countries = new Map(read('src/data/countries.generated.json').map((c) => [c.cca3, c.name]));
-  const items = collectItems(read('src/data/conflicts.json'), read('src/data/blocs.json'), (iso) => countries.get(iso) ?? iso);
+  const items = collectItems(read('src/data/conflicts.json'), read('src/data/blocs.json'), (iso) => countries.get(iso) ?? iso, read('src/data/unrest.json'));
   mkdirSync(out, { recursive: true });
   writeFileSync(resolve(out, 'feed.xml'), renderRss(items, { limit }));
   writeFileSync(resolve(out, 'feed.json'), renderJsonFeed(items, { limit }));

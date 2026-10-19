@@ -7,10 +7,13 @@ import { formatDate } from '../lib/labels';
 import { SANCTIONS, SANCTIONS_COLORS, sanctionsBinLabel } from '../lib/sanctions';
 import { ELECTIONS, ELECTIONS_VERIFIED, ELECTION_COLORS, electionBinLabel } from '../lib/elections';
 import { NUCLEAR, NUCLEAR_COLOR, NUCLEAR_STATUSES, NUCLEAR_STATUS_LABEL, nuclearCount } from '../lib/nuclear';
-import { ACLED, ACLED_COLORS, acledBinLabel, acledNote } from '../lib/acled';
+import { ACLED, ACLED_COLORS, ACLED_UNREST_COLORS, acledBinLabel, acledNote } from '../lib/acled';
+import { UCDP, UCDP_COLORS, ucdpBinLabel, ucdpNote } from '../lib/ucdp';
 import { MILITARY, MILITARY_COLORS, militaryBinLabel } from '../lib/military';
 import { TRADE, TRADE_COLOR, TRADE_PARTNERS, TRADE_PARTNER_LABEL } from '../lib/trade';
 import { CHOKEPOINTS_FILE, CHOKEPOINT_COLOR, CHOKEPOINT_STATUSES, CHOKEPOINT_STATUS_LABEL } from '../lib/chokepoints';
+import { UNREST } from '../data/unrest';
+import { UNREST_COLOR, UNREST_VERIFIED } from '../lib/unrest';
 
 interface Props {
   mode: Mode;
@@ -117,6 +120,24 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
       </aside>
     );
   }
+  if (layer === 'unrest') {
+    return (
+      <aside className="legend frame" aria-label="Legend">
+        <h3>Civil unrest · {UNREST.length}</h3>
+        <ul>
+          {INTENSITIES.map((i) => (
+            <li key={i}>
+              <span className="swatch triangle" style={{ background: UNREST_COLOR[i] }} />
+              {INTENSITY_LABEL[i]}
+            </li>
+          ))}
+        </ul>
+        <div className="note">
+          Protest movements, riots, uprisings, coups, mutinies and crackdowns that are not armed conflicts, each with dated, sourced assessments. Countries are tinted by their most intense episode. Curated and reassessed weekly; newest assessment {formatDate(UNREST_VERIFIED)}.
+        </div>
+      </aside>
+    );
+  }
   if (layer === 'acled') {
     return (
       <aside className="legend frame" aria-label="Legend">
@@ -133,6 +154,50 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           {acledNote()}{' '}
           <a href={ACLED.source.url} target="_blank" rel="noopener noreferrer">
             ACLED
+          </a>
+          .
+        </div>
+      </aside>
+    );
+  }
+  if (layer === 'acled-unrest') {
+    return (
+      <aside className="legend frame" aria-label="Legend">
+        <h3>Protests and riots</h3>
+        <ul>
+          {ACLED_UNREST_COLORS.map((color, i) => (
+            <li key={i}>
+              <span className="swatch" style={{ background: color }} />
+              {acledBinLabel(i)}
+            </li>
+          ))}
+        </ul>
+        <div className="note">
+          Protest and riot events only, from the same window as the political-violence layer. {acledNote()}{' '}
+          <a href={ACLED.source.url} target="_blank" rel="noopener noreferrer">
+            ACLED
+          </a>
+          .
+        </div>
+      </aside>
+    );
+  }
+  if (layer === 'ucdp') {
+    return (
+      <aside className="legend frame" aria-label="Legend">
+        <h3>Organised violence</h3>
+        <ul>
+          {UCDP_COLORS.map((color, i) => (
+            <li key={i}>
+              <span className="swatch" style={{ background: color }} />
+              {ucdpBinLabel(i)}
+            </li>
+          ))}
+        </ul>
+        <div className="note">
+          {ucdpNote()}{' '}
+          <a href={UCDP.source.url} target="_blank" rel="noopener noreferrer">
+            UCDP
           </a>
           .
         </div>

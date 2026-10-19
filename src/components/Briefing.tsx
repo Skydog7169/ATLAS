@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
-import type { Conflict } from '../data/types';
+import type { HistoryEntry } from '../data/types';
 import { INTENSITY_COLOR, INTENSITY_LABEL, formatDate } from '../lib/labels';
 
 export interface BriefItem {
   id: string;
-  kind: 'conflict' | 'country' | 'bloc';
+  kind: 'conflict' | 'country' | 'bloc' | 'unrest';
   title: string;
   eyebrow: string;
   detail: string;
   color: string;
-  conflict?: Conflict;
+  /** A conflict or unrest record: the newest assessment is shown as the caption. */
+  conflict?: { history: HistoryEntry[]; location: [number, number] };
 }
 
 interface Props {

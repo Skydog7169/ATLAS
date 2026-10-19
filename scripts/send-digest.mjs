@@ -75,7 +75,7 @@ async function main() {
   const since = argv.includes('--since') ? argv[argv.indexOf('--since') + 1] : sinceDate();
   const read = (p) => JSON.parse(readFileSync(resolve(root, p), 'utf8'));
   const countries = new Map(read('src/data/countries.generated.json').map((c) => [c.cca3, c.name]));
-  const items = collectItems(read('src/data/conflicts.json'), read('src/data/blocs.json'), (iso) => countries.get(iso) ?? iso);
+  const items = collectItems(read('src/data/conflicts.json'), read('src/data/blocs.json'), (iso) => countries.get(iso) ?? iso, read('src/data/unrest.json'));
   const digest = renderDigest(items, since);
   if (!digest) {
     console.log(`No changes since ${since}; nothing to send.`);

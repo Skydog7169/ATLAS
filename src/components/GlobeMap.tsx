@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { geoCentroid, geoDistance, geoGraticule10, geoOrthographic, geoPath } from 'd3-geo';
 import { COUNTRY_FEATURES, MICROSTATES, drawnIsos } from '../lib/geo';
 import { useSize } from '../hooks/useSize';
+import { triPath } from '../lib/shapes';
 import { CountryLayer, type Focus, type MapMarker, type CountryFill } from './WorldMap';
 
 interface Props {
@@ -314,7 +315,7 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
               return (
                 <g
                   key={mk.id}
-                  className={'marker' + (mk.pulse ? ' pulse' : '') + (mk.shape === 'diamond' ? ' diamond' : '')}
+                  className={'marker' + (mk.pulse ? ' pulse' : '') + (mk.shape && mk.shape !== 'circle' ? ' ' + mk.shape : '')}
                   data-selected={selected}
                   data-shape={mk.shape ?? 'circle'}
                   transform={`translate(${p[0]},${p[1]})`}
@@ -336,7 +337,12 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
                       <circle r={r + 11} strokeDasharray="6 5" />
                     </g>
                   )}
-                  {mk.shape === 'diamond' ? (
+                  {mk.shape === 'triangle' ? (
+                    <>
+                      <path className="ring" d={triPath(r + 3)} stroke={mk.color} />
+                      <path className="core" d={triPath(r)} fill={mk.color} filter="url(#marker-glow)" />
+                    </>
+                  ) : mk.shape === 'diamond' ? (
                     <>
                       <rect className="ring" x={-(r + 3)} y={-(r + 3)} width={2 * (r + 3)} height={2 * (r + 3)} transform="rotate(45)" stroke={mk.color} />
                       <rect className="core" x={-r} y={-r} width={2 * r} height={2 * r} transform="rotate(45)" fill={mk.color} filter="url(#marker-glow)" />

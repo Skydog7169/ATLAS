@@ -2,10 +2,11 @@ import { describe, expect, it } from 'vitest';
 import { collectItems, renderJsonFeed, renderRss } from '../../scripts/build-feeds.mjs';
 import conflicts from '../data/conflicts.json';
 import blocs from '../data/blocs.json';
+import unrest from '../data/unrest.json';
 import { countryName } from './countries';
 
 describe('build-time feeds', () => {
-  const items = collectItems(conflicts, blocs, countryName);
+  const items = collectItems(conflicts, blocs, countryName, unrest);
 
   it('flattens both datasets newest first with unique ids', () => {
     expect(items.length).toBeGreaterThan(40);
@@ -13,7 +14,8 @@ describe('build-time feeds', () => {
     expect(new Set(items.map((i) => i.id)).size).toBe(items.length);
     expect(items.some((i) => i.tags[0] === 'conflict')).toBe(true);
     expect(items.some((i) => i.tags[0] === 'bloc')).toBe(true);
-    for (const it of items) expect(it.url).toMatch(/^https:\/\/atlas-geopolitic\.vercel\.app\/#mode=/);
+    expect(items.some((i) => i.tags[0] === 'unrest' && i.url.includes('#layer=unrest&unrest='))).toBe(true);
+    for (const it of items) expect(it.url).toMatch(/^https:\/\/atlas-geopolitic\.vercel\.app\/#(mode|layer)=/);
   });
 
   it('renders valid-looking RSS with escaped text and a stable guid', () => {

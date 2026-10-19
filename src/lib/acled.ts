@@ -1,11 +1,32 @@
 import raw from '../data/acled.generated.json';
 import { formatDate } from './labels';
+import type { DossierExtra } from './dossier';
+
+export interface AcledByType {
+  battles: number;
+  explosions: number;
+  civilians: number;
+  protests: number;
+  riots: number;
+  strategic: number;
+}
 
 export interface AcledRow {
   iso: string;
   events: number;
   fatalities: number;
+  /** Counts per ACLED event type; absent in files built before the split. */
+  byType?: AcledByType;
 }
+
+export const ACLED_TYPE_LABEL: Record<keyof AcledByType, string> = {
+  battles: 'Battles',
+  explosions: 'Explosions and remote violence',
+  civilians: 'Violence against civilians',
+  protests: 'Protests',
+  riots: 'Riots',
+  strategic: 'Strategic developments',
+};
 
 interface AcledFile {
   source: { name: string; url: string };
@@ -35,6 +56,39 @@ export function acledBin(events: number): number {
 
 export function acledColor(iso: string): string {
   return ACLED_COLORS[acledBin(ACLED_BY_ISO.get(iso)?.events ?? 0)] ?? 'var(--land)';
+}
+
+/** Amber ramp for the protests-and-riots view, distinct from the teal political-violence ramp. */
+export const ACLED_UNREST_COLORS = ['var(--land)', '#4a3a12', '#8a6a1a', '#c9a227', '#ffd166', '#fff1b8'] as const;
+
+/** Protests plus riots in the window; zero when the file predates the per-type split. */
+export function acledUnrestEvents(iso: string): number {
+  const t = ACLED_BY_ISO.get(iso)?.byType;
+  return t ? t.protests + t.riots : 0;
+}
+
+export function acledUnrestColor(iso: string): string {
+  return ACLED_UNREST_COLORS[acledBin(acledUnrestEvents(iso))] ?? 'var(--land)';
+}
+
+export function acledUnrestSummary(iso: string): string | null {
+  const t = ACLED_BY_ISO.get(iso)?.byType;
+  if (!t) return null;
+  return `${t.protests} protests · ${t.riots} riots in ${ACLED.days} days`;
+}
+
+/** Dossier section: events by type over the window. Null until the build has credentials. */
+export function acledDossier(iso: string): DossierExtra | null {
+  const row = ACLED_BY_ISO.get(iso);
+  if (!ACLED.available || !row?.byType) return null;
+  const t = row.byType;
+  const keys = (Object.keys(ACLED_TYPE_LABEL) as Array<keyof AcledByType>).filter((k) => t[k] > 0).sort((a, b) => t[b] - t[a]);
+  return {
+    id: 'acled',
+    title: `Recorded events · ${row.events}`,
+    rows: keys.map((k) => ({ label: ACLED_TYPE_LABEL[k], value: String(t[k]) })),
+    footnote: `${acledNote()} ${row.fatalities} reported fatalities.`,
+  };
 }
 
 export function acledBinLabel(i: number): string {

@@ -9,12 +9,15 @@ import { DISPLACEMENT_BY_ISO, displacementColor, formatPeople } from './lib/disp
 import { sanctionsColor, sanctionsSummary } from './lib/sanctions';
 import { electionColor, electionSummary } from './lib/elections';
 import { nuclearColor, nuclearSummary } from './lib/nuclear';
-import { ACLED, acledColor, acledSummary } from './lib/acled';
+import { ACLED, acledColor, acledSummary, acledUnrestColor, acledUnrestSummary } from './lib/acled';
+import { UCDP, ucdpColor, ucdpSummary, ucdpYear } from './lib/ucdp';
+import { UNREST, UNREST_BY_ID } from './data/unrest';
+import { UNREST_COLOR, UNREST_MARKER_PREFIX, UNREST_RADIUS, UNREST_KIND_LABEL, unrestColor, unrestSummary } from './lib/unrest';
 import { militaryColor, militarySummary } from './lib/military';
 import { tradeColor, tradeSummary } from './lib/trade';
 import { CHOKEPOINTS, CHOKEPOINT_BY_ID, CHOKEPOINT_COLOR, CHOKEPOINT_MARKER_PREFIX, CHOKEPOINT_STATUS_LABEL, currentStatus } from './lib/chokepoints';
 import LayerMenu, { type LayerOption } from './components/LayerMenu';
-import { INTENSITY_COLOR, INTENSITY_RADIUS } from './lib/labels';
+import { INTENSITY_COLOR, INTENSITY_LABEL, INTENSITY_RADIUS } from './lib/labels';
 import BlocChips from './components/BlocChips';
 import DetailPanel from './components/DetailPanel';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -48,8 +51,11 @@ const LAYER_OPTIONS: LayerOption[] = [
   { id: 'military', label: 'Military presence', hint: 'Foreign bases, deployments and peace operations by host' },
   { id: 'trade', label: 'Trade dependence', hint: 'Export share to the US, China or the EU (WITS)' },
   { id: 'chokepoints', label: 'Chokepoints', hint: 'Eight maritime passages with dated status' },
+  { id: 'unrest', label: 'Civil unrest', hint: 'Protest movements, riots, uprisings, coups and crackdowns' },
   // The ACLED slot only appears when the weekly build had credentials for the API.
   ...(ACLED.available ? [{ id: 'acled' as const, label: 'Violence events', hint: `ACLED political-violence events, last ${ACLED.days} days` }] : []),
+  ...(ACLED.available ? [{ id: 'acled-unrest' as const, label: 'Protests and riots', hint: `ACLED protest and riot events, last ${ACLED.days} days` }] : []),
+  ...(UCDP.available ? [{ id: 'ucdp' as const, label: 'Organised violence', hint: `UCDP deaths in state-based, non-state and one-sided violence, ${ucdpYear()}` }] : []),
 ];
 
 /** Newest `updated` month across both datasets, shown in the header readouts. */
@@ -155,8 +161,11 @@ export default function App() {
       if (layer === 'elections') return { fill: electionColor(iso) };
       if (layer === 'nuclear') return { fill: nuclearColor(iso) };
       if (layer === 'acled') return { fill: acledColor(iso) };
+      if (layer === 'acled-unrest') return { fill: acledUnrestColor(iso) };
+      if (layer === 'ucdp') return { fill: ucdpColor(iso) };
       if (layer === 'military') return { fill: militaryColor(iso) };
       if (layer === 'trade') return { fill: tradeColor(iso) };
+      if (layer === 'unrest') return { fill: unrestColor(iso) };
       if (mode === 'conflicts') {
         const intensity = maxIntensityByCountry.get(iso);
         if (!intensity) return { fill: 'var(--land)' };
@@ -191,6 +200,11 @@ export default function App() {
         out.push({ id: c.id, lonLat: c.location, color: INTENSITY_COLOR[intensity], radius: INTENSITY_RADIUS[intensity], label: c.name, pulse: intensity === 'high' && viewMonth === null });
       }
     }
+    if (layer === 'unrest') {
+      for (const u of [...UNREST].sort((a, b) => INTENSITY_ORDER[a.intensity] - INTENSITY_ORDER[b.intensity])) {
+        out.push({ id: UNREST_MARKER_PREFIX + u.id, lonLat: u.location, color: UNREST_COLOR[u.intensity], radius: UNREST_RADIUS[u.intensity], label: `${u.name}: ${UNREST_KIND_LABEL[u.kind]}, ${INTENSITY_LABEL[u.intensity].toLowerCase()}`, shape: 'triangle', pulse: u.intensity === 'high' });
+      }
+    }
     if (layer === 'chokepoints') {
       for (const cp of CHOKEPOINTS) {
         const st = currentStatus(cp).status;
@@ -201,7 +215,7 @@ export default function App() {
   }, [mode, visible, viewMonth, layer]);
 
   const selectedIso = selection?.kind === 'country' ? selection.iso : null;
-  const selectedMarkerId = selection?.kind === 'conflict' ? selection.id : selection?.kind === 'chokepoint' ? CHOKEPOINT_MARKER_PREFIX + selection.id : null;
+  const selectedMarkerId = selection?.kind === 'conflict' ? selection.id : selection?.kind === 'chokepoint' ? CHOKEPOINT_MARKER_PREFIX + selection.id : selection?.kind === 'unrest' ? UNREST_MARKER_PREFIX + selection.id : null;
 
   const selectCountry = useCallback(
     (iso: string) => {
@@ -229,9 +243,22 @@ export default function App() {
     [update],
   );
 
+  const selectUnrest = useCallback(
+    (id: string) => {
+      const u = UNREST_BY_ID.get(id);
+      update({ layer: 'unrest', selection: { kind: 'unrest', id } });
+      if (u) setFocus({ kind: 'point', lonLat: u.location, scale: 3.5 });
+    },
+    [update],
+  );
+
   const onMarkerClick = useCallback(
-    (id: string) => (id.startsWith(CHOKEPOINT_MARKER_PREFIX) ? selectChokepoint(id.slice(CHOKEPOINT_MARKER_PREFIX.length)) : selectConflict(id)),
-    [selectChokepoint, selectConflict],
+    (id: string) => {
+      if (id.startsWith(CHOKEPOINT_MARKER_PREFIX)) selectChokepoint(id.slice(CHOKEPOINT_MARKER_PREFIX.length));
+      else if (id.startsWith(UNREST_MARKER_PREFIX)) selectUnrest(id.slice(UNREST_MARKER_PREFIX.length));
+      else selectConflict(id);
+    },
+    [selectChokepoint, selectConflict, selectUnrest],
   );
 
   const selectPair = useCallback(
@@ -254,9 +281,10 @@ export default function App() {
     (hit: SearchHit) => {
       if (hit.kind === 'country') selectCountry(hit.id);
       else if (hit.kind === 'bloc') selectBloc(hit.id);
+      else if (hit.kind === 'unrest') selectUnrest(hit.id);
       else selectConflict(hit.id);
     },
-    [selectCountry, selectBloc, selectConflict],
+    [selectCountry, selectBloc, selectConflict, selectUnrest],
   );
 
   const onHover = useCallback((h: { label: string; sub?: string; iso?: string | null } | null, clientX: number, clientY: number) => {
@@ -281,8 +309,11 @@ export default function App() {
     if (layer === 'elections') return electionSummary(hover.iso) ?? 'No election on record';
     if (layer === 'nuclear') return nuclearSummary(hover.iso) ?? 'No nuclear role recorded';
     if (layer === 'acled') return acledSummary(hover.iso) ?? 'No ACLED events in the window';
+    if (layer === 'acled-unrest') return acledUnrestSummary(hover.iso) ?? 'No ACLED protests or riots in the window';
+    if (layer === 'ucdp') return ucdpSummary(hover.iso) ?? `No organised-violence deaths recorded in ${ucdpYear()}`;
     if (layer === 'military') return militarySummary(hover.iso) ?? 'No foreign military presence recorded';
     if (layer === 'trade') return tradeSummary(hover.iso) ?? 'No WITS export data';
+    if (layer === 'unrest') return unrestSummary(hover.iso) ?? 'No tracked unrest';
     if (mode === 'conflicts') {
       const list = conflictsForCountry(hover.iso).sort((a, b) => INTENSITY_ORDER[b.intensity] - INTENSITY_ORDER[a.intensity]);
       return list.length ? list.map((c) => c.name).join(' · ') : null;
@@ -312,6 +343,9 @@ export default function App() {
         const memberships = blocsForCountry(w.id).filter((x) => x.membership.status === 'member');
         const live = conflictsForCountry(w.id);
         if (country) out.push({ id: w.id, kind: 'country', title: country.name, eyebrow: 'Watchlist · country', detail: [memberships.length ? memberships.map((x) => x.bloc.shortName).join(' · ') : 'No tracked bloc memberships', live.length ? `${live.length} tracked conflict${live.length > 1 ? 's' : ''}` : null].filter(Boolean).join(' — '), color: 'var(--accent)' });
+      } else if (w.kind === 'unrest') {
+        const u = UNREST_BY_ID.get(w.id);
+        if (u) out.push({ id: u.id, kind: 'unrest', title: u.name, eyebrow: `Watchlist · ${UNREST_KIND_LABEL[u.kind].toLowerCase()}`, detail: u.status, color: UNREST_COLOR[u.intensity], conflict: u });
       } else {
         const b = BLOC_BY_ID.get(w.id);
         if (b) out.push({ id: b.id, kind: 'bloc', title: b.name, eyebrow: 'Watchlist · bloc', detail: `${b.members.filter((m) => m.status === 'member').length} members · ${b.changes[0] ? `latest change ${b.changes[0].date}` : 'no dated changes'}`, color: b.color });
@@ -328,6 +362,9 @@ export default function App() {
       } else if (item.kind === 'country') {
         update({ selection: null });
         setFocus({ kind: 'country', iso: item.id });
+      } else if (item.kind === 'unrest') {
+        update({ layer: 'unrest', selection: null });
+        if (item.conflict) setFocus({ kind: 'point', lonLat: item.conflict.location, scale: 3.5 });
       } else {
         update({ mode: 'blocs', bloc: item.id, vs: null, selection: null });
         setFocus({ kind: 'reset' });
@@ -340,6 +377,7 @@ export default function App() {
     (item: BriefItem) => {
       if (item.kind === 'conflict') update({ brief: false, mode: 'conflicts', selection: { kind: 'conflict', id: item.id } });
       else if (item.kind === 'country') update({ brief: false, selection: { kind: 'country', iso: item.id } });
+      else if (item.kind === 'unrest') update({ brief: false, layer: 'unrest', selection: { kind: 'unrest', id: item.id } });
       else update({ brief: false, mode: 'blocs', bloc: item.id, selection: { kind: 'bloc', id: item.id } });
     },
     [update],
@@ -376,7 +414,9 @@ export default function App() {
 
   const conflictColor = useCallback((id: string) => {
     const c = CONFLICT_BY_ID.get(id);
-    return c ? INTENSITY_COLOR[c.intensity] : 'var(--fg-muted)';
+    if (c) return INTENSITY_COLOR[c.intensity];
+    const u = UNREST_BY_ID.get(id);
+    return u ? UNREST_COLOR[u.intensity] : 'var(--fg-muted)';
   }, []);
 
   return (
@@ -464,7 +504,7 @@ export default function App() {
       </header>
 
       <main className="stage" ref={stageRef}>
-        <SinceLastVisit onSelectConflict={selectConflict} onSelectBloc={selectBloc} onOpenChanges={() => update({ selection: { kind: 'changes' } })} />
+        <SinceLastVisit onSelectConflict={selectConflict} onSelectBloc={selectBloc} onSelectUnrest={selectUnrest} onOpenChanges={() => update({ selection: { kind: 'changes' } })} />
         <ErrorBoundary>
           <Suspense fallback={<MapSkeleton />}>
             {view === 'globe' ? (
@@ -581,7 +621,7 @@ export default function App() {
 
         {brief && <Briefing items={briefItems} onShow={onBriefShow} onOpen={onBriefOpen} onExit={exitBrief} />}
 
-        <Ticker onSelectConflict={selectConflict} onSelectBloc={selectBloc} />
+        <Ticker onSelectConflict={selectConflict} onSelectBloc={selectBloc} onSelectUnrest={selectUnrest} />
 
         {hover && (
           <div className="tooltip" style={{ left: hover.x, top: hover.y }}>
@@ -607,6 +647,7 @@ export default function App() {
               }}
               onOpenChanges={() => update({ selection: { kind: 'changes' } })}
               onSelectChokepoint={selectChokepoint}
+              onSelectUnrest={selectUnrest}
               onSelectPair={selectPair}
             />
           </ErrorBoundary>
