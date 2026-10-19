@@ -26,7 +26,8 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    # A full pass over ~60 entries with web search took 44 minutes on its first real run.
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -109,9 +110,6 @@ jobs:
 
       - name: Fill any countries missing from the elections table
         run: node scripts/build-elections.mjs
-
-      - name: Refresh WITS export shares
-        run: node scripts/build-trade.mjs
 
       - name: Refresh ACLED event counts (skipped without credentials)
         env:
