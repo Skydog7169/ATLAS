@@ -2,6 +2,9 @@
 // the European Union from the World Bank WITS trade-statistics API into
 // src/data/trade.generated.json. Three SDMX calls per year (US+China, the 27
 // EU members, the world total); the newest year with data wins per reporter.
+// A second pass fetches each reporter's partner breakdown (one call per
+// reporter, a few at a time) and keeps its largest partners so the
+// relationship view can show trade both ways between any two countries.
 // Refreshed by the weekly workflow; the committed file is the fallback.
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
@@ -15,6 +18,8 @@ const BASE = 'https://wits.worldbank.org/API/V1/SDMX/V21/datasource/tradestats-t
 export const EU27 = ['AUT', 'BEL', 'BGR', 'HRV', 'CYP', 'CZE', 'DNK', 'EST', 'FIN', 'FRA', 'DEU', 'GRC', 'HUN', 'IRL', 'ITA', 'LVA', 'LTU', 'LUX', 'MLT', 'NLD', 'POL', 'PRT', 'ROU', 'SVK', 'SVN', 'ESP', 'SWE'];
 /** WITS lags two to three years; try the newest plausible year first. */
 const YEARS = [new Date().getFullYear() - 2, new Date().getFullYear() - 3, new Date().getFullYear() - 4];
+export const TOP_PARTNERS = 15;
+const CONCURRENCY = 4;
 
 async function query(year, partners) {
   const url = `${BASE}/reporter/all/year/${year}/partner/${partners.join(';').toLowerCase()}/product/Total/indicator/XPRT-TRD-VL?format=JSON`;
@@ -61,6 +66,34 @@ export function buildRows(year, usChn, eu, world) {
 
 const round = (x) => Math.round(Math.min(1, Math.max(0, x)) * 1000) / 1000;
 
+/** One reporter's partner shares, largest first, limited to TOP_PARTNERS real countries. Exported for tests. */
+export function topPartners(partners, total, limit = TOP_PARTNERS) {
+  const out = [];
+  for (const [iso, value] of partners) if (KNOWN.has(iso) && iso !== 'WLD' && value > 0) out.push({ iso, share: round(value / total) });
+  return out.sort((a, b) => b.share - a.share).slice(0, limit);
+}
+
+async function fetchPartners(rows) {
+  const queue = [...rows];
+  const results = new Map();
+  let failures = 0;
+  async function worker() {
+    for (let row = queue.shift(); row; row = queue.shift()) {
+      try {
+        const url = `${BASE}/reporter/${row.iso.toLowerCase()}/year/${row.year}/partner/all/product/Total/indicator/XPRT-TRD-VL?format=JSON`;
+        const res = await fetch(url, { signal: AbortSignal.timeout(120000) });
+        if (!res.ok) throw new Error(String(res.status));
+        const parsed = parseSdmx(await res.json()).get(row.iso);
+        if (parsed) results.set(row.iso, topPartners(parsed, row.exportsUsd / 1000));
+      } catch {
+        failures += 1;
+      }
+    }
+  }
+  await Promise.all(Array.from({ length: CONCURRENCY }, worker));
+  return { results, failures };
+}
+
 async function main() {
   const byIso = new Map();
   try {
@@ -82,7 +115,14 @@ async function main() {
   }
   if (byIso.size < 100) throw new Error(`only ${byIso.size} reporters; refusing to overwrite`);
   const rows = [...byIso.values()].sort((a, b) => a.iso.localeCompare(b.iso));
-  const prev = existsSync(OUT) ? JSON.parse(readFileSync(OUT, 'utf8')) : null;
+  const prevFile = existsSync(OUT) ? JSON.parse(readFileSync(OUT, 'utf8')) : null;
+  const { results: partnerLists, failures } = await fetchPartners(rows);
+  if (failures) console.warn(`partner breakdown failed for ${failures} reporters; keeping their previous lists where available`);
+  for (const row of rows) {
+    const prevRow = prevFile?.rows?.find((r) => r.iso === row.iso);
+    row.partners = partnerLists.get(row.iso) ?? prevRow?.partners ?? [];
+  }
+  const prev = prevFile;
   if (prev && JSON.stringify(prev.rows) === JSON.stringify(rows)) {
     console.log('trade data unchanged');
     return;

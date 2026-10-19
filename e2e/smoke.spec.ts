@@ -307,3 +307,29 @@ test('conflict panel shows who backs whom and the peace process; dossier lists s
   await expect(page).toHaveURL(/conflict=/);
   await noSeriousA11yIssues(page);
 });
+
+test('analysis: bloc trend charts and the relationship view', async ({ page }) => {
+  await open(page, '#mode=blocs&bloc=nato');
+  const panel = page.locator('.panel');
+  await expect(panel.locator('#bloc-trends')).toContainText('Since 1990');
+  await expect(panel.locator('.trend')).toHaveCount(2);
+  await expect(panel.locator('.trend').first()).toContainText(/32/);
+  await expect(panel.locator('.trend table tr')).not.toHaveCount(0);
+
+  await open(page, '#country=UKR');
+  await panel.getByRole('button', { name: 'Relationship with…' }).click();
+  await expect(page).toHaveURL(/pair=UKR/);
+  await panel.locator('#pair-q').fill('russ');
+  await panel.locator('.link-list button', { hasText: 'Russia' }).first().click();
+  await expect(page).toHaveURL(/pair=UKR(,|%2C)RUS/);
+  await expect(panel.locator('h2')).toContainText('Ukraine');
+  await expect(panel.locator('h2')).toContainText('Russia');
+  await expect(panel.locator('#pair-conflicts')).toContainText(/Conflicts · [1-9]/);
+  await expect(panel.locator('#pair-trade + .tiles .tile')).toHaveCount(2);
+  await panel.locator('#pair-conflicts + ul button').first().click();
+  await expect(page).toHaveURL(/conflict=russia-ukraine/);
+
+  await open(page, '#pair=FRA,DEU');
+  await expect(panel.locator('#pair-blocs')).toContainText(/Shared blocs · [3-9]/);
+  await noSeriousA11yIssues(page);
+});

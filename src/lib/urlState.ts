@@ -9,6 +9,8 @@ export type Selection =
   | { kind: 'about' }
   | { kind: 'watchlist' }
   | { kind: 'chokepoint'; id: string }
+  | { kind: 'pair'; a: string; b: string | null }
+  | { kind: 'ask' }
   | null;
 
 export interface AppState {
@@ -46,6 +48,8 @@ export function serialize(state: AppState): string {
     else if (state.selection.kind === 'about') p.set('about', '1');
     else if (state.selection.kind === 'watchlist') p.set('watchlist', '1');
     else if (state.selection.kind === 'chokepoint') p.set('chokepoint', state.selection.id);
+    else if (state.selection.kind === 'pair') p.set('pair', state.selection.b ? `${state.selection.a},${state.selection.b}` : state.selection.a);
+    else if (state.selection.kind === 'ask') p.set('ask', '1');
     else p.set(state.selection.kind, state.selection.id);
   }
   return '#' + p.toString();
@@ -69,7 +73,10 @@ export function parse(hash: string, isValid: { bloc: (id: string) => boolean; co
   const conflict = p.get('conflict');
   const selBloc = p.get('selbloc');
   const chokepoint = p.get('chokepoint');
+  const pair = (p.get('pair') ?? '').toUpperCase().split(',').filter(Boolean);
   if (p.get('about') === '1') selection = { kind: 'about' };
+  else if (p.get('ask') === '1') selection = { kind: 'ask' };
+  else if (pair[0] && isValid.country(pair[0]) && (!pair[1] || (isValid.country(pair[1]) && pair[1] !== pair[0]))) selection = { kind: 'pair', a: pair[0], b: pair[1] ?? null };
   else if (chokepoint && isValid.chokepoint?.(chokepoint)) selection = { kind: 'chokepoint', id: chokepoint };
   else if (p.get('watchlist') === '1') selection = { kind: 'watchlist' };
   else if (p.get('changes') === '1') selection = { kind: 'changes' };
