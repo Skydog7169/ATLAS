@@ -3,7 +3,7 @@
   "name": "World Bank Open Data",
   "url": "https://data.worldbank.org/"
  },
- "fetchedAt": "2026-10-07",
+ "fetchedAt": "2026-10-19",
  "rows": [
   {
    "iso": "ABW",
@@ -29,8 +29,8 @@
    "populationYear": 2025,
    "gdpUsd": 122174889423.635,
    "gdpYear": 2025,
-   "militaryUsd": 922050813.886942,
-   "militaryYear": 2024
+   "militaryUsd": 1459150446.30333,
+   "militaryYear": 2025
   },
   {
    "iso": "ALB",
@@ -38,8 +38,8 @@
    "populationYear": 2025,
    "gdpUsd": 30540188271.3421,
    "gdpYear": 2025,
-   "militaryUsd": 535472559.206879,
-   "militaryYear": 2024
+   "militaryUsd": 623614024.57297,
+   "militaryYear": 2025
   },
   {
    "iso": "AND",
@@ -65,8 +65,8 @@
    "populationYear": 2025,
    "gdpUsd": 683097891618.597,
    "gdpYear": 2025,
-   "militaryUsd": 4177618452.20522,
-   "militaryYear": 2024
+   "militaryUsd": 3875750072.35425,
+   "militaryYear": 2025
   },
   {
    "iso": "ARM",
@@ -74,8 +74,8 @@
    "populationYear": 2025,
    "gdpUsd": 29243452882.3545,
    "gdpYear": 2025,
-   "militaryUsd": 1418011710.7943,
-   "militaryYear": 2024
+   "militaryUsd": 1725213042.68086,
+   "militaryYear": 2025
   },
   {
    "iso": "ASM",
@@ -101,8 +101,8 @@
    "populationYear": 2025,
    "gdpUsd": 1798518933689.21,
    "gdpYear": 2025,
-   "militaryUsd": 33819572368.4211,
-   "militaryYear": 2024
+   "militaryUsd": 35326559811.2952,
+   "militaryYear": 2025
   },
   {
    "iso": "AUT",
@@ -110,8 +110,8 @@
    "populationYear": 2025,
    "gdpUsd": 579470021095.418,
    "gdpYear": 2025,
-   "militaryUsd": 5258693991.82582,
-   "militaryYear": 2024
+   "militaryUsd": 6353360557.72398,
+   "militaryYear": 2025
   },
   {
    "iso": "AZE",
@@ -119,8 +119,8 @@
    "populationYear": 2025,
    "gdpUsd": 75937647058.8235,
    "gdpYear": 2025,
-   "militaryUsd": 3777088235.29412,
-   "militaryYear": 2024
+   "militaryUsd": 4939000000,
+   "militaryYear": 2025
   },
   {
    "iso": "BDI",
@@ -128,8 +128,8 @@
    "populationYear": 2025,
    "gdpUsd": 3364713864.08488,
    "gdpYear": 2025,
-   "militaryUsd": 171829784.578258,
-   "militaryYear": 2024
+   "militaryUsd": 226615473.530873,
+   "militaryYear": 2025
   },
   {
    "iso": "BEL",
@@ -137,8 +137,8 @@
    "populationYear": 2025,
    "gdpUsd": 725466462859.646,
    "gdpYear": 2025,
-   "militaryUsd": 8561520105.74799,
-   "militaryYear": 2024
+   "militaryUsd": 14531958576.8111,
+   "militaryYear": 2025
   },
   {
    "iso": "BEN",
@@ -146,8 +146,8 @@
    "populationYear": 2025,
    "gdpUsd": 24566420903.5337,
    "gdpYear": 2025,
-   "militaryUsd": 154107719.732787,
-   "militaryYear": 2024
+   "militaryUsd": 216913737.35984,
+   "militaryYear": 2025
   },
   {
    "iso": "BFA",
@@ -155,8 +155,8 @@
    "populationYear": 2025,
    "gdpUsd": 27627297461.3181,
    "gdpYear": 2025,
-   "militaryUsd": 1023672220.14258,
-   "militaryYear": 2024
+   "militaryUsd": 891556029.442113,
+   "militaryYear": 2025
   },
   {
    "iso": "BGD",
@@ -164,8 +164,8 @@
    "populationYear": 2025,
    "gdpUsd": 456319229255.578,
    "gdpYear": 2025,
-   "militaryUsd": 4034561892.72044,
-   "militaryYear": 2024
+   "militaryUsd": 3826632299.58464,
+   "militaryYear": 2025
   },
   {
    "iso": "BGR",
@@ -173,8 +173,8 @@
    "populationYear": 2025,
    "gdpUsd": 130777235529.606,
    "gdpYear": 2025,
-   "militaryUsd": 2329834254.14365,
-   "militaryYear": 2024
+   "militaryUsd": 2589155424.30657,
+   "militaryYear": 2025
   },
   {
    "iso": "BHR",
@@ -182,8 +182,8 @@
    "populationYear": 2025,
    "gdpUsd": 48965725531.9149,
    "gdpYear": 2025,
-   "militaryUsd": 1383973404.25532,
-   "militaryYear": 2024
+   "militaryUsd": 1468151595.74468,
+   "militaryYear": 2025
   },
   {
    "iso": "BHS",
@@ -200,8 +200,8 @@
    "populationYear": 2025,
    "gdpUsd": 32599982936.3931,
    "gdpYear": 2025,
-   "militaryUsd": 215974868.507652,
-   "militaryYear": 2024
+   "militaryUsd": 231395167.755815,
+   "militaryYear": 2025
   },
   {
    "iso": "BLR",
@@ -209,8 +209,8 @@
    "populationYear": 2025,
    "gdpUsd": 93397215864.198,
    "gdpYear": 2025,
-   "militaryUsd": 1491391768.48364,
-   "militaryYear": 2024
+   "militaryUsd": 1938589500.49007,
+   "militaryYear": 2025
   },
   {
    "iso": "BLZ",
@@ -218,8 +218,8 @@
    "populationYear": 2025,
    "gdpUsd": 3326500000,
    "gdpYear": 2025,
-   "militaryUsd": 30137800,
-   "militaryYear": 2024
+   "militaryUsd": 33317350,
+   "militaryYear": 2025
   },
   {
    "iso": "BMU",
@@ -236,8 +236,8 @@
    "populationYear": 2025,
    "gdpUsd": 64768947525.3256,
    "gdpYear": 2025,
-   "militaryUsd": 655130126.365488,
-   "militaryYear": 2024
+   "militaryUsd": 688306801.736614,
+   "militaryYear": 2025
   },
   {
    "iso": "BRA",
@@ -245,8 +245,8 @@
    "populationYear": 2025,
    "gdpUsd": 2279920092492.13,
    "gdpYear": 2025,
-   "militaryUsd": 20947723265.0291,
-   "militaryYear": 2024
+   "militaryUsd": 23949869705.5596,
+   "militaryYear": 2025
   },
   {
    "iso": "BRB",
@@ -263,7 +263,7 @@
    "populationYear": 2025,
    "gdpUsd": 15031980994.1121,
    "gdpYear": 2025,
-   "militaryUsd": 558608208.955224,
+   "militaryUsd": 560266733.742499,
    "militaryYear": 2024
   },
   {
@@ -281,8 +281,8 @@
    "populationYear": 2025,
    "gdpUsd": 19928479839.4476,
    "gdpYear": 2025,
-   "militaryUsd": 567822651.448639,
-   "militaryYear": 2024
+   "militaryUsd": 614353516.229317,
+   "militaryYear": 2025
   },
   {
    "iso": "CAF",
@@ -290,8 +290,8 @@
    "populationYear": 2025,
    "gdpUsd": 3066109226.40165,
    "gdpYear": 2025,
-   "militaryUsd": 71174969.9459274,
-   "militaryYear": 2024
+   "militaryUsd": 74185526.5873289,
+   "militaryYear": 2025
   },
   {
    "iso": "CAN",
@@ -299,8 +299,8 @@
    "populationYear": 2025,
    "gdpUsd": 2319899772425.92,
    "gdpYear": 2025,
-   "militaryUsd": 29346897810.219,
-   "militaryYear": 2024
+   "militaryUsd": 37494244642.3716,
+   "militaryYear": 2025
   },
   {
    "iso": "CHE",
@@ -308,8 +308,8 @@
    "populationYear": 2025,
    "gdpUsd": 1043529899250.92,
    "gdpYear": 2025,
-   "militaryUsd": 6722303543.86997,
-   "militaryYear": 2024
+   "militaryUsd": 7591405901.06939,
+   "militaryYear": 2025
   },
   {
    "iso": "CHL",
@@ -317,8 +317,8 @@
    "populationYear": 2025,
    "gdpUsd": 357371159574.862,
    "gdpYear": 2025,
-   "militaryUsd": 5105441707.26122,
-   "militaryYear": 2024
+   "militaryUsd": 5327885653.37998,
+   "militaryYear": 2025
   },
   {
    "iso": "CHN",
@@ -326,8 +326,8 @@
    "populationYear": 2025,
    "gdpUsd": 19498039388042.6,
    "gdpYear": 2025,
-   "militaryUsd": 313658330217.176,
-   "militaryYear": 2024
+   "militaryUsd": 335524155624.44,
+   "militaryYear": 2025
   },
   {
    "iso": "CIV",
@@ -335,8 +335,8 @@
    "populationYear": 2025,
    "gdpUsd": 99773555666.1988,
    "gdpYear": 2025,
-   "militaryUsd": 658353218.218127,
-   "militaryYear": 2024
+   "militaryUsd": 759441425.328472,
+   "militaryYear": 2025
   },
   {
    "iso": "CMR",
@@ -344,8 +344,8 @@
    "populationYear": 2025,
    "gdpUsd": 58933453923.761,
    "gdpYear": 2025,
-   "militaryUsd": 534852005.33635,
-   "militaryYear": 2024
+   "militaryUsd": 627467840.682397,
+   "militaryYear": 2025
   },
   {
    "iso": "COD",
@@ -353,8 +353,8 @@
    "populationYear": 2025,
    "gdpUsd": 91030531316.9936,
    "gdpYear": 2025,
-   "militaryUsd": 899187778.403836,
-   "militaryYear": 2024
+   "militaryUsd": 1225252134.15196,
+   "militaryYear": 2025
   },
   {
    "iso": "COG",
@@ -362,8 +362,8 @@
    "populationYear": 2025,
    "gdpUsd": 16306633778.765,
    "gdpYear": 2025,
-   "militaryUsd": 182044402.521739,
-   "militaryYear": 2024
+   "militaryUsd": 204916764.119144,
+   "militaryYear": 2025
   },
   {
    "iso": "COL",
@@ -371,8 +371,8 @@
    "populationYear": 2025,
    "gdpUsd": 457410034202.523,
    "gdpYear": 2025,
-   "militaryUsd": 15096259111.9062,
-   "militaryYear": 2024
+   "militaryUsd": 14502706852.6697,
+   "militaryYear": 2025
   },
   {
    "iso": "COM",
@@ -389,8 +389,8 @@
    "populationYear": 2025,
    "gdpUsd": 3056630435.32463,
    "gdpYear": 2025,
-   "militaryUsd": 16827224.9254434,
-   "militaryYear": 2024
+   "militaryUsd": 20076627.5685326,
+   "militaryYear": 2025
   },
   {
    "iso": "CRI",
@@ -399,7 +399,7 @@
    "gdpUsd": 102904921157.478,
    "gdpYear": 2025,
    "militaryUsd": 0,
-   "militaryYear": 2024
+   "militaryYear": 2025
   },
   {
    "iso": "CUB",
@@ -407,7 +407,7 @@
    "populationYear": 2025,
    "gdpUsd": 107352000000,
    "gdpYear": 2020,
-   "militaryUsd": 128609126.95598,
+   "militaryUsd": 128609126.955981,
    "militaryYear": 2018
   },
   {
@@ -434,8 +434,8 @@
    "populationYear": 2025,
    "gdpUsd": 41225787247.3309,
    "gdpYear": 2025,
-   "militaryUsd": 598185755.607045,
-   "militaryYear": 2024
+   "militaryUsd": 663312501.410103,
+   "militaryYear": 2025
   },
   {
    "iso": "CZE",
@@ -443,8 +443,8 @@
    "populationYear": 2025,
    "gdpUsd": 391026962800.475,
    "gdpYear": 2025,
-   "militaryUsd": 6524946704.27873,
-   "militaryYear": 2024
+   "militaryUsd": 7051481133.02338,
+   "militaryYear": 2025
   },
   {
    "iso": "DEU",
@@ -452,8 +452,8 @@
    "populationYear": 2025,
    "gdpUsd": 5050922925047.05,
    "gdpYear": 2025,
-   "militaryUsd": 88458476389.5109,
-   "militaryYear": 2024
+   "militaryUsd": 113585948604.562,
+   "militaryYear": 2025
   },
   {
    "iso": "DJI",
@@ -479,8 +479,8 @@
    "populationYear": 2025,
    "gdpUsd": 462526660468.393,
    "gdpYear": 2025,
-   "militaryUsd": 9958899778.69112,
-   "militaryYear": 2024
+   "militaryUsd": 14948790190.9334,
+   "militaryYear": 2025
   },
   {
    "iso": "DOM",
@@ -488,8 +488,8 @@
    "populationYear": 2025,
    "gdpUsd": 127407463759.043,
    "gdpYear": 2025,
-   "militaryUsd": 980991970.499619,
-   "militaryYear": 2024
+   "militaryUsd": 1037253440.08817,
+   "militaryYear": 2025
   },
   {
    "iso": "DZA",
@@ -497,8 +497,8 @@
    "populationYear": 2025,
    "gdpUsd": 287031225987.736,
    "gdpYear": 2025,
-   "militaryUsd": 21811242555.0313,
-   "militaryYear": 2024
+   "militaryUsd": 25438789692.3346,
+   "militaryYear": 2025
   },
   {
    "iso": "ECU",
@@ -506,8 +506,8 @@
    "populationYear": 2025,
    "gdpUsd": 130320560400,
    "gdpYear": 2025,
-   "militaryUsd": 2698000000,
-   "militaryYear": 2024
+   "militaryUsd": 2735600000,
+   "militaryYear": 2025
   },
   {
    "iso": "EGY",
@@ -515,8 +515,8 @@
    "populationYear": 2025,
    "gdpUsd": 365254630179.737,
    "gdpYear": 2025,
-   "militaryUsd": 2396211163.82267,
-   "militaryYear": 2024
+   "militaryUsd": 2501747815.23096,
+   "militaryYear": 2025
   },
   {
    "iso": "ERI",
@@ -533,8 +533,8 @@
    "populationYear": 2025,
    "gdpUsd": 1906453309985.88,
    "gdpYear": 2025,
-   "militaryUsd": 24615397928.7413,
-   "militaryYear": 2024
+   "militaryUsd": 40211754089.1145,
+   "militaryYear": 2025
   },
   {
    "iso": "EST",
@@ -542,8 +542,8 @@
    "populationYear": 2025,
    "gdpUsd": 47030833798.5866,
    "gdpYear": 2025,
-   "militaryUsd": 1441919732.77431,
-   "militaryYear": 2024
+   "militaryUsd": 1575931232.09169,
+   "militaryYear": 2025
   },
   {
    "iso": "ETH",
@@ -551,8 +551,8 @@
    "populationYear": 2025,
    "gdpUsd": 126358758448.356,
    "gdpYear": 2025,
-   "militaryUsd": 921665263.86463,
-   "militaryYear": 2024
+   "militaryUsd": 528111206.319261,
+   "militaryYear": 2025
   },
   {
    "iso": "FIN",
@@ -560,8 +560,8 @@
    "populationYear": 2025,
    "gdpUsd": 317039368819.607,
    "gdpYear": 2025,
-   "militaryUsd": 6987848067.30834,
-   "militaryYear": 2024
+   "militaryUsd": 8081582925.3435,
+   "militaryYear": 2025
   },
   {
    "iso": "FJI",
@@ -569,8 +569,8 @@
    "populationYear": 2025,
    "gdpUsd": 6198013062.06553,
    "gdpYear": 2025,
-   "militaryUsd": 77638335.6893706,
-   "militaryYear": 2024
+   "militaryUsd": 81159432.2235739,
+   "militaryYear": 2025
   },
   {
    "iso": "FRA",
@@ -578,8 +578,8 @@
    "populationYear": 2025,
    "gdpUsd": 3366315927447.33,
    "gdpYear": 2025,
-   "militaryUsd": 64675015306.1997,
-   "militaryYear": 2024
+   "militaryUsd": 68007580714.3018,
+   "militaryYear": 2025
   },
   {
    "iso": "FRO",
@@ -605,8 +605,8 @@
    "populationYear": 2025,
    "gdpUsd": 21427119323.2764,
    "gdpYear": 2025,
-   "militaryUsd": 319095920.726509,
-   "militaryYear": 2024
+   "militaryUsd": 356111990.094242,
+   "militaryYear": 2025
   },
   {
    "iso": "GBR",
@@ -614,8 +614,8 @@
    "populationYear": 2025,
    "gdpUsd": 4002587541846.01,
    "gdpYear": 2025,
-   "militaryUsd": 81763173069.6744,
-   "militaryYear": 2024
+   "militaryUsd": 88977496940.3926,
+   "militaryYear": 2025
   },
   {
    "iso": "GEO",
@@ -623,8 +623,8 @@
    "populationYear": 2025,
    "gdpUsd": 38143612855.1367,
    "gdpYear": 2025,
-   "militaryUsd": 615864045.59285,
-   "militaryYear": 2024
+   "militaryUsd": 657878727.017108,
+   "militaryYear": 2025
   },
   {
    "iso": "GHA",
@@ -632,8 +632,8 @@
    "populationYear": 2025,
    "gdpUsd": 114209905278.717,
    "gdpYear": 2025,
-   "militaryUsd": 268736705.433852,
-   "militaryYear": 2024
+   "militaryUsd": 506651717.200633,
+   "militaryYear": 2025
   },
   {
    "iso": "GIB",
@@ -650,8 +650,8 @@
    "populationYear": 2025,
    "gdpUsd": 28346024753.2924,
    "gdpYear": 2025,
-   "militaryUsd": 562455950.499682,
-   "militaryYear": 2024
+   "militaryUsd": 600539642.430641,
+   "militaryYear": 2025
   },
   {
    "iso": "GMB",
@@ -659,8 +659,8 @@
    "populationYear": 2025,
    "gdpUsd": 2593673987.53306,
    "gdpYear": 2025,
-   "militaryUsd": 14433677.7042713,
-   "militaryYear": 2024
+   "militaryUsd": 14738181.3404507,
+   "militaryYear": 2025
   },
   {
    "iso": "GNB",
@@ -668,8 +668,8 @@
    "populationYear": 2025,
    "gdpUsd": 2527930272.92988,
    "gdpYear": 2025,
-   "militaryUsd": 25292392.1705683,
-   "militaryYear": 2023
+   "militaryUsd": 22360184.3571576,
+   "militaryYear": 2025
   },
   {
    "iso": "GNQ",
@@ -677,8 +677,8 @@
    "populationYear": 2025,
    "gdpUsd": 12823210425.9217,
    "gdpYear": 2025,
-   "militaryUsd": 113135237.554975,
-   "militaryYear": 2024
+   "militaryUsd": 120731065.556855,
+   "militaryYear": 2025
   },
   {
    "iso": "GRC",
@@ -686,8 +686,8 @@
    "populationYear": 2025,
    "gdpUsd": 280635521324.441,
    "gdpYear": 2025,
-   "militaryUsd": 8021963044.4518,
-   "militaryYear": 2024
+   "militaryUsd": 8388421361.36994,
+   "militaryYear": 2025
   },
   {
    "iso": "GRD",
@@ -713,8 +713,8 @@
    "populationYear": 2025,
    "gdpUsd": 123306008821.471,
    "gdpYear": 2025,
-   "militaryUsd": 415185334.034068,
-   "militaryYear": 2024
+   "militaryUsd": 632872273.981159,
+   "militaryYear": 2025
   },
   {
    "iso": "GUM",
@@ -731,8 +731,8 @@
    "populationYear": 2025,
    "gdpUsd": 27097477218.2254,
    "gdpYear": 2025,
-   "militaryUsd": 201841558.938087,
-   "militaryYear": 2024
+   "militaryUsd": 247643803.406549,
+   "militaryYear": 2025
   },
   {
    "iso": "HKG",
@@ -749,8 +749,8 @@
    "populationYear": 2025,
    "gdpUsd": 39601409103.3005,
    "gdpYear": 2025,
-   "militaryUsd": 581271651.183095,
-   "militaryYear": 2024
+   "militaryUsd": 580246011.635374,
+   "militaryYear": 2025
   },
   {
    "iso": "HRV",
@@ -758,8 +758,8 @@
    "populationYear": 2025,
    "gdpUsd": 105060182186.274,
    "gdpYear": 2025,
-   "militaryUsd": 1629055602.0691,
-   "militaryYear": 2024
+   "militaryUsd": 2101617670.28405,
+   "militaryYear": 2025
   },
   {
    "iso": "HTI",
@@ -767,8 +767,8 @@
    "populationYear": 2025,
    "gdpUsd": 32077278409.2339,
    "gdpYear": 2025,
-   "militaryUsd": 19751091.2623219,
-   "militaryYear": 2024
+   "militaryUsd": 39144696.9765041,
+   "militaryYear": 2025
   },
   {
    "iso": "HUN",
@@ -776,8 +776,8 @@
    "populationYear": 2025,
    "gdpUsd": 246490213513.054,
    "gdpYear": 2025,
-   "militaryUsd": 4734698455.68824,
-   "militaryYear": 2024
+   "militaryUsd": 5001983632.20059,
+   "militaryYear": 2025
   },
   {
    "iso": "IDN",
@@ -785,8 +785,8 @@
    "populationYear": 2025,
    "gdpUsd": 1445642584163.81,
    "gdpYear": 2025,
-   "militaryUsd": 11042843809.9082,
-   "militaryYear": 2024
+   "militaryUsd": 15025416115.2861,
+   "militaryYear": 2025
   },
   {
    "iso": "IMN",
@@ -803,8 +803,8 @@
    "populationYear": 2025,
    "gdpUsd": 3956067115771.63,
    "gdpYear": 2025,
-   "militaryUsd": 86125976248.5524,
-   "militaryYear": 2024
+   "militaryUsd": 92057013588.1601,
+   "militaryYear": 2025
   },
   {
    "iso": "IRL",
@@ -812,8 +812,8 @@
    "populationYear": 2025,
    "gdpUsd": 721701359046.313,
    "gdpYear": 2025,
-   "militaryUsd": 1330503579.37914,
-   "militaryYear": 2024
+   "militaryUsd": 1551113417.41308,
+   "militaryYear": 2025
   },
   {
    "iso": "IRN",
@@ -821,8 +821,8 @@
    "populationYear": 2025,
    "gdpUsd": 362682115433.364,
    "gdpYear": 2025,
-   "militaryUsd": 7891903306.81818,
-   "militaryYear": 2024
+   "militaryUsd": 7396057109.81132,
+   "militaryYear": 2025
   },
   {
    "iso": "IRQ",
@@ -830,8 +830,8 @@
    "populationYear": 2025,
    "gdpUsd": 254367293538.462,
    "gdpYear": 2025,
-   "militaryUsd": 6178546529.67549,
-   "militaryYear": 2024
+   "militaryUsd": 6447958100.79325,
+   "militaryYear": 2025
   },
   {
    "iso": "ISL",
@@ -840,7 +840,7 @@
    "gdpUsd": 38582528789.0033,
    "gdpYear": 2025,
    "militaryUsd": 0,
-   "militaryYear": 2024
+   "militaryYear": 2025
   },
   {
    "iso": "ISR",
@@ -848,8 +848,8 @@
    "populationYear": 2025,
    "gdpUsd": 610777842873.595,
    "gdpYear": 2025,
-   "militaryUsd": 46505298369.3376,
-   "militaryYear": 2024
+   "militaryUsd": 48281256782.2613,
+   "militaryYear": 2025
   },
   {
    "iso": "ITA",
@@ -857,8 +857,8 @@
    "populationYear": 2025,
    "gdpUsd": 2551556954100.35,
    "gdpYear": 2025,
-   "militaryUsd": 37964578316.9022,
-   "militaryYear": 2024
+   "militaryUsd": 48143627462.04,
+   "militaryYear": 2025
   },
   {
    "iso": "JAM",
@@ -866,8 +866,8 @@
    "populationYear": 2025,
    "gdpUsd": 22704903217.5631,
    "gdpYear": 2025,
-   "militaryUsd": 262511269.974231,
-   "militaryYear": 2024
+   "militaryUsd": 286646045.669905,
+   "militaryYear": 2025
   },
   {
    "iso": "JOR",
@@ -875,8 +875,8 @@
    "populationYear": 2025,
    "gdpUsd": 61610052535.2113,
    "gdpYear": 2025,
-   "militaryUsd": 2560281690.14085,
-   "militaryYear": 2024
+   "militaryUsd": 2555352112.67606,
+   "militaryYear": 2025
   },
   {
    "iso": "JPN",
@@ -884,8 +884,8 @@
    "populationYear": 2025,
    "gdpUsd": 4435162999976.94,
    "gdpYear": 2025,
-   "militaryUsd": 55273904316.7083,
-   "militaryYear": 2024
+   "militaryUsd": 62158093812.4419,
+   "militaryYear": 2025
   },
   {
    "iso": "KAZ",
@@ -893,8 +893,8 @@
    "populationYear": 2025,
    "gdpUsd": 306239209650.024,
    "gdpYear": 2025,
-   "militaryUsd": 1208967905.89819,
-   "militaryYear": 2024
+   "militaryUsd": 1308552096.59849,
+   "militaryYear": 2025
   },
   {
    "iso": "KEN",
@@ -902,8 +902,8 @@
    "populationYear": 2025,
    "gdpUsd": 135941278878.815,
    "gdpYear": 2025,
-   "militaryUsd": 1231306436.54642,
-   "militaryYear": 2024
+   "militaryUsd": 1469684195.87127,
+   "militaryYear": 2025
   },
   {
    "iso": "KGZ",
@@ -911,8 +911,8 @@
    "populationYear": 2025,
    "gdpUsd": 22623752095.4613,
    "gdpYear": 2025,
-   "militaryUsd": 473046660.875227,
-   "militaryYear": 2024
+   "militaryUsd": 601125601.97899,
+   "militaryYear": 2025
   },
   {
    "iso": "KHM",
@@ -920,8 +920,8 @@
    "populationYear": 2025,
    "gdpUsd": 51267065842.9641,
    "gdpYear": 2025,
-   "militaryUsd": 720543532.173392,
-   "militaryYear": 2024
+   "militaryUsd": 738950217.718036,
+   "militaryYear": 2025
   },
   {
    "iso": "KIR",
@@ -947,8 +947,8 @@
    "populationYear": 2025,
    "gdpUsd": 1872374961553.15,
    "gdpYear": 2025,
-   "militaryUsd": 47571318596.7228,
-   "militaryYear": 2024
+   "militaryUsd": 47770908937.4631,
+   "militaryYear": 2025
   },
   {
    "iso": "KWT",
@@ -956,8 +956,8 @@
    "populationYear": 2025,
    "gdpUsd": 157209026926.418,
    "gdpYear": 2025,
-   "militaryUsd": 7792925565.71038,
-   "militaryYear": 2024
+   "militaryUsd": 8088284947.00752,
+   "militaryYear": 2025
   },
   {
    "iso": "LAO",
@@ -965,7 +965,7 @@
    "populationYear": 2025,
    "gdpUsd": 18302970218.5902,
    "gdpYear": 2025,
-   "militaryUsd": 22677713.1196136,
+   "militaryUsd": 22755619.3589915,
    "militaryYear": 2013
   },
   {
@@ -974,8 +974,8 @@
    "populationYear": 2025,
    "gdpUsd": 25971643441.3408,
    "gdpYear": 2024,
-   "militaryUsd": 635471571.906355,
-   "militaryYear": 2024
+   "militaryUsd": 828299104.155617,
+   "militaryYear": 2025
   },
   {
    "iso": "LBR",
@@ -983,8 +983,8 @@
    "populationYear": 2025,
    "gdpUsd": 5245938900,
    "gdpYear": 2025,
-   "militaryUsd": 33825000,
-   "militaryYear": 2024
+   "militaryUsd": 44210000,
+   "militaryYear": 2025
   },
   {
    "iso": "LBY",
@@ -992,7 +992,7 @@
    "populationYear": 2025,
    "gdpUsd": 48098909613.6316,
    "gdpYear": 2025,
-   "militaryUsd": 1573682777.31469,
+   "militaryUsd": 1572965616.59158,
    "militaryYear": 2023
   },
   {
@@ -1019,8 +1019,8 @@
    "populationYear": 2025,
    "gdpUsd": 108825231671.196,
    "gdpYear": 2025,
-   "militaryUsd": 1333312353.41663,
-   "militaryYear": 2024
+   "militaryUsd": 1390730987.15186,
+   "militaryYear": 2025
   },
   {
    "iso": "LSO",
@@ -1028,8 +1028,8 @@
    "populationYear": 2025,
    "gdpUsd": 2573572920.05159,
    "gdpYear": 2025,
-   "militaryUsd": 36295976.9958149,
-   "militaryYear": 2024
+   "militaryUsd": 39909364.8832255,
+   "militaryYear": 2025
   },
   {
    "iso": "LTU",
@@ -1037,8 +1037,8 @@
    "populationYear": 2025,
    "gdpUsd": 95210150818.3512,
    "gdpYear": 2025,
-   "militaryUsd": 2627474141.71702,
-   "militaryYear": 2024
+   "militaryUsd": 2952191864.26911,
+   "militaryYear": 2025
   },
   {
    "iso": "LUX",
@@ -1046,8 +1046,8 @@
    "populationYear": 2025,
    "gdpUsd": 101157829491.107,
    "gdpYear": 2025,
-   "militaryUsd": 871643141.196422,
-   "militaryYear": 2024
+   "militaryUsd": 855409155.517451,
+   "militaryYear": 2025
   },
   {
    "iso": "LVA",
@@ -1055,8 +1055,8 @@
    "populationYear": 2025,
    "gdpUsd": 48618869160.3254,
    "gdpYear": 2025,
-   "militaryUsd": 1425694079.36724,
-   "militaryYear": 2024
+   "militaryUsd": 1731606615.07569,
+   "militaryYear": 2025
   },
   {
    "iso": "MAC",
@@ -1082,8 +1082,8 @@
    "populationYear": 2025,
    "gdpUsd": 182374250612.28,
    "gdpYear": 2025,
-   "militaryUsd": 5517924399.23385,
-   "militaryYear": 2024
+   "militaryUsd": 6330727244.32833,
+   "militaryYear": 2025
   },
   {
    "iso": "MCO",
@@ -1100,8 +1100,8 @@
    "populationYear": 2025,
    "gdpUsd": 20351796275.2943,
    "gdpYear": 2025,
-   "militaryUsd": 110725502.000124,
-   "militaryYear": 2024
+   "militaryUsd": 113287334.343161,
+   "militaryYear": 2025
   },
   {
    "iso": "MDG",
@@ -1109,8 +1109,8 @@
    "populationYear": 2025,
    "gdpUsd": 19620352035.7899,
    "gdpYear": 2025,
-   "militaryUsd": 121634246.7323,
-   "militaryYear": 2024
+   "militaryUsd": 119676668.151526,
+   "militaryYear": 2025
   },
   {
    "iso": "MDV",
@@ -1127,8 +1127,8 @@
    "populationYear": 2025,
    "gdpUsd": 1832641364775.52,
    "gdpYear": 2025,
-   "militaryUsd": 16726425452.0934,
-   "militaryYear": 2024
+   "militaryUsd": 13647711360.1699,
+   "militaryYear": 2025
   },
   {
    "iso": "MHL",
@@ -1145,8 +1145,8 @@
    "populationYear": 2025,
    "gdpUsd": 19101199817.0174,
    "gdpYear": 2025,
-   "militaryUsd": 353684979.985732,
-   "militaryYear": 2024
+   "militaryUsd": 374751246.971901,
+   "militaryYear": 2025
   },
   {
    "iso": "MLI",
@@ -1154,8 +1154,8 @@
    "populationYear": 2025,
    "gdpUsd": 30069148580.7688,
    "gdpYear": 2025,
-   "militaryUsd": 929278520.861402,
-   "militaryYear": 2024
+   "militaryUsd": 952899497.833115,
+   "militaryYear": 2025
   },
   {
    "iso": "MLT",
@@ -1163,8 +1163,8 @@
    "populationYear": 2025,
    "gdpUsd": 27771821560.9411,
    "gdpYear": 2025,
-   "militaryUsd": 109254896.361343,
-   "militaryYear": 2024
+   "militaryUsd": 124657626.965684,
+   "militaryYear": 2025
   },
   {
    "iso": "MMR",
@@ -1181,8 +1181,8 @@
    "populationYear": 2025,
    "gdpUsd": 9232801464.79257,
    "gdpYear": 2025,
-   "militaryUsd": 150033208.503973,
-   "militaryYear": 2024
+   "militaryUsd": 176544908.963743,
+   "militaryYear": 2025
   },
   {
    "iso": "MNG",
@@ -1190,8 +1190,8 @@
    "populationYear": 2025,
    "gdpUsd": 25369107325.4549,
    "gdpYear": 2025,
-   "militaryUsd": 180843441.375323,
-   "militaryYear": 2024
+   "militaryUsd": 221316703.291124,
+   "militaryYear": 2025
   },
   {
    "iso": "MNP",
@@ -1208,8 +1208,8 @@
    "populationYear": 2025,
    "gdpUsd": 22337997046.1913,
    "gdpYear": 2025,
-   "militaryUsd": 450448587.393598,
-   "militaryYear": 2024
+   "militaryUsd": 468062039.793201,
+   "militaryYear": 2025
   },
   {
    "iso": "MRT",
@@ -1217,8 +1217,8 @@
    "populationYear": 2025,
    "gdpUsd": 11679910946.4371,
    "gdpYear": 2025,
-   "militaryUsd": 260059017.269229,
-   "militaryYear": 2024
+   "militaryUsd": 321759024.993279,
+   "militaryYear": 2025
   },
   {
    "iso": "MUS",
@@ -1226,8 +1226,8 @@
    "populationYear": 2025,
    "gdpUsd": 16157804491.7614,
    "gdpYear": 2025,
-   "militaryUsd": 23009853.3257139,
-   "militaryYear": 2024
+   "militaryUsd": 23839838.9129243,
+   "militaryYear": 2025
   },
   {
    "iso": "MWI",
@@ -1235,8 +1235,8 @@
    "populationYear": 2025,
    "gdpUsd": 14918276698.303,
    "gdpYear": 2025,
-   "militaryUsd": 117589994.544906,
-   "militaryYear": 2024
+   "militaryUsd": 162819193.404249,
+   "militaryYear": 2025
   },
   {
    "iso": "MYS",
@@ -1244,8 +1244,8 @@
    "populationYear": 2025,
    "gdpUsd": 472193128644.597,
    "gdpYear": 2025,
-   "militaryUsd": 4312858466.81122,
-   "militaryYear": 2024
+   "militaryUsd": 4933177367.16025,
+   "militaryYear": 2025
   },
   {
    "iso": "NAM",
@@ -1253,8 +1253,8 @@
    "populationYear": 2025,
    "gdpUsd": 15080340653.5276,
    "gdpYear": 2025,
-   "militaryUsd": 362392304.29255,
-   "militaryYear": 2024
+   "militaryUsd": 410522284.161499,
+   "militaryYear": 2025
   },
   {
    "iso": "NCL",
@@ -1271,8 +1271,8 @@
    "populationYear": 2025,
    "gdpUsd": 21646191388.2507,
    "gdpYear": 2025,
-   "militaryUsd": 435880522.487372,
-   "militaryYear": 2024
+   "militaryUsd": 488890417.555204,
+   "militaryYear": 2025
   },
   {
    "iso": "NGA",
@@ -1280,8 +1280,8 @@
    "populationYear": 2025,
    "gdpUsd": 290794361542.112,
    "gdpYear": 2025,
-   "militaryUsd": 1133303623.27648,
-   "militaryYear": 2024
+   "militaryUsd": 2101677527.96428,
+   "militaryYear": 2025
   },
   {
    "iso": "NIC",
@@ -1289,8 +1289,8 @@
    "populationYear": 2025,
    "gdpUsd": 22237167113.0916,
    "gdpYear": 2025,
-   "militaryUsd": 105264016.309888,
-   "militaryYear": 2024
+   "militaryUsd": 116367344.164231,
+   "militaryYear": 2025
   },
   {
    "iso": "NLD",
@@ -1298,8 +1298,8 @@
    "populationYear": 2025,
    "gdpUsd": 1332767651100.39,
    "gdpYear": 2025,
-   "militaryUsd": 23179211260.1708,
-   "militaryYear": 2024
+   "militaryUsd": 28944340410.1708,
+   "militaryYear": 2025
   },
   {
    "iso": "NOR",
@@ -1307,8 +1307,8 @@
    "populationYear": 2025,
    "gdpUsd": 530755719438.879,
    "gdpYear": 2025,
-   "militaryUsd": 10435320375.7091,
-   "militaryYear": 2024
+   "militaryUsd": 17033643852.4906,
+   "militaryYear": 2025
   },
   {
    "iso": "NPL",
@@ -1316,8 +1316,8 @@
    "populationYear": 2025,
    "gdpUsd": 45489810283.1132,
    "gdpYear": 2025,
-   "militaryUsd": 426517834.461529,
-   "militaryYear": 2024
+   "militaryUsd": 428290814.130341,
+   "militaryYear": 2025
   },
   {
    "iso": "NRU",
@@ -1334,8 +1334,8 @@
    "populationYear": 2025,
    "gdpUsd": 264057413739.965,
    "gdpYear": 2025,
-   "militaryUsd": 2998527517.58211,
-   "militaryYear": 2024
+   "militaryUsd": 2855732604.46047,
+   "militaryYear": 2025
   },
   {
    "iso": "OMN",
@@ -1344,7 +1344,7 @@
    "gdpUsd": 109604780696.23,
    "gdpYear": 2025,
    "militaryUsd": 5988296488.94668,
-   "militaryYear": 2024
+   "militaryYear": 2025
   },
   {
    "iso": "PAK",
@@ -1352,8 +1352,8 @@
    "populationYear": 2025,
    "gdpUsd": 407307214476.222,
    "gdpYear": 2025,
-   "militaryUsd": 10165952756.2448,
-   "militaryYear": 2024
+   "militaryUsd": 11871380866.1054,
+   "militaryYear": 2025
   },
   {
    "iso": "PAN",
@@ -1362,7 +1362,7 @@
    "gdpUsd": 90462600000,
    "gdpYear": 2025,
    "militaryUsd": 0,
-   "militaryYear": 2024
+   "militaryYear": 2025
   },
   {
    "iso": "PER",
@@ -1370,8 +1370,8 @@
    "populationYear": 2025,
    "gdpUsd": 334854659181.893,
    "gdpYear": 2025,
-   "militaryUsd": 2565268613.71996,
-   "militaryYear": 2024
+   "militaryUsd": 2596241408.39308,
+   "militaryYear": 2025
   },
   {
    "iso": "PHL",
@@ -1379,8 +1379,8 @@
    "populationYear": 2025,
    "gdpUsd": 487086123720.417,
    "gdpYear": 2025,
-   "militaryUsd": 6117535232.86185,
-   "militaryYear": 2024
+   "militaryUsd": 6378758229.62055,
+   "militaryYear": 2025
   },
   {
    "iso": "PLW",
@@ -1397,8 +1397,8 @@
    "populationYear": 2025,
    "gdpUsd": 32498658653.8415,
    "gdpYear": 2025,
-   "militaryUsd": 91005056.1232259,
-   "militaryYear": 2024
+   "militaryUsd": 106480682.765567,
+   "militaryYear": 2025
   },
   {
    "iso": "POL",
@@ -1406,8 +1406,8 @@
    "populationYear": 2025,
    "gdpUsd": 1035491784197.44,
    "gdpYear": 2025,
-   "militaryUsd": 38000728652.37,
-   "militaryYear": 2024
+   "militaryUsd": 46760133894.5979,
+   "militaryYear": 2025
   },
   {
    "iso": "PRI",
@@ -1433,8 +1433,8 @@
    "populationYear": 2025,
    "gdpUsd": 346639825141.821,
    "gdpYear": 2025,
-   "militaryUsd": 4641618584.64707,
-   "militaryYear": 2024
+   "militaryUsd": 5861290977.59628,
+   "militaryYear": 2025
   },
   {
    "iso": "PRY",
@@ -1442,8 +1442,8 @@
    "populationYear": 2025,
    "gdpUsd": 49278227554.3339,
    "gdpYear": 2025,
-   "militaryUsd": 413971348.08491,
-   "militaryYear": 2024
+   "militaryUsd": 421095331.469374,
+   "militaryYear": 2025
   },
   {
    "iso": "PSE",
@@ -1478,8 +1478,8 @@
    "populationYear": 2025,
    "gdpUsd": 428677977854.826,
    "gdpYear": 2025,
-   "militaryUsd": 8715729594.3219,
-   "militaryYear": 2024
+   "militaryUsd": 9725350362.95386,
+   "militaryYear": 2025
   },
   {
    "iso": "RUS",
@@ -1487,8 +1487,8 @@
    "populationYear": 2025,
    "gdpUsd": 2561310169358.74,
    "gdpYear": 2025,
-   "militaryUsd": 148967275140.483,
-   "militaryYear": 2024
+   "militaryUsd": 190416640325.211,
+   "militaryYear": 2025
   },
   {
    "iso": "RWA",
@@ -1496,8 +1496,8 @@
    "populationYear": 2025,
    "gdpUsd": 16372132990.2271,
    "gdpYear": 2025,
-   "militaryUsd": 175924380.585353,
-   "militaryYear": 2024
+   "militaryUsd": 191192499.021855,
+   "militaryYear": 2025
   },
   {
    "iso": "SAU",
@@ -1505,8 +1505,8 @@
    "populationYear": 2025,
    "gdpUsd": 1276942933333.33,
    "gdpYear": 2025,
-   "militaryUsd": 80330666666.6667,
-   "militaryYear": 2024
+   "militaryUsd": 83181333333.3333,
+   "militaryYear": 2025
   },
   {
    "iso": "SDN",
@@ -1514,7 +1514,7 @@
    "populationYear": 2025,
    "gdpUsd": 60162634574.4689,
    "gdpYear": 2025,
-   "militaryUsd": 375212619.388697,
+   "militaryUsd": 369443039.163841,
    "militaryYear": 2021
   },
   {
@@ -1523,8 +1523,8 @@
    "populationYear": 2025,
    "gdpUsd": 37006536238.3731,
    "gdpYear": 2025,
-   "militaryUsd": 514941285.308382,
-   "militaryYear": 2024
+   "militaryUsd": 566873602.751505,
+   "militaryYear": 2025
   },
   {
    "iso": "SGP",
@@ -1532,8 +1532,8 @@
    "populationYear": 2025,
    "gdpUsd": 603869516998.738,
    "gdpYear": 2025,
-   "militaryUsd": 15061025802.2031,
-   "militaryYear": 2024
+   "militaryUsd": 17438486492.2764,
+   "militaryYear": 2025
   },
   {
    "iso": "SLB",
@@ -1550,8 +1550,8 @@
    "populationYear": 2025,
    "gdpUsd": 7464157904.43509,
    "gdpYear": 2025,
-   "militaryUsd": 36447048.8625476,
-   "militaryYear": 2024
+   "militaryUsd": 32182766.1089669,
+   "militaryYear": 2025
   },
   {
    "iso": "SLV",
@@ -1559,8 +1559,8 @@
    "populationYear": 2025,
    "gdpUsd": 36708110000,
    "gdpYear": 2025,
-   "militaryUsd": 425200000,
-   "militaryYear": 2024
+   "militaryUsd": 490000000,
+   "militaryYear": 2025
   },
   {
    "iso": "SMR",
@@ -1577,8 +1577,8 @@
    "populationYear": 2025,
    "gdpUsd": 12995200000.2658,
    "gdpYear": 2025,
-   "militaryUsd": 201854000,
-   "militaryYear": 2024
+   "militaryUsd": 199468000,
+   "militaryYear": 2025
   },
   {
    "iso": "SRB",
@@ -1586,8 +1586,8 @@
    "populationYear": 2025,
    "gdpUsd": 99953324472.9042,
    "gdpYear": 2025,
-   "militaryUsd": 2322830101.6066,
-   "militaryYear": 2024
+   "militaryUsd": 2781295696.28539,
+   "militaryYear": 2025
   },
   {
    "iso": "SSD",
@@ -1595,8 +1595,8 @@
    "populationYear": 2025,
    "gdpUsd": 11997800760.2242,
    "gdpYear": 2015,
-   "militaryUsd": 2027890373.09995,
-   "militaryYear": 2024
+   "militaryUsd": 178422465.694743,
+   "militaryYear": 2025
   },
   {
    "iso": "STP",
@@ -1622,8 +1622,8 @@
    "populationYear": 2025,
    "gdpUsd": 154530066506.895,
    "gdpYear": 2025,
-   "militaryUsd": 2849224738.28021,
-   "militaryYear": 2024
+   "militaryUsd": 3118330513.25437,
+   "militaryYear": 2025
   },
   {
    "iso": "SVN",
@@ -1631,8 +1631,8 @@
    "populationYear": 2025,
    "gdpUsd": 79648204979.3618,
    "gdpYear": 2025,
-   "militaryUsd": 951904999.881012,
-   "militaryYear": 2024
+   "militaryUsd": 1221658206.42978,
+   "militaryYear": 2025
   },
   {
    "iso": "SWE",
@@ -1640,8 +1640,8 @@
    "populationYear": 2025,
    "gdpUsd": 668998664082.081,
    "gdpYear": 2025,
-   "militaryUsd": 12040289402.7522,
-   "militaryYear": 2024
+   "militaryUsd": 16473477206.4967,
+   "militaryYear": 2025
   },
   {
    "iso": "SWZ",
@@ -1649,8 +1649,8 @@
    "populationYear": 2025,
    "gdpUsd": 5160679612.81734,
    "gdpYear": 2025,
-   "militaryUsd": 79655264.6081486,
-   "militaryYear": 2024
+   "militaryUsd": 93361425.0009785,
+   "militaryYear": 2025
   },
   {
    "iso": "SXM",
@@ -1667,8 +1667,8 @@
    "populationYear": 2025,
    "gdpUsd": 2387022853.48583,
    "gdpYear": 2025,
-   "militaryUsd": 26860869.6918082,
-   "militaryYear": 2024
+   "militaryUsd": 28380338.8842227,
+   "militaryYear": 2025
   },
   {
    "iso": "SYR",
@@ -1694,8 +1694,8 @@
    "populationYear": 2025,
    "gdpUsd": 21472835225.4338,
    "gdpYear": 2025,
-   "militaryUsd": 557711240.140698,
-   "militaryYear": 2024
+   "militaryUsd": 648809933.273715,
+   "militaryYear": 2025
   },
   {
    "iso": "TGO",
@@ -1703,8 +1703,8 @@
    "populationYear": 2025,
    "gdpUsd": 11889949067.4697,
    "gdpYear": 2025,
-   "militaryUsd": 195347349.222552,
-   "militaryYear": 2024
+   "militaryUsd": 204947549.441101,
+   "militaryYear": 2025
   },
   {
    "iso": "THA",
@@ -1712,8 +1712,8 @@
    "populationYear": 2025,
    "gdpUsd": 577009981112.015,
    "gdpYear": 2025,
-   "militaryUsd": 5522411647.48004,
-   "militaryYear": 2024
+   "militaryUsd": 5983978404.68406,
+   "militaryYear": 2025
   },
   {
    "iso": "TJK",
@@ -1721,8 +1721,8 @@
    "populationYear": 2025,
    "gdpUsd": 17660626562.4832,
    "gdpYear": 2025,
-   "militaryUsd": 246393473.020582,
-   "militaryYear": 2024
+   "militaryUsd": 246931888.321536,
+   "militaryYear": 2025
   },
   {
    "iso": "TKM",
@@ -1739,8 +1739,8 @@
    "populationYear": 2025,
    "gdpUsd": 1902180257.82737,
    "gdpYear": 2025,
-   "militaryUsd": 46400000,
-   "militaryYear": 2024
+   "militaryUsd": 47916000,
+   "militaryYear": 2025
   },
   {
    "iso": "TON",
@@ -1757,8 +1757,8 @@
    "populationYear": 2025,
    "gdpUsd": 25942749718.4685,
    "gdpYear": 2025,
-   "militaryUsd": 234544782.155796,
-   "militaryYear": 2024
+   "militaryUsd": 229899160.506055,
+   "militaryYear": 2025
   },
   {
    "iso": "TUN",
@@ -1766,8 +1766,8 @@
    "populationYear": 2025,
    "gdpUsd": 57502836548.0878,
    "gdpYear": 2025,
-   "militaryUsd": 1313683263.15451,
-   "militaryYear": 2024
+   "militaryUsd": 1484859113.76125,
+   "militaryYear": 2025
   },
   {
    "iso": "TUR",
@@ -1775,8 +1775,8 @@
    "populationYear": 2025,
    "gdpUsd": 1597293229287,
    "gdpYear": 2025,
-   "militaryUsd": 24978735534.6038,
-   "militaryYear": 2024
+   "militaryUsd": 29986711540.6008,
+   "militaryYear": 2025
   },
   {
    "iso": "TUV",
@@ -1793,8 +1793,8 @@
    "populationYear": 2025,
    "gdpUsd": 90143496090.4411,
    "gdpYear": 2025,
-   "militaryUsd": 920849885.868755,
-   "militaryYear": 2024
+   "militaryUsd": 1030461758.32071,
+   "militaryYear": 2025
   },
   {
    "iso": "UGA",
@@ -1802,8 +1802,8 @@
    "populationYear": 2025,
    "gdpUsd": 61985829288.1496,
    "gdpYear": 2025,
-   "militaryUsd": 1116761828.70832,
-   "militaryYear": 2024
+   "militaryUsd": 1296994464.2173,
+   "militaryYear": 2025
   },
   {
    "iso": "UKR",
@@ -1811,8 +1811,8 @@
    "populationYear": 2025,
    "gdpUsd": 214233312784.397,
    "gdpYear": 2025,
-   "militaryUsd": 64704990025.4782,
-   "militaryYear": 2024
+   "militaryUsd": 84109045741.8544,
+   "militaryYear": 2025
   },
   {
    "iso": "URY",
@@ -1820,8 +1820,8 @@
    "populationYear": 2025,
    "gdpUsd": 85347696277.6859,
    "gdpYear": 2025,
-   "militaryUsd": 1736764487.451,
-   "militaryYear": 2024
+   "militaryUsd": 1954316864.68679,
+   "militaryYear": 2025
   },
   {
    "iso": "USA",
@@ -1829,8 +1829,8 @@
    "populationYear": 2025,
    "gdpUsd": 30769700000000,
    "gdpYear": 2025,
-   "militaryUsd": 997309000000,
-   "militaryYear": 2024
+   "militaryUsd": 954387000000,
+   "militaryYear": 2025
   },
   {
    "iso": "UZB",
@@ -1838,7 +1838,7 @@
    "populationYear": 2025,
    "gdpUsd": 147038081129.405,
    "gdpYear": 2025,
-   "militaryUsd": 1440385072.20752,
+   "militaryUsd": 1440466815.75834,
    "militaryYear": 2018
   },
   {
@@ -1856,8 +1856,8 @@
    "populationYear": 2025,
    "gdpUsd": 99661244155.6306,
    "gdpYear": 2025,
-   "militaryUsd": 0,
-   "militaryYear": 2024
+   "militaryUsd": 2127936596.43571,
+   "militaryYear": 2017
   },
   {
    "iso": "VGB",
@@ -1883,8 +1883,8 @@
    "populationYear": 2025,
    "gdpUsd": 514697215165.065,
    "gdpYear": 2025,
-   "militaryUsd": 5500000000,
-   "militaryYear": 2018
+   "militaryUsd": 10487302148.8671,
+   "militaryYear": 2025
   },
   {
    "iso": "VUT",
@@ -1919,8 +1919,8 @@
    "populationYear": 2025,
    "gdpUsd": 427184325997.307,
    "gdpYear": 2025,
-   "militaryUsd": 2835956043.23652,
-   "militaryYear": 2024
+   "militaryUsd": 3173874329.74185,
+   "militaryYear": 2025
   },
   {
    "iso": "ZMB",
@@ -1928,8 +1928,8 @@
    "populationYear": 2025,
    "gdpUsd": 28879806220.1264,
    "gdpYear": 2025,
-   "militaryUsd": 349668209.787907,
-   "militaryYear": 2024
+   "militaryUsd": 405858785.205616,
+   "militaryYear": 2025
   },
   {
    "iso": "ZWE",
@@ -1937,8 +1937,8 @@
    "populationYear": 2025,
    "gdpUsd": 51215643905.5886,
    "gdpYear": 2025,
-   "militaryUsd": 98394292.7162675,
-   "militaryYear": 2024
+   "militaryUsd": 159639292.706335,
+   "militaryYear": 2025
   }
  ]
 }
