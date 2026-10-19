@@ -27,8 +27,8 @@
         "backers": [
           {
             "name": "United States",
-            "support": "arms",
-            "iso": "USA"
+            "iso": "USA",
+            "support": "arms"
           },
           {
             "name": "European Union",
@@ -36,18 +36,18 @@
           },
           {
             "name": "United Kingdom",
-            "support": "arms",
-            "iso": "GBR"
+            "iso": "GBR",
+            "support": "arms"
           },
           {
             "name": "Germany",
-            "support": "arms",
-            "iso": "DEU"
+            "iso": "DEU",
+            "support": "arms"
           },
           {
             "name": "Poland",
-            "support": "basing",
-            "iso": "POL"
+            "iso": "POL",
+            "support": "basing"
           }
         ]
       },
@@ -60,23 +60,23 @@
         "backers": [
           {
             "name": "North Korea",
-            "support": "troops",
-            "iso": "PRK"
+            "iso": "PRK",
+            "support": "troops"
           },
           {
             "name": "Iran",
-            "support": "arms",
-            "iso": "IRN"
+            "iso": "IRN",
+            "support": "arms"
           },
           {
             "name": "Belarus",
-            "support": "basing",
-            "iso": "BLR"
+            "iso": "BLR",
+            "support": "basing"
           },
           {
             "name": "China",
-            "support": "political",
-            "iso": "CHN"
+            "iso": "CHN",
+            "support": "political"
           }
         ]
       }
@@ -93,6 +93,28 @@
     ],
     "actorsUpdated": "2026-10",
     "peace": [
+      {
+        "date": "2026-10-09",
+        "kind": "talks",
+        "summary": "US envoys Witkoff and Kushner met Ukrainian, E3, European Commission and NATO officials in Miami. They discussed de-escalation before winter, energy security, grain exports and security guarantees ahead of the next US contact with Russia.",
+        "sources": [
+          {
+            "name": "The New Voice of Ukraine",
+            "url": "https://english.nv.ua/nation/negotiations-in-miami-witkoff-summarizes-meeting-with-ukrainian-and-eu-delegations-50648828.html"
+          }
+        ]
+      },
+      {
+        "date": "2026-10",
+        "kind": "collapse",
+        "summary": "An energy ceasefire announced by President Trump in mid-October reportedly lasted only a few hours before Russia resumed strikes on Ukraine's energy infrastructure, and Ukraine answered with mass drone attacks on 18 October.",
+        "sources": [
+          {
+            "name": "Washington Times",
+            "url": "https://www.washingtontimes.com/news/2026/oct/18/ukraine-launches-1000-drones-russian-oil-terminals-data-centers/"
+          }
+        ]
+      },
       {
         "date": "2026-01",
         "kind": "talks",
@@ -147,6 +169,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "high",
+        "status": "On 9 October 2026 US envoys Witkoff and Kushner met Ukrainian, E3, EU and NATO officials in Miami to prepare for the next US contact with Russia. A US-announced energy ceasefire then collapsed within hours as Russian strikes on Ukraine's power grid continued. ISW reported Ukrainian counterattacks east of Sloviansk and Kramatorsk, and on 18 October Ukraine launched more than 1,000 drones at Russia, hitting St Petersburg oil terminals.",
+        "sources": [
+          {
+            "name": "The New Voice of Ukraine – Witkoff summarizes Miami meeting",
+            "url": "https://english.nv.ua/nation/negotiations-in-miami-witkoff-summarizes-meeting-with-ukrainian-and-eu-delegations-50648828.html"
+          },
+          {
+            "name": "Washington Times – Ukraine launches more than 1,000 drones at Russian oil terminals",
+            "url": "https://www.washingtontimes.com/news/2026/oct/18/ukraine-launches-1000-drones-russian-oil-terminals-data-centers/"
+          },
+          {
+            "name": "Euromaidan Press – Ukraine pushes Russia back across the Siverskyi Donets, ISW says",
+            "url": "https://euromaidanpress.com/2026/10/09/ukraine-reruns-its-vivaldi-playbook-outside-kramatorsk-and-pushes-russia-back-across-the-siverskyi-donets-isw-says/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "high",
@@ -214,18 +256,18 @@
         "backers": [
           {
             "name": "Egypt",
-            "support": "political",
-            "iso": "EGY"
+            "iso": "EGY",
+            "support": "political"
           },
           {
             "name": "Iran",
-            "support": "arms",
-            "iso": "IRN"
+            "iso": "IRN",
+            "support": "arms"
           },
           {
             "name": "Türkiye",
-            "support": "arms",
-            "iso": "TUR"
+            "iso": "TUR",
+            "support": "arms"
           }
         ]
       },
@@ -237,8 +279,8 @@
         "backers": [
           {
             "name": "United Arab Emirates",
-            "support": "arms",
-            "iso": "ARE"
+            "iso": "ARE",
+            "support": "arms"
           }
         ]
       },
@@ -296,6 +338,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "high",
+        "status": "Heavy fighting continued from 7 to 19 October 2026. Army chief al-Burhan ruled out talks with the RSF on 6 October. Al Jazeera reported on 17 October that the army said it killed dozens of RSF fighters in an attack in Nyala. Army air and drone strikes killed civilians in North and West Kordofan on 15 and 17 October. On 19 October, RSF drones were shot down near Khartoum airport (three children were reported killed), and the army said it repelled an RSF–SPLM-N assault near Kurmuk in Blue Nile.",
+        "sources": [
+          {
+            "name": "Al Jazeera",
+            "url": "https://www.aljazeera.com/news/2026/10/17/2550"
+          },
+          {
+            "name": "Sudan Tribune",
+            "url": "https://sudantribune.com/article/320162"
+          },
+          {
+            "name": "Sudan Tribune",
+            "url": "https://sudantribune.com/article/320151"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "high",
@@ -364,8 +426,8 @@
         "backers": [
           {
             "name": "United States",
-            "support": "arms",
-            "iso": "USA"
+            "iso": "USA",
+            "support": "arms"
           }
         ]
       },
@@ -377,13 +439,13 @@
         "backers": [
           {
             "name": "Iran",
-            "support": "arms",
-            "iso": "IRN"
+            "iso": "IRN",
+            "support": "arms"
           },
           {
             "name": "Qatar",
-            "support": "political",
-            "iso": "QAT"
+            "iso": "QAT",
+            "support": "political"
           }
         ]
       },
@@ -395,23 +457,23 @@
         "backers": [
           {
             "name": "United States",
-            "support": "political",
-            "iso": "USA"
+            "iso": "USA",
+            "support": "political"
           },
           {
             "name": "Egypt",
-            "support": "political",
-            "iso": "EGY"
+            "iso": "EGY",
+            "support": "political"
           },
           {
             "name": "Qatar",
-            "support": "political",
-            "iso": "QAT"
+            "iso": "QAT",
+            "support": "political"
           },
           {
             "name": "Türkiye",
-            "support": "political",
-            "iso": "TUR"
+            "iso": "TUR",
+            "support": "political"
           }
         ]
       }
@@ -428,6 +490,17 @@
     ],
     "actorsUpdated": "2026-10",
     "peace": [
+      {
+        "date": "2026-10-18",
+        "kind": "mediation",
+        "summary": "Board of Peace envoy Nickolay Mladenov demanded that Israel immediately let the International Stabilization Force and the Palestinian technocratic committee into Gaza, after Israel blocked construction of the force's base.",
+        "sources": [
+          {
+            "name": "Haaretz",
+            "url": "https://haaretz.com/gaza/2026-10-18/ty-article/.premium/board-of-peace-urges-israel-to-let-in-gaza-technocrats-international-force/000001a1-4da0-dd09-adaf-7ff85f170000"
+          }
+        ]
+      },
       {
         "date": "2026-08",
         "kind": "collapse",
@@ -478,6 +551,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "medium",
+        "status": "The October 2025 ceasefire reached its first anniversary on 10 October 2026. More than 100 aid groups said it existed \"in name only\", and Gaza's Health Ministry reported 1,488 people killed between the start of the truce and 11 October. Israeli strikes killed more people on 14–15 October. Israel has still not let in contractors to build the base for the International Stabilization Force, and on 18 October Board of Peace envoy Nickolay Mladenov demanded that Israel let the force and the technocratic committee into Gaza.",
+        "sources": [
+          {
+            "name": "Al Jazeera – Palestine weekly: Gaza marks year of 'ceasefire' with more Israeli killing",
+            "url": "https://www.aljazeera.com/news/2026/10/13/palestine-weekly-gaza-marks-year-of-ceasefire-with-more-israeli-killing"
+          },
+          {
+            "name": "FDD's Long War Journal – Israel reportedly blocks Board of Peace base in Gaza, IDF reports 31 ceasefire violations October 1–15",
+            "url": "https://www.longwarjournal.org/archives/2026/10/israel-reportedly-blocks-board-of-peace-base-in-gaza-idf-reports-31-ceasefire-violations-october-1-15.php"
+          },
+          {
+            "name": "Haaretz – Board of Peace Envoy Urges Israel to Let International Stabilization Force, Palestinian Technocrats Into Gaza",
+            "url": "https://haaretz.com/gaza/2026-10-18/ty-article/.premium/board-of-peace-urges-israel-to-let-in-gaza-technocrats-international-force/000001a1-4da0-dd09-adaf-7ff85f170000"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "medium",
@@ -546,8 +639,8 @@
         "backers": [
           {
             "name": "United States",
-            "support": "arms",
-            "iso": "USA"
+            "iso": "USA",
+            "support": "arms"
           }
         ]
       },
@@ -559,8 +652,8 @@
         "backers": [
           {
             "name": "Iran",
-            "support": "arms",
-            "iso": "IRN"
+            "iso": "IRN",
+            "support": "arms"
           }
         ]
       },
@@ -573,13 +666,13 @@
         "backers": [
           {
             "name": "United States",
-            "support": "political",
-            "iso": "USA"
+            "iso": "USA",
+            "support": "political"
           },
           {
             "name": "France",
-            "support": "political",
-            "iso": "FRA"
+            "iso": "FRA",
+            "support": "political"
           }
         ]
       }
@@ -596,6 +689,17 @@
     ],
     "actorsUpdated": "2026-10",
     "peace": [
+      {
+        "date": "2026-10-19",
+        "kind": "talks",
+        "summary": "Israel and Lebanon were set to hold US-hosted military talks at CENTCOM in Tampa on pilot zones, Lebanese army deployment and Israeli withdrawal; Lebanon said it would reject direct military coordination.",
+        "sources": [
+          {
+            "name": "The National",
+            "url": "https://www.thenationalnews.com/news/mena/2026/10/19/lebanon-to-reject-direct-military-co-ordination-with-israel-at-florida-talks/"
+          }
+        ]
+      },
       {
         "date": "2026-06-26",
         "kind": "agreement",
@@ -642,6 +746,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "medium",
+        "status": "Israeli strikes in Lebanon continued after 7 October 2026. They included airstrikes in the south on 10 October and an IDF killing on 9 October, far from the south, of a man it said planned attacks under Iranian direction. As of 19 October, Israel and Lebanon were due to hold military talks at US Central Command in Tampa on pilot zones, Lebanese army deployment and Israeli withdrawal. Beirut said it would reject direct military coordination, and progress has stalled since July.",
+        "sources": [
+          {
+            "name": "The National – Lebanon to reject direct military co-ordination with Israel at Florida talks (2026-10-19)",
+            "url": "https://www.thenationalnews.com/news/mena/2026/10/19/lebanon-to-reject-direct-military-co-ordination-with-israel-at-florida-talks/"
+          },
+          {
+            "name": "Alma/Meir Amit ITIC – Spotlight on Terrorism: Hezbollah and Lebanon (October 5-12, 2026)",
+            "url": "https://www.terrorism-info.org.il/en/spotlight-on-terrorism-hezbollah-and-lebanon-october-5-12-2026/"
+          },
+          {
+            "name": "CFR Global Conflict Tracker – Conflict With Hezbollah in Lebanon",
+            "url": "https://www.cfr.org/global-conflict-tracker/conflict/political-instability-lebanon"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "medium",
@@ -712,13 +836,13 @@
         "backers": [
           {
             "name": "Russia",
-            "support": "political",
-            "iso": "RUS"
+            "iso": "RUS",
+            "support": "political"
           },
           {
             "name": "China",
-            "support": "political",
-            "iso": "CHN"
+            "iso": "CHN",
+            "support": "political"
           }
         ]
       },
@@ -761,6 +885,17 @@
     ],
     "actorsUpdated": "2026-10",
     "peace": [
+      {
+        "date": "2026-10-18",
+        "kind": "talks",
+        "summary": "Iran's foreign minister Abbas Araghchi said Tehran was still reviewing US comments, received through intermediaries, on its September seven-day ceasefire proposal, and that its conditions for reopening Hormuz still stood.",
+        "sources": [
+          {
+            "name": "CBS News",
+            "url": "https://www.cbsnews.com/live-updates/iran-war-us-trump-strait-of-hormuz-yemen-houthis-saudi-arabia/"
+          }
+        ]
+      },
       {
         "date": "2026-10",
         "kind": "talks",
@@ -811,6 +946,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "high",
+        "status": "Attacks on shipping in and near the Strait of Hormuz picked up in October 2026. The IMO recorded a ship struck almost every day, Al Jazeera counted at least 12 attacks in the week to 16 October, and a container ship sank after hitting a mine. On 15 October US officials reportedly weighed using a high-yield bomb on Iranian sites. On 18 October Iran said it was still reviewing US comments on its seven-day ceasefire plan and that its conditions for reopening Hormuz were unchanged.",
+        "sources": [
+          {
+            "name": "Al Jazeera – US and Iran both claim control of Strait of Hormuz amid attacks on vessels (17 Oct 2026)",
+            "url": "https://www.aljazeera.com/news/2026/10/17/us-and-iran-both-claim-control-of-strait-of-hormuz-amid-attacks-on-vessels"
+          },
+          {
+            "name": "CBS News live updates – Iran says Hormuz reopening, seven-day ceasefire conditions still on the table (18 Oct 2026)",
+            "url": "https://www.cbsnews.com/live-updates/iran-war-us-trump-strait-of-hormuz-yemen-houthis-saudi-arabia/"
+          },
+          {
+            "name": "CFR Global Conflict Tracker – Conflict With Iran",
+            "url": "https://www.cfr.org/global-conflict-tracker/conflict/confrontation-between-united-states-and-iran"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "high",
@@ -880,8 +1035,8 @@
         "backers": [
           {
             "name": "Iran",
-            "support": "arms",
-            "iso": "IRN"
+            "iso": "IRN",
+            "support": "arms"
           }
         ]
       },
@@ -893,23 +1048,23 @@
         "backers": [
           {
             "name": "Saudi Arabia",
-            "support": "troops",
-            "iso": "SAU"
+            "iso": "SAU",
+            "support": "troops"
           },
           {
             "name": "United Arab Emirates",
-            "support": "arms",
-            "iso": "ARE"
+            "iso": "ARE",
+            "support": "arms"
           },
           {
             "name": "Türkiye",
-            "support": "troops",
-            "iso": "TUR"
+            "iso": "TUR",
+            "support": "troops"
           },
           {
             "name": "Pakistan",
-            "support": "troops",
-            "iso": "PAK"
+            "iso": "PAK",
+            "support": "troops"
           }
         ]
       },
@@ -978,6 +1133,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "high",
+        "status": "From 6 to 12 October 2026, Houthi missile and drone attacks on airports in Abha, Riyadh and Dammam killed at least 20 people. Saudi-led coalition aircraft hit Sanaa, including oil facilities, and further Houthi attacks on Riyadh were intercepted on 13 October. By 18–19 October, government forces were pushing offensives in Taiz, al-Jawf and Marib. A Houthi ballistic missile strike killed at least 53 government troops, and the GCC condemned the attacks on Saudi Arabia.",
+        "sources": [
+          {
+            "name": "Al Jazeera – GCC condemns Houthi attacks on Saudi Arabia as Yemen fighting intensifies (18 Oct 2026)",
+            "url": "https://www.aljazeera.com/news/2026/10/18/gcc-condemns-houthi-attacks-on-saudi-arabia-as-yemen-fighting-intensifies"
+          },
+          {
+            "name": "PBS NewsHour/AP – Houthi ballistic missiles kill at least 53 government forces",
+            "url": "https://pbs.org/newshour/world/iran-backed-houthi-rebels-strike-yemens-government-forces-with-ballistic-missiles-killing-at-least-53"
+          },
+          {
+            "name": "Bloomberg – Saudi Arabia intercepts new Houthi missile attacks on Riyadh (13 Oct 2026)",
+            "url": "https://www.bloomberg.com/news/articles/2026-10-13/saudi-arabia-intercepts-new-houthi-attacks-as-conflict-drags-on"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "high",
@@ -1049,23 +1224,23 @@
         "backers": [
           {
             "name": "Türkiye",
-            "support": "arms",
-            "iso": "TUR"
+            "iso": "TUR",
+            "support": "arms"
           },
           {
             "name": "Qatar",
-            "support": "funding",
-            "iso": "QAT"
+            "iso": "QAT",
+            "support": "funding"
           },
           {
             "name": "Saudi Arabia",
-            "support": "funding",
-            "iso": "SAU"
+            "iso": "SAU",
+            "support": "funding"
           },
           {
             "name": "United States",
-            "support": "political",
-            "iso": "USA"
+            "iso": "USA",
+            "support": "political"
           }
         ]
       },
@@ -1077,8 +1252,8 @@
         "backers": [
           {
             "name": "United States",
-            "support": "arms",
-            "iso": "USA"
+            "iso": "USA",
+            "support": "arms"
           }
         ]
       },
@@ -1181,7 +1356,8 @@
           }
         ]
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "myanmar",
@@ -1210,13 +1386,13 @@
         "backers": [
           {
             "name": "Russia",
-            "support": "arms",
-            "iso": "RUS"
+            "iso": "RUS",
+            "support": "arms"
           },
           {
             "name": "China",
-            "support": "political",
-            "iso": "CHN"
+            "iso": "CHN",
+            "support": "political"
           }
         ]
       },
@@ -1246,6 +1422,17 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-10-15",
+        "kind": "talks",
+        "summary": "Myanmar Now reported that the KIO/KIA had rejected the military government's invitation to peace talks in Naypyitaw. CNF and ABSDF also called a junta talks offer a ploy and refused it.",
+        "sources": [
+          {
+            "name": "Myanmar Now",
+            "url": "https://myanmar-now.org/en/news/kio-kia-rejects-myanmar-juntas-offer-of-peace-talks/"
+          }
+        ]
+      },
+      {
         "date": "2026-04",
         "kind": "collapse",
         "summary": "Min Aung Hlaing was sworn in as president after junta-run elections boycotted by the opposition; fighting stayed intense.",
@@ -1269,6 +1456,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "high",
+        "status": "Heavy fighting continued between 7 and 19 October 2026. Since 7 October, junta gunboats and landing craft have tried to put troops ashore on Nga Pyi Island near Sittwe, which the Arakan Army has besieged. The AA has driven them back and damaged several navy vessels. Air strikes went on across the country, including about 30 in Sagaing and others in Mon and Magway. The KIO/KIA, CNF and ABSDF turned down junta offers of peace talks.",
+        "sources": [
+          {
+            "name": "The Irrawaddy",
+            "url": "https://www.irrawaddy.com/news/burma/myanmar-regimes-sittwe-counteroffensive-hits-the-rocks-on-nga-pyi-island.html"
+          },
+          {
+            "name": "Myanmar Now",
+            "url": "https://myanmar-now.org/en/news/kio-kia-rejects-myanmar-juntas-offer-of-peace-talks/"
+          },
+          {
+            "name": "CFR Global Conflict Tracker",
+            "url": "https://www.cfr.org/global-conflict-tracker/conflict/rohingya-crisis-myanmar"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "high",
@@ -1352,13 +1559,13 @@
         "backers": [
           {
             "name": "Russia (Africa Corps)",
-            "support": "troops",
-            "iso": "RUS"
+            "iso": "RUS",
+            "support": "troops"
           },
           {
             "name": "Türkiye",
-            "support": "arms",
-            "iso": "TUR"
+            "iso": "TUR",
+            "support": "arms"
           }
         ]
       }
@@ -1399,6 +1606,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "high",
+        "status": "As of 19 October 2026, JNIM was still blockading Bamako following its offensive with the Azawad Liberation Front that began on 25 April 2026. New fighting broke out between JNIM and Islamic State Sahel Province in the Mali–Burkina Faso–Niger tri-border area on 9 October 2026, adding to their turf war after the deadly clashes in Burkina Faso reported in September. Attacks on state forces continued across the three countries, and no negotiation track exists.",
+        "sources": [
+          {
+            "name": "Africanews – Al-Qaeda and IS rivalry sparks fierce fighting across Sahel (16 Oct 2026)",
+            "url": "https://www.africanews.com/2026/10/16/rival-jnim-and-islamic-state-jihadists-clash-in-intensifying-sahel-turf-war/"
+          },
+          {
+            "name": "CFR Global Conflict Tracker – Violent Extremism in the Sahel",
+            "url": "https://www.cfr.org/global-conflict-tracker/conflict/violent-extremism-sahel"
+          },
+          {
+            "name": "Wikipedia – 2026 Mali offensives",
+            "url": "https://en.wikipedia.org/wiki/2026_Mali_offensives"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "high",
@@ -1469,8 +1696,8 @@
         "backers": [
           {
             "name": "Rwanda",
-            "support": "troops",
-            "iso": "RWA"
+            "iso": "RWA",
+            "support": "troops"
           }
         ]
       },
@@ -1483,13 +1710,13 @@
         "backers": [
           {
             "name": "Burundi",
-            "support": "troops",
-            "iso": "BDI"
+            "iso": "BDI",
+            "support": "troops"
           },
           {
             "name": "Uganda",
-            "support": "troops",
-            "iso": "UGA"
+            "iso": "UGA",
+            "support": "troops"
           }
         ]
       },
@@ -1501,13 +1728,13 @@
         "backers": [
           {
             "name": "United States",
-            "support": "political",
-            "iso": "USA"
+            "iso": "USA",
+            "support": "political"
           },
           {
             "name": "Qatar",
-            "support": "political",
-            "iso": "QAT"
+            "iso": "QAT",
+            "support": "political"
           }
         ]
       }
@@ -1570,6 +1797,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "medium",
+        "status": "On 12 October 2026, former President Joseph Kabila appeared in M23-held Goma alongside M23 leaders to launch the Front pour la refondation de la nation (FRN), a political-military coalition against the Tshisekedi government that includes M23/AFC. Clashes between M23 and Wazalendo militias went on into early October, including in south-central Lubero. A new Doha round planned for October now looks uncertain, and M23 still holds Goma, Bukavu and much of the Kivus.",
+        "sources": [
+          {
+            "name": "ACLED – Former DRC president forms rebel alliance with M23",
+            "url": "https://acleddata.com/expert-comment/former-drc-president-forms-rebel-alliance-m23-what-does-mean-peace-congo"
+          },
+          {
+            "name": "Al Jazeera – Ex-DRC President Kabila's alliance with M23 rebels: Why it matters",
+            "url": "https://www.aljazeera.com/news/2026/10/14/ex-drc-president-joseph-kabila-joins-hands-with-m23-rebels-why-it-matters"
+          },
+          {
+            "name": "Critical Threats – Congo War Security Review, October 7, 2026",
+            "url": "https://www.criticalthreats.org/briefs/congo-war-security-review"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "medium",
@@ -1647,13 +1894,13 @@
           },
           {
             "name": "United States",
-            "support": "troops",
-            "iso": "USA"
+            "iso": "USA",
+            "support": "troops"
           },
           {
             "name": "Türkiye",
-            "support": "arms",
-            "iso": "TUR"
+            "iso": "TUR",
+            "support": "arms"
           }
         ]
       },
@@ -1727,7 +1974,8 @@
           }
         ]
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "ethiopia",
@@ -1765,8 +2013,8 @@
         "backers": [
           {
             "name": "Eritrea",
-            "support": "political",
-            "iso": "ERI"
+            "iso": "ERI",
+            "support": "political"
           }
         ]
       },
@@ -1789,6 +2037,28 @@
     ],
     "actorsUpdated": "2026-10",
     "peace": [
+      {
+        "date": "2026-10-16",
+        "kind": "roadmap",
+        "summary": "PM Abiy Ahmed named a six-month federal caretaker administration for Tigray, tasked with restoring security, returning displaced people and organizing regional elections.",
+        "sources": [
+          {
+            "name": "Al Jazeera",
+            "url": "https://www.aljazeera.com/news/2026/10/16/ethiopia-announces-instalment-of-interim-government-in-tigray"
+          }
+        ]
+      },
+      {
+        "date": "2026-10-09",
+        "kind": "mediation",
+        "summary": "UN Secretary-General Guterres called for an immediate end to fighting in Tigray, Afar and Amhara and urged the signatories of the Pretoria Agreement to return to dialogue under its framework.",
+        "sources": [
+          {
+            "name": "UN News",
+            "url": "https://news.un.org/en/story/2026/10/1168570"
+          }
+        ]
+      },
       {
         "date": "2026-09-23",
         "kind": "collapse",
@@ -1813,6 +2083,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "high",
+        "status": "Federal forces (ENDF) and the pro-government Tigray Peace Force pushed into Adwa, Axum, Adigrat and Zalambessa between 12 and 15 October 2026. They took Rama near the Eritrean border on 15 October, while the TDF briefly retook Abiy Adi in Central Tigray. On 16 October Abiy Ahmed named a six-month federal caretaker administration for Tigray and promised elections. Ethiopia and Eritrea have each told the UN Security Council that the other started the war.",
+        "sources": [
+          {
+            "name": "ACLED – Conflict in Ethiopia",
+            "url": "https://acleddata.com/country/conflict-ethiopia"
+          },
+          {
+            "name": "Al Jazeera – Ethiopian forces expand control in Tigray as militia claims Eritrean losses (15 Oct 2026)",
+            "url": "https://www.aljazeera.com/news/2026/10/15/ethiopian-forces-expand-control-in-tigray-as-militia-claims-eritrean-losses"
+          },
+          {
+            "name": "Africanews – Ethiopia appoints interim Tigray government after TPLF ouster (16 Oct 2026)",
+            "url": "https://www.africanews.com/2026/10/16/ethiopia-appoints-interim-tigray-government-after-tplf-ouster/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "high",
@@ -1881,8 +2171,8 @@
         "backers": [
           {
             "name": "Uganda",
-            "support": "troops",
-            "iso": "UGA"
+            "iso": "UGA",
+            "support": "troops"
           }
         ]
       },
@@ -1984,7 +2274,8 @@
           }
         ]
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "haiti",
@@ -2019,8 +2310,8 @@
         "backers": [
           {
             "name": "United States",
-            "support": "funding",
-            "iso": "USA"
+            "iso": "USA",
+            "support": "funding"
           }
         ]
       },
@@ -2032,8 +2323,8 @@
         "backers": [
           {
             "name": "Kenya",
-            "support": "troops",
-            "iso": "KEN"
+            "iso": "KEN",
+            "support": "troops"
           }
         ]
       }
@@ -2063,6 +2354,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "high",
+        "status": "On 18 October 2026, gangs attacked an armoured vehicle of the UN-backed Gang Suppression Force with gunfire and explosives in the Santo area of Croix-des-Bouquets, Port-au-Prince. Four Salvadoran soldiers have been missing since the attack, which AP called the force's first major attack since it began operations. Fighting has slowed the search. The force has just over 1,500 personnel, gangs control about 70% of the capital, and the first round of elections is set for 13 December 2026.",
+        "sources": [
+          {
+            "name": "AP via Washington Times",
+            "url": "https://www.washingtontimes.com/news/2026/oct/19/gangs-haiti-target-foreign-troops-largest-attack-since-new-force/"
+          },
+          {
+            "name": "The Haitian Times",
+            "url": "https://haitiantimes.com/2026/10/19/four-salvadoran-soldiers-gsf-haiti-missing-attack/"
+          },
+          {
+            "name": "CBC News",
+            "url": "https://www.cbc.ca/news/world/haiti-gang-suppression-force-attacked-9.7387206"
+          }
+        ],
+        "confidence": "high"
+      },
       {
         "date": "2026-10-07",
         "intensity": "high",
@@ -2150,8 +2461,8 @@
         "backers": [
           {
             "name": "United States",
-            "support": "intelligence",
-            "iso": "USA"
+            "iso": "USA",
+            "support": "intelligence"
           }
         ]
       }
@@ -2181,6 +2492,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "high",
+        "status": "Jihadist attacks in Borno went on after ISWAP's 7 October 2026 assault on the Kukawa base. On 13 October, insurgents attacked a military base in Guzamala LGA, killing about 15 soldiers and 5 militia members and burning military vehicles. Around 18 October, eight soldiers died when their patrol vehicle hit a landmine near the Cameroon border. Boko Haram also attacked communities in Adamawa, killing five security personnel and other people. Kidnappings and army rescue operations continued in Katsina and Zamfara.",
+        "sources": [
+          {
+            "name": "Sahara Reporters",
+            "url": "https://saharareporters.com/2026/10/15/breaking-iswap-terrorists-kill-about-15-soldiers-burn-military-vehicles-attack-borno"
+          },
+          {
+            "name": "TheCable",
+            "url": "https://www.thecable.ng/eight-soldiers-killed-as-patrol-vehicle-hits-iswap-landmine-in-borno/"
+          },
+          {
+            "name": "Vanguard",
+            "url": "https://www.vanguardngr.com/2026/10/boko-haram-attack-kills-soldiers-civilians-in-borno/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "high",
@@ -2254,8 +2585,8 @@
         "backers": [
           {
             "name": "Rwanda",
-            "support": "troops",
-            "iso": "RWA"
+            "iso": "RWA",
+            "support": "troops"
           },
           {
             "name": "European Union",
@@ -2327,7 +2658,8 @@
           }
         ]
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "colombia",
@@ -2357,8 +2689,8 @@
         "backers": [
           {
             "name": "Venezuela",
-            "support": "basing",
-            "iso": "VEN"
+            "iso": "VEN",
+            "support": "basing"
           }
         ]
       },
@@ -2383,8 +2715,8 @@
         "backers": [
           {
             "name": "United States",
-            "support": "funding",
-            "iso": "USA"
+            "iso": "USA",
+            "support": "funding"
           }
         ]
       }
@@ -2436,6 +2768,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "medium",
+        "status": "Fighting continued with no talks under way. An army operation that included an air strike killed four FARC dissidents in Catatumbo on 10 October 2026. Infobae reported on 18 October that clashes between the ELN and FARC dissidents in Catatumbo were displacing residents and involved drone attacks. The military counted 176 explosive-drone attacks so far in 2026. Colombia and Panama hit Clan del Golfo networks on the border on 9 October.",
+        "sources": [
+          {
+            "name": "Xinhua",
+            "url": "https://english.news.cn/20261014/612c3223d28940c7a87c7c11c5c59706/c.html"
+          },
+          {
+            "name": "Infobae",
+            "url": "https://www.infobae.com/colombia/2026/10/18/combates-entre-el-eln-y-disidencias-de-las-farc-en-el-catatumbo-provocan-desplazamientos-y-ataques-con-drones/"
+          },
+          {
+            "name": "InSight Crime",
+            "url": "https://insightcrime.org/colombia-organized-crime-news/urabenos-profile/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "medium",
@@ -2516,8 +2868,8 @@
         "backers": [
           {
             "name": "United States",
-            "support": "intelligence",
-            "iso": "USA"
+            "iso": "USA",
+            "support": "intelligence"
           }
         ]
       }
@@ -2535,6 +2887,26 @@
     "actorsUpdated": "2026-10",
     "peace": [],
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "medium",
+        "status": "Fighting between Sinaloa Cartel factions continues in Sinaloa. A clash in a Sinaloa prison killed 10 people around 8–9 October 2026, and Culiacán saw almost daily killings, including a 12 October attack on a house that left four dead. By mid-October troops had arrested suspects over the kidnapping of 10 Vizsla Silver miners in El Rosario and Mazatlán. Mexican data show Jalisco homicides down 39.6% in the first eight months of 2026.",
+        "sources": [
+          {
+            "name": "Al Jazeera",
+            "url": "https://www.aljazeera.com/news/2026/10/9/mexico-prison-clash-in-strife-torn-sinaloa-state-leaves-10-dead"
+          },
+          {
+            "name": "Rio Times",
+            "url": "https://riotimesonline.com/sinaloa-arrests-five-over-kidnapped-miners"
+          },
+          {
+            "name": "Mexico News Daily",
+            "url": "https://mexiconewsdaily.com/news/killing-el-mencho-cartel-cjng/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "medium",
@@ -2610,8 +2982,8 @@
         "backers": [
           {
             "name": "China",
-            "support": "arms",
-            "iso": "CHN"
+            "iso": "CHN",
+            "support": "arms"
           }
         ]
       }
@@ -2694,7 +3066,8 @@
           }
         ]
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "pakistan-afghanistan",
@@ -2726,8 +3099,8 @@
         "backers": [
           {
             "name": "China",
-            "support": "arms",
-            "iso": "CHN"
+            "iso": "CHN",
+            "support": "arms"
           }
         ]
       },
@@ -2840,7 +3213,8 @@
           }
         ]
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "libya",
@@ -2870,8 +3244,8 @@
         "backers": [
           {
             "name": "Türkiye",
-            "support": "troops",
-            "iso": "TUR"
+            "iso": "TUR",
+            "support": "troops"
           }
         ]
       },
@@ -2883,18 +3257,18 @@
         "backers": [
           {
             "name": "Russia (Africa Corps)",
-            "support": "troops",
-            "iso": "RUS"
+            "iso": "RUS",
+            "support": "troops"
           },
           {
             "name": "Egypt",
-            "support": "political",
-            "iso": "EGY"
+            "iso": "EGY",
+            "support": "political"
           },
           {
             "name": "United Arab Emirates",
-            "support": "arms",
-            "iso": "ARE"
+            "iso": "ARE",
+            "support": "arms"
           }
         ]
       },
@@ -2917,6 +3291,28 @@
     ],
     "actorsUpdated": "2026-10",
     "peace": [
+      {
+        "date": "2026-10-15",
+        "kind": "talks",
+        "summary": "Greece and Egypt held their third round of political consultations on Libya in Athens.",
+        "sources": [
+          {
+            "name": "Hellenic Republic Ministry of Foreign Affairs",
+            "url": "https://www.mfa.gr/en/third-round-of-greece-egypt-political-consultations-on-libya-athens-15-october-2026/"
+          }
+        ]
+      },
+      {
+        "date": "2026-10-14",
+        "kind": "mediation",
+        "summary": "UN envoy Hanna Tetteh briefed the Security Council on Libya and reported encouraging progress in the political process, despite the High Council of State's objections to the 30 August deal.",
+        "sources": [
+          {
+            "name": "UN Press – Security Council, 10242nd Meeting",
+            "url": "https://press.un.org/en/blog/sc16477"
+          }
+        ]
+      },
       {
         "date": "2026-08-30",
         "kind": "agreement",
@@ -2941,6 +3337,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "low",
+        "status": "On 6 October 2026 the House of Representatives replaced longtime speaker Aguila Saleh with Al-Saleheen Abdulnabi al-Obeidi. On 14 October UN envoy Hanna Tetteh told the Security Council the political process had made encouraging progress, but High Council of State head Mohammed Takala told the UN mission that the council rejects the '4+4' track behind the 30 August election deal. No major fighting was reported; the UN mission's mandate expires on 31 October.",
+        "sources": [
+          {
+            "name": "UN Press – Security Council, 10242nd Meeting, Libya (14 Oct 2026)",
+            "url": "https://press.un.org/en/blog/sc16477"
+          },
+          {
+            "name": "The New Arab – Libya's eastern lawmakers elect new speaker",
+            "url": "https://www.newarab.com/news/libyas-eastern-lawmakers-elect-new-speaker-amid-discontent"
+          },
+          {
+            "name": "Libya Observer",
+            "url": "https://libyaobserver.ly/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "low",
@@ -3016,8 +3432,8 @@
         "backers": [
           {
             "name": "China",
-            "support": "arms",
-            "iso": "CHN"
+            "iso": "CHN",
+            "support": "arms"
           }
         ]
       },
@@ -3029,8 +3445,8 @@
         "backers": [
           {
             "name": "United States",
-            "support": "political",
-            "iso": "USA"
+            "iso": "USA",
+            "support": "political"
           }
         ]
       }
@@ -3135,7 +3551,8 @@
           }
         ]
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "taiwan-strait",
@@ -3173,13 +3590,13 @@
         "backers": [
           {
             "name": "United States",
-            "support": "arms",
-            "iso": "USA"
+            "iso": "USA",
+            "support": "arms"
           },
           {
             "name": "Japan",
-            "support": "political",
-            "iso": "JPN"
+            "iso": "JPN",
+            "support": "political"
           }
         ]
       }
@@ -3209,6 +3626,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "latent",
+        "status": "In his 10 October 2026 National Day speech, President Lai Ching-te said Taiwan cherishes peace but will not give up its freedom, and he pointed to a record NT$1.1 trillion defence budget for 2027. Beijing condemned the speech. China then announced live-fire drills along its own coast from 12 to 20 October in the Bohai, Yellow, East China and South China seas, none of them around Taiwan. The Liaoning carrier group trained in the Philippine Sea on 14 October, and daily PLA air and naval activity near Taiwan stayed at a low to moderate level.",
+        "sources": [
+          {
+            "name": "Hong Kong Free Press (AFP): Taiwan 'preparing for the worst' as China begins live-fire drills",
+            "url": "https://hongkongfp.com/2026/10/12/taiwan-preparing-for-the-worst-as-china-begins-live-fire-drills/"
+          },
+          {
+            "name": "USNI News: Chinese Carrier Strike Group Heads to South China Sea After Philippine Sea Drills",
+            "url": "https://news.usni.org/2026/10/14/chinese-carrier-strike-group-drills-in-the-philippine-sea"
+          },
+          {
+            "name": "AEI/ISW China & Taiwan Update, October 16, 2026",
+            "url": "https://www.aei.org/commentary/china-taiwan-update-october-16-2026/"
+          }
+        ],
+        "confidence": "high"
+      },
       {
         "date": "2026-10-07",
         "intensity": "latent",
@@ -3278,13 +3715,13 @@
         "backers": [
           {
             "name": "Russia",
-            "support": "arms",
-            "iso": "RUS"
+            "iso": "RUS",
+            "support": "arms"
           },
           {
             "name": "China",
-            "support": "funding",
-            "iso": "CHN"
+            "iso": "CHN",
+            "support": "funding"
           }
         ]
       },
@@ -3297,13 +3734,13 @@
         "backers": [
           {
             "name": "United States",
-            "support": "troops",
-            "iso": "USA"
+            "iso": "USA",
+            "support": "troops"
           },
           {
             "name": "Japan",
-            "support": "political",
-            "iso": "JPN"
+            "iso": "JPN",
+            "support": "political"
           }
         ]
       }
@@ -3344,6 +3781,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "latent",
+        "status": "North Korea kept testing weapons after the 3 October IRBM launch. State media reported a tactical ballistic missile test on 12 October, submarine-launched strategic cruise missiles on 14 October and an AI-equipped torpedo test around 17 October. On 19 October Kim Yo Jong called the border 'very unstable' and blamed Seoul. She said Pyongyang is considering resuming loudspeaker broadcasts and deploying more tactical strike weapons along the border. Seoul reported a fourth suspected North Korean mine found this month. No talks took place.",
+        "sources": [
+          {
+            "name": "Stars and Stripes",
+            "url": "https://www.stripes.com/theaters/asia_pacific/2026-10-15/north-korea-submarine-launched-cruise-missiles-23160219.html"
+          },
+          {
+            "name": "ABC News (AP)",
+            "url": "https://abcnews.com/International/wireStory/north-korea-threatens-restart-propaganda-broadcasts-deploy-weapons-137373680"
+          },
+          {
+            "name": "Korea JoongAng Daily",
+            "url": "https://www.koreajoongangdaily.com/korea/kim-yojong-blames-seoul-for-border-tensions-threatens-to-resume-loudspeaker-broadcasts/12928611"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "latent",
@@ -3422,18 +3879,18 @@
         "backers": [
           {
             "name": "United States",
-            "support": "troops",
-            "iso": "USA"
+            "iso": "USA",
+            "support": "troops"
           },
           {
             "name": "Japan",
-            "support": "arms",
-            "iso": "JPN"
+            "iso": "JPN",
+            "support": "arms"
           },
           {
             "name": "Australia",
-            "support": "political",
-            "iso": "AUS"
+            "iso": "AUS",
+            "support": "political"
           }
         ]
       },
@@ -3470,6 +3927,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "low",
+        "status": "On 8 October 2026, Chinese coast guard ships fired a water cannon at Philippine boats and followed them while the Philippine Coast Guard evacuated a sick or injured navy serviceman from a disputed outpost. USNI reported on 9 October that incidents had spiked across the South China Sea and Luzon Strait. China's Liaoning carrier group sailed through the Luzon Strait into the South China Sea on 15 October, and by 19 October the two governments were trading sharp public statements.",
+        "sources": [
+          {
+            "name": "Marine Insight",
+            "url": "https://www.marineinsight.com/philippine-coast-guard-ship-stopped-short-by-china-coast-guard-cutter-using-water-cannon-during-medevac-of-navy-serviceman/"
+          },
+          {
+            "name": "USNI News",
+            "url": "https://news.usni.org/2026/10/09/philippine-and-chinese-incidents-spike-in-south-china-sea-luzon-strait"
+          },
+          {
+            "name": "USNI News",
+            "url": "https://news.usni.org/2026/10/16/usni-news-western-pacific-pulse-oct-16-2026"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "low",
@@ -3542,13 +4019,13 @@
           },
           {
             "name": "France",
-            "support": "arms",
-            "iso": "FRA"
+            "iso": "FRA",
+            "support": "arms"
           },
           {
             "name": "India",
-            "support": "arms",
-            "iso": "IND"
+            "iso": "IND",
+            "support": "arms"
           }
         ]
       },
@@ -3561,13 +4038,13 @@
         "backers": [
           {
             "name": "Türkiye",
-            "support": "arms",
-            "iso": "TUR"
+            "iso": "TUR",
+            "support": "arms"
           },
           {
             "name": "Israel",
-            "support": "arms",
-            "iso": "ISR"
+            "iso": "ISR",
+            "support": "arms"
           }
         ]
       },
@@ -3590,6 +4067,17 @@
     ],
     "actorsUpdated": "2026-10",
     "peace": [
+      {
+        "date": "2026-10-15",
+        "kind": "roadmap",
+        "summary": "Pashinyan said at a government meeting that Armenia aims to sign and ratify the initialled peace treaty with Azerbaijan by 2031.",
+        "sources": [
+          {
+            "name": "AFP via NAMPA",
+            "url": "https://www.nampa.org/text/23040414"
+          }
+        ]
+      },
       {
         "date": "2026-10",
         "kind": "talks",
@@ -3618,6 +4106,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "latent",
+        "status": "On 15 October 2026, Prime Minister Nikol Pashinyan told a government meeting he aims to have the peace treaty with Azerbaijan, initialled in August 2025, signed and ratified by 2031. That pushes the signing well beyond earlier expectations. Baku still requires Armenia to change its constitution first. On 14 October his office denied reports that he had met Presidents Putin and Aliyev in Turkmenistan. No deadly border clashes were reported, and work on the TRIPP corridor is still being prepared.",
+        "sources": [
+          {
+            "name": "AFP via NAMPA: Armenia PM hopes for Azerbaijan peace treaty within 5 years (15 Oct 2026)",
+            "url": "https://www.nampa.org/text/23040414"
+          },
+          {
+            "name": "Armenpress: Pashinyan aims to achieve signing of initialed peace agreement by 2031",
+            "url": "https://armenpress.am/en/article/1262853"
+          },
+          {
+            "name": "OC Media daily brief, 14 October 2026",
+            "url": "https://oc-media.org/wednesday-14-october-2026/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "latent",
@@ -3693,13 +4201,13 @@
         "backers": [
           {
             "name": "Russia",
-            "support": "political",
-            "iso": "RUS"
+            "iso": "RUS",
+            "support": "political"
           },
           {
             "name": "Cuba",
-            "support": "intelligence",
-            "iso": "CUB"
+            "iso": "CUB",
+            "support": "intelligence"
           }
         ]
       }
@@ -3717,6 +4225,17 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-10-09",
+        "kind": "talks",
+        "summary": "The US State Department said US-backed reconciliation talks between Venezuela's interim government and the 2015 National Assembly delegation had made concrete progress, with a third round set to begin on 14 October.",
+        "sources": [
+          {
+            "name": "U.S. Embassy Caracas",
+            "url": "https://ve.usembassy.gov/reconciliation-talks-deliver-concrete-progress-for-venezuelas-democratic-transition/"
+          }
+        ]
+      },
+      {
         "date": "2026-09-24",
         "kind": "talks",
         "summary": "Acting president Rodríguez told the UN that elections would follow, without a date.",
@@ -3729,6 +4248,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "low",
+        "status": "On 9 October 2026 the US State Department said the US-backed reconciliation talks between Venezuela's interim government and the 2015 National Assembly faction had made progress, and that a third round would start on 14 October. On 14 October the US Treasury lifted sanctions on National Assembly head Jorge Rodríguez. On 15 October Nicolás Maduro and Cilia Flores pleaded not guilty in New York to new torture charges. No new US strikes on Venezuelan territory were reported.",
+        "sources": [
+          {
+            "name": "CFR Global Conflict Tracker – Instability in Venezuela",
+            "url": "https://www.cfr.org/global-conflict-tracker/conflict/instability-venezuela"
+          },
+          {
+            "name": "U.S. Embassy Caracas – Reconciliation Talks Deliver Concrete Progress",
+            "url": "https://ve.usembassy.gov/reconciliation-talks-deliver-concrete-progress-for-venezuelas-democratic-transition/"
+          },
+          {
+            "name": "Reuters via US News – US Lifts Sanctions on Head of Venezuela Legislature",
+            "url": "https://www.usnews.com/news/top-news/articles/2026-10-14/us-lifts-sanctions-on-head-of-venezuela-legislature"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "low",
@@ -3838,6 +4377,22 @@
     ],
     "history": [
       {
+        "date": "2026-10-19",
+        "intensity": "low",
+        "status": "Sporadic violence went on in Cameroon's Anglophone regions between 7 and 19 October 2026. Unidentified gunmen shot journalist Ambe Macmillan Awa in Bamenda (Northwest) in mid-October and killed a young girl in the same incident. Media reported that troops captured separatist commander 'General' Shaggy alive in Ekona (Southwest) on 16 October. No peace talks are under way, and analysts say separatist attacks continue as the crisis marks a decade.",
+        "sources": [
+          {
+            "name": "CameroonOnline.org – Journalist Ambe Macmillan shot in Bamenda",
+            "url": "https://cameroononline.org/cameroonian-journalist-ambe-macmillan-shot-in-bamenda-young-girl-killed"
+          },
+          {
+            "name": "MMI News (X) – 'General' Shaggy captured in Ekona",
+            "url": "https://twitter.com/MimiMefoInfo/status/2111461044921020882"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
         "date": "2026-10-07",
         "intensity": "low",
         "status": "Paul Biya remained in office in 2026 as the conflict entered its ninth year with near-weekly ambushes and reprisals; in March the Supreme Court annulled the life sentences of ten separatist leaders. Separatists imposed school-year lockdowns in the Northwest and Southwest from 7 September 2026, killed a senior police officer and abducted teachers in Wum, and attacked Buea and Bamenda on 24–25 September. Violence spilled into the Littoral region, where three soldiers were killed.",
@@ -3943,6 +4498,17 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-10-18",
+        "kind": "talks",
+        "summary": "Iranian Foreign Minister Araghchi said Tehran was reviewing US comments on its seven-day ceasefire and Hormuz reopening proposal, which he said was still on the table, though Iran's conditions had not changed.",
+        "sources": [
+          {
+            "name": "CBS News",
+            "url": "https://www.cbsnews.com/live-updates/iran-war-us-trump-strait-of-hormuz-yemen-houthis-saudi-arabia/"
+          }
+        ]
+      },
+      {
         "date": "2026-07-14",
         "kind": "collapse",
         "summary": "The United States imposed a naval blockade of Iran after the April ceasefire collapsed on 8 July.",
@@ -3966,6 +4532,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "medium",
+        "status": "Attacks on shipping rose sharply in October 2026. Ships were hit almost every day, at least 12 vessels were attacked in the week to 16 October, and strikes spread outside the strait. The IRGC formally declared the Strait of Hormuz closed on 17 October, US aircraft disabled a ship running the blockade on 10 October, and on 19 October the IRGC said a tanker using an 'unauthorized' route hit a mine and caught fire. On 18 October Iran said it was still reviewing US comments on its seven-day ceasefire and reopening plan.",
+        "sources": [
+          {
+            "name": "Al Jazeera",
+            "url": "https://www.aljazeera.com/news/2026/10/17/us-and-iran-both-claim-control-of-strait-of-hormuz-amid-attacks-on-vessels"
+          },
+          {
+            "name": "USNI News",
+            "url": "https://news.usni.org/2026/10/09/october-sees-near-daily-strikes-on-ships-in-hormuz"
+          },
+          {
+            "name": "CBS News",
+            "url": "https://www.cbsnews.com/live-updates/iran-war-us-trump-strait-of-hormuz-yemen-houthis-saudi-arabia/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "medium",
@@ -4011,8 +4597,8 @@
         "backers": [
           {
             "name": "Iran",
-            "support": "arms",
-            "iso": "IRN"
+            "iso": "IRN",
+            "support": "arms"
           }
         ]
       },
@@ -4031,8 +4617,8 @@
         "backers": [
           {
             "name": "Saudi Arabia",
-            "support": "troops",
-            "iso": "SAU"
+            "iso": "SAU",
+            "support": "troops"
           }
         ]
       }
@@ -4077,7 +4663,8 @@
           }
         ]
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "balochistan",
@@ -4112,8 +4699,8 @@
         "backers": [
           {
             "name": "China",
-            "support": "funding",
-            "iso": "CHN"
+            "iso": "CHN",
+            "support": "funding"
           }
         ]
       }
@@ -4142,6 +4729,7 @@
           }
         ]
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   }
 ]

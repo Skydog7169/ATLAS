@@ -8,14 +8,18 @@
       "iso": "AFG",
       "date": null,
       "type": "general",
-      "note": "No date set",
+      "note": "No national election is scheduled. The Taliban's Islamic Emirate does not hold elections and has shown no intention to hold any.",
       "sources": [
+        {
+          "name": "BTI 2026 Afghanistan Country Report",
+          "url": "https://bti-project.org/en/reports/country-report/AFG"
+        },
         {
           "name": "Wikipedia: List of next general elections",
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-08"
+      "verified": "2026-10-19"
     },
     {
       "iso": "AGO",
@@ -177,14 +181,18 @@
       "iso": "BFA",
       "date": null,
       "type": "general",
-      "note": "No date set",
+      "note": "There is no election date. The military government has postponed elections, with only a general target of 2029.",
       "sources": [
+        {
+          "name": "BTI 2026 Burkina Faso Country Dashboard",
+          "url": "https://bti-project.org/en/reports/country-dashboard/BFA"
+        },
         {
           "name": "Wikipedia: List of next general elections",
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-08"
+      "verified": "2026-10-19"
     },
     {
       "iso": "BGD",
@@ -204,11 +212,16 @@
       "type": "presidential",
       "sources": [
         {
+          "name": "Sofia Globe",
+          "url": "https://sofiaglobe.com/2026/07/29/bulgaria-sets-october-25-date-for-2026-presidential-elections/"
+        },
+        {
           "name": "Wikipedia: List of next general elections",
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-08"
+      "verified": "2026-10-19",
+      "note": "First round. If no candidate wins 50% of the vote, a runoff will be held on November 1, 2026. Date set by the National Assembly on July 29, 2026."
     },
     {
       "iso": "BHR",
@@ -286,7 +299,12 @@
       "iso": "BRA",
       "date": "2026-10-25",
       "type": "presidential",
+      "note": "Second-round runoff between Flávio Bolsonaro and Lula; first round held 2026-10-04",
       "sources": [
+        {
+          "name": "Council on Foreign Relations",
+          "url": "https://www.cfr.org/articles/brazils-2026-election-what-to-know-and-whats-at-stake"
+        },
         {
           "name": "IFES ElectionGuide",
           "url": "https://www.electionguide.org/elections/id/5254/"
@@ -296,8 +314,7 @@
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-08",
-      "note": "Brazilian Presidency"
+      "verified": "2026-10-19"
     },
     {
       "iso": "BRB",
@@ -314,15 +331,19 @@
     {
       "iso": "BRN",
       "date": null,
-      "type": "general",
-      "note": "No date set",
+      "type": "legislative",
+      "note": "No change since the 2026-10-08 check. Brunei is an absolute monarchy and holds no national elections; the Sultan appoints the Legislative Council.",
       "sources": [
+        {
+          "name": "Freedom House – Brunei: Freedom in the World 2023",
+          "url": "https://freedomhouse.org/country/brunei/freedom-world/2023"
+        },
         {
           "name": "Wikipedia: List of next general elections",
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-08"
+      "verified": "2026-10-19"
     },
     {
       "iso": "BTN",
@@ -374,15 +395,20 @@
     },
     {
       "iso": "CHE",
-      "date": "2026-12-09",
+      "date": "2026-12",
       "type": "presidential",
       "sources": [
+        {
+          "name": "Wikipedia – Bundespräsident (Schweiz)",
+          "url": "https://de.wikipedia.org/wiki/Bundespr%C3%A4sident_(Schweiz)"
+        },
         {
           "name": "Wikipedia: List of next general elections",
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-08"
+      "verified": "2026-10-19",
+      "note": "Federal Assembly elects the 2027 President during the December winter session; exact day not confirmed in search results (expected 2026-12-09)"
     },
     {
       "iso": "CHL",
@@ -498,11 +524,16 @@
       "type": "presidential",
       "sources": [
         {
+          "name": "Lusa",
+          "url": "https://www.lusa.pt/lusofonia/article/2026-01-19/46382037/cabo-verde-realiza-elei%C3%A7%C3%B5es-legislativas-a-17-de-maio-e-presidenciais-a-15-de-novembro"
+        },
+        {
           "name": "Wikipedia: List of next general elections",
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-08"
+      "verified": "2026-10-19",
+      "note": "First round of the presidential election. The legislative election was held on 17 May 2026."
     },
     {
       "iso": "CRI",
@@ -666,11 +697,16 @@
       "type": "legislative",
       "sources": [
         {
+          "name": "La Moncloa",
+          "url": "https://www.lamoncloa.gob.es/lang/en/presidente/news/paginas/2026/20261005-institutional-statement.aspx"
+        },
+        {
           "name": "Wikipedia: List of next general elections",
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-08"
+      "verified": "2026-10-19",
+      "note": "Snap general election announced by Pedro Sánchez on 5 Oct 2026"
     },
     {
       "iso": "EST",
@@ -810,23 +846,33 @@
       "type": "presidential",
       "sources": [
         {
-          "name": "Wikipedia: List of next general elections",
-          "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
-        }
-      ],
-      "verified": "2026-10-08"
-    },
-    {
-      "iso": "GNB",
-      "date": "2026-12-06",
-      "type": "general",
-      "sources": [
+          "name": "Channels Television",
+          "url": "https://www.channelstv.com/2025/10/09/gambia-sets-december-2026-presidential-election-date/"
+        },
         {
           "name": "Wikipedia: List of next general elections",
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-08"
+      "verified": "2026-10-19",
+      "note": "The electoral commission set the presidential vote for 5 December 2026 and parliamentary elections for 10 April 2027."
+    },
+    {
+      "iso": "GNB",
+      "date": null,
+      "type": "general",
+      "sources": [
+        {
+          "name": "Reuters via Internazionale",
+          "url": "https://www.internazionale.it/ultime-notizie-reuters/2026/10/08/guinea-bissau-to-delay-elections-following-last-year-s-coup"
+        },
+        {
+          "name": "Wikipedia: List of next general elections",
+          "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
+        }
+      ],
+      "verified": "2026-10-19",
+      "note": "On 8 Oct 2026 the PM said the 6 Dec 2026 presidential and legislative elections would be delayed; no new date has been set"
     },
     {
       "iso": "GNQ",
@@ -916,14 +962,18 @@
       "iso": "HTI",
       "date": null,
       "type": "general",
-      "note": "No date set",
+      "note": "The 13 Dec 2026 first round was postponed indefinitely on 6 Oct 2026, and the electoral council has not set a new date.",
       "sources": [
+        {
+          "name": "France 24",
+          "url": "https://www.france24.com/en/americas/20261007-haiti-postpones-elections-indefinitely-as-gang-violence-hampers-preparations"
+        },
         {
           "name": "Wikipedia: List of next general elections",
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-08"
+      "verified": "2026-10-19"
     },
     {
       "iso": "HUN",
@@ -1015,11 +1065,16 @@
       "type": "legislative",
       "sources": [
         {
+          "name": "Library of Congress – In Custodia Legis: FALQs: Israel's Upcoming Election on October 27, 2026",
+          "url": "https://blogs.loc.gov/law/2026/10/falqs-israels-upcoming-election-on-october-27-2026/"
+        },
+        {
           "name": "Wikipedia: List of next general elections",
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-08"
+      "verified": "2026-10-19",
+      "note": "Early Knesset election after the Knesset dissolved on July 17, 2026"
     },
     {
       "iso": "ITA",

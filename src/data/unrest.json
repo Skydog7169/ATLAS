@@ -54,7 +54,8 @@
         ],
         "confidence": "medium"
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "madagascar-gen-z-uprising-coup",
@@ -108,7 +109,8 @@
         ],
         "confidence": "high"
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "serbia-anti-corruption-protests",
@@ -161,7 +163,8 @@
         ],
         "confidence": "high"
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "iran-2025-26-uprising-crackdown",
@@ -214,7 +217,8 @@
         ],
         "confidence": "medium"
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "tunisia-anti-saied-protests",
@@ -267,7 +271,8 @@
         ],
         "confidence": "medium"
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "us-anti-ice-no-kings-protests",
@@ -329,7 +334,8 @@
         ],
         "confidence": "high"
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "tanzania-post-election-crackdown",
@@ -387,7 +393,8 @@
         ],
         "confidence": "high"
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "argentina-austerity-protests",
@@ -445,7 +452,8 @@
         ],
         "confidence": "high"
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "bulgaria-gen-z-protests",
@@ -498,7 +506,8 @@
         ],
         "confidence": "high"
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "guinea-bissau-coup-2025",
@@ -520,6 +529,26 @@
     "trigger": "Soldiers seized power on 26 November 2025, a day before results of the 23 November presidential and legislative elections were due, halting the electoral process.",
     "summary": "The army took control of Bissau on 26 November 2025, suspended the vote count and installed army chief General Horta N'Tam as transitional president; President Embaló was removed and later left the country. It was unclear whether the takeover was a genuine coup or a manoeuvre to pre-empt Embaló's electoral defeat. The junta has since set elections for 6 December 2026 and has been purging Embaló loyalists from the security forces.",
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "medium",
+        "status": "As of 19 October 2026 the junta of Gen. Horta N'Tam is still consolidating power. On 2 October it blocked ex-president Embaló from returning from Morocco, and on 7 October it ordered presidential-guard members loyal to him to disarm. On about 9 October the authorities said conditions were not right for the 6 December 2026 elections, and reports say the vote is heading for postponement. No confirmed new date or lethal unrest was found for 15-19 October.",
+        "sources": [
+          {
+            "name": "allAfrica – Guinea-Bissau Says Conditions Not Ripe for December 6 Elections",
+            "url": "https://allafrica.com/stories/202610090140.html"
+          },
+          {
+            "name": "eNCA (AFP) – G.Bissau moves towards postponement of December general election",
+            "url": "https://www.enca.com/news/gbissau-moves-towards-postponement-december-general-election"
+          },
+          {
+            "name": "France 24 (AFP) – Guinea-Bissau junta urges military unit loyal to ex-president to disarm",
+            "url": "https://www.france24.com/en/live-news/20261008-guinea-bissau-junta-urges-military-unit-loyal-to-ex-president-to-disarm"
+          }
+        ],
+        "confidence": "low"
+      },
       {
         "date": "2026-10-15",
         "intensity": "medium",
@@ -573,6 +602,26 @@
     "trigger": "A hunger strike by activist Sonam Wangchuk for statehood and Sixth Schedule tribal protections culminated in a youth shutdown in Leh on 24 September 2025 that turned violent.",
     "summary": "A years-long campaign for statehood and constitutional safeguards for Ladakh erupted on 24 September 2025 when protesters torched the BJP office in Leh and police opened fire, killing four and injuring dozens. Wangchuk was detained under the National Security Act for six months and talks with Delhi broke down before resuming in October 2025. In 2026 the Centre has offered an elected body and Article 371-style safeguards short of statehood, but rounds of talks through October 2026 have ended without agreement.",
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "low",
+        "status": "On 16 October 2026, the day after the fifth round of talks in Leh, the Leh Apex Body and Kargil Democratic Alliance formally rejected the Home Ministry's draft on a legislature and Article 371 safeguards. They said the Centre had backtracked on what was agreed on 22 May. They urged the ministry to accept their own memorandum and said their agitation would continue. The next round of talks is still set for 22 October in Delhi, and no street unrest has been reported.",
+        "sources": [
+          {
+            "name": "The Tribune",
+            "url": "https://www.tribuneindia.com/news/j-k/backtracked-by-home-minsitry-ladakh-bodies-reject-home-ministrys-draft-proposal/"
+          },
+          {
+            "name": "The Wire",
+            "url": "https://m.thewire.in/article/politics/ladakh-bodies-reject-union-govts-draft-say-it-breaks-may-22-agreement/amp"
+          },
+          {
+            "name": "Daijiworld",
+            "url": "https://daijiworld.com/news/newsDisplay?newsID=1331879"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-15",
         "intensity": "low",
@@ -668,7 +717,8 @@
         ],
         "confidence": "high"
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "bolivia-blockades-2026",
@@ -690,6 +740,26 @@
     "trigger": "President Rodrigo Paz's December 2025 decree scrapping fuel subsidies and raising diesel prices set off road blockades by unions and Morales-aligned peasant groups.",
     "summary": "Weeks of blockades over fuel-subsidy cuts in December 2025 to January 2026 ended with a government deal, but a second, larger wave erupted on 1 May 2026, sparked by a land-collateral law (Law 1720) and the wider economic crisis. Blockades lasted about 53 days, choked food, fuel and medicine supplies and left at least 24 people dead by 9 July 2026 according to the ombudsman; Paz declared a state of emergency on 20 June 2026 allowing the military to clear roads, and a deal with the COB ended the blockades on 23 June. A state of exception banning blockades has since been extended to 17 December 2026, while Morales-aligned groups plan renewed mobilisation.",
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "medium",
+        "status": "On 19 October 2026 farmer federations aligned with Evo Morales, led by the CSUTCB, started the protests they had announced in departmental capitals against the fuel-price rise and the Paz government's economic measures, and organisers said the mobilisations would be permanent. Urban teachers were told on 17 October to mobilise, with marches from 20 October, and media reported a possible national strike around 23 October. A march on La Paz from Patacamaya is set for 6 November, and the state of exception banning blockades still applies.",
+        "sources": [
+          {
+            "name": "Prensa Latina – Sectores bolivianos protestan contra medidas económicas del gobierno (19 Oct 2026)",
+            "url": "https://www.prensa-latina.cu/2026/10/19/sectores-bolivianos-protestan-contra-medidas-economicas-del-gobierno/"
+          },
+          {
+            "name": "Los Tiempos – Evistas deciden iniciar su marcha a La Paz en 23 días más (14 Oct 2026)",
+            "url": "https://www.lostiempos.com/actualidad/pais/20261014/evistas-deciden-iniciar-su-marcha-paz-23-dias-mas"
+          },
+          {
+            "name": "Latin Times – Bolivia's workers declare emergency; national strike looms (Oct 2026)",
+            "url": "https://www.latintimes.com/bolivian-workers-reject-paz-governments-economic-overhaul-national-strike-looms-oct-23-600336"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-14",
         "intensity": "medium",
@@ -779,7 +849,8 @@
         ],
         "confidence": "medium"
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "pakistan-pti-crackdown",
@@ -841,7 +912,8 @@
         ],
         "confidence": "medium"
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "venezuela-post-election-unrest",
@@ -903,7 +975,8 @@
         ],
         "confidence": "high"
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "turkey-imamoglu-protests",
@@ -924,6 +997,26 @@
     "trigger": "Istanbul Mayor Ekrem Imamoglu, Erdogan's main rival, was detained on 19 March 2025 on corruption and terrorism charges days before the CHP named him presidential candidate.",
     "summary": "Imamoglu's detention on 19 March 2025 triggered Turkey's largest protests in over a decade, with nightly rallies outside Istanbul City Hall and in dozens of cities; police used tear gas and water cannon and detained more than 1,100 people in the first week. The CHP ended the daily demonstrations with a mass rally but has held periodic rallies since. Imamoglu remains jailed and his corruption trial, opened in March 2026, is ongoing while courts have acquitted most prosecuted protesters.",
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "low",
+        "status": "Imamoglu gave a four-day defence in the Istanbul municipality corruption trial from 14 to 17 October 2026, calling the case political. On 17 October the court freed 7 detained defendants but kept Imamoglu and 45 others in custody and adjourned to 2 November. Prosecutors opened a new probe over his courtroom remarks. No large street protests were reported this week.",
+        "sources": [
+          {
+            "name": "Turkish Minute",
+            "url": "https://turkishminute.com/2026/10/14/jailed-istanbul-mayor-accuses-erdogan-govt-of-shielding-corruption-in-trial-defense/"
+          },
+          {
+            "name": "Turkish Minute",
+            "url": "https://turkishminute.com/2026/10/16/imamoglu-accuses-erdogans-party-of-85-billion-zoning-giveaway-in-trial-defense/"
+          },
+          {
+            "name": "Milli Gazete",
+            "url": "https://www.milligazete.com.tr/ibb-davasinda-son-durum-ne-imamoglu-serbest-birakildi-mi-7-tahliye-edilen-kim-kac-tutuklu-kaldi"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-12",
         "intensity": "low",
@@ -1010,7 +1103,8 @@
         ],
         "confidence": "high"
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "cuba-blackout-protests",
@@ -1031,6 +1125,26 @@
     "trigger": "Days-long power cuts and food shortages in Santiago de Cuba and other cities set off street protests in March 2024, which have recurred with every collapse of the national grid.",
     "summary": "Cuba's economic crisis has produced the most sustained street protest since July 2021, with cacerolazos and night-time demonstrations erupting after repeated nationwide blackouts. In 2026 the loss of Venezuelan oil after Maduro's removal and a US fuel blockade caused full grid collapses in March, July and August (at least seven by August), leaving some Havana districts without power for over 19 hours a day. Protests in Havana, Mayabeque, Guantánamo, Santiago and elsewhere have been met with arrests, and monitoring groups recorded record numbers of protest incidents in mid-2026.",
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "medium",
+        "status": "On 10 October 2026 a fault on the Nuevitas–Las Tunas transmission line blacked out eastern Cuba. Infobae counts eight total grid collapses in 2026, and the grid operator forecast a 2,020 MW shortfall for 19 October. Blackout protests kept spreading: residents of Cabañas (Artemisa) took to the streets around 13–14 October, and on 16 October a crowd protested in Santa Rita, Jiguaní (Granma), while protesters in Holguín demanded the release of political prisoners.",
+        "sources": [
+          {
+            "name": "Diario de Cuba – Protests over blackouts in Granma, demands for political prisoners in Holguín",
+            "url": "https://diariodecuba.com/cuba/1792256766_69429.html"
+          },
+          {
+            "name": "Infobae – New protest shows the impact of blackouts in Cuba (Cabañas)",
+            "url": "https://www.infobae.com/cuba/2026/10/14/crisis-electrica-una-nueva-protesta-expone-el-impacto-de-los-apagones-en-cuba/"
+          },
+          {
+            "name": "Infobae – Cuba faces another night of blackouts with a 2,020 MW shortfall",
+            "url": "https://www.infobae.com/cuba/2026/10/19/cuba-encara-otra-noche-de-apagones-con-una-afectacion-prevista-de-2020-megavatios/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-02",
         "intensity": "medium",
@@ -1129,7 +1243,8 @@
         ],
         "confidence": "high"
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "nepal-gen-z-protests",
@@ -1152,6 +1267,26 @@
     "trigger": "A government ban on more than two dozen social media platforms on top of anger at corruption and nepotism brought youth crowds onto the streets of Kathmandu on 8 September 2025.",
     "summary": "Police fire on youth protesters on 8 September 2025 killed at least 19 people and the next day crowds torched parliament, the Supreme Court and politicians' homes, forcing Prime Minister K.P. Sharma Oli to resign; about 76 people died in two days. Former chief justice Sushila Karki led an interim government that held elections on 5 March 2026, which Kathmandu ex-mayor Balen Shah's Rastriya Swatantra Party won in a landslide. Street mobilisation has ended, but accountability for the killings remains contested.",
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "low",
+        "status": "On 5 October 2026 a government study committee led by former High Court judge Baburam Regmi recommended dropping only some of the criminal cases against Gen Z protesters. Media reports said about 300 of the 1,778 people named in 445 cases qualified, while violent-crime cases cannot be withdrawn. Civic groups said on 19 October that families of the dead still lack justice and that critics and journalists face cybercrime arrests. No major street protests were reported between 1 and 19 October.",
+        "sources": [
+          {
+            "name": "OnlineKhabar English",
+            "url": "https://english.onlinekhabar.com/govt-report-recommends-withdrawing-some-gen-z-protest-cases-not-violent-crime-cases.html"
+          },
+          {
+            "name": "Asia News Network",
+            "url": "https://asianews.network/nepal-high-level-panel-says-cases-against-most-gen-z-protest-accused-cant-be-dropped/"
+          },
+          {
+            "name": "CIVICUS Monitor",
+            "url": "https://monitor.civicus.org/explore/nepal-still-no-justice-for-protesters-one-year-on-as-journalists-and-critics-continue-to-be-targeted/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-01",
         "intensity": "low",
@@ -1210,6 +1345,22 @@
     "trigger": "The deaths of eight women after caesarean deliveries at a public hospital in Agadir in September 2025 triggered Discord-organised youth protests over health, education and World Cup spending.",
     "summary": "From 27 September 2025 a leaderless, Discord-coordinated youth movement staged roughly three weeks of protests in dozens of Moroccan cities demanding better healthcare and education and an end to corruption; three people were killed in Lqliaa and more than 2,000 people were prosecuted, including hundreds of minors. The street phase ended by mid-October 2025 but prosecutions continued into 2026. The 23 September 2026 general election was the first national vote since the uprising.",
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "latent",
+        "status": "On about 16 October 2026 King Mohammed VI swore in a new government led by PAM's Fatima Ezzahra El Mansouri, Morocco's first female prime minister. It replaces the Akhannouch government, whose term ended on 29 September. Thirteen of the 31 previous ministers kept their posts, including Interior Minister Abdelouafi Laftit. Searches found no renewed GenZ212 street mobilisation between 24 September and 19 October 2026, including around the movement's first anniversary. Grievances over health, education and jobs remain unresolved.",
+        "sources": [
+          {
+            "name": "The National – Morocco government sworn in under first female Prime Minister Fatima El Mansouri (2026-10-16)",
+            "url": "https://www.thenationalnews.com/news/mena/2026/10/16/morocco-government-sworn-in-under-first-female-prime-minister-fatima-el-mansouri/"
+          },
+          {
+            "name": "Kuwait Times – King appoints new Morocco govt led by female premier",
+            "url": "https://kuwaittimes.com/article/51804/international/king-appoints-new-morocco-govt-led-by-female-premier/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-09-24",
         "intensity": "latent",
@@ -1304,7 +1455,8 @@
         ],
         "confidence": "high"
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "armenia-opposition-church-crackdown",
@@ -1361,7 +1513,8 @@
         ],
         "confidence": "medium"
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "indonesia-2025-protests",
@@ -1382,6 +1535,26 @@
     "trigger": "Revelations that all 580 lawmakers received a 50 million rupiah monthly housing allowance sparked protests outside parliament on 25 August 2025, which exploded after a police armoured vehicle ran over a motorcycle-taxi driver on 28 August.",
     "summary": "Protests over lawmakers' perks turned into nationwide riots in late August 2025 in which crowds torched regional parliaments and looted ministers' homes; the human rights commission counted 10 dead. President Prabowo revoked the perks but branded some protesters as treasonous and deployed troops. Student-led protests over the cost of living, fuel prices, corruption and the military's expanding role have recurred through 2026, including a June wave and confrontational anniversary rallies in August 2026.",
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "medium",
+        "status": "After the 27-28 August 2026 clashes outside parliament, Jakarta police named 48 suspects. In early October 2026 protests started again: students from the regions rallied on 2 October, and labour unions and ride-hailing drivers demonstrated at parliament on 6 October against the draft Manpower (Ketenagakerjaan) bill. On 19 October, student alliances including BEM UI announced rallies in central Jakarta for 20 October, the second anniversary of the Prabowo-Gibran government.",
+        "sources": [
+          {
+            "name": "Jakarta Globe",
+            "url": "https://jakartaglobe.id/news/jakarta-police-name-48-suspects-over-parliament-protest-unrest"
+          },
+          {
+            "name": "Wikipedia (Indonesian): Unjuk rasa Oktober 2026 di Indonesia",
+            "url": "https://id.wikipedia.org/wiki/Unjuk_rasa_Oktober_2026_di_Indonesia"
+          },
+          {
+            "name": "Kompas",
+            "url": "https://megapolitan.kompas.com/read/2026/10/19/14293781/bem-ui-akan-demo-2-tahun-prabowo-gibran-di-2-titik-jakarta-besok-ini"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-08-28",
         "intensity": "medium",
@@ -1444,6 +1617,26 @@
     "trigger": "A September 2025 pension-reform law forcing young workers into the pension system sparked youth marches in Lima that widened into anger over crime, corruption and police repression.",
     "summary": "Youth-led 'Generation Z' protests began in Lima on 20 September 2025 and fed into Congress's removal of President Dina Boluarte on 10 October 2025. Protests continued against her successor José Jerí (one dead, about 100 injured on 15 October; a state of emergency in Lima), and Jerí was himself censured by Congress in February 2026 and replaced by José María Balcázar. After a disputed April first round, Keiko Fujimori won the June 2026 runoff by under 50,000 votes and took office on 28 July 2026 amid protests by relatives of those killed in earlier unrest.",
     "history": [
+      {
+        "date": "2026-10-19",
+        "intensity": "low",
+        "status": "Starting 10 August 2026, transport workers held regional strikes over higher fuel prices in Pucallpa (Ucayali), Nauta (Loreto), Arequipa and parts of Tacna. Since President Keiko Fujimori's inauguration on 28 July 2026, no large or deadly Gen Z mobilisation in Lima has been reported. A state of emergency has been in force in Lima and Callao since October 2025, and Australian travel advice published in early October 2026 still lists it as active.",
+        "sources": [
+          {
+            "name": "Wikipedia (es): Protestas por el alza del combustible en Perú de 2026",
+            "url": "https://es.wikipedia.org/wiki/Protestas_por_el_alza_del_combustible_en_Per%C3%BA_de_2026"
+          },
+          {
+            "name": "Smartraveller: Peru travel advice",
+            "url": "https://www.smartraveller.gov.au/destinations/americas/peru"
+          },
+          {
+            "name": "Al Jazeera: Protests in Lima as Keiko Fujimori sworn in as Peru president",
+            "url": "https://www.aljazeera.com/video/newsfeed/2026/7/29/protests-in-lima-as-keiko-fujimori-sworn-in-as-peru-president"
+          }
+        ],
+        "confidence": "low"
+      },
       {
         "date": "2026-07-29",
         "intensity": "low",
@@ -1542,7 +1735,8 @@
         ],
         "confidence": "high"
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "new-caledonia-unrest",
@@ -1600,7 +1794,8 @@
         ],
         "confidence": "high"
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "cameroon-post-election-unrest",
@@ -1653,7 +1848,8 @@
         ],
         "confidence": "high"
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   },
   {
     "id": "ecuador-indigenous-strike-2025",
@@ -1711,6 +1907,7 @@
         ],
         "confidence": "medium"
       }
-    ]
+    ],
+    "lastChecked": "2026-10-19"
   }
 ]
