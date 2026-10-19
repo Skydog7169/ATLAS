@@ -26,12 +26,17 @@ import Ticker from './components/Ticker';
 import SinceLastVisit from './components/SinceLastVisit';
 import { ASK_ENABLED } from './components/AskPanel';
 import { useWatchlist } from './hooks/useWatchlist';
-import { formatMonth } from './lib/labels';
+import { formatDate, formatMonth } from './lib/labels';
 import type { CountryFill, Focus, MapMarker } from './components/WorldMap';
+import Briefing, { type BriefItem } from './components/Briefing';
+import { COUNTRY_BY_ISO } from './lib/countries';
+import { downloadBlob, readLegend, renderPng } from './lib/exportPng';
+import { serialize } from './lib/urlState';
 
 // The map pulls in d3 and the 110m geometry; loading it after the shell
 // paints keeps first render fast on phones.
 const WorldMap = lazy(() => import('./components/WorldMap'));
+const GlobeMap = lazy(() => import('./components/GlobeMap'));
 
 const OVERVIEW_STEPS = ['var(--land)', '#123a4a', '#17607a', '#1f8fb3', '#35e0ff'];
 
@@ -90,7 +95,8 @@ function MapSkeleton() {
 
 export default function App() {
   const { state, update } = useAppState();
-  const { mode, bloc, vs, selection, month, layer } = state;
+  const { mode, bloc, vs, selection, month, layer, view, rotation, brief, embed } = state;
+  const [exporting, setExporting] = useState(false);
   const [picking, setPicking] = useState(false);
   const [hover, setHover] = useState<{ label: string; sub?: string; iso: string | null; x: number; y: number } | null>(null);
   const [focus, setFocus] = useState<Focus>(null);
@@ -285,13 +291,96 @@ export default function App() {
     return list.length ? list.map((x) => x.bloc.shortName).join(' · ') : 'No tracked bloc memberships';
   }, [hover, mode, layer]);
 
+  // Briefing cycles the live high-intensity conflicts first, then whatever is starred.
+  const briefItems = useMemo<BriefItem[]>(() => {
+    const out: BriefItem[] = [];
+    const seen = new Set<string>();
+    for (const c of CONFLICTS) {
+      if (c.history[0]?.intensity !== 'high') continue;
+      seen.add('conflict:' + c.id);
+      out.push({ id: c.id, kind: 'conflict', title: c.name, eyebrow: 'High intensity', detail: c.history[0]?.status ?? '', color: INTENSITY_COLOR.high, conflict: c });
+    }
+    for (const w of watchlist.items) {
+      const key = w.kind + ':' + w.id;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      if (w.kind === 'conflict') {
+        const c = CONFLICT_BY_ID.get(w.id);
+        if (c) out.push({ id: c.id, kind: 'conflict', title: c.name, eyebrow: 'Watchlist · conflict', detail: c.history[0]?.status ?? '', color: INTENSITY_COLOR[c.intensity], conflict: c });
+      } else if (w.kind === 'country') {
+        const country = COUNTRY_BY_ISO.get(w.id);
+        const memberships = blocsForCountry(w.id).filter((x) => x.membership.status === 'member');
+        const live = conflictsForCountry(w.id);
+        if (country) out.push({ id: w.id, kind: 'country', title: country.name, eyebrow: 'Watchlist · country', detail: [memberships.length ? memberships.map((x) => x.bloc.shortName).join(' · ') : 'No tracked bloc memberships', live.length ? `${live.length} tracked conflict${live.length > 1 ? 's' : ''}` : null].filter(Boolean).join(' — '), color: 'var(--accent)' });
+      } else {
+        const b = BLOC_BY_ID.get(w.id);
+        if (b) out.push({ id: b.id, kind: 'bloc', title: b.name, eyebrow: 'Watchlist · bloc', detail: `${b.members.filter((m) => m.status === 'member').length} members · ${b.changes[0] ? `latest change ${b.changes[0].date}` : 'no dated changes'}`, color: b.color });
+      }
+    }
+    return out;
+  }, [watchlist.items]);
+
+  const onBriefShow = useCallback(
+    (item: BriefItem) => {
+      if (item.kind === 'conflict') {
+        update({ mode: 'conflicts', month: null, selection: null });
+        if (item.conflict) setFocus({ kind: 'point', lonLat: item.conflict.location, scale: 3.5 });
+      } else if (item.kind === 'country') {
+        update({ selection: null });
+        setFocus({ kind: 'country', iso: item.id });
+      } else {
+        update({ mode: 'blocs', bloc: item.id, vs: null, selection: null });
+        setFocus({ kind: 'reset' });
+      }
+    },
+    [update],
+  );
+
+  const onBriefOpen = useCallback(
+    (item: BriefItem) => {
+      if (item.kind === 'conflict') update({ brief: false, mode: 'conflicts', selection: { kind: 'conflict', id: item.id } });
+      else if (item.kind === 'country') update({ brief: false, selection: { kind: 'country', iso: item.id } });
+      else update({ brief: false, mode: 'blocs', bloc: item.id, selection: { kind: 'bloc', id: item.id } });
+    },
+    [update],
+  );
+
+  const exitBrief = useCallback(() => update({ brief: false }), [update]);
+
+  // One-tap PNG of the current map with the legend and a date stamp.
+  const exportPng = useCallback(async () => {
+    const root = stageRef.current;
+    const svg = root?.querySelector<SVGSVGElement>('.map-root svg');
+    if (!root || !svg || exporting) return;
+    setExporting(true);
+    try {
+      const css = getComputedStyle(document.documentElement);
+      const legend = readLegend(root);
+      const title = legend.title ?? (mode === 'conflicts' ? `ATLAS · Conflicts${viewMonth ? ' · ' + formatMonth(viewMonth) : ''}` : activeBloc ? `ATLAS · ${activeBloc.name}` : 'ATLAS · Bloc overview');
+      const today = new Date().toISOString().slice(0, 10);
+      const blob = await renderPng({
+        svg,
+        background: css.getPropertyValue('--bg').trim() || '#04070d',
+        foreground: css.getPropertyValue('--fg').trim() || '#d9f1ff',
+        muted: css.getPropertyValue('--fg-muted').trim() || '#7fa3bd',
+        title,
+        legendTitle: legend.title,
+        legend: legend.rows,
+        stamp: `Data ${formatMonth(DATA_ASOF)} · exported ${formatDate(today)} · atlas-geopolitic.vercel.app`,
+      });
+      downloadBlob(blob, `atlas-${layer ?? mode}-${today}.png`);
+    } finally {
+      setExporting(false);
+    }
+  }, [exporting, mode, viewMonth, activeBloc, layer]);
+
   const conflictColor = useCallback((id: string) => {
     const c = CONFLICT_BY_ID.get(id);
     return c ? INTENSITY_COLOR[c.intensity] : 'var(--fg-muted)';
   }, []);
 
   return (
-    <div className="app" data-panel-open={selection !== null} data-mode={mode} data-layer={layer ?? undefined}>
+    <div className="app" data-panel-open={selection !== null} data-mode={mode} data-layer={layer ?? undefined} data-view={view} data-brief={brief} data-embed={embed}>
       <header className="header">
         <a className="brand" href="#" onClick={(e) => { e.preventDefault(); update({ selection: null, bloc: null }); setFocus({ kind: 'reset' }); }}>
           <Logo />
@@ -378,19 +467,37 @@ export default function App() {
         <SinceLastVisit onSelectConflict={selectConflict} onSelectBloc={selectBloc} onOpenChanges={() => update({ selection: { kind: 'changes' } })} />
         <ErrorBoundary>
           <Suspense fallback={<MapSkeleton />}>
-            <WorldMap
-              fillFor={fillFor}
-              markers={markers}
-              showMicrostates={mode === 'blocs'}
-              selectedIso={selectedIso}
-              selectedMarkerId={selectedMarkerId}
-              focus={focus}
-              insetRight={insetRight}
-              onCountryClick={selectCountry}
-              onMarkerClick={onMarkerClick}
-              onHover={onHover}
-              zoomApiRef={zoomApi}
-            />
+            {view === 'globe' ? (
+              <GlobeMap
+                fillFor={fillFor}
+                markers={markers}
+                showMicrostates={mode === 'blocs'}
+                selectedIso={selectedIso}
+                selectedMarkerId={selectedMarkerId}
+                focus={focus}
+                insetRight={insetRight}
+                rotation={rotation}
+                onRotate={(r) => update({ rotation: r })}
+                onCountryClick={selectCountry}
+                onMarkerClick={onMarkerClick}
+                onHover={onHover}
+                zoomApiRef={zoomApi}
+              />
+            ) : (
+              <WorldMap
+                fillFor={fillFor}
+                markers={markers}
+                showMicrostates={mode === 'blocs'}
+                selectedIso={selectedIso}
+                selectedMarkerId={selectedMarkerId}
+                focus={focus}
+                insetRight={insetRight}
+                onCountryClick={selectCountry}
+                onMarkerClick={onMarkerClick}
+                onHover={onHover}
+                zoomApiRef={zoomApi}
+              />
+            )}
           </Suspense>
         </ErrorBoundary>
 
@@ -427,7 +534,52 @@ export default function App() {
           <button className="icon-btn" aria-label="Reset view" onClick={() => zoomApi.current?.reset()} title="Reset view">
             ⌂
           </button>
+          <button
+            className="icon-btn"
+            aria-label={view === 'globe' ? 'Flat map' : 'Globe view'}
+            aria-pressed={view === 'globe'}
+            title={view === 'globe' ? 'Switch to the flat map' : 'Switch to the globe'}
+            onClick={() => {
+              update({ view: view === 'globe' ? 'flat' : 'globe' });
+              setFocus({ kind: 'reset' });
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              {view === 'globe' ? (
+                <>
+                  <rect x="3" y="5" width="18" height="14" rx="1" />
+                  <path d="M3 12h18M9 5v14M15 5v14" />
+                </>
+              ) : (
+                <>
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+                </>
+              )}
+            </svg>
+          </button>
+          <button className="icon-btn" aria-label="Export PNG" title="Export the map as a PNG" data-busy={exporting} onClick={() => void exportPng()}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <path d="M12 3v12M7 10l5 5 5-5M4 17v3h16v-3" />
+            </svg>
+          </button>
+          {!embed && (
+            <button className="icon-btn" aria-label="Start briefing" title="Full-screen briefing" onClick={() => update({ brief: true, selection: null })}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                <path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" />
+              </svg>
+            </button>
+          )}
         </div>
+
+        {embed && (
+          <a className="embed-badge" href={serialize({ ...state, embed: false })} target="_blank" rel="noopener noreferrer" aria-label="Open this view in ATLAS">
+            <Logo />
+            ATLAS ↗
+          </a>
+        )}
+
+        {brief && <Briefing items={briefItems} onShow={onBriefShow} onOpen={onBriefOpen} onExit={exitBrief} />}
 
         <Ticker onSelectConflict={selectConflict} onSelectBloc={selectBloc} />
 

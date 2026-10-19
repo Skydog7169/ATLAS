@@ -24,12 +24,23 @@ export interface AppState {
   month: string | null;
   /** Optional data overlay drawn instead of the mode's fill. */
   layer: Layer;
+  /** Flat Natural Earth map or an orthographic globe. */
+  view: View;
+  /** Globe centre as [longitude, latitude], whole degrees. */
+  rotation: [number, number];
+  /** Full-screen briefing mode: chrome hidden, items auto-cycling. */
+  brief: boolean;
+  /** Chrome-less view for iframes. */
+  embed: boolean;
 }
+
+export type View = 'flat' | 'globe';
+export const DEFAULT_ROTATION: [number, number] = [15, 20];
 
 export const LAYERS = ['displacement', 'sanctions', 'elections', 'nuclear', 'acled', 'military', 'trade', 'chokepoints'] as const;
 export type Layer = (typeof LAYERS)[number] | null;
 
-export const DEFAULT_STATE: AppState = { mode: 'blocs', bloc: null, vs: null, selection: null, month: null, layer: null };
+export const DEFAULT_STATE: AppState = { mode: 'blocs', bloc: null, vs: null, selection: null, month: null, layer: null, view: 'flat', rotation: DEFAULT_ROTATION, brief: false, embed: false };
 
 const MONTH = /^\d{4}-(0[1-9]|1[0-2])$/;
 
@@ -41,6 +52,12 @@ export function serialize(state: AppState): string {
   if (state.bloc && state.vs) p.set('vs', state.vs);
   if (state.month) p.set('t', state.month);
   if (state.layer) p.set('layer', state.layer);
+  if (state.view === 'globe') {
+    p.set('view', 'globe');
+    if (state.rotation[0] !== DEFAULT_ROTATION[0] || state.rotation[1] !== DEFAULT_ROTATION[1]) p.set('rot', `${state.rotation[0]},${state.rotation[1]}`);
+  }
+  if (state.brief) p.set('brief', '1');
+  if (state.embed) p.set('embed', '1');
   if (state.selection) {
     if (state.selection.kind === 'country') p.set('country', state.selection.iso);
     else if (state.selection.kind === 'changes') p.set('changes', '1');
@@ -87,5 +104,14 @@ export function parse(hash: string, isValid: { bloc: (id: string) => boolean; co
   else if (bloc && vs && !country && !conflict) selection = { kind: 'compare' };
   else if (bloc && !country && !conflict) selection = { kind: 'bloc', id: bloc };
 
-  return { mode, bloc, vs, selection, month, layer };
+  const view: View = p.get('view') === 'globe' ? 'globe' : 'flat';
+  const rotation = parseRotation(p.get('rot'));
+  return { mode, bloc, vs, selection, month, layer, view, rotation, brief: p.get('brief') === '1', embed: p.get('embed') === '1' };
+}
+
+export function parseRotation(raw: string | null): [number, number] {
+  if (!raw) return DEFAULT_ROTATION;
+  const [lon, lat] = raw.split(',').map(Number);
+  if (lon === undefined || lat === undefined || !Number.isFinite(lon) || !Number.isFinite(lat)) return DEFAULT_ROTATION;
+  return [Math.round(((((lon + 180) % 360) + 360) % 360) - 180), Math.round(Math.max(-89, Math.min(89, lat)))];
 }
