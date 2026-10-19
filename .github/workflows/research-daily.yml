@@ -1,0 +1,102 @@
+name: Daily research pass
+
+# Re-checks only the hot list (high-intensity conflicts and unrest, entries
+# updated in the last two weeks, and the longest-unchecked) with web search,
+# Tuesday to Sunday. Monday belongs to the full weekly refresh. Changes land
+# on one rolling pull request that is updated in place each day.
+
+on:
+  schedule:
+    - cron: '23 5 * * 2-7' # Tuesday to Sunday 05:23 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write # lets the job fetch a GitHub OIDC token for Anthropic Workload Identity Federation
+
+concurrency:
+  group: research
+  cancel-in-progress: false
+
+jobs:
+  hot-list:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      # Credentials for the research pass, in order of preference:
+      #  1. Workload Identity Federation: the three ANTHROPIC_* repository *variables* (identifiers, not
+      #     secrets) plus a GitHub OIDC token minted here for audience https://api.anthropic.com. The SDK
+      #     exchanges it for a short-lived Anthropic token; nothing long-lived is stored anywhere.
+      #  2. A classic ANTHROPIC_API_KEY repository secret.
+      #  3. Neither: the pass is skipped with a warning and the generated datasets are still refreshed.
+      # The identifiers below are this repository's federation rule, organization, service account and
+      # workspace in the Claude Console. They are not secrets; repository variables of the same names override them.
+      - name: Fetch GitHub OIDC token for Anthropic
+        env:
+          RULE_ID: ${{ vars.ANTHROPIC_FEDERATION_RULE_ID || 'fdrl_01AJtJ6PTveRW95sgzfHygNe' }}
+          ORG_ID: ${{ vars.ANTHROPIC_ORGANIZATION_ID || '727213a0-ed97-4716-ab97-d0aab0d7bba6' }}
+          SVAC_ID: ${{ vars.ANTHROPIC_SERVICE_ACCOUNT_ID || 'svac_01FGteXTqd19q3STqFGFKcSY' }}
+          WRKSPC_ID: ${{ vars.ANTHROPIC_WORKSPACE_ID || 'wrkspc_015ZWRDjvrKs8EZqEmmyRqCp' }}
+        run: |
+          curl -sS --fail -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=https://api.anthropic.com" \
+            | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>process.stdout.write(JSON.parse(s).value))' \
+            > "$RUNNER_TEMP/anthropic-oidc.jwt"
+          echo "ANTHROPIC_IDENTITY_TOKEN_FILE=$RUNNER_TEMP/anthropic-oidc.jwt" >> "$GITHUB_ENV"
+          echo "ANTHROPIC_FEDERATION_RULE_ID=$RULE_ID" >> "$GITHUB_ENV"
+          echo "ANTHROPIC_ORGANIZATION_ID=$ORG_ID" >> "$GITHUB_ENV"
+          echo "ANTHROPIC_SERVICE_ACCOUNT_ID=$SVAC_ID" >> "$GITHUB_ENV"
+          echo "ANTHROPIC_WORKSPACE_ID=$WRKSPC_ID" >> "$GITHUB_ENV"
+
+      - name: Research pass
+        env:
+          # Passed under another name: an empty ANTHROPIC_API_KEY in the environment would shadow federation.
+          API_KEY_SECRET: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -n "$ANTHROPIC_IDENTITY_TOKEN_FILE" ] && [ -n "$ANTHROPIC_ORGANIZATION_ID" ] && [ -n "$ANTHROPIC_SERVICE_ACCOUNT_ID" ]; then
+            echo "Authenticating with Workload Identity Federation (rule $ANTHROPIC_FEDERATION_RULE_ID)."
+            # The SDK re-exchanges the JWT whenever its Anthropic token nears expiry, and Anthropic rejects a
+            # replayed JWT, so keep a fresh GitHub OIDC token in the file for the whole (long) pass.
+            (
+              while sleep 240; do
+                curl -sS --fail -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+                  "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=https://api.anthropic.com" \
+                  | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>process.stdout.write(JSON.parse(s).value))' \
+                  > "$ANTHROPIC_IDENTITY_TOKEN_FILE.next" && mv "$ANTHROPIC_IDENTITY_TOKEN_FILE.next" "$ANTHROPIC_IDENTITY_TOKEN_FILE"
+              done
+            ) &
+            trap 'kill %1 2>/dev/null || true' EXIT
+          elif [ -n "$API_KEY_SECRET" ]; then
+            export ANTHROPIC_API_KEY="$API_KEY_SECRET"
+            echo "Authenticating with the ANTHROPIC_API_KEY secret."
+          else
+            echo "::warning::No Anthropic credentials: set the ANTHROPIC_FEDERATION_RULE_ID, ANTHROPIC_ORGANIZATION_ID and ANTHROPIC_SERVICE_ACCOUNT_ID repository variables (Workload Identity Federation) or an ANTHROPIC_API_KEY secret. Nothing to do for the daily pass."
+            exit 0
+          fi
+          node scripts/research/update.mjs --hot --report research-report.md
+
+      - name: Validate
+        run: pnpm run test
+
+      - name: Open or update the rolling pull request
+        if: ${{ hashFiles('research-report.md') != '' }}
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: data/daily-research
+          base: main
+          add-paths: |
+            src/data/conflicts.json
+            src/data/unrest.json
+          commit-message: 'Data refresh: daily research pass'
+          title: 'Daily research pass'
+          body-path: research-report.md
+          labels: data-refresh

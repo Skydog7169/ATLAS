@@ -195,6 +195,19 @@ export const NewConflictsOutputSchema = z.object({
   ),
 });
 
+export const NewUnrestOutputSchema = z.object({
+  candidates: z.array(
+    z.object({
+      name: z.string(),
+      countries: z.array(z.string()),
+      kind: UnrestKindSchema,
+      intensity: IntensitySchema,
+      why: z.string().describe('one or two sentences on why this belongs on the map'),
+      source: z.object({ name: z.string(), url: z.string() }),
+    }),
+  ),
+});
+
 // ---------------------------------------------------------------------------
 // Batch 2 datasets: sanctions (generated), elections (research-maintained), nuclear (curated).
 
