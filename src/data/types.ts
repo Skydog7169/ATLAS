@@ -88,6 +88,8 @@ export interface HistoryEntry {
   status: string;
   sources: Source[];
   confidence?: Confidence;
+  /** Who wrote the text: the research pass ('ai', the default for older entries) or an editor by hand. */
+  drafted?: 'ai' | 'editor';
 }
 
 export type ActorType = 'state' | 'armed-group' | 'coalition' | 'international';
@@ -99,6 +101,9 @@ export interface Backer {
   name: string;
   iso?: Iso3;
   support: SupportKind;
+  /** Unset means documented; 'reported' and 'alleged' are hedged wherever the backer is shown. */
+  basis?: 'documented' | 'reported' | 'alleged';
+  source?: Source;
 }
 
 /** A party to a conflict, grouped by `side` for the who-backs-whom diagram. */

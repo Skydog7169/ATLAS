@@ -1,5 +1,5 @@
 import type { Conflict } from '../data/types';
-import { SUPPORT_LABEL, sides } from '../lib/actors';
+import { isMediator, sides, supportLabel } from '../lib/actors';
 import { countryName } from '../lib/countries';
 
 interface Props {
@@ -20,7 +20,7 @@ export default function ActorsGraph({ conflict, onSelectCountry }: Props) {
   return (
     <div className="actors" role="group" aria-label={`Parties to ${conflict.name} and their backers`}>
       {cols.map((col) => {
-        const mediator = /mediator/i.test(col.side);
+        const mediator = isMediator(col);
         return (
           <section key={col.side} className="actor-side">
             <h4 className="side">{col.side}</h4>
@@ -33,11 +33,12 @@ export default function ActorsGraph({ conflict, onSelectCountry }: Props) {
                     <ul className="backers" aria-label={`Backers of ${a.name}`}>
                       {a.backers.map((b) => {
                         const name = b.iso ? countryName(b.iso) : b.name;
-                        const support = SUPPORT_LABEL[b.support].toLowerCase();
+                        // Mediators broker talks; their sponsors are not "backing" a party. Hedged support says so.
+                        const support = mediator ? 'mediating' : supportLabel(b).toLowerCase();
                         return (
                           <li key={b.name + b.support}>
                             {b.iso ? (
-                              <button type="button" className="backer clickable" onClick={() => onSelectCountry(b.iso!)} aria-label={`${name}: ${SUPPORT_LABEL[b.support]} for ${a.name}. Open dossier`}>
+                              <button type="button" className="backer clickable" onClick={() => onSelectCountry(b.iso!)} aria-label={`${name}: ${mediator ? 'mediating' : supportLabel(b)} for ${a.name}. Open dossier`}>
                                 <span className="backer-name">{name}</span>
                                 <span className="backer-support">{support}</span>
                               </button>

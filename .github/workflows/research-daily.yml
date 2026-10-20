@@ -96,6 +96,7 @@ jobs:
           add-paths: |
             src/data/conflicts.json
             src/data/unrest.json
+            src/data/chokepoints.json
           commit-message: 'Data refresh: daily research pass'
           title: 'Daily research pass'
           body-path: research-report.md

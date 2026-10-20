@@ -31,8 +31,8 @@ export function mockClient() {
                 : 'Mock development: on 1 October 2026 fighting intensified around the capital after talks collapsed, and both sides reported heavy casualties. Humanitarian access remained blocked through the first week of October.'
               : 'No material change since the previous assessment; positions and diplomacy as previously described.',
             sources: [
-              { name: 'Al Jazeera: mock article', url: seenUrl },
-              { name: 'Invented', url: 'https://not-in-results.example/x' },
+              { name: 'Al Jazeera', headline: 'Mock article on fighting near the capital', published: '2026-10-01', url: seenUrl },
+              { name: 'Invented', headline: 'Not in the results', published: '2026-10-01', url: 'https://not-in-results.example/x' },
             ],
             confidence: 'medium',
             note: changed ? 'mock note for reviewer' : '',
@@ -42,6 +42,16 @@ export function mockClient() {
                   { date: '2026-10-02', kind: 'ceasefire', summary: 'Mock: an unsourced claim that must be dropped.', source: { name: 'Invented', url: 'https://not-in-results.example/y' } },
                 ]
               : [],
+          };
+        } else if (prompt.startsWith('Chokepoint:')) {
+          // Alternate a sourced change and a homepage-only one, which must not be applied.
+          const changed = n % 2 === 1;
+          parsed = {
+            changed: true,
+            status: 'disrupted',
+            summary: 'Mock: on 1 October 2026 insurers raised war-risk premiums after two tankers were struck, and transits fell by a third.',
+            sources: changed ? [{ name: 'AP', headline: 'Mock tanker strikes', published: '2026-10-01', url: seenUrl2 }] : [{ name: 'Reuters', headline: 'Front page', published: '2026-10-01', url: 'https://www.reuters.com/' }],
+            note: 'mock chokepoint note',
           };
         } else if (prompt.startsWith('Here are the current membership lists')) {
           parsed = { changes: [], note: 'mock: no sourced membership changes found' };

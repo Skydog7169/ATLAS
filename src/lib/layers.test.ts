@@ -96,11 +96,11 @@ describe('elections dataset', () => {
   });
 
   it('formats dates at the precision known', () => {
-    expect(formatElectionDate({ iso: 'X', date: '2026-11-03', type: 'legislative', sources: [], verified: '2026-10-08' })).toBe('Nov 3, 2026');
+    expect(formatElectionDate({ iso: 'X', date: '2026-11-03', type: 'legislative', sources: [], verified: '2026-10-08' })).toBe('3 Nov 2026');
     expect(formatElectionDate({ iso: 'X', date: '2027-04', type: 'legislative', sources: [], verified: '2026-10-08' })).toBe('Apr 2027');
     expect(formatElectionDate({ iso: 'X', date: '2029', type: 'legislative', deadline: true, sources: [], verified: '2026-10-08' })).toBe('by 2029');
     expect(formatElectionDate({ iso: 'X', date: null, type: 'general', sources: [], verified: '2026-10-08' })).toBe('No date set');
-    expect(electionSummary('USA', new Date('2026-10-08T00:00:00Z'))).toBe('Legislative election Nov 3, 2026 (this month)');
+    expect(electionSummary('USA', new Date('2026-10-08T00:00:00Z'))).toBe('Legislative election 3 Nov 2026 (this month)');
   });
 });
 
@@ -127,7 +127,7 @@ describe('nuclear dataset', () => {
     const t = testsFor('PRK');
     expect(t[0]?.date).toBe('2017-09-03');
     expect(t.map((x) => x.date)).toEqual([...t.map((x) => x.date)].sort().reverse());
-    expect(nuclearSummary('PRK')).toBe('Nuclear-armed · last test Sep 3, 2017');
+    expect(nuclearSummary('PRK')).toBe('Nuclear-armed · last test 3 Sep 2017');
     expect(nuclearSummary('IRN')).toBe('Threshold state');
     expect(nuclearSummary('BRA')).toBeNull();
   });

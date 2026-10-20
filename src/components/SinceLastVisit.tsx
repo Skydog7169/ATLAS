@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import { useSeen } from '../hooks/useSeen';
 import { setWatchOnly, useWatchlist } from '../hooks/useWatchlist';
-import { CHANGES, bySignal, watchlistOnly } from '../lib/feed';
+import { bySignal, watchlistOnly } from '../lib/feed';
 import type { ChangeItem } from '../lib/history';
-import { deltaWord, itemColor, shortDay } from '../lib/delta';
+import { deltaWord, itemColor } from '../lib/delta';
 import { formatDate } from '../lib/labels';
 
 interface Props {
@@ -70,21 +70,5 @@ export default function SinceLastVisit({ onSelectConflict, onSelectBloc, onSelec
         Mark read
       </button>
     </div>
-  );
-}
-
-/**
- * Header readout: when the data last changed, with a dot while anything is
- * unseen. Opens the changes panel on the unseen window when there is one.
- */
-export function UpdatedReadout({ onOpen }: { onOpen: (since: boolean) => void }) {
-  const { unseen } = useSeen();
-  const newest = CHANGES[0]?.date;
-  if (!newest) return null;
-  return (
-    <button className="readout-btn optional" onClick={() => onOpen(unseen.length > 0)} title={unseen.length ? `Recent changes: ${unseen.length} unseen` : 'Recent changes'}>
-      UPDATED <b>{shortDay(newest).toUpperCase()}</b>
-      {unseen.length > 0 && <span className="readout-dot" aria-label={`${unseen.length} unseen`} role="img" />}
-    </button>
   );
 }

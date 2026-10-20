@@ -210,6 +210,7 @@
       "iso": "BGR",
       "date": "2026-10-25",
       "type": "presidential",
+      "note": "First round. If no candidate wins 50% of the vote, a runoff will be held on November 1, 2026. Date set by the National Assembly on July 29, 2026.",
       "sources": [
         {
           "name": "Sofia Globe",
@@ -220,8 +221,7 @@
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-19",
-      "note": "First round. If no candidate wins 50% of the vote, a runoff will be held on November 1, 2026. Date set by the National Assembly on July 29, 2026."
+      "verified": "2026-10-19"
     },
     {
       "iso": "BHR",
@@ -397,6 +397,7 @@
       "iso": "CHE",
       "date": "2026-12",
       "type": "presidential",
+      "note": "Federal Assembly elects the 2027 President during the December winter session; exact day not confirmed in search results (expected 2026-12-09)",
       "sources": [
         {
           "name": "Wikipedia – Bundespräsident (Schweiz)",
@@ -407,8 +408,7 @@
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-19",
-      "note": "Federal Assembly elects the 2027 President during the December winter session; exact day not confirmed in search results (expected 2026-12-09)"
+      "verified": "2026-10-19"
     },
     {
       "iso": "CHL",
@@ -430,6 +430,7 @@
         "indirect",
         "non-competitive"
       ],
+      "note": "National People’s Congress, elected by provincial congresses",
       "sources": [
         {
           "name": "Wikipedia: List of next general elections",
@@ -440,8 +441,7 @@
           "url": "https://freedomhouse.org/country/china/freedom-world/2025"
         }
       ],
-      "verified": "2026-10-08",
-      "note": "National People’s Congress, elected by provincial congresses"
+      "verified": "2026-10-08"
     },
     {
       "iso": "CIV",
@@ -531,6 +531,7 @@
       "iso": "CPV",
       "date": "2026-11-15",
       "type": "presidential",
+      "note": "First round of the presidential election. The legislative election was held on 17 May 2026.",
       "sources": [
         {
           "name": "Lusa",
@@ -541,8 +542,7 @@
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-19",
-      "note": "First round of the presidential election. The legislative election was held on 17 May 2026."
+      "verified": "2026-10-19"
     },
     {
       "iso": "CRI",
@@ -699,6 +699,7 @@
       "iso": "ESP",
       "date": "2026-11-29",
       "type": "legislative",
+      "note": "Snap general election announced by Pedro Sánchez on 5 Oct 2026",
       "sources": [
         {
           "name": "La Moncloa",
@@ -709,8 +710,7 @@
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-19",
-      "note": "Snap general election announced by Pedro Sánchez on 5 Oct 2026"
+      "verified": "2026-10-19"
     },
     {
       "iso": "EST",
@@ -848,6 +848,7 @@
       "iso": "GMB",
       "date": "2026-12-05",
       "type": "presidential",
+      "note": "The electoral commission set the presidential vote for 5 December 2026 and parliamentary elections for 10 April 2027.",
       "sources": [
         {
           "name": "Channels Television",
@@ -858,13 +859,13 @@
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-19",
-      "note": "The electoral commission set the presidential vote for 5 December 2026 and parliamentary elections for 10 April 2027."
+      "verified": "2026-10-19"
     },
     {
       "iso": "GNB",
       "date": null,
       "type": "general",
+      "note": "On 8 Oct 2026 the PM said the 6 Dec 2026 presidential and legislative elections would be delayed; no new date has been set",
       "sources": [
         {
           "name": "Reuters via Internazionale",
@@ -875,8 +876,7 @@
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-19",
-      "note": "On 8 Oct 2026 the PM said the 6 Dec 2026 presidential and legislative elections would be delayed; no new date has been set"
+      "verified": "2026-10-19"
     },
     {
       "iso": "GNQ",
@@ -1067,6 +1067,7 @@
       "iso": "ISR",
       "date": "2026-10-27",
       "type": "legislative",
+      "note": "Early Knesset election after the Knesset dissolved on July 17, 2026",
       "sources": [
         {
           "name": "Library of Congress – In Custodia Legis: FALQs: Israel's Upcoming Election on October 27, 2026",
@@ -1077,8 +1078,7 @@
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-19",
-      "note": "Early Knesset election after the Knesset dissolved on July 17, 2026"
+      "verified": "2026-10-19"
     },
     {
       "iso": "ITA",

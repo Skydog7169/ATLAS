@@ -7,6 +7,14 @@ const NATO_BLUE = '#4f7cff';
 async function open(page: Page, hash = '') {
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
+  // The first-visit This week card is covered by its own test; elsewhere it would sit over the map.
+  await page.addInitScript(() => {
+    try {
+      if (!localStorage.getItem('atlas.intro.v1')) localStorage.setItem('atlas.intro.v1', 'dismissed');
+    } catch {
+      /* storage blocked */
+    }
+  });
   page.on('console', (m) => {
     if (m.type() === 'error') errors.push(m.text());
   });
@@ -18,10 +26,10 @@ async function open(page: Page, hash = '') {
 
 /** On the narrowest phones Changes lives in the header's More menu. */
 async function openChanges(page: Page) {
-  const direct = page.locator('.header .icon-btn[aria-label="Recent changes"]');
+  const direct = page.locator('.header .icon-btn[aria-label="Latest changes"]');
   if (await direct.isVisible()) return direct.click();
   await page.locator('.header .icon-btn[aria-label="More"]').click();
-  await page.locator('.more-list').getByRole('button', { name: 'Recent changes' }).click();
+  await page.locator('.more-list').getByRole('button', { name: 'Latest changes' }).click();
 }
 
 async function noSeriousA11yIssues(page: Page) {
@@ -77,7 +85,7 @@ test('conflicts mode: markers, panel, timeline replay and changes feed', async (
   await noSeriousA11yIssues(page);
 
   await openChanges(page);
-  await expect(page.locator('.panel h2')).toContainText('Recent changes');
+  await expect(page.locator('.panel h2')).toContainText('Latest changes');
   // Defaults to the last week; 'All' is independent of today's date.
   await expect(page.getByRole('button', { name: '7 days', exact: true })).toHaveAttribute('aria-pressed', 'true');
   await page.getByRole('button', { name: 'All', exact: true }).click();
@@ -156,7 +164,7 @@ test('country dossier has every section and a shareable link', async ({ page }) 
     await expect(panel.locator(`#dossier-${id}`)).toBeVisible();
   }
   await expect(panel.locator('.tile')).toHaveCount(6);
-  await expect(panel.locator('#dossier-changes')).toContainText(/Recent changes · [1-9]/);
+  await expect(panel.locator('#dossier-changes')).toContainText(/Latest changes · [1-9]/);
   // A country with no tracked conflict still gets the full dossier.
   await open(page, '#country=ISL');
   await expect(panel.locator('h2')).toContainText('Iceland');
@@ -278,7 +286,7 @@ test('since-your-last-visit strip tracks seen items and agrees with the panel it
   await page.waitForSelector('path.country[d^="M"]');
   const strip = page.locator('.since');
   await expect(strip).toBeVisible();
-  await expect(strip).toContainText(/Since Jan 1, 2020 · \d+ changes/);
+  await expect(strip).toContainText(/Since 1 Jan 2020 · \d+ changes/);
   const total = Number(await strip.locator('.since-label b').first().textContent());
   await expect(page.locator('.readout-btn .readout-dot')).toHaveCount(1);
 
@@ -400,9 +408,10 @@ test('conflict panel shows who backs whom and the peace process; dossier lists s
   await expect(panel.locator('.actors .actor')).not.toHaveCount(0);
   await expect(panel.locator('#conflict-peace')).toContainText(/Peace process · [1-9]/);
   await expect(panel.locator('.peace li').first()).toContainText(/Roadmap|Talks|Agreement|Ceasefire|Setback|Mediation/);
-  // A backer (listed as a badge under the diagram) opens that country's dossier.
+  // A backer in the diagram opens that country's dossier (the duplicate chip row is gone).
+  await expect(panel.locator('.badges .badge .meta')).toHaveCount(0);
   await expect(panel.locator('.actors .backer.clickable')).not.toHaveCount(0);
-  await panel.locator('#conflict-actors ~ .badges .badge').first().click();
+  await panel.locator('.actors .backer.clickable').first().dispatchEvent('click');
   await expect(panel.locator('.eyebrow')).toContainText('Country dossier');
   await open(page, '#country=RWA');
   await expect(panel.locator('#dossier-sponsorship')).toContainText(/Backs parties abroad · [1-9]/);
@@ -444,7 +453,9 @@ test('briefing mode hides the chrome and cycles captions; embed hides the chrome
   await expect(page.locator('.ticker')).toBeHidden();
   const card = page.getByRole('region', { name: 'Briefing' });
   await expect(card).toBeVisible();
-  await expect(card.locator('.eyebrow')).toContainText('Live conflict');
+  // The eyebrow names the conflict type; intensity is not repeated in the dateline.
+  await expect(card.locator('.eyebrow')).toContainText(/Interstate|Civil war|Insurgency|State vs\. armed group|Criminal violence|Flashpoint/);
+  await expect(card).toContainText(/AI-drafted · \d+ sources?|Baseline summary/);
   await expect(card.locator('.brief-count')).toContainText(/^1 \/ \d+$/);
   await expect(page).toHaveURL(/mode=conflicts/);
   await card.getByRole('button', { name: 'Next' }).click();
@@ -550,6 +561,66 @@ test('civil unrest: layer tints and marks episodes, panel, dossier row, search a
   await expect(page).toHaveURL(/unrest=serbia-anti-corruption-protests/);
   await open(page, '#watchlist=1');
   await expect(page.locator('.panel')).toContainText('Unrest · 1');
+  await noSeriousA11yIssues(page);
+});
+
+test('front door: promise line, freshness readout and a first-visit This week card', async ({ page }, testInfo) => {
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.goto('/', { waitUntil: 'networkidle' });
+  await page.waitForSelector('path.country[d^="M"]');
+  // Neutral land, not a membership-count choropleth.
+  await expect(page.locator('path.country[data-iso="USA"]')).toHaveAttribute('fill', 'var(--land)');
+  await expect(page.locator('.legend')).toContainText('18 blocs tracked');
+  const fresh = page.locator('.readout-btn.freshness');
+  await expect(fresh).toBeVisible();
+  await expect(fresh).toContainText(/\d{1,2} [A-Z]{3}/);
+  // Phones keep the two-row header; the promise is in the card there.
+  if (testInfo.project.name !== 'phone') await expect(page.locator('.brand .tag')).toBeVisible();
+
+  const card = page.getByRole('complementary', { name: /This week/ });
+  await expect(card).toBeVisible();
+  await expect(card).toContainText(/\d+ new/);
+  await expect(card).toContainText('AI-researched from cited sources, editor-approved');
+  await noSeriousA11yIssues(page);
+  await card.locator('.tw-list button').first().click();
+  await expect(page.locator('.panel h2')).toBeVisible();
+  // It survives a reload until dismissed, then stays dismissed.
+  await page.goto('/', { waitUntil: 'networkidle' });
+  await page.waitForSelector('path.country[d^="M"]');
+  await page.getByRole('button', { name: 'Dismiss This week' }).click();
+  await expect(page.locator('.this-week')).toHaveCount(0);
+  await page.reload({ waitUntil: 'networkidle' });
+  await page.waitForSelector('path.country[d^="M"]');
+  await expect(page.locator('.this-week')).toHaveCount(0);
+  // The readout opens Latest changes.
+  await page.locator('.readout-btn.freshness').click();
+  await expect(page.locator('.panel h2')).toContainText('Latest changes');
+  expect(errors).toEqual([]);
+});
+
+test('provenance: conflict panels open on the latest dated assessment with its sources and who drafted it', async ({ page }) => {
+  await open(page, '#mode=conflicts&conflict=sudan');
+  const panel = page.locator('.panel');
+  const latest = panel.locator('.latest');
+  await expect(latest.locator('h3')).toContainText(/Latest · \d{1,2} [A-Z][a-z]{2} \d{4}/);
+  await expect(latest.locator('.provenance')).toContainText(/AI-drafted \(Claude, web search\) from \d+ cited sources? · approved by an editor/);
+  await expect(latest.locator('.cite-list a').first()).toHaveAttribute('href', /^https:\/\//);
+  await expect(panel.locator('.badges .badge').first()).toHaveAttribute('title', /High intensity: /);
+  await expect(panel.locator('.updated')).toContainText(/^Updated \d{1,2} [A-Z][a-z]{2} \d{4}\./);
+  // Older baseline entries say they only cite trackers' front pages.
+  const oldest = panel.locator('#conflict-assessments + ol li').last();
+  await oldest.locator('summary').click();
+  await expect(oldest).toContainText('Baseline summary · general references only');
+  await expect(oldest).toContainText('Background reference');
+
+  // Disputed entities say so and link to About.
+  await open(page, '#country=TWN');
+  await expect(panel).toContainText('Self-governing; claimed by the PRC; not a UN member');
+  await panel.getByRole('button', { name: /Disputed status/ }).click();
+  await expect(page.locator('.panel h2')).toContainText('How ATLAS works');
+  await expect(page.locator('#about-disputed')).toBeVisible();
+  await expect(page.locator('.panel')).toContainText('Anthropic’s Claude');
   await noSeriousA11yIssues(page);
 });
 
@@ -808,7 +879,7 @@ test('keyboard: layer menu follows the menu pattern, header buttons show their p
   await expect(trigger).toBeFocused();
 
   if (testInfo.project.name === 'desktop') {
-    const changes = page.locator('.header .icon-btn[aria-label="Recent changes"]');
+    const changes = page.locator('.header .icon-btn[aria-label="Latest changes"]');
     const watch = page.locator('.header .icon-btn[aria-label="Watchlist"]');
     await changes.click();
     await expect(changes).toHaveAttribute('aria-pressed', 'true');

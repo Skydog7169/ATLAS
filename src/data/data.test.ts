@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { BLOCS } from './blocs';
 import { CONFLICTS } from './conflicts';
+import { isHomepage } from './guards';
 import { COUNTRY_BY_ISO } from '../lib/countries';
 import { COUNTRY_FEATURES, MICROSTATES, hasPolygon } from '../lib/geo';
 import { BlocsFileSchema, ConflictsFileSchema } from './schema';
@@ -111,6 +112,21 @@ describe('conflicts', () => {
   });
 });
 
+describe('citations', () => {
+  // The December 2025 baseline and one February 2026 summary cite tracker front pages only and are labelled as such.
+  // Everything from the research pass onwards must carry at least one specific article.
+  const RESEARCH_PASS_START = '2026-10-01';
+
+  it.each([...CONFLICTS, ...UNREST].map((c) => [c.id, c] as const))('%s: every researched entry cites at least one specific article', (_id, c) => {
+    for (const h of c.history) {
+      if (h.date < RESEARCH_PASS_START) continue;
+      expect(
+        h.sources.some((s) => !isHomepage(s.url)),
+        `${c.id} ${h.date}: only homepage citations`,
+      ).toBe(true);
+    }
+  });
+});
 describe('conflict theatres', () => {
   it.each(CONFLICTS.filter((c) => c.theatre).map((c) => [c.id, c] as const))('%s theatre is a subset of its countries', (_id, c) => {
     for (const iso of c.theatre!) expect(c.countries, `${c.id}: theatre ${iso} not in countries`).toContain(iso);

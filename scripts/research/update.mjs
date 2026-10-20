@@ -3,7 +3,8 @@
 // web search) for a fresh assessment; appends it to the JSON only when it is material,
 // sourced and within the intensity guardrail. Also reviews bloc memberships,
 // scans for conflicts the map is missing (reported, never auto-added) and for
-// unrest it is missing (added when two independent sources back it, else reported).
+// unrest it is missing (added when two independent sources back it, else reported),
+// and re-checks the status of chokepoints linked to a high-intensity conflict.
 //
 // Usage:
 //   node scripts/research/update.mjs [--only id,id] [--limit N] [--hot] [--dry-run] [--mock] [--report path]
@@ -20,9 +21,9 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Anthropic from '@anthropic-ai/sdk';
 import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod';
-import { AssessmentOutputSchema, BlocReviewOutputSchema, BlocsFileSchema, ConflictsFileSchema, ElectionOutputSchema, ElectionsFileSchema, MONTH_OR_DATE, NewConflictsOutputSchema, NewUnrestOutputSchema, PARTIAL_DATE, UnrestFileSchema } from '../../src/data/schema.ts';
+import { AssessmentOutputSchema, BlocReviewOutputSchema, BlocsFileSchema, ChokepointOutputSchema, ChokepointsFileSchema, ConflictsFileSchema, ElectionOutputSchema, ElectionsFileSchema, MONTH_OR_DATE, NewConflictsOutputSchema, NewUnrestOutputSchema, PARTIAL_DATE, UnrestFileSchema } from '../../src/data/schema.ts';
 import { hotSelection } from './select.mjs';
-import { clampIntensity, hostOf, isMaterialChange, verifySources } from '../../src/data/guards.ts';
+import { clampIntensity, hostOf, isHomepage, isMaterialChange, verifySources } from '../../src/data/guards.ts';
 import { mockClient } from './mock.mjs';
 import { captureUnrest, MAX_AUTO_ADDS } from './capture.mjs';
 
@@ -32,6 +33,7 @@ const CONFLICTS_PATH = resolve(root, 'src/data/conflicts.json');
 const BLOCS_PATH = resolve(root, 'src/data/blocs.json');
 const ELECTIONS_PATH = resolve(root, 'src/data/elections.json');
 const UNREST_PATH = resolve(root, 'src/data/unrest.json');
+const CHOKEPOINTS_PATH = resolve(root, 'src/data/chokepoints.json');
 const COUNTRIES = JSON.parse(readFileSync(resolve(root, 'src/data/countries.generated.json'), 'utf8'));
 /** Country centroid as [lon, lat], or null for an unknown code. */
 const countryLonLat = (iso) => {
@@ -52,13 +54,14 @@ const conflicts = ConflictsFileSchema.parse(JSON.parse(readFileSync(CONFLICTS_PA
 const blocs = BlocsFileSchema.parse(JSON.parse(readFileSync(BLOCS_PATH, 'utf8')));
 const elections = ElectionsFileSchema.parse(JSON.parse(readFileSync(ELECTIONS_PATH, 'utf8')));
 const unrest = UnrestFileSchema.parse(JSON.parse(readFileSync(UNREST_PATH, 'utf8')));
+const chokepoints = ChokepointsFileSchema.parse(JSON.parse(readFileSync(CHOKEPOINTS_PATH, 'utf8')));
 
 const client = args.mock ? mockClient() : new Anthropic();
 const usage = { input: 0, output: 0, cacheRead: 0, calls: 0 };
-const report = { updated: [], unchanged: [], clamped: [], droppedSources: [], errors: [], blocChanges: [], blocNote: '', candidates: [], unrestCandidates: [], unrestAdded: [], elections: [], peace: [] };
+const report = { updated: [], unchanged: [], clamped: [], droppedSources: [], errors: [], blocChanges: [], blocNote: '', candidates: [], unrestCandidates: [], unrestAdded: [], elections: [], peace: [], chokepoints: [] };
 
 const SYSTEM = `You are a research analyst maintaining a public geopolitics map. Today is ${today}.
-Write in plain, neutral English with specific dates. Never invent events or URLs: every source you return must be a URL that appeared in your web search results. Prefer wire services, UN bodies and established conflict trackers (CFR, ACLED, Crisis Group, ISW). If nothing material happened since the previous assessment, say so by setting changed=false and restating the current situation briefly.
+Write in plain, neutral English with specific dates. Never invent events or URLs: every source you return must be a URL that appeared in your web search results, pointing at the specific article that supports the claim (with its outlet, headline and publication date), not a site's front page or a tracker's index page. Prefer wire services, UN bodies and established conflict trackers (CFR, ACLED, Crisis Group, ISW). If nothing material happened since the previous assessment, say so by setting changed=false and restating the current situation briefly.
 Keep the native diacritics of Latin-alphabet names (Erdoğan, Vučić, Türkiye, Côte d'Ivoire); do not strip them.`;
 
 const UNREST_SCALE =
@@ -113,6 +116,14 @@ if (!args.only) {
   } catch (err) {
     report.errors.push(`new-unrest: ${describeError(err)}`);
   }
+  // Chokepoint status moves markets; both passes re-check the passages tied to a high-intensity conflict.
+  for (const cp of chokepointsDue(chokepoints.chokepoints, conflicts)) {
+    try {
+      await reviewChokepoint(cp);
+    } catch (err) {
+      report.errors.push(`chokepoint/${cp.id}: ${describeError(err)}`);
+    }
+  }
 }
 
 // Validate before writing; a schema failure means a bug above, not bad data.
@@ -120,12 +131,14 @@ ConflictsFileSchema.parse(conflicts);
 BlocsFileSchema.parse(blocs);
 ElectionsFileSchema.parse(elections);
 UnrestFileSchema.parse(unrest);
+ChokepointsFileSchema.parse(chokepoints);
 
 if (!args.dryRun) {
   writeFileSync(CONFLICTS_PATH, JSON.stringify(conflicts, null, 2) + '\n');
   writeFileSync(BLOCS_PATH, JSON.stringify(blocs, null, 2) + '\n');
   writeFileSync(ELECTIONS_PATH, JSON.stringify(elections, null, 2) + '\n');
   writeFileSync(UNREST_PATH, JSON.stringify(unrest, null, 2) + '\n');
+  if (report.chokepoints.length) writeFileSync(CHOKEPOINTS_PATH, JSON.stringify(chokepoints, null, 2) + '\n');
 }
 
 const md = renderReport();
@@ -167,7 +180,7 @@ async function assessConflict(conflict, kind = 'conflict') {
   if (!out) throw new Error('no parseable output');
 
   const seenUrls = collectSearchUrls(response);
-  const { kept, dropped } = verifySources(out.sources, seenUrls);
+  const { kept, dropped } = verifySources(out.sources.map(citation), seenUrls);
   if (dropped.length) report.droppedSources.push({ id: conflict.id, dropped: dropped.map((s) => s.url) });
   if (kind === 'conflict') applyPeaceEvents(conflict, out.peaceEvents ?? [], seenUrls);
 
@@ -178,14 +191,78 @@ async function assessConflict(conflict, kind = 'conflict') {
     return;
   }
   if (kept.length === 0) throw new Error('assessment changed but no verifiable sources survived');
+  // A front page or tracker index cannot back a dated claim: at least one citation must be a specific article.
+  const specific = kept.filter((s) => !isHomepage(s.url));
+  if (specific.length === 0) throw new Error('assessment changed but every surviving source is a homepage or tracker index');
   const { intensity, clamped } = clampIntensity(previous.intensity, out.intensity);
   if (clamped) report.clamped.push({ id: conflict.id, from: previous.intensity, proposed: out.intensity, applied: intensity });
 
-  const entry = { date: today, intensity, status: out.status.trim(), sources: kept.slice(0, 3), confidence: out.confidence };
+  const entry = { date: today, intensity, status: out.status.trim(), sources: [...specific, ...kept.filter((s) => isHomepage(s.url))].slice(0, 3), confidence: out.confidence, drafted: 'ai' };
   if (previous.date === today) conflict.history[0] = entry;
   else conflict.history.unshift(entry);
   delete conflict.lastChecked;
   report.updated.push({ id: conflict.id, name: kind === 'unrest' ? `${conflict.name} (unrest)` : conflict.name, from: previous.intensity, to: intensity, confidence: out.confidence, note: out.note, status: entry.status });
+}
+
+/**
+ * Turns the model's structured citation into the stored "Outlet: Headline (date)"
+ * name the panel renders, matching the peace-process tracker.
+ */
+/** "17 Oct 2026", the same style the panel prints (labels.ts is not importable from Node: it pulls in bundler-only paths). */
+function formatDate(iso) {
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  return `${Number(iso.slice(8, 10))} ${months[Number(iso.slice(5, 7)) - 1]} ${iso.slice(0, 4)}`;
+}
+
+export function citation(s) {
+  const outlet = String(s.name ?? '').trim();
+  const headline = String(s.headline ?? '').trim();
+  const published = /^\d{4}-\d{2}-\d{2}$/.test(s.published ?? '') ? ` (${formatDate(s.published)})` : '';
+  return { name: headline ? `${outlet}: ${headline}${published}` : outlet, url: s.url };
+}
+
+/** Chokepoints linked to a conflict currently at high intensity. */
+export function chokepointsDue(list, conflictList) {
+  const high = new Set(conflictList.filter((c) => c.history[0]?.intensity === 'high').map((c) => c.id));
+  return list.filter((cp) => cp.conflicts.some((id) => high.has(id)));
+}
+
+/** Re-checks one chokepoint; appends a dated entry only on a material, specifically sourced change. */
+async function reviewChokepoint(cp) {
+  const previous = cp.history[0];
+  const linked = cp.conflicts.map((id) => conflicts.find((c) => c.id === id)).filter(Boolean);
+  const prompt = [
+    `Chokepoint: ${cp.name} (id ${cp.id}), between ${cp.between}. Carries: ${cp.carries}`,
+    `Previous entry (${previous.date}, status ${previous.status}): ${previous.summary}`,
+    `Linked conflicts: ${linked.map((c) => `${c.name} (${c.history[0].date}, ${c.history[0].intensity}): ${c.history[0].status}`).join(' | ')}`,
+    '',
+    `Task: search for changes to shipping traffic, closures, attacks on vessels or naval restrictions in this passage between ${previous.date} and ${today}. Status scale: open = normal traffic; recovering = traffic returning after disruption; restricted = formal limits or inspections; disrupted = attacks or diversions cutting traffic; closed = effectively shut. If nothing material changed, set changed=false.`,
+  ].join('\n');
+  const response = await client.messages.parse({
+    model: MODEL,
+    max_tokens: 8000,
+    system: SYSTEM,
+    output_config: { effort: 'low', format: zodOutputFormat(ChokepointOutputSchema) },
+    tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 5 }],
+    messages: [{ role: 'user', content: prompt }],
+  });
+  track(response);
+  const out = response.parsed_output ?? parseTextFallback(response, ChokepointOutputSchema);
+  if (!out) throw new Error('no parseable output');
+  const { kept, dropped } = verifySources(out.sources.map(citation), collectSearchUrls(response));
+  if (dropped.length) report.droppedSources.push({ id: `chokepoint/${cp.id}`, dropped: dropped.map((s) => s.url) });
+  const specific = kept.filter((s) => !isHomepage(s.url));
+  const summary = String(out.summary ?? '').trim();
+  const changed = out.changed && (out.status !== previous.status || isMaterialChange({ intensity: 'low', status: previous.summary }, summary, 'low'));
+  if (!changed || specific.length === 0 || summary.length < 20) {
+    report.chokepoints.push({ id: cp.id, name: cp.name, changed: false, status: previous.status, note: specific.length === 0 && out.changed ? 'change proposed without a specific citation; not applied' : out.note });
+    return;
+  }
+  const entry = { date: today, status: out.status, summary: summary.slice(0, 500), sources: specific.slice(0, 3) };
+  if (previous.date === today) cp.history[0] = entry;
+  else cp.history.unshift(entry);
+  chokepoints.verified = today;
+  report.chokepoints.push({ id: cp.id, name: cp.name, changed: true, from: previous.status, status: out.status, note: out.note, summary: entry.summary });
 }
 
 /** Appends sourced peace-process events the model found, skipping duplicates and unverifiable citations. */
@@ -450,6 +527,10 @@ function renderReport() {
   if (report.clamped.length) {
     lines.push('', '### Intensity moves clamped to one step (review)');
     for (const c of report.clamped) lines.push(`- ${c.id}: ${c.from} → proposed ${c.proposed}, applied ${c.applied}`);
+  }
+  if (report.chokepoints.length) {
+    lines.push('', `### Chokepoints re-checked (${report.chokepoints.length}, ${report.chokepoints.filter((c) => c.changed).length} changed)`);
+    for (const c of report.chokepoints) lines.push(`- **${c.name}**: ${c.changed ? `${c.from} → ${c.status} — ${c.summary}` : `no change (${c.status})`}${c.note ? ` — _${c.note}_` : ''}`);
   }
   lines.push('', `### Peace-process events added (${report.peace.length})`);
   for (const p of report.peace) lines.push(`- **${p.name}** ${p.date} ${p.kind}: ${p.summary}`);

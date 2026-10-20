@@ -80,7 +80,7 @@ export default function Ticker({ onSelectConflict, onSelectBloc, onSelectUnrest 
     <div className={'ticker' + (paused ? ' paused' : '')} role="region" aria-label="Latest changes">
       <span className="ticker-label">
         <span className="live" aria-hidden="true" />
-        <span>FEED{only ? ' · STARRED' : ''}</span>
+        <span>LATEST{only ? ' · STARRED' : ''}</span>
       </span>
       <button className="ticker-pause" aria-pressed={paused} aria-label="Pause feed" title={paused ? 'Resume scrolling' : 'Pause feed'} onClick={togglePaused}>
         <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

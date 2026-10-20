@@ -43,7 +43,7 @@ describe('country dossier', () => {
     // ACLED and UCDP sections appear only when their builds had credentials.
     const generated = (id: string) => id === 'acled' || id === 'ucdp';
     expect(irn.extras.map((x) => x.id).filter((id) => !generated(id))).toEqual(['unrest', 'sponsorship', 'sanctions', 'elections', 'nuclear', 'trade']);
-    expect(irn.sections.filter((id) => !generated(id)).slice(0, 9)).toEqual(['profile', 'memberships', 'conflicts', 'unrest', 'sponsorship', 'sanctions', 'elections', 'nuclear', 'trade']);
+    expect(irn.sections.filter((id) => !generated(id)).slice(0, 10)).toEqual(['profile', 'memberships', 'conflicts', 'changes', 'unrest', 'sponsorship', 'sanctions', 'elections', 'nuclear', 'trade']);
     expect(irn.extras.find((x) => x.id === 'sanctions')!.rows.length).toBeGreaterThanOrEqual(3);
     // A country with no nuclear role gets no nuclear section but still an (empty) sanctions one.
     const bra = countryDossier('BRA')!;
@@ -66,6 +66,19 @@ describe('country dossier', () => {
   it('writes a readable profile line', () => {
     expect(profileLine(countryDossier('FRA')!.country)).toMatch(/French Republic · Capital: Paris · UN member/);
     expect(profileLine(countryDossier('TWN')!.country)).toMatch(/Taipei/);
+  });
+
+  it('states disputed statuses neutrally instead of calling them territories', () => {
+    const line = (iso: string) => profileLine(countryDossier(iso)!.country);
+    expect(line('TWN')).toMatch(/Self-governing; claimed by the PRC; not a UN member$/);
+    expect(line('PSE')).toMatch(/UN non-member observer state$/);
+    expect(line('PSE')).toContain('Administrative seat: Ramallah (claims East Jerusalem)');
+    expect(line('UNK')).toMatch(/Partially recognised/);
+    expect(line('ESH')).toMatch(/^Largest city: El Aaiún/);
+    expect(line('ESH')).not.toContain('Sahrawi Arab Democratic Republic');
+    expect(line('ISR')).toContain('status disputed');
+    for (const iso of ['TWN', 'PSE', 'UNK', 'ESH']) expect(line(iso)).not.toMatch(/Territory$/);
+    expect(line('PRI')).toMatch(/Territory$/);
   });
 });
 

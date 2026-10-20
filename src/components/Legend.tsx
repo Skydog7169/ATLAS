@@ -1,7 +1,8 @@
 import { Children, cloneElement, type ReactElement, type ReactNode } from 'react';
 import { BLOC_BY_ID } from '../data/blocs';
-import { INTENSITY_COLOR, INTENSITY_LABEL, conflictFill } from '../lib/labels';
+import { CONFIDENCE_DEF, INTENSITY_COLOR, INTENSITY_DEF, INTENSITY_LABEL, UNREST_INTENSITY_DEF, UNREST_INTENSITY_LABEL, conflictFill } from '../lib/labels';
 import { FAINT_FILL, NO_DATA_SWATCH, hatchSwatch } from '../lib/palette';
+import { BLOCS } from '../data/blocs';
 import type { Intensity } from '../data/types';
 import type { Layer, Mode } from '../lib/urlState';
 import { DISPLACEMENT, DISPLACEMENT_COLORS, binLabel } from '../lib/displacement';
@@ -25,7 +26,6 @@ interface Props {
   mode: Mode;
   bloc: string | null;
   vs: string | null;
-  overviewSteps: string[];
   layer: Layer;
   /** Conflicts replay month, or null when live. */
   month?: string | null;
@@ -75,7 +75,7 @@ function LegendWithReplay(props: Props) {
   return cloneElement(el, undefined, ...Children.toArray(el.props.children), note);
 }
 
-function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed = false }: Props) {
+function LegendBody({ mode, bloc, vs, layer, month = null, embed = false }: Props) {
   if (layer === 'displacement') {
     return (
       <LegendFrame>
@@ -125,7 +125,7 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
               </a>
             </span>
           ))}
-          ; verified {formatDate(MILITARY.verified)}.
+          ; curated {formatDate(MILITARY.verified)}.
         </div>
       </LegendFrame>
     );
@@ -192,7 +192,7 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
           ))}
         </ul>
         <div className="note">
-          Eight passages with a dated status and the conflicts that bear on them. Curated; verified {formatDate(CHOKEPOINTS_FILE.verified)}.
+          Eight passages with a dated status and the conflicts that bear on them. Curated {formatDate(CHOKEPOINTS_FILE.verified)}; re-checked daily where a high-intensity conflict bears on the passage.{mode === 'conflicts' ? ' Round markers are still conflicts.' : ''}
         </div>
       </LegendFrame>
     );
@@ -206,12 +206,15 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
             <li key={i}>
               <span className="swatch triangle" style={{ background: UNREST_COLOR[i] }} />
               <span className="swatch" style={{ background: unrestFillColor(i) }} aria-hidden="true" />
-              {INTENSITY_LABEL[i]}
+              <span>
+                {UNREST_INTENSITY_LABEL[i]}
+                <span className="def">{UNREST_INTENSITY_DEF[i]}</span>
+              </span>
             </li>
           ))}
         </ul>
         <div className="note">
-          Protest movements, riots, uprisings, coups, mutinies and crackdowns that are not armed conflicts, each with dated, sourced assessments. Intensity here means the scale of mobilisation and the lethality of the response, not armed combat. Countries are tinted by their most intense episode. Curated and reassessed weekly; newest assessment {formatDate(UNREST_VERIFIED)}.
+          Protest movements, riots, uprisings, coups, mutinies and crackdowns that are not armed conflicts, each with dated, sourced assessments. Intensity here means the scale of mobilisation and the lethality of the response, not armed combat. Countries are tinted by their most intense episode. Checked daily (hot list) and weekly (all); updated {formatDate(UNREST_VERIFIED)}.
         </div>
       </LegendFrame>
     );
@@ -331,7 +334,7 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
           <a href={ELECTIONS.source.url} target="_blank" rel="noopener noreferrer">
             {ELECTIONS.source.name.replace(/^Wikipedia: /, 'Wikipedia, ')}
           </a>{' '}
-          and re-checked by the weekly research pass; last verified {formatDate(ELECTIONS_VERIFIED)}.
+          and re-checked by the weekly research pass; last checked {formatDate(ELECTIONS_VERIFIED)}.
         </div>
       </LegendFrame>
     );
@@ -358,7 +361,7 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
               </a>
             </span>
           ))}
-          ; verified {formatDate(NUCLEAR.verified)}. Umbrella covers NATO members, Japan, South Korea and Australia.
+          ; curated {formatDate(NUCLEAR.verified)}. Umbrella covers NATO members, Japan, South Korea and Australia.
         </div>
       </LegendFrame>
     );
@@ -372,7 +375,10 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
             <li key={i}>
               <span className="swatch circle" style={{ background: INTENSITY_COLOR[i] }} />
               <span className="swatch" style={{ background: conflictFill(i) }} aria-hidden="true" />
-              {INTENSITY_LABEL[i]}
+              <span>
+                {INTENSITY_LABEL[i]}
+                <span className="def">{INTENSITY_DEF[i]}</span>
+              </span>
             </li>
           ))}
           <li>
@@ -392,7 +398,9 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
             </>
           )}
         </ul>
-        <div className="note">Markers (circles) and territory (squares): countries are filled by the most intense conflict fought on their territory, deeper for more intense. A dashed outline marks a state whose forces fight only abroad. Marker size follows intensity.</div>
+        <div className="note">
+          Markers (circles) and territory (squares): countries are filled by the most intense conflict fought on their territory, deeper for more intense. A dashed outline marks a state whose forces fight only abroad. Marker size follows intensity. <abbr title={`High: ${CONFIDENCE_DEF.high}. Medium: ${CONFIDENCE_DEF.medium}. Low: ${CONFIDENCE_DEF.low}.`}>Confidence</abbr>: high means two or more independent outlets agree.
+        </div>
       </LegendFrame>
     );
   }
@@ -450,16 +458,8 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
 
   return (
     <LegendFrame>
-      <LegendTitle>Bloc memberships</LegendTitle>
-      <ul>
-        {overviewSteps.map((color, i) => (
-          <li key={i}>
-            <span className="swatch" style={{ background: color }} />
-            {i === 0 ? 'None' : i === overviewSteps.length - 1 ? `${i}+` : String(i)}
-          </li>
-        ))}
-      </ul>
-      <div className="note">{embed ? 'Tap a country for details · open in ATLAS ↗ to pick a bloc.' : 'Pick a bloc above to see its members, then use VS Compare to set two blocs side by side. Click any country for details.'}</div>
+      <LegendTitle>{BLOCS.length} blocs tracked</LegendTitle>
+      <div className="note">{embed ? 'Tap a country for its dossier · open in ATLAS ↗ to pick a bloc.' : 'Pick a bloc above to colour its members, or press VS to compare two. Switch to Conflicts for who is fighting. Click any country for its dossier.'}</div>
     </LegendFrame>
   );
 }

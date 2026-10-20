@@ -3441,7 +3441,7 @@ a {
 
 /* The narrowest phones: Changes and About move into the overflow menu so the header stays one row. */
 @media (max-width: 440px) {
-  .header .icon-btn[aria-label='Recent changes'],
+  .header .icon-btn[aria-label='Latest changes'],
   .header .icon-btn[aria-label='About ATLAS'] {
     display: none;
   }

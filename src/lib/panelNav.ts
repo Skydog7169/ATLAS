@@ -27,7 +27,7 @@ export function selectionLabel(s: Selection): string {
     case 'compare':
       return 'Comparison';
     case 'changes':
-      return 'Recent changes';
+      return 'Latest changes';
     case 'watchlist':
       return 'Watchlist';
     case 'about':

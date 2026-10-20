@@ -19,17 +19,19 @@ import { tradeFill } from './lib/trade';
 import { CHOKEPOINTS, CHOKEPOINT_BY_ID, CHOKEPOINT_COLOR, CHOKEPOINT_GLYPH, CHOKEPOINT_MARKER_PREFIX, CHOKEPOINT_STATUS_LABEL, currentStatus } from './lib/chokepoints';
 import LayerMenu from './components/LayerMenu';
 import { LAYER_LABEL, LAYER_OPTIONS } from './lib/layerOptions';
-import { INTENSITY_COLOR, INTENSITY_LABEL, INTENSITY_RADIUS, conflictFill } from './lib/labels';
-import { ramp, resolveColor } from './lib/palette';
+import { CONFLICT_TYPE_LABEL, INTENSITY_COLOR, INTENSITY_LABEL, INTENSITY_RADIUS, conflictFill } from './lib/labels';
+import { resolveColor } from './lib/palette';
 import { useSeen } from './hooks/useSeen';
 import BlocChips from './components/BlocChips';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import Legend from './components/Legend';
 import Search, { type SearchHit } from './components/Search';
 import ThemeToggle from './components/ThemeToggle';
-import Clock from './components/Clock';
+import HeaderReadouts from './components/HeaderReadouts';
+import ThisWeek from './components/ThisWeek';
+import { DATA_ASOF, PROMISE, PROMISE_SHORT } from './lib/frontdoor';
 import Ticker from './components/Ticker';
-import SinceLastVisit, { UpdatedReadout } from './components/SinceLastVisit';
+import SinceLastVisit from './components/SinceLastVisit';
 import { watchItemResolves } from './lib/feed';
 import { ASK_ENABLED } from './components/AskPanel';
 import { useWatchlist } from './hooks/useWatchlist';
@@ -66,7 +68,7 @@ import LegendDock from './components/LegendDock';
 import EmbedCaption from './components/EmbedCaption';
 import MoreMenu from './components/MoreMenu';
 import { conflictFillMaps, isTheatre } from './lib/theatre';
-import { SOVEREIGN, memberFor, territoryLine } from './lib/sovereign';
+import { memberFor, territoryLine } from './lib/sovereign';
 import { blocsSuppressed, isDefaultMap, mapStateSegments, resetState, shareUrl } from './lib/mapState';
 import { copyText } from './lib/clipboard';
 import MapStateStrip from './components/MapStateStrip';
@@ -91,18 +93,6 @@ function prefetchLater() {
   if ('requestIdleCallback' in window) window.requestIdleCallback(run, { timeout: 8000 });
   else setTimeout(run, 4000);
 }
-
-// Theme-relative (palette.ts): the top class stays clear of --accent, which is reserved for UI and selection.
-const OVERVIEW_STEPS = ramp('overview');
-
-
-/** Newest `updated` month across both datasets, shown in the header readouts. */
-const DATA_ASOF = [...BLOCS.map((b) => b.updated), ...CONFLICTS.map((c) => c.updated)].sort().at(-1) ?? '';
-
-const membershipCount = new Map<string, number>();
-for (const b of BLOCS) for (const m of b.members) if (m.status === 'member') membershipCount.set(m.iso, (membershipCount.get(m.iso) ?? 0) + 1);
-// Territories drawn on their own (Greenland) count the alliances they inherit from their sovereign.
-for (const iso of Object.keys(SOVEREIGN)) for (const b of BLOCS) if (!b.members.some((m) => m.iso === iso) && memberFor(b, iso)) membershipCount.set(iso, (membershipCount.get(iso) ?? 0) + 1);
 
 const EARLIEST_MONTH = earliestMonth(CONFLICTS, []);
 
@@ -285,8 +275,8 @@ export default function App() {
         if (m.status === 'suspended' || m.status === 'frozen') return { fill: activeBloc.color, hatch: activeBloc.color };
         return { fill: `color-mix(in srgb, ${activeBloc.color} 45%, var(--land))` };
       }
-      const n = Math.min(membershipCount.get(iso) ?? 0, OVERVIEW_STEPS.length - 1);
-      return { fill: OVERVIEW_STEPS[n] ?? 'var(--land)' };
+      // No bloc picked: neutral land. A count of memberships among hand-picked blocs answers no question, so the chips are the call to action.
+      return { fill: 'var(--land)' };
     },
     [mode, activeBloc, compare, maxIntensityByCountry, partyAbroadByCountry, layer, pair, theatre, backers],
   );
@@ -517,7 +507,7 @@ export default function App() {
     for (const c of CONFLICTS) {
       if (c.history[0]?.intensity !== 'high') continue;
       seen.add('conflict:' + c.id);
-      out.push({ id: c.id, kind: 'conflict', title: c.name, eyebrow: 'Live conflict', detail: c.history[0]?.status ?? '', color: INTENSITY_COLOR.high, conflict: c });
+      out.push({ id: c.id, kind: 'conflict', title: c.name, eyebrow: CONFLICT_TYPE_LABEL[c.type], detail: c.history[0]?.status ?? '', color: INTENSITY_COLOR.high, conflict: c });
     }
     for (const w of watchlist.items) {
       const key = w.kind + ':' + w.id;
@@ -574,6 +564,15 @@ export default function App() {
       else if (item.kind === 'country') update({ brief: false, selection: { kind: 'country', iso: item.id } });
       else if (item.kind === 'unrest') update({ brief: false, layer: 'unrest', selection: { kind: 'unrest', id: item.id } });
       else update({ brief: false, mode: 'blocs', bloc: item.id, selection: { kind: 'bloc', id: item.id } });
+    },
+    [update],
+  );
+
+  // Opens About and scrolls to the disputed-territories block when asked from a dossier.
+  const openAbout = useCallback(
+    (anchor?: string) => {
+      update({ selection: { kind: 'about' } });
+      if (anchor) requestAnimationFrame(() => requestAnimationFrame(() => document.getElementById(anchor)?.scrollIntoView({ block: 'start' })));
     },
     [update],
   );
@@ -705,7 +704,10 @@ export default function App() {
           <Logo />
           <span>
             <span className="word">ATLAS</span>
-            <span className="tag">GEOPOLITICAL AWARENESS</span>
+            <span className="tag">
+              <span className="long">{PROMISE}</span>
+              <span className="short">{PROMISE_SHORT}</span>
+            </span>
           </span>
         </a>
         <div className="segmented" role="group" aria-label="Map mode">
@@ -717,24 +719,19 @@ export default function App() {
           </button>
         </div>
         <div className="spacer" />
-        <div className="readouts" aria-label="Status readouts">
-          <Clock />
-          <span className="optional">
-            TRACKED <b>{CONFLICTS.length}</b> · BLOCS <b>{BLOCS.length}</b>
-          </span>
-          <UpdatedReadout onOpen={(since) => update({ selection: { kind: 'changes', since } })} />
+        <HeaderReadouts open={selection?.kind === 'changes'} onOpenChanges={(since) => update({ selection: selection?.kind === 'changes' ? null : { kind: 'changes', since } })}>
           {edition.newer && (
             <button className="readout-btn edition-chip" onClick={() => window.location.reload()} title={`A newer edition (${formatDate(edition.newer)}) has shipped. Reload to load it; your view is kept in the link.`}>
               NEW EDITION ↻
             </button>
           )}
-        </div>
+        </HeaderReadouts>
         <Search onPick={onPick} conflictColor={conflictColor} mode={mode} watchlist={watchlist.items} />
         <button
           className="icon-btn"
-          aria-label="Recent changes"
+          aria-label="Latest changes"
           aria-pressed={selection?.kind === 'changes'}
-          title="Recent changes"
+          title="Latest changes"
           onClick={() => update({ selection: selection?.kind === 'changes' ? null : { kind: 'changes' } })}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -785,7 +782,7 @@ export default function App() {
         </button>
         <MoreMenu
           items={[
-            { label: 'Recent changes', pressed: selection?.kind === 'changes', onSelect: () => update({ selection: selection?.kind === 'changes' ? null : { kind: 'changes' } }) },
+            { label: 'Latest changes', pressed: selection?.kind === 'changes', onSelect: () => update({ selection: selection?.kind === 'changes' ? null : { kind: 'changes' } }) },
             { label: 'About ATLAS', pressed: selection?.kind === 'about', onSelect: () => update({ selection: selection?.kind === 'about' ? null : { kind: 'about' } }) },
           ]}
         />
@@ -793,6 +790,7 @@ export default function App() {
       </header>
 
       <main className="stage" ref={stageRef}>
+        {!embed && !brief && <ThisWeek onSelectConflict={selectConflict} onSelectUnrest={selectUnrest} onOpenChanges={() => update({ selection: { kind: 'changes' } })} onOpenAbout={() => openAbout()} />}
         {/* First in DOM order so the first Tab into an embed announces what it is and when it is from. */}
         {embed && <EmbedBadge href={openHref} logo={<Logo />} month={viewMonth} dataAsof={DATA_ASOF} />}
         {dropped.length > 0 && !embed && (
@@ -885,7 +883,7 @@ export default function App() {
 
         {!mapError && !(embed && embedOpts.legend === 'off') && (
           <LegendDock panelOpen={panelOpen}>
-            <Legend mode={mode} bloc={bloc} vs={mode === 'blocs' ? vs : null} overviewSteps={OVERVIEW_STEPS} layer={layer} month={viewMonth} embed={embed} onClearLayer={embed ? undefined : () => update({ layer: null })} strip={stateStrip} />
+            <Legend mode={mode} bloc={bloc} vs={mode === 'blocs' ? vs : null} layer={layer} month={viewMonth} embed={embed} onClearLayer={embed ? undefined : () => update({ layer: null })} strip={stateStrip} />
           </LegendDock>
         )}
 
@@ -1002,6 +1000,7 @@ export default function App() {
                   onSelectChokepoint={selectChokepoint}
                   onSelectUnrest={selectUnrest}
                   onSelectPair={selectPair}
+                  onOpenAbout={openAbout}
                   layer={layer}
                   mapBloc={mode === 'blocs' ? bloc : null}
                   onCompareBloc={(id) => {
