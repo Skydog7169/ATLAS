@@ -28,7 +28,8 @@ export function focusForSelection(selection: Selection, ctx: { bloc?: string | n
     case 'country':
       return { kind: 'country', iso: selection.iso };
     case 'pair':
-      return selection.b ? { kind: 'isos', isos: [selection.a, selection.b] } : { kind: 'country', iso: selection.a };
+      // A one-sided pair is the picker: the map stays put so the second country can be clicked.
+      return selection.b ? { kind: 'isos', isos: [selection.a, selection.b] } : null;
     case 'bloc':
       return blocFocus(selection.id);
     case 'compare':

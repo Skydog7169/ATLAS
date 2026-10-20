@@ -106,7 +106,7 @@ describe('focusForSelection', () => {
     expect(asean?.kind).toBe('isos');
     expect(asean && asean.kind === 'isos' ? asean.isos : []).toContain('IDN');
     expect(focusForSelection({ kind: 'pair', a: 'USA', b: 'CHN' })).toEqual({ kind: 'isos', isos: ['USA', 'CHN'] });
-    expect(focusForSelection({ kind: 'pair', a: 'USA', b: null })).toEqual({ kind: 'country', iso: 'USA' });
+    expect(focusForSelection({ kind: 'pair', a: 'USA', b: null })).toBeNull();
     expect(focusForSelection({ kind: 'conflict', id: 'sudan' })).toMatchObject({ kind: 'point', scale: 3.5 });
     expect(focusForSelection({ kind: 'about' })).toBeNull();
     expect(focusForSelection(null)).toBeNull();

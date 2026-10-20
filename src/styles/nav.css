@@ -1,0 +1,134 @@
+/* ---------- navigation spine: panel back chip, section strip, notices ---------- */
+
+/* Two levels of "on": a panel the button opened gets an outline and a tint;
+   a mode or layer that is on ([data-active], the segmented control) gets a
+   solid fill. Scoped to the header so the globe toggle keeps its icon swap. */
+.header .icon-btn[aria-pressed='true'] {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, var(--bg-elev-2));
+}
+
+/* Headings take focus programmatically; the house :focus-visible ring is enough. */
+.panel-head h2:focus,
+.brief-card h2:focus {
+  outline: none;
+}
+
+.panel-back {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: calc(100% - 28px);
+  margin: 12px 14px 0;
+  padding: 4px 10px 4px 8px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elev-2);
+  color: var(--fg-muted);
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.panel-back:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.panel-back + .panel-head {
+  padding-top: 10px;
+}
+
+.section-nav {
+  display: flex;
+  gap: 4px;
+  padding: 8px 14px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--border);
+  flex: 0 0 auto;
+  mask-image: linear-gradient(to right, black 90%, transparent);
+}
+
+.section-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.section-nav .chip {
+  padding: 4px 9px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+
+.section-nav .chip[aria-current='true'] {
+  color: var(--fg);
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 16%, var(--bg-elev));
+}
+
+.stale-link {
+  z-index: 5;
+}
+
+.stale-text {
+  flex: 1;
+  min-width: 0;
+  color: var(--fg);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mode-toast {
+  position: absolute;
+  left: 50%;
+  top: 64px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: calc(100% - 32px);
+  padding: 8px 10px 8px 14px;
+  background: var(--bg-elev);
+  border: 1px solid var(--accent);
+  box-shadow: var(--shadow);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  z-index: 7;
+}
+
+.brief-head .brief-count {
+  margin-left: auto;
+}
+
+.brief-hint {
+  margin-left: 10px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--fg-faint);
+}
+
+@media (max-width: 820px) {
+  /* The back chip sits at the top of the sheet; the decorative grip would land between it and the title. */
+  .panel-back + .panel-head {
+    padding-top: 10px;
+  }
+
+  .panel-back + .panel-head::after {
+    display: none;
+  }
+
+  .brief-hint {
+    display: none;
+  }
+
+  .stale-text {
+    white-space: normal;
+  }
+}

@@ -52,8 +52,12 @@ const MONTH = /^\d{4}-(0[1-9]|1[0-2])$/;
 export function serialize(state: AppState): string {
   const p = new URLSearchParams();
   p.set('mode', state.mode);
-  if (state.bloc) p.set('bloc', state.bloc);
-  if (state.bloc && state.vs) p.set('vs', state.vs);
+  // The bloc highlight only exists in blocs mode; it stays in memory so toggling back restores it.
+  const bloc = state.mode === 'blocs' ? state.bloc : null;
+  if (bloc) p.set('bloc', bloc);
+  if (bloc && state.vs) p.set('vs', state.vs);
+  // A bare #bloc=… link opens its panel, so say so when the user closed it.
+  if (bloc && !state.selection) p.set('panel', '0');
   if (state.month) p.set('t', state.month);
   if (state.layer) p.set('layer', state.layer);
   if (state.view === 'globe') {
@@ -73,6 +77,8 @@ export function serialize(state: AppState): string {
     else if (state.selection.kind === 'unrest') p.set('unrest', state.selection.id);
     else if (state.selection.kind === 'pair') p.set('pair', state.selection.b ? `${state.selection.a},${state.selection.b}` : state.selection.a);
     else if (state.selection.kind === 'ask') p.set('ask', '1');
+    // With a comparison set, bloc+vs alone would reopen the compare panel.
+    else if (state.selection.kind === 'bloc' && bloc && state.vs) p.set('selbloc', state.selection.id);
     else p.set(state.selection.kind, state.selection.id);
   }
   return '#' + p.toString();
@@ -90,19 +96,41 @@ const LAYER_FALLBACK: Partial<Record<string, { layer: Layer; mode?: Mode }>> = {
   ucdp: { layer: null, mode: 'conflicts' },
 };
 
-export function parse(
-  hash: string,
-  isValid: { bloc: (id: string) => boolean; conflict: (id: string) => boolean; country: (iso: string) => boolean; chokepoint?: (id: string) => boolean; unrest?: (id: string) => boolean; layer?: (id: string) => boolean },
-): AppState {
+export interface Validators {
+  bloc: (id: string) => boolean;
+  conflict: (id: string) => boolean;
+  country: (iso: string) => boolean;
+  chokepoint?: (id: string) => boolean;
+  unrest?: (id: string) => boolean;
+  layer?: (id: string) => boolean;
+}
+
+/** An id the link named that this edition doesn't know. */
+export interface DroppedId {
+  kind: 'bloc' | 'vs' | 'conflict' | 'country' | 'chokepoint' | 'unrest' | 'pair';
+  id: string;
+}
+
+export function parse(hash: string, isValid: Validators): AppState {
+  return parseHash(hash, isValid).state;
+}
+
+/** Like parse, and also reports every id that failed validation so the app can say so. */
+export function parseHash(hash: string, isValid: Validators): { state: AppState; dropped: DroppedId[] } {
   const p = new URLSearchParams(hash.replace(/^#/, ''));
+  const dropped: DroppedId[] = [];
+  const check = (kind: DroppedId['kind'], id: string, ok: boolean | undefined) => {
+    if (!ok) dropped.push({ kind, id });
+    return !!ok;
+  };
   const layerParam = p.get('layer');
   // Credential-gated layers (ACLED, UCDP) may be missing from this build; never draw them as an all-zero map.
   const fallback = layerParam && isValid.layer && !isValid.layer(layerParam) ? LAYER_FALLBACK[layerParam] : undefined;
-  const mode: Mode = fallback?.mode ?? (p.get('mode') === 'conflicts' ? 'conflicts' : 'blocs');
+  let mode: Mode = fallback?.mode ?? (p.get('mode') === 'conflicts' ? 'conflicts' : 'blocs');
   const blocParam = p.get('bloc');
-  const bloc = blocParam && isValid.bloc(blocParam) ? blocParam : null;
+  const bloc = blocParam && check('bloc', blocParam, isValid.bloc(blocParam)) ? blocParam : null;
   const vsParam = p.get('vs');
-  const vs = bloc && vsParam && vsParam !== bloc && isValid.bloc(vsParam) ? vsParam : null;
+  const vs = bloc && vsParam && vsParam !== bloc && check('vs', vsParam, isValid.bloc(vsParam)) ? vsParam : null;
 
   const t = p.get('t');
   const month = t && MONTH.test(t) ? t : null;
@@ -116,24 +144,34 @@ export function parse(
   const chokepoint = p.get('chokepoint');
   const unrest = p.get('unrest');
   const pair = (p.get('pair') ?? '').toUpperCase().split(',').filter(Boolean);
+  const pairOk = !!pair[0] && check('pair', pair.join(','), isValid.country(pair[0]) && (!pair[1] || (isValid.country(pair[1]) && pair[1] !== pair[0])));
+  const chokepointOk = !!chokepoint && check('chokepoint', chokepoint, isValid.chokepoint?.(chokepoint));
+  const unrestOk = !!unrest && check('unrest', unrest, isValid.unrest?.(unrest));
+  const countryOk = !!country && check('country', country, isValid.country(country.toUpperCase()));
+  const conflictOk = !!conflict && check('conflict', conflict, isValid.conflict(conflict));
+  // panel=0: the bloc is highlighted but its panel was closed.
+  const inferPanel = p.get('panel') !== '0' && !country && !conflict;
   if (p.get('about') === '1') selection = { kind: 'about' };
   else if (p.get('ask') === '1') selection = { kind: 'ask' };
-  else if (pair[0] && isValid.country(pair[0]) && (!pair[1] || (isValid.country(pair[1]) && pair[1] !== pair[0]))) selection = { kind: 'pair', a: pair[0], b: pair[1] ?? null };
-  else if (chokepoint && isValid.chokepoint?.(chokepoint)) selection = { kind: 'chokepoint', id: chokepoint };
-  else if (unrest && isValid.unrest?.(unrest)) selection = { kind: 'unrest', id: unrest };
+  else if (pairOk) selection = { kind: 'pair', a: pair[0]!, b: pair[1] ?? null };
+  else if (chokepointOk) selection = { kind: 'chokepoint', id: chokepoint! };
+  else if (unrestOk) selection = { kind: 'unrest', id: unrest! };
   else if (p.get('watchlist') === '1') selection = { kind: 'watchlist' };
   else if (p.get('changes') === '1') selection = { kind: 'changes' };
   else if (p.get('changes') === 'since') selection = { kind: 'changes', since: true };
-  else if (vs && p.get('compare') === '1') selection = { kind: 'compare' };
-  else if (country && isValid.country(country.toUpperCase())) selection = { kind: 'country', iso: country.toUpperCase() };
-  else if (conflict && isValid.conflict(conflict)) selection = { kind: 'conflict', id: conflict };
+  else if (vs && mode === 'blocs' && p.get('compare') === '1') selection = { kind: 'compare' };
+  else if (countryOk) selection = { kind: 'country', iso: country!.toUpperCase() };
+  else if (conflictOk) selection = { kind: 'conflict', id: conflict! };
   else if (selBloc && isValid.bloc(selBloc)) selection = { kind: 'bloc', id: selBloc };
-  else if (bloc && vs && !country && !conflict) selection = { kind: 'compare' };
-  else if (bloc && !country && !conflict) selection = { kind: 'bloc', id: bloc };
+  // A leftover bloc highlight doesn't open its panel over a conflicts map.
+  else if (bloc && vs && inferPanel && mode === 'blocs') selection = { kind: 'compare' };
+  else if (bloc && inferPanel && mode === 'blocs') selection = { kind: 'bloc', id: bloc };
+  // A war is only shown on the conflicts map.
+  if (selection?.kind === 'conflict') mode = 'conflicts';
 
   const view: View = p.get('view') === 'globe' ? 'globe' : 'flat';
   const rotation = parseRotation(p.get('rot'));
-  return { mode, bloc, vs, selection, month, layer, view, rotation, brief: p.get('brief') === '1', embed: p.get('embed') === '1', ...embedThemeOf(p) };
+  return { state: { mode, bloc, vs, selection, month, layer, view, rotation, brief: p.get('brief') === '1', embed: p.get('embed') === '1', ...embedThemeOf(p) }, dropped };
 }
 
 export function parseRotation(raw: string | null): [number, number] {

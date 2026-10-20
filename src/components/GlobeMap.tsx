@@ -280,7 +280,7 @@ export default function GlobeMap({
   );
 
   useEffect(() => {
-    if (!focus) return;
+    if (!focus || focus.kind === 'restore') return;
     if (focus.kind === 'reset') tweenTo(HOME, 1);
     else if (focus.kind === 'country') {
       const f = COUNTRY_FEATURES.find((x) => x.properties.iso === focus.iso);

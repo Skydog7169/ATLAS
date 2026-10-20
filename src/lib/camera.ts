@@ -11,6 +11,8 @@ export type Focus =
   | { kind: 'isos'; isos: string[] }
   | { kind: 'point'; lonLat: [number, number]; scale?: number }
   | { kind: 'reset' }
+  /** Back to the view before the last fly-to, unless the user has moved the map since. */
+  | { kind: 'restore' }
   | null;
 
 /** Screen pixels covered by chrome on each side of the map stage. */
