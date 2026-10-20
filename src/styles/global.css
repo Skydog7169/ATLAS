@@ -2550,6 +2550,11 @@ a {
 }
 
 @media (max-width: 820px) {
+  .header {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+  }
+
   .panel {
     right: 0;
     max-height: 52dvh;
@@ -2717,6 +2722,10 @@ a {
     display: block;
   }
 
+  .header .spacer {
+    min-width: 0;
+  }
+
   .brand .word {
     letter-spacing: 0.1em;
   }
@@ -2724,5 +2733,46 @@ a {
   .segmented button {
     padding-left: 10px;
     padding-right: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .brand .word {
+    display: none;
+  }
+
+  .header {
+    gap: 6px;
+  }
+
+  .segmented button {
+    padding-left: 7px;
+    padding-right: 7px;
+  }
+}
+
+@media (pointer: coarse) and (max-height: 700px) {
+  .map-controls {
+    gap: 2px;
+  }
+
+  .map-controls .icon-btn {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Tiny embeds: zoom buttons only, and the legend shrinks to its title. */
+@media (max-height: 400px) {
+  .app[data-embed='true'] .map-controls > :not([aria-label='Zoom in'], [aria-label='Zoom out']) {
+    display: none;
+  }
+
+  .app[data-embed='true'] .legend-dock[data-collapsed='true'] .legend ul {
+    display: none;
+  }
+
+  .app[data-embed='true'] .legend-dock[data-collapsed='true'] .legend h3 {
+    margin: 0;
   }
 }

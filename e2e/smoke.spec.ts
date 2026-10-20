@@ -15,6 +15,14 @@ async function open(page: Page, hash = '') {
   return errors;
 }
 
+/** On the narrowest phones Changes lives in the header's More menu. */
+async function openChanges(page: Page) {
+  const direct = page.locator('.header .icon-btn[aria-label="Recent changes"]');
+  if (await direct.isVisible()) return direct.click();
+  await page.locator('.header .icon-btn[aria-label="More"]').click();
+  await page.locator('.more-list').getByRole('button', { name: 'Recent changes' }).click();
+}
+
 async function noSeriousA11yIssues(page: Page) {
   const results = await new AxeBuilder({ page }).disableRules(['color-contrast']).analyze();
   const serious = results.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');
@@ -67,7 +75,7 @@ test('conflicts mode: markers, panel, timeline replay and changes feed', async (
   await expect(page.locator('g.marker')).toHaveCount(31);
   await noSeriousA11yIssues(page);
 
-  await page.getByRole('button', { name: 'Recent changes' }).click();
+  await openChanges(page);
   await expect(page.locator('.panel h2')).toContainText('Recent changes');
   expect(await page.locator('.feed li').count()).toBeGreaterThan(10);
 });
@@ -183,7 +191,7 @@ test('watchlist: stars survive reload and filter the ticker and feed', async ({ 
   expect(await items.count()).toBeGreaterThan(0);
   for (const id of await items.evaluateAll((els) => els.map((e) => e.getAttribute('data-id')))) expect(id).toBe('sudan');
 
-  await page.getByRole('button', { name: 'Recent changes' }).click();
+  await openChanges(page);
   await expect(page.locator('.panel .watch-toggle')).toHaveAttribute('aria-pressed', 'true');
   await page.getByRole('button', { name: 'All', exact: true }).click();
   const feed = page.locator('.panel .feed li');
@@ -448,4 +456,51 @@ test('civil unrest: layer tints and marks episodes, panel, dossier row, search a
   await open(page, '#watchlist=1');
   await expect(page.locator('.panel')).toContainText('Unrest · 1');
   await noSeriousA11yIssues(page);
+});
+
+test('camera frames the subject in the uncovered area: phone sheet, desktop panel, pairs', async ({ page }, testInfo) => {
+  if (testInfo.project.name === 'phone') {
+    await open(page, '#mode=conflicts&conflict=sudan');
+    const sheet = (await page.locator('.panel').boundingBox())!;
+    const marker = page.locator('g.marker[data-selected="true"]');
+    await expect.poll(async () => (await marker.boundingBox())!.y + (await marker.boundingBox())!.height).toBeLessThan(sheet.y);
+    // Recentre stays reachable above the sheet.
+    const recentre = page.getByRole('button', { name: 'Recentre on selection' });
+    await expect(recentre).toBeVisible();
+    expect((await recentre.boundingBox())!.y + 44).toBeLessThanOrEqual(sheet.y);
+    // The legend collapses to a pill that can be expanded.
+    await expect(page.locator('.legend-dock')).toHaveAttribute('data-collapsed', 'true');
+    await page.getByRole('button', { name: 'Expand legend' }).click();
+    await expect(page.locator('.legend-dock')).toHaveAttribute('data-collapsed', 'false');
+    return;
+  }
+  await open(page, '#mode=blocs&bloc=asean&selbloc=asean');
+  const panel = (await page.locator('.panel').boundingBox())!;
+  await expect
+    .poll(async () => {
+      const box = await page.locator('path.country[data-iso="THA"]').boundingBox();
+      return box ? box.x + box.width : Infinity;
+    })
+    .toBeLessThan(panel.x);
+  await page.goto('/#pair=USA,CHN');
+  await expect(page.locator('path.country[data-iso="USA"]')).toHaveAttribute('fill', 'var(--accent)');
+  await expect(page.locator('path.country[data-iso="CHN"]')).toHaveAttribute('fill', 'var(--warn)');
+  await expect(page.locator('path.country[data-iso="CHN"]')).toHaveAttribute('data-selected', 'true');
+  await expect(page.locator('path.country[data-iso="FRA"]')).toHaveAttribute('opacity', '0.55');
+});
+
+test('globe toggle keeps the selection in view instead of resetting', async ({ page }) => {
+  await open(page, '#country=JPN');
+  await page.locator('.map-controls .icon-btn[aria-label="Globe view"]').click();
+  const globe = page.locator('.map-root.globe');
+  await expect.poll(async () => Number((await globe.getAttribute('data-rotation'))?.split(',')[0])).toBeGreaterThan(120);
+  await expect(page.locator('path.country[data-iso="JPN"]')).toHaveAttribute('d', /^M/);
+});
+
+test('relationship picker accepts a map click for the second country', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'phone', 'the sheet covers most targets; covered on desktop');
+  await open(page, '#pair=IND');
+  await expect(page.locator('.pair-hint')).toBeVisible();
+  await page.locator('path.country[data-iso="BRA"]').click({ force: true });
+  await expect(page).toHaveURL(/pair=IND(,|%2C)BRA/);
 });
