@@ -1,5 +1,5 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { BLOCS, BLOC_BY_ID, blocsForCountry } from './data/blocs';
+import { BLOC_BY_ID, blocsForCountry } from './data/blocs';
 import { CONFLICTS, CONFLICT_BY_ID, INTENSITY_ORDER, conflictsForCountry } from './data/conflicts';
 import type { Intensity } from './data/types';
 import { useAppState } from './hooks/useAppState';
@@ -17,14 +17,16 @@ import { militaryColor, militarySummary } from './lib/military';
 import { tradeColor, tradeSummary } from './lib/trade';
 import { CHOKEPOINTS, CHOKEPOINT_BY_ID, CHOKEPOINT_COLOR, CHOKEPOINT_MARKER_PREFIX, CHOKEPOINT_STATUS_LABEL, currentStatus } from './lib/chokepoints';
 import LayerMenu, { type LayerOption } from './components/LayerMenu';
-import { INTENSITY_COLOR, INTENSITY_LABEL, INTENSITY_RADIUS } from './lib/labels';
+import { CONFLICT_TYPE_LABEL, INTENSITY_COLOR, INTENSITY_LABEL, INTENSITY_RADIUS } from './lib/labels';
 import BlocChips from './components/BlocChips';
 import DetailPanel from './components/DetailPanel';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import Legend from './components/Legend';
 import Search, { type SearchHit } from './components/Search';
 import ThemeToggle from './components/ThemeToggle';
-import Clock from './components/Clock';
+import HeaderReadouts from './components/HeaderReadouts';
+import ThisWeek from './components/ThisWeek';
+import { PROMISE, PROMISE_SHORT, dataStamp } from './lib/frontdoor';
 import Ticker from './components/Ticker';
 import SinceLastVisit from './components/SinceLastVisit';
 import { ASK_ENABLED } from './components/AskPanel';
@@ -41,8 +43,6 @@ import { serialize } from './lib/urlState';
 const WorldMap = lazy(() => import('./components/WorldMap'));
 const GlobeMap = lazy(() => import('./components/GlobeMap'));
 
-const OVERVIEW_STEPS = ['var(--land)', '#123a4a', '#17607a', '#1f8fb3', '#35e0ff'];
-
 const LAYER_OPTIONS: LayerOption[] = [
   { id: 'displacement', label: 'Displacement', hint: 'People displaced from each country (UNHCR)' },
   { id: 'sanctions', label: 'Sanctions', hint: 'UN, US and EU regimes targeting the country' },
@@ -57,12 +57,6 @@ const LAYER_OPTIONS: LayerOption[] = [
   ...(ACLED.available ? [{ id: 'acled-unrest' as const, label: 'Protests and riots', hint: `ACLED protest and riot events, last ${ACLED.days} days` }] : []),
   ...(UCDP.available ? [{ id: 'ucdp' as const, label: 'Organised violence', hint: `UCDP deaths in state-based, non-state and one-sided violence, ${ucdpYear()}` }] : []),
 ];
-
-/** Newest `updated` month across both datasets, shown in the header readouts. */
-const DATA_ASOF = [...BLOCS.map((b) => b.updated), ...CONFLICTS.map((c) => c.updated)].sort().at(-1) ?? '';
-
-const membershipCount = new Map<string, number>();
-for (const b of BLOCS) for (const m of b.members) if (m.status === 'member') membershipCount.set(m.iso, (membershipCount.get(m.iso) ?? 0) + 1);
 
 // Replay covers conflict assessments only; bloc events go back years and would stretch the scrubber.
 const TIMELINE_MONTHS = monthRange(earliestMonth(CONFLICTS, []), currentMonth());
@@ -187,8 +181,8 @@ export default function App() {
         if (m.status === 'suspended' || m.status === 'frozen') return { fill: activeBloc.color, hatch: activeBloc.color };
         return { fill: `color-mix(in srgb, ${activeBloc.color} 45%, var(--land))` };
       }
-      const n = Math.min(membershipCount.get(iso) ?? 0, OVERVIEW_STEPS.length - 1);
-      return { fill: OVERVIEW_STEPS[n] ?? 'var(--land)' };
+      // No bloc picked: neutral land. A count of memberships among hand-picked blocs answers no question, so the chips are the call to action.
+      return { fill: 'var(--land)' };
     },
     [mode, activeBloc, compare, maxIntensityByCountry, layer],
   );
@@ -329,7 +323,7 @@ export default function App() {
     for (const c of CONFLICTS) {
       if (c.history[0]?.intensity !== 'high') continue;
       seen.add('conflict:' + c.id);
-      out.push({ id: c.id, kind: 'conflict', title: c.name, eyebrow: 'High intensity', detail: c.history[0]?.status ?? '', color: INTENSITY_COLOR.high, conflict: c });
+      out.push({ id: c.id, kind: 'conflict', title: c.name, eyebrow: CONFLICT_TYPE_LABEL[c.type], detail: c.history[0]?.status ?? '', color: INTENSITY_COLOR.high, conflict: c });
     }
     for (const w of watchlist.items) {
       const key = w.kind + ':' + w.id;
@@ -383,6 +377,15 @@ export default function App() {
     [update],
   );
 
+  // Opens About and scrolls to the disputed-territories block when asked from a dossier.
+  const openAbout = useCallback(
+    (anchor?: string) => {
+      update({ selection: { kind: 'about' } });
+      if (anchor) requestAnimationFrame(() => requestAnimationFrame(() => document.getElementById(anchor)?.scrollIntoView({ block: 'start' })));
+    },
+    [update],
+  );
+
   const exitBrief = useCallback(() => update({ brief: false }), [update]);
 
   // One-tap PNG of the current map with the legend and a date stamp.
@@ -404,7 +407,7 @@ export default function App() {
         title,
         legendTitle: legend.title,
         legend: legend.rows,
-        stamp: `Data ${formatMonth(DATA_ASOF)} · exported ${formatDate(today)} · atlas-geopolitic.vercel.app`,
+        stamp: `${dataStamp()} · exported ${formatDate(today)} · atlas-geopolitic.vercel.app`,
       });
       downloadBlob(blob, `atlas-${layer ?? mode}-${today}.png`);
     } finally {
@@ -426,7 +429,10 @@ export default function App() {
           <Logo />
           <span>
             <span className="word">ATLAS</span>
-            <span className="tag">GEOPOLITICAL AWARENESS</span>
+            <span className="tag">
+              <span className="long">{PROMISE}</span>
+              <span className="short">{PROMISE_SHORT}</span>
+            </span>
           </span>
         </a>
         <div className="segmented" role="group" aria-label="Map mode">
@@ -438,21 +444,13 @@ export default function App() {
           </button>
         </div>
         <div className="spacer" />
-        <div className="readouts" aria-label="Status readouts">
-          <Clock />
-          <span className="optional">
-            TRACKED <b>{CONFLICTS.length}</b> · BLOCS <b>{BLOCS.length}</b>
-          </span>
-          <button className="readout-btn optional" onClick={() => update({ selection: { kind: 'changes' } })} title="Recent changes">
-            DATA <b>{formatMonth(DATA_ASOF).toUpperCase()}</b>
-          </button>
-        </div>
+        <HeaderReadouts open={selection?.kind === 'changes'} onOpenChanges={() => update({ selection: selection?.kind === 'changes' ? null : { kind: 'changes' } })} />
         <Search onPick={onPick} conflictColor={conflictColor} />
         <button
           className="icon-btn"
-          aria-label="Recent changes"
+          aria-label="Latest changes"
           aria-pressed={selection?.kind === 'changes'}
-          title="Recent changes"
+          title="Latest changes"
           onClick={() => update({ selection: selection?.kind === 'changes' ? null : { kind: 'changes' } })}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -504,6 +502,7 @@ export default function App() {
       </header>
 
       <main className="stage" ref={stageRef}>
+        {!embed && !brief && <ThisWeek onSelectConflict={selectConflict} onSelectUnrest={selectUnrest} onOpenChanges={() => update({ selection: { kind: 'changes' } })} onOpenAbout={() => openAbout()} />}
         <SinceLastVisit onSelectConflict={selectConflict} onSelectBloc={selectBloc} onSelectUnrest={selectUnrest} onOpenChanges={() => update({ selection: { kind: 'changes' } })} />
         <ErrorBoundary>
           <Suspense fallback={<MapSkeleton />}>
@@ -559,7 +558,7 @@ export default function App() {
           />
         )}
 
-        <Legend mode={mode} bloc={bloc} vs={mode === 'blocs' ? vs : null} overviewSteps={OVERVIEW_STEPS} layer={layer} />
+        <Legend mode={mode} bloc={bloc} vs={mode === 'blocs' ? vs : null} layer={layer} />
 
         {mode === 'conflicts' && <Timeline months={TIMELINE_MONTHS} value={month} onChange={(m) => update({ month: m })} />}
 
@@ -649,6 +648,7 @@ export default function App() {
               onSelectChokepoint={selectChokepoint}
               onSelectUnrest={selectUnrest}
               onSelectPair={selectPair}
+              onOpenAbout={openAbout}
             />
           </ErrorBoundary>
         )}
