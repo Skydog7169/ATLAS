@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { BLOCS, BLOC_BY_ID } from '../data/blocs';
 import { CONFLICTS, CONFLICT_BY_ID } from '../data/conflicts';
 import { UNREST_BY_ID } from '../data/unrest';
@@ -38,6 +38,9 @@ import { useEmbed } from '../lib/embedContext';
 import { replayBadge } from '../lib/timeline';
 import TrendChart from './TrendChart';
 import AskPanel, { ASK_ENABLED } from './AskPanel';
+import SectionNav from './SectionNav';
+import { usePanelFocus } from '../hooks/usePanelFocus';
+import { selectionKey } from '../lib/navHistory';
 
 interface Props {
   selection: Exclude<Selection, null>;
@@ -55,6 +58,8 @@ interface Props {
   onSelectChokepoint: (id: string) => void;
   onSelectPair: (a: string, b: string | null) => void;
   onSelectUnrest: (id: string) => void;
+  /** The panel this one was reached from, for the "‹ Ukraine" chip; it steps history back. */
+  backTo?: { label: string; onBack: () => void } | null;
 }
 
 function CloseButton({ onClick }: { onClick: () => void }) {
@@ -213,6 +218,17 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
         <StarButton item={{ kind: 'country', id: country.cca3 }} name={country.name} />
         <CloseButton onClick={props.onClose} />
       </div>
+      <SectionNav
+        label="Dossier sections"
+        items={[
+          { id: 'dossier-memberships', label: `Memberships ${memberships.filter((m) => m.membership.status === 'member').length}` },
+          { id: 'dossier-conflicts', label: `Conflicts ${conflicts.length}` },
+          ...extras.map((x) => ({ id: `dossier-${x.id}`, label: x.title })),
+          { id: 'dossier-displacement', label: 'Displacement' },
+          { id: 'dossier-figures', label: 'Figures' },
+          { id: 'dossier-changes', label: `Changes ${changes.length}` },
+        ]}
+      />
       <div className="panel-body dossier" data-sections={dossier.sections.join(' ')}>
         <Muted>{profileLine(country)}</Muted>
         {territoryLine(country.cca3, BLOCS) && <Muted>{territoryLine(country.cca3, BLOCS)}</Muted>}
@@ -796,7 +812,22 @@ function ConflictView({ conflict, props }: { conflict: Conflict; props: Props })
         <StarButton item={{ kind: 'conflict', id: conflict.id }} name={conflict.name} />
         <CloseButton onClick={props.onClose} />
       </div>
+      <SectionNav
+        label="Conflict sections"
+        items={[
+          { id: 'conflict-background', label: 'Background' },
+          ...(conflict.actors?.length ? [{ id: 'conflict-actors', label: 'Backers' }] : []),
+          { id: 'conflict-peace', label: `Peace ${conflict.peace?.length ?? 0}` },
+          { id: 'conflict-assessments', label: 'Assessments' },
+          { id: 'conflict-countries', label: 'Countries' },
+        ]}
+      />
       <div className="panel-body">
+        {replay && (
+          <p className="sr-only" role="status">
+            {conflict.name}: {shown ? `${INTENSITY_LABEL[shown.intensity].toLowerCase()} intensity` : 'no assessment'}, {props.month ? formatMonth(props.month) : ''}
+          </p>
+        )}
         <div className="badges">
           <span className="badge" style={{ ['--badge-color' as string]: INTENSITY_COLOR[(shown ?? conflict).intensity] }}>
             <span className="dot" /> {INTENSITY_LABEL[(shown ?? conflict).intensity]}
@@ -810,7 +841,7 @@ function ConflictView({ conflict, props }: { conflict: Conflict; props: Props })
             <li key={p}>{p}</li>
           ))}
         </ul>
-        <h3>Background</h3>
+        <h3 id="conflict-background">Background</h3>
         <p>{conflict.summary}</p>
         {conflict.actors && conflict.actors.length > 0 && (
           <>
@@ -866,10 +897,10 @@ function ConflictView({ conflict, props }: { conflict: Conflict; props: Props })
             ))}
           </ol>
         )}
-        <h3>Assessments</h3>
+        <h3 id="conflict-assessments">Assessments</h3>
         {replay && !shown && <p style={{ color: 'var(--fg-muted)' }}>No assessment on record for {props.month ? formatMonth(props.month) : ''}{conflict.since <= Number(props.month?.slice(0, 4)) ? `; the current phase began in ${conflict.since}, before ATLAS tracked it` : ''}.</p>}
         <HistoryList history={conflict.history} highlight={shown} />
-        <h3>Countries</h3>
+        <h3 id="conflict-countries">Countries</h3>
         <div className="badges">
           {conflict.countries.map((iso) => (
             <button key={iso} className="badge" onClick={() => props.onSelectCountry(iso)} style={{ cursor: 'pointer' }}>
@@ -1440,7 +1471,7 @@ function AboutView({ props }: { props: Props }) {
         </p>
         <h3>Keyboard</h3>
         <p className="mono" style={{ fontSize: 12 }}>
-          / search · arrows pan or rotate · + − zoom · 0 reset · Tab through conflict markers, Enter opens · Esc closes the tooltip · briefing: Space pauses, arrows step, Esc exits
+          / search · arrows pan or rotate · + − zoom · 0 reset · Tab through conflict markers, Enter opens · Esc closes the tooltip, then the panel · browser Back steps back through panels, modes and layers · briefing: Space pauses, arrows step, Esc exits
         </p>
         <div className="panel-actions">
           <ShareButton />
@@ -1455,6 +1486,8 @@ function AboutView({ props }: { props: Props }) {
 
 export default function DetailPanel(props: Props) {
   const { selection } = props;
+  const sectionRef = useRef<HTMLElement>(null);
+  const headingId = usePanelFocus(sectionRef, selectionKey(selection));
   let body: React.ReactNode = null;
   if (selection.kind === 'country') {
     const d = countryDossier(selection.iso);
@@ -1499,7 +1532,13 @@ export default function DetailPanel(props: Props) {
   }
   if (!body) return null;
   return (
-    <section className="panel frame" aria-live="polite">
+    // No aria-live: moving focus to the heading announces a new panel once.
+    <section className="panel frame" role="complementary" aria-labelledby={headingId} ref={sectionRef}>
+      {props.backTo && (
+        <button className="panel-back" onClick={props.backTo.onBack} title={`Back to ${props.backTo.label}`}>
+          <span aria-hidden="true">‹</span> {props.backTo.label}
+        </button>
+      )}
       {body}
     </section>
   );

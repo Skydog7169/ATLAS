@@ -20,7 +20,7 @@ An interactive geopolitics map. Two views of the same world:
 
 - **Analysis** — a relationship view for any two countries (shared blocs, conflicts linking them, US and EU sanctions either side applies to the other, forces either keeps in the other, export share each way); bloc trend charts of membership and combined GDP since 1990; and, behind a flag, **Ask ATLAS**, a question box answered strictly from the dataset with citations.
 
-Search any country, bloc or conflict. Every view is a shareable link.
+Search any country, bloc or conflict. Every view is a shareable link, and browser Back steps back through the panels, modes and layers you visited (Escape closes the open panel).
 
 ## Running it
 
@@ -105,7 +105,7 @@ Setup: add an `ANTHROPIC_API_KEY` repository secret (Settings → Secrets and va
 
 The globe button in the map controls swaps the flat Natural Earth projection for an orthographic globe (`#view=globe`). Dragging rotates it with a short inertial glide on release, pinch and wheel zoom, and arrow keys rotate in 12° steps; the centre is written to the URL as `rot=lon,lat` so a shared link reopens on the same face of the planet. The globe always uses the 1:110m geometry because every path is re-projected on each frame.
 
-Briefing mode (`#brief=1`, or the grid button in the map controls) asks for browser full screen, hides every piece of chrome and cycles through the live high-intensity conflicts followed by the watchlist, flying the map to each and showing a caption with the latest assessment. Space pauses, arrows step, Escape exits, and "Open" drops out of the briefing into that item's panel. Auto-advance is off under `prefers-reduced-motion`.
+Briefing mode (`#brief=1`, or the grid button in the map controls) asks for browser full screen, hides every piece of chrome and cycles through the live high-intensity conflicts followed by the watchlist, flying the map to each and showing a caption with the latest assessment. Space pauses, arrows step, Escape (or leaving full screen) exits back to the view you started from, and "Open" drops out of the briefing into that item's panel. Auto-advance is off under `prefers-reduced-motion`.
 
 Adding `embed=1` to any link gives a chrome-less view for an iframe: no header, ticker or chips, just the map, legend, controls and a badge linking back to the full app. The badge carries the data month (`DATA OCT 2026`), or `REPLAY · MAR 2026` when the link pins a month with `t=`. The **Embed** button (map controls, and next to Copy link in every panel) builds the iframe snippet with a live preview at 360×240, 640×360 or 960×540 and three host options kept in the link: `legend=off`, `interactive=0` (no pan or zoom) and `theme=light|auto` (embeds are dark by default). Embeds use cooperative gestures: one-finger swipes and plain wheel scrolling go to the host page, two fingers or ctrl/⌘ + scroll move the map.
 

@@ -25,6 +25,18 @@ export default function EmbedDialog({ state, title, onClose }: Props) {
     if (d && !d.open) d.showModal?.();
   }, []);
 
+  // Escape closes this layer only, wherever focus is; preventDefault tells the
+  // app-level Escape (useEscapeLayers) to leave the panel underneath open.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      e.preventDefault();
+      onClose();
+    };
+    window.addEventListener('keydown', onKey, true);
+    return () => window.removeEventListener('keydown', onKey, true);
+  }, [onClose]);
+
   const size = EMBED_PRESETS[preset] ?? EMBED_PRESETS[1]!;
   const src = useMemo(() => embedUrl(state, opts, freeze, window.location.href, theme === 'dark' ? undefined : theme), [state, opts, freeze, theme]);
   const snippet = embedSnippet(src, size.height, title);
@@ -40,7 +52,9 @@ export default function EmbedDialog({ state, title, onClose }: Props) {
   };
 
   return (
-    <dialog ref={ref} className="embed-dialog" aria-labelledby={`${id}-title`} onClose={onClose}>
+    <dialog ref={ref} className="embed-dialog" aria-labelledby={`${id}-title`}
+      onClose={onClose}
+    >
       <div className="panel-head">
         <h2 id={`${id}-title`}>
           <span className="eyebrow">Embed this view</span>

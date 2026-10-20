@@ -6,6 +6,9 @@ import type { Mode } from '../lib/urlState';
 
 export type { SearchHit } from '../lib/search';
 
+/** Window event whose detail is a query to put in the search box. */
+export const SEARCH_PREFILL_EVENT = 'atlas:search';
+
 interface Props {
   onPick: (hit: SearchHit) => void;
   conflictColor: (id: string) => string;
@@ -55,16 +58,40 @@ export default function Search({ onPick, conflictColor, mode, watchlist = [] }: 
 
   useEffect(() => setActive(0), [query]);
 
+  // "Search" from a stale-link notice: fill the box and open the list.
+  useEffect(() => {
+    const onPrefill = (e: Event) => {
+      const q = (e as CustomEvent<string>).detail;
+      if (typeof q !== 'string') return;
+      setQuery(q);
+      setOpen(true);
+      inputRef.current?.focus();
+    };
+    window.addEventListener(SEARCH_PREFILL_EVENT, onPrefill);
+    return () => window.removeEventListener(SEARCH_PREFILL_EVENT, onPrefill);
+  }, []);
+
   const pick = (hit: SearchHit) => {
     onPick(hit);
-    if (hit.kind !== 'action' && hit.kind !== 'layer') setRecent(pushRecent({ kind: hit.kind, id: hit.id }));
+    const opensPanel = hit.kind !== 'action' && hit.kind !== 'layer';
+    if (opensPanel) setRecent(pushRecent({ kind: hit.kind, id: hit.id }));
     setQuery('');
     setOpen(false);
-    inputRef.current?.blur();
+    // A pick that opens a panel hands focus to it (the panel focuses its heading);
+    // layers and actions keep focus here so the user doesn't lose their place.
+    if (opensPanel) inputRef.current?.blur();
   };
 
   const showList = open;
   const showOptions = hasQuery || hits.length > 0;
+
+  // Match counts for screen readers, after typing settles.
+  const [announce, setAnnounce] = useState('');
+  useEffect(() => {
+    const q = query.trim();
+    const t = setTimeout(() => setAnnounce(!showList || !q ? '' : hits.length ? `${hits.length} result${hits.length === 1 ? '' : 's'}` : `No matches for “${q}”`), 300);
+    return () => clearTimeout(t);
+  }, [query, hits.length, showList]);
   let index = -1;
 
   return (
@@ -103,9 +130,14 @@ export default function Search({ onPick, conflictColor, mode, watchlist = [] }: 
             const hit = hits[active];
             if (hit) pick(hit);
           } else if (e.key === 'Escape') {
-            setQuery('');
-            setOpen(false);
-            inputRef.current?.blur();
+            // Step down one layer per press and keep focus; an empty, closed box lets Escape through to the app.
+            if (showList) {
+              e.preventDefault();
+              setOpen(false);
+            } else if (query) {
+              e.preventDefault();
+              setQuery('');
+            }
           }
         }}
       />
@@ -114,12 +146,16 @@ export default function Search({ onPick, conflictColor, mode, watchlist = [] }: 
           /
         </span>
       )}
+      <span className="sr-only" role="status">
+        {announce}
+      </span>
       {showList && (
         <div className="search-list">
           {showOptions && (
             <ul id={listId} role="listbox" aria-label={hasQuery ? 'Search results' : 'Suggestions'}>
               {hasQuery && hits.length === 0 && (
-                <li className="empty" role="option" aria-selected={false}>
+                // Shown, not announced: the status line above says it.
+                <li className="empty" aria-hidden="true">
                   No matches for “{query}”
                 </li>
               )}

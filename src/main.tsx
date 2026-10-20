@@ -9,6 +9,7 @@ import './styles/time.css';
 import './styles/embed.css';
 import './styles/first-paint.css';
 import './styles/status.css';
+import './styles/nav.css';
 
 installChunkReload();
 
