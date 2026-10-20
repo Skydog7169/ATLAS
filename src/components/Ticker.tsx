@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useWatchlist } from '../hooks/useWatchlist';
 import { CHANGES, tickerItems } from '../lib/feed';
 import type { ChangeItem } from '../lib/history';
-import { INTENSITY_COLOR, INTENSITY_LABEL, formatDate } from '../lib/labels';
+import { INTENSITY_COLOR, INTENSITY_LABEL, UNREST_INTENSITY_LABEL, formatDate } from '../lib/labels';
 
 interface Props {
   onSelectConflict: (id: string) => void;
@@ -36,7 +36,7 @@ export default function Ticker({ onSelectConflict, onSelectBloc, onSelectUnrest 
             <span className="dot" style={{ background: it.intensity ? INTENSITY_COLOR[it.intensity] : it.color }} aria-hidden="true" />
             <span className="when">{formatDate(it.date)}</span>
             <span className="title">{it.title}</span>
-            <span className="tag">{it.intensity ? INTENSITY_LABEL[it.intensity] : 'Membership'}</span>
+            <span className="tag">{it.intensity ? (it.kind === 'unrest' ? UNREST_INTENSITY_LABEL : INTENSITY_LABEL)[it.intensity] : 'Membership'}</span>
             <span className="detail">{clip(it.detail, 110)}</span>
           </button>
         </li>
@@ -48,7 +48,7 @@ export default function Ticker({ onSelectConflict, onSelectBloc, onSelectUnrest 
     <div className="ticker" role="region" aria-label="Latest changes">
       <span className="ticker-label">
         <span className="live" aria-hidden="true" />
-        <span>FEED</span>
+        <span>LATEST</span>
       </span>
       <div className="ticker-viewport" data-empty={items.length === 0}>
         {items.length === 0 ? (

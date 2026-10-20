@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import type { HistoryEntry } from '../data/types';
-import { INTENSITY_COLOR, INTENSITY_LABEL, formatDate } from '../lib/labels';
+import { INTENSITY_COLOR, formatDate } from '../lib/labels';
+import { shortProvenance } from '../lib/sources';
+import { DATA_ASOF } from '../lib/frontdoor';
+import Clock from './Clock';
 
 export interface BriefItem {
   id: string;
@@ -81,6 +84,7 @@ export default function Briefing({ items, intervalMs = 9000, onShow, onOpen, onE
         <span className="eyebrow" style={{ color: item.color }}>
           {item.eyebrow}
         </span>
+        <Clock live={Date.now() - Date.parse(DATA_ASOF + 'T00:00:00Z') < 86400000 * 1.5} />
         <span className="brief-count mono">
           {index + 1} / {items.length}
         </span>
@@ -89,8 +93,9 @@ export default function Briefing({ items, intervalMs = 9000, onShow, onOpen, onE
       {latest ? (
         <p>
           <span className="label" style={{ color: INTENSITY_COLOR[latest.intensity] }}>
-            {INTENSITY_LABEL[latest.intensity]} · {formatDate(latest.date)}
+            {formatDate(latest.date)}
           </span>
+          <span className="label brief-provenance"> · {shortProvenance(latest)}</span>
           <br />
           {latest.status}
         </p>

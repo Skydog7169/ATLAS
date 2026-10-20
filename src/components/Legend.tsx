@@ -1,5 +1,6 @@
 import { BLOC_BY_ID } from '../data/blocs';
-import { INTENSITY_COLOR, INTENSITY_LABEL } from '../lib/labels';
+import { CONFIDENCE_DEF, INTENSITY_COLOR, INTENSITY_DEF, INTENSITY_LABEL, UNREST_INTENSITY_DEF, UNREST_INTENSITY_LABEL } from '../lib/labels';
+import { BLOCS } from '../data/blocs';
 import type { Intensity } from '../data/types';
 import type { Layer, Mode } from '../lib/urlState';
 import { DISPLACEMENT, DISPLACEMENT_COLORS, binLabel } from '../lib/displacement';
@@ -19,13 +20,12 @@ interface Props {
   mode: Mode;
   bloc: string | null;
   vs: string | null;
-  overviewSteps: string[];
   layer: Layer;
 }
 
 const INTENSITIES: Intensity[] = ['high', 'medium', 'low', 'latent'];
 
-export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) {
+export default function Legend({ mode, bloc, vs, layer }: Props) {
   if (layer === 'displacement') {
     return (
       <aside className="legend frame" aria-label="Legend">
@@ -71,7 +71,7 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
               </a>
             </span>
           ))}
-          ; verified {formatDate(MILITARY.verified)}.
+          ; curated {formatDate(MILITARY.verified)}.
         </div>
       </aside>
     );
@@ -115,7 +115,7 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           ))}
         </ul>
         <div className="note">
-          Eight passages with a dated status and the conflicts that bear on them. Curated; verified {formatDate(CHOKEPOINTS_FILE.verified)}.{mode === 'conflicts' ? ' Round markers are still conflicts.' : ''}
+          Eight passages with a dated status and the conflicts that bear on them. Curated {formatDate(CHOKEPOINTS_FILE.verified)}; re-checked daily where a high-intensity conflict bears on the passage.{mode === 'conflicts' ? ' Round markers are still conflicts.' : ''}
         </div>
       </aside>
     );
@@ -128,12 +128,15 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           {INTENSITIES.map((i) => (
             <li key={i}>
               <span className="swatch triangle" style={{ background: UNREST_COLOR[i] }} />
-              {INTENSITY_LABEL[i]}
+              <span>
+                {UNREST_INTENSITY_LABEL[i]}
+                <span className="def">{UNREST_INTENSITY_DEF[i]}</span>
+              </span>
             </li>
           ))}
         </ul>
         <div className="note">
-          Protest movements, riots, uprisings, coups, mutinies and crackdowns that are not armed conflicts, each with dated, sourced assessments. Countries are tinted by their most intense episode. Curated and reassessed weekly; newest assessment {formatDate(UNREST_VERIFIED)}.
+          Protest movements, riots, uprisings, coups, mutinies and crackdowns that are not armed conflicts, each with dated, sourced assessments. Countries are tinted by their most intense episode. Checked daily (hot list) and weekly (all); updated {formatDate(UNREST_VERIFIED)}.
         </div>
       </aside>
     );
@@ -248,7 +251,7 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           <a href={ELECTIONS.source.url} target="_blank" rel="noopener noreferrer">
             {ELECTIONS.source.name.replace(/^Wikipedia: /, 'Wikipedia, ')}
           </a>{' '}
-          and re-checked by the weekly research pass; last verified {formatDate(ELECTIONS_VERIFIED)}.
+          and re-checked by the weekly research pass; last checked {formatDate(ELECTIONS_VERIFIED)}.
         </div>
       </aside>
     );
@@ -275,7 +278,7 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
               </a>
             </span>
           ))}
-          ; verified {formatDate(NUCLEAR.verified)}. Umbrella covers NATO members, Japan, South Korea and Australia.
+          ; curated {formatDate(NUCLEAR.verified)}. Umbrella covers NATO members, Japan, South Korea and Australia.
         </div>
       </aside>
     );
@@ -288,11 +291,16 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           {INTENSITIES.map((i) => (
             <li key={i}>
               <span className="swatch circle" style={{ background: INTENSITY_COLOR[i] }} />
-              {INTENSITY_LABEL[i]}
+              <span>
+                {INTENSITY_LABEL[i]}
+                <span className="def">{INTENSITY_DEF[i]}</span>
+              </span>
             </li>
           ))}
         </ul>
-        <div className="note">Countries are tinted by the most intense conflict on their territory. Marker size follows intensity.</div>
+        <div className="note">
+          Countries are tinted by the most intense conflict on their territory. Marker size follows intensity. <abbr title={`High: ${CONFIDENCE_DEF.high}. Medium: ${CONFIDENCE_DEF.medium}. Low: ${CONFIDENCE_DEF.low}.`}>Confidence</abbr>: high means two or more independent outlets agree.
+        </div>
       </aside>
     );
   }
@@ -350,16 +358,8 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
 
   return (
     <aside className="legend frame" aria-label="Legend">
-      <h3>Bloc memberships</h3>
-      <ul>
-        {overviewSteps.map((color, i) => (
-          <li key={i}>
-            <span className="swatch" style={{ background: color }} />
-            {i === 0 ? 'None' : i === overviewSteps.length - 1 ? `${i}+` : String(i)}
-          </li>
-        ))}
-      </ul>
-      <div className="note">Pick a bloc above to see its members. Click any country for details.</div>
+      <h3>{BLOCS.length} blocs tracked</h3>
+      <div className="note">Pick a bloc above to colour its members, or press VS to compare two. Switch to Conflicts for who is fighting. Click any country for its dossier.</div>
     </aside>
   );
 }
