@@ -2,7 +2,7 @@ import { INTENSITY_ORDER } from '../data/conflicts';
 import { UNREST, unrestForCountry } from '../data/unrest';
 import type { Intensity, UnrestKind } from '../data/types';
 import type { DossierExtra } from './dossier';
-import { INTENSITY_LABEL, formatDate, formatMonth } from './labels';
+import { UNREST_INTENSITY_LABEL, formatDate, formatMonth } from './labels';
 
 export const UNREST_KIND_LABEL: Record<UnrestKind, string> = {
   protests: 'Protest movement',
@@ -44,7 +44,7 @@ export function unrestColor(iso: string): string {
 
 export function unrestSummary(iso: string): string | null {
   const list = unrestForCountry(iso).sort((a, b) => INTENSITY_ORDER[b.intensity] - INTENSITY_ORDER[a.intensity]);
-  return list.length ? list.map((u) => `${u.name} (${INTENSITY_LABEL[u.intensity].toLowerCase()})`).join(' · ') : null;
+  return list.length ? list.map((u) => `${u.name} (${UNREST_INTENSITY_LABEL[u.intensity].toLowerCase()})`).join(' · ') : null;
 }
 
 /** Dossier section: unrest episodes on the country's territory, most intense first. */
@@ -56,10 +56,10 @@ export function unrestDossier(iso: string): DossierExtra | null {
     title: 'Civil unrest',
     rows: list.map((u) => ({
       label: u.name,
-      value: `${UNREST_KIND_LABEL[u.kind]} · ${INTENSITY_LABEL[u.intensity]}`,
-      note: `Since ${formatMonth(u.since)} · assessed ${formatDate(u.updated)}`,
+      value: `${UNREST_KIND_LABEL[u.kind]} · ${UNREST_INTENSITY_LABEL[u.intensity]}`,
+      note: `Since ${formatMonth(u.since)} · updated ${formatDate(u.updated)}`,
       unrestId: u.id,
     })),
-    footnote: `Curated, reassessed weekly; newest assessment ${formatDate(UNREST_VERIFIED)}.`,
+    footnote: `Checked daily (hot list) and weekly (all); newest update ${formatDate(UNREST_VERIFIED)}.`,
   };
 }

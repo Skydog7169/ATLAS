@@ -93,5 +93,5 @@ export function nuclearDossier(iso: string): DossierExtra | null {
   const tests = testsFor(iso);
   const rows: DossierExtra['rows'] = [{ label: NUCLEAR_STATUS_LABEL[row.status], value: '', href: row.sources[0]?.url, note: row.note }];
   if (tests.length) rows.push({ label: `Last test ${formatDate(tests[0]!.date)}`, value: `${tests.length} since 1998`, href: tests[0]!.source.url, note: tests[0]!.note });
-  return { id: 'nuclear', title: 'Nuclear status', rows, footnote: `Curated, verified ${formatDate(NUCLEAR.verified)}.` };
+  return { id: 'nuclear', title: 'Nuclear status', rows, footnote: `Curated ${formatDate(NUCLEAR.verified)}.` };
 }

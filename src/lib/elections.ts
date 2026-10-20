@@ -94,6 +94,6 @@ export function electionsDossier(iso: string, now: Date = new Date()): DossierEx
     title: 'Next national election',
     rows,
     empty: 'No election on record for this territory.',
-    footnote: row ? `Verified ${formatDate(row.verified)}. ${row.sources.map((s) => s.name).join('; ')}.` : undefined,
+    footnote: row ? `Checked ${formatDate(row.verified)}. ${row.sources.map((s) => s.name).join('; ')}.` : undefined,
   };
 }
