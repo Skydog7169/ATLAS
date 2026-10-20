@@ -1,85 +1,88 @@
 /* ATLAS — tactical display theme.
-   Tokens first; dark is the primary theme, light is a "daylight console" variant. */
+   Tokens first. Each colour token is defined once with light-dark(LIGHT, DARK);
+   dark is the primary theme, light is a "daylight console" variant. The theme
+   follows the OS unless data-theme pins it (ThemeToggle, or embeds via #theme=).
+
+   Colour roles, so one hue never means two things:
+   - cyan (--accent) is UI and selection only; no data class uses it;
+   - red → yellow is conflict intensity (markers) and the red territory ramp;
+   - amber (--warn) is personal: watchlist and since-last-visit;
+   - every sequential ramp is a --ramp-* hue mixed with --land and --fg in
+     src/lib/palette.ts, so its highest class is always farthest from land.
+   src/lib/tokens.test.ts holds the text tokens to WCAG AA in both themes and
+   src/lib/palette.test.ts holds the ramps to their ordering and spacing. */
 :root {
   color-scheme: dark light;
   --font: 'Rajdhani', 'Segoe UI', system-ui, sans-serif;
   --mono: 'Share Tech Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --bg: #04070d;
-  --bg-elev: #080f1a;
-  --bg-elev-2: #0d1826;
-  --fg: #d9f1ff;
-  --fg-muted: #7fa3bd;
-  --fg-faint: #4b6a82;
-  --border: #173449;
-  --border-strong: #22506d;
-  --accent: #35e0ff;
-  --accent-dim: #1a7f92;
-  --accent-fg: #03131a;
-  --warn: #ffb347;
-  --alert: #ff3b3b;
-  --ocean: #060c15;
-  --land: #152434;
-  --land-hover: #1f3a52;
-  --land-dim: #0f1a27;
-  --graticule: #0f2234;
-  --stroke: #2a5168;
-  --glow: 0 0 12px color-mix(in srgb, var(--accent) 55%, transparent);
-  --shadow: 0 18px 50px rgba(0, 0, 0, 0.6);
+  --bg: light-dark(#dfe7ee, #04070d);
+  --bg-elev: light-dark(#eef3f7, #080f1a);
+  --bg-elev-2: light-dark(#d6e1ea, #0d1826);
+  --fg: light-dark(#0b1a26, #d9f1ff);
+  --fg-muted: light-dark(#3f5d73, #7fa3bd);
+  --fg-faint: light-dark(#4d6579, #6f90a8);
+  --border: light-dark(#a9bfcf, #173449);
+  --border-strong: light-dark(#6f93ad, #22506d);
+  --accent: light-dark(#07627f, #35e0ff);
+  --accent-dim: light-dark(#4aa3c2, #1a7f92);
+  --accent-fg: light-dark(#ffffff, #03131a);
+  --warn: light-dark(#8f5200, #ffb347);
+  --alert: light-dark(#b81a1a, #ff3b3b);
+  --ocean: light-dark(#cfdbe5, #060c15);
+  --land: light-dark(#f3f7fa, #152434);
+  --land-hover: light-dark(#ffffff, #1f3a52);
+  --land-dim: light-dark(#e4ebf1, #0f1a27);
+  --graticule: light-dark(#bccbd8, #0f2234);
+  --stroke: light-dark(#7d98ad, #2a5168);
+
+  /* Ramp hues (palette.ts mixes these with --land and --fg). */
+  --ramp-overview: light-dark(#0a4163, #80d8fe);
+  --ramp-sanctions: light-dark(#7d5e07, #ecb417);
+  --ramp-displacement: light-dark(#4c00ed, #ae2cfc);
+  --ramp-elections: light-dark(#006b20, #0fe450);
+  --ramp-military: light-dark(#1f4fb8, #598bff);
+  --ramp-acled: light-dark(#018357, #289668);
+  --ramp-acled-unrest: light-dark(#866214, #fcd507);
+  --ramp-ucdp: light-dark(#d00405, #fc3008);
+  --ramp-unrest: light-dark(#920cf0, #b172fc);
+  --ramp-conflict: light-dark(#d0020f, #fc463c);
+
+  /* Glows only read on the dark ground; the light theme gets a 1px accent outline instead. */
+  --glow: 0 0 0 1px light-dark(var(--accent), transparent), 0 0 12px light-dark(transparent, color-mix(in srgb, var(--accent) 55%, transparent));
+  --shadow: 0 18px 50px light-dark(rgba(11, 26, 38, 0.18), rgba(0, 0, 0, 0.6));
   --header-h: 56px;
   --panel-w: 400px;
   --cut: 10px;
   --focus: 0 0 0 2px var(--accent);
-}
 
-:root:not([data-theme='dark']) {
-  @media (prefers-color-scheme: light) {
-    --bg: #dfe7ee;
-    --bg-elev: #eef3f7;
-    --bg-elev-2: #d6e1ea;
-    --fg: #0b1a26;
-    --fg-muted: #3f5d73;
-    --fg-faint: #7a93a6;
-    --border: #a9bfcf;
-    --border-strong: #6f93ad;
-    --accent: #0a7ea4;
-    --accent-dim: #4aa3c2;
-    --accent-fg: #ffffff;
-    --warn: #b86a00;
-    --alert: #c81e1e;
-    --ocean: #cfdbe5;
-    --land: #f3f7fa;
-    --land-hover: #ffffff;
-    --land-dim: #e4ebf1;
-    --graticule: #bccbd8;
-    --stroke: #7d98ad;
-    --glow: 0 0 10px color-mix(in srgb, var(--accent) 35%, transparent);
-    --shadow: 0 18px 50px rgba(11, 26, 38, 0.18);
-  }
+  /* Type scale. Floors: no mono under 11px, no sentence text under 12px, no tracking on prose. */
+  --t-display: 600 1.375rem/1.15 var(--font); /* 22px panel titles */
+  --t-body: 500 0.9375rem/1.45 var(--font); /* 15px */
+  --t-small: 500 0.78125rem/1.4 var(--font); /* 12.5px notes, footnotes */
+  --t-eyebrow: 400 0.6875rem/1.3 var(--mono); /* 11px caps, tracked */
+  --t-data: 400 0.875rem/1.3 var(--mono); /* 14px values, dates */
+  --track-eyebrow: 0.16em;
+  --track-data: 0.02em;
+
+  /* Space and control sizes, so controls in one row share a height. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --control-sm: 28px;
+  --control-md: 36px;
+  --panel-pad: 14px;
 }
 
 :root[data-theme='light'] {
-  --bg: #dfe7ee;
-  --bg-elev: #eef3f7;
-  --bg-elev-2: #d6e1ea;
-  --fg: #0b1a26;
-  --fg-muted: #3f5d73;
-  --fg-faint: #7a93a6;
-  --border: #a9bfcf;
-  --border-strong: #6f93ad;
-  --accent: #0a7ea4;
-  --accent-dim: #4aa3c2;
-  --accent-fg: #ffffff;
-  --warn: #b86a00;
-  --alert: #c81e1e;
-  --ocean: #cfdbe5;
-  --land: #f3f7fa;
-  --land-hover: #ffffff;
-  --land-dim: #e4ebf1;
-  --graticule: #bccbd8;
-  --stroke: #7d98ad;
-  --glow: 0 0 10px color-mix(in srgb, var(--accent) 35%, transparent);
-  --shadow: 0 18px 50px rgba(11, 26, 38, 0.18);
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
 }
 
 * {
@@ -221,7 +224,7 @@ a {
 .brand .tag {
   display: block;
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.22em;
   color: var(--fg-muted);
   margin-top: 3px;
@@ -315,18 +318,29 @@ a {
   overflow: hidden;
 }
 
-/* Scanlines + vignette over the map. Static, cheap, and off under reduced motion. */
+/* Faint scanlines over the map: the HUD texture, kept light enough not to break up
+   small countries. The vignette lives in the SVG under the country paths
+   (.sphere-vignette) so it never darkens a data class. Dark theme only; off
+   under reduced motion. */
 .stage::after {
   content: '';
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 2;
-  background:
-    repeating-linear-gradient(0deg, transparent 0 2px, color-mix(in srgb, black 10%, transparent) 2px 3px),
-    radial-gradient(ellipse at center, transparent 55%, color-mix(in srgb, var(--bg) 70%, transparent) 100%);
+  background: repeating-linear-gradient(0deg, transparent 0 2px, color-mix(in srgb, black 5%, transparent) 2px 3px);
   mix-blend-mode: multiply;
   opacity: 0.6;
+}
+
+:root[data-theme='light'] .stage::after {
+  display: none;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) .stage::after {
+    display: none;
+  }
 }
 
 /* ---------- map ---------- */
@@ -377,15 +391,35 @@ a {
   stroke-dasharray: 4 3;
 }
 
-.country:hover {
-  filter: brightness(1.3) saturate(1.2);
-  stroke: var(--accent);
+/* Hover and selection are drawn as outline overlays above every country
+   (WorldMap/GlobeMap), so the fill, the reader's key to the legend, never
+   changes and neighbours cannot paint over the outline. */
+.hover-outline,
+.selection-halo,
+.selection-line {
+  fill: none;
+  pointer-events: none;
+  vector-effect: non-scaling-stroke;
+  stroke-linejoin: round;
 }
 
-.country[data-selected='true'] {
-  stroke: var(--accent);
-  stroke-width: 1.8;
-  filter: drop-shadow(0 0 4px var(--accent));
+.hover-outline {
+  stroke: var(--fg);
+  stroke-width: 1.5;
+}
+
+.selection-halo {
+  stroke: var(--bg);
+  stroke-width: 4;
+}
+
+.selection-line {
+  stroke: var(--fg);
+  stroke-width: 2;
+}
+
+.sphere-vignette {
+  pointer-events: none;
 }
 
 .country[data-neutral='true'] {
@@ -396,10 +430,11 @@ a {
   cursor: pointer;
 }
 
+/* A 2px ground-colour halo separates a marker from a same-hue territory tint. */
 .marker circle.core,
 .marker rect.core {
   stroke: var(--bg);
-  stroke-width: 1.2;
+  stroke-width: 2;
 }
 
 .marker circle.ring,
@@ -447,7 +482,7 @@ a {
 }
 
 .microstate {
-  stroke: var(--bg);
+  stroke: color-mix(in srgb, var(--fg) 45%, transparent);
   stroke-width: 1;
   cursor: pointer;
 }
@@ -572,7 +607,7 @@ a {
   width: 8px;
   height: 8px;
   background: var(--chip-color, var(--accent));
-  box-shadow: 0 0 6px var(--chip-color, var(--accent));
+  box-shadow: 0 0 6px light-dark(transparent, var(--chip-color, var(--accent)));
 }
 
 /* ---------- legend ---------- */
@@ -580,8 +615,7 @@ a {
   position: absolute;
   left: 12px;
   bottom: 12px;
-  background: color-mix(in srgb, var(--bg-elev) 88%, transparent);
-  backdrop-filter: blur(8px);
+  background: var(--bg-elev);
   border: 1px solid var(--border-strong);
   padding: 10px 12px;
   font-size: 12px;
@@ -589,11 +623,11 @@ a {
   max-width: 270px;
 }
 
-.legend h3 {
+.legend .legend-title {
   margin: 0 0 8px;
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.18em;
+  font-size: 11px;
+  letter-spacing: var(--track-eyebrow);
   text-transform: uppercase;
   color: var(--accent);
 }
@@ -635,10 +669,9 @@ a {
 }
 
 .legend .note {
-  color: var(--fg-faint);
+  color: var(--fg-muted);
   margin-top: 8px;
-  font-size: 11px;
-  line-height: 1.4;
+  font: var(--t-small);
 }
 
 /* ---------- search ---------- */
@@ -699,8 +732,7 @@ a {
   margin: 0;
   padding: 4px;
   list-style: none;
-  background: color-mix(in srgb, var(--bg-elev) 96%, transparent);
-  backdrop-filter: blur(10px);
+  background: var(--bg-elev);
   border: 1px solid var(--border-strong);
   box-shadow: var(--shadow);
   max-height: 60vh;
@@ -725,7 +757,7 @@ a {
 .search-list .kind {
   margin-left: auto;
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 11px;
   color: var(--fg-faint);
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -743,8 +775,7 @@ a {
   right: 12px;
   bottom: 12px;
   width: var(--panel-w);
-  background: color-mix(in srgb, var(--bg-elev) 93%, transparent);
-  backdrop-filter: blur(12px);
+  background: var(--bg-elev);
   border: 1px solid var(--border-strong);
   box-shadow: var(--shadow);
   display: flex;
@@ -771,23 +802,25 @@ a {
   border-bottom: 1px solid var(--border);
 }
 
+.panel-head .panel-title {
+  flex: 1;
+  min-width: 0;
+}
+
 .panel-head h2 {
   margin: 0;
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 1.15;
+  font: var(--t-display);
   letter-spacing: 0.02em;
-  flex: 1;
 }
 
 .panel-head .eyebrow {
   display: block;
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.2em;
+  font-size: 11px;
+  letter-spacing: var(--track-eyebrow);
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 6px;
+  margin: 0 0 6px;
 }
 
 .panel-body {
@@ -797,11 +830,11 @@ a {
   line-height: 1.5;
 }
 
-.panel-body h4 {
+.panel-body h3 {
   margin: 16px 0 6px;
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.18em;
+  font-size: 11px;
+  letter-spacing: var(--track-eyebrow);
   text-transform: uppercase;
   color: var(--fg-muted);
   display: flex;
@@ -809,17 +842,17 @@ a {
   gap: 8px;
 }
 
-.panel-body h4::after {
+.panel-body h3::after {
   content: '';
   flex: 1;
   height: 1px;
   background: var(--border);
 }
 
-.panel-body h5.sub-head {
+.panel-body h4.sub-head {
   margin: 10px 0 4px;
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 400;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -945,10 +978,8 @@ a {
 
 .updated {
   margin-top: 16px;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  color: var(--fg-faint);
+  font: var(--t-small);
+  color: var(--fg-muted);
 }
 
 /* ---------- error ---------- */
@@ -1218,8 +1249,7 @@ a {
   gap: 12px;
   padding: 8px 14px;
   width: min(520px, calc(100% - 300px - 72px));
-  background: color-mix(in srgb, var(--bg-elev) 88%, transparent);
-  backdrop-filter: blur(8px);
+  background: var(--bg-elev);
   border: 1px solid var(--border-strong);
   z-index: 3;
 }
@@ -1299,10 +1329,12 @@ a {
 }
 
 /* ---------- compare & figures ---------- */
+/* Compare is a mode, not a personal signal, so it stays neutral rather than amber. */
 .chip.compare {
-  --chip-color: var(--warn);
-  color: var(--warn);
-  border-color: color-mix(in srgb, var(--warn) 60%, var(--border-strong));
+  --chip-color: var(--fg-muted);
+  color: var(--fg);
+  border-style: dashed;
+  border-color: var(--border-strong);
 }
 
 .chip.compare.picking {
@@ -1314,7 +1346,7 @@ a {
 }
 
 .chip .tag-ab {
-  font-size: 9px;
+  font-size: 11px;
   padding: 0 4px;
   border: 1px solid currentColor;
   margin-left: 2px;
@@ -1350,7 +1382,7 @@ a {
 }
 
 .tile .label {
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .compare-grid {
@@ -1362,7 +1394,7 @@ a {
   grid-template-columns: 1fr;
 }
 
-.compare-grid h4 {
+.compare-grid h3 {
   margin-top: 6px;
 }
 
@@ -1375,7 +1407,7 @@ a {
 /* ---------- labels & keyboard focus ---------- */
 .country-label {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.14em;
   fill: var(--fg);
   opacity: 0.75;
@@ -1384,6 +1416,19 @@ a {
   stroke: var(--bg);
   stroke-width: 3px;
   stroke-linejoin: round;
+}
+
+/* Label colour follows the fill under it (WorldMap measures it), so a label never reads double-struck. */
+.country-label.on-dark {
+  fill: #eef6fb;
+  stroke: rgba(2, 8, 14, 0.7);
+  opacity: 1;
+}
+
+.country-label.on-light {
+  fill: #0b1a26;
+  stroke: rgba(255, 255, 255, 0.7);
+  opacity: 1;
 }
 
 .map-root svg:focus-visible {
@@ -1415,8 +1460,7 @@ a {
   height: var(--ticker-h);
   display: flex;
   align-items: stretch;
-  background: color-mix(in srgb, var(--bg-elev) 94%, transparent);
-  backdrop-filter: blur(8px);
+  background: var(--bg-elev);
   border-top: 1px solid var(--border-strong);
   font-family: var(--mono);
   font-size: 11px;
@@ -1520,7 +1564,7 @@ a {
 
 .ticker-track .tag {
   color: var(--accent);
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .ticker-track .detail {
@@ -1551,7 +1595,7 @@ a {
   cursor: pointer;
   color: var(--fg-muted);
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   flex: 0 0 auto;
@@ -1652,7 +1696,7 @@ a {
   border-radius: 8px;
   background: var(--warn);
   color: var(--accent-fg);
-  font-size: 9px;
+  font-size: 11px;
   line-height: 16px;
   text-align: center;
   font-family: var(--mono);
@@ -1818,8 +1862,7 @@ a {
   padding: 4px;
   list-style: none;
   width: 250px;
-  background: color-mix(in srgb, var(--bg-elev) 96%, transparent);
-  backdrop-filter: blur(10px);
+  background: var(--bg-elev);
   border: 1px solid var(--border-strong);
   box-shadow: var(--shadow);
   z-index: 7;
@@ -1894,6 +1937,37 @@ a {
   border: 0;
 }
 
+.swatch.diamond.glyph-outline {
+  background: var(--bg) !important;
+  border: 2px solid var(--glyph-color);
+}
+
+.swatch.diamond.glyph-half {
+  background: linear-gradient(-45deg, var(--glyph-color) 50%, var(--bg) 50%) !important;
+  border: 1px solid var(--glyph-color);
+}
+
+.swatch.diamond.glyph-cross {
+  background:
+    linear-gradient(0deg, transparent 42%, var(--bg) 42% 58%, transparent 58%),
+    linear-gradient(90deg, transparent 42%, var(--bg) 42% 58%, transparent 58%),
+    var(--glyph-color) !important;
+}
+
+.marker rect.core.glyph-outline {
+  stroke-width: 2;
+}
+
+.marker .glyph-mask {
+  pointer-events: none;
+}
+
+.marker .glyph-x {
+  stroke: var(--bg);
+  stroke-width: 2;
+  pointer-events: none;
+}
+
 .chokepoint-status {
   display: grid;
   gap: 4px;
@@ -1901,79 +1975,121 @@ a {
 
 /* ---------- actors graph & peace process ---------- */
 .actors {
-  margin: 6px 0 4px;
-  overflow-x: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin: 6px 0 8px;
 }
 
-.actors svg {
-  display: block;
-  min-width: 300px;
-  font-family: var(--mono);
+.actors ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.actors .actor-side > ul {
+  display: grid;
+  gap: 8px;
 }
 
 .actors .side {
-  font-size: 9px;
-  letter-spacing: 0.18em;
-  fill: var(--accent);
+  margin: 0 0 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+  color: var(--accent);
+  overflow-wrap: anywhere;
+}
+
+.actors .side::after {
+  content: none;
 }
 
 .actors .actor {
-  fill: var(--bg-elev-2);
-  stroke: var(--border-strong);
-  stroke-width: 1;
+  display: grid;
+  gap: 2px;
+  padding: 6px 8px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border-strong);
+  border-left-width: 3px;
 }
 
 .actors .actor-state {
-  stroke: var(--accent-dim);
+  border-left-color: var(--accent-dim);
 }
 
 .actors .actor-armed-group {
-  stroke: var(--alert);
+  border-left-color: var(--alert);
 }
 
 .actors .actor-coalition {
-  stroke: var(--warn);
+  border-left-color: var(--warn);
 }
 
 .actors .actor.mediator,
 .actors .actor-international {
-  stroke-dasharray: 3 2;
+  border-style: dashed;
 }
 
 .actors .actor-name {
-  font-size: 10px;
-  fill: var(--fg);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--fg);
 }
 
 .actors .actor-type {
-  font-size: 8px;
-  letter-spacing: 0.12em;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  fill: var(--fg-faint);
+  color: var(--fg-muted);
 }
 
-.actors .link {
-  fill: none;
-  stroke: var(--border-strong);
-  stroke-width: 1;
+.actors .backers {
+  display: grid;
+  gap: 4px;
+  margin-top: 6px;
+  padding-left: 8px;
+  border-left: 1px solid var(--border-strong);
 }
 
-.actors .backer-name {
-  font-size: 9px;
-  fill: var(--fg-muted);
+.actors .backer {
+  display: grid;
+  width: 100%;
+  min-height: 32px;
+  align-content: center;
+  padding: 3px 8px;
+  text-align: left;
+  font-size: 12px;
+  line-height: 1.25;
+  border: 1px solid transparent;
+  background: transparent;
 }
 
 .actors .backer.clickable {
   cursor: pointer;
+  border-color: var(--border);
+  background: var(--bg-elev);
 }
 
-.actors .backer.clickable:hover .backer-name,
-.actors .backer.clickable:focus-visible .backer-name {
-  fill: var(--accent);
+.actors .backer.clickable:hover {
+  border-color: var(--accent);
 }
 
 .actors .backer.clickable:focus-visible {
-  outline: none;
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.actors .backer-name {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.actors .backer-support {
+  color: var(--fg-muted);
 }
 
 .badges .badge .meta {
@@ -2043,8 +2159,7 @@ a {
   bottom: 24px;
   width: min(520px, calc(100% - 48px));
   padding: 18px 20px 16px;
-  background: color-mix(in srgb, var(--bg-elev) 92%, transparent);
-  backdrop-filter: blur(12px);
+  background: var(--bg-elev);
   border: 1px solid var(--border-strong);
   box-shadow: var(--shadow);
   z-index: 5;
@@ -2059,8 +2174,8 @@ a {
 
 .brief-card .eyebrow {
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.2em;
+  font-size: 11px;
+  letter-spacing: var(--track-eyebrow);
   text-transform: uppercase;
 }
 
@@ -2095,13 +2210,17 @@ a {
   bottom: 0;
   height: 2px;
   background: var(--accent);
-  width: 0;
+  /* Compositor-only: scaling a full-width bar avoids a layout and repaint every frame. */
+  width: 100%;
+  transform-origin: left center;
+  transform: scaleX(0);
+  will-change: transform;
   animation: brief-fill linear forwards;
 }
 
 @keyframes brief-fill {
   to {
-    width: 100%;
+    transform: scaleX(1);
   }
 }
 
@@ -2189,16 +2308,6 @@ a {
   margin: 6px 0 4px;
 }
 
-@media (min-width: 821px) {
-  .trends {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .trends.single {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* Short series (a bloc founded a few years ago): start and end figures instead of a line. */
 .trend-figures {
   display: grid;
@@ -2213,7 +2322,7 @@ a {
 
 .trend-figures .label {
   color: var(--fg-muted);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   margin-right: 6px;
@@ -2242,10 +2351,11 @@ a {
 .trend-now {
   font-family: var(--mono);
   font-size: 14px;
+  white-space: nowrap;
 }
 
 .trend-sub {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--fg-muted);
   letter-spacing: 0.06em;
 }
@@ -2256,8 +2366,8 @@ a {
 
 .trend-tick {
   font-family: var(--mono);
-  font-size: 9px;
-  fill: var(--fg-faint);
+  font-size: 11px;
+  fill: var(--fg-muted);
 }
 
 .tiles.two {
@@ -2341,6 +2451,220 @@ a {
   clip-path: polygon(50% 0, 100% 100%, 0 100%);
 }
 
+/* ---------- focus rings ----------
+   The chamfer clip-path cuts off an outer ring, so chips and text buttons draw
+   focus inside their edge. Filled controls get a double ring (fill-coloured
+   inner, accent outer) so the ring never sits 1:1 against its own fill, and
+   these rules come last so a component's own box-shadow cannot replace them. */
+.chip:focus-visible,
+.text-btn:focus-visible,
+.segmented button:focus-visible,
+.ticker-filter:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.chip[aria-pressed='true']:focus-visible,
+.ticker-filter.on:focus-visible {
+  box-shadow:
+    inset 0 0 0 2px var(--fg),
+    inset 0 0 0 4px var(--bg);
+}
+
+.text-btn.primary:focus-visible,
+.segmented button[aria-pressed='true']:focus-visible {
+  box-shadow:
+    inset 0 0 0 2px var(--accent-fg),
+    inset 0 0 0 4px var(--accent);
+}
+
+/* ---------- trade key (partner × share band) ---------- */
+.trade-key {
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 11px;
+  margin-bottom: 6px;
+}
+
+.trade-key th {
+  font-weight: 400;
+  color: var(--fg-muted);
+  text-align: left;
+  padding: 0 6px 3px 0;
+}
+
+.trade-key thead th:not(:first-child) {
+  text-align: center;
+}
+
+.trade-key td {
+  padding: 2px 6px;
+  text-align: center;
+}
+
+.trade-key .swatch {
+  display: inline-block;
+  width: 22px;
+  height: 12px;
+}
+
+/* Touch targets for small markers: transparent, only where the pointer is coarse. */
+.marker .hit {
+  fill: transparent;
+  stroke: none;
+}
+
+@media (pointer: fine) {
+  .marker .hit {
+    display: none;
+  }
+}
+
+/* ---------- data rows (dossier extras) ---------- */
+.link-list .data-row {
+  align-items: baseline;
+}
+
+.data-row .data-label {
+  flex: 1;
+  min-width: 0;
+}
+
+.data-row .data-value {
+  flex: 0 0 auto;
+  min-width: 96px;
+  max-width: 50%;
+  margin-left: auto;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: baseline;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 14px;
+  letter-spacing: var(--track-data);
+  color: var(--fg);
+  text-align: right;
+}
+
+.data-row .pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 1px 6px;
+  border: 1px solid color-mix(in srgb, var(--pill-color) 60%, var(--border));
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.data-row .pill .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--pill-color);
+}
+
+.data-row .share-bar {
+  display: block;
+  height: 4px;
+  margin-top: 4px;
+  background: var(--bg-elev-2);
+}
+
+.data-row .share-bar > span {
+  display: block;
+  height: 100%;
+  background: var(--accent-dim);
+}
+
+/* With a mouse the chip row shows a thin scrollbar, so chips past the fade can be reached without a wheel. */
+@media (pointer: fine) {
+  .chip-row {
+    scrollbar-width: thin;
+  }
+
+  .chip-row::-webkit-scrollbar {
+    display: block;
+    height: 4px;
+  }
+}
+
+/* ---------- control heights and stroked chamfers ----------
+   Small controls share one height. The chamfer clip-path cuts through the 1px
+   border, so a pseudo-element draws each cut corner's diagonal in the
+   border colour. */
+.chip,
+.badge,
+.text-btn,
+.segmented.small button {
+  min-height: var(--control-sm);
+  padding-block: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.text-btn {
+  justify-content: center;
+  gap: var(--space-1);
+}
+
+.chip,
+.text-btn {
+  position: relative;
+  --chamfer: var(--border-strong);
+}
+
+.chip::before,
+.chip::after,
+.text-btn::before,
+.text-btn::after {
+  content: '';
+  position: absolute;
+  width: calc(var(--cut) * 1.4142);
+  height: 1px;
+  background: var(--chamfer);
+  pointer-events: none;
+}
+
+.chip::before,
+.text-btn::before {
+  top: calc(var(--cut) - 0.5px);
+  left: 0;
+  transform-origin: 0 50%;
+  transform: rotate(-45deg);
+}
+
+.chip::after,
+.text-btn::after {
+  right: 0;
+  bottom: calc(var(--cut) - 0.5px);
+  transform-origin: 100% 50%;
+  transform: rotate(-45deg);
+}
+
+.chip:hover,
+.chip[aria-pressed='true'] {
+  --chamfer: var(--chip-color, var(--accent));
+}
+
+.text-btn:hover,
+.text-btn.primary {
+  --chamfer: var(--accent);
+}
+
+.watch-toggle[aria-pressed='true'] {
+  --chamfer: var(--warn);
+}
+
+/* Tiles are facts, not controls: keep only their coloured top rule. */
+.tile {
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+}
+
+
 /* ---------- camera, sheet and small-screen layout ---------- */
 .map-hud {
   position: absolute;
@@ -2387,7 +2711,7 @@ a {
 .layer-readout .label {
   display: block;
   color: var(--fg-muted);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -2515,7 +2839,7 @@ a {
 
 .embed-caption .kicker {
   color: var(--fg-muted);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   white-space: nowrap;

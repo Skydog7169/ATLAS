@@ -1,4 +1,5 @@
 import raw from '../data/displacement.generated.json';
+import { NO_DATA_FILL, ramp } from './palette';
 
 export interface DisplacementRow {
   iso: string;
@@ -29,7 +30,7 @@ export const DISPLACEMENT_BY_ISO: ReadonlyMap<string, DisplacementRow> = new Map
 export const DISPLACEMENT_BINS = [0, 100_000, 500_000, 1_000_000, 3_000_000, 6_000_000] as const;
 
 /** Sequential violet ramp, kept distinct from the red/orange conflict scale and the cyan bloc scale. */
-export const DISPLACEMENT_COLORS = ['var(--land)', '#2b2150', '#4a2f86', '#7142bf', '#a35be6', '#dd8bff'] as const;
+export const DISPLACEMENT_COLORS = ramp('displacement');
 
 export function displacementBin(total: number): number {
   let bin = 0;
@@ -48,7 +49,9 @@ export function displacementTotal(row: DisplacementRow): number {
 
 export function displacementColor(iso: string): string {
   const row = DISPLACEMENT_BY_ISO.get(iso);
-  return DISPLACEMENT_COLORS[displacementBin(row ? displacementTotal(row) : 0)] ?? 'var(--land)';
+  // Kosovo is counted inside Serbia's figure, so it is not missing data.
+  if (!row) return REPORTED_WITH[iso] ? 'var(--land)' : NO_DATA_FILL;
+  return DISPLACEMENT_COLORS[displacementBin(displacementTotal(row))] ?? 'var(--land)';
 }
 
 /** Map fill; a known source gap (figures from outside UNHCR) is drawn hatched. */

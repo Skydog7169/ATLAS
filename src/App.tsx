@@ -8,16 +8,18 @@ import Timeline from './components/Timeline';
 import { displacementFill } from './lib/displacement';
 import { sanctionsFill } from './lib/sanctions';
 import { electionColor } from './lib/elections';
-import { nuclearColor } from './lib/nuclear';
+import { nuclearFill } from './lib/nuclear';
 import { ACLED, acledColor, acledUnrestColor } from './lib/acled';
 import { UCDP, ucdpColor, ucdpYear } from './lib/ucdp';
 import { UNREST, UNREST_BY_ID } from './data/unrest';
 import { UNREST_COLOR, UNREST_MARKER_PREFIX, UNREST_RADIUS, UNREST_KIND_LABEL, unrestColor } from './lib/unrest';
 import { militaryColor } from './lib/military';
-import { tradeColor } from './lib/trade';
-import { CHOKEPOINTS, CHOKEPOINT_BY_ID, CHOKEPOINT_COLOR, CHOKEPOINT_MARKER_PREFIX, CHOKEPOINT_STATUS_LABEL, currentStatus } from './lib/chokepoints';
+import { tradeFill } from './lib/trade';
+import { CHOKEPOINTS, CHOKEPOINT_BY_ID, CHOKEPOINT_COLOR, CHOKEPOINT_GLYPH, CHOKEPOINT_MARKER_PREFIX, CHOKEPOINT_STATUS_LABEL, currentStatus } from './lib/chokepoints';
 import LayerMenu, { type LayerOption } from './components/LayerMenu';
-import { INTENSITY_COLOR, INTENSITY_LABEL, INTENSITY_RADIUS } from './lib/labels';
+import { INTENSITY_COLOR, INTENSITY_LABEL, INTENSITY_RADIUS, conflictFill } from './lib/labels';
+import { ramp, resolveColor } from './lib/palette';
+import { readLastVisit } from './lib/lastVisit';
 import BlocChips from './components/BlocChips';
 import DetailPanel from './components/DetailPanel';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -50,7 +52,8 @@ import { SOVEREIGN, memberFor, territoryLine } from './lib/sovereign';
 const WorldMap = lazy(() => import('./components/WorldMap'));
 const GlobeMap = lazy(() => import('./components/GlobeMap'));
 
-const OVERVIEW_STEPS = ['var(--land)', '#123a4a', '#17607a', '#1f8fb3', '#35e0ff'];
+// Theme-relative (palette.ts): the top class stays clear of --accent, which is reserved for UI and selection.
+const OVERVIEW_STEPS = ramp('overview');
 
 const LAYER_OPTIONS: LayerOption[] = [
   { id: 'displacement', label: 'Displacement', hint: 'People displaced from each country (UNHCR)' },
@@ -156,12 +159,12 @@ export default function App() {
       if (layer === 'displacement') return displacementFill(iso);
       if (layer === 'sanctions') return sanctionsFill(iso);
       if (layer === 'elections') return { fill: electionColor(iso) };
-      if (layer === 'nuclear') return { fill: nuclearColor(iso) };
+      if (layer === 'nuclear') return nuclearFill(iso);
       if (layer === 'acled') return { fill: acledColor(iso) };
       if (layer === 'acled-unrest') return { fill: acledUnrestColor(iso) };
       if (layer === 'ucdp') return { fill: ucdpColor(iso) };
       if (layer === 'military') return { fill: militaryColor(iso) };
-      if (layer === 'trade') return { fill: tradeColor(iso) };
+      if (layer === 'trade') return tradeFill(iso);
       if (layer === 'unrest') return { fill: unrestColor(iso) };
       // The pair view paints its two countries and steps everything else back.
       if (pair) {
@@ -175,19 +178,18 @@ export default function App() {
           const abroad = partyAbroadByCountry.get(iso);
           // With a conflict open, its foreign backers are outlined; parties fighting abroad keep theirs.
           const outline = (theatre ? backers.get(iso) : undefined) ?? (abroad ? INTENSITY_COLOR[abroad] : undefined);
-          return { fill: 'var(--land)', dim: Boolean(theatre), outline };
+          return { fill: 'var(--land)', outline };
         }
-        const outline = theatre ? backers.get(iso) : undefined;
-        const pct = intensity === 'high' ? 55 : intensity === 'medium' ? 42 : intensity === 'low' ? 30 : 22;
-        // With a conflict open, only its theatre keeps full strength; backers get a dashed outline.
-        return { fill: `color-mix(in srgb, ${INTENSITY_COLOR[intensity]} ${pct}%, var(--land))`, dim: theatre ? !theatre.has(iso) : false, outline };
+        // With a conflict open, its foreign backers get a dashed outline in their side's colour.
+        return { fill: conflictFill(intensity), outline: theatre ? backers.get(iso) : undefined };
       }
       if (compare) {
         const inA = memberFor(compare.a, iso)?.status === 'member';
         const inB = memberFor(compare.b, iso)?.status === 'member';
         if (inA && inB) return { fill: compare.a.color, stripes: [compare.a.color, compare.b.color] };
         if (inA) return { fill: compare.a.color };
-        if (inB) return { fill: compare.b.color };
+        // Bloc B is hatched so the comparison survives colour-vision deficiency, not just hue.
+        if (inB) return { fill: compare.b.color, hatch: compare.b.color };
         return { fill: 'var(--land)', dim: true };
       }
       if (activeBloc) {
@@ -203,26 +205,57 @@ export default function App() {
     [mode, activeBloc, compare, maxIntensityByCountry, partyAbroadByCountry, layer, pair, theatre, backers],
   );
 
+  // While a dossier, pair or conflict panel is open, the countries it is about stay at full strength and the rest recede.
+  const focusIsos = useMemo<ReadonlySet<string> | null>(() => {
+    if (selection?.kind === 'country') return new Set([selection.iso]);
+    if (selection?.kind === 'pair') return new Set([selection.a, ...(selection.b ? [selection.b] : [])]);
+    if (selection?.kind === 'conflict') {
+      const c = CONFLICT_BY_ID.get(selection.id);
+      return c ? new Set(c.countries) : null;
+    }
+    return null;
+  }, [selection]);
+  const fillWithFocus = useCallback(
+    (iso: string | null): CountryFill => {
+      const style = fillFor(iso);
+      return focusIsos && (!iso || !focusIsos.has(iso)) ? { ...style, dim: true } : style;
+    },
+    [fillFor, focusIsos],
+  );
+
+  // Pulse rings only where they point at something: the selected conflict and what changed since the last visit.
+  const [lastVisit] = useState(readLastVisit);
+
   const markers = useMemo<MapMarker[]>(() => {
     const out: MapMarker[] = [];
     if (mode === 'conflicts') {
-      for (const { conflict: c, intensity } of [...visible].sort((a, b) => INTENSITY_ORDER[a.intensity] - INTENSITY_ORDER[b.intensity])) {
-        out.push({ id: c.id, lonLat: c.location, color: INTENSITY_COLOR[intensity], radius: INTENSITY_RADIUS[intensity], label: c.name, pulse: intensity === 'high' && viewMonth === null });
+      // Most intense first, so keyboard and screen-reader order reaches the wars before the flashpoints.
+      for (const { conflict: c, intensity } of [...visible].sort((a, b) => INTENSITY_ORDER[b.intensity] - INTENSITY_ORDER[a.intensity])) {
+        const changed = viewMonth === null && lastVisit !== null && (c.history[0]?.date ?? '') > lastVisit;
+        out.push({
+          id: c.id,
+          lonLat: c.location,
+          color: INTENSITY_COLOR[intensity],
+          radius: INTENSITY_RADIUS[intensity],
+          label: `${c.name}: ${INTENSITY_LABEL[intensity].toLowerCase()}${viewMonth ? `, ${formatMonth(viewMonth)}` : ''}`,
+          pulse: changed || (selection?.kind === 'conflict' && selection.id === c.id),
+        });
       }
     }
     if (layer === 'unrest') {
-      for (const u of [...UNREST].sort((a, b) => INTENSITY_ORDER[a.intensity] - INTENSITY_ORDER[b.intensity])) {
-        out.push({ id: UNREST_MARKER_PREFIX + u.id, lonLat: u.location, color: UNREST_COLOR[u.intensity], radius: UNREST_RADIUS[u.intensity], label: `${u.name}: ${UNREST_KIND_LABEL[u.kind]}, ${INTENSITY_LABEL[u.intensity].toLowerCase()}`, shape: 'triangle', pulse: u.intensity === 'high' });
+      for (const u of [...UNREST].sort((a, b) => INTENSITY_ORDER[b.intensity] - INTENSITY_ORDER[a.intensity])) {
+        const changed = lastVisit !== null && u.updated > lastVisit;
+        out.push({ id: UNREST_MARKER_PREFIX + u.id, lonLat: u.location, color: UNREST_COLOR[u.intensity], radius: UNREST_RADIUS[u.intensity], label: `${u.name}: ${UNREST_KIND_LABEL[u.kind]}, ${INTENSITY_LABEL[u.intensity].toLowerCase()}`, shape: 'triangle', pulse: changed || (selection?.kind === 'unrest' && selection.id === u.id) });
       }
     }
     if (layer === 'chokepoints') {
       for (const cp of CHOKEPOINTS) {
         const st = currentStatus(cp).status;
-        out.push({ id: CHOKEPOINT_MARKER_PREFIX + cp.id, lonLat: cp.location, color: CHOKEPOINT_COLOR[st], radius: 7, label: `${cp.name}: ${CHOKEPOINT_STATUS_LABEL[st]}`, shape: 'diamond' });
+        out.push({ id: CHOKEPOINT_MARKER_PREFIX + cp.id, lonLat: cp.location, color: CHOKEPOINT_COLOR[st], radius: 7, label: `${cp.name}: ${CHOKEPOINT_STATUS_LABEL[st]}`, shape: 'diamond', glyph: CHOKEPOINT_GLYPH[st] });
       }
     }
     return out;
-  }, [mode, visible, viewMonth, layer]);
+  }, [mode, visible, viewMonth, layer, lastVisit, selection]);
 
   const selectedIsos = useMemo(() => (selection?.kind === 'country' ? [selection.iso] : selection?.kind === 'pair' ? [selection.a, ...(selection.b ? [selection.b] : [])] : []), [selection]);
   const selectedMarkerIds = useMemo(() => {
@@ -410,15 +443,15 @@ export default function App() {
     if (!root || !svg || exporting) return;
     setExporting(true);
     try {
-      const css = getComputedStyle(document.documentElement);
       const legend = readLegend(root);
       const title = legend.title ?? (mode === 'conflicts' ? `ATLAS · Conflicts${viewMonth ? ' · ' + formatMonth(viewMonth) : ''}` : activeBloc ? `ATLAS · ${activeBloc.name}` : 'ATLAS · Bloc overview');
       const today = new Date().toISOString().slice(0, 10);
       const blob = await renderPng({
         svg,
-        background: css.getPropertyValue('--bg').trim() || '#04070d',
-        foreground: css.getPropertyValue('--fg').trim() || '#d9f1ff',
-        muted: css.getPropertyValue('--fg-muted').trim() || '#7fa3bd',
+        // Tokens are light-dark() pairs, which a canvas cannot parse; resolve them to the active theme's colour.
+        background: resolveColor('--bg', '#04070d'),
+        foreground: resolveColor('--fg', '#d9f1ff'),
+        muted: resolveColor('--fg-muted', '#7fa3bd'),
         title,
         legendTitle: legend.title,
         legend: legend.rows,
@@ -443,6 +476,7 @@ export default function App() {
       style={{ ['--map-inset-top' as string]: `${insets.top}px`, ['--sheet-h' as string]: `${insets.bottom}px` }}
       data-panel-open={panelOpen} data-mode={mode} data-layer={layer ?? undefined} data-view={view} data-brief={brief} data-embed={embed}>
       <header className="header">
+        <h1 className="sr-only">ATLAS geopolitical map</h1>
         <a className="brand" href="#" onClick={(e) => { e.preventDefault(); update({ selection: null, bloc: null }); setFocus({ kind: 'reset' }); }}>
           <Logo />
           <span>
@@ -536,7 +570,7 @@ export default function App() {
           <Suspense fallback={<MapSkeleton />}>
             {view === 'globe' ? (
               <GlobeMap
-                fillFor={fillFor}
+                fillFor={fillWithFocus}
                 markers={markers}
                 showMicrostates={mode === 'blocs'}
                 selectedIsos={selectedIsos}
@@ -556,7 +590,7 @@ export default function App() {
               />
             ) : (
               <WorldMap
-                fillFor={fillFor}
+                fillFor={fillWithFocus}
                 markers={markers}
                 showMicrostates={mode === 'blocs'}
                 selectedIsos={selectedIsos}
