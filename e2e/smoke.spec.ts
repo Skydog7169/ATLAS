@@ -70,7 +70,17 @@ test('conflicts mode: markers, panel, timeline replay and changes feed', async (
 
   await page.getByRole('button', { name: 'Recent changes' }).click();
   await expect(page.locator('.panel h2')).toContainText('Recent changes');
+  // Defaults to the last week; 'All' is independent of today's date.
+  await expect(page.getByRole('button', { name: '7 days', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await page.getByRole('button', { name: 'All', exact: true }).click();
   expect(await page.locator('.feed li').count()).toBeGreaterThan(10);
+  // Grouped by what changed, with worded tags and same-level re-assessments folded away.
+  await expect(page.locator('.feed-group[data-delta="new"] h3')).toContainText(/New · \d+/);
+  await expect(page.locator('.feed-group[data-delta="up"] .feed-delta').first()).toContainText(/▲ Escalated · \w+ → \w+/);
+  await expect(page.locator('.feed-same > summary')).toContainText(/\d+ re-assessments?, no change/);
+  const title = page.locator('.feed .feed-title').first();
+  expect(await title.evaluate((el) => getComputedStyle(el).textAlign)).toBe('left');
+  await expect(page.locator('.panel a.text-btn', { hasText: 'RSS' })).toHaveAttribute('href', '/feed.xml');
 });
 
 test('search jumps to a conflict and to a microstate', async ({ page }) => {
@@ -159,8 +169,24 @@ test('ticker shows the ten newest items, pauses on hover and opens them', async 
   expect(paused).toBe('paused');
   const first = track.locator('button').first();
   const title = (await first.locator('.title').textContent()) ?? '';
+  await expect(first.locator('.tag')).toHaveText(/^(Conflict|Unrest) · (High|Medium|Low|Latent)$|^Membership$/);
   await first.click();
   await expect(page.locator('.panel h2')).toContainText(title.split(':')[0]!.slice(0, 12));
+});
+
+test('ticker can be paused, and the choice persists', async ({ page }) => {
+  await open(page);
+  const ticker = page.locator('.ticker');
+  const pause = ticker.getByRole('button', { name: 'Pause feed' });
+  await expect(pause).toHaveAttribute('aria-pressed', 'false');
+  await pause.click();
+  await expect(pause).toHaveAttribute('aria-pressed', 'true');
+  await expect(ticker).toHaveClass(/paused/);
+  expect(await ticker.locator('.ticker-track').first().evaluate((el) => getComputedStyle(el).animationName)).toBe('none');
+  await expect(ticker.locator('.ticker-track[aria-hidden="true"]')).toBeHidden();
+  await page.reload({ waitUntil: 'networkidle' });
+  await expect(page.locator('.ticker')).toHaveClass(/paused/);
+  await expect(page.locator('.ticker-filter')).toHaveAttribute('aria-label', 'Show only starred items');
 });
 
 test('watchlist: stars survive reload and filter the ticker and feed', async ({ page }) => {
@@ -180,6 +206,7 @@ test('watchlist: stars survive reload and filter the ticker and feed', async ({ 
   await page.locator('.panel .icon-btn[aria-label="Close panel"]').click();
   await page.locator('.ticker-filter').click();
   await expect(page.locator('.ticker-filter')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('.ticker-label')).toContainText('STARRED');
   const items = page.locator('.ticker-track:not([aria-hidden]) button');
   expect(await items.count()).toBeGreaterThan(0);
   for (const id of await items.evaluateAll((els) => els.map((e) => e.getAttribute('data-id')))) expect(id).toBe('sudan');
@@ -194,30 +221,88 @@ test('watchlist: stars survive reload and filter the ticker and feed', async ({ 
   await page.locator('.header .icon-btn[aria-label="Watchlist"]').click();
   await expect(page).toHaveURL(/watchlist=1/);
   await expect(page.locator('.panel h2')).toContainText('Watchlist');
+  await expect(page.locator('.panel .watch-row .watch-meta').first()).toContainText(/Updated \w+ \d+ · Conflict · High/);
   await page.locator('.panel .watch-row .star').click();
   await expect(page.locator('.panel')).toContainText('Nothing starred yet');
+  // The empty state offers one-tap suggestions.
+  await expect(page.locator('.panel .watch-ghost')).toContainText('Starred items appear here');
+  await page.locator('.panel .watch-row .icon-btn.star').first().click();
+  await expect(page.locator('.header .icon-btn[aria-label="Watchlist"]')).toHaveAttribute('data-count', '1');
   await noSeriousA11yIssues(page);
 });
 
-test('since-your-last-visit strip appears for returning visitors and clears when read', async ({ page }) => {
+test('watchlist: stale ids are labelled and removable, and other tabs merge', async ({ page, context }) => {
+  await open(page);
+  await page.evaluate(() => localStorage.setItem('atlas.watchlist.v1', JSON.stringify([{ kind: 'conflict', id: 'old-war-2023' }])));
+  await open(page, '#watchlist=1');
+  // A hash-only navigation keeps the page, so reload to read the seeded storage.
+  await page.reload({ waitUntil: 'networkidle' });
+  const panel = page.locator('.panel');
+  await expect(panel.locator('.watch-gone')).toContainText('Removed or renamed in a data update');
+  await expect(panel.locator('.watch-gone button')).toHaveText('Remove');
+  await expect(page.locator('.header .icon-btn[aria-label="Watchlist"]')).not.toHaveAttribute('data-count', /.*/);
+
+  // A second tab stars something; this tab picks it up and a later toggle here keeps it.
+  const other = await context.newPage();
+  await other.goto('/#mode=conflicts&conflict=sudan', { waitUntil: 'networkidle' });
+  await other.locator('.panel .icon-btn.star').click();
+  await expect(panel).toContainText('Sudan');
+  await panel.locator('.watch-gone button').click();
+  const stored = await page.evaluate(() => JSON.parse(localStorage.getItem('atlas.watchlist.v1') ?? '[]'));
+  expect(stored).toEqual([{ kind: 'conflict', id: 'sudan' }]);
+  await other.close();
+});
+
+test('since-your-last-visit strip tracks seen items and agrees with the panel it opens', async ({ page }) => {
   await open(page);
   await expect(page.locator('.since')).toHaveCount(0);
-  const stored = await page.evaluate(() => localStorage.getItem('atlas.lastVisit.v1'));
-  expect(stored).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-  await page.evaluate(() => localStorage.setItem('atlas.lastVisit.v1', '2020-01-01'));
+  // A first visit seeds the seen-set silently.
+  const stored = await page.evaluate(() => JSON.parse(localStorage.getItem('atlas.lastVisit.v2') ?? 'null'));
+  expect(stored.seen.length).toBeGreaterThan(40);
+  // A visitor from the v1 era is migrated: everything dated on or after their stamp is unseen once.
+  await page.evaluate(() => {
+    localStorage.removeItem('atlas.lastVisit.v2');
+    localStorage.setItem('atlas.lastVisit.v1', '2020-01-01');
+    localStorage.setItem('atlas.watchlist.only.v1', '1');
+  });
   await page.reload({ waitUntil: 'networkidle' });
   // On the globe, countries on the far side have an empty path, so wait for one that is drawn.
   await page.waitForSelector('path.country[d^="M"]');
   const strip = page.locator('.since');
   await expect(strip).toBeVisible();
   await expect(strip).toContainText(/Since Jan 1, 2020 · \d+ changes/);
-  await strip.locator('.since-list button').first().click();
-  await expect(page.locator('.panel')).toBeVisible();
-  await strip.getByRole('button', { name: 'Mark read' }).click();
+  const total = Number(await strip.locator('.since-label b').first().textContent());
+  await expect(page.locator('.readout-btn .readout-dot')).toHaveCount(1);
+
+  // '+N more' opens the panel on the same window, unfiltered, so it lists exactly the strip's count.
+  await strip.locator('.since-more').click();
+  await expect(page).toHaveURL(/changes=since/);
+  const panel = page.locator('.panel');
+  await expect(panel.locator('.since-chip')).toHaveAttribute('aria-pressed', 'true');
+  await expect(panel.locator('.since-chip')).toContainText(`· ${total}`);
+  await expect(panel.locator('.watch-toggle')).toHaveAttribute('aria-pressed', 'false');
+  expect(await panel.locator('.feed li').count()).toBe(total);
+
+  // Mark read in the panel clears the strip too.
+  await panel.getByRole('button', { name: 'Mark read' }).click();
   await expect(page.locator('.since')).toHaveCount(0);
   await page.reload({ waitUntil: 'networkidle' });
   // On the globe, countries on the far side have an empty path, so wait for one that is drawn.
   await page.waitForSelector('path.country[d^="M"]');
+  await expect(page.locator('.since')).toHaveCount(0);
+
+  // An item that goes live after Mark read is unseen whatever its date.
+  await page.evaluate(() => {
+    const v = JSON.parse(localStorage.getItem('atlas.lastVisit.v2')!);
+    v.seen = v.seen.filter((k: string) => !k.startsWith('conflict:sudan:'));
+    localStorage.setItem('atlas.lastVisit.v2', JSON.stringify(v));
+  });
+  await page.reload({ waitUntil: 'networkidle' });
+  await page.waitForSelector('path.country[d^="M"]');
+  await expect(strip).toBeVisible();
+  await strip.locator('.since-list button').first().click();
+  await expect(page.locator('.panel')).toBeVisible();
+  await strip.getByRole('button', { name: 'Mark read' }).click();
   await expect(page.locator('.since')).toHaveCount(0);
 });
 
