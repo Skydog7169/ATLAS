@@ -3,7 +3,8 @@ import { BLOCS, BLOC_BY_ID, blocsForCountry } from './data/blocs';
 import { CONFLICTS, CONFLICT_BY_ID, INTENSITY_ORDER, conflictsForCountry } from './data/conflicts';
 import type { Intensity } from './data/types';
 import { useAppState } from './hooks/useAppState';
-import { currentMonth, earliestMonth, entryAt, monthRange } from './lib/history';
+import { replayAt } from './lib/history';
+import { ASSESSED_MONTHS, TIMELINE_MONTHS } from './lib/timeline';
 import Timeline from './components/Timeline';
 import { DISPLACEMENT_BY_ISO, displacementColor, formatPeople } from './lib/displacement';
 import { sanctionsColor, sanctionsSummary } from './lib/sanctions';
@@ -29,12 +30,19 @@ import Ticker from './components/Ticker';
 import SinceLastVisit from './components/SinceLastVisit';
 import { ASK_ENABLED } from './components/AskPanel';
 import { useWatchlist } from './hooks/useWatchlist';
-import { formatDate, formatMonth } from './lib/labels';
+import { formatMonth } from './lib/labels';
 import type { CountryFill, Focus, MapMarker } from './components/WorldMap';
 import Briefing, { type BriefItem } from './components/Briefing';
 import { COUNTRY_BY_ISO } from './lib/countries';
-import { downloadBlob, readLegend, renderPng } from './lib/exportPng';
+import { downloadBlob, exportMeta, readLegend, renderPng } from './lib/exportPng';
 import { serialize } from './lib/urlState';
+import { EmbedContext, type EmbedContextValue } from './lib/embedContext';
+import { useGestureHint } from './hooks/useGestureHint';
+import { useReplayNotice } from './hooks/useReplayNotice';
+import ReplayBanner from './components/ReplayBanner';
+import EmbedBadge from './components/EmbedBadge';
+import EmbedDialog from './components/EmbedDialog';
+import GestureHint from './components/GestureHint';
 
 // The map pulls in d3 and the 110m geometry; loading it after the shell
 // paints keeps first render fast on phones.
@@ -64,17 +72,27 @@ const DATA_ASOF = [...BLOCS.map((b) => b.updated), ...CONFLICTS.map((c) => c.upd
 const membershipCount = new Map<string, number>();
 for (const b of BLOCS) for (const m of b.members) if (m.status === 'member') membershipCount.set(m.iso, (membershipCount.get(m.iso) ?? 0) + 1);
 
-// Replay covers conflict assessments only; bloc events go back years and would stretch the scrubber.
-const TIMELINE_MONTHS = monthRange(earliestMonth(CONFLICTS, []), currentMonth());
-
-/** Conflicts with the assessment in force for the view month (live = newest). */
-function conflictsAt(month: string | null): Array<{ conflict: (typeof CONFLICTS)[number]; intensity: Intensity }> {
-  const out: Array<{ conflict: (typeof CONFLICTS)[number]; intensity: Intensity }> = [];
+/**
+ * Conflicts with the assessment in force for the view month (live = newest).
+ * In replay, `stale` marks an assessment carried forward from an earlier month.
+ */
+function conflictsAt(month: string | null): Array<{ conflict: (typeof CONFLICTS)[number]; intensity: Intensity; stale: boolean }> {
+  const out: Array<{ conflict: (typeof CONFLICTS)[number]; intensity: Intensity; stale: boolean }> = [];
   for (const c of CONFLICTS) {
-    const entry = month ? entryAt(c, month) : c.history[0];
-    if (entry) out.push({ conflict: c, intensity: entry.intensity });
+    if (!month) {
+      const entry = c.history[0];
+      if (entry) out.push({ conflict: c, intensity: entry.intensity, stale: false });
+      continue;
+    }
+    const r = replayAt(c, month);
+    if (r.entry) out.push({ conflict: c, intensity: r.entry.intensity, stale: !r.fresh });
   }
   return out;
+}
+
+/** Replay: conflicts already under way at `month` but with no assessment yet, drawn as outlines rather than left out. */
+function untrackedAt(month: string | null): Array<(typeof CONFLICTS)[number]> {
+  return month ? CONFLICTS.filter((c) => replayAt(c, month).untracked) : [];
 }
 
 function Logo() {
@@ -101,7 +119,10 @@ function MapSkeleton() {
 
 export default function App() {
   const { state, update } = useAppState();
-  const { mode, bloc, vs, selection, month, layer, view, rotation, brief, embed } = state;
+  const { mode, bloc, vs, selection, month, layer, view, rotation, brief, embed, embedOpts } = state;
+  const [gestureHint, showGestureHint] = useGestureHint();
+  const [replayNotice, dismissReplayNotice] = useReplayNotice();
+  const [embedding, setEmbedding] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [picking, setPicking] = useState(false);
   const [hover, setHover] = useState<{ label: string; sub?: string; iso: string | null; x: number; y: number } | null>(null);
@@ -142,6 +163,7 @@ export default function App() {
 
   const viewMonth = mode === 'conflicts' ? month : null;
   const visible = useMemo(() => conflictsAt(viewMonth), [viewMonth]);
+  const untracked = useMemo(() => untrackedAt(viewMonth), [viewMonth]);
   const maxIntensityByCountry = useMemo(() => {
     const map = new Map<string, Intensity>();
     for (const { conflict, intensity } of visible) {
@@ -196,8 +218,12 @@ export default function App() {
   const markers = useMemo<MapMarker[]>(() => {
     const out: MapMarker[] = [];
     if (mode === 'conflicts') {
-      for (const { conflict: c, intensity } of [...visible].sort((a, b) => INTENSITY_ORDER[a.intensity] - INTENSITY_ORDER[b.intensity])) {
-        out.push({ id: c.id, lonLat: c.location, color: INTENSITY_COLOR[intensity], radius: INTENSITY_RADIUS[intensity], label: c.name, pulse: intensity === 'high' && viewMonth === null });
+      for (const c of untracked) {
+        out.push({ id: c.id, lonLat: c.location, color: 'var(--fg-muted)', radius: INTENSITY_RADIUS.latent, label: `${c.name}: not yet tracked in ${formatMonth(viewMonth ?? '')}`, ghost: true });
+      }
+      for (const { conflict: c, intensity, stale } of [...visible].sort((a, b) => INTENSITY_ORDER[a.intensity] - INTENSITY_ORDER[b.intensity])) {
+        const label = stale && viewMonth ? `${c.name}: ${INTENSITY_LABEL[intensity].toLowerCase()} at the last assessment, none on record for ${formatMonth(viewMonth)}` : c.name;
+        out.push({ id: c.id, lonLat: c.location, color: INTENSITY_COLOR[intensity], radius: INTENSITY_RADIUS[intensity], label, pulse: intensity === 'high' && viewMonth === null, stale });
       }
     }
     if (layer === 'unrest') {
@@ -212,7 +238,7 @@ export default function App() {
       }
     }
     return out;
-  }, [mode, visible, viewMonth, layer]);
+  }, [mode, visible, untracked, viewMonth, layer]);
 
   const selectedIso = selection?.kind === 'country' ? selection.iso : null;
   const selectedMarkerId = selection?.kind === 'conflict' ? selection.id : selection?.kind === 'chokepoint' ? CHOKEPOINT_MARKER_PREFIX + selection.id : selection?.kind === 'unrest' ? UNREST_MARKER_PREFIX + selection.id : null;
@@ -394,23 +420,61 @@ export default function App() {
     try {
       const css = getComputedStyle(document.documentElement);
       const legend = readLegend(root);
-      const title = legend.title ?? (mode === 'conflicts' ? `ATLAS · Conflicts${viewMonth ? ' · ' + formatMonth(viewMonth) : ''}` : activeBloc ? `ATLAS · ${activeBloc.name}` : 'ATLAS · Bloc overview');
       const today = new Date().toISOString().slice(0, 10);
+      const meta = exportMeta({
+        mode,
+        layer,
+        layerLabel: LAYER_OPTIONS.find((o) => o.id === layer)?.label ?? null,
+        month: viewMonth,
+        bloc: activeBloc?.shortName ?? null,
+        vs: mode === 'blocs' && activeBloc ? (vsBloc?.shortName ?? null) : null,
+        dataAsof: DATA_ASOF,
+        today,
+      });
       const blob = await renderPng({
         svg,
         background: css.getPropertyValue('--bg').trim() || '#04070d',
         foreground: css.getPropertyValue('--fg').trim() || '#d9f1ff',
         muted: css.getPropertyValue('--fg-muted').trim() || '#7fa3bd',
-        title,
+        title: meta.title,
         legendTitle: legend.title,
         legend: legend.rows,
-        stamp: `Data ${formatMonth(DATA_ASOF)} · exported ${formatDate(today)} · atlas-geopolitic.vercel.app`,
+        stamp: meta.stamp,
       });
-      downloadBlob(blob, `atlas-${layer ?? mode}-${today}.png`);
+      downloadBlob(blob, meta.filename);
     } finally {
       setExporting(false);
     }
-  }, [exporting, mode, viewMonth, activeBloc, layer]);
+  }, [exporting, mode, viewMonth, activeBloc, vsBloc, layer]);
+
+  // Embeds may pin a theme for the host page; the full app keeps the reader's toggle.
+  useEffect(() => {
+    if (!embed || embedOpts.theme === 'auto') return;
+    document.documentElement.setAttribute('data-theme', embedOpts.theme);
+  }, [embed, embedOpts.theme]);
+
+  const embedContext = useMemo<EmbedContextValue>(
+    () => ({
+      shareUrl: () => new URL(serialize({ ...state, embed: false }), window.location.href).href,
+      onEmbed: embed ? undefined : () => setEmbedding(true),
+    }),
+    [embed, state],
+  );
+
+  // What the current view shows, for the embed iframe's accessible title.
+  const viewTitle = useMemo(() => {
+    if (selection?.kind === 'conflict') return CONFLICT_BY_ID.get(selection.id)?.name ?? 'Conflicts';
+    if (selection?.kind === 'country') return COUNTRY_BY_ISO.get(selection.iso)?.name ?? 'Country';
+    if (selection?.kind === 'unrest') return UNREST_BY_ID.get(selection.id)?.name ?? 'Civil unrest';
+    if (selection?.kind === 'chokepoint') return CHOKEPOINT_BY_ID.get(selection.id)?.name ?? 'Chokepoints';
+    const layerLabel = LAYER_OPTIONS.find((o) => o.id === layer)?.label;
+    if (layerLabel) return layerLabel;
+    if (mode === 'conflicts') return 'Conflict intensity';
+    if (compare) return `${compare.a.shortName} vs ${compare.b.shortName}`;
+    return activeBloc?.name ?? 'Bloc memberships';
+  }, [selection, layer, mode, compare, activeBloc]);
+
+  const openHref = serialize({ ...state, embed: false });
 
   const conflictColor = useCallback((id: string) => {
     const c = CONFLICT_BY_ID.get(id);
@@ -420,9 +484,10 @@ export default function App() {
   }, []);
 
   return (
-    <div className="app" data-panel-open={selection !== null} data-mode={mode} data-layer={layer ?? undefined} data-view={view} data-brief={brief} data-embed={embed}>
+    <EmbedContext.Provider value={embedContext}>
+    <div className="app" data-panel-open={selection !== null} data-mode={mode} data-layer={layer ?? undefined} data-view={view} data-brief={brief} data-embed={embed} data-interactive={embed ? embedOpts.interactive : undefined} data-replay={viewMonth !== null}>
       <header className="header">
-        <a className="brand" href="#" onClick={(e) => { e.preventDefault(); update({ selection: null, bloc: null }); setFocus({ kind: 'reset' }); }}>
+        <a className="brand" href="#" onClick={(e) => { e.preventDefault(); update({ selection: null, bloc: null, month: null }); setFocus({ kind: 'reset' }); }}>
           <Logo />
           <span>
             <span className="word">ATLAS</span>
@@ -430,7 +495,7 @@ export default function App() {
           </span>
         </a>
         <div className="segmented" role="group" aria-label="Map mode">
-          <button aria-pressed={mode === 'blocs'} onClick={() => update({ mode: 'blocs', selection: selection?.kind === 'conflict' ? null : selection })}>
+          <button aria-pressed={mode === 'blocs'} onClick={() => update({ mode: 'blocs', month: null, selection: selection?.kind === 'conflict' ? null : selection })}>
             Blocs
           </button>
           <button aria-pressed={mode === 'conflicts'} onClick={() => update({ mode: 'conflicts', selection: selection?.kind === 'bloc' ? null : selection })}>
@@ -504,6 +569,8 @@ export default function App() {
       </header>
 
       <main className="stage" ref={stageRef}>
+        {/* First in DOM order so the first Tab into an embed announces what it is and when it is from. */}
+        {embed && <EmbedBadge href={openHref} logo={<Logo />} month={viewMonth} dataAsof={DATA_ASOF} />}
         <SinceLastVisit onSelectConflict={selectConflict} onSelectBloc={selectBloc} onSelectUnrest={selectUnrest} onOpenChanges={() => update({ selection: { kind: 'changes' } })} />
         <ErrorBoundary>
           <Suspense fallback={<MapSkeleton />}>
@@ -536,6 +603,8 @@ export default function App() {
                 onMarkerClick={onMarkerClick}
                 onHover={onHover}
                 zoomApiRef={zoomApi}
+                gestures={!embed ? 'all' : embedOpts.interactive ? 'cooperative' : 'none'}
+                onGestureBlocked={showGestureHint}
               />
             )}
           </Suspense>
@@ -559,9 +628,13 @@ export default function App() {
           />
         )}
 
-        <Legend mode={mode} bloc={bloc} vs={mode === 'blocs' ? vs : null} overviewSteps={OVERVIEW_STEPS} layer={layer} />
+        {!(embed && embedOpts.legend === 'off') && <Legend mode={mode} bloc={bloc} vs={mode === 'blocs' ? vs : null} overviewSteps={OVERVIEW_STEPS} layer={layer} month={viewMonth} embed={embed} />}
 
-        {mode === 'conflicts' && <Timeline months={TIMELINE_MONTHS} value={month} onChange={(m) => update({ month: m })} />}
+        {mode === 'conflicts' && <Timeline months={TIMELINE_MONTHS} assessed={ASSESSED_MONTHS} value={month} onChange={(m) => update({ month: m })} />}
+
+        {!embed && !brief && <ReplayBanner month={viewMonth} notice={mode === 'conflicts' ? replayNotice : null} onLive={() => update({ month: null })} onDismissNotice={dismissReplayNotice} />}
+
+        <GestureHint kind={gestureHint} />
 
         <div className="map-controls">
           <LayerMenu options={LAYER_OPTIONS} value={layer} onChange={(l) => update({ layer: l })} />
@@ -604,6 +677,13 @@ export default function App() {
             </svg>
           </button>
           {!embed && (
+            <button className="icon-btn" aria-label="Embed this view" title="Embed this view in another site" onClick={() => setEmbedding(true)}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                <path d="m8 7-5 5 5 5M16 7l5 5-5 5" />
+              </svg>
+            </button>
+          )}
+          {!embed && (
             <button className="icon-btn" aria-label="Start briefing" title="Full-screen briefing" onClick={() => update({ brief: true, selection: null })}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" />
@@ -612,12 +692,6 @@ export default function App() {
           )}
         </div>
 
-        {embed && (
-          <a className="embed-badge" href={serialize({ ...state, embed: false })} target="_blank" rel="noopener noreferrer" aria-label="Open this view in ATLAS">
-            <Logo />
-            ATLAS ↗
-          </a>
-        )}
 
         {brief && <Briefing items={briefItems} onShow={onBriefShow} onOpen={onBriefOpen} onExit={exitBrief} />}
 
@@ -629,6 +703,8 @@ export default function App() {
             {hoverDetail && <div className="sub">{hoverDetail}</div>}
           </div>
         )}
+
+        {embedding && <EmbedDialog state={state} title={viewTitle} onClose={() => setEmbedding(false)} />}
 
         {selection && (
           <ErrorBoundary>
@@ -654,5 +730,6 @@ export default function App() {
         )}
       </main>
     </div>
+    </EmbedContext.Provider>
   );
 }

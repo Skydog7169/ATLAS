@@ -33,7 +33,21 @@ export interface AppState {
   brief: boolean;
   /** Chrome-less view for iframes. */
   embed: boolean;
+  /** Host options for an embed; only serialised when `embed` is set. */
+  embedOpts: EmbedOptions;
 }
+
+export interface EmbedOptions {
+  /** Legend: shown as the frame size allows, or left off for a bare map. */
+  legend: 'auto' | 'off';
+  /** False freezes pan and zoom; clicks still answer "what is this?". */
+  interactive: boolean;
+  theme: 'auto' | 'dark' | 'light';
+}
+
+export const DEFAULT_EMBED_OPTS: EmbedOptions = { legend: 'auto', interactive: true, theme: 'auto' };
+const EMBED_LEGENDS: readonly EmbedOptions['legend'][] = ['auto', 'off'];
+const EMBED_THEMES: readonly EmbedOptions['theme'][] = ['auto', 'dark', 'light'];
 
 export type View = 'flat' | 'globe';
 export const DEFAULT_ROTATION: [number, number] = [15, 20];
@@ -41,7 +55,7 @@ export const DEFAULT_ROTATION: [number, number] = [15, 20];
 export const LAYERS = ['displacement', 'sanctions', 'elections', 'nuclear', 'acled', 'acled-unrest', 'ucdp', 'military', 'trade', 'chokepoints', 'unrest'] as const;
 export type Layer = (typeof LAYERS)[number] | null;
 
-export const DEFAULT_STATE: AppState = { mode: 'blocs', bloc: null, vs: null, selection: null, month: null, layer: null, view: 'flat', rotation: DEFAULT_ROTATION, brief: false, embed: false };
+export const DEFAULT_STATE: AppState = { mode: 'blocs', bloc: null, vs: null, selection: null, month: null, layer: null, view: 'flat', rotation: DEFAULT_ROTATION, brief: false, embed: false, embedOpts: DEFAULT_EMBED_OPTS };
 
 const MONTH = /^\d{4}-(0[1-9]|1[0-2])$/;
 
@@ -58,7 +72,13 @@ export function serialize(state: AppState): string {
     if (state.rotation[0] !== DEFAULT_ROTATION[0] || state.rotation[1] !== DEFAULT_ROTATION[1]) p.set('rot', `${state.rotation[0]},${state.rotation[1]}`);
   }
   if (state.brief) p.set('brief', '1');
-  if (state.embed) p.set('embed', '1');
+  if (state.embed) {
+    p.set('embed', '1');
+    const o = state.embedOpts;
+    if (o.legend !== 'auto') p.set('legend', o.legend);
+    if (!o.interactive) p.set('interactive', '0');
+    if (o.theme !== 'auto') p.set('theme', o.theme);
+  }
   if (state.selection) {
     if (state.selection.kind === 'country') p.set('country', state.selection.iso);
     else if (state.selection.kind === 'changes') p.set('changes', '1');
@@ -74,7 +94,7 @@ export function serialize(state: AppState): string {
   return '#' + p.toString();
 }
 
-export function parse(hash: string, isValid: { bloc: (id: string) => boolean; conflict: (id: string) => boolean; country: (iso: string) => boolean; chokepoint?: (id: string) => boolean; unrest?: (id: string) => boolean }): AppState {
+export function parse(hash: string, isValid: { bloc: (id: string) => boolean; conflict: (id: string) => boolean; country: (iso: string) => boolean; chokepoint?: (id: string) => boolean; unrest?: (id: string) => boolean; month?: (m: string) => string | null }): AppState {
   const p = new URLSearchParams(hash.replace(/^#/, ''));
   const mode: Mode = p.get('mode') === 'conflicts' ? 'conflicts' : 'blocs';
   const blocParam = p.get('bloc');
@@ -83,7 +103,8 @@ export function parse(hash: string, isValid: { bloc: (id: string) => boolean; co
   const vs = bloc && vsParam && vsParam !== bloc && isValid.bloc(vsParam) ? vsParam : null;
 
   const t = p.get('t');
-  const month = t && MONTH.test(t) ? t : null;
+  // The month validator clamps to the replay range: before it snaps to the first stop, the live month or later is live.
+  const month = t && MONTH.test(t) ? (isValid.month ? isValid.month(t) : t) : null;
   const layerParam = p.get('layer');
   const layer: Layer = (LAYERS as readonly string[]).includes(layerParam ?? '') ? (layerParam as Layer) : null;
 
@@ -110,7 +131,13 @@ export function parse(hash: string, isValid: { bloc: (id: string) => boolean; co
 
   const view: View = p.get('view') === 'globe' ? 'globe' : 'flat';
   const rotation = parseRotation(p.get('rot'));
-  return { mode, bloc, vs, selection, month, layer, view, rotation, brief: p.get('brief') === '1', embed: p.get('embed') === '1' };
+  const embed = p.get('embed') === '1';
+  const legendParam = p.get('legend') as EmbedOptions['legend'];
+  const themeParam = p.get('theme') as EmbedOptions['theme'];
+  const embedOpts: EmbedOptions = embed
+    ? { legend: EMBED_LEGENDS.includes(legendParam) ? legendParam : 'auto', interactive: p.get('interactive') !== '0', theme: EMBED_THEMES.includes(themeParam) ? themeParam : 'auto' }
+    : DEFAULT_EMBED_OPTS;
+  return { mode, bloc, vs, selection, month, layer, view, rotation, brief: p.get('brief') === '1', embed, embedOpts };
 }
 
 export function parseRotation(raw: string | null): [number, number] {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { inlineStyles, readLegend } from './exportPng';
+import { exportMeta, inlineStyles, readLegend } from './exportPng';
 
 describe('exportPng helpers', () => {
   it('reads the on-screen legend into rows with swatch colours', () => {
@@ -44,5 +44,25 @@ describe('exportPng helpers', () => {
     // The source is untouched.
     expect(svg.getAttribute('tabindex')).toBe('0');
     svg.remove();
+  });
+});
+
+describe('exportMeta', () => {
+  const base = { mode: 'conflicts' as const, layer: null, layerLabel: null, month: null, bloc: null, vs: null, dataAsof: '2026-10', today: '2026-10-20' };
+  it('titles a replay with its month and stamps the assessment date', () => {
+    const m = exportMeta({ ...base, month: '2026-03' });
+    expect(m.title).toMatch(/^ATLAS · Conflicts · Replay Mar(ch)? 2026$/);
+    expect(m.stamp).toMatch(/^Assessments as of Mar(ch)? 2026 · data Oct(ober)? 2026 · exported/);
+    expect(m.filename).toBe('atlas-conflicts-2026-03-exported-2026-10-20.png');
+  });
+  it('names the live view from app state, not the legend', () => {
+    expect(exportMeta(base)).toMatchObject({ title: 'ATLAS · Conflicts', filename: 'atlas-conflicts-2026-10-20.png' });
+    expect(exportMeta(base).stamp).toMatch(/^Data Oct(ober)? 2026 · exported/);
+    expect(exportMeta({ ...base, mode: 'blocs', bloc: 'NATO', vs: 'EU' }).title).toBe('ATLAS · NATO vs EU');
+    expect(exportMeta({ ...base, mode: 'blocs' }).title).toBe('ATLAS · Bloc overview');
+    expect(exportMeta({ ...base, layer: 'sanctions', layerLabel: 'Sanctions' })).toMatchObject({ title: 'ATLAS · Sanctions layer · Conflicts', filename: 'atlas-sanctions-2026-10-20.png' });
+  });
+  it('ignores a stray month outside conflicts mode', () => {
+    expect(exportMeta({ ...base, mode: 'blocs', month: '2026-03' }).title).toBe('ATLAS · Bloc overview');
   });
 });

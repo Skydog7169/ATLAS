@@ -1,9 +1,47 @@
+import { formatDate, formatMonth } from './labels';
+
 /**
  * Rasterises the live map SVG to a PNG with the legend and a date stamp.
  * Computed styles are inlined because the standalone SVG has no stylesheet
  * and the fills lean on CSS variables and color-mix().
  */
 const STYLE_PROPS = ['fill', 'fill-opacity', 'stroke', 'stroke-width', 'stroke-dasharray', 'opacity', 'font-family', 'font-size', 'letter-spacing', 'paint-order', 'stroke-linejoin'] as const;
+
+export interface ExportView {
+  mode: 'blocs' | 'conflicts';
+  /** Layer id for the filename, and its human label for the title. */
+  layer: string | null;
+  layerLabel: string | null;
+  /** Conflicts replay month, or null when live. */
+  month: string | null;
+  bloc: string | null;
+  vs: string | null;
+  /** Newest data month, YYYY-MM. */
+  dataAsof: string;
+  /** Export date, YYYY-MM-DD. */
+  today: string;
+}
+
+/**
+ * Title, stamp and filename built from app state rather than the legend, so
+ * a replayed map always says which month it shows.
+ */
+export function exportMeta(v: ExportView): { title: string; stamp: string; filename: string } {
+  const parts = ['ATLAS'];
+  if (v.layerLabel) parts.push(`${v.layerLabel} layer`);
+  if (v.mode === 'conflicts') parts.push('Conflicts');
+  else if (v.bloc && v.vs) parts.push(`${v.bloc} vs ${v.vs}`);
+  else parts.push(v.bloc ?? 'Bloc overview');
+  const month = v.mode === 'conflicts' ? v.month : null;
+  if (month) parts.push(`Replay ${formatMonth(month)}`);
+  const site = 'atlas-geopolitic.vercel.app';
+  const stamp = month
+    ? `Assessments as of ${formatMonth(month)} · data ${formatMonth(v.dataAsof)} · exported ${formatDate(v.today)} · ${site}`
+    : `Data ${formatMonth(v.dataAsof)} · exported ${formatDate(v.today)} · ${site}`;
+  const base = v.layer ?? v.mode;
+  const filename = month ? `atlas-${base}-${month}-exported-${v.today}.png` : `atlas-${base}-${v.today}.png`;
+  return { title: parts.join(' · '), stamp, filename };
+}
 
 export interface LegendRow {
   color: string;

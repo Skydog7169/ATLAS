@@ -7,6 +7,7 @@ import { zoom as d3zoom, zoomIdentity, type ZoomBehavior, type ZoomTransform } f
 import 'd3-transition';
 import { COUNTRY_FEATURES, MICROSTATES, drawnIsos, loadDetailedFeatures, type CountryFeature } from '../lib/geo';
 import { COUNTRY_BY_ISO } from '../lib/countries';
+import { gestureFilter, type Gestures } from '../lib/gestures';
 
 export interface MapMarker {
   id: string;
@@ -17,7 +18,12 @@ export interface MapMarker {
   pulse?: boolean;
   /** Diamonds mark chokepoints so they read apart from round conflict markers. */
   shape?: 'circle' | 'diamond' | 'triangle';
+  /** Replay: the assessment is carried forward from an earlier month, so the marker is drawn desaturated. */
+  stale?: boolean;
+  /** Replay: the conflict was under way but not yet tracked, so the marker is a hollow outline. */
+  ghost?: boolean;
 }
+
 
 export type Focus =
   | { kind: 'country'; iso: string }
@@ -48,6 +54,9 @@ interface Props {
   onMarkerClick: (id: string) => void;
   onHover: (hover: { label: string; sub?: string; iso?: string | null } | null, x: number, y: number) => void;
   zoomApiRef?: RefObject<{ zoomIn: () => void; zoomOut: () => void; reset: () => void } | null>;
+  gestures?: Gestures;
+  /** Called when a cooperative embed lets a gesture through to the page, so the app can say how to move the map. */
+  onGestureBlocked?: (kind: 'wheel' | 'touch') => void;
 }
 
 const PAD = 8;
@@ -134,6 +143,8 @@ export default function WorldMap({
   onMarkerClick,
   onHover,
   zoomApiRef,
+  gestures = 'all',
+  onGestureBlocked,
 }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -143,6 +154,8 @@ export default function WorldMap({
   const [transform, setTransform] = useState<ZoomTransform>(zoomIdentity);
   const onHoverRef = useRef(onHover);
   onHoverRef.current = onHover;
+  const onBlockedRef = useRef(onGestureBlocked);
+  onBlockedRef.current = onGestureBlocked;
   const [detail, setDetail] = useState<CountryFeature[] | null>(null);
   const loadingDetail = useRef(false);
   const features = detail ?? COUNTRY_FEATURES;
@@ -215,6 +228,7 @@ export default function WorldMap({
       [width, height],
     ];
     const behaviour = d3zoom<SVGSVGElement, unknown>()
+      .filter(gestureFilter(gestures, (kind) => onBlockedRef.current?.(kind)))
       .scaleExtent([MIN_SCALE, MAX_SCALE])
       .translateExtent([
         [Math.min(0, bx0 - PAD), Math.min(0, by0 - PAD)],
@@ -231,11 +245,16 @@ export default function WorldMap({
     sel.call(behaviour).on('dblclick.zoom', null);
     behaviour.transform(sel, initialRef.current);
     zoomRef.current = behaviour;
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 1) onBlockedRef.current?.('touch');
+    };
+    if (gestures === 'cooperative') svg.addEventListener('touchmove', onTouchMove, { passive: true });
     return () => {
+      svg.removeEventListener('touchmove', onTouchMove);
       sel.on('.zoom', null);
       zoomRef.current = null;
     };
-  }, [width, height, sphereBounds]);
+  }, [width, height, sphereBounds, gestures]);
 
   // Expose simple controls to the parent.
   useEffect(() => {
@@ -381,14 +400,18 @@ export default function WorldMap({
               const [x, y] = transform.apply(p);
               const r = mk.radius * (0.6 + 0.4 * scaleAdjust);
               const selected = mk.id === selectedMarkerId;
+              // Markers panned out of the frame keep out of the tab order.
+              const onScreen = x >= 0 && x <= width && y >= 0 && y <= height;
               return (
                 <g
                   key={mk.id}
                   className={'marker' + (mk.pulse ? ' pulse' : '') + (mk.shape && mk.shape !== 'circle' ? ' ' + mk.shape : '')}
                   data-selected={selected}
                   data-shape={mk.shape ?? 'circle'}
+                  data-stale={mk.stale || undefined}
+                  data-ghost={mk.ghost || undefined}
                   transform={`translate(${x},${y})`}
-                  tabIndex={0}
+                  tabIndex={onScreen ? 0 : -1}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();

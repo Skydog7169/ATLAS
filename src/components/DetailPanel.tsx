@@ -27,6 +27,8 @@ import { relationship, relationshipSummary } from '../lib/relationship';
 import { blocTrend, trendComplete } from '../lib/trends';
 import { WB_HISTORY } from '../lib/worldbankHistory';
 import { search } from '../lib/search';
+import { useEmbed } from '../lib/embedContext';
+import { replayBadge } from '../lib/timeline';
 import TrendChart from './TrendChart';
 import AskPanel, { ASK_ENABLED } from './AskPanel';
 
@@ -58,23 +60,37 @@ function CloseButton({ onClick }: { onClick: () => void }) {
   );
 }
 
+/** Copies the full-app link (never the chrome-less embed URL); offers the embed snippet next to it. */
 function ShareButton() {
+  const { shareUrl, onEmbed } = useEmbed();
   const [copied, setCopied] = useState(false);
+  const [fallback, setFallback] = useState<string | null>(null);
   return (
-    <button
-      className="text-btn"
-      onClick={async () => {
-        try {
-          await navigator.clipboard.writeText(window.location.href);
-          setCopied(true);
-          setTimeout(() => setCopied(false), 1500);
-        } catch {
-          /* clipboard unavailable: the URL bar already holds the link */
-        }
-      }}
-    >
-      {copied ? 'Link copied' : 'Copy link'}
-    </button>
+    <>
+      <button
+        className="text-btn"
+        onClick={async () => {
+          const url = shareUrl();
+          try {
+            await navigator.clipboard.writeText(url);
+            setFallback(null);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1500);
+          } catch {
+            // Clipboard blocked (common in third-party frames): show the link to copy by hand.
+            setFallback(url);
+          }
+        }}
+      >
+        {copied ? 'Link copied' : 'Copy link'}
+      </button>
+      {onEmbed && (
+        <button className="text-btn" onClick={onEmbed}>
+          Embed
+        </button>
+      )}
+      {fallback && <input className="share-fallback" readOnly value={fallback} aria-label="Link to this view" autoFocus onFocus={(e) => e.currentTarget.select()} />}
+    </>
   );
 }
 
@@ -651,7 +667,7 @@ function ConflictView({ conflict, props }: { conflict: Conflict; props: Props })
             <span className="dot" /> {INTENSITY_LABEL[(shown ?? conflict).intensity]}
           </span>
           <span className="badge muted">Since {conflict.since}</span>
-          {replay && props.month && <span className="badge muted">As of {formatMonth(props.month)}</span>}
+          {replay && props.month && <span className="badge muted replay-badge">{replayBadge(conflict, props.month)}</span>}
         </div>
         <h4>Parties</h4>
         <ul style={{ margin: '0 0 8px', paddingLeft: 18 }}>
@@ -714,7 +730,7 @@ function ConflictView({ conflict, props }: { conflict: Conflict; props: Props })
           </ol>
         )}
         <h4>Assessments</h4>
-        {replay && !shown && <p style={{ color: 'var(--fg-muted)' }}>No assessment on record for {props.month ? formatMonth(props.month) : ''}.</p>}
+        {replay && !shown && <p style={{ color: 'var(--fg-muted)' }}>No assessment on record for {props.month ? formatMonth(props.month) : ''}{conflict.since <= Number(props.month?.slice(0, 4)) ? `; the current phase began in ${conflict.since}, before ATLAS tracked it` : ''}.</p>}
         <HistoryList history={conflict.history} highlight={shown} />
         <h4>Countries</h4>
         <div className="badges">
@@ -1123,7 +1139,7 @@ function AboutView({ props }: { props: Props }) {
         </p>
         <h4>Globe, briefing, embed and export</h4>
         <p>
-          The globe button in the map controls switches to an orthographic globe you can spin by dragging (it keeps turning briefly when released) and the centre travels in the link. The briefing button goes full screen, hides the chrome and cycles through the live high-intensity conflicts and your watchlist, nine seconds each; Space pauses, arrows step, Escape exits. Add <span className="mono">embed=1</span> to any link to get a chrome-less view for an iframe, and the download button saves the map you are looking at as a PNG with its legend and a date stamp.
+          The globe button in the map controls switches to an orthographic globe you can spin by dragging (it keeps turning briefly when released) and the centre travels in the link. The briefing button goes full screen, hides the chrome and cycles through the live high-intensity conflicts and your watchlist, nine seconds each; Space pauses, arrows step, Escape exits. The Embed button next to Copy link (and in the map controls) builds an iframe snippet for the current view, with a preview and options for the legend, interaction, theme and a frozen replay month; embeds carry their data date in the badge. The download button saves the map you are looking at as a PNG with its legend and a date stamp.
         </p>
         <h4>Analysis</h4>
         <p>
