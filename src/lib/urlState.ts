@@ -35,6 +35,8 @@ export interface AppState {
   embed: boolean;
   /** Host options for an embed; only serialised when `embed` is set. */
   embedOpts: EmbedOptions;
+  /** Embeds only: the theme the host pinned (dark when absent). Kept in the link so a reload keeps it. */
+  theme?: 'light' | 'auto';
 }
 
 export interface EmbedOptions {
@@ -42,12 +44,10 @@ export interface EmbedOptions {
   legend: 'auto' | 'off';
   /** False freezes pan and zoom; clicks still answer "what is this?". */
   interactive: boolean;
-  theme: 'auto' | 'dark' | 'light';
 }
 
-export const DEFAULT_EMBED_OPTS: EmbedOptions = { legend: 'auto', interactive: true, theme: 'auto' };
+export const DEFAULT_EMBED_OPTS: EmbedOptions = { legend: 'auto', interactive: true };
 const EMBED_LEGENDS: readonly EmbedOptions['legend'][] = ['auto', 'off'];
-const EMBED_THEMES: readonly EmbedOptions['theme'][] = ['auto', 'dark', 'light'];
 
 export type View = 'flat' | 'globe';
 export const DEFAULT_ROTATION: [number, number] = [15, 20];
@@ -77,7 +77,7 @@ export function serialize(state: AppState): string {
     const o = state.embedOpts;
     if (o.legend !== 'auto') p.set('legend', o.legend);
     if (!o.interactive) p.set('interactive', '0');
-    if (o.theme !== 'auto') p.set('theme', o.theme);
+    if (state.theme) p.set('theme', state.theme);
   }
   if (state.selection) {
     if (state.selection.kind === 'country') p.set('country', state.selection.iso);
@@ -92,6 +92,11 @@ export function serialize(state: AppState): string {
     else p.set(state.selection.kind, state.selection.id);
   }
   return '#' + p.toString();
+}
+
+function embedThemeOf(p: URLSearchParams): Pick<AppState, 'theme'> {
+  const t = p.get('theme');
+  return p.get('embed') === '1' && (t === 'light' || t === 'auto') ? { theme: t } : {};
 }
 
 export function parse(hash: string, isValid: { bloc: (id: string) => boolean; conflict: (id: string) => boolean; country: (iso: string) => boolean; chokepoint?: (id: string) => boolean; unrest?: (id: string) => boolean; month?: (m: string) => string | null }): AppState {
@@ -133,11 +138,8 @@ export function parse(hash: string, isValid: { bloc: (id: string) => boolean; co
   const rotation = parseRotation(p.get('rot'));
   const embed = p.get('embed') === '1';
   const legendParam = p.get('legend') as EmbedOptions['legend'];
-  const themeParam = p.get('theme') as EmbedOptions['theme'];
-  const embedOpts: EmbedOptions = embed
-    ? { legend: EMBED_LEGENDS.includes(legendParam) ? legendParam : 'auto', interactive: p.get('interactive') !== '0', theme: EMBED_THEMES.includes(themeParam) ? themeParam : 'auto' }
-    : DEFAULT_EMBED_OPTS;
-  return { mode, bloc, vs, selection, month, layer, view, rotation, brief: p.get('brief') === '1', embed, embedOpts };
+  const embedOpts: EmbedOptions = embed ? { legend: EMBED_LEGENDS.includes(legendParam) ? legendParam : 'auto', interactive: p.get('interactive') !== '0' } : DEFAULT_EMBED_OPTS;
+  return { mode, bloc, vs, selection, month, layer, view, rotation, brief: p.get('brief') === '1', embed, embedOpts, ...embedThemeOf(p) };
 }
 
 export function parseRotation(raw: string | null): [number, number] {

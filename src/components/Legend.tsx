@@ -1,6 +1,7 @@
 import { Children, cloneElement, type ReactElement, type ReactNode } from 'react';
 import { BLOC_BY_ID } from '../data/blocs';
-import { INTENSITY_COLOR, INTENSITY_LABEL } from '../lib/labels';
+import { INTENSITY_COLOR, INTENSITY_LABEL, conflictFill } from '../lib/labels';
+import { FAINT_FILL, NO_DATA_SWATCH, hatchSwatch } from '../lib/palette';
 import type { Intensity } from '../data/types';
 import type { Layer, Mode } from '../lib/urlState';
 import { DISPLACEMENT, DISPLACEMENT_COLORS, binLabel } from '../lib/displacement';
@@ -8,14 +9,15 @@ import { formatDate, formatMonth } from '../lib/labels';
 import { layerAsOf } from '../lib/layerAsOf';
 import { SANCTIONS, SANCTIONS_COLORS, sanctionsBinLabel } from '../lib/sanctions';
 import { ELECTIONS, ELECTIONS_VERIFIED, ELECTION_COLORS, electionBinLabel } from '../lib/elections';
-import { NUCLEAR, NUCLEAR_COLOR, NUCLEAR_STATUSES, NUCLEAR_STATUS_LABEL, nuclearCount } from '../lib/nuclear';
+import { NUCLEAR, NUCLEAR_COLOR, NUCLEAR_HATCHED, NUCLEAR_STATUSES, NUCLEAR_STATUS_LABEL, nuclearCount } from '../lib/nuclear';
 import { ACLED, ACLED_COLORS, ACLED_UNREST_COLORS, acledBinLabel, acledNote } from '../lib/acled';
 import { UCDP, UCDP_COLORS, ucdpBinLabel, ucdpNote } from '../lib/ucdp';
 import { MILITARY, MILITARY_COLORS, militaryBinLabel } from '../lib/military';
-import { TRADE, TRADE_COLOR, TRADE_PARTNERS, TRADE_PARTNER_LABEL } from '../lib/trade';
-import { CHOKEPOINTS_FILE, CHOKEPOINT_COLOR, CHOKEPOINT_STATUSES, CHOKEPOINT_STATUS_LABEL } from '../lib/chokepoints';
+import { TRADE, TRADE_BAND_LABEL, TRADE_PARTNERS, TRADE_PARTNER_LABEL, tradeMix } from '../lib/trade';
+import { CHOKEPOINTS_FILE, CHOKEPOINT_COLOR, CHOKEPOINT_GLYPH, CHOKEPOINT_STATUSES, CHOKEPOINT_STATUS_LABEL } from '../lib/chokepoints';
 import { UNREST } from '../data/unrest';
 import { UNREST_COLOR, UNREST_VERIFIED } from '../lib/unrest';
+import { unrestFillColor } from '../lib/palette';
 
 interface Props {
   mode: Mode;
@@ -30,6 +32,16 @@ interface Props {
 }
 
 const INTENSITIES: Intensity[] = ['high', 'medium', 'low', 'latent'];
+
+/** The "No data" row every quantitative legend whose source can lack a country carries. */
+function NoDataRow() {
+  return (
+    <li>
+      <span className="swatch" style={{ backgroundColor: 'var(--land)', backgroundImage: NO_DATA_SWATCH }} />
+      No data
+    </li>
+  );
+}
 
 /**
  * During replay a data layer still shows current data while the markers move
@@ -51,8 +63,8 @@ export default function Legend(props: Props) {
 function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed = false }: Props) {
   if (layer === 'displacement') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Forcibly displaced</h3>
+      <aside className="legend" aria-label="Legend">
+        <h2 className="legend-title">Forcibly displaced</h2>
         <ul>
           {DISPLACEMENT_COLORS.map((color, i) => (
             <li key={i}>
@@ -61,9 +73,10 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
             </li>
           ))}
           <li>
-            <span className="swatch" style={{ background: `repeating-linear-gradient(45deg, ${DISPLACEMENT_COLORS[4]} 0 3px, transparent 3px 6px)` }} />
+            <span className="swatch" style={hatchSwatch(DISPLACEMENT_COLORS[4]!)} />
             Known source gap (non-UNHCR figures)
           </li>
+          <NoDataRow />
         </ul>
         <div className="note">
           People displaced from each country: refugees, asylum seekers, IDPs and others in need of protection. UNHCR figures exclude Palestine refugees under UNRWA's mandate; Palestine adds UNRWA's register and is hatched. Kosovo is counted with Serbia.{' '}
@@ -78,8 +91,8 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
   }
   if (layer === 'military') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Foreign military presence</h3>
+      <aside className="legend" aria-label="Legend">
+        <h2 className="legend-title">Foreign military presence</h2>
         <ul>
           {MILITARY_COLORS.map((color, i) => (
             <li key={i}>
@@ -105,22 +118,45 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
   }
   if (layer === 'trade') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Export dependence</h3>
+      <aside className="legend" aria-label="Legend">
+        <h2 className="legend-title">Export dependence</h2>
+        <table className="trade-key">
+          <thead>
+            <tr>
+              <th scope="col">Largest of</th>
+              {TRADE_BAND_LABEL.map((b) => (
+                <th key={b} scope="col">
+                  {b}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {TRADE_PARTNERS.map((p) => (
+              <tr key={p}>
+                <th scope="row">{p === 'eu' ? 'EU' : p === 'us' ? 'US' : 'China'}</th>
+                {([0, 1, 2] as const).map((band) => (
+                  <td key={band}>
+                    <span className="swatch" style={{ background: tradeMix(p, band) }} title={`${TRADE_PARTNER_LABEL[p]}, ${TRADE_BAND_LABEL[band]} of exports`} />
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
         <ul>
-          {TRADE_PARTNERS.map((p) => (
-            <li key={p}>
-              <span className="swatch" style={{ background: TRADE_COLOR[p] }} />
-              Mostly to {TRADE_PARTNER_LABEL[p]}
-            </li>
-          ))}
           <li>
-            <span className="swatch" style={{ background: 'var(--land-dim)' }} />
+            <span className="swatch" style={{ background: `repeating-linear-gradient(45deg, ${tradeMix('us', 1)} 0 4px, ${tradeMix('china', 1)} 4px 8px)` }} />
+            Near tie (within 2 points)
+          </li>
+          <li>
+            <span className="swatch" style={{ background: FAINT_FILL }} />
             None above 10%
           </li>
+          <NoDataRow />
         </ul>
         <div className="note">
-          Hue is the largest of the three export destinations; a stronger tint means a larger share (60% of exports and up reads as full colour).{' '}
+          Hue is the largest export share among the US, China and the EU; depth is the share band. EU members are tinted by the US and China only, since most of their EU share is the single market.{' '}
           <a href={TRADE.source.url} target="_blank" rel="noopener noreferrer">
             {TRADE.source.name}
           </a>
@@ -131,12 +167,12 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
   }
   if (layer === 'chokepoints') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Maritime chokepoints</h3>
+      <aside className="legend" aria-label="Legend">
+        <h2 className="legend-title">Maritime chokepoints</h2>
         <ul>
           {CHOKEPOINT_STATUSES.map((st) => (
             <li key={st}>
-              <span className="swatch diamond" style={{ background: CHOKEPOINT_COLOR[st] }} />
+              <span className={'swatch diamond glyph-' + CHOKEPOINT_GLYPH[st]} style={{ ['--glyph-color' as string]: CHOKEPOINT_COLOR[st], background: CHOKEPOINT_COLOR[st] }} />
               {CHOKEPOINT_STATUS_LABEL[st]}
             </li>
           ))}
@@ -149,12 +185,13 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
   }
   if (layer === 'unrest') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Civil unrest · {UNREST.length}</h3>
+      <aside className="legend" aria-label="Legend">
+        <h2 className="legend-title">Civil unrest · {UNREST.length}</h2>
         <ul>
           {INTENSITIES.map((i) => (
             <li key={i}>
               <span className="swatch triangle" style={{ background: UNREST_COLOR[i] }} />
+              <span className="swatch" style={{ background: unrestFillColor(i) }} aria-hidden="true" />
               {INTENSITY_LABEL[i]}
             </li>
           ))}
@@ -167,8 +204,8 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
   }
   if (layer === 'acled') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Political violence</h3>
+      <aside className="legend" aria-label="Legend">
+        <h2 className="legend-title">Political violence</h2>
         <ul>
           {ACLED_COLORS.map((color, i) => (
             <li key={i}>
@@ -189,8 +226,8 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
   }
   if (layer === 'acled-unrest') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Protests and riots</h3>
+      <aside className="legend" aria-label="Legend">
+        <h2 className="legend-title">Protests and riots</h2>
         <ul>
           {ACLED_UNREST_COLORS.map((color, i) => (
             <li key={i}>
@@ -211,8 +248,8 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
   }
   if (layer === 'ucdp') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Organised violence</h3>
+      <aside className="legend" aria-label="Legend">
+        <h2 className="legend-title">Organised violence</h2>
         <ul>
           {UCDP_COLORS.map((color, i) => (
             <li key={i}>
@@ -233,8 +270,8 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
   }
   if (layer === 'sanctions') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Sanctions regimes</h3>
+      <aside className="legend" aria-label="Legend">
+        <h2 className="legend-title">Sanctions regimes</h2>
         <ul>
           {SANCTIONS_COLORS.map((color, i) => (
             <li key={i}>
@@ -264,8 +301,8 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
   }
   if (layer === 'elections') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Next national election</h3>
+      <aside className="legend" aria-label="Legend">
+        <h2 className="legend-title">Next national election</h2>
         <ul>
           {[4, 3, 2, 1, 0].map((i) => (
             <li key={i}>
@@ -273,6 +310,7 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
               {electionBinLabel(i)}
             </li>
           ))}
+          <NoDataRow />
         </ul>
         <div className="note">
           Next presidential or legislative vote per country. Seeded from{' '}
@@ -286,12 +324,12 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
   }
   if (layer === 'nuclear') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Nuclear status</h3>
+      <aside className="legend" aria-label="Legend">
+        <h2 className="legend-title">Nuclear status</h2>
         <ul>
           {NUCLEAR_STATUSES.map((st) => (
             <li key={st}>
-              <span className="swatch" style={{ background: NUCLEAR_COLOR[st] }} />
+              <span className="swatch" style={NUCLEAR_HATCHED.has(st) ? hatchSwatch(NUCLEAR_COLOR[st]) : { background: NUCLEAR_COLOR[st] }} />
               {NUCLEAR_STATUS_LABEL[st]} · {nuclearCount(st)}
             </li>
           ))}
@@ -313,12 +351,13 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
   }
   if (mode === 'conflicts') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Conflict intensity{month ? ` · ${formatMonth(month)}` : ''}</h3>
+      <aside className="legend" aria-label="Legend">
+        <h2 className="legend-title">Conflict intensity{month ? ` · ${formatMonth(month)}` : ''}</h2>
         <ul>
           {INTENSITIES.map((i) => (
             <li key={i}>
               <span className="swatch circle" style={{ background: INTENSITY_COLOR[i] }} />
+              <span className="swatch" style={{ background: conflictFill(i) }} aria-hidden="true" />
               {INTENSITY_LABEL[i]}
             </li>
           ))}
@@ -339,7 +378,7 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
             </>
           )}
         </ul>
-        <div className="note">Countries are filled by the most intense conflict fought on their territory. A dashed outline marks a state whose forces fight only abroad. Marker size follows intensity.</div>
+        <div className="note">Markers (circles) and territory (squares): countries are filled by the most intense conflict fought on their territory, deeper for more intense. A dashed outline marks a state whose forces fight only abroad. Marker size follows intensity.</div>
       </aside>
     );
   }
@@ -352,16 +391,16 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
     let both = 0;
     for (const iso of setA) if (setB.has(iso)) both += 1;
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>
+      <aside className="legend" aria-label="Legend">
+        <h2 className="legend-title">
           {b.shortName} vs {v.shortName}
-        </h3>
+        </h2>
         <ul>
           <li>
             <span className="swatch" style={{ background: b.color }} /> {b.shortName} only · {setA.size - both}
           </li>
           <li>
-            <span className="swatch" style={{ background: v.color }} /> {v.shortName} only · {setB.size - both}
+            <span className="swatch" style={hatchSwatch(v.color)} /> {v.shortName} only · {setB.size - both}
           </li>
           <li>
             <span className="swatch" style={{ background: `repeating-linear-gradient(45deg, ${b.color} 0 4px, ${v.color} 4px 8px)` }} /> Both · {both}
@@ -374,8 +413,8 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
   if (b) {
     const statuses = new Set(b.members.map((m) => m.status));
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>{b.shortName}</h3>
+      <aside className="legend" aria-label="Legend">
+        <h2 className="legend-title">{b.shortName}</h2>
         <ul>
           <li>
             <span className="swatch" style={{ background: b.color }} /> Member
@@ -396,8 +435,8 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
   }
 
   return (
-    <aside className="legend frame" aria-label="Legend">
-      <h3>Bloc memberships</h3>
+    <aside className="legend" aria-label="Legend">
+      <h2 className="legend-title">Bloc memberships</h2>
       <ul>
         {overviewSteps.map((color, i) => (
           <li key={i}>

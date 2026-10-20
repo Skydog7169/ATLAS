@@ -16,6 +16,7 @@ export default function EmbedDialog({ state, title, onClose }: Props) {
   const id = useId();
   const [preset, setPreset] = useState(1);
   const [opts, setOpts] = useState<EmbedOptions>(DEFAULT_EMBED_OPTS);
+  const [theme, setTheme] = useState<'dark' | 'light' | 'auto'>('dark');
   const [freeze, setFreeze] = useState(state.month !== null);
   const [copied, setCopied] = useState<'ok' | 'failed' | null>(null);
 
@@ -25,7 +26,7 @@ export default function EmbedDialog({ state, title, onClose }: Props) {
   }, []);
 
   const size = EMBED_PRESETS[preset] ?? EMBED_PRESETS[1]!;
-  const src = useMemo(() => embedUrl(state, opts, freeze, window.location.href), [state, opts, freeze]);
+  const src = useMemo(() => embedUrl(state, opts, freeze, window.location.href, theme === 'dark' ? undefined : theme), [state, opts, freeze, theme]);
   const snippet = embedSnippet(src, size.height, title);
 
   const copy = async () => {
@@ -80,9 +81,9 @@ export default function EmbedDialog({ state, title, onClose }: Props) {
           </fieldset>
           <fieldset>
             <legend>Theme</legend>
-            {(['auto', 'dark', 'light'] as const).map((v) => (
+            {(['dark', 'light', 'auto'] as const).map((v) => (
               <label key={v}>
-                <input type="radio" name={`${id}-theme`} checked={opts.theme === v} onChange={() => setOpts({ ...opts, theme: v })} /> {v === 'auto' ? 'Reader’s system' : v === 'dark' ? 'Dark' : 'Light'}
+                <input type="radio" name={`${id}-theme`} checked={theme === v} onChange={() => setTheme(v)} /> {v === 'auto' ? 'Reader’s system' : v === 'dark' ? 'Dark' : 'Light'}
               </label>
             ))}
           </fieldset>

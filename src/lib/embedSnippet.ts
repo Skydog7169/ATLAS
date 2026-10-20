@@ -7,10 +7,11 @@ export const EMBED_PRESETS = [
 ] as const;
 
 /** The embed URL for a view: chrome-less, with host options, and pinned to the replay month only when frozen. */
-export function embedUrl(state: AppState, opts: EmbedOptions, freeze: boolean, base: string): string {
+/** `theme` is the embed's pinned theme: dark when absent (the embed default), else light or the reader's system theme. */
+export function embedUrl(state: AppState, opts: EmbedOptions, freeze: boolean, base: string, theme?: AppState['theme']): string {
   const month = freeze && state.mode === 'conflicts' ? state.month : null;
   const url = new URL(base);
-  url.hash = serialize({ ...state, month, brief: false, embed: true, embedOpts: opts });
+  url.hash = serialize({ ...state, month, brief: false, embed: true, embedOpts: opts, theme });
   return url.href;
 }
 

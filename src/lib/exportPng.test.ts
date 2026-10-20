@@ -5,7 +5,7 @@ describe('exportPng helpers', () => {
   it('reads the on-screen legend into rows with swatch colours', () => {
     const root = document.createElement('div');
     root.innerHTML = `
-      <aside class="legend"><h3>Export dependence</h3>
+      <aside class="legend"><h2 class="legend-title">Export dependence</h2>
         <ul>
           <li><span class="swatch" style="background: rgb(79, 140, 255)"></span> United States</li>
           <li><span class="swatch" style="background: rgb(255, 59, 59)"></span> China</li>
@@ -19,6 +19,25 @@ describe('exportPng helpers', () => {
     expect(legend.rows).toEqual([
       { color: 'rgb(79, 140, 255)', label: 'United States' },
       { color: 'rgb(255, 59, 59)', label: 'China' },
+    ]);
+    root.remove();
+  });
+
+  it('reads a two-way key (trade partner × share band) into one row per cell', () => {
+    const root = document.createElement('div');
+    root.innerHTML = `
+      <aside class="legend"><h2 class="legend-title">Export dependence</h2>
+        <table class="trade-key">
+          <thead><tr><th>Largest of</th><th>10–25%</th><th>50%+</th></tr></thead>
+          <tbody><tr><th>US</th><td><span class="swatch" style="background: rgb(1, 2, 3)"></span></td><td><span class="swatch" style="background: rgb(4, 5, 6)"></span></td></tr></tbody>
+        </table>
+        <ul><li><span class="swatch" style="background: rgb(7, 8, 9)"></span> No data</li></ul>
+      </aside>`;
+    document.body.appendChild(root);
+    expect(readLegend(root).rows).toEqual([
+      { color: 'rgb(1, 2, 3)', label: 'US 10–25%' },
+      { color: 'rgb(4, 5, 6)', label: 'US 50%+' },
+      { color: 'rgb(7, 8, 9)', label: 'No data' },
     ]);
     root.remove();
   });

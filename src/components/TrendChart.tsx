@@ -47,12 +47,13 @@ export default function TrendChart({ points, color, series, label, sub }: Props)
       <figcaption id={`${id}-cap`} className="trend-cap">
         <span className="label">{label}</span>
         <span className="trend-now">
+          {fmt(first[series])} →{' '}
           <span title={carriedNote}>
             {fmt(last[series])}
             {lastEstimated ? '*' : ''}
           </span>{' '}
           <span className="trend-sub">
-            in {last.year}
+            {first.year}–{last.year}
             {sub ? ` · ${sub}` : ''}
           </span>
         </span>

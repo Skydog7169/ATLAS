@@ -1,4 +1,5 @@
 import raw from '../data/ucdp.generated.json';
+import { ramp } from './palette';
 import type { DossierExtra } from './dossier';
 import { formatDate } from './labels';
 
@@ -28,7 +29,7 @@ export const UCDP_BY_ISO: ReadonlyMap<string, UcdpRow> = new Map(UCDP.rows.map((
 /** Lower bounds of each bin: best-estimate deaths in the year. */
 export const UCDP_BINS = [0, 1, 25, 100, 1000, 10000] as const;
 /** Wine-to-rose ramp, darker than the conflict reds so the two are not confused. */
-export const UCDP_COLORS = ['var(--land)', '#4a1b26', '#7d2437', '#b33a4e', '#e86a78', '#ffc4c0'] as const;
+export const UCDP_COLORS = ramp('ucdp');
 
 export const UCDP_TYPE_LABEL: Record<'stateBased' | 'nonState' | 'oneSided', string> = {
   stateBased: 'State-based conflict',

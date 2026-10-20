@@ -56,15 +56,16 @@ describe('replay month', () => {
 
 describe('embed host options', () => {
   it('round-trips legend, interaction and theme only when embedded', () => {
-    const hash = serialize({ ...DEFAULT_STATE, embed: true, embedOpts: { legend: 'off', interactive: false, theme: 'light' } });
+    const hash = serialize({ ...DEFAULT_STATE, embed: true, embedOpts: { legend: 'off', interactive: false }, theme: 'light' });
     expect(hash).toContain('legend=off');
     expect(hash).toContain('interactive=0');
     expect(hash).toContain('theme=light');
-    expect(parse(hash, valid).embedOpts).toEqual({ legend: 'off', interactive: false, theme: 'light' });
-    expect(serialize({ ...DEFAULT_STATE, embedOpts: { legend: 'off', interactive: false, theme: 'dark' } })).not.toMatch(/legend|interactive|theme/);
+    expect(parse(hash, valid).embedOpts).toEqual({ legend: 'off', interactive: false });
+    expect(parse(hash, valid).theme).toBe('light');
+    expect(serialize({ ...DEFAULT_STATE, embedOpts: { legend: 'off', interactive: false }, theme: 'light' })).not.toMatch(/legend|interactive|theme/);
   });
   it('falls back to defaults for unknown values and outside embeds', () => {
-    expect(parse('#embed=1&legend=huge&theme=sepia', valid).embedOpts).toEqual(DEFAULT_EMBED_OPTS);
+    expect(parse('#embed=1&legend=huge&interactive=maybe', valid).embedOpts).toEqual(DEFAULT_EMBED_OPTS);
     expect(parse('#legend=off', valid).embedOpts).toEqual(DEFAULT_EMBED_OPTS);
   });
 });

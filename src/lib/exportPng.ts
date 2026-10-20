@@ -84,8 +84,19 @@ export function inlineStyles(source: SVGSVGElement): SVGSVGElement {
 export function readLegend(root: ParentNode): { title: string | null; rows: LegendRow[] } {
   const legend = root.querySelector('.legend');
   if (!legend) return { title: null, rows: [] };
-  const title = legend.querySelector('h3')?.textContent?.trim() ?? null;
+  const title = legend.querySelector('.legend-title')?.textContent?.trim() ?? null;
   const rows: LegendRow[] = [];
+  // Two-way keys (trade: partner × share band) become one row per cell.
+  legend.querySelectorAll('table').forEach((table) => {
+    const bands = [...table.querySelectorAll('thead th')].slice(1).map((th) => th.textContent?.trim() ?? '');
+    table.querySelectorAll('tbody tr').forEach((tr) => {
+      const name = tr.querySelector('th')?.textContent?.trim() ?? '';
+      tr.querySelectorAll('td').forEach((td, i) => {
+        const swatch = td.querySelector<HTMLElement>('.swatch');
+        if (swatch) rows.push({ color: getComputedStyle(swatch).backgroundColor, label: `${name} ${bands[i] ?? ''}`.trim() });
+      });
+    });
+  });
   legend.querySelectorAll('li').forEach((li) => {
     const swatch = li.querySelector<HTMLElement>('.swatch');
     const color = swatch ? getComputedStyle(swatch).backgroundColor : 'transparent';

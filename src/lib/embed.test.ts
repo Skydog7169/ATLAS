@@ -29,6 +29,7 @@ describe('embed snippet', () => {
     const frozen = embedUrl(state, { ...DEFAULT_EMBED_OPTS, legend: 'off' }, true, 'https://atlas.test/');
     expect(frozen).toBe('https://atlas.test/#mode=conflicts&t=2026-03&embed=1&legend=off&conflict=sudan');
     expect(embedUrl(state, DEFAULT_EMBED_OPTS, false, 'https://atlas.test/x#old')).toBe('https://atlas.test/x#mode=conflicts&embed=1&conflict=sudan');
+    expect(embedUrl(state, DEFAULT_EMBED_OPTS, false, 'https://atlas.test/', 'light')).toContain('embed=1&theme=light');
   });
   it('writes an escaped, titled iframe', () => {
     expect(embedSnippet('https://atlas.test/#a=1&b=2', 360, 'Sudan "civil" war')).toBe(
