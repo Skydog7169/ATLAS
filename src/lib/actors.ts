@@ -2,7 +2,7 @@ import { CONFLICTS } from '../data/conflicts';
 import type { Actor, Backer, Conflict, SupportKind } from '../data/types';
 import { countryName } from './countries';
 import type { DossierExtra } from './dossier';
-import { INTENSITY_LABEL, formatMonth } from './labels';
+import { formatMonth } from './labels';
 
 export const SUPPORT_LABEL: Record<SupportKind, string> = {
   troops: 'Troops',
@@ -75,7 +75,7 @@ export function sponsorshipDossier(iso: string): DossierExtra | null {
   return {
     id: 'sponsorship',
     title: `Backs parties abroad · ${rows.length}`,
-    rows: rows.map((r) => ({ label: r.conflict.name, value: INTENSITY_LABEL[r.conflict.intensity], note: `${SUPPORT_LABEL[r.backer.support]} for ${r.actor.name}`, conflictId: r.conflict.id })),
+    rows: rows.map((r) => ({ label: r.conflict.name, value: '', intensity: r.conflict.intensity, note: `${SUPPORT_LABEL[r.backer.support]} for ${r.actor.name}`, conflictId: r.conflict.id })),
     footnote: `Actor lists reviewed ${formatMonth(rows[0]!.conflict.actorsUpdated ?? rows[0]!.conflict.updated.slice(0, 7))}.`,
   };
 }
