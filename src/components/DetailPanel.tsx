@@ -551,9 +551,11 @@ function RelationshipView({ a, b, props }: { a: string; b: string | null; props:
                 ))}
               </ul>
             )}
-            <h4 id="pair-sanctions">Sanctions between them</h4>
-            {r.sanctions.length === 0 ? (
-              <Muted>Neither applies a country-level regime to the other (UN measures are not counted as bilateral).</Muted>
+            <h4 id="pair-sanctions">US and EU sanctions between them</h4>
+            {!r.sanctionsInScope ? (
+              <Muted>Not tracked for this pair: ATLAS records only US and EU country-level regimes. UK, Japanese, Canadian, Swiss and other national sanctions, and countersanctions, are not included.</Muted>
+            ) : r.sanctions.length === 0 ? (
+              <Muted>Neither the US nor the EU applies a country-level regime to the other (UN measures are not counted as bilateral; other national sanctions and countersanctions are not tracked).</Muted>
             ) : (
               <ul className="link-list">
                 {r.sanctions.flatMap((s) =>
@@ -563,7 +565,7 @@ function RelationshipView({ a, b, props }: { a: string; b: string | null; props:
                         <span>
                           {x.name}
                           <span className="row-note">
-                            {countryName(s.from)} → {countryName(s.to)}
+                            {x.authority === 'EU' ? `EU (${countryName(s.from)} is a member)` : countryName(s.from)} → {countryName(s.to)}
                           </span>
                         </span>
                         <span className="meta">{x.authority} ↗</span>
@@ -1170,7 +1172,7 @@ function AboutView({ props }: { props: Props }) {
         </p>
         <h4>Analysis</h4>
         <p>
-          Any country dossier offers "Relationship with…": pick a second country to see shared blocs, the conflicts that link them, sanctions one applies to the other, forces either keeps in the other, and each side's export share to the other. Bloc panels chart membership and combined GDP since 1990 from accession years and World Bank data.
+          Any country dossier offers "Relationship with…": pick a second country to see shared blocs, the conflicts that link them, US and EU sanctions either side applies to the other (other national sanctions and countersanctions are not tracked), forces either keeps in the other, and each side's export share to the other. Bloc panels chart membership and combined GDP since 1990 from accession years and World Bank data.
           {ASK_ENABLED ? ' Ask ATLAS answers questions strictly from this dataset with citations; it is rate-limited and capped per day.' : ''}
         </p>
         <h4>Keyboard</h4>

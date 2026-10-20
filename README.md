@@ -18,7 +18,7 @@ An interactive geopolitics map. Two views of the same world:
 - **Power and trade layers** — eight maritime chokepoints (Hormuz, Bab el-Mandeb, Suez, Malacca, Taiwan Strait, Turkish Straits, Panama, GIUK) drawn as diamonds with a dated status and linked conflicts; foreign military presence by host country (bases, deployments and peace operations, curated and sourced); and export dependence as a three-way tint by the largest of the US, China and the EU from World Bank WITS, with the shares in each dossier.
 - **Conflict depth** — each conflict panel carries a dated peace-process tracker (ceasefires, agreements, talks, roadmaps, setbacks) that the weekly pass extends, and a who-backs-whom diagram built from structured actors and their outside backers. A country's dossier lists the conflicts it sponsors abroad.
 
-- **Analysis** — a relationship view for any two countries (shared blocs, conflicts linking them, sanctions one applies to the other, forces either keeps in the other, export share each way); bloc trend charts of membership and combined GDP since 1990; and, behind a flag, **Ask ATLAS**, a question box answered strictly from the dataset with citations.
+- **Analysis** — a relationship view for any two countries (shared blocs, conflicts linking them, US and EU sanctions either side applies to the other, forces either keeps in the other, export share each way); bloc trend charts of membership and combined GDP since 1990; and, behind a flag, **Ask ATLAS**, a question box answered strictly from the dataset with citations.
 
 Search any country, bloc or conflict. Every view is a shareable link.
 

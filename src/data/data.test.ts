@@ -148,3 +148,16 @@ describe('displacement truth', () => {
     expect(displacementFill('PSE').hatch).toBeDefined();
   });
 });
+
+describe('conflict panels agree with themselves', () => {
+  // The Parties list and the who-backs-whom graph are both shown; an armed actor in one must appear in the other.
+  const ALIASES: Record<string, string[]> = { syria: ['Druze forces in Sweida (al-Hijri)'] };
+  it.each(CONFLICTS.filter((c) => c.actors).map((c) => [c.id, c] as const))('%s lists every non-mediator actor among its parties', (id, c) => {
+    const parties = c.parties.join(' | ').toLowerCase();
+    for (const a of c.actors!) {
+      if (a.side === 'Mediators' || ALIASES[id]?.includes(a.name)) continue;
+      const stem = a.name.split(' (')[0]!.toLowerCase().slice(0, 12);
+      expect(parties, `${id}: actor "${a.name}" missing from parties`).toContain(stem);
+    }
+  });
+});

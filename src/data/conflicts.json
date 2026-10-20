@@ -247,7 +247,8 @@
     ],
     "parties": [
       "Sudanese Armed Forces (SAF)",
-      "Rapid Support Forces (RSF)"
+      "Rapid Support Forces (RSF)",
+      "SPLM-North (al-Hilu), allied with the RSF"
     ],
     "summary": "A power struggle between the army and the paramilitary RSF erupted into open war in Khartoum in April 2023. It has produced the world’s largest displacement crisis, famine conditions, and mass atrocities in Darfur.",
     "actors": [
@@ -308,7 +309,7 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
-        "date": "2026-10-07",
+        "date": "2026-10-06",
         "kind": "collapse",
         "summary": "Army chief al-Burhan rejected talks and vowed to retake all RSF-held territory.",
         "sources": [
@@ -636,7 +637,8 @@
     ],
     "parties": [
       "Israel",
-      "Hezbollah"
+      "Hezbollah",
+      "Lebanese government and army"
     ],
     "summary": "Hezbollah opened a front in support of Hamas in October 2023. Israel escalated in September 2024 with pager attacks, the killing of Hassan Nasrallah and a ground incursion into southern Lebanon.",
     "actors": [
@@ -1392,8 +1394,8 @@
       "MMR"
     ],
     "parties": [
-      "Military junta (State Administration Council)",
-      "People’s Defence Forces and ethnic armed organisations"
+      "Military government (SAC) and USDP",
+      "National Unity Government, People’s Defence Forces and ethnic armed organisations"
     ],
     "summary": "The February 2021 coup triggered nationwide armed resistance. Ethnic armies and the opposition National Unity Government’s forces have taken large parts of the border regions, and the junta has responded with air strikes and mass conscription.",
     "actors": [
@@ -1549,7 +1551,8 @@
     "parties": [
       "JNIM (al-Qaeda affiliate)",
       "Islamic State Sahel Province",
-      "Mali, Burkina Faso and Niger armed forces with Russia’s Africa Corps"
+      "Mali, Burkina Faso and Niger armed forces with Russia’s Africa Corps",
+      "Azawad Liberation Front (Tuareg separatists)"
     ],
     "summary": "Jihadist insurgencies that began in northern Mali in 2012 have spread across Burkina Faso and Niger and towards coastal West Africa. Military juntas expelled French and UN forces and brought in Russian contractors.",
     "actors": [
@@ -1894,7 +1897,8 @@
     ],
     "parties": [
       "Al-Shabaab",
-      "Federal Government of Somalia with AU mission (AUSSOM) and US air support"
+      "Federal Government of Somalia with AU mission (AUSSOM) and US air support",
+      "Puntland and Jubaland administrations, at odds with Mogadishu"
     ],
     "summary": "Al-Qaeda’s East African affiliate controls much of rural southern Somalia and stages attacks in Mogadishu. The AU mission was re-hatted as AUSSOM in January 2025 with uncertain funding.",
     "actors": [
@@ -2317,7 +2321,7 @@
     ],
     "parties": [
       "Viv Ansanm gang coalition",
-      "Haitian National Police and the multinational force"
+      "Haitian National Police and the UN-authorised Gang Suppression Force"
     ],
     "summary": "Gangs control most of Port-au-Prince and major roads, and have displaced over a million people. A Kenya-led Multinational Security Support mission arrived in 2024 but was under-resourced.",
     "actors": [

@@ -161,7 +161,7 @@ export const AssessmentOutputSchema = z.object({
   peaceEvents: z
     .array(
       z.object({
-        date: z.string().describe('YYYY-MM-DD, or YYYY-MM when only the month is known'),
+        date: z.string().describe('the date the event happened, not the date an article reported it: YYYY-MM-DD, or YYYY-MM when only the month is known'),
         kind: PeaceEventKindSchema,
         summary: z.string().describe('one sentence, 20-300 characters'),
         source: z.object({ name: z.string(), url: z.string() }),
