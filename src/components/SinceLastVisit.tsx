@@ -1,8 +1,10 @@
-import { useMemo, useState } from 'react';
-import { CHANGES } from '../lib/feed';
+import { useMemo } from 'react';
+import { useSeen } from '../hooks/useSeen';
+import { setWatchOnly, useWatchlist } from '../hooks/useWatchlist';
+import { CHANGES, bySignal, watchlistOnly } from '../lib/feed';
 import type { ChangeItem } from '../lib/history';
-import { INTENSITY_COLOR, formatDate } from '../lib/labels';
-import { changesSinceVisit, readLastVisit, writeLastVisit } from '../lib/lastVisit';
+import { deltaWord, itemColor, shortDay } from '../lib/delta';
+import { formatDate } from '../lib/labels';
 
 interface Props {
   onSelectConflict: (id: string) => void;
@@ -14,49 +16,75 @@ interface Props {
 const SHOWN = 4;
 
 /**
- * Strip under the header listing what changed since the visitor last pressed
- * "Mark read". The timestamp lives in localStorage; a first visit stores
- * today's date silently so the next visit has a baseline.
+ * Strip under the header listing what the visitor has not seen since they
+ * last pressed "Mark read". What counts as seen is a set of item keys in
+ * localStorage (see lastVisit.ts), so entries merged later than their research
+ * date still surface. Followed items lead, then new and escalated ones. "+N
+ * more" opens the changes panel on the same unseen window, unfiltered, so the
+ * count it promises is the count it shows.
  */
 export default function SinceLastVisit({ onSelectConflict, onSelectBloc, onSelectUnrest, onOpenChanges }: Props) {
-  const today = new Date().toISOString().slice(0, 10);
-  const [lastVisit, setLastVisit] = useState<string | null>(() => {
-    const v = readLastVisit();
-    if (!v) writeLastVisit(today);
-    return v;
-  });
-  const items = useMemo(() => changesSinceVisit(CHANGES, lastVisit), [lastVisit]);
-  if (!lastVisit || items.length === 0) return null;
+  const { since, unseen, markRead } = useSeen();
+  const { keys } = useWatchlist();
+  const followed = useMemo(() => watchlistOnly(unseen, keys).sort(bySignal), [unseen, keys]);
+  if (unseen.length === 0) return null;
+  const followedKeys = new Set(followed.map((it) => it.key));
+  const shown = [...followed, ...unseen.filter((it) => !followedKeys.has(it.key)).sort(bySignal)].slice(0, SHOWN);
+  const rest = unseen.length - shown.length;
   const open = (it: ChangeItem) => (it.kind === 'conflict' ? onSelectConflict(it.id) : it.kind === 'unrest' ? onSelectUnrest(it.id) : onSelectBloc(it.id));
-  const markRead = () => {
-    writeLastVisit(today);
-    setLastVisit(today);
+  const openAll = () => {
+    setWatchOnly(false);
+    onOpenChanges();
   };
   return (
     <div className="since" role="status" aria-label="Changes since your last visit">
       <span className="since-label">
-        Since {formatDate(lastVisit)} · <b>{items.length}</b> {items.length === 1 ? 'change' : 'changes'}
+        Since {formatDate(since)} · <b>{unseen.length}</b> {unseen.length === 1 ? 'change' : 'changes'}
+        {followed.length > 0 && (
+          <>
+            {' '}· <b className="since-followed">{followed.length}</b> you follow
+          </>
+        )}
       </span>
       <ul className="since-list">
-        {items.slice(0, SHOWN).map((it, i) => (
-          <li key={it.kind + it.id + it.date + i}>
-            <button type="button" onClick={() => open(it)}>
-              <span className="dot" style={{ background: it.intensity ? INTENSITY_COLOR[it.intensity] : it.color }} aria-hidden="true" />
-              {it.title}
-            </button>
-          </li>
-        ))}
-        {items.length > SHOWN && (
-          <li>
-            <button type="button" className="more" onClick={onOpenChanges}>
-              +{items.length - SHOWN} more
-            </button>
-          </li>
-        )}
+        {shown.map((it) => {
+          const word = deltaWord(it.delta);
+          return (
+            <li key={it.key}>
+              <button type="button" onClick={() => open(it)} data-followed={followedKeys.has(it.key) || undefined}>
+                <span className={'dot' + (it.kind === 'unrest' ? ' triangle' : '')} style={{ background: itemColor(it) }} aria-hidden="true" />
+                {followedKeys.has(it.key) && <span className="since-star" aria-label="Followed">★</span>}
+                {it.title}
+                {word && <span className="since-delta" data-delta={it.delta}>{word}</span>}
+              </button>
+            </li>
+          );
+        })}
       </ul>
+      {rest > 0 && (
+        <button type="button" className="text-btn since-more" onClick={openAll}>
+          +{rest} more
+        </button>
+      )}
       <button type="button" className="text-btn since-read" onClick={markRead}>
         Mark read
       </button>
     </div>
+  );
+}
+
+/**
+ * Header readout: when the data last changed, with a dot while anything is
+ * unseen. Opens the changes panel on the unseen window when there is one.
+ */
+export function UpdatedReadout({ onOpen }: { onOpen: (since: boolean) => void }) {
+  const { unseen } = useSeen();
+  const newest = CHANGES[0]?.date;
+  if (!newest) return null;
+  return (
+    <button className="readout-btn optional" onClick={() => onOpen(unseen.length > 0)} title={unseen.length ? `Recent changes: ${unseen.length} unseen` : 'Recent changes'}>
+      UPDATED <b>{shortDay(newest).toUpperCase()}</b>
+      {unseen.length > 0 && <span className="readout-dot" aria-label={`${unseen.length} unseen`} role="img" />}
+    </button>
   );
 }

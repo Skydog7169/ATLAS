@@ -18,6 +18,22 @@ describe('build-time feeds', () => {
     for (const it of items) expect(it.url).toMatch(/^https:\/\/atlas-geopolitic\.vercel\.app\/#(mode|layer)=/);
   });
 
+  it('marks each assessment new, escalated, eased or unchanged against the previous one', () => {
+    for (const it of items) expect(['new', 'up', 'down', 'same', 'membership']).toContain(it.delta);
+    const up = items.find((i) => i.delta === 'up')!;
+    expect(up.title).toMatch(/: ▲ Escalated · \w+ → \w+$/);
+    expect(items.find((i) => i.delta === 'new')!.title).toMatch(/: New · /);
+    expect(items.find((i) => i.delta === 'same')!.title).toMatch(/, no change$/);
+    expect(items.find((i) => i.tags[0] === 'unrest')!.title).toContain('(unrest):');
+    // Same-day ties go to the most severe item, not the alphabet.
+    const rank: Record<string, number> = { high: 3, medium: 2, low: 1, latent: 0 };
+    for (let i = 1; i < items.length; i++) {
+      const a = items[i - 1]!;
+      const b = items[i]!;
+      if (a.date === b.date) expect(a.intensity ? rank[a.intensity]! : -1).toBeGreaterThanOrEqual(b.intensity ? rank[b.intensity]! : -1);
+    }
+  });
+
   it('renders valid-looking RSS with escaped text and a stable guid', () => {
     const xml = renderRss(items, { now: new Date('2026-10-08T00:00:00Z'), limit: 5 });
     expect(xml.startsWith('<?xml version="1.0"')).toBe(true);

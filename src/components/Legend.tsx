@@ -197,7 +197,7 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
           ))}
         </ul>
         <div className="note">
-          Protest movements, riots, uprisings, coups, mutinies and crackdowns that are not armed conflicts, each with dated, sourced assessments. Countries are tinted by their most intense episode. Curated and reassessed weekly; newest assessment {formatDate(UNREST_VERIFIED)}.
+          Protest movements, riots, uprisings, coups, mutinies and crackdowns that are not armed conflicts, each with dated, sourced assessments. Intensity here means the scale of mobilisation and the lethality of the response, not armed combat. Countries are tinted by their most intense episode. Curated and reassessed weekly; newest assessment {formatDate(UNREST_VERIFIED)}.
         </div>
       </aside>
     );

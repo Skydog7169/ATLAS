@@ -3,11 +3,13 @@ import { BLOCS, BLOC_BY_ID } from '../data/blocs';
 import { CONFLICTS, CONFLICT_BY_ID } from '../data/conflicts';
 import { UNREST_BY_ID } from '../data/unrest';
 import { UNREST_COLOR, UNREST_KIND_LABEL } from '../lib/unrest';
-import type { Bloc, Conflict, HistoryEntry, MembershipStatus, Unrest } from '../data/types';
+import type { Bloc, Conflict, HistoryEntry, Intensity, MembershipStatus, Unrest } from '../data/types';
 import { countryName } from '../lib/countries';
 import { changesSince, entryAt, type ChangeItem } from '../lib/history';
+import { deltaTag, deltaWord, groupChanges, itemColor, kindTag, shortDay } from '../lib/delta';
 import { CATEGORY_LABEL, CHANGE_LABEL, CONFLICT_TYPE_LABEL, INTENSITY_COLOR, INTENSITY_LABEL, STATUS_LABEL, STATUS_LABEL_PLURAL, formatDate, formatMonth } from '../lib/labels';
 import type { Selection } from '../lib/urlState';
+import type { WatchItem } from '../lib/watchlist';
 import { STALE_YEARS, WORLD, WORLDBANK, blocFigures, formatCount, formatUsd, share, staleValues, type Figures } from '../lib/worldbank';
 import { blocMembers } from '../lib/membership';
 import { DISPLACEMENT, REPORTED_WITH, displacementTotal, formatPeople } from '../lib/displacement';
@@ -15,7 +17,8 @@ import { SANCTIONS } from '../lib/sanctions';
 import { ELECTIONS_VERIFIED } from '../lib/elections';
 import { NUCLEAR } from '../lib/nuclear';
 import { TRUSTED_HOSTS } from '../data/guards';
-import { CHANGES, watchlistOnly } from '../lib/feed';
+import { CHANGES, changesForWatchItem, watchItemResolves, watchlistOnly } from '../lib/feed';
+import { useSeen } from '../hooks/useSeen';
 import { conflictBadges, countryDossier, notMemberOf, profileLine, type CountryDossier } from '../lib/dossier';
 import { isTheatre } from '../lib/theatre';
 import { territoryLine } from '../lib/sovereign';
@@ -120,27 +123,66 @@ function Muted({ children }: { children: React.ReactNode }) {
   return <p style={{ color: 'var(--fg-muted)' }}>{children}</p>;
 }
 
-/** One feed entry: date, linked title, kind tag and clipped detail. Shared by the changes feed and the dossier. */
-function FeedList({ items, props, compact }: { items: ChangeItem[]; props: Props; compact?: boolean }) {
-  const max = compact ? 140 : 180;
+function FeedRows({ items, props, unseen }: { items: ChangeItem[]; props: Props; unseen?: ReadonlySet<string> }) {
   return (
     <ol className="history feed">
-      {items.map((it, i) => (
-        <li key={it.kind + it.id + it.date + i}>
-          <span className="when">
-            <span className="dot" style={{ background: it.intensity ? INTENSITY_COLOR[it.intensity] : it.color }} aria-hidden="true" />
-            {formatDate(it.date)}
-          </span>
-          <span>
-            <button className="inline-link" onClick={() => (it.kind === 'conflict' ? props.onSelectConflict(it.id) : it.kind === 'unrest' ? props.onSelectUnrest(it.id) : props.onSelectBloc(it.id))}>
-              {it.title}
-            </button>
-            <span className="label"> · {it.intensity ? INTENSITY_LABEL[it.intensity] : 'Membership'}{it.kind === 'unrest' ? ' (unrest)' : ''}</span>
-            <span className="note"> {it.detail.length > max ? it.detail.slice(0, max - 3).trimEnd() + '…' : it.detail}</span>
-          </span>
-        </li>
-      ))}
+      {items.map((it) => {
+        const delta = deltaTag(it);
+        return (
+          <li key={it.key} data-delta={it.delta} data-unseen={unseen?.has(it.key) || undefined}>
+            <span className="when">{formatDate(it.date)}</span>
+            <span className="feed-body">
+              <button className="inline-link feed-title" onClick={() => (it.kind === 'conflict' ? props.onSelectConflict(it.id) : it.kind === 'unrest' ? props.onSelectUnrest(it.id) : props.onSelectBloc(it.id))}>
+                {it.title}
+              </button>
+              <span className="feed-tags">
+                <span className="feed-kind" data-kind={it.kind}>
+                  <span className={'dot' + (it.kind === 'unrest' ? ' triangle' : '')} style={{ background: itemColor(it) }} aria-hidden="true" />
+                  {kindTag(it)}
+                </span>
+                {delta && (
+                  <span className="feed-delta" data-delta={it.delta}>
+                    {delta}
+                  </span>
+                )}
+              </span>
+              <span className="note feed-detail">{it.detail}</span>
+            </span>
+          </li>
+        );
+      })}
     </ol>
+  );
+}
+
+/**
+ * Feed entries: date, linked title, a kind/level pill with the worded change
+ * ('▲ Escalated · low → medium'), and the detail clamped to three lines.
+ * Same-level re-assessments are folded under one line unless `collapseSame` is off.
+ */
+function FeedList({ items, props, collapseSame = true, unseen }: { items: ChangeItem[]; props: Props; collapseSame?: boolean; unseen?: ReadonlySet<string> }) {
+  const signals = collapseSame ? items.filter((it) => it.delta !== 'same') : items;
+  const same = collapseSame ? items.filter((it) => it.delta === 'same') : [];
+  return (
+    <>
+      {signals.length > 0 && <FeedRows items={signals} props={props} unseen={unseen} />}
+      {same.length > 0 && (
+        <details className="feed-same">
+          <summary>
+            {same.length} re-assessment{same.length === 1 ? '' : 's'}, no change
+          </summary>
+          <FeedRows items={same} props={props} unseen={unseen} />
+        </details>
+      )}
+    </>
+  );
+}
+
+function RssLink() {
+  return (
+    <a className="text-btn" href="/feed.xml" type="application/rss+xml" title="Subscribe to every change via RSS (JSON Feed at /feed.json)">
+      RSS
+    </a>
   );
 }
 
@@ -334,7 +376,7 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
         )}
 
         <h3 id="dossier-changes">Recent changes · {changes.length}</h3>
-        {changes.length === 0 ? <Muted>No dated assessment or membership change on record for {country.name}.</Muted> : <FeedList items={changes} props={props} compact />}
+        {changes.length === 0 ? <Muted>No dated assessment or membership change on record for {country.name}.</Muted> : <FeedList items={changes} props={props} />}
 
         <div className="panel-actions">
           <button className="text-btn primary" onClick={() => props.onSelectPair(country.cca3, null)}>
@@ -707,7 +749,7 @@ function RelationshipView({ a, b, props }: { a: string; b: string | null; props:
   );
 }
 
-function HistoryList({ history, highlight, onSelectEntry }: { history: HistoryEntry[]; highlight: HistoryEntry | null; onSelectEntry?: (h: HistoryEntry) => void }) {
+function HistoryList({ history, highlight, onSelectEntry, palette = INTENSITY_COLOR }: { history: HistoryEntry[]; highlight: HistoryEntry | null; onSelectEntry?: (h: HistoryEntry) => void; palette?: Record<Intensity, string> }) {
   return (
     <ol className="history">
       {history.map((h, i) => {
@@ -715,7 +757,7 @@ function HistoryList({ history, highlight, onSelectEntry }: { history: HistoryEn
         return (
           <li key={h.date + i} data-current={open}>
             <span className="when">
-              <span className="dot" style={{ background: INTENSITY_COLOR[h.intensity] }} aria-hidden="true" />
+              <span className="dot" style={{ background: palette[h.intensity] }} aria-hidden="true" />
               {formatDate(h.date)}
             </span>
             <details open={open} onToggle={onSelectEntry ? () => onSelectEntry(h) : undefined}>
@@ -879,7 +921,7 @@ function UnrestView({ unrest, props }: { unrest: Unrest; props: Props }) {
         <h3>Background</h3>
         <p>{unrest.summary}</p>
         <h3 id="unrest-assessments">Assessments</h3>
-        <HistoryList history={unrest.history} highlight={null} />
+        <HistoryList history={unrest.history} highlight={null} palette={UNREST_COLOR} />
         <h3>Countries</h3>
         <div className="badges">
           {unrest.countries.map((iso) => (
@@ -902,18 +944,36 @@ function UnrestView({ unrest, props }: { unrest: Unrest; props: Props }) {
 }
 
 const WINDOWS = [
+  { days: 7, label: '7 days' },
   { days: 30, label: '30 days' },
   { days: 90, label: '90 days' },
   { days: 0, label: 'All' },
 ];
 
+const FUNNEL = (
+  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden="true">
+    <path d="M3 4h18l-7 8.5V19l-4 2v-8.5Z" />
+  </svg>
+);
+
+/** The changes feed, grouped New / Escalated / Eased / Membership / Re-assessed. 'since' is the visitor's unseen items. */
 function ChangesView({ props }: { props: Props }) {
-  const [days, setDays] = useState(90);
+  const fromStrip = props.selection.kind === 'changes' && props.selection.since === true;
+  const seen = useSeen();
+  const [win, setWin] = useState<number | 'since'>(() => (fromStrip && seen.unseen.length > 0 ? 'since' : 7));
   const { only, keys, items: starred, setOnly } = useWatchlist();
+  const sinceActive = win === 'since' && seen.unseen.length > 0;
+  const days = win === 'since' ? 7 : win;
   const shown = useMemo(() => {
-    const pool = only ? watchlistOnly(CHANGES, keys) : [...CHANGES];
-    return days ? changesSince(pool, days) : pool;
-  }, [days, only, keys]);
+    const base = sinceActive ? seen.unseen : CHANGES;
+    const pool = only ? watchlistOnly(base, keys) : [...base];
+    return sinceActive || !days ? pool : changesSince(pool, days);
+  }, [sinceActive, seen.unseen, days, only, keys]);
+  const groups = useMemo(() => groupChanges(shown), [shown]);
+  const markRead = () => {
+    seen.markRead();
+    setWin(7);
+  };
   return (
     <>
       <div className="panel-head">
@@ -923,27 +983,51 @@ function ChangesView({ props }: { props: Props }) {
             Recent changes
           </h2>
         </div>
+        {sinceActive && (
+          <button className="text-btn" onClick={markRead}>
+            Mark read
+          </button>
+        )}
         <CloseButton onClick={props.onClose} />
       </div>
       <div className="panel-body">
         <div className="filter-row">
+          {seen.unseen.length > 0 && (
+            <button aria-pressed={sinceActive} onClick={() => setWin('since')} className="text-btn since-chip" title="Everything you have not seen since you last pressed Mark read">
+              Since {shortDay(seen.since)} · {seen.unseen.length}
+            </button>
+          )}
           <div className="segmented small" role="group" aria-label="Time window">
             {WINDOWS.map((w) => (
-              <button key={w.days} aria-pressed={days === w.days} onClick={() => setDays(w.days)}>
+              <button key={w.days} aria-pressed={!sinceActive && days === w.days} onClick={() => setWin(w.days)}>
                 {w.label}
               </button>
             ))}
           </div>
-          <button className={'text-btn watch-toggle' + (only ? ' on' : '')} aria-pressed={only} onClick={() => setOnly(!only)}>
-            ★ Watchlist{starred.length ? ` · ${starred.length}` : ''}
+          <button className={'text-btn watch-toggle' + (only ? ' on' : '')} aria-pressed={only} onClick={() => setOnly(!only)} aria-label="Show only starred items">
+            {FUNNEL} Starred only{starred.length ? ` · ${starred.length}` : ''}
           </button>
+          <RssLink />
         </div>
         {shown.length === 0 && (
           <p style={{ color: 'var(--fg-muted)', marginTop: 12 }}>
-            {only && starred.length === 0 ? 'Your watchlist is empty. Star a country, bloc or conflict from its panel.' : only ? 'No changes for your watchlist in this window.' : 'No changes recorded in this window.'}
+            {only && starred.length === 0 ? 'Nothing is starred yet. Star a country, bloc, conflict or unrest episode from its panel.' : only ? 'No changes to your starred items in this window.' : 'No changes recorded in this window.'}
           </p>
         )}
-        <FeedList items={shown} props={props} />
+        {groups.map((g) => (
+          <section key={g.delta} className="feed-group" data-delta={g.delta}>
+            {g.delta === 'same' ? (
+              <FeedList items={g.items} props={props} unseen={seen.unseenKeys} />
+            ) : (
+              <>
+                <h3>
+                  {g.title} · {g.items.length}
+                </h3>
+                <FeedList items={g.items} props={props} collapseSame={false} unseen={seen.unseenKeys} />
+              </>
+            )}
+          </section>
+        ))}
         <div className="panel-actions">
           <ShareButton />
         </div>
@@ -952,19 +1036,69 @@ function ChangesView({ props }: { props: Props }) {
   );
 }
 
+/** Latest dated change for a starred item, and whether anything about it is unseen. */
+function watchStatus(item: WatchItem, unseen: ReadonlySet<string>) {
+  const changes = changesForWatchItem(CHANGES, item);
+  return { latest: changes[0] ?? null, unread: changes.some((c) => unseen.has(c.key)) };
+}
+
+const STAR_PATH = 'm12 3 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.4l-5.7 3.1 1.2-6.4L2.8 9.7l6.4-.8L12 3Z';
+
+function WatchRow({ item, name, onOpen, unseen }: { item: WatchItem; name: string; onOpen: () => void; unseen: ReadonlySet<string> }) {
+  const { toggle } = useWatchlist();
+  const { latest, unread } = watchStatus(item, unseen);
+  const entity = item.kind === 'conflict' ? CONFLICT_BY_ID.get(item.id) : item.kind === 'unrest' ? UNREST_BY_ID.get(item.id) : undefined;
+  const color = entity ? itemColor({ kind: item.kind as 'conflict' | 'unrest', intensity: entity.intensity }) : item.kind === 'bloc' ? BLOC_BY_ID.get(item.id)?.color : undefined;
+  const meta = entity
+    ? [latest ? `Updated ${shortDay(latest.date)}` : null, kindTag({ kind: item.kind as 'conflict' | 'unrest', intensity: entity.intensity }), latest && latest.id === item.id ? deltaWord(latest.delta) : null]
+    : [latest ? `Latest ${shortDay(latest.date)}: ${latest.title}${deltaWord(latest.delta) ? ` ${deltaWord(latest.delta)}` : ''}` : 'No dated changes'];
+  return (
+    <li className="watch-row" data-unread={unread || undefined}>
+      <button onClick={onOpen}>
+        <span className={'dot' + (item.kind === 'unrest' ? ' triangle' : '')} style={{ background: color ?? 'var(--fg-muted)' }} aria-hidden="true" />
+        <span className="watch-text">
+          <span className="watch-name">{name}</span>
+          <span className="watch-meta">{meta.filter(Boolean).join(' · ')}</span>
+        </span>
+        {unread && <span className="unread-dot" aria-label="Unseen changes" role="img" />}
+      </button>
+      <button className="icon-btn star small" aria-pressed="true" aria-label={`Remove ${name} from watchlist`} onClick={() => toggle(item)}>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden="true">
+          <path d={STAR_PATH} />
+        </svg>
+      </button>
+    </li>
+  );
+}
+
+/** Suggestions for an empty watchlist: the current high-intensity conflicts, newest first, plus NATO. */
+function suggestions(): Array<{ item: WatchItem; name: string }> {
+  const wars = CONFLICTS.filter((c) => c.intensity === 'high')
+    .sort((a, b) => b.updated.localeCompare(a.updated))
+    .slice(0, 3)
+    .map((c) => ({ item: { kind: 'conflict' as const, id: c.id }, name: c.name }));
+  const nato = BLOC_BY_ID.get('nato');
+  return nato ? [...wars, { item: { kind: 'bloc' as const, id: nato.id }, name: nato.name }] : wars;
+}
+
 function WatchlistView({ props }: { props: Props }) {
-  const { items, toggle } = useWatchlist();
+  const { items, toggle, persisted } = useWatchlist();
+  const { unseenKeys } = useSeen();
+  const resolved = items.filter(watchItemResolves);
+  const unresolved = items.filter((it) => !watchItemResolves(it));
   const groups = [
     { kind: 'country' as const, title: 'Countries', name: (id: string) => countryName(id), open: props.onSelectCountry },
     { kind: 'bloc' as const, title: 'Blocs', name: (id: string) => BLOC_BY_ID.get(id)?.shortName ?? id, open: props.onSelectBloc },
     { kind: 'conflict' as const, title: 'Conflicts', name: (id: string) => CONFLICT_BY_ID.get(id)?.name ?? id, open: props.onSelectConflict },
     { kind: 'unrest' as const, title: 'Unrest', name: (id: string) => UNREST_BY_ID.get(id)?.name ?? id, open: props.onSelectUnrest },
-  ].map((g) => ({ ...g, rows: items.filter((it) => it.kind === g.kind) }));
+  ].map((g) => ({ ...g, rows: resolved.filter((it) => it.kind === g.kind) }));
   return (
     <>
       <div className="panel-head">
         <div className="panel-title">
-          <p className="eyebrow">Saved on this device</p>
+          <p className="eyebrow" data-unsaved={!persisted || undefined}>
+            {persisted ? 'Saved on this device' : 'This tab only'}
+          </p>
           <h2>
             Watchlist
           </h2>
@@ -972,10 +1106,32 @@ function WatchlistView({ props }: { props: Props }) {
         <CloseButton onClick={props.onClose} />
       </div>
       <div className="panel-body">
+        {!persisted && <p className="watch-warning">Storage is blocked in this browser: stars last until you close this tab.</p>}
         {items.length === 0 ? (
-          <Muted>Nothing starred yet. Open any country, bloc or conflict and press the star to follow it. The ticker and the changes feed can then be filtered to what you follow.</Muted>
+          <>
+            <p style={{ color: 'var(--fg-muted)', fontSize: 13 }}>
+              Nothing starred yet. Press the star on any country, bloc, conflict or unrest episode to follow it: its latest change and anything you have not seen show up here, and followed items lead the since-last-visit strip.
+            </p>
+            <ul className="link-list">
+              <li className="watch-row watch-ghost" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round">
+                  <path d={STAR_PATH} />
+                </svg>
+                Starred items appear here
+              </li>
+            </ul>
+            <h3>Suggested</h3>
+            <ul className="link-list">
+              {suggestions().map(({ item, name }) => (
+                <li key={item.kind + item.id} className="watch-row">
+                  <button onClick={() => (item.kind === 'conflict' ? props.onSelectConflict(item.id) : props.onSelectBloc(item.id))}>{name}</button>
+                  <StarButton item={item} name={name} small />
+                </li>
+              ))}
+            </ul>
+          </>
         ) : (
-          <Muted>Stars are kept in this browser only. Use the ★ Watchlist toggle on the ticker or the changes feed to see only these.</Muted>
+          <Muted>Followed items lead the since-last-visit strip. A dot marks anything you have not seen; Starred only on the ticker or the changes feed narrows them to these.</Muted>
         )}
         {groups
           .filter((g) => g.rows.length > 0)
@@ -986,27 +1142,34 @@ function WatchlistView({ props }: { props: Props }) {
               </h3>
               <ul className="link-list">
                 {g.rows.map((it) => (
-                  <li key={it.id} className="watch-row">
-                    <button onClick={() => g.open(it.id)}>
-                      {g.kind === 'conflict' && <span className="dot" style={{ width: 10, height: 10, borderRadius: '50%', background: INTENSITY_COLOR[CONFLICT_BY_ID.get(it.id)?.intensity ?? 'latent'] }} />}
-                      {g.kind === 'bloc' && <span className="dot" style={{ width: 10, height: 10, borderRadius: '50%', background: BLOC_BY_ID.get(it.id)?.color }} />}
-                      {g.kind === 'unrest' && <span className="dot" style={{ width: 10, height: 10, borderRadius: '50%', background: UNREST_COLOR[UNREST_BY_ID.get(it.id)?.intensity ?? 'latent'] }} />}
-                      {g.name(it.id)}
-                    </button>
-                    <button className="icon-btn star small" aria-pressed="true" aria-label={`Remove ${g.name(it.id)} from watchlist`} onClick={() => toggle(it)}>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden="true">
-                        <path d="m12 3 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.4l-5.7 3.1 1.2-6.4L2.8 9.7l6.4-.8L12 3Z" />
-                      </svg>
-                    </button>
-                  </li>
+                  <WatchRow key={it.id} item={it} name={g.name(it.id)} onOpen={() => g.open(it.id)} unseen={unseenKeys} />
                 ))}
               </ul>
             </div>
           ))}
+        {unresolved.length > 0 && (
+          <div>
+            <h3>No longer tracked · {unresolved.length}</h3>
+            <ul className="link-list">
+              {unresolved.map((it) => (
+                <li key={it.kind + it.id} className="watch-row watch-gone">
+                  <span className="watch-text">
+                    <span className="watch-name">{it.id}</span>
+                    <span className="watch-meta">Removed or renamed in a data update</span>
+                  </span>
+                  <button className="text-btn" aria-label={`Remove ${it.id} from watchlist`} onClick={() => toggle(it)}>
+                    Remove
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         <div className="panel-actions">
           <button className="text-btn" onClick={() => props.onOpenChanges()}>
             Open changes feed
           </button>
+          <RssLink />
         </div>
       </div>
     </>

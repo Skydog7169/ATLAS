@@ -4,7 +4,8 @@ export type Selection =
   | { kind: 'country'; iso: string }
   | { kind: 'bloc'; id: string }
   | { kind: 'conflict'; id: string }
-  | { kind: 'changes' }
+  /** `since`: opened from the since-last-visit strip, so the panel preselects the unseen window. */
+  | { kind: 'changes'; since?: boolean }
   | { kind: 'compare' }
   | { kind: 'about' }
   | { kind: 'watchlist' }
@@ -81,7 +82,7 @@ export function serialize(state: AppState): string {
   }
   if (state.selection) {
     if (state.selection.kind === 'country') p.set('country', state.selection.iso);
-    else if (state.selection.kind === 'changes') p.set('changes', '1');
+    else if (state.selection.kind === 'changes') p.set('changes', state.selection.since ? 'since' : '1');
     else if (state.selection.kind === 'compare') p.set('compare', '1');
     else if (state.selection.kind === 'about') p.set('about', '1');
     else if (state.selection.kind === 'watchlist') p.set('watchlist', '1');
@@ -140,6 +141,7 @@ export function parse(
   else if (unrest && isValid.unrest?.(unrest)) selection = { kind: 'unrest', id: unrest };
   else if (p.get('watchlist') === '1') selection = { kind: 'watchlist' };
   else if (p.get('changes') === '1') selection = { kind: 'changes' };
+  else if (p.get('changes') === 'since') selection = { kind: 'changes', since: true };
   else if (vs && p.get('compare') === '1') selection = { kind: 'compare' };
   else if (country && isValid.country(country.toUpperCase())) selection = { kind: 'country', iso: country.toUpperCase() };
   else if (conflict && isValid.conflict(conflict)) selection = { kind: 'conflict', id: conflict };
