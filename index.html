@@ -15,6 +15,18 @@
       rel="stylesheet"
     />
     <title>ATLAS</title>
+    <script>
+      // Apply the theme before first paint (mirrors src/lib/theme.ts): an embed's
+      // link pins it (#embed=1&theme=light|dark|auto, dark by default); otherwise
+      // the visitor's stored choice, else the OS preference.
+      (function () {
+        try {
+          var p = new URLSearchParams(location.hash.replace(/^#/, ''));
+          var t = p.get('embed') === '1' ? p.get('theme') || 'dark' : localStorage.getItem('atlas:theme');
+          if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

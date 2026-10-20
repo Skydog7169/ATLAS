@@ -1,32 +1,23 @@
 import { useEffect, useState } from 'react';
+import { THEME_KEY, applyTheme, embedTheme, readStoredTheme, type ThemeChoice } from '../lib/theme';
 
-type Theme = 'auto' | 'light' | 'dark';
-const KEY = 'atlas:theme';
-const ORDER: Theme[] = ['auto', 'dark', 'light'];
-
-function readStored(): Theme {
-  try {
-    const v = localStorage.getItem(KEY);
-    return v === 'light' || v === 'dark' ? v : 'auto';
-  } catch {
-    return 'auto';
-  }
-}
+const ORDER: ThemeChoice[] = ['auto', 'dark', 'light'];
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>(readStored);
+  // An embed's link decides its theme; the visitor's stored choice is for the full site only.
+  const [pinned] = useState(() => (typeof window === 'undefined' ? null : embedTheme(window.location.hash)));
+  const [theme, setTheme] = useState<ThemeChoice>(() => pinned ?? readStoredTheme());
 
   useEffect(() => {
-    const root = document.documentElement;
-    if (theme === 'auto') root.removeAttribute('data-theme');
-    else root.setAttribute('data-theme', theme);
+    applyTheme(theme);
+    if (pinned) return;
     try {
-      if (theme === 'auto') localStorage.removeItem(KEY);
-      else localStorage.setItem(KEY, theme);
+      if (theme === 'auto') localStorage.removeItem(THEME_KEY);
+      else localStorage.setItem(THEME_KEY, theme);
     } catch {
       /* storage blocked: theme still applies for this page view */
     }
-  }, [theme]);
+  }, [theme, pinned]);
 
   const next = ORDER[(ORDER.indexOf(theme) + 1) % ORDER.length] ?? 'auto';
   const label = theme === 'auto' ? 'System theme' : theme === 'dark' ? 'Dark theme' : 'Light theme';

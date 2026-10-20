@@ -4,8 +4,9 @@ import { ElectionsFileSchema, NuclearFileSchema, SanctionsFileSchema } from '../
 import sanctionsJson from '../data/sanctions.generated.json';
 import electionsJson from '../data/elections.json';
 import nuclearJson from '../data/nuclear.json';
-import { SANCTIONS, SANCTIONS_BY_ISO, sanctionsBin, sanctionsBinLabel, sanctionsColor, sanctionsFill, sanctionsSummary } from './sanctions';
-import { ELECTIONS, electionBin, electionBinLabel, electionColor, electionsDossier, formatElectionDate, monthsUntil, monthsUntilForLabel, electionSummary } from './elections';
+import { SANCTIONS, SANCTIONS_BY_ISO, SANCTIONS_COLORS, sanctionsBin, sanctionsBinLabel, sanctionsColor, sanctionsFill, sanctionsSummary } from './sanctions';
+import { ELECTIONS, ELECTION_COLORS, electionBin, electionBinLabel, electionColor, electionsDossier, formatElectionDate, monthsUntil, monthsUntilForLabel, electionSummary } from './elections';
+import { NO_DATA_FILL } from './palette';
 import { NUCLEAR, NUCLEAR_BY_ISO, nuclearColor, nuclearCount, nuclearSummary, testsFor } from './nuclear';
 
 describe('sanctions dataset', () => {
@@ -45,7 +46,7 @@ describe('sanctions dataset', () => {
     expect(sanctionsBinLabel(3)).toBe('3–4 regimes');
     expect(sanctionsBinLabel(4)).toBe('5+ regimes');
     expect(sanctionsColor('FRA')).toBe('var(--land)');
-    expect(sanctionsColor('RUS')).toBe('#ffd166');
+    expect(sanctionsColor('RUS')).toBe(SANCTIONS_COLORS[4]);
     expect(sanctionsSummary('PRK')).toBe('UN · US · EU · comprehensive US embargo');
     expect(sanctionsSummary('RUS')).toMatch(/^US×\d · EU×\d$/);
     expect(sanctionsSummary('FRA')).toBeNull();
@@ -89,8 +90,9 @@ describe('elections dataset', () => {
     expect(electionBin(18)).toBe(1);
     expect(electionBin(30)).toBe(1);
     expect(electionBinLabel(0)).toBe('No date set');
-    expect(electionColor('USA', now)).toBe('#8cff7a');
-    expect(electionColor('ZZZ', now)).toBe('var(--land)');
+    expect(electionColor('USA', now)).toBe(ELECTION_COLORS[4]);
+    // No row at all is "no data", drawn as a hatch, not the same as a country with no date set.
+    expect(electionColor('ZZZ', now)).toBe(NO_DATA_FILL);
   });
 
   it('formats dates at the precision known', () => {

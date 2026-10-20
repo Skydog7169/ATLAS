@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 export interface SectionNavItem {
-  /** Id of the section's h4 inside the panel body. */
+  /** Id of the section's heading inside the panel body. */
   id: string;
   label: string;
 }

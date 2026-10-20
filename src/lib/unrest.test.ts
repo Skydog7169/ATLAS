@@ -4,11 +4,12 @@ import unrestJson from '../data/unrest.json';
 import { UNREST, UNREST_BY_ID, unrestForCountry } from '../data/unrest';
 import { COUNTRY_BY_ISO } from './countries';
 import { CONFLICT_BY_ID } from '../data/conflicts';
-import { UNREST_COLOR, UNREST_KIND_LABEL, maxUnrestIntensity, unrestColor, unrestDossier, unrestSummary } from './unrest';
+import { UNREST_KIND_LABEL, maxUnrestIntensity, unrestColor, unrestDossier, unrestSummary } from './unrest';
 import { CHANGES, changesForCountry, watchlistOnly } from './feed';
 import { search } from './search';
 import { parse, serialize, DEFAULT_STATE } from './urlState';
 import { countryDossier } from './dossier';
+import { unrestFillColor } from './palette';
 
 describe('unrest dataset', () => {
   it('validates, has unique ids and resolves every ISO code', () => {
@@ -39,7 +40,8 @@ describe('unrest dataset', () => {
     expect(unrestSummary('BRA')).toBeNull();
     const kenya = maxUnrestIntensity('KEN')!;
     expect(kenya).toBeTruthy();
-    expect(unrestColor('KEN')).toContain(UNREST_COLOR[kenya]);
+    expect(unrestColor('KEN')).toBe(unrestFillColor(kenya));
+    expect(unrestDossier('KEN')!.rows[0]!.intensity).toBe(kenya);
     expect(unrestSummary('KEN')).toMatch(/Kenya Gen Z protests \(.+\)/);
     expect(unrestForCountry('FRA').map((u) => u.id)).toContain('new-caledonia-unrest');
   });
