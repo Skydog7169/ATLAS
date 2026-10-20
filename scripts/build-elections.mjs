@@ -30,13 +30,17 @@ const ALIAS = {
   syria: 'SYR', iran: 'IRN', palestine: 'PSE', 'east timor': 'TLS', 'timor-leste': 'TLS', brunei: 'BRN', micronesia: 'FSM', 'federated states of micronesia': 'FSM', 'saint kitts and nevis': 'KNA',
   'saint lucia': 'LCA', 'saint vincent and the grenadines': 'VCT', bahamas: 'BHS', 'the bahamas': 'BHS', 'trinidad and tobago': 'TTO', türkiye: 'TUR', turkey: 'TUR', kosovo: 'UNK', moldova: 'MDA',
   bolivia: 'BOL', venezuela: 'VEN', tanzania: 'TZA', myanmar: 'MMR', burma: 'MMR', netherlands: 'NLD', 'the netherlands': 'NLD', philippines: 'PHL', 'marshall islands': 'MHL',
-  'solomon islands': 'SLB', maldives: 'MDV', 'sahrawi arab democratic republic': 'ESH', 'western sahara': 'ESH', 'hong kong': 'HKG', macau: 'MAC',
+  'solomon islands': 'SLB', maldives: 'MDV', 'hong kong': 'HKG', macau: 'MAC',
   'united states of america': 'USA', 'russian federation': 'RUS', 'republic of korea': 'KOR', 'viet nam': 'VNM', 'the republic of north macedonia': 'MKD',
 };
 
+/** Territories with no national elections of their own; the Sahrawi Republic's votes in the Tindouf camps are not Western Sahara's. */
+const NO_NATIONAL_ELECTIONS = new Set(['ESH']);
+
 function isoFor(name) {
   const key = name.toLowerCase().trim();
-  return BY_NAME.get(key) ?? ALIAS[key] ?? null;
+  const iso = BY_NAME.get(key) ?? ALIAS[key] ?? null;
+  return iso && NO_NATIONAL_ELECTIONS.has(iso) ? null : iso;
 }
 const MONTHS = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, sept: 9, oct: 10, nov: 11, dec: 12 };
 

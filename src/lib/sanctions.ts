@@ -13,7 +13,10 @@ export interface SanctionsRegime {
 
 export interface SanctionsRow {
   iso: string;
+  /** Regimes that target the country. */
   regimes: SanctionsRegime[];
+  /** Regimes filed under the country that protect it and are aimed at others (Russia over Crimea, separatists in Transnistria). */
+  concerns?: Array<SanctionsRegime & { aimedAt: string }>;
 }
 
 interface SanctionsFile {
@@ -43,6 +46,19 @@ export function sanctionsColor(iso: string): string {
   return SANCTIONS_COLORS[sanctionsBin(SANCTIONS_BY_ISO.get(iso)?.regimes.length ?? 0)] ?? 'var(--land)';
 }
 
+/**
+ * Comprehensive embargoes: OFAC prohibits virtually all trade and dealings
+ * with these countries, which a regime count understates (Cuba has one
+ * programme). Drawn hatched over the count colour. Curated; see
+ * https://ofac.treasury.gov/faqs/topic/1631 (comprehensive country programmes).
+ */
+export const COMPREHENSIVE_EMBARGOES: ReadonlySet<string> = new Set(['CUB', 'IRN', 'PRK']);
+
+export function sanctionsFill(iso: string): { fill: string; hatch?: string } {
+  const fill = sanctionsColor(iso);
+  return COMPREHENSIVE_EMBARGOES.has(iso) ? { fill, hatch: SANCTIONS_COLORS[SANCTIONS_COLORS.length - 1] } : { fill };
+}
+
 export function sanctionsBinLabel(i: number): string {
   const lo = SANCTIONS_BINS[i] ?? 0;
   const hi = SANCTIONS_BINS[i + 1];
@@ -54,13 +70,13 @@ export function sanctionsBinLabel(i: number): string {
 /** Short tooltip line: "UN · US · EU×3". */
 export function sanctionsSummary(iso: string): string | null {
   const row = SANCTIONS_BY_ISO.get(iso);
-  if (!row) return null;
+  if (!row || row.regimes.length === 0) return null;
   const counts = new Map<SanctionsAuthority, number>();
   for (const r of row.regimes) counts.set(r.authority, (counts.get(r.authority) ?? 0) + 1);
   return (['UN', 'US', 'EU'] as const)
     .filter((a) => counts.has(a))
     .map((a) => (counts.get(a)! > 1 ? `${a}×${counts.get(a)}` : a))
-    .join(' · ');
+    .join(' · ') + (COMPREHENSIVE_EMBARGOES.has(iso) ? ' · comprehensive US embargo' : '');
 }
 
 export function sanctionsDossier(iso: string): DossierExtra | null {
@@ -70,6 +86,12 @@ export function sanctionsDossier(iso: string): DossierExtra | null {
     title: `Sanctions · ${row?.regimes.length ?? 0}`,
     rows: (row?.regimes ?? []).map((r) => ({ label: r.name, value: r.authority, href: r.url })),
     empty: 'No UN, US or EU regime targets this country.',
+    secondary: row?.concerns?.length
+      ? {
+          title: `Regimes concerning this country (aimed at others) · ${row.concerns.length}`,
+          rows: row.concerns.map((r) => ({ label: r.name, value: r.authority, href: r.url, note: r.aimedAt })),
+        }
+      : undefined,
     footnote: `OFAC, EU Sanctions Map and UN Security Council regimes, fetched ${formatDate(SANCTIONS.fetchedAt)}.`,
   };
 }

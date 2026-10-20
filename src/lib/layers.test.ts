@@ -4,8 +4,8 @@ import { ElectionsFileSchema, NuclearFileSchema, SanctionsFileSchema } from '../
 import sanctionsJson from '../data/sanctions.generated.json';
 import electionsJson from '../data/elections.json';
 import nuclearJson from '../data/nuclear.json';
-import { SANCTIONS, SANCTIONS_BY_ISO, SANCTIONS_COLORS, sanctionsBin, sanctionsBinLabel, sanctionsColor, sanctionsSummary } from './sanctions';
-import { ELECTIONS, ELECTION_COLORS, electionBin, electionBinLabel, electionColor, formatElectionDate, monthsUntil, electionSummary } from './elections';
+import { SANCTIONS, SANCTIONS_BY_ISO, SANCTIONS_COLORS, sanctionsBin, sanctionsBinLabel, sanctionsColor, sanctionsFill, sanctionsSummary } from './sanctions';
+import { ELECTIONS, ELECTION_COLORS, electionBin, electionBinLabel, electionColor, electionsDossier, formatElectionDate, monthsUntil, monthsUntilForLabel, electionSummary } from './elections';
 import { NO_DATA_FILL } from './palette';
 import { NUCLEAR, NUCLEAR_BY_ISO, nuclearColor, nuclearCount, nuclearSummary, testsFor } from './nuclear';
 
@@ -26,6 +26,19 @@ describe('sanctions dataset', () => {
     expect(SANCTIONS_BY_ISO.has('FRA')).toBe(false);
   });
 
+  it('files regimes that protect a country as concerns, not as sanctions against it', () => {
+    for (const iso of ['UKR', 'MDA']) {
+      const row = SANCTIONS_BY_ISO.get(iso)!;
+      expect(row.regimes, `${iso} targeting regimes`).toHaveLength(0);
+      expect(row.concerns!.length).toBeGreaterThan(0);
+      expect(sanctionsColor(iso)).toBe('var(--land)');
+      expect(sanctionsSummary(iso)).toBeNull();
+    }
+    expect(SANCTIONS_BY_ISO.get('UKR')!.concerns).toHaveLength(3);
+    expect(sanctionsFill('CUB').hatch).toBeDefined();
+    expect(sanctionsFill('RUS').hatch).toBeUndefined();
+  });
+
   it('bins and summarises', () => {
     expect([0, 1, 2, 3, 4, 5, 9].map(sanctionsBin)).toEqual([0, 1, 2, 3, 3, 4, 4]);
     expect(sanctionsBinLabel(0)).toBe('No country regime');
@@ -34,9 +47,21 @@ describe('sanctions dataset', () => {
     expect(sanctionsBinLabel(4)).toBe('5+ regimes');
     expect(sanctionsColor('FRA')).toBe('var(--land)');
     expect(sanctionsColor('RUS')).toBe(SANCTIONS_COLORS[4]);
-    expect(sanctionsSummary('PRK')).toBe('UN · US · EU');
+    expect(sanctionsSummary('PRK')).toBe('UN · US · EU · comprehensive US embargo');
     expect(sanctionsSummary('RUS')).toMatch(/^US×\d · EU×\d$/);
     expect(sanctionsSummary('FRA')).toBeNull();
+  });
+});
+
+describe('election rows say what kind of vote they are', () => {
+  it('qualifies non-competitive votes, keeps the year-only date open until the year ends and drops echo notes', () => {
+    expect(electionSummary('CHN', new Date('2026-10-20T00:00:00Z'))).toMatch(/^Legislative election \(indirect, non-competitive\) Mar 2028/);
+    expect(ELECTIONS.rows.some((r) => r.iso === 'ESH')).toBe(false);
+    expect(monthsUntilForLabel('2026', new Date('2026-10-20T00:00:00Z'))).toBe(0);
+    expect(monthsUntilForLabel('2025', new Date('2026-10-20T00:00:00Z'))).toBeLessThan(0);
+    const ukr = electionsDossier('UKR')!.rows[0]!;
+    expect(ukr.value).toBe('No date set');
+    expect(ukr.note).toMatch(/martial law/);
   });
 });
 
@@ -61,7 +86,9 @@ describe('elections dataset', () => {
     expect([null, -1, 0, 2, 3, 5, 6, 11, 12, 23, 24, 60].map(electionBin)).toEqual([0, 0, 4, 4, 3, 3, 2, 2, 1, 1, 1, 1]);
     expect(electionBinLabel(4)).toBe('Within 3 months');
     expect(electionBinLabel(3)).toBe('3–6 months');
-    expect(electionBinLabel(1)).toBe('24+ months away');
+    expect(electionBinLabel(1)).toBe('12+ months away');
+    expect(electionBin(18)).toBe(1);
+    expect(electionBin(30)).toBe(1);
     expect(electionBinLabel(0)).toBe('No date set');
     expect(electionColor('USA', now)).toBe(ELECTION_COLORS[4]);
     // No row at all is "no data", drawn as a hatch, not the same as a country with no date set.

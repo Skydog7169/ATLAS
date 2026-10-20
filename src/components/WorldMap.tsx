@@ -50,6 +50,8 @@ export interface CountryFill {
   /** When set, alternating diagonal stripes of two colours (a country in both compared blocs). */
   stripes?: [string, string];
   dim?: boolean;
+  /** When set, a dashed outline in this colour over the fill (a party to a conflict fought abroad). */
+  outline?: string;
 }
 
 interface Props {
@@ -115,6 +117,8 @@ export const CountryLayer = memo(function CountryLayer({ features, paths, fillFo
         d={paths[i]}
         fill={fill}
         opacity={style.dim ? 0.55 : 1}
+        style={style.outline ? { ['--outline' as string]: style.outline } : undefined}
+        data-outline={style.outline ? true : undefined}
         data-iso={iso ?? undefined}
         data-selected={iso !== null && iso === selectedIso}
         data-neutral={iso === null}
@@ -418,7 +422,8 @@ export default function WorldMap({
                     rx={1.5}
                     fill={style.stripes ? style.stripes[0] : (style.hatch ?? style.fill)}
                     opacity={style.dim ? 0.6 : 1}
-                    stroke={m.iso === selectedIso ? 'var(--fg)' : undefined}
+                    stroke={m.iso === selectedIso ? 'var(--fg)' : style.outline}
+                    strokeDasharray={style.outline && m.iso !== selectedIso ? '2 1.5' : undefined}
                     onClick={() => onCountryClick(m.iso)}
                     onPointerEnter={(e) => onHover({ label: m.name, iso: m.iso }, e.clientX, e.clientY)}
                     onPointerLeave={() => onHover(null, 0, 0)}

@@ -1,7 +1,10 @@
 [
   {
     "id": "russia-ukraine",
-    "name": "Russia–Ukraine war",
+    "name": "Ukraine: Russian invasion",
+    "aliases": [
+      "Russia–Ukraine war"
+    ],
     "type": "interstate",
     "since": 2014,
     "location": [
@@ -9,6 +12,10 @@
       48.1
     ],
     "countries": [
+      "UKR",
+      "RUS"
+    ],
+    "theatre": [
       "UKR",
       "RUS"
     ],
@@ -231,7 +238,10 @@
   },
   {
     "id": "sudan",
-    "name": "Sudan civil war",
+    "name": "Sudan: civil war",
+    "aliases": [
+      "Sudan civil war"
+    ],
     "type": "civil-war",
     "since": 2023,
     "location": [
@@ -243,7 +253,8 @@
     ],
     "parties": [
       "Sudanese Armed Forces (SAF)",
-      "Rapid Support Forces (RSF)"
+      "Rapid Support Forces (RSF)",
+      "SPLM-North (al-Hilu), allied with the RSF"
     ],
     "summary": "A power struggle between the army and the paramilitary RSF erupted into open war in Khartoum in April 2023. It has produced the world’s largest displacement crisis, famine conditions, and mass atrocities in Darfur.",
     "actors": [
@@ -304,7 +315,7 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
-        "date": "2026-10-07",
+        "date": "2026-10-06",
         "kind": "collapse",
         "summary": "Army chief al-Burhan rejected talks and vowed to retake all RSF-held territory.",
         "sources": [
@@ -400,7 +411,10 @@
   },
   {
     "id": "gaza",
-    "name": "Israel–Hamas war (Gaza)",
+    "name": "Gaza: Israel–Hamas war",
+    "aliases": [
+      "Israel–Hamas war (Gaza)"
+    ],
     "type": "asymmetric",
     "since": 2023,
     "location": [
@@ -409,6 +423,9 @@
     ],
     "countries": [
       "ISR",
+      "PSE"
+    ],
+    "theatre": [
       "PSE"
     ],
     "parties": [
@@ -613,7 +630,10 @@
   },
   {
     "id": "israel-lebanon",
-    "name": "Israel–Lebanon war",
+    "name": "Lebanon: Israel–Hezbollah war",
+    "aliases": [
+      "Israel–Lebanon war"
+    ],
     "type": "asymmetric",
     "since": 2023,
     "location": [
@@ -624,9 +644,13 @@
       "LBN",
       "ISR"
     ],
+    "theatre": [
+      "LBN"
+    ],
     "parties": [
       "Israel",
-      "Hezbollah"
+      "Hezbollah",
+      "Lebanese government and army"
     ],
     "summary": "Hezbollah opened a front in support of Hamas in October 2023. Israel escalated in September 2024 with pager attacks, the killing of Hassan Nasrallah and a ground incursion into southern Lebanon.",
     "actors": [
@@ -808,7 +832,10 @@
   },
   {
     "id": "iran-israel",
-    "name": "US–Israel war with Iran",
+    "name": "Iran: US–Israel war",
+    "aliases": [
+      "US–Israel war with Iran"
+    ],
     "type": "interstate",
     "since": 2024,
     "location": [
@@ -819,6 +846,10 @@
       "IRN",
       "ISR",
       "USA"
+    ],
+    "theatre": [
+      "IRN",
+      "ISR"
     ],
     "parties": [
       "Iran and the IRGC",
@@ -1008,7 +1039,10 @@
   },
   {
     "id": "yemen",
-    "name": "Yemen war (Houthis–Saudi Arabia)",
+    "name": "Yemen: civil war (Houthis)",
+    "aliases": [
+      "Yemen war (Houthis–Saudi Arabia)"
+    ],
     "type": "civil-war",
     "since": 2014,
     "location": [
@@ -1019,6 +1053,9 @@
       "YEM",
       "SAU",
       "ISR"
+    ],
+    "theatre": [
+      "YEM"
     ],
     "parties": [
       "Houthis (Ansar Allah)",
@@ -1195,7 +1232,10 @@
   },
   {
     "id": "syria",
-    "name": "Syria transition",
+    "name": "Syria: post-Assad violence",
+    "aliases": [
+      "Syria transition"
+    ],
     "type": "civil-war",
     "since": 2011,
     "location": [
@@ -1206,6 +1246,9 @@
       "SYR",
       "ISR",
       "TUR"
+    ],
+    "theatre": [
+      "SYR"
     ],
     "parties": [
       "Transitional government (former HTS)",
@@ -1361,7 +1404,10 @@
   },
   {
     "id": "myanmar",
-    "name": "Myanmar civil war",
+    "name": "Myanmar: civil war",
+    "aliases": [
+      "Myanmar civil war"
+    ],
     "type": "civil-war",
     "since": 2021,
     "location": [
@@ -1372,8 +1418,8 @@
       "MMR"
     ],
     "parties": [
-      "Military junta (State Administration Council)",
-      "People’s Defence Forces and ethnic armed organisations"
+      "Military government (SAC) and USDP",
+      "National Unity Government, People’s Defence Forces and ethnic armed organisations"
     ],
     "summary": "The February 2021 coup triggered nationwide armed resistance. Ethnic armies and the opposition National Unity Government’s forces have taken large parts of the border regions, and the junta has responded with air strikes and mass conscription.",
     "actors": [
@@ -1514,7 +1560,10 @@
   },
   {
     "id": "sahel",
-    "name": "Central Sahel insurgency",
+    "name": "Central Sahel: jihadist insurgency",
+    "aliases": [
+      "Central Sahel insurgency"
+    ],
     "type": "insurgency",
     "since": 2012,
     "location": [
@@ -1529,7 +1578,8 @@
     "parties": [
       "JNIM (al-Qaeda affiliate)",
       "Islamic State Sahel Province",
-      "Mali, Burkina Faso and Niger armed forces with Russia’s Africa Corps"
+      "Mali, Burkina Faso and Niger armed forces with Russia’s Africa Corps",
+      "Azawad Liberation Front (Tuareg separatists)"
     ],
     "summary": "Jihadist insurgencies that began in northern Mali in 2012 have spread across Burkina Faso and Niger and towards coastal West Africa. Military juntas expelled French and UN forces and brought in Russian contractors.",
     "actors": [
@@ -1668,7 +1718,10 @@
   },
   {
     "id": "drc-east",
-    "name": "Eastern DR Congo (M23)",
+    "name": "Eastern DR Congo: M23 rebellion",
+    "aliases": [
+      "Eastern DR Congo (M23)"
+    ],
     "type": "insurgency",
     "since": 2021,
     "location": [
@@ -1680,6 +1733,9 @@
       "RWA",
       "UGA",
       "BDI"
+    ],
+    "theatre": [
+      "COD"
     ],
     "parties": [
       "M23 / Congo River Alliance (backed by Rwanda)",
@@ -1859,7 +1915,10 @@
   },
   {
     "id": "somalia",
-    "name": "Somalia (al-Shabaab)",
+    "name": "Somalia: insurgency (al-Shabaab)",
+    "aliases": [
+      "Somalia (al-Shabaab)"
+    ],
     "type": "insurgency",
     "since": 2006,
     "location": [
@@ -1871,7 +1930,8 @@
     ],
     "parties": [
       "Al-Shabaab",
-      "Federal Government of Somalia with AU mission (AUSSOM) and US air support"
+      "Federal Government of Somalia with AU mission (AUSSOM) and US air support",
+      "Puntland and Jubaland administrations, at odds with Mogadishu"
     ],
     "summary": "Al-Qaeda’s East African affiliate controls much of rural southern Somalia and stages attacks in Mogadishu. The AU mission was re-hatted as AUSSOM in January 2025 with uncertain funding.",
     "actors": [
@@ -1989,6 +2049,9 @@
     "countries": [
       "ETH",
       "ERI"
+    ],
+    "theatre": [
+      "ETH"
     ],
     "parties": [
       "Federal government and allied regional forces",
@@ -2145,7 +2208,10 @@
   },
   {
     "id": "south-sudan",
-    "name": "South Sudan",
+    "name": "South Sudan: civil conflict",
+    "aliases": [
+      "South Sudan"
+    ],
     "type": "civil-war",
     "since": 2013,
     "location": [
@@ -2279,7 +2345,10 @@
   },
   {
     "id": "haiti",
-    "name": "Haiti gang conflict",
+    "name": "Haiti: gang conflict",
+    "aliases": [
+      "Haiti gang conflict"
+    ],
     "type": "criminal-violence",
     "since": 2021,
     "location": [
@@ -2291,7 +2360,7 @@
     ],
     "parties": [
       "Viv Ansanm gang coalition",
-      "Haitian National Police and the multinational force"
+      "Haitian National Police and the UN-authorised Gang Suppression Force"
     ],
     "summary": "Gangs control most of Port-au-Prince and major roads, and have displaced over a million people. A Kenya-led Multinational Security Support mission arrived in 2024 but was under-resourced.",
     "actors": [
@@ -2416,7 +2485,10 @@
   },
   {
     "id": "nigeria",
-    "name": "Nigeria (north-east and north-west)",
+    "name": "Nigeria: insurgency and banditry",
+    "aliases": [
+      "Nigeria (north-east and north-west)"
+    ],
     "type": "insurgency",
     "since": 2009,
     "location": [
@@ -2554,7 +2626,10 @@
   },
   {
     "id": "mozambique",
-    "name": "Cabo Delgado insurgency",
+    "name": "Mozambique: Cabo Delgado insurgency",
+    "aliases": [
+      "Cabo Delgado insurgency"
+    ],
     "type": "insurgency",
     "since": 2017,
     "location": [
@@ -2663,7 +2738,10 @@
   },
   {
     "id": "colombia",
-    "name": "Colombia armed groups",
+    "name": "Colombia: armed-group conflict",
+    "aliases": [
+      "Colombia armed groups"
+    ],
     "type": "insurgency",
     "since": 2016,
     "location": [
@@ -2830,7 +2908,10 @@
   },
   {
     "id": "mexico",
-    "name": "Mexico cartel violence",
+    "name": "Mexico: cartel violence",
+    "aliases": [
+      "Mexico cartel violence"
+    ],
     "type": "criminal-violence",
     "since": 2006,
     "location": [
@@ -2949,7 +3030,10 @@
   },
   {
     "id": "india-pakistan",
-    "name": "India–Pakistan (Kashmir)",
+    "name": "India–Pakistan: Kashmir standoff",
+    "aliases": [
+      "India–Pakistan (Kashmir)"
+    ],
     "type": "interstate",
     "since": 1947,
     "location": [
@@ -3071,7 +3155,10 @@
   },
   {
     "id": "pakistan-afghanistan",
-    "name": "Pakistan–Afghanistan war",
+    "name": "Pakistan–Afghanistan: border war",
+    "aliases": [
+      "Pakistan–Afghanistan war"
+    ],
     "type": "interstate",
     "since": 2021,
     "location": [
@@ -3218,7 +3305,10 @@
   },
   {
     "id": "libya",
-    "name": "Libya",
+    "name": "Libya: rival-government conflict",
+    "aliases": [
+      "Libya"
+    ],
     "type": "civil-war",
     "since": 2011,
     "location": [
@@ -3399,7 +3489,10 @@
   },
   {
     "id": "thailand-cambodia",
-    "name": "Thailand–Cambodia border",
+    "name": "Thailand–Cambodia: border dispute",
+    "aliases": [
+      "Thailand–Cambodia border"
+    ],
     "type": "interstate",
     "since": 2025,
     "location": [
@@ -3556,7 +3649,10 @@
   },
   {
     "id": "taiwan-strait",
-    "name": "Taiwan Strait",
+    "name": "Taiwan Strait: cross-strait standoff",
+    "aliases": [
+      "Taiwan Strait"
+    ],
     "type": "flashpoint",
     "since": 1949,
     "location": [
@@ -3688,7 +3784,10 @@
   },
   {
     "id": "korean-peninsula",
-    "name": "Korean Peninsula",
+    "name": "Korean Peninsula: standoff",
+    "aliases": [
+      "Korean Peninsula"
+    ],
     "type": "flashpoint",
     "since": 1953,
     "location": [
@@ -3843,7 +3942,10 @@
   },
   {
     "id": "south-china-sea",
-    "name": "South China Sea",
+    "name": "South China Sea: maritime disputes",
+    "aliases": [
+      "South China Sea"
+    ],
     "type": "flashpoint",
     "since": 2012,
     "location": [
@@ -3855,6 +3957,7 @@
       "PHL",
       "VNM"
     ],
+    "theatre": [],
     "parties": [
       "China",
       "Philippines",
@@ -3989,7 +4092,10 @@
   },
   {
     "id": "armenia-azerbaijan",
-    "name": "Armenia–Azerbaijan peace process",
+    "name": "Armenia–Azerbaijan: border standoff",
+    "aliases": [
+      "Armenia–Azerbaijan peace process"
+    ],
     "type": "flashpoint",
     "since": 2020,
     "location": [
@@ -4168,7 +4274,10 @@
   },
   {
     "id": "venezuela-us",
-    "name": "Venezuela–United States",
+    "name": "Venezuela–US: military confrontation",
+    "aliases": [
+      "Venezuela–United States"
+    ],
     "type": "interstate",
     "since": 2025,
     "location": [
@@ -4178,6 +4287,9 @@
     "countries": [
       "VEN",
       "USA"
+    ],
+    "theatre": [
+      "VEN"
     ],
     "parties": [
       "United States",
@@ -4310,7 +4422,10 @@
   },
   {
     "id": "cameroon-anglophone",
-    "name": "Cameroon Anglophone crisis",
+    "name": "Cameroon: Anglophone crisis",
+    "aliases": [
+      "Cameroon Anglophone crisis"
+    ],
     "type": "insurgency",
     "since": 2017,
     "location": [
@@ -4434,7 +4549,10 @@
   },
   {
     "id": "hormuz",
-    "name": "Strait of Hormuz crisis",
+    "name": "Strait of Hormuz: shipping crisis",
+    "aliases": [
+      "Strait of Hormuz crisis"
+    ],
     "type": "interstate",
     "since": 2026,
     "location": [
@@ -4451,6 +4569,7 @@
       "OMN",
       "USA"
     ],
+    "theatre": [],
     "parties": [
       "Iran and the IRGC Navy",
       "Gulf Cooperation Council states",
@@ -4582,6 +4701,9 @@
       "IRQ",
       "USA"
     ],
+    "theatre": [
+      "IRQ"
+    ],
     "parties": [
       "Popular Mobilization Forces and Islamic Resistance in Iraq",
       "United States and Israel (air strikes)",
@@ -4668,7 +4790,10 @@
   },
   {
     "id": "balochistan",
-    "name": "Balochistan insurgency",
+    "name": "Pakistan: Balochistan insurgency",
+    "aliases": [
+      "Balochistan insurgency"
+    ],
     "type": "insurgency",
     "since": 2004,
     "location": [

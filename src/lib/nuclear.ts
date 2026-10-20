@@ -2,6 +2,8 @@ import raw from '../data/nuclear.json';
 import { BLOC_BY_ID } from '../data/blocs';
 import type { DossierExtra } from './dossier';
 import { formatDate } from './labels';
+import { SOVEREIGN } from './sovereign';
+import { countryName } from './countries';
 
 export type NuclearStatus = 'armed' | 'threshold' | 'hosting' | 'umbrella';
 
@@ -57,6 +59,16 @@ export const NUCLEAR_BY_ISO: ReadonlyMap<string, NuclearRow> = (() => {
       status: 'umbrella',
       note: `${bloc!.shortName} member: covered by the alliance's nuclear deterrent.`,
       sources: NUCLEAR.sources.filter((s) => /nato/i.test(s.name)),
+    });
+  }
+  // Dependent territories drawn on their own (Greenland, Puerto Rico) are covered by their sovereign's deterrent.
+  for (const [iso, t] of Object.entries(SOVEREIGN)) {
+    if (!t.nuclear || out.has(iso) || !out.has(t.sovereign)) continue;
+    out.set(iso, {
+      iso,
+      status: 'umbrella',
+      note: `${t.label}: covered by ${countryName(t.sovereign)}'s ${out.get(t.sovereign)!.status === 'armed' ? 'own nuclear deterrent' : 'nuclear umbrella'}.`,
+      sources: out.get(t.sovereign)!.sources,
     });
   }
   return out;

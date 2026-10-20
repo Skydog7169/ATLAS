@@ -92,8 +92,12 @@ export function exportShare(from: string, to: string): number | null {
   return row.partners.find((p) => p.iso === to)?.share ?? null;
 }
 
+/** Whole percent from 10% up, one decimal below, and '<0.1%' for a real but tiny share, so a listed partner never reads '0%'. */
 export function pct(x: number): string {
-  return `${Math.round(x * 100)}%`;
+  if (x >= 0.1) return `${Math.round(x * 100)}%`;
+  if (x <= 0) return '0%';
+  if (x < 0.001) return '<0.1%';
+  return `${(x * 100).toFixed(1)}%`;
 }
 
 export function tradeSummary(iso: string): string | null {

@@ -10,6 +10,7 @@ export interface ElectionRow {
   /** YYYY, YYYY-MM or YYYY-MM-DD; null when nothing is scheduled. */
   date: string | null;
   type: ElectionType;
+  qualifiers?: Array<'indirect' | 'non-competitive'>;
   deadline?: boolean;
   note?: string;
   sources: Array<{ name: string; url: string }>;
@@ -53,7 +54,8 @@ export function electionBinLabel(i: number): string {
   const idx = ELECTION_BINS.length - i;
   const hi = ELECTION_BINS[idx]!;
   const lo = ELECTION_BINS[idx - 1];
-  if (i === 1) return `${hi}+ months away`;
+  // The open-ended bin starts at the previous bound: everything 12 months or more away.
+  if (i === 1) return `${ELECTION_BINS[ELECTION_BINS.length - 2]}+ months away`;
   return lo === undefined ? `Within ${hi} months` : `${lo}–${hi} months`;
 }
 
@@ -71,6 +73,23 @@ export function formatElectionDate(row: ElectionRow): string {
   return row.deadline ? `by ${text}` : text;
 }
 
+/** "Legislative election (indirect, non-competitive)". */
+export function electionTypeLabel(row: ElectionRow): string {
+  return ELECTION_TYPE_LABEL[row.type] + (row.qualifiers?.length ? ` (${row.qualifiers.join(', ')})` : '');
+}
+
+/**
+ * Whole months to a partial date, measured to the end of its period when
+ * asking whether it has passed: "2026" is not passed until 2027.
+ */
+export function monthsUntilForLabel(date: string, now: Date = new Date()): number {
+  const months = monthsUntil(date, now);
+  if (months >= 0 || date.length === 10) return months;
+  const [y, m] = date.split('-').map(Number) as [number, number?];
+  const end = m ? Date.UTC(y, m, 1) : Date.UTC(y + 1, 0, 1);
+  return end > now.getTime() ? 0 : months;
+}
+
 export function monthsLabel(months: number): string {
   if (months < 0) return 'passed';
   if (months === 0) return 'this month';
@@ -80,8 +99,8 @@ export function monthsLabel(months: number): string {
 export function electionSummary(iso: string, now: Date = new Date()): string | null {
   const row = ELECTIONS_BY_ISO.get(iso);
   if (!row) return null;
-  if (!row.date) return `${ELECTION_TYPE_LABEL[row.type]}: no date set`;
-  return `${ELECTION_TYPE_LABEL[row.type]} ${formatElectionDate(row)} (${monthsLabel(monthsUntil(row.date, now))})`;
+  if (!row.date) return `${electionTypeLabel(row)}: ${row.note ?? 'no date set'}`;
+  return `${electionTypeLabel(row)} ${formatElectionDate(row)} (${monthsLabel(monthsUntilForLabel(row.date, now))})`;
 }
 
 export function electionsDossier(iso: string, now: Date = new Date()): DossierExtra | null {
@@ -89,7 +108,9 @@ export function electionsDossier(iso: string, now: Date = new Date()): DossierEx
   const rows: DossierExtra['rows'] = [];
   if (row) {
     const first = row.sources[0];
-    rows.push({ label: ELECTION_TYPE_LABEL[row.type], value: row.date ? `${formatElectionDate(row)} · ${monthsLabel(monthsUntil(row.date, now))}` : 'No date set', href: first?.url, note: row.note });
+    const value = row.date ? `${formatElectionDate(row)} · ${monthsLabel(monthsUntilForLabel(row.date, now))}` : 'No date set';
+    // A note that only repeats the value ('No date set') is dropped.
+    rows.push({ label: electionTypeLabel(row), value, href: first?.url, note: row.note && row.note !== value ? row.note : undefined });
   }
   return {
     id: 'elections',
