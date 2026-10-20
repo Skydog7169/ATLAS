@@ -611,6 +611,155 @@ test('provenance: conflict panels open on the latest dated assessment with its s
   await noSeriousA11yIssues(page);
 });
 
+test('navigation: Back steps through panels, Escape and focus follow, the camera follows the URL', async ({ page }) => {
+  await open(page);
+  const panel = page.locator('.panel');
+  const nato = page.getByRole('button', { name: /^NATO —/ });
+  await nato.click();
+  await expect(panel.locator('h2')).toContainText('North Atlantic');
+  // Focus lands on the panel heading, and the panel is a labelled landmark without a live region.
+  await expect(panel.locator('h2')).toBeFocused();
+  await expect(page.getByRole('complementary', { name: /North Atlantic/ })).toBeVisible();
+  expect(await panel.getAttribute('aria-live')).toBeNull();
+
+  // Searching keeps focus out of <body> and moves it into the panel it opens.
+  await page.getByRole('searchbox').fill('germany');
+  await expect(page.locator('.search [role="status"]')).toContainText(/\d+ results?/);
+  await page.keyboard.press('Enter');
+  await expect(panel.locator('h2')).toContainText('Germany');
+  await expect(panel.locator('h2')).toBeFocused();
+  const back = panel.locator('.panel-back');
+  await expect(back).toHaveText(/NATO/);
+  await expect(back).toBeVisible();
+  await back.click();
+  await expect(panel.locator('h2')).toContainText('North Atlantic');
+  await page.goForward();
+  await expect(panel.locator('h2')).toContainText('Germany');
+  await page.goBack();
+  await expect(panel.locator('h2')).toContainText('North Atlantic');
+  await page.goBack();
+  await expect(panel).toHaveCount(0);
+  await expect(page).toHaveURL(/#mode=blocs$/);
+
+  // Escape closes the panel and focus returns to what opened it.
+  await nato.focus();
+  await page.keyboard.press('Enter');
+  await expect(panel.locator('h2')).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(panel).toHaveCount(0);
+  await expect(nato).toBeFocused();
+  // A closed bloc panel stays closed on reload.
+  await expect(page).toHaveURL(/panel=0/);
+  await page.reload({ waitUntil: 'networkidle' });
+  await expect(nato).toHaveAttribute('aria-pressed', 'true');
+  await expect(panel).toHaveCount(0);
+
+  // A hash change moves the camera along with the panel.
+  await open(page, '#mode=blocs&country=FRA');
+  const layer = page.locator('.map-root svg > g').first();
+  await expect(panel.locator('h2')).toContainText('France');
+  await page.waitForTimeout(900);
+  const before = await layer.getAttribute('transform');
+  await page.evaluate(() => (window.location.hash = '#mode=blocs&country=AUS'));
+  await expect(panel.locator('h2')).toContainText('Australia');
+  await expect.poll(() => layer.getAttribute('transform')).not.toBe(before);
+  // Closing returns the camera to where it was before the fly-to.
+  await page.waitForTimeout(900);
+  await panel.getByRole('button', { name: 'Close panel' }).click();
+  await expect.poll(() => layer.getAttribute('transform'), { timeout: 3000 }).not.toMatch(/scale\((?:[3-9]|\d\d)/);
+});
+
+test('navigation: related links keep the user layer, mode switches offer Undo, stale links say so', async ({ page }, testInfo) => {
+  await open(page, '#mode=blocs&layer=sanctions');
+  await page.getByRole('searchbox').fill('serbia anti');
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL(/unrest=serbia-anti-corruption-protests/);
+  await expect(page).toHaveURL(/layer=sanctions/);
+  await expect(page.locator('g.marker[data-shape="triangle"]')).toHaveCount(1);
+
+  await open(page, '#mode=blocs&country=UKR');
+  await page.locator('.panel #dossier-conflicts + ul button').first().click();
+  await expect(page).toHaveURL(/mode=conflicts/);
+  const toast = page.locator('.mode-toast');
+  await expect(toast).toContainText('Switched to Conflicts');
+  await toast.getByRole('button', { name: 'Undo' }).click();
+  await expect(page).toHaveURL(/mode=blocs&country=UKR/);
+  await expect(page.locator('.panel h2')).toContainText('Ukraine');
+
+  await open(page, '#mode=conflicts&conflict=no-such-war');
+  const notice = page.locator('.stale-link');
+  await expect(notice).toContainText('no-such-war');
+  if (testInfo.project.name === 'desktop') {
+    await notice.getByRole('button', { name: 'Search' }).click();
+    await expect(page.getByRole('searchbox')).toHaveValue('no such war');
+    await expect(page.getByRole('searchbox')).toBeFocused();
+  } else {
+    await notice.getByRole('button', { name: 'Dismiss' }).click();
+  }
+  await expect(notice).toHaveCount(0);
+});
+
+test('keyboard: layer menu follows the menu pattern, header buttons show their panel is open, briefing manages focus', async ({ page }, testInfo) => {
+  await open(page, '#mode=blocs');
+  const trigger = page.locator('.map-controls .icon-btn[aria-label="Data layers"]');
+  await trigger.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('.layer-list [role="menuitemradio"][aria-checked="true"]')).toBeFocused();
+  await page.keyboard.press('ArrowDown');
+  await expect(page.locator('.layer-list button[data-layer="displacement"]')).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL(/layer=displacement/);
+  await expect(trigger).toBeFocused();
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Escape');
+  await expect(page.locator('.layer-list')).toHaveCount(0);
+  await expect(trigger).toBeFocused();
+
+  if (testInfo.project.name === 'desktop') {
+    const changes = page.locator('.header .icon-btn[aria-label="Latest changes"]');
+    const watch = page.locator('.header .icon-btn[aria-label="Watchlist"]');
+    await changes.click();
+    await expect(changes).toHaveAttribute('aria-pressed', 'true');
+    const on = await changes.evaluate((el) => getComputedStyle(el).borderColor);
+    const off = await watch.evaluate((el) => getComputedStyle(el).borderColor);
+    expect(on).not.toBe(off);
+    await page.keyboard.press('Escape');
+
+    // Escape cancels compare picking (and only that), returning focus to the chip.
+    await open(page, '#mode=blocs&bloc=nato');
+    await page.getByRole('button', { name: 'VS Compare' }).click();
+    await expect(page.getByRole('button', { name: 'Pick a bloc…' })).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('button', { name: 'VS Compare' })).toBeFocused();
+    await expect(page.locator('.panel h2')).toContainText('North Atlantic');
+    // Clicking the first bloc again while picking cancels instead of dropping it.
+    await page.getByRole('button', { name: 'VS Compare' }).click();
+    await page.getByRole('button', { name: /^NATO —/ }).click();
+    await expect(page).toHaveURL(/bloc=nato/);
+    await expect(page.getByRole('button', { name: 'VS Compare' })).toBeVisible();
+  }
+
+  // Briefing takes focus onto its card, announces a short line and restores the view on exit.
+  // (On phones the open panel sheet covers the map controls, so start from a closed one.)
+  const phone = testInfo.project.name === 'phone';
+  await open(page, phone ? '#mode=blocs&bloc=nato&panel=0' : '#mode=blocs&bloc=nato');
+  const start = page.getByRole('button', { name: 'Start briefing' });
+  await start.click();
+  const card = page.getByRole('region', { name: 'Briefing' });
+  await expect(card.locator('h2')).toBeFocused();
+  await expect(card.locator('[role="status"]')).toContainText(/^1 of \d+: /);
+  expect(await card.getAttribute('aria-live')).toBeNull();
+  await page.keyboard.press('Escape');
+  // The view the presenter started from comes back, panel included.
+  if (phone) {
+    await expect(page).toHaveURL(/mode=blocs&bloc=nato&panel=0$/);
+    await expect(start).toBeFocused();
+  } else {
+    await expect(page).toHaveURL(/mode=blocs&bloc=nato$/);
+    await expect(page.locator('.panel h2')).toContainText('North Atlantic');
+  }
+});
+
 /**
  * axe's colour-contrast rule gives up ("incomplete") on text over the HUD
  * pseudo-elements (scanlines, corner brackets), so the default scan cannot see

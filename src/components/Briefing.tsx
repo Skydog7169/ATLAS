@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { HistoryEntry } from '../data/types';
 import { INTENSITY_COLOR, formatDate } from '../lib/labels';
 import { shortProvenance } from '../lib/sources';
@@ -36,14 +36,34 @@ export default function Briefing({ items, intervalMs = 9000, onShow, onOpen, onE
   const [paused, setPaused] = useState(false);
   const onShowRef = useRef(onShow);
   onShowRef.current = onShow;
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const exited = useRef(false);
   const item = items[index] ?? null;
+
+  // Exit once, whichever of Escape, the button or leaving full screen gets there first.
+  const exit = useCallback(() => {
+    if (exited.current) return;
+    exited.current = true;
+    onExit();
+  }, [onExit]);
 
   useEffect(() => {
     const el = document.documentElement;
     el.requestFullscreen?.().catch(() => undefined);
+    // In real full screen the browser takes the first Escape to leave it; treat that as exiting the briefing.
+    const onFullscreen = () => {
+      if (!document.fullscreenElement) exit();
+    };
+    document.addEventListener('fullscreenchange', onFullscreen);
     return () => {
+      document.removeEventListener('fullscreenchange', onFullscreen);
       if (document.fullscreenElement) document.exitFullscreen?.().catch(() => undefined);
     };
+  }, [exit]);
+
+  // The header is hidden during a briefing; land focus on the card so it is announced.
+  useEffect(() => {
+    headingRef.current?.focus({ preventScroll: true });
   }, []);
 
   useEffect(() => {
@@ -58,22 +78,25 @@ export default function Briefing({ items, intervalMs = 9000, onShow, onOpen, onE
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onExit();
-      else if (e.key === ' ') {
+      if (e.key === 'Escape') {
+        // Claimed so the app-level Escape doesn't also close something underneath.
+        e.preventDefault();
+        exit();
+      } else if (e.key === ' ') {
         e.preventDefault();
         setPaused((p) => !p);
       } else if (e.key === 'ArrowRight') setIndex((i) => (i + 1) % Math.max(1, items.length));
       else if (e.key === 'ArrowLeft') setIndex((i) => (i - 1 + items.length) % Math.max(1, items.length));
     };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [items.length, onExit]);
+    window.addEventListener('keydown', onKey, true);
+    return () => window.removeEventListener('keydown', onKey, true);
+  }, [items.length, exit]);
 
   if (!item) {
     return (
       <div className="brief-card frame" role="status">
         <p>Nothing to brief: no high-intensity conflict is live and the watchlist is empty.</p>
-        <button className="text-btn" onClick={onExit}>
+        <button className="text-btn" onClick={exit}>
           Exit
         </button>
       </div>
@@ -81,7 +104,25 @@ export default function Briefing({ items, intervalMs = 9000, onShow, onOpen, onE
   }
   const latest = item.conflict?.history[0];
   return (
-    <div className="brief-card frame" role="region" aria-label="Briefing" aria-live="polite" onPointerEnter={() => setPaused(true)} onPointerLeave={() => setPaused(false)}>
+    <div
+      className="brief-card frame"
+      role="region"
+      aria-label="Briefing"
+      onPointerEnter={() => setPaused(true)}
+      onPointerLeave={() => setPaused(false)}
+      // Keyboard and screen-reader users get the same pause as a hovering pointer
+      // (the heading takes focus on entry, which isn't a request to pause).
+      onFocus={(e) => {
+        if (e.target !== headingRef.current) setPaused(true);
+      }}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setPaused(false);
+      }}
+    >
+      {/* Each advance announces one short line; the card itself is read on demand. */}
+      <p className="sr-only" role="status">
+        {`${index + 1} of ${items.length}: ${item.title}, ${item.eyebrow}`}
+      </p>
       <div className="brief-head">
         <span className="eyebrow" style={{ color: item.color }}>
           {item.eyebrow}
@@ -91,8 +132,11 @@ export default function Briefing({ items, intervalMs = 9000, onShow, onOpen, onE
         <span className="brief-count mono">
           {index + 1} / {items.length}
         </span>
+        <span className="brief-hint mono">Esc to exit</span>
       </div>
-      <h2>{item.title}</h2>
+      <h2 ref={headingRef} tabIndex={-1}>
+        {item.title}
+      </h2>
       {latest ? (
         <p>
           <span className="label" style={{ color: INTENSITY_COLOR[latest.intensity] }}>
@@ -118,7 +162,7 @@ export default function Briefing({ items, intervalMs = 9000, onShow, onOpen, onE
         <button className="text-btn" onClick={() => onOpen(item)}>
           Open
         </button>
-        <button className="text-btn" onClick={onExit}>
+        <button className="text-btn" onClick={exit}>
           Exit briefing
         </button>
       </div>

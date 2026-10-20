@@ -231,7 +231,7 @@ export default function AboutView({ onClose, closeButton, actions }: { onClose: 
         </p>
         <h3>Keyboard</h3>
         <p className="mono" style={{ fontSize: 12 }}>
-          / search · arrows pan or rotate · + − zoom · 0 reset · Tab through conflict markers, Enter opens · Esc closes the tooltip · briefing: Space pauses, arrows step, Esc exits
+          / search · arrows pan or rotate · + − zoom · 0 reset · Tab through conflict markers, Enter opens · Esc closes the tooltip, then the panel · browser Back steps back through panels, modes and layers · briefing: Space pauses, arrows step, Esc exits
         </p>
         <div className="panel-actions">
           {actions}

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { BLOCS, BLOC_BY_ID } from '../data/blocs';
 import { CONFLICTS, CONFLICT_BY_ID } from '../data/conflicts';
 import { UNREST_BY_ID } from '../data/unrest';
@@ -34,6 +34,9 @@ import TrendChart from './TrendChart';
 import AskPanel from './AskPanel';
 import { AgeBadges, ConfidenceLabel, FreshnessFooter, IntensityBadge, LatestBlock, ProvenanceNote, SourceLinks } from './Provenance';
 import AboutView from './AboutView';
+import SectionNav from './SectionNav';
+import { usePanelFocus } from '../hooks/usePanelFocus';
+import { selectionKey } from '../lib/navHistory';
 
 interface Props {
   selection: Exclude<Selection, null>;
@@ -52,6 +55,8 @@ interface Props {
   onSelectPair: (a: string, b: string | null) => void;
   onSelectUnrest: (id: string) => void;
   onOpenAbout: (anchor?: string) => void;
+  /** The panel this one was reached from, for the "‹ Ukraine" chip; it steps history back. */
+  backTo?: { label: string; onBack: () => void } | null;
 }
 
 function CloseButton({ onClick }: { onClick: () => void }) {
@@ -196,6 +201,17 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
         <StarButton item={{ kind: 'country', id: country.cca3 }} name={country.name} />
         <CloseButton onClick={props.onClose} />
       </div>
+      <SectionNav
+        label="Dossier sections"
+        items={[
+          { id: 'dossier-memberships', label: `Memberships ${memberships.filter((m) => m.membership.status === 'member').length}` },
+          { id: 'dossier-conflicts', label: `Conflicts ${conflicts.length}` },
+          { id: 'dossier-changes', label: `Latest ${changes.length}` },
+          ...extras.map((x) => ({ id: `dossier-${x.id}`, label: x.title })),
+          { id: 'dossier-displacement', label: 'Displacement' },
+          { id: 'dossier-figures', label: 'Figures' },
+        ]}
+      />
       <div className="panel-body dossier" data-sections={dossier.sections.join(' ')}>
         <Muted>
           {profileLine(country)}
@@ -787,7 +803,23 @@ function ConflictView({ conflict, props }: { conflict: Conflict; props: Props })
         <StarButton item={{ kind: 'conflict', id: conflict.id }} name={conflict.name} />
         <CloseButton onClick={props.onClose} />
       </div>
+      <SectionNav
+        label="Conflict sections"
+        items={[
+          { id: 'latest-title', label: 'Latest' },
+          ...(conflict.actors?.length ? [{ id: 'conflict-actors', label: 'Backers' }] : []),
+          { id: 'conflict-peace', label: `Peace ${conflict.peace?.length ?? 0}` },
+          { id: 'conflict-background', label: 'Background' },
+          { id: 'conflict-assessments', label: 'Earlier' },
+          { id: 'conflict-countries', label: 'Countries' },
+        ]}
+      />
       <div className="panel-body">
+        {replay && (
+          <p className="sr-only" role="status">
+            {conflict.name}: {shown ? `${INTENSITY_LABEL[shown.intensity].toLowerCase()} intensity` : 'no assessment'}, {props.month ? formatMonth(props.month) : ''}
+          </p>
+        )}
         <div className="badges">
           <IntensityBadge intensity={(shown ?? conflict).intensity} />
           <span className="badge muted">Since {conflict.since}</span>
@@ -850,7 +882,7 @@ function ConflictView({ conflict, props }: { conflict: Conflict; props: Props })
         </details>
         <h3 id="conflict-assessments">Earlier assessments · {earlier.length}</h3>
         <HistoryList history={earlier} highlight={null} openFirst={false} />
-        <h3>Countries</h3>
+        <h3 id="conflict-countries">Countries</h3>
         <div className="badges">
           {conflict.countries.map((iso) => (
             <button key={iso} className="badge" onClick={() => props.onSelectCountry(iso)} style={{ cursor: 'pointer' }}>
@@ -1334,6 +1366,8 @@ function CompareView({ a, b, props }: { a: Bloc; b: Bloc; props: Props }) {
 
 export default function DetailPanel(props: Props) {
   const { selection } = props;
+  const sectionRef = useRef<HTMLElement>(null);
+  const headingId = usePanelFocus(sectionRef, selectionKey(selection));
   let body: React.ReactNode = null;
   if (selection.kind === 'country') {
     const d = countryDossier(selection.iso);
@@ -1378,7 +1412,13 @@ export default function DetailPanel(props: Props) {
   }
   if (!body) return null;
   return (
-    <section className="panel frame" aria-live="polite">
+    // No aria-live: moving focus to the heading announces a new panel once.
+    <section className="panel frame" role="complementary" aria-labelledby={headingId} ref={sectionRef}>
+      {props.backTo && (
+        <button className="panel-back" onClick={props.backTo.onBack} title={`Back to ${props.backTo.label}`}>
+          <span aria-hidden="true">‹</span> {props.backTo.label}
+        </button>
+      )}
       {body}
     </section>
   );

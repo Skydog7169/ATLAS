@@ -7,6 +7,7 @@ import './styles/fonts.css';
 import './styles/global.css';
 import './styles/first-paint.css';
 import './styles/status.css';
+import './styles/nav.css';
 import './styles/frontdoor.css';
 
 installChunkReload();
