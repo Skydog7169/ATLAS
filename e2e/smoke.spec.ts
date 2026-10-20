@@ -249,8 +249,9 @@ test('data layers: sanctions, elections and nuclear tint the map with legends', 
   await expect(page.locator('path.country[data-iso="POL"]')).toHaveAttribute('fill', '#3b7dd8');
   await expect(page.locator('path.country[data-iso="BRA"]')).toHaveAttribute('fill', 'var(--land)');
 
-  // Off returns to the mode colours and clears the URL.
-  await page.locator('.map-controls .icon-btn[aria-label="Data layers"]').click();
+  // Off returns to the mode colours and clears the URL. With a layer on, the trigger names it.
+  await expect(page.locator('.layer-trigger')).toContainText('Nuclear');
+  await page.getByRole('button', { name: 'Data layers: Nuclear' }).click();
   await page.getByRole('menuitemradio', { name: /^Off/ }).click();
   await expect(page).not.toHaveURL(/layer=/);
   await noSeriousA11yIssues(page);
@@ -355,7 +356,8 @@ test('briefing mode hides the chrome and cycles captions; embed hides the chrome
   await expect(page.locator('.header')).toBeVisible();
   await expect(page).not.toHaveURL(/brief=1/);
   // Opening an item leaves the briefing in that item's panel.
-  await page.getByRole('button', { name: 'Start briefing' }).click();
+  await page.getByRole('button', { name: 'Share and present' }).click();
+  await page.getByRole('menuitem', { name: /Start briefing/ }).click();
   await page.getByRole('region', { name: 'Briefing' }).getByRole('button', { name: 'Open' }).click();
   await expect(page.locator('.panel h2')).toBeVisible();
   await expect(page).toHaveURL(/conflict=/);
@@ -368,14 +370,16 @@ test('briefing mode hides the chrome and cycles captions; embed hides the chrome
   await expect(badge).toBeVisible();
   expect(await badge.getAttribute('href')).toMatch(/layer=sanctions/);
   expect(await badge.getAttribute('href')).not.toMatch(/embed/);
-  await expect(page.getByRole('button', { name: 'Start briefing' })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Share and present' }).click();
+  await expect(page.getByRole('menuitem', { name: /Start briefing/ })).toHaveCount(0);
   await noSeriousA11yIssues(page);
 });
 
 test('one-tap PNG export downloads a stamped image', async ({ page }) => {
   await open(page, '#layer=displacement');
   const download = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Export PNG' }).click();
+  await page.getByRole('button', { name: 'Share and present' }).click();
+  await page.getByRole('menuitem', { name: /Export PNG/ }).click();
   const file = await download;
   expect(file.suggestedFilename()).toMatch(/^atlas-displacement-\d{4}-\d{2}-\d{2}\.png$/);
   const path = await file.path();
@@ -448,4 +452,75 @@ test('civil unrest: layer tints and marks episodes, panel, dossier row, search a
   await open(page, '#watchlist=1');
   await expect(page.locator('.panel')).toContainText('Unrest · 1');
   await noSeriousA11yIssues(page);
+});
+
+test('map state: the strip names every overlay, each piece clears, and Reset returns to the default map', async ({ page }) => {
+  await open(page, '#mode=conflicts&t=2026-03&layer=sanctions&conflict=sudan');
+  const strip = page.getByRole('navigation', { name: 'Map state' });
+  // On phones the open panel covers the legend; close it to read the strip.
+  if ((page.viewportSize()?.width ?? 0) <= 820) await page.getByRole('button', { name: 'Close panel' }).click();
+  else await expect(strip).toContainText('Focus: Sudan civil war');
+  await expect(strip).toContainText('Conflicts');
+  await expect(strip).toContainText('Overlay: Sanctions');
+  await expect(strip).toContainText('Replay Mar 2026');
+  await strip.getByRole('button', { name: 'Return to live' }).click();
+  await expect(page).not.toHaveURL(/t=2026-03/);
+  await expect(page).toHaveURL(/layer=sanctions/);
+  await strip.getByRole('button', { name: 'Reset' }).click();
+  await expect(page).toHaveURL(/#mode=blocs$/);
+  await expect(strip).toHaveCount(0);
+  await noSeriousA11yIssues(page);
+});
+
+test('map state: the legend clears a layer, and the brand mark is a true reset', async ({ page }) => {
+  await open(page, '#mode=conflicts&layer=displacement');
+  // Conflict markers keep their key under any layer legend.
+  await expect(page.locator('.legend-intensity')).toContainText('High');
+  await page.locator('.legend').getByRole('button', { name: 'Clear overlay' }).click();
+  await expect(page).not.toHaveURL(/layer=/);
+  await expect(page.locator('.legend h3')).toContainText('Conflict intensity');
+
+  await open(page, '#mode=conflicts&t=2026-03&layer=sanctions&conflict=sudan');
+  await page.locator('.brand').click();
+  await expect(page).toHaveURL(/#mode=blocs$/);
+});
+
+test('map state: a layer mutes the bloc chips, and picking a bloc takes the map back', async ({ page }) => {
+  await open(page, '#mode=blocs&bloc=nato&layer=sanctions');
+  await expect(page.locator('.chip-row')).toHaveAttribute('data-suppressed', 'true');
+  // NATO isn't drawn under the layer.
+  await expect(page.locator('path.country[data-iso="FRA"]')).not.toHaveAttribute('fill', NATO_BLUE);
+  if ((page.viewportSize()?.width ?? 0) > 820) {
+    // The panel's secondary action says it will hide the layer.
+    await page.getByRole('button', { name: 'Show on map (hide layer)' }).click();
+  } else {
+    await page.getByRole('button', { name: 'NATO', exact: true }).click();
+  }
+  await expect(page).not.toHaveURL(/layer=/);
+  await expect(page).toHaveURL(/bloc=nato/);
+  await expect(page.locator('path.country[data-iso="FRA"]')).toHaveAttribute('fill', NATO_BLUE);
+  await expect(page.locator('.chip-row')).not.toHaveAttribute('data-suppressed', 'true');
+  // Showing the bloc it already shows is not offered; comparing is.
+  await expect(page.getByRole('button', { name: /^Show on map/ })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Compare with…' }).click();
+  await expect(page.locator('.chip.compare')).toContainText('Pick a bloc');
+
+  // Chokepoints over Blocs leaves the land neutral so only the diamonds carry meaning.
+  await open(page, '#mode=blocs&layer=chokepoints');
+  await expect(page.locator('path.country[data-iso="USA"]')).toHaveAttribute('fill', 'var(--land)');
+});
+
+test('layer menu fits a 1280x720 laptop and every item, Off included, is clickable', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'phone', 'desktop viewport check');
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await open(page, '#layer=displacement');
+  await expect(page.locator('.layer-trigger')).toContainText('Displacement');
+  await page.locator('.layer-trigger').click();
+  const list = page.locator('.layer-list');
+  const box = (await list.boundingBox())!;
+  const stage = (await page.locator('.stage').boundingBox())!;
+  expect(box.y).toBeGreaterThanOrEqual(stage.y);
+  expect(box.y + box.height).toBeLessThanOrEqual(stage.y + stage.height);
+  await page.getByRole('menuitemradio', { name: /^Off/ }).click();
+  await expect(page).not.toHaveURL(/layer=/);
 });

@@ -35,6 +35,11 @@ import Briefing, { type BriefItem } from './components/Briefing';
 import { COUNTRY_BY_ISO } from './lib/countries';
 import { downloadBlob, readLegend, renderPng } from './lib/exportPng';
 import { serialize } from './lib/urlState';
+import { blocsSuppressed, embedCode, isDefaultMap, mapStateSegments, resetState, shareUrl } from './lib/mapState';
+import { copyText } from './lib/clipboard';
+import MapStateStrip from './components/MapStateStrip';
+import SharePopover from './components/SharePopover';
+import Icon from './components/Icon';
 
 // The map pulls in d3 and the 110m geometry; loading it after the shell
 // paints keeps first render fast on phones.
@@ -166,6 +171,8 @@ export default function App() {
       if (layer === 'military') return { fill: militaryColor(iso) };
       if (layer === 'trade') return { fill: tradeColor(iso) };
       if (layer === 'unrest') return { fill: unrestColor(iso) };
+      // Chokepoints are diamonds on the sea; over Blocs, a membership fill would read as tied to them.
+      if (layer === 'chokepoints' && mode === 'blocs') return { fill: 'var(--land)' };
       if (mode === 'conflicts') {
         const intensity = maxIntensityByCountry.get(iso);
         if (!intensity) return { fill: 'var(--land)' };
@@ -419,10 +426,22 @@ export default function App() {
     return u ? UNREST_COLOR[u.intensity] : 'var(--fg-muted)';
   }, []);
 
+  // The brand mark and the strip's Reset return to the default map (keeping flat/globe and embed).
+  const resetMap = useCallback(() => {
+    setPicking(false);
+    update((s) => resetState(s));
+    setFocus({ kind: 'reset' });
+  }, [update]);
+
+  const layerLabel = useCallback((l: Exclude<typeof layer, null>) => LAYER_OPTIONS.find((o) => o.id === l)?.label ?? l, []);
+  const stateStrip = embed ? undefined : (
+    <MapStateStrip segments={mapStateSegments(state, layerLabel)} onClear={(patch) => update(patch)} onReset={isDefaultMap(state) ? undefined : resetMap} />
+  );
+
   return (
     <div className="app" data-panel-open={selection !== null} data-mode={mode} data-layer={layer ?? undefined} data-view={view} data-brief={brief} data-embed={embed}>
       <header className="header">
-        <a className="brand" href="#" onClick={(e) => { e.preventDefault(); update({ selection: null, bloc: null }); setFocus({ kind: 'reset' }); }}>
+        <a className="brand" href="#" onClick={(e) => { e.preventDefault(); resetMap(); }}>
           <Logo />
           <span>
             <span className="word">ATLAS</span>
@@ -546,70 +565,74 @@ export default function App() {
             active={bloc}
             vs={vs}
             picking={picking}
+            suppressed={blocsSuppressed(state)}
             onPicking={setPicking}
             onChange={(id) => {
               setPicking(false);
-              update({ bloc: id, vs: null, selection: id ? { kind: 'bloc', id } : selection?.kind === 'bloc' || selection?.kind === 'compare' ? null : selection });
+              // Picking a chip is a request to see the bloc, so it takes the map back from any layer.
+              update({ bloc: id, vs: null, layer: null, selection: id ? { kind: 'bloc', id } : selection?.kind === 'bloc' || selection?.kind === 'compare' ? null : selection });
               if (!id) setFocus({ kind: 'reset' });
             }}
             onVs={(id) => {
-              update({ vs: id, selection: id ? { kind: 'compare' } : bloc ? { kind: 'bloc', id: bloc } : null });
+              update({ vs: id, layer: null, selection: id ? { kind: 'compare' } : bloc ? { kind: 'bloc', id: bloc } : null });
               setFocus({ kind: 'reset' });
             }}
           />
         )}
 
-        <Legend mode={mode} bloc={bloc} vs={mode === 'blocs' ? vs : null} overviewSteps={OVERVIEW_STEPS} layer={layer} />
+        <Legend mode={mode} bloc={bloc} vs={mode === 'blocs' ? vs : null} overviewSteps={OVERVIEW_STEPS} layer={layer} onClearLayer={() => update({ layer: null })} strip={stateStrip} />
 
         {mode === 'conflicts' && <Timeline months={TIMELINE_MONTHS} value={month} onChange={(m) => update({ month: m })} />}
 
         <div className="map-controls">
-          <LayerMenu options={LAYER_OPTIONS} value={layer} onChange={(l) => update({ layer: l })} />
-          <button className="icon-btn" aria-label="Zoom in" onClick={() => zoomApi.current?.zoomIn()}>
-            +
-          </button>
-          <button className="icon-btn" aria-label="Zoom out" onClick={() => zoomApi.current?.zoomOut()}>
-            −
-          </button>
-          <button className="icon-btn" aria-label="Reset view" onClick={() => zoomApi.current?.reset()} title="Reset view">
-            ⌂
-          </button>
-          <button
-            className="icon-btn"
-            aria-label={view === 'globe' ? 'Flat map' : 'Globe view'}
-            aria-pressed={view === 'globe'}
-            title={view === 'globe' ? 'Switch to the flat map' : 'Switch to the globe'}
-            onClick={() => {
-              update({ view: view === 'globe' ? 'flat' : 'globe' });
-              setFocus({ kind: 'reset' });
-            }}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-              {view === 'globe' ? (
-                <>
-                  <rect x="3" y="5" width="18" height="14" rx="1" />
-                  <path d="M3 12h18M9 5v14M15 5v14" />
-                </>
-              ) : (
-                <>
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
-                </>
-              )}
-            </svg>
-          </button>
-          <button className="icon-btn" aria-label="Export PNG" title="Export the map as a PNG" data-busy={exporting} onClick={() => void exportPng()}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-              <path d="M12 3v12M7 10l5 5 5-5M4 17v3h16v-3" />
-            </svg>
-          </button>
-          {!embed && (
-            <button className="icon-btn" aria-label="Start briefing" title="Full-screen briefing" onClick={() => update({ brief: true, selection: null })}>
+          <div className="control-group" role="group" aria-label="Data">
+            <LayerMenu options={LAYER_OPTIONS} value={layer} onChange={(l) => update({ layer: l })} />
+          </div>
+          <div className="control-group" role="group" aria-label="View">
+            <button className="icon-btn" aria-label="Zoom in" title="Zoom in" onClick={() => zoomApi.current?.zoomIn()}>
+              <Icon name="plus" />
+            </button>
+            <button className="icon-btn" aria-label="Zoom out" title="Zoom out" onClick={() => zoomApi.current?.zoomOut()}>
+              <Icon name="minus" />
+            </button>
+            <button className="icon-btn" aria-label="Reset zoom" onClick={() => zoomApi.current?.reset()} title="Reset zoom">
+              <Icon name="fit" />
+            </button>
+            <button
+              className="icon-btn"
+              aria-label={view === 'globe' ? 'Flat map' : 'Globe view'}
+              aria-pressed={view === 'globe'}
+              title={view === 'globe' ? 'Switch to the flat map' : 'Switch to the globe'}
+              onClick={() => {
+                update({ view: view === 'globe' ? 'flat' : 'globe' });
+                setFocus({ kind: 'reset' });
+              }}
+            >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                <path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" />
+                {view === 'globe' ? (
+                  <>
+                    <rect x="3" y="5" width="18" height="14" rx="1" />
+                    <path d="M3 12h18M9 5v14M15 5v14" />
+                  </>
+                ) : (
+                  <>
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+                  </>
+                )}
               </svg>
             </button>
-          )}
+          </div>
+          <div className="control-group" role="group" aria-label="Share">
+            <SharePopover
+              actions={[
+                { id: 'link', icon: 'link', label: 'Copy link', hint: 'This exact view, including layer and month', done: 'Link copied', run: () => copyText(shareUrl(state, window.location.origin, window.location.pathname)) },
+                { id: 'embed', icon: 'code', label: 'Copy embed code', hint: 'An iframe of the map alone, for articles', done: 'Embed code copied', run: () => copyText(embedCode(state, window.location.origin, window.location.pathname)) },
+                { id: 'png', icon: 'download', label: 'Export PNG', hint: 'The map with its legend, stamped with the data date', busy: exporting, run: () => void exportPng() },
+                ...(embed ? [] : [{ id: 'brief', icon: 'present' as const, label: 'Start briefing', hint: 'Present the hotspots full-screen', run: () => update({ brief: true, selection: null }) }]),
+              ]}
+            />
+          </div>
         </div>
 
         {embed && (
@@ -642,13 +665,19 @@ export default function App() {
               onSelectBloc={selectBloc}
               onSelectConflict={selectConflict}
               onHighlightBloc={(id) => {
-                update({ mode: 'blocs', bloc: id });
+                update({ mode: 'blocs', bloc: id, layer: null });
                 setFocus({ kind: 'reset' });
               }}
               onOpenChanges={() => update({ selection: { kind: 'changes' } })}
               onSelectChokepoint={selectChokepoint}
               onSelectUnrest={selectUnrest}
               onSelectPair={selectPair}
+              mapLayer={layer}
+              mapBloc={mode === 'blocs' ? bloc : null}
+              onCompareBloc={(id) => {
+                update({ mode: 'blocs', bloc: id, vs: null, layer: null, selection: { kind: 'bloc', id } });
+                setPicking(true);
+              }}
             />
           </ErrorBoundary>
         )}
