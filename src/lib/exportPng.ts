@@ -89,15 +89,17 @@ export async function renderPng(opts: ExportOptions): Promise<Blob> {
   try {
     const img = await loadImage(url);
     const canvas = document.createElement('canvas');
+    // The stamp strip is appended below the map so it never crops it (the globe touches the bottom edge).
+    const total = h + STAMP_H;
     canvas.width = Math.round(w * scale);
-    canvas.height = Math.round(h * scale);
+    canvas.height = Math.round(total * scale);
     const ctx = canvas.getContext('2d');
     if (!ctx) throw new Error('Canvas unavailable');
     ctx.scale(scale, scale);
     ctx.fillStyle = opts.background;
-    ctx.fillRect(0, 0, w, h);
+    ctx.fillRect(0, 0, w, total);
     ctx.drawImage(img, 0, 0, w, h);
-    drawLegend(ctx, opts, w, h);
+    drawLegend(ctx, opts, w, total);
     const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
     if (!blob) throw new Error('PNG encoding failed');
     return blob;
@@ -105,6 +107,9 @@ export async function renderPng(opts: ExportOptions): Promise<Blob> {
     URL.revokeObjectURL(url);
   }
 }
+
+/** Height of the title and date strip under the map. */
+export const STAMP_H = 26;
 
 function drawLegend(ctx: CanvasRenderingContext2D, opts: ExportOptions, w: number, h: number) {
   const mono = '"Share Tech Mono", ui-monospace, Menlo, monospace';
