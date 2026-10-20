@@ -57,6 +57,8 @@ export const ConflictInputSchema = z.object({
   since: z.number().int().min(1900).max(2100),
   location: z.tuple([z.number().min(-180).max(180), z.number().min(-90).max(90)]),
   countries: z.array(z.string().regex(ISO3)).min(1),
+  /** Where the fighting is; a subset of `countries`, defaulting to it. Empty for maritime flashpoints. */
+  theatre: z.array(z.string().regex(ISO3)).optional(),
   parties: z.array(z.string().min(2)).min(1),
   summary: z.string().min(40),
   actors: z.array(ActorSchema).min(1).optional(),

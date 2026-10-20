@@ -35,6 +35,7 @@ import Briefing, { type BriefItem } from './components/Briefing';
 import { COUNTRY_BY_ISO } from './lib/countries';
 import { downloadBlob, readLegend, renderPng } from './lib/exportPng';
 import { serialize } from './lib/urlState';
+import { conflictFillMaps, isTheatre } from './lib/theatre';
 
 // The map pulls in d3 and the 110m geometry; loading it after the shell
 // paints keeps first render fast on phones.
@@ -142,16 +143,8 @@ export default function App() {
 
   const viewMonth = mode === 'conflicts' ? month : null;
   const visible = useMemo(() => conflictsAt(viewMonth), [viewMonth]);
-  const maxIntensityByCountry = useMemo(() => {
-    const map = new Map<string, Intensity>();
-    for (const { conflict, intensity } of visible) {
-      for (const iso of conflict.countries) {
-        const cur = map.get(iso);
-        if (!cur || INTENSITY_ORDER[intensity] > INTENSITY_ORDER[cur]) map.set(iso, intensity);
-      }
-    }
-    return map;
-  }, [visible]);
+  // Theatre states are filled; parties fighting only abroad get a dashed outline.
+  const { home: maxIntensityByCountry, abroad: partyAbroadByCountry } = useMemo(() => conflictFillMaps(visible), [visible]);
 
   const fillFor = useCallback(
     (iso: string | null): CountryFill => {
@@ -168,7 +161,10 @@ export default function App() {
       if (layer === 'unrest') return { fill: unrestColor(iso) };
       if (mode === 'conflicts') {
         const intensity = maxIntensityByCountry.get(iso);
-        if (!intensity) return { fill: 'var(--land)' };
+        if (!intensity) {
+          const abroad = partyAbroadByCountry.get(iso);
+          return abroad ? { fill: 'var(--land)', outline: INTENSITY_COLOR[abroad] } : { fill: 'var(--land)' };
+        }
         const pct = intensity === 'high' ? 55 : intensity === 'medium' ? 42 : intensity === 'low' ? 30 : 22;
         return { fill: `color-mix(in srgb, ${INTENSITY_COLOR[intensity]} ${pct}%, var(--land))` };
       }
@@ -190,7 +186,7 @@ export default function App() {
       const n = Math.min(membershipCount.get(iso) ?? 0, OVERVIEW_STEPS.length - 1);
       return { fill: OVERVIEW_STEPS[n] ?? 'var(--land)' };
     },
-    [mode, activeBloc, compare, maxIntensityByCountry, layer],
+    [mode, activeBloc, compare, maxIntensityByCountry, partyAbroadByCountry, layer],
   );
 
   const markers = useMemo<MapMarker[]>(() => {
@@ -316,7 +312,7 @@ export default function App() {
     if (layer === 'unrest') return unrestSummary(hover.iso) ?? 'No tracked unrest';
     if (mode === 'conflicts') {
       const list = conflictsForCountry(hover.iso).sort((a, b) => INTENSITY_ORDER[b.intensity] - INTENSITY_ORDER[a.intensity]);
-      return list.length ? list.map((c) => c.name).join(' · ') : null;
+      return list.length ? list.map((c) => (isTheatre(c, hover.iso!) ? c.name : `${c.name} (abroad)`)).join(' · ') : null;
     }
     const list = blocsForCountry(hover.iso).filter((x) => x.membership.status === 'member');
     return list.length ? list.map((x) => x.bloc.shortName).join(' · ') : 'No tracked bloc memberships';

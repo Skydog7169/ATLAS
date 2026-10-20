@@ -12,6 +12,10 @@
       "UKR",
       "RUS"
     ],
+    "theatre": [
+      "UKR",
+      "RUS"
+    ],
     "parties": [
       "Russia",
       "Ukraine (backed by NATO members and the EU)"
@@ -411,6 +415,9 @@
       "ISR",
       "PSE"
     ],
+    "theatre": [
+      "PSE"
+    ],
     "parties": [
       "Israel",
       "Hamas and allied Palestinian factions"
@@ -624,6 +631,9 @@
       "LBN",
       "ISR"
     ],
+    "theatre": [
+      "LBN"
+    ],
     "parties": [
       "Israel",
       "Hezbollah"
@@ -819,6 +829,10 @@
       "IRN",
       "ISR",
       "USA"
+    ],
+    "theatre": [
+      "IRN",
+      "ISR"
     ],
     "parties": [
       "Iran and the IRGC",
@@ -1020,6 +1034,9 @@
       "SAU",
       "ISR"
     ],
+    "theatre": [
+      "YEM"
+    ],
     "parties": [
       "Houthis (Ansar Allah)",
       "Internationally recognised government and Saudi-led coalition",
@@ -1206,6 +1223,9 @@
       "SYR",
       "ISR",
       "TUR"
+    ],
+    "theatre": [
+      "SYR"
     ],
     "parties": [
       "Transitional government (former HTS)",
@@ -1681,6 +1701,9 @@
       "UGA",
       "BDI"
     ],
+    "theatre": [
+      "COD"
+    ],
     "parties": [
       "M23 / Congo River Alliance (backed by Rwanda)",
       "DRC armed forces and allied militias",
@@ -1989,6 +2012,9 @@
     "countries": [
       "ETH",
       "ERI"
+    ],
+    "theatre": [
+      "ETH"
     ],
     "parties": [
       "Federal government and allied regional forces",
@@ -3855,6 +3881,7 @@
       "PHL",
       "VNM"
     ],
+    "theatre": [],
     "parties": [
       "China",
       "Philippines",
@@ -4179,6 +4206,9 @@
       "VEN",
       "USA"
     ],
+    "theatre": [
+      "VEN"
+    ],
     "parties": [
       "United States",
       "Venezuelan government and armed forces"
@@ -4451,6 +4481,7 @@
       "OMN",
       "USA"
     ],
+    "theatre": [],
     "parties": [
       "Iran and the IRGC Navy",
       "Gulf Cooperation Council states",
@@ -4581,6 +4612,9 @@
     "countries": [
       "IRQ",
       "USA"
+    ],
+    "theatre": [
+      "IRQ"
     ],
     "parties": [
       "Popular Mobilization Forces and Islamic Resistance in Iraq",

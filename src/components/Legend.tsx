@@ -291,8 +291,12 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
               {INTENSITY_LABEL[i]}
             </li>
           ))}
+          <li>
+            <span className="swatch outline" style={{ borderColor: INTENSITY_COLOR.high }} />
+            Party to a conflict abroad
+          </li>
         </ul>
-        <div className="note">Countries are tinted by the most intense conflict on their territory. Marker size follows intensity.</div>
+        <div className="note">Countries are filled by the most intense conflict fought on their territory. A dashed outline marks a state whose forces fight only abroad. Marker size follows intensity.</div>
       </aside>
     );
   }

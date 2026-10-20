@@ -64,7 +64,7 @@ Conventions worth knowing:
 
 - Kosovo uses the user-assigned code `UNK`. Northern Cyprus and Somaliland are drawn as neutral territory.
 - Taiwan, Palestine and Western Sahara are included as map entities without taking a position on status.
-- A country is tinted in Conflicts mode by the most intense conflict on its territory, including conflicts where it is an external party.
+- In Conflicts mode a country is filled by the most intense conflict fought on its territory (a conflict's `theatre`, which defaults to its `countries`). States whose forces fight only abroad, such as the US in the Iran war or Saudi Arabia in Yemen, get a dashed outline instead; maritime flashpoints (Hormuz, the South China Sea) have an empty theatre.
 - Bloc "member" counts in the legend and tests count full members only.
 
 ### How the data stays current

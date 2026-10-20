@@ -128,6 +128,12 @@ export interface ConflictInput {
   location: [number, number];
   /** States whose territory or forces are directly involved. */
   countries: Iso3[];
+  /**
+   * The subset of `countries` on whose territory the fighting takes place.
+   * Defaults to `countries` when absent; empty for maritime flashpoints.
+   * The map tints theatre states and outlines the rest as parties abroad.
+   */
+  theatre?: Iso3[];
   parties: string[];
   summary: string;
   /** Structured parties with their outside backers. */

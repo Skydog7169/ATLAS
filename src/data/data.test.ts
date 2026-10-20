@@ -6,6 +6,7 @@ import { COUNTRY_FEATURES, MICROSTATES, hasPolygon } from '../lib/geo';
 import { BlocsFileSchema, ConflictsFileSchema } from './schema';
 import conflictsJson from './conflicts.json';
 import blocsJson from './blocs.json';
+import { conflictFillMaps } from '../lib/theatre';
 
 const ISO3 = /^[A-Z]{3}$/;
 const MONTH = /^\d{4}-(0[1-9]|1[0-2])$/;
@@ -99,5 +100,21 @@ describe('conflicts', () => {
     expect(c.summary.length).toBeGreaterThan(40);
     expect(c.status.length).toBeGreaterThan(40);
     expect(c.sources.length).toBeGreaterThan(0);
+  });
+});
+
+describe('conflict theatres', () => {
+  it.each(CONFLICTS.filter((c) => c.theatre).map((c) => [c.id, c] as const))('%s theatre is a subset of its countries', (_id, c) => {
+    for (const iso of c.theatre!) expect(c.countries, `${c.id}: theatre ${iso} not in countries`).toContain(iso);
+    expect(new Set(c.theatre).size).toBe(c.theatre!.length);
+  });
+
+  it('does not count outside belligerents as war zones', () => {
+    const { home, abroad } = conflictFillMaps(CONFLICTS.map((c) => ({ conflict: c, intensity: c.intensity })));
+    for (const iso of ['USA', 'SAU', 'ARE', 'QAT', 'RWA', 'UGA']) {
+      expect(home.has(iso), `${iso} should not be filled`).toBe(false);
+      expect(abroad.has(iso), `${iso} should be outlined as a party abroad`).toBe(true);
+    }
+    for (const iso of ['UKR', 'SDN', 'IRN', 'YEM', 'COD']) expect(home.get(iso)).toBeDefined();
   });
 });

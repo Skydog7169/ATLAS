@@ -15,6 +15,7 @@ import { tradeDossier } from './trade';
 import { unrestDossier } from './unrest';
 import { acledDossier } from './acled';
 import { ucdpDossier } from './ucdp';
+import { isTheatre } from './theatre';
 
 export type DossierSectionId = 'profile' | 'memberships' | 'conflicts' | 'unrest' | 'acled' | 'ucdp' | 'sponsorship' | 'military' | 'displacement' | 'figures' | 'trade' | 'changes' | 'sanctions' | 'elections' | 'nuclear';
 
@@ -80,6 +81,21 @@ export function countryDossier(iso: string, feed: readonly ChangeItem[] = CHANGE
     extras,
     sections,
   };
+}
+
+/**
+ * Dossier intensity badges: the most intense conflict fought on the country's
+ * soil, and separately the most intense one its forces join abroad, so the US
+ * and Ukraine never share an unqualified 'High' badge. `conflicts` is sorted
+ * most intense first.
+ */
+export function conflictBadges(iso: string, conflicts: readonly Conflict[]): Array<{ label: string; intensity: Conflict['intensity'] }> {
+  const out: Array<{ label: string; intensity: Conflict['intensity'] }> = [];
+  const home = conflicts.find((c) => isTheatre(c, iso));
+  const abroad = conflicts.find((c) => !isTheatre(c, iso));
+  if (home) out.push({ label: 'Conflict at home', intensity: home.intensity });
+  if (abroad) out.push({ label: 'Party abroad', intensity: abroad.intensity });
+  return out;
 }
 
 /** Human line for the profile section: "Republic of X · Capital: Y · UN member". */

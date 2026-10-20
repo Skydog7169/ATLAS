@@ -15,7 +15,8 @@ import { ELECTIONS_VERIFIED } from '../lib/elections';
 import { NUCLEAR } from '../lib/nuclear';
 import { TRUSTED_HOSTS } from '../data/guards';
 import { CHANGES, watchlistOnly } from '../lib/feed';
-import { countryDossier, profileLine, type CountryDossier } from '../lib/dossier';
+import { conflictBadges, countryDossier, profileLine, type CountryDossier } from '../lib/dossier';
+import { isTheatre } from '../lib/theatre';
 import { useWatchlist } from '../hooks/useWatchlist';
 import StarButton from './StarButton';
 import ActorsGraph from './ActorsGraph';
@@ -145,11 +146,11 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
         <div className="badges">
           <span className="badge muted">{country.cca3}</span>
           <span className="badge muted">{country.region}</span>
-          {conflicts.length > 0 && (
-            <span className="badge" style={{ ['--badge-color' as string]: INTENSITY_COLOR[conflicts[0]!.intensity] }}>
-              <span className="dot" /> {INTENSITY_LABEL[conflicts[0]!.intensity]}
+          {conflictBadges(country.cca3, conflicts).map((b) => (
+            <span key={b.label} className="badge" style={{ ['--badge-color' as string]: INTENSITY_COLOR[b.intensity] }}>
+              <span className="dot" /> {b.label}: {INTENSITY_LABEL[b.intensity]}
             </span>
-          )}
+          ))}
         </div>
 
         <h4 id="dossier-memberships">Bloc memberships · {memberships.filter((m) => m.membership.status === 'member').length}</h4>
@@ -179,7 +180,7 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
                 <button onClick={() => props.onSelectConflict(c.id)}>
                   <span className="dot" style={{ width: 10, height: 10, borderRadius: '50%', background: INTENSITY_COLOR[c.intensity] }} />
                   {c.name}
-                  <span className="meta">{INTENSITY_LABEL[c.intensity]}</span>
+                  <span className="meta">{isTheatre(c, country.cca3) ? INTENSITY_LABEL[c.intensity] : `${INTENSITY_LABEL[c.intensity]} · abroad`}</span>
                 </button>
               </li>
             ))}
@@ -1112,7 +1113,7 @@ function AboutView({ props }: { props: Props }) {
         <h4>Caveats</h4>
         <ul style={{ margin: 0, paddingLeft: 18 }}>
           <li>Borders follow Natural Earth and imply no position on disputes. Kosovo uses the code UNK; Northern Cyprus and Somaliland are drawn as neutral territory.</li>
-          <li>Conflict tinting uses the most intense conflict on a country's territory, including conflicts where it is an external party.</li>
+          <li>Conflict tinting fills a country by the most intense conflict fought on its territory. States whose forces fight only abroad (the US in the Iran war, Saudi Arabia in Yemen, Rwanda in eastern DR Congo) are drawn with a dashed outline instead. Maritime flashpoints such as Hormuz and the South China Sea have no land theatre.</li>
           <li>Bloc figures count full members only and skip countries without a World Bank value; the tiles say when coverage is partial.</li>
           <li>Displacement figures are UNHCR mid-year or end-year stocks, not flows, and lag events by months.</li>
           <li>An assessment is a dated snapshot. Check the linked sources before relying on it.</li>
