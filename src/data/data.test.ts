@@ -11,6 +11,8 @@ import { SANCTIONS_BY_ISO } from '../lib/sanctions';
 import { DISPLACEMENT, DISPLACEMENT_BY_ISO, displacementBin, displacementFill, displacementTotal } from '../lib/displacement';
 import { WORLDBANK_BY_ISO, blocFigures } from '../lib/worldbank';
 import { blocMembers } from '../lib/membership';
+import { SOVEREIGN, memberFor, territoryLine } from '../lib/sovereign';
+import { NUCLEAR_BY_ISO } from '../lib/nuclear';
 
 const ISO3 = /^[A-Z]{3}$/;
 const MONTH = /^\d{4}-(0[1-9]|1[0-2])$/;
@@ -174,5 +176,28 @@ describe('membership counting', () => {
     const eu = BLOCS.find((b) => b.id === 'eu')!;
     expect(eu.members.filter((m) => m.status === 'candidate').map((m) => m.iso).sort()).toEqual(['ALB', 'BIH', 'GEO', 'MDA', 'MKD', 'MNE', 'SRB', 'TUR', 'UKR']);
     expect(blocMembers(eu).full).toHaveLength(27);
+  });
+});
+
+describe('dependent territories', () => {
+  it('Greenland inherits NATO and the umbrella from Denmark, not the EU', () => {
+    const nato = BLOCS.find((b) => b.id === 'nato')!;
+    const eu = BLOCS.find((b) => b.id === 'eu')!;
+    expect(memberFor(nato, 'GRL')?.status).toBe('member');
+    expect(memberFor(eu, 'GRL')).toBeUndefined();
+    expect(NUCLEAR_BY_ISO.get('GRL')?.status).toBe('umbrella');
+    expect(territoryLine('GRL', BLOCS)).toBe("Autonomous territory of Denmark · covered via Denmark's NATO membership");
+  });
+
+  it('Puerto Rico stays outside NATO (south of the Article 6 area) but under the US deterrent', () => {
+    expect(memberFor(BLOCS.find((b) => b.id === 'nato')!, 'PRI')).toBeUndefined();
+    expect(NUCLEAR_BY_ISO.get('PRI')?.status).toBe('umbrella');
+  });
+
+  it('every sovereign resolves to a country', () => {
+    for (const [iso, t] of Object.entries(SOVEREIGN)) {
+      expect(COUNTRY_BY_ISO.has(iso), iso).toBe(true);
+      expect(COUNTRY_BY_ISO.get(t.sovereign)?.independent, t.sovereign).toBe(true);
+    }
   });
 });

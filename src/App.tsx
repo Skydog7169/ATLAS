@@ -36,6 +36,7 @@ import { COUNTRY_BY_ISO } from './lib/countries';
 import { downloadBlob, readLegend, renderPng } from './lib/exportPng';
 import { serialize } from './lib/urlState';
 import { conflictFillMaps, isTheatre } from './lib/theatre';
+import { SOVEREIGN, memberFor, territoryLine } from './lib/sovereign';
 
 // The map pulls in d3 and the 110m geometry; loading it after the shell
 // paints keeps first render fast on phones.
@@ -64,6 +65,8 @@ const DATA_ASOF = [...BLOCS.map((b) => b.updated), ...CONFLICTS.map((c) => c.upd
 
 const membershipCount = new Map<string, number>();
 for (const b of BLOCS) for (const m of b.members) if (m.status === 'member') membershipCount.set(m.iso, (membershipCount.get(m.iso) ?? 0) + 1);
+// Territories drawn on their own (Greenland) count the alliances they inherit from their sovereign.
+for (const iso of Object.keys(SOVEREIGN)) for (const b of BLOCS) if (!b.members.some((m) => m.iso === iso) && memberFor(b, iso)) membershipCount.set(iso, (membershipCount.get(iso) ?? 0) + 1);
 
 // Replay covers conflict assessments only; bloc events go back years and would stretch the scrubber.
 const TIMELINE_MONTHS = monthRange(earliestMonth(CONFLICTS, []), currentMonth());
@@ -169,15 +172,15 @@ export default function App() {
         return { fill: `color-mix(in srgb, ${INTENSITY_COLOR[intensity]} ${pct}%, var(--land))` };
       }
       if (compare) {
-        const inA = compare.a.members.some((x) => x.iso === iso && x.status === 'member');
-        const inB = compare.b.members.some((x) => x.iso === iso && x.status === 'member');
+        const inA = memberFor(compare.a, iso)?.status === 'member';
+        const inB = memberFor(compare.b, iso)?.status === 'member';
         if (inA && inB) return { fill: compare.a.color, stripes: [compare.a.color, compare.b.color] };
         if (inA) return { fill: compare.a.color };
         if (inB) return { fill: compare.b.color };
         return { fill: 'var(--land)', dim: true };
       }
       if (activeBloc) {
-        const m = activeBloc.members.find((x) => x.iso === iso);
+        const m = memberFor(activeBloc, iso);
         if (!m) return { fill: 'var(--land)', dim: true };
         if (m.status === 'member') return { fill: activeBloc.color };
         if (m.status === 'suspended' || m.status === 'frozen') return { fill: activeBloc.color, hatch: activeBloc.color };
@@ -314,6 +317,8 @@ export default function App() {
       return list.length ? list.map((c) => (isTheatre(c, hover.iso!) ? c.name : `${c.name} (abroad)`)).join(' · ') : null;
     }
     const list = blocsForCountry(hover.iso).filter((x) => x.membership.status === 'member');
+    const territory = territoryLine(hover.iso, BLOCS);
+    if (territory) return territory;
     return list.length ? list.map((x) => x.bloc.shortName).join(' · ') : 'No tracked bloc memberships';
   }, [hover, mode, layer]);
 

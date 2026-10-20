@@ -18,6 +18,7 @@ import { TRUSTED_HOSTS } from '../data/guards';
 import { CHANGES, watchlistOnly } from '../lib/feed';
 import { conflictBadges, countryDossier, notMemberOf, profileLine, type CountryDossier } from '../lib/dossier';
 import { isTheatre } from '../lib/theatre';
+import { territoryLine } from '../lib/sovereign';
 import { useWatchlist } from '../hooks/useWatchlist';
 import StarButton from './StarButton';
 import ActorsGraph from './ActorsGraph';
@@ -153,6 +154,7 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
       </div>
       <div className="panel-body dossier" data-sections={dossier.sections.join(' ')}>
         <Muted>{profileLine(country)}</Muted>
+        {territoryLine(country.cca3, BLOCS) && <Muted>{territoryLine(country.cca3, BLOCS)}</Muted>}
         <div className="badges">
           <span className="badge muted">{country.cca3}</span>
           <span className="badge muted">{country.region}</span>
@@ -1231,6 +1233,7 @@ function AboutView({ props }: { props: Props }) {
         <h4>Caveats</h4>
         <ul style={{ margin: 0, paddingLeft: 18 }}>
           <li>Borders follow Natural Earth and imply no position on disputes. Kosovo uses the code UNK; Northern Cyprus and Somaliland are drawn as neutral territory.</li>
+          <li>Dependent territories drawn on their own take the alliances whose treaty area covers them and their sovereign's nuclear deterrent: Greenland is shown in NATO via Denmark, while Puerto Rico and the Falklands lie outside NATO's Article 6 area. They never inherit EU membership, trade or elections. French Guiana is part of France's polygon.</li>
           <li>Conflict tinting fills a country by the most intense conflict fought on its territory. States whose forces fight only abroad (the US in the Iran war, Saudi Arabia in Yemen, Rwanda in eastern DR Congo) are drawn with a dashed outline instead. Maritime flashpoints such as Hormuz and the South China Sea have no land theatre.</li>
           <li>Bloc figures count full members only and skip countries without a World Bank value; the tiles say when coverage is partial.</li>
           <li>Displacement figures are UNHCR mid-year or end-year stocks, not flows, and lag events by months. UNHCR figures exclude Palestine refugees under UNRWA's mandate, so Palestine adds UNRWA's register and IDMC's IDP estimate; UNHCR reports Kosovo together with Serbia.</li>
