@@ -489,7 +489,8 @@ test('camera frames the subject in the uncovered area: phone sheet, desktop pane
   await expect(page.locator('path.country[data-iso="FRA"]')).toHaveAttribute('opacity', '0.55');
 });
 
-test('globe toggle keeps the selection in view instead of resetting', async ({ page }) => {
+test('globe toggle keeps the selection in view instead of resetting', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'phone', 'only recentre and layers stay above the phone sheet');
   await open(page, '#country=JPN');
   await page.locator('.map-controls .icon-btn[aria-label="Globe view"]').click();
   const globe = page.locator('.map-root.globe');
@@ -501,6 +502,7 @@ test('relationship picker accepts a map click for the second country', async ({ 
   test.skip(testInfo.project.name === 'phone', 'the sheet covers most targets; covered on desktop');
   await open(page, '#pair=IND');
   await expect(page.locator('.pair-hint')).toBeVisible();
-  await page.locator('path.country[data-iso="BRA"]').click({ force: true });
+  // Brazil is off-screen while the camera frames India; the click handler is what matters here.
+  await page.locator('path.country[data-iso="BRA"]').dispatchEvent('click');
   await expect(page).toHaveURL(/pair=IND(,|%2C)BRA/);
 });
