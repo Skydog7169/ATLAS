@@ -218,7 +218,7 @@ async function reviewBlocs() {
     })
     .join('\n');
   const latest = blocs.flatMap((b) => b.changes.map((c) => c.date)).sort().at(-1) ?? '2020-01-01';
-  const prompt = `Here are the current membership lists:\n${listing}\n\nSearch for formal membership changes (accessions, withdrawals, suspensions, reinstatements, frozen participation, new founding members) that took effect between ${latest} and ${today}. Return only changes you can source to a page in your search results, with the exact date. Return an empty list if none.`;
+  const prompt = `Here are the current membership lists:\n${listing}\n\nSearch for formal membership changes (accessions, withdrawals, suspensions, reinstatements, frozen participation, new founding members, and candidate status granted, e.g. by the EU) that took effect between ${latest} and ${today}. Return only changes you can source to a page in your search results, with the exact date. Return an empty list if none.`;
 
   const response = await client.messages.parse({
     model: MODEL,
@@ -250,7 +250,7 @@ async function reviewBlocs() {
 
 function applyBlocChange(bloc, ch, source) {
   const member = bloc.members.find((m) => m.iso === ch.iso);
-  const statusFor = { joined: 'member', founded: 'member', reinstated: 'member', suspended: 'suspended', frozen: 'frozen', invited: 'invited' };
+  const statusFor = { joined: 'member', founded: 'member', reinstated: 'member', suspended: 'suspended', frozen: 'frozen', invited: 'invited', candidate: 'candidate' };
   if (ch.change === 'left') {
     bloc.members = bloc.members.filter((m) => m.iso !== ch.iso);
   } else if (member) {

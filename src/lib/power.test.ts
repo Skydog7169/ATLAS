@@ -7,7 +7,7 @@ import militaryJson from '../data/military.json';
 import tradeJson from '../data/trade.generated.json';
 import { CHOKEPOINTS, CHOKEPOINT_BY_ID, currentStatus, linkedConflicts } from './chokepoints';
 import { MILITARY, PRESENCE_ACTIVE, militaryBin, militaryBinLabel, militaryColor, militaryDossier, militarySummary, operatorsIn, presencesBy } from './military';
-import { TRADE, leadingPartner, tradeColor, tradeDossier, tradeSummary } from './trade';
+import { TRADE, leadingPartner, pct, tradeColor, tradeDossier, tradeSummary } from './trade';
 import { EU27, buildRows, parseSdmx } from '../../scripts/build-trade.mjs';
 import { countryDossier } from './dossier';
 
@@ -87,7 +87,8 @@ describe('trade dependence', () => {
     expect(leadingPartner({ iso: 'X', year: 2023, exportsUsd: 1, us: 0.05, china: 0.05, eu: 0.09 })).toBeNull();
     expect(tradeColor('MEX')).toMatch(/^color-mix\(in srgb, #4f8cff 100%/);
     expect(tradeColor('ZZZ')).toBe('var(--land)');
-    expect(tradeSummary('MEX')).toMatch(/^Exports 20\d\d: US \d+% · China \d+% · EU \d+%$/);
+    expect(tradeSummary('MEX')).toMatch(/^Exports 20\d\d: US \d+% · China [\d.]+% · EU [\d.]+%$/);
+    expect([0.6, 0.12, 0.032, 0.002, 0.0004, 0].map(pct)).toEqual(['60%', '12%', '3.2%', '0.2%', '<0.1%', '0%']);
     expect(tradeDossier('DEU')!.rows.find((r) => r.label === 'European Union')!.note).toBe('Largest of the three');
     expect(countryDossier('DEU')!.sections).toContain('trade');
   });

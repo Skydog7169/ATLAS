@@ -9,7 +9,8 @@ import blocsJson from './blocs.json';
 import { conflictFillMaps } from '../lib/theatre';
 import { SANCTIONS_BY_ISO } from '../lib/sanctions';
 import { DISPLACEMENT, DISPLACEMENT_BY_ISO, displacementBin, displacementFill, displacementTotal } from '../lib/displacement';
-import { WORLDBANK_BY_ISO } from '../lib/worldbank';
+import { WORLDBANK_BY_ISO, blocFigures } from '../lib/worldbank';
+import { blocMembers } from '../lib/membership';
 
 const ISO3 = /^[A-Z]{3}$/;
 const MONTH = /^\d{4}-(0[1-9]|1[0-2])$/;
@@ -159,5 +160,19 @@ describe('conflict panels agree with themselves', () => {
       const stem = a.name.split(' (')[0]!.toLowerCase().slice(0, 12);
       expect(parties, `${id}: actor "${a.name}" missing from parties`).toContain(stem);
     }
+  });
+});
+
+describe('membership counting', () => {
+  it('uses one rule: full members counted, suspended and frozen listed apart', () => {
+    const au = blocMembers(BLOCS.find((b) => b.id === 'au')!);
+    expect(au.full.length + au.suspended.length).toBe(55);
+    expect(blocFigures(BLOCS.find((b) => b.id === 'au')!).members).toBe(au.full.length);
+  });
+
+  it('records EU candidates without counting them', () => {
+    const eu = BLOCS.find((b) => b.id === 'eu')!;
+    expect(eu.members.filter((m) => m.status === 'candidate').map((m) => m.iso).sort()).toEqual(['ALB', 'BIH', 'GEO', 'MDA', 'MKD', 'MNE', 'SRB', 'TUR', 'UKR']);
+    expect(blocMembers(eu).full).toHaveLength(27);
   });
 });

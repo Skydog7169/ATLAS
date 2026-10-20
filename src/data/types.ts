@@ -18,7 +18,9 @@ export type MembershipStatus =
   | 'frozen'
   | 'partner'
   | 'observer'
-  | 'invited';
+  | 'invited'
+  /** Accession candidate (EU); not a member, never counted or summed. */
+  | 'candidate';
 
 export interface BlocMember {
   iso: Iso3;
@@ -35,7 +37,7 @@ export interface FormerMember {
   until: number;
 }
 
-export type BlocChangeKind = 'joined' | 'left' | 'suspended' | 'reinstated' | 'frozen' | 'invited' | 'founded';
+export type BlocChangeKind = 'joined' | 'left' | 'suspended' | 'reinstated' | 'frozen' | 'invited' | 'founded' | 'candidate';
 
 /** One dated membership event, used for the changes feed and the bloc panel. */
 export interface BlocChange {

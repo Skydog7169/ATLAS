@@ -71,7 +71,7 @@ export const ConflictInputSchema = z.object({
 
 export const BlocMemberSchema = z.object({
   iso: z.string().regex(ISO3),
-  status: z.enum(['member', 'suspended', 'frozen', 'partner', 'observer', 'invited']),
+  status: z.enum(['member', 'suspended', 'frozen', 'partner', 'observer', 'invited', 'candidate']),
   note: z.string().optional(),
   since: z.number().int().min(1940).max(2100).optional(),
 });
@@ -85,7 +85,7 @@ export const FormerMemberSchema = z.object({
 export const BlocChangeSchema = z.object({
   date: z.string().regex(ISO_DATE),
   iso: z.string().regex(ISO3),
-  change: z.enum(['joined', 'left', 'suspended', 'reinstated', 'frozen', 'invited', 'founded']),
+  change: z.enum(['joined', 'left', 'suspended', 'reinstated', 'frozen', 'invited', 'founded', 'candidate']),
   note: z.string().optional(),
   source: SourceSchema.optional(),
 });
@@ -175,7 +175,7 @@ export const BlocReviewOutputSchema = z.object({
     z.object({
       blocId: z.string(),
       iso: z.string().describe('ISO 3166-1 alpha-3'),
-      change: z.enum(['joined', 'left', 'suspended', 'reinstated', 'frozen', 'invited', 'founded']),
+      change: z.enum(['joined', 'left', 'suspended', 'reinstated', 'frozen', 'invited', 'founded', 'candidate']),
       date: z.string().describe('YYYY-MM-DD the change took effect'),
       note: z.string(),
       source: z.object({ name: z.string(), url: z.string() }),

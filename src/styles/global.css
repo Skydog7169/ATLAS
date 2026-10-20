@@ -2193,6 +2193,35 @@ a {
   .trends {
     grid-template-columns: 1fr 1fr;
   }
+
+  .trends.single {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Short series (a bloc founded a few years ago): start and end figures instead of a line. */
+.trend-figures {
+  display: grid;
+  gap: 4px;
+  margin: 6px 0 4px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev-2);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.trend-figures .label {
+  color: var(--fg-muted);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-right: 6px;
+}
+
+/* A figure from years before the others it is shown or summed with. */
+.stale {
+  color: var(--warn);
 }
 
 .trend {

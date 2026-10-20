@@ -332,7 +332,7 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
             <span className="swatch" style={{ background: `repeating-linear-gradient(45deg, ${b.color} 0 4px, ${v.color} 4px 8px)` }} /> Both · {both}
           </li>
         </ul>
-        <div className="note">Full members only. Open the panel for shared members and combined figures.</div>
+        <div className="note">Full members only. Open the panel for shared members, suspended states and each bloc's totals.</div>
       </aside>
     );
   }
@@ -345,9 +345,9 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           <li>
             <span className="swatch" style={{ background: b.color }} /> Member
           </li>
-          {(statuses.has('partner') || statuses.has('observer') || statuses.has('invited')) && (
+          {(statuses.has('partner') || statuses.has('observer') || statuses.has('invited') || statuses.has('candidate')) && (
             <li>
-              <span className="swatch" style={{ background: b.color, opacity: 0.45 }} /> Partner, observer or invited
+              <span className="swatch" style={{ background: b.color, opacity: 0.45 }} /> {statuses.has('candidate') ? 'Candidate' : 'Partner, observer or invited'}
             </li>
           )}
           {(statuses.has('suspended') || statuses.has('frozen')) && (

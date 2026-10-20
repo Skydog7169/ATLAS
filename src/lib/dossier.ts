@@ -1,4 +1,4 @@
-import { blocsForCountry } from '../data/blocs';
+import { BLOC_BY_ID, blocsForCountry } from '../data/blocs';
 import { INTENSITY_ORDER, conflictsForCountry } from '../data/conflicts';
 import type { Bloc, BlocMember, Conflict, CountryRecord } from '../data/types';
 import { COUNTRY_BY_ISO } from './countries';
@@ -100,9 +100,18 @@ export function conflictBadges(iso: string, conflicts: readonly Conflict[]): Arr
   return out;
 }
 
+/** Headline blocs readers check first; the dossier names those a country is not a full member of. */
+export const HEADLINE_BLOCS = ['nato', 'eu', 'brics', 'sco', 'g7'];
+
+export function notMemberOf(iso: string): string[] {
+  return HEADLINE_BLOCS.map((id) => BLOC_BY_ID.get(id))
+    .filter((b): b is Bloc => !!b && !b.members.some((m) => m.iso === iso && m.status === 'member'))
+    .map((b) => b.shortName);
+}
+
 /** Human line for the profile section: "Republic of X · Capital: Y · UN member". */
 export function profileLine(c: CountryRecord): string {
-  const parts = [c.official];
+  const parts = c.official && c.official !== c.name ? [c.official] : [];
   if (c.capital) parts.push(`Capital: ${c.capital}`);
   parts.push(c.unMember ? 'UN member' : c.independent ? 'Not a UN member' : 'Territory');
   return parts.join(' · ');
