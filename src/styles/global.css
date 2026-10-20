@@ -13,8 +13,8 @@
    src/lib/palette.test.ts holds the ramps to their ordering and spacing. */
 :root {
   color-scheme: dark light;
-  --font: 'Rajdhani', 'Segoe UI', system-ui, sans-serif;
-  --mono: 'Share Tech Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font: 'Rajdhani', 'Rajdhani Fallback', 'Rajdhani Fallback Roboto', 'Segoe UI', system-ui, sans-serif;
+  --mono: 'Share Tech Mono', 'Share Tech Mono Fallback', 'Share Tech Mono Fallback Consolas', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --bg: light-dark(#dfe7ee, #04070d);
   --bg-elev: light-dark(#eef3f7, #080f1a);
@@ -740,7 +740,13 @@ a {
   z-index: 20;
 }
 
-.search-list li {
+.search-list ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.search-list li[role='option'] {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -766,6 +772,26 @@ a {
 .search-list .empty {
   color: var(--fg-muted);
   cursor: default;
+}
+
+.search-group {
+  padding: 8px 10px 3px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+.search-list .hint {
+  margin: 0;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.search-list ul + .hint {
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
 }
 
 /* ---------- detail panel ---------- */
@@ -991,14 +1017,53 @@ a {
   text-align: center;
 }
 
-.error-fallback pre {
+.error-card {
+  max-width: min(440px, 100%);
+  padding: 20px 22px;
+  border: 1px solid var(--border-strong);
+  background: color-mix(in srgb, var(--bg-elev) 94%, transparent);
+  box-shadow: var(--shadow);
   text-align: left;
-  font-size: 12px;
-  background: var(--bg-elev);
-  padding: 12px;
-  border: 1px solid var(--border);
-  max-width: 90vw;
-  overflow: auto;
+}
+
+.error-card .eyebrow {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--warn);
+}
+
+.error-card h2 {
+  margin: 6px 0 8px;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.error-card p {
+  margin: 0 0 12px;
+  color: var(--fg-muted);
+}
+
+.error-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.error-fallback[data-variant='panel'] {
+  height: auto;
+  bottom: auto;
+  padding: 0;
+  display: block;
+}
+
+.error-fallback[data-variant='panel'] .error-card {
+  max-width: none;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
 }
 
 /* ---------- responsive ---------- */
