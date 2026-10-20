@@ -1,6 +1,7 @@
 import raw from '../data/sanctions.generated.json';
 import type { DossierExtra } from './dossier';
 import { formatDate } from './labels';
+import { ramp } from './palette';
 
 export type SanctionsAuthority = 'UN' | 'US' | 'EU';
 
@@ -28,9 +29,9 @@ export const SANCTIONS_BY_ISO: ReadonlyMap<string, SanctionsRow> = new Map(SANCT
 
 export const AUTHORITY_LABEL: Record<SanctionsAuthority, string> = { UN: 'UN Security Council', US: 'United States (OFAC)', EU: 'European Union' };
 
-/** Bins by regime count. Amber ramp: distinct from the red conflict scale, the violet displacement ramp and the cyan bloc scale. */
+/** Bins by regime count. Gold ramp from palette.ts: distinct from the red conflict scale, the violet displacement ramp and the cyan bloc scale. */
 export const SANCTIONS_BINS = [0, 1, 2, 3, 5] as const;
-export const SANCTIONS_COLORS = ['var(--land)', '#4a3a12', '#8a6a1a', '#c99a1f', '#ffd166'] as const;
+export const SANCTIONS_COLORS = ramp('sanctions');
 
 export function sanctionsBin(count: number): number {
   let bin = 0;

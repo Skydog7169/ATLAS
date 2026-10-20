@@ -1,4 +1,5 @@
 import raw from '../data/elections.json';
+import { NO_DATA_FILL, ramp } from './palette';
 import type { DossierExtra } from './dossier';
 import { formatDate, formatMonth } from './labels';
 
@@ -39,7 +40,7 @@ export function monthsUntil(date: string, now: Date = new Date()): number {
 /** Upper bounds (exclusive) of each bin in months; the last bin is open-ended, and null-date countries sit in bin 0. */
 export const ELECTION_BINS = [3, 6, 12, 24] as const;
 /** Green ramp, brightest for the soonest. Bin 0 is "no date". */
-export const ELECTION_COLORS = ['var(--land)', '#2a4a2a', '#2f7a3a', '#3fb04a', '#8cff7a'] as const;
+export const ELECTION_COLORS = ramp('elections');
 
 export function electionBin(months: number | null): number {
   if (months === null || months < 0) return 0;
@@ -58,7 +59,8 @@ export function electionBinLabel(i: number): string {
 
 export function electionColor(iso: string, now: Date = new Date()): string {
   const row = ELECTIONS_BY_ISO.get(iso);
-  const months = row?.date ? monthsUntil(row.date, now) : null;
+  if (!row) return NO_DATA_FILL;
+  const months = row.date ? monthsUntil(row.date, now) : null;
   return ELECTION_COLORS[electionBin(months)] ?? 'var(--land)';
 }
 

@@ -6,8 +6,9 @@ import chokepointsJson from '../data/chokepoints.json';
 import militaryJson from '../data/military.json';
 import tradeJson from '../data/trade.generated.json';
 import { CHOKEPOINTS, CHOKEPOINT_BY_ID, currentStatus, linkedConflicts } from './chokepoints';
-import { MILITARY, PRESENCE_ACTIVE, militaryBin, militaryBinLabel, militaryColor, militaryDossier, militarySummary, operatorsIn, presencesBy } from './military';
-import { TRADE, leadingPartner, tradeColor, tradeDossier, tradeSummary } from './trade';
+import { MILITARY, MILITARY_COLORS, PRESENCE_ACTIVE, militaryBin, militaryBinLabel, militaryColor, militaryDossier, militarySummary, operatorsIn, presencesBy } from './military';
+import { TRADE, TRADE_BY_ISO, TRADE_COLOR, leadingPartner, tradeColor, tradeDossier, tradeFill, tradeMix, tradeSummary } from './trade';
+import { FAINT_FILL, NO_DATA_FILL } from './palette';
 import { EU27, buildRows, parseSdmx } from '../../scripts/build-trade.mjs';
 import { countryDossier } from './dossier';
 
@@ -45,7 +46,7 @@ describe('military presence', () => {
     expect([0, 1, 2, 3, 4, 5, 9].map(militaryBin)).toEqual([0, 1, 2, 3, 3, 4, 4]);
     expect(militaryBinLabel(1)).toBe('1 foreign operator');
     expect(militaryBinLabel(4)).toBe('5+ foreign operators');
-    expect(militaryColor('DJI')).toBe('#9fc0ff');
+    expect(militaryColor('DJI')).toBe(MILITARY_COLORS[4]);
     expect(militaryColor('ISL')).toBe('var(--land)');
     expect(militarySummary('SEN')).toBeNull();
     expect(militarySummary('DJI')).toMatch(/^Hosts: /);
@@ -73,8 +74,21 @@ describe('trade dependence', () => {
   it('picks the leading partner above a floor and tints by share', () => {
     expect(leadingPartner({ iso: 'X', year: 2023, exportsUsd: 1, us: 0.5, china: 0.2, eu: 0.1 })).toBe('us');
     expect(leadingPartner({ iso: 'X', year: 2023, exportsUsd: 1, us: 0.05, china: 0.05, eu: 0.09 })).toBeNull();
-    expect(tradeColor('MEX')).toMatch(/^color-mix\(in srgb, #4f8cff 100%/);
-    expect(tradeColor('ZZZ')).toBe('var(--land)');
+    expect(tradeColor('MEX')).toBe(TRADE_COLOR.us);
+    expect(tradeColor('ZZZ')).toBe(NO_DATA_FILL);
+    expect(tradeSummary('DEU')).toMatch(/EU single market/);
+    expect(tradeDossier('MEX')!.rows[0]!.share).toBeGreaterThan(0.5);
+  });
+
+  it('keys the map by share band, splits near ties and leaves the single market out for EU members', () => {
+    expect(tradeMix('china', 0)).toBe('color-mix(in oklab, #ff4f5e 42%, var(--land))');
+    // India's US and EU shares sit within a point of each other: stripes, not a categorical lead.
+    const ind = TRADE_BY_ISO.get('IND')!;
+    if (Math.abs(ind.us - ind.eu) < 0.02) expect(tradeFill('IND').stripes).toBeDefined();
+    // Germany sends half its exports to the EU, but its tint is the US or China, or the faint "none above 10%".
+    const deu = tradeFill('DEU').fill;
+    expect(deu.includes(TRADE_COLOR.eu)).toBe(false);
+    expect([FAINT_FILL, TRADE_COLOR.us, TRADE_COLOR.china].some((c) => deu === c || deu.includes(c))).toBe(true);
     expect(tradeSummary('MEX')).toMatch(/^Exports 20\d\d: US \d+% · China \d+% · EU \d+%$/);
     expect(tradeDossier('DEU')!.rows.find((r) => r.label === 'European Union')!.note).toBe('Largest of the three');
     expect(countryDossier('DEU')!.sections).toContain('trade');

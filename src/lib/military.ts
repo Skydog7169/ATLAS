@@ -1,4 +1,5 @@
 import raw from '../data/military.json';
+import { ramp } from './palette';
 import type { Source } from '../data/types';
 import { countryName } from './countries';
 import type { DossierExtra } from './dossier';
@@ -56,7 +57,7 @@ export function operatorsIn(iso: string): string[] {
 
 export const MILITARY_BINS = [0, 1, 2, 3, 5] as const;
 /** Steel-blue ramp, distinct from the cyan bloc overview. */
-export const MILITARY_COLORS = ['var(--land)', '#2c3f6b', '#3b5aa0', '#5b84d6', '#9fc0ff'] as const;
+export const MILITARY_COLORS = ramp('military');
 
 export function militaryBin(count: number): number {
   let bin = 0;

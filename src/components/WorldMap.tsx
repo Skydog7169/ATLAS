@@ -1,4 +1,5 @@
 import { memo, useEffect, useMemo, useRef, useState, type RefObject } from 'react';
+import { useHoverIso, useThemeKey } from '../hooks/useMapOverlays';
 import { useSize } from '../hooks/useSize';
 import { triPath } from '../lib/shapes';
 import { geoGraticule10, geoNaturalEarth1, geoPath, type GeoPath } from 'd3-geo';
@@ -7,6 +8,7 @@ import { zoom as d3zoom, zoomIdentity, type ZoomBehavior, type ZoomTransform } f
 import 'd3-transition';
 import { COUNTRY_FEATURES, MICROSTATES, drawnIsos, loadDetailedFeatures, type CountryFeature } from '../lib/geo';
 import { COUNTRY_BY_ISO } from '../lib/countries';
+import { NO_DATA_PATTERN, isDarkFill } from '../lib/palette';
 
 export interface MapMarker {
   id: string;
@@ -17,6 +19,22 @@ export interface MapMarker {
   pulse?: boolean;
   /** Diamonds mark chokepoints so they read apart from round conflict markers. */
   shape?: 'circle' | 'diamond' | 'triangle';
+  /** Diamond fill style, so status does not rest on colour alone. */
+  glyph?: DiamondGlyph;
+}
+
+export type DiamondGlyph = 'outline' | 'half' | 'solid' | 'cross';
+
+/** A chokepoint diamond: outline (open), half-filled (restricted), solid (closed, with an ×). */
+export function DiamondCore({ r, color, glyph = 'solid' }: { r: number; color: string; glyph?: DiamondGlyph }) {
+  const d = r * Math.SQRT2;
+  return (
+    <>
+      <rect className={'core glyph-' + glyph} x={-r} y={-r} width={2 * r} height={2 * r} transform="rotate(45)" fill={glyph === 'outline' ? 'var(--bg)' : color} style={glyph === 'outline' ? { stroke: color } : undefined} filter="url(#marker-glow)" />
+      {glyph === 'half' && <path className="glyph-mask" d={`M${-d} 0L0 ${-d}L${d} 0Z`} fill="var(--bg)" />}
+      {glyph === 'cross' && <path className="glyph-x" d={`M${-r * 0.55} ${-r * 0.55}L${r * 0.55} ${r * 0.55}M${r * 0.55} ${-r * 0.55}L${-r * 0.55} ${r * 0.55}`} />}
+    </>
+  );
 }
 
 export type Focus =
@@ -56,6 +74,11 @@ const MAX_SCALE = 16;
 /** Zoom factor at which the 1:50m geometry loads and country labels appear. */
 const DETAIL_SCALE = 2.5;
 const KEY_PAN = 80;
+
+function labelTone(fill: string, themeKey: string): string {
+  const dark = isDarkFill(fill, themeKey);
+  return dark === null ? '' : dark ? ' on-dark' : ' on-light';
+}
 
 function hatchId(color: string) {
   return 'hatch-' + color.replace(/[^a-z0-9]/gi, '');
@@ -104,8 +127,14 @@ export const CountryLayer = memo(function CountryLayer({ features, paths, fillFo
   return (
     <>
       <defs>
+        {/* Sparse cross-hatch over land: a country the layer's source has no row for. */}
+        <pattern id={NO_DATA_PATTERN} width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <rect width="6" height="6" fill="var(--land)" />
+          <path d="M0 0V6M0 0H6" stroke="var(--fg-faint)" strokeWidth="0.7" opacity="0.7" />
+        </pattern>
         {[...hatches].map((color) => (
           <pattern key={color} id={hatchId(color)} width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="6" height="6" fill="var(--land)" />
             <rect width="6" height="6" fill={color} opacity="0.35" />
             <rect width="3" height="6" fill={color} />
           </pattern>
@@ -121,6 +150,28 @@ export const CountryLayer = memo(function CountryLayer({ features, paths, fillFo
     </>
   );
 });
+
+/**
+ * Hover and selection outlines, drawn above every country so neighbours cannot
+ * paint over them and the fill (the key to the legend) never changes. The
+ * strokes do not scale with zoom.
+ */
+export function CountryOutlines({ features, paths, selectedIso, hoverIso }: { features: CountryFeature[]; paths: string[]; selectedIso: string | null; hoverIso: string | null }) {
+  const index = (iso: string | null) => (iso ? features.findIndex((f) => f.properties.iso === iso) : -1);
+  const sel = index(selectedIso);
+  const hov = hoverIso !== selectedIso ? index(hoverIso) : -1;
+  return (
+    <g aria-hidden="true">
+      {hov >= 0 && paths[hov] && <path className="hover-outline" d={paths[hov]} />}
+      {sel >= 0 && paths[sel] && (
+        <>
+          <path className="selection-halo" d={paths[sel]} />
+          <path className="selection-line" d={paths[sel]} />
+        </>
+      )}
+    </g>
+  );
+}
 
 export default function WorldMap({
   fillFor,
@@ -141,8 +192,9 @@ export default function WorldMap({
   const zoomRef = useRef<ZoomBehavior<SVGSVGElement, unknown> | null>(null);
   const { width, height } = useSize(rootRef);
   const [transform, setTransform] = useState<ZoomTransform>(zoomIdentity);
-  const onHoverRef = useRef(onHover);
-  onHoverRef.current = onHover;
+  const [hoverIso, onCountryHover] = useHoverIso(onHover);
+  const onHoverRef = useRef(onCountryHover);
+  onHoverRef.current = onCountryHover;
   const [detail, setDetail] = useState<CountryFeature[] | null>(null);
   const loadingDetail = useRef(false);
   const features = detail ?? COUNTRY_FEATURES;
@@ -292,6 +344,7 @@ export default function WorldMap({
     // insetRight is read when focus changes; a panel opening on its own should not move the map.
   }, [focus, projection, path, width, height, features]);
 
+  const themeKey = useThemeKey();
   const scaleAdjust = 1 / Math.sqrt(transform.k);
   const showLabels = transform.k >= DETAIL_SCALE;
 
@@ -321,16 +374,24 @@ export default function WorldMap({
           width={width}
           height={height}
           tabIndex={0}
-          role="application"
+          role="group"
+          aria-roledescription="map"
           aria-label="World map. Arrow keys pan, plus and minus zoom, 0 resets. Use search to jump to a country."
           onKeyDown={onKeyDown}
         >
           <g ref={layerRef}>
             <path className="sphere" d={spherePath} />
+            {/* The vignette darkens the ocean edge only; drawn under the countries, it never shifts a data class. */}
+            <path className="sphere-vignette" d={spherePath} fill="url(#ocean-vignette)" />
             <path className="graticule" d={graticulePath} />
-            <CountryLayer features={features} paths={paths} fillFor={fillFor} selectedIso={selectedIso} onCountryClick={onCountryClick} onHover={onHover} />
+            <CountryLayer features={features} paths={paths} fillFor={fillFor} selectedIso={selectedIso} onCountryClick={onCountryClick} onHover={onCountryHover} />
+            <CountryOutlines features={features} paths={paths} selectedIso={selectedIso} hoverIso={hoverIso} />
           </g>
           <defs>
+            <radialGradient id="ocean-vignette" cx="50%" cy="50%" r="50%">
+              <stop offset="0.55" stopColor="var(--bg)" stopOpacity="0" />
+              <stop offset="1" stopColor="var(--bg)" stopOpacity="0.7" />
+            </radialGradient>
             <filter id="marker-glow" x="-100%" y="-100%" width="300%" height="300%">
               <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur" />
               <feMerge>
@@ -370,7 +431,7 @@ export default function WorldMap({
                 const [x, y] = transform.apply([a.cx, a.cy]);
                 if (x < -50 || y < -20 || x > width + 50 || y > height + 20) return null;
                 return (
-                  <text key={a.iso} className="country-label" x={x} y={y} textAnchor="middle" dominantBaseline="middle" aria-hidden="true">
+                  <text key={a.iso} className={'country-label' + labelTone(fillFor(a.iso).fill, themeKey)} x={x} y={y} textAnchor="middle" dominantBaseline="middle" aria-hidden="true">
                     {a.name.toUpperCase()}
                   </text>
                 );
@@ -409,6 +470,8 @@ export default function WorldMap({
                       <path d={`M0 ${-(r + 16)}v7M0 ${r + 16}v-7M${-(r + 16)} 0h7M${r + 16} 0h-7`} />
                     </g>
                   )}
+                  {/* A finger-sized hit area on touch screens; hidden for fine pointers. */}
+                  <circle className="hit" r={Math.max(12, r + 3)} />
                   {mk.shape === 'triangle' ? (
                     <>
                       <path className="ring" d={triPath(r + 3)} stroke={mk.color} />
@@ -417,7 +480,7 @@ export default function WorldMap({
                   ) : mk.shape === 'diamond' ? (
                     <>
                       <rect className="ring" x={-(r + 3)} y={-(r + 3)} width={2 * (r + 3)} height={2 * (r + 3)} transform="rotate(45)" stroke={mk.color} />
-                      <rect className="core" x={-r} y={-r} width={2 * r} height={2 * r} transform="rotate(45)" fill={mk.color} filter="url(#marker-glow)" />
+                      <DiamondCore r={r} color={mk.color} glyph={mk.glyph} />
                     </>
                   ) : (
                     <>
