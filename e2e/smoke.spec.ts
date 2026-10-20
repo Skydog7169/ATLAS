@@ -522,10 +522,11 @@ test('embeds: dated replay badge, cooperative scrolling and bottom-anchored cont
 
   // Off the frame's edge, markers leave the tab order.
   await page.setViewportSize({ width: 360, height: 240 });
-  await open(page, '#mode=conflicts&embed=1');
+  // A deep link flies to Sudan; markers in East Asia and the Americas end up outside the frame.
+  // (Leave the page first: a hash-only goto would not reload, and the landing fly-to runs on load.)
+  await page.goto('about:blank');
+  await open(page, '#mode=conflicts&embed=1&conflict=sudan');
   const total = await page.locator('g.marker').count();
-  await page.locator('.map-root svg').focus();
-  for (let i = 0; i < 4; i++) await page.keyboard.press('+');
   await expect.poll(() => page.locator('g.marker[tabindex="0"]').count()).toBeLessThan(total);
   expect(await page.locator('g.marker[tabindex="-1"]').count()).toBeGreaterThan(0);
 });
