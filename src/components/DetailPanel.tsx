@@ -19,6 +19,7 @@ import { countryDossier, profileLine, type CountryDossier } from '../lib/dossier
 import { useWatchlist } from '../hooks/useWatchlist';
 import StarButton from './StarButton';
 import ActorsGraph from './ActorsGraph';
+import { DataRowBody } from './DataRow';
 import { PEACE_KIND_LABEL, backersOf, SUPPORT_LABEL } from '../lib/actors';
 import { CHOKEPOINTS_FILE, CHOKEPOINT_BY_ID, CHOKEPOINT_COLOR, CHOKEPOINT_STATUS_LABEL, currentStatus, linkedConflicts, type Chokepoint } from '../lib/chokepoints';
 import { MILITARY, PRESENCE_KIND_LABEL, operatorName } from '../lib/military';
@@ -81,7 +82,7 @@ function ShareButton() {
 function Sources({ sources }: { sources: Array<{ name: string; url: string }> }) {
   return (
     <>
-      <h4>Sources</h4>
+      <h3>Sources</h3>
       <ul className="link-list">
         {sources.map((s) => (
           <li key={s.url}>
@@ -133,10 +134,12 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
   return (
     <>
       <div className="panel-head">
-        <h2>
-          <span className="eyebrow">Country dossier · {country.subregion ?? country.region}</span>
-          {country.name}
-        </h2>
+        <div className="panel-title">
+          <p className="eyebrow">Country dossier · {country.subregion ?? country.region}</p>
+          <h2>
+            {country.name}
+          </h2>
+        </div>
         <StarButton item={{ kind: 'country', id: country.cca3 }} name={country.name} />
         <CloseButton onClick={props.onClose} />
       </div>
@@ -152,7 +155,7 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
           )}
         </div>
 
-        <h4 id="dossier-memberships">Bloc memberships · {memberships.filter((m) => m.membership.status === 'member').length}</h4>
+        <h3 id="dossier-memberships">Bloc memberships · {memberships.filter((m) => m.membership.status === 'member').length}</h3>
         {memberships.length === 0 ? (
           <Muted>Not a member of any bloc tracked here.</Muted>
         ) : (
@@ -169,7 +172,7 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
           </ul>
         )}
 
-        <h4 id="dossier-conflicts">Conflicts · {conflicts.length}</h4>
+        <h3 id="dossier-conflicts">Conflicts · {conflicts.length}</h3>
         {conflicts.length === 0 ? (
           <Muted>No tracked conflict on this territory.</Muted>
         ) : (
@@ -188,7 +191,7 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
 
         {extras.map((x) => (
           <div key={x.id}>
-            <h4 id={`dossier-${x.id}`}>{x.title}</h4>
+            <h3 id={`dossier-${x.id}`}>{x.title}</h3>
             {x.rows.length === 0 ? (
               <Muted>{x.empty ?? 'None recorded.'}</Muted>
             ) : (
@@ -196,28 +199,16 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
                 {x.rows.map((r, i) => (
                   <li key={r.label + i}>
                     {r.conflictId || r.unrestId ? (
-                      <button onClick={() => (r.conflictId ? props.onSelectConflict(r.conflictId) : props.onSelectUnrest(r.unrestId!))}>
-                        <span>
-                          {r.label}
-                          {r.note && <span className="row-note">{r.note}</span>}
-                        </span>
-                        <span className="meta">{r.value}</span>
+                      <button className="data-row" onClick={() => (r.conflictId ? props.onSelectConflict(r.conflictId) : props.onSelectUnrest(r.unrestId!))}>
+                        <DataRowBody {...r} />
                       </button>
                     ) : r.href ? (
-                      <a href={r.href} target="_blank" rel="noopener noreferrer" title={r.note}>
-                        <span>
-                          {r.label}
-                          {r.note && <span className="row-note">{r.note}</span>}
-                        </span>
-                        <span className="meta">{r.value ? `${r.value} ↗` : '↗'}</span>
+                      <a className="data-row" href={r.href} target="_blank" rel="noopener noreferrer" title={r.note}>
+                        <DataRowBody {...r} value={r.value} suffix="↗" />
                       </a>
                     ) : (
-                      <span className="row">
-                        <span>
-                          {r.label}
-                          {r.note && <span className="row-note">{r.note}</span>}
-                        </span>
-                        <span className="meta">{r.value}</span>
+                      <span className="row data-row">
+                        <DataRowBody {...r} />
                       </span>
                     )}
                   </li>
@@ -228,7 +219,7 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
           </div>
         ))}
 
-        <h4 id="dossier-displacement">Displacement</h4>
+        <h3 id="dossier-displacement">Displacement</h3>
         {displacement && displacement.total > 0 ? (
           <div className="tiles" style={{ ['--tile-color' as string]: '#a35be6' }}>
             <div className="tile">
@@ -251,7 +242,7 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
           <Muted>No UNHCR displacement figure for people from {country.name}.</Muted>
         )}
 
-        <h4 id="dossier-figures">Figures</h4>
+        <h3 id="dossier-figures">Figures</h3>
         {figures && (figures.population !== null || figures.gdpUsd !== null || figures.militaryUsd !== null) ? (
           <div className="tiles">
             <div className="tile">
@@ -274,7 +265,7 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
           <Muted>No World Bank figures for {country.name}.</Muted>
         )}
 
-        <h4 id="dossier-changes">Recent changes · {changes.length}</h4>
+        <h3 id="dossier-changes">Recent changes · {changes.length}</h3>
         {changes.length === 0 ? <Muted>No dated assessment or membership change on record for {country.name}.</Muted> : <FeedList items={changes} props={props} compact />}
 
         <div className="panel-actions">
@@ -330,10 +321,12 @@ function BlocView({ bloc, props }: { bloc: Bloc; props: Props }) {
   return (
     <>
       <div className="panel-head">
-        <h2>
-          <span className="eyebrow">{CATEGORY_LABEL[bloc.category]} bloc</span>
-          {bloc.name}
-        </h2>
+        <div className="panel-title">
+          <p className="eyebrow">{CATEGORY_LABEL[bloc.category]} bloc</p>
+          <h2>
+            {bloc.name}
+          </h2>
+        </div>
         <StarButton item={{ kind: 'bloc', id: bloc.id }} name={bloc.shortName} />
         <CloseButton onClick={props.onClose} />
       </div>
@@ -346,7 +339,7 @@ function BlocView({ bloc, props }: { bloc: Bloc; props: Props }) {
           {bloc.headquarters && <span className="badge muted">{bloc.headquarters}</span>}
         </div>
         <p>{bloc.description}</p>
-        <h4>At a glance · {blocFigures(bloc).members} members</h4>
+        <h3>At a glance · {blocFigures(bloc).members} members</h3>
         <FigureTiles f={blocFigures(bloc)} color={bloc.color} />
         <BlocTrends bloc={bloc} />
         <div className="panel-actions">
@@ -357,9 +350,9 @@ function BlocView({ bloc, props }: { bloc: Bloc; props: Props }) {
         </div>
         {groups.map((g) => (
           <div key={g.status}>
-            <h4>
+            <h3>
               {STATUS_LABEL[g.status]} · {g.rows.length}
-            </h4>
+            </h3>
             <ul className="link-list member-grid">
               {g.rows.map((m) => (
                 <li key={m.iso}>
@@ -374,7 +367,7 @@ function BlocView({ bloc, props }: { bloc: Bloc; props: Props }) {
         ))}
         {bloc.changes.length > 0 && (
           <>
-            <h4>Membership changes</h4>
+            <h3>Membership changes</h3>
             <ul className="history">
               {bloc.changes.map((ch) => (
                 <li key={ch.date + ch.iso + ch.change}>
@@ -413,7 +406,7 @@ function BlocTrends({ bloc }: { bloc: Bloc }) {
   const last = points.at(-1)!;
   return (
     <>
-      <h4 id="bloc-trends">Since {points[0]!.year}</h4>
+      <h3 id="bloc-trends">Since {points[0]!.year}</h3>
       <div className="trends">
         <TrendChart points={points} color={bloc.color} series="members" label="Members" />
         <TrendChart points={points} color={bloc.color} series="gdpUsd" label="Combined GDP" />
@@ -459,10 +452,12 @@ function RelationshipView({ a, b, props }: { a: string; b: string | null; props:
   return (
     <>
       <div className="panel-head">
-        <h2>
-          <span className="eyebrow">Relationship</span>
-          {na} {nb ? <span style={{ color: 'var(--fg-muted)' }}>and</span> : ''} {nb ?? ''}
-        </h2>
+        <div className="panel-title">
+          <p className="eyebrow">Relationship</p>
+          <h2>
+            {na} {nb ? <span style={{ color: 'var(--fg-muted)' }}>and</span> : ''} {nb ?? ''}
+          </h2>
+        </div>
         <CloseButton onClick={props.onClose} />
       </div>
       <div className="panel-body" data-pair={b ? `${a},${b}` : a}>
@@ -473,7 +468,7 @@ function RelationshipView({ a, b, props }: { a: string; b: string | null; props:
             <div className="badges">
               <span className="badge muted">{relationshipSummary(r)}</span>
             </div>
-            <h4 id="pair-blocs">Shared blocs · {r.sharedBlocs.length}</h4>
+            <h3 id="pair-blocs">Shared blocs · {r.sharedBlocs.length}</h3>
             {r.sharedBlocs.length === 0 ? (
               <Muted>No bloc tracked here has both as members.</Muted>
             ) : (
@@ -489,7 +484,7 @@ function RelationshipView({ a, b, props }: { a: string; b: string | null; props:
                 ))}
               </ul>
             )}
-            <h4 id="pair-conflicts">Conflicts · {r.conflicts.length}</h4>
+            <h3 id="pair-conflicts">Conflicts · {r.conflicts.length}</h3>
             {r.conflicts.length === 0 ? (
               <Muted>No tracked conflict links them.</Muted>
             ) : (
@@ -508,7 +503,7 @@ function RelationshipView({ a, b, props }: { a: string; b: string | null; props:
                 ))}
               </ul>
             )}
-            <h4 id="pair-sanctions">Sanctions between them</h4>
+            <h3 id="pair-sanctions">Sanctions between them</h3>
             {r.sanctions.length === 0 ? (
               <Muted>Neither applies a country-level regime to the other (UN measures are not counted as bilateral).</Muted>
             ) : (
@@ -530,7 +525,7 @@ function RelationshipView({ a, b, props }: { a: string; b: string | null; props:
                 )}
               </ul>
             )}
-            <h4 id="pair-military">Military presence</h4>
+            <h3 id="pair-military">Military presence</h3>
             {r.presence.aInB.length + r.presence.bInA.length === 0 ? (
               <Muted>Neither keeps forces in the other.</Muted>
             ) : (
@@ -548,7 +543,7 @@ function RelationshipView({ a, b, props }: { a: string; b: string | null; props:
                 ))}
               </ul>
             )}
-            <h4 id="pair-trade">Trade both ways</h4>
+            <h3 id="pair-trade">Trade both ways</h3>
             <div className="tiles two">
               <div className="tile">
                 <span className="label">{na} → {nb}</span>
@@ -561,7 +556,7 @@ function RelationshipView({ a, b, props }: { a: string; b: string | null; props:
                 <span className="sub">{r.trade.bToA === null ? (r.trade.yearB ? 'not among its 15 largest destinations' : 'no WITS data') : `of ${nb}'s goods exports, ${r.trade.yearB}`}</span>
               </div>
             </div>
-            <h4>Status</h4>
+            <h3>Status</h3>
             <ul className="link-list">
               <li>
                 <span className="row">
@@ -638,10 +633,12 @@ function ConflictView({ conflict, props }: { conflict: Conflict; props: Props })
   return (
     <>
       <div className="panel-head">
-        <h2>
-          <span className="eyebrow">{CONFLICT_TYPE_LABEL[conflict.type]}</span>
-          {conflict.name}
-        </h2>
+        <div className="panel-title">
+          <p className="eyebrow">{CONFLICT_TYPE_LABEL[conflict.type]}</p>
+          <h2>
+            {conflict.name}
+          </h2>
+        </div>
         <StarButton item={{ kind: 'conflict', id: conflict.id }} name={conflict.name} />
         <CloseButton onClick={props.onClose} />
       </div>
@@ -653,24 +650,26 @@ function ConflictView({ conflict, props }: { conflict: Conflict; props: Props })
           <span className="badge muted">Since {conflict.since}</span>
           {replay && props.month && <span className="badge muted">As of {formatMonth(props.month)}</span>}
         </div>
-        <h4>Parties</h4>
+        <h3>Parties</h3>
         <ul style={{ margin: '0 0 8px', paddingLeft: 18 }}>
           {conflict.parties.map((p) => (
             <li key={p}>{p}</li>
           ))}
         </ul>
-        <h4>Background</h4>
+        <h3>Background</h3>
         <p>{conflict.summary}</p>
         {conflict.actors && conflict.actors.length > 0 && (
           <>
-            <h4 id="conflict-actors">Who backs whom</h4>
+            <h3 id="conflict-actors">Who backs whom</h3>
             <ActorsGraph conflict={conflict} onSelectCountry={props.onSelectCountry} />
             {backersOf(conflict).length > 0 && (
               <div className="badges">
                 {backersOf(conflict).map((b) => (
                   <button key={b.iso} className="badge" style={{ cursor: 'pointer' }} onClick={() => props.onSelectCountry(b.iso)} title={`${b.support.map((k) => SUPPORT_LABEL[k]).join(', ')} for ${b.actors.join(', ')}`}>
                     {b.name}
-                    <span className="meta">{b.support.map((k) => SUPPORT_LABEL[k].toLowerCase()).join(', ')}</span>
+                    <span className="meta">
+                      {b.support.map((k) => SUPPORT_LABEL[k].toLowerCase()).join(', ')} → {b.actors.join(', ')}
+                    </span>
                   </button>
                 ))}
               </div>
@@ -682,12 +681,12 @@ function ConflictView({ conflict, props }: { conflict: Conflict; props: Props })
                     {s.name} ↗
                   </a>
                 ))}
-                {conflict.actorsUpdated && <span className="src" style={{ color: 'var(--fg-faint)' }}>reviewed {formatMonth(conflict.actorsUpdated)}</span>}
+                {conflict.actorsUpdated && <span className="src">reviewed {formatMonth(conflict.actorsUpdated)}</span>}
               </p>
             )}
           </>
         )}
-        <h4 id="conflict-peace">Peace process · {conflict.peace?.length ?? 0}</h4>
+        <h3 id="conflict-peace">Peace process · {conflict.peace?.length ?? 0}</h3>
         {!conflict.peace?.length ? (
           <p style={{ color: 'var(--fg-muted)' }}>No negotiation track on record.</p>
         ) : (
@@ -713,10 +712,10 @@ function ConflictView({ conflict, props }: { conflict: Conflict; props: Props })
             ))}
           </ol>
         )}
-        <h4>Assessments</h4>
+        <h3>Assessments</h3>
         {replay && !shown && <p style={{ color: 'var(--fg-muted)' }}>No assessment on record for {props.month ? formatMonth(props.month) : ''}.</p>}
         <HistoryList history={conflict.history} highlight={shown} />
-        <h4>Countries</h4>
+        <h3>Countries</h3>
         <div className="badges">
           {conflict.countries.map((iso) => (
             <button key={iso} className="badge" onClick={() => props.onSelectCountry(iso)} style={{ cursor: 'pointer' }}>
@@ -741,10 +740,12 @@ function UnrestView({ unrest, props }: { unrest: Unrest; props: Props }) {
   return (
     <>
       <div className="panel-head">
-        <h2>
-          <span className="eyebrow">{UNREST_KIND_LABEL[unrest.kind]}</span>
-          {unrest.name}
-        </h2>
+        <div className="panel-title">
+          <p className="eyebrow">{UNREST_KIND_LABEL[unrest.kind]}</p>
+          <h2>
+            {unrest.name}
+          </h2>
+        </div>
         <StarButton item={{ kind: 'unrest', id: unrest.id }} name={unrest.name} />
         <CloseButton onClick={props.onClose} />
       </div>
@@ -755,19 +756,19 @@ function UnrestView({ unrest, props }: { unrest: Unrest; props: Props }) {
           </span>
           <span className="badge muted">Since {formatMonth(unrest.since)}</span>
         </div>
-        <h4>Parties</h4>
+        <h3>Parties</h3>
         <ul style={{ margin: '0 0 8px', paddingLeft: 18 }}>
           {unrest.parties.map((p) => (
             <li key={p}>{p}</li>
           ))}
         </ul>
-        <h4 id="unrest-trigger">Trigger</h4>
+        <h3 id="unrest-trigger">Trigger</h3>
         <p>{unrest.trigger}</p>
-        <h4>Background</h4>
+        <h3>Background</h3>
         <p>{unrest.summary}</p>
-        <h4 id="unrest-assessments">Assessments</h4>
+        <h3 id="unrest-assessments">Assessments</h3>
         <HistoryList history={unrest.history} highlight={null} />
-        <h4>Countries</h4>
+        <h3>Countries</h3>
         <div className="badges">
           {unrest.countries.map((iso) => (
             <button key={iso} className="badge" onClick={() => props.onSelectCountry(iso)} style={{ cursor: 'pointer' }}>
@@ -804,10 +805,12 @@ function ChangesView({ props }: { props: Props }) {
   return (
     <>
       <div className="panel-head">
-        <h2>
-          <span className="eyebrow">Data feed</span>
-          Recent changes
-        </h2>
+        <div className="panel-title">
+          <p className="eyebrow">Data feed</p>
+          <h2>
+            Recent changes
+          </h2>
+        </div>
         <CloseButton onClick={props.onClose} />
       </div>
       <div className="panel-body">
@@ -848,10 +851,12 @@ function WatchlistView({ props }: { props: Props }) {
   return (
     <>
       <div className="panel-head">
-        <h2>
-          <span className="eyebrow">Saved on this device</span>
-          Watchlist
-        </h2>
+        <div className="panel-title">
+          <p className="eyebrow">Saved on this device</p>
+          <h2>
+            Watchlist
+          </h2>
+        </div>
         <CloseButton onClick={props.onClose} />
       </div>
       <div className="panel-body">
@@ -864,9 +869,9 @@ function WatchlistView({ props }: { props: Props }) {
           .filter((g) => g.rows.length > 0)
           .map((g) => (
             <div key={g.kind}>
-              <h4>
+              <h3>
                 {g.title} · {g.rows.length}
-              </h4>
+              </h3>
               <ul className="link-list">
                 {g.rows.map((it) => (
                   <li key={it.id} className="watch-row">
@@ -902,10 +907,12 @@ function ChokepointView({ cp, props }: { cp: Chokepoint; props: Props }) {
   return (
     <>
       <div className="panel-head">
-        <h2>
-          <span className="eyebrow">Maritime chokepoint</span>
-          {cp.name}
-        </h2>
+        <div className="panel-title">
+          <p className="eyebrow">Maritime chokepoint</p>
+          <h2>
+            {cp.name}
+          </h2>
+        </div>
         <CloseButton onClick={props.onClose} />
       </div>
       <div className="panel-body">
@@ -916,9 +923,9 @@ function ChokepointView({ cp, props }: { cp: Chokepoint; props: Props }) {
           <span className="badge muted">As of {formatDate(now.date)}</span>
         </div>
         <Muted>{cp.between}</Muted>
-        <h4>What passes through</h4>
+        <h3>What passes through</h3>
         <p>{cp.carries}</p>
-        <h4 id="chokepoint-status">Status</h4>
+        <h3 id="chokepoint-status">Status</h3>
         <ol className="history peace">
           {cp.history.map((e, i) => (
             <li key={e.date + i} data-current={i === 0}>
@@ -940,7 +947,7 @@ function ChokepointView({ cp, props }: { cp: Chokepoint; props: Props }) {
             </li>
           ))}
         </ol>
-        <h4 id="chokepoint-conflicts">Linked conflicts · {conflicts.length}</h4>
+        <h3 id="chokepoint-conflicts">Linked conflicts · {conflicts.length}</h3>
         {conflicts.length === 0 ? (
           <Muted>No tracked conflict bears on this passage.</Muted>
         ) : (
@@ -956,7 +963,7 @@ function ChokepointView({ cp, props }: { cp: Chokepoint; props: Props }) {
             ))}
           </ul>
         )}
-        <h4>Other chokepoints</h4>
+        <h3>Other chokepoints</h3>
         <div className="badges">
           {CHOKEPOINTS_FILE.chokepoints
             .filter((x) => x.id !== cp.id)
@@ -997,24 +1004,26 @@ function CompareView({ a, b, props }: { a: Bloc; b: Bloc; props: Props }) {
   return (
     <>
       <div className="panel-head">
-        <h2>
-          <span className="eyebrow">Compare</span>
-          {a.shortName} <span style={{ color: 'var(--fg-muted)' }}>vs</span> {b.shortName}
-        </h2>
+        <div className="panel-title">
+          <p className="eyebrow">Compare</p>
+          <h2>
+            {a.shortName} <span style={{ color: 'var(--fg-muted)' }}>vs</span> {b.shortName}
+          </h2>
+        </div>
         <CloseButton onClick={props.onClose} />
       </div>
       <div className="panel-body">
         <div className="compare-grid">
           <div>
-            <h4>
+            <h3>
               <span className="dot" style={{ width: 8, height: 8, background: a.color }} /> {a.shortName}
-            </h4>
+            </h3>
             <FigureTiles f={blocFigures(a)} color={a.color} />
           </div>
           <div>
-            <h4>
+            <h3>
               <span className="dot" style={{ width: 8, height: 8, background: b.color }} /> {b.shortName}
-            </h4>
+            </h3>
             <FigureTiles f={blocFigures(b)} color={b.color} />
           </div>
         </div>
@@ -1030,15 +1039,15 @@ function CompareView({ a, b, props }: { a: Bloc; b: Bloc; props: Props }) {
           </button>
           <ShareButton />
         </div>
-        <h4>In both · {both.length}</h4>
+        <h3>In both · {both.length}</h3>
         {list(both)}
-        <h4>
+        <h3>
           {a.shortName} only · {onlyA.length}
-        </h4>
+        </h3>
         {list(onlyA)}
-        <h4>
+        <h3>
           {b.shortName} only · {onlyB.length}
-        </h4>
+        </h3>
         {list(onlyB)}
         <FiguresNote />
       </div>
@@ -1051,10 +1060,12 @@ function AboutView({ props }: { props: Props }) {
   return (
     <>
       <div className="panel-head">
-        <h2>
-          <span className="eyebrow">About</span>
-          How ATLAS works
-        </h2>
+        <div className="panel-title">
+          <p className="eyebrow">About</p>
+          <h2>
+            How ATLAS works
+          </h2>
+        </div>
         <CloseButton onClick={props.onClose} />
       </div>
       <div className="panel-body">
@@ -1062,7 +1073,7 @@ function AboutView({ props }: { props: Props }) {
           ATLAS is an open geopolitics map: who belongs to which bloc, where armed conflicts and civil unrest are and how intense they are, and how many people they have displaced.
           It is built for orientation, not operations. Every claim links to a source, and every assessment carries the date it was verified.
         </p>
-        <h4>Freshness</h4>
+        <h3>Freshness</h3>
         <ul className="history">
           <li>
             <span className="when">{formatDate(newest)}</span>
@@ -1101,15 +1112,15 @@ function AboutView({ props }: { props: Props }) {
             <span>GDP by year since {WB_HISTORY.from} for the bloc trend charts (World Bank)</span>
           </li>
         </ul>
-        <h4>How assessments are made</h4>
+        <h3>How assessments are made</h3>
         <p>
           Each conflict has a dated history of assessments. A weekly automated pass searches the web for developments, drafts an update and proposes it in a pull request that a person reviews before it goes live. The pass is held to three rules: it may only cite pages that appeared in its own search results or that live on a short list of trusted trackers and wire services; it may not move intensity by more than one step at a time; and it must leave an entry alone when nothing material changed. Intensity is a judgement on a four-step scale: high means large-scale sustained combat, medium regular deadly fighting, low sporadic violence, latent a ceasefire or standoff.
         </p>
-        <h4>Sources</h4>
+        <h3>Sources</h3>
         <p>
           Conflict trackers: CFR Global Conflict Tracker, ACLED, Crisis Group CrisisWatch, ISW. Civil unrest: curated from wire services, Crisis Group, ACLED, the Carnegie Global Protest Tracker, HRW and Amnesty, then reassessed weekly by the same research pass; organised-violence deaths from the UCDP Georeferenced Event Dataset when a token is configured. Memberships: the organisations' own sites. Displacement: UNHCR Refugee Data Finder, by country of origin. Figures: World Bank Open Data. Sanctions: OFAC's programme index, the EU Sanctions Map and UN Security Council committees (country-level regimes only). Elections: seeded from Wikipedia's list of next general elections and IFES ElectionGuide, then re-checked weekly by the research pass. Nuclear status: SIPRI, the Arms Control Association and NATO, curated by hand. Geometry: Natural Earth via world-atlas. Trusted hosts for automated citations: {TRUSTED_HOSTS.join(', ')}.
         </p>
-        <h4>Caveats</h4>
+        <h3>Caveats</h3>
         <ul style={{ margin: 0, paddingLeft: 18 }}>
           <li>Borders follow Natural Earth and imply no position on disputes. Kosovo uses the code UNK; Northern Cyprus and Somaliland are drawn as neutral territory.</li>
           <li>Conflict tinting uses the most intense conflict on a country's territory, including conflicts where it is an external party.</li>
@@ -1117,20 +1128,20 @@ function AboutView({ props }: { props: Props }) {
           <li>Displacement figures are UNHCR mid-year or end-year stocks, not flows, and lag events by months.</li>
           <li>An assessment is a dated snapshot. Check the linked sources before relying on it.</li>
         </ul>
-        <h4>Following things</h4>
+        <h3>Following things</h3>
         <p>
           Every country has a dossier (memberships, conflicts, displacement, figures and its recent changes) at a link you can share. The strip along the bottom cycles the ten newest dated changes and pauses while you hover it. Press the star on any panel to add it to a watchlist kept in this browser; the ticker and the changes feed can be filtered to it. A strip under the header lists what changed since you last pressed "Mark read". The same changes are available as <a href="/feed.xml">RSS</a> and <a href="/feed.json">JSON Feed</a>.
         </p>
-        <h4>Globe, briefing, embed and export</h4>
+        <h3>Globe, briefing, embed and export</h3>
         <p>
-          The globe button in the map controls switches to an orthographic globe you can spin by dragging (it keeps turning briefly when released) and the centre travels in the link. The briefing button goes full screen, hides the chrome and cycles through the live high-intensity conflicts and your watchlist, nine seconds each; Space pauses, arrows step, Escape exits. Add <span className="mono">embed=1</span> to any link to get a chrome-less view for an iframe, and the download button saves the map you are looking at as a PNG with its legend and a date stamp.
+          The globe button in the map controls switches to an orthographic globe you can spin by dragging (it keeps turning briefly when released) and the centre travels in the link. The briefing button goes full screen, hides the chrome and cycles through the live high-intensity conflicts and your watchlist, nine seconds each; Space pauses, arrows step, Escape exits. Add <span className="mono">embed=1</span> to any link to get a chrome-less view for an iframe (dark unless the link also says <span className="mono">theme=light</span> or <span className="mono">theme=auto</span>), and the download button saves the map you are looking at as a PNG with its legend and a date stamp.
         </p>
-        <h4>Analysis</h4>
+        <h3>Analysis</h3>
         <p>
           Any country dossier offers "Relationship with…": pick a second country to see shared blocs, the conflicts that link them, sanctions one applies to the other, forces either keeps in the other, and each side's export share to the other. Bloc panels chart membership and combined GDP since 1990 from accession years and World Bank data.
           {ASK_ENABLED ? ' Ask ATLAS answers questions strictly from this dataset with citations; it is rate-limited and capped per day.' : ''}
         </p>
-        <h4>Keyboard</h4>
+        <h3>Keyboard</h3>
         <p className="mono" style={{ fontSize: 12 }}>
           / search · arrows pan or rotate · + − zoom · 0 reset · Tab through conflict markers, Enter opens · Esc closes the tooltip · briefing: Space pauses, arrows step, Esc exits
         </p>

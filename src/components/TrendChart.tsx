@@ -37,7 +37,10 @@ export default function TrendChart({ points, color, series, label }: Props) {
       <figcaption id={`${id}-cap`} className="trend-cap">
         <span className="label">{label}</span>
         <span className="trend-now">
-          {fmt(last[series])} <span className="trend-sub">in {last.year}</span>
+          {fmt(first[series])} → {fmt(last[series])}{' '}
+          <span className="trend-sub">
+            {first.year}–{last.year}
+          </span>
         </span>
       </figcaption>
       <svg viewBox={`0 0 ${W} ${H}`} width="100%" aria-hidden="true">

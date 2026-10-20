@@ -1,6 +1,6 @@
 import { blocsForCountry } from '../data/blocs';
 import { INTENSITY_ORDER, conflictsForCountry } from '../data/conflicts';
-import type { Bloc, BlocMember, Conflict, CountryRecord } from '../data/types';
+import type { Bloc, BlocMember, Conflict, CountryRecord, Intensity } from '../data/types';
 import { COUNTRY_BY_ISO } from './countries';
 import { DISPLACEMENT_BY_ISO, type DisplacementRow } from './displacement';
 import { CHANGES, changesForCountry } from './feed';
@@ -27,7 +27,7 @@ export interface DossierExtra {
   id: Extract<DossierSectionId, 'sanctions' | 'elections' | 'nuclear' | 'sponsorship' | 'military' | 'trade' | 'unrest' | 'acled' | 'ucdp'>;
   title: string;
   /** A row links out (`href`), into a conflict panel (`conflictId`), an unrest panel (`unrestId`) or a country dossier (`countryIso`). */
-  rows: Array<{ label: string; value: string; href?: string; note?: string; conflictId?: string; unrestId?: string; countryIso?: string }>;
+  rows: Array<{ label: string; value: string; href?: string; note?: string; conflictId?: string; unrestId?: string; countryIso?: string; intensity?: Intensity; share?: number }>;
   /** Shown when `rows` is empty. */
   empty?: string;
   /** Source and fetch date shown under the section. */
