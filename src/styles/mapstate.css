@@ -297,14 +297,8 @@
   }
 }
 
-/* ---------- legend dock (phones) with the h2 title and the state strip ---------- */
-.legend-dock:has(.legend-toggle) .legend .legend-title,
+/* ---------- legend dock (phones): keep the strip clear of the collapse toggle ---------- */
+/* (The collapsed pill's h2 title rule lives with LegendDock in global.css.) */
 .legend-dock:has(.legend-toggle) .legend .map-state {
   padding-right: 28px;
-}
-
-/* Collapsed, the legend keeps its title (and its clear ✕) plus the swatches. */
-.legend-dock[data-collapsed='true'] .legend > .legend-title {
-  display: flex;
-  margin-bottom: 6px;
 }

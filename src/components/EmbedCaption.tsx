@@ -5,8 +5,8 @@ import type { Selection } from '../lib/urlState';
  * Embeds show the subject, not the full panel: a one-line caption at the
  * bottom with a link to the full view in ATLAS.
  */
-export default function EmbedCaption({ selection, href }: { selection: Exclude<Selection, null>; href: string }) {
-  const cap = captionFor(selection);
+export default function EmbedCaption({ selection, month = null, href }: { selection: Exclude<Selection, null>; month?: string | null; href: string }) {
+  const cap = captionFor(selection, month);
   if (!cap) return null;
   return (
     <div className="embed-caption">

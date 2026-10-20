@@ -32,7 +32,7 @@ export function usePanelFocus(sectionRef: RefObject<HTMLElement | null>, key: st
       const target = opener.current;
       // Only pull focus back if it was in the panel (or lost with it); another overlay may have taken it.
       const lost = !document.activeElement || document.activeElement === document.body;
-      if (!lost) return;
+      if (!lost || !document.hasFocus()) return;
       if (isFocusable(target)) target.focus({ preventScroll: true });
       else document.querySelector<SVGSVGElement>('.map-root svg')?.focus({ preventScroll: true });
     };
@@ -46,7 +46,8 @@ export function usePanelFocus(sectionRef: RefObject<HTMLElement | null>, key: st
     // Never pull focus out of a text field the user has moved into meanwhile (the panel can render a beat late).
     const active = document.activeElement;
     const typing = (active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement) && !sectionRef.current?.contains(active);
-    if (appReady && !typing) h2.focus({ preventScroll: true });
+    // document.hasFocus(): an embed must not pull focus out of its host page before the reader has used it.
+    if (appReady && !typing && document.hasFocus()) h2.focus({ preventScroll: true });
   }, [sectionRef, key, headingId]);
 
   return headingId;

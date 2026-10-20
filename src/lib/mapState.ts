@@ -57,7 +57,7 @@ export function mapStateSegments(state: AppState, layerLabel: (l: Exclude<Layer,
     out.push({ key: 'layer', label: `Overlay: ${name}`, clear: { layer: null }, clearLabel: `Clear ${name} overlay` });
   }
   if (state.mode === 'conflicts' && state.month) {
-    out.push({ key: 'month', label: `Replay ${formatMonth(state.month)}`, clear: { month: null }, clearLabel: 'Return to live' });
+    out.push({ key: 'month', label: `Replay ${formatMonth(state.month)}`, clear: { month: null }, clearLabel: 'Clear replay month' });
   }
   const focus = focusName(state.selection);
   if (focus) out.push({ key: 'focus', label: `Focus: ${focus}`, clear: { selection: null }, clearLabel: `Clear focus: ${focus}` });
@@ -83,10 +83,4 @@ export function blocsSuppressed(state: Pick<AppState, 'mode' | 'layer'>): boolea
 /** The full-app link for a state, independent of the hash the page happens to have. */
 export function shareUrl(state: AppState, origin: string, pathname = '/'): string {
   return origin + pathname + serialize({ ...state, embed: false, brief: false });
-}
-
-/** A paste-ready iframe for the map-only (embed) version of a state. */
-export function embedCode(state: AppState, origin: string, pathname = '/'): string {
-  const src = origin + pathname + serialize({ ...state, embed: true, brief: false });
-  return `<iframe src="${src.replace(/&/g, '&amp;')}" width="100%" height="480" title="ATLAS map" loading="lazy" style="border:0"></iframe>`;
 }

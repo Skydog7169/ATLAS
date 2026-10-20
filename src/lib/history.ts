@@ -25,6 +25,47 @@ export function entryAt(conflict: Conflict, month: string): HistoryEntry | null 
   return conflict.history.find((h) => h.date <= cutoff) ?? null;
 }
 
+/** True when the conflict has an assessment dated inside `month`, not one carried forward from earlier. */
+export function assessedIn(conflict: Conflict, month: string): boolean {
+  return conflict.history.some((h) => monthKey(h.date) === month);
+}
+
+/** Months (YYYY-MM) in which at least one conflict received a new assessment. */
+export function assessedMonths(conflicts: Conflict[]): Set<string> {
+  const out = new Set<string>();
+  for (const c of conflicts) for (const h of c.history) out.add(monthKey(h.date));
+  return out;
+}
+
+export interface ReplayEntry {
+  /** The assessment in force at the end of the month, or null if none was on record yet. */
+  entry: HistoryEntry | null;
+  /** The entry is dated inside the month rather than carried forward. */
+  fresh: boolean;
+  /** No entry yet, but the conflict's current phase had already begun: shown as "not yet tracked". */
+  untracked: boolean;
+}
+
+/** What replay can honestly say about a conflict at `month`. */
+export function replayAt(conflict: Conflict, month: string): ReplayEntry {
+  const entry = entryAt(conflict, month);
+  if (entry) return { entry, fresh: monthKey(entry.date) === month, untracked: false };
+  return { entry: null, fresh: false, untracked: conflict.since <= Number(month.slice(0, 4)) };
+}
+
+/**
+ * Where a requested replay month lands on a timeline whose last stop is live:
+ * before the first stop snaps to it, the last stop or later is live (null).
+ */
+export function clampMonth(month: string, months: string[]): { month: string | null; clamped: 'before' | 'after' | null } {
+  const first = months[0];
+  const last = months.at(-1);
+  if (!first || !last) return { month: null, clamped: null };
+  if (month < first) return { month: first, clamped: 'before' };
+  if (month >= last) return { month: null, clamped: month > last ? 'after' : null };
+  return { month, clamped: null };
+}
+
 /** Inclusive list of YYYY-MM keys from `from` to `to`. */
 export function monthRange(from: string, to: string): string[] {
   const out: string[] = [];

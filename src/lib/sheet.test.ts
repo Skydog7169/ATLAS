@@ -39,5 +39,7 @@ describe('captionFor', () => {
     expect(captionFor({ kind: 'conflict', id: 'sudan' })?.kicker).toMatch(/since \d{4}/);
     expect(captionFor({ kind: 'pair', a: 'USA', b: 'CHN' })?.title).toBe('United States and China');
     expect(captionFor({ kind: 'about' })).toBeNull();
+    // Replay: the kicker says when the shown assessment is carried forward.
+    expect(captionFor({ kind: 'conflict', id: 'iran-israel' }, '2026-04')?.kicker).toMatch(/Last assessed .* · no assessment on record for Apr/);
   });
 });

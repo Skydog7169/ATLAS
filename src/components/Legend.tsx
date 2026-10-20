@@ -1,10 +1,12 @@
+import { Children, cloneElement, type ReactElement, type ReactNode } from 'react';
 import { BLOC_BY_ID } from '../data/blocs';
 import { INTENSITY_COLOR, INTENSITY_LABEL, conflictFill } from '../lib/labels';
 import { FAINT_FILL, NO_DATA_SWATCH, hatchSwatch } from '../lib/palette';
 import type { Intensity } from '../data/types';
 import type { Layer, Mode } from '../lib/urlState';
 import { DISPLACEMENT, DISPLACEMENT_COLORS, binLabel } from '../lib/displacement';
-import { formatDate } from '../lib/labels';
+import { formatDate, formatMonth } from '../lib/labels';
+import { layerAsOf } from '../lib/layerAsOf';
 import { SANCTIONS, SANCTIONS_COLORS, sanctionsBinLabel } from '../lib/sanctions';
 import { ELECTIONS, ELECTIONS_VERIFIED, ELECTION_COLORS, electionBinLabel } from '../lib/elections';
 import { NUCLEAR, NUCLEAR_COLOR, NUCLEAR_HATCHED, NUCLEAR_STATUSES, NUCLEAR_STATUS_LABEL, nuclearCount } from '../lib/nuclear';
@@ -15,7 +17,6 @@ import { TRADE, TRADE_BAND_LABEL, TRADE_PARTNERS, TRADE_PARTNER_LABEL, tradeMix 
 import { CHOKEPOINTS_FILE, CHOKEPOINT_COLOR, CHOKEPOINT_GLYPH, CHOKEPOINT_STATUSES, CHOKEPOINT_STATUS_LABEL } from '../lib/chokepoints';
 import { UNREST } from '../data/unrest';
 import { UNREST_COLOR, UNREST_VERIFIED } from '../lib/unrest';
-import type { ReactNode } from 'react';
 import { LegendFrame, LegendTitle } from './LegendFrame';
 import { LegendChromeContext } from './legendChrome';
 import { unrestFillColor } from '../lib/palette';
@@ -26,6 +27,10 @@ interface Props {
   vs: string | null;
   overviewSteps: string[];
   layer: Layer;
+  /** Conflicts replay month, or null when live. */
+  month?: string | null;
+  /** Inside an iframe: no bloc chips above the map to point at. */
+  embed?: boolean;
   /** Turns the data layer off from the legend title. */
   onClearLayer?: () => void;
   /** Map-state strip shown above the legend. */
@@ -44,16 +49,33 @@ function NoDataRow() {
   );
 }
 
+/**
+ * During replay a data layer still shows current data while the markers move
+ * back in time; the legend says so, so the two time bases never pass as one.
+ */
 export default function Legend(props: Props) {
   const { mode, layer, onClearLayer, strip } = props;
   return (
     <LegendChromeContext.Provider value={{ mode, layer, onClearLayer, strip }}>
-      <LegendBody {...props} />
+      <LegendWithReplay {...props} />
     </LegendChromeContext.Provider>
   );
 }
 
-function LegendBody({ mode, bloc, vs, overviewSteps, layer }: Props) {
+function LegendWithReplay(props: Props) {
+  const el = LegendBody(props) as ReactElement<{ children?: ReactNode }>;
+  const { month, layer, mode } = props;
+  if (!month || !layer || mode !== 'conflicts') return el;
+  const asOf = layerAsOf(layer);
+  const note = (
+    <div className="note replay-note" key="replay-note">
+      Layer shows current data{asOf ? ` (as of ${formatDate(asOf)})` : ''}; markers show {formatMonth(month)}.
+    </div>
+  );
+  return cloneElement(el, undefined, ...Children.toArray(el.props.children), note);
+}
+
+function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed = false }: Props) {
   if (layer === 'displacement') {
     return (
       <LegendFrame>
@@ -344,7 +366,7 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer }: Props) {
   if (mode === 'conflicts') {
     return (
       <LegendFrame>
-        <LegendTitle>Conflict intensity</LegendTitle>
+        <LegendTitle>Conflict intensity{month ? ` · ${formatMonth(month)}` : ''}</LegendTitle>
         <ul>
           {INTENSITIES.map((i) => (
             <li key={i}>
@@ -357,6 +379,18 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer }: Props) {
             <span className="swatch outline" style={{ borderColor: INTENSITY_COLOR.high }} />
             Party to a conflict abroad
           </li>
+          {month && (
+            <>
+              <li className="replay-key">
+                <span className="swatch circle stale" style={{ background: 'var(--fg-muted)' }} />
+                Faded: no new assessment, last one carried forward
+              </li>
+              <li className="replay-key">
+                <span className="swatch circle ghost" style={{ background: 'transparent' }} />
+                Outline: under way, not yet tracked
+              </li>
+            </>
+          )}
         </ul>
         <div className="note">Markers (circles) and territory (squares): countries are filled by the most intense conflict fought on their territory, deeper for more intense. A dashed outline marks a state whose forces fight only abroad. Marker size follows intensity.</div>
       </LegendFrame>
@@ -425,7 +459,7 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer }: Props) {
           </li>
         ))}
       </ul>
-      <div className="note">Pick a bloc above to see its members, then use VS Compare to set two blocs side by side. Click any country for details.</div>
+      <div className="note">{embed ? 'Tap a country for details · open in ATLAS ↗ to pick a bloc.' : 'Pick a bloc above to see its members, then use VS Compare to set two blocs side by side. Click any country for details.'}</div>
     </LegendFrame>
   );
 }

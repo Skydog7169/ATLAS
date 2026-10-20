@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { blocsSuppressed, embedCode, isDefaultMap, mapStateSegments, resetState, shareUrl } from './mapState';
+import { blocsSuppressed, isDefaultMap, mapStateSegments, resetState, shareUrl } from './mapState';
 import { DEFAULT_STATE, type AppState } from './urlState';
 
 const label = (l: string) => l.charAt(0).toUpperCase() + l.slice(1);
@@ -59,11 +59,8 @@ describe('bloc suppression', () => {
 });
 
 describe('sharing', () => {
-  it('builds a full-app link and an escaped embed snippet', () => {
+  it('builds a full-app link without the embed or briefing flags', () => {
     const s: AppState = { ...DEFAULT_STATE, mode: 'conflicts', layer: 'sanctions', brief: true };
     expect(shareUrl(s, 'https://atlas.test')).toBe('https://atlas.test/#mode=conflicts&layer=sanctions');
-    const code = embedCode(s, 'https://atlas.test');
-    expect(code).toContain('src="https://atlas.test/#mode=conflicts&amp;layer=sanctions&amp;embed=1"');
-    expect(code).toMatch(/^<iframe [^>]*title="ATLAS map"[^>]*><\/iframe>$/);
   });
 });
