@@ -3,32 +3,10 @@ import { CONFLICT_BY_ID } from '../data/conflicts';
 import { UNREST_BY_ID } from '../data/unrest';
 import { CHOKEPOINT_BY_ID } from './chokepoints';
 import { countryName } from './countries';
-import type { Focus } from '../components/WorldMap';
 import type { Selection } from './urlState';
 
-/**
- * Where the camera goes for a selection: the same targets the select*
- * callbacks fly to. Null for panels that don't move the map (changes,
- * watchlist, about, ask, a one-sided pair).
- */
-export function focusForSelection(s: Selection): Focus {
-  if (!s) return null;
-  if (s.kind === 'country') return { kind: 'country', iso: s.iso };
-  if (s.kind === 'conflict') {
-    const c = CONFLICT_BY_ID.get(s.id);
-    return c ? { kind: 'point', lonLat: c.location, scale: 3.5 } : null;
-  }
-  if (s.kind === 'chokepoint') {
-    const cp = CHOKEPOINT_BY_ID.get(s.id);
-    return cp ? { kind: 'point', lonLat: cp.location, scale: 3 } : null;
-  }
-  if (s.kind === 'unrest') {
-    const u = UNREST_BY_ID.get(s.id);
-    return u ? { kind: 'point', lonLat: u.location, scale: 3.5 } : null;
-  }
-  if (s.kind === 'bloc' || s.kind === 'compare' || (s.kind === 'pair' && s.b)) return { kind: 'reset' };
-  return null;
-}
+/** Where the camera goes for a selection; shared with the footprint camera. */
+export { focusForSelection } from './focus';
 
 /** Short name of a panel for the "‹ Ukraine" back chip. */
 export function selectionLabel(s: Selection): string {
@@ -49,7 +27,7 @@ export function selectionLabel(s: Selection): string {
     case 'compare':
       return 'Comparison';
     case 'changes':
-      return 'Recent changes';
+      return 'Latest changes';
     case 'watchlist':
       return 'Watchlist';
     case 'about':
