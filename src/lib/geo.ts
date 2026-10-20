@@ -31,8 +31,33 @@ let detailed: Promise<CountryFeature[]> | null = null;
  * zooms in. Adds coastlines detail and real shapes for microstates.
  */
 export function loadDetailedFeatures(): Promise<CountryFeature[]> {
-  detailed ??= import('../data/geo/countries-50m.json').then((m) => toFeatures((m.default ?? m) as unknown as CountriesTopology));
+  detailed ??= import('../data/geo/countries-50m.json')
+    .then((m) => toFeatures((m.default ?? m) as unknown as CountriesTopology))
+    .catch((e: unknown) => {
+      detailed = null;
+      throw e;
+    });
   return detailed;
+}
+
+/**
+ * Start fetching and parsing the 1:50m set once the browser is idle after
+ * first paint, so a fly-to that crosses the detail zoom finds it ready.
+ * Returns a cleanup that cancels the scheduled start.
+ */
+export function prefetchDetailedFeatures(): () => void {
+  if (detailed || typeof window === 'undefined') return () => {};
+  const start = () => {
+    loadDetailedFeatures().catch(() => {
+      detailed = null; // a failed chunk is retried on demand
+    });
+  };
+  if ('requestIdleCallback' in window) {
+    const id = window.requestIdleCallback(start, { timeout: 4000 });
+    return () => window.cancelIdleCallback(id);
+  }
+  const id = setTimeout(start, 2000);
+  return () => clearTimeout(id);
 }
 
 /** ISO codes that have a polygon in the given feature set. */

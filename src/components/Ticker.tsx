@@ -61,8 +61,9 @@ export default function Ticker({ onSelectConflict, onSelectBloc, onSelectUnrest 
         )}
       </div>
       <button className={'ticker-filter' + (only ? ' on' : '')} aria-pressed={only} onClick={() => setOnly(!only)} title="Show only watchlist items">
+        {/* A funnel, so it doesn't read as a second copy of the header's watchlist star. */}
         <svg width="12" height="12" viewBox="0 0 24 24" fill={only ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden="true">
-          <path d="m12 3 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.4l-5.7 3.1 1.2-6.4L2.8 9.7l6.4-.8L12 3Z" />
+          <path d="M3 4h18l-7 8.5V19l-4 2v-8.5L3 4Z" />
         </svg>
         <span>Watchlist</span>
       </button>
