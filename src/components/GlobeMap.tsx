@@ -299,7 +299,8 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
                     rx={1.5}
                     fill={style.stripes ? style.stripes[0] : (style.hatch ?? style.fill)}
                     opacity={style.dim ? 0.6 : 1}
-                    stroke={m.iso === selectedIso ? 'var(--fg)' : undefined}
+                    stroke={m.iso === selectedIso ? 'var(--fg)' : style.outline}
+                    strokeDasharray={style.outline && m.iso !== selectedIso ? '2 1.5' : undefined}
                     onClick={() => onCountryClick(m.iso)}
                     onPointerEnter={(e) => onHover({ label: m.name, iso: m.iso }, e.clientX, e.clientY)}
                     onPointerLeave={() => onHover(null, 0, 0)}

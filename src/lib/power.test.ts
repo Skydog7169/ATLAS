@@ -7,7 +7,7 @@ import militaryJson from '../data/military.json';
 import tradeJson from '../data/trade.generated.json';
 import { CHOKEPOINTS, CHOKEPOINT_BY_ID, currentStatus, linkedConflicts } from './chokepoints';
 import { MILITARY, PRESENCE_ACTIVE, militaryBin, militaryBinLabel, militaryColor, militaryDossier, militarySummary, operatorsIn, presencesBy } from './military';
-import { TRADE, leadingPartner, tradeColor, tradeDossier, tradeSummary } from './trade';
+import { TRADE, leadingPartner, pct, tradeColor, tradeDossier, tradeSummary } from './trade';
 import { EU27, buildRows, parseSdmx } from '../../scripts/build-trade.mjs';
 import { countryDossier } from './dossier';
 
@@ -48,7 +48,7 @@ describe('military presence', () => {
     expect(militaryColor('DJI')).toBe('#9fc0ff');
     expect(militaryColor('ISL')).toBe('var(--land)');
     expect(militarySummary('SEN')).toBeNull();
-    expect(militarySummary('DJI')).toMatch(/^Hosts: /);
+    expect(militarySummary('DJI')).toMatch(/^Foreign forces: /);
   });
 
   it('builds a dossier section for hosts and operators, with ended rows in the footnote', () => {
@@ -57,6 +57,18 @@ describe('military presence', () => {
     expect(fra.footnote).toMatch(/Ended: .*Senegal/);
     expect(militaryDossier('ISL')).toBeNull();
     expect(countryDossier('DJI')!.sections).toContain('military');
+  });
+
+  it('does not call an occupying army hosted, and files North Korean troops under Russia', () => {
+    const kind = (host: string, op: string) => PRESENCE_ACTIVE.find((p) => p.host === host && p.operator === op)?.kind;
+    expect(kind('UKR', 'RUS')).toBe('occupation');
+    expect(kind('LBN', 'ISR')).toBe('occupation');
+    expect(kind('SYR', 'ISR')).toBe('occupation');
+    expect(kind('COD', 'RWA')).toBe('contested');
+    expect(kind('UKR', 'PRK')).toBeUndefined();
+    expect(kind('RUS', 'PRK')).toBe('deployment');
+    expect(militaryDossier('UKR')!.title).toMatch(/^Foreign forces present · \d/);
+    expect(militaryDossier('UKR')!.title).not.toMatch(/hosted/);
   });
 });
 
@@ -75,7 +87,8 @@ describe('trade dependence', () => {
     expect(leadingPartner({ iso: 'X', year: 2023, exportsUsd: 1, us: 0.05, china: 0.05, eu: 0.09 })).toBeNull();
     expect(tradeColor('MEX')).toMatch(/^color-mix\(in srgb, #4f8cff 100%/);
     expect(tradeColor('ZZZ')).toBe('var(--land)');
-    expect(tradeSummary('MEX')).toMatch(/^Exports 20\d\d: US \d+% · China \d+% · EU \d+%$/);
+    expect(tradeSummary('MEX')).toMatch(/^Exports 20\d\d: US \d+% · China [\d.]+% · EU [\d.]+%$/);
+    expect([0.6, 0.12, 0.032, 0.002, 0.0004, 0].map(pct)).toEqual(['60%', '12%', '3.2%', '0.2%', '<0.1%', '0%']);
     expect(tradeDossier('DEU')!.rows.find((r) => r.label === 'European Union')!.note).toBe('Largest of the three');
     expect(countryDossier('DEU')!.sections).toContain('trade');
   });

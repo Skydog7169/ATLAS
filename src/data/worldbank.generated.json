@@ -3,7 +3,7 @@
   "name": "World Bank Open Data",
   "url": "https://data.worldbank.org/"
  },
- "fetchedAt": "2026-10-19",
+ "fetchedAt": "2026-10-20",
  "rows": [
   {
    "iso": "ABW",
@@ -1812,6 +1812,15 @@
    "gdpUsd": 214233312784.397,
    "gdpYear": 2025,
    "militaryUsd": 84109045741.8544,
+   "militaryYear": 2025
+  },
+  {
+   "iso": "UNK",
+   "population": 1576876,
+   "populationYear": 2025,
+   "gdpUsd": 12456403306.8191,
+   "gdpYear": 2025,
+   "militaryUsd": 234500146.650723,
    "militaryYear": 2025
   },
   {
