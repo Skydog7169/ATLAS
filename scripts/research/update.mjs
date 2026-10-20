@@ -1,15 +1,16 @@
 #!/usr/bin/env node
 // Weekly research pass. For each conflict and unrest episode, asks Claude (with
 // web search) for a fresh assessment; appends it to the JSON only when it is material,
-// sourced and within the intensity guardrail. Also reviews bloc memberships
-// and scans for conflicts the map is missing (reported, never auto-added).
+// sourced and within the intensity guardrail. Also reviews bloc memberships,
+// scans for conflicts the map is missing (reported, never auto-added) and for
+// unrest it is missing (added when two independent sources back it, else reported).
 //
 // Usage:
 //   node scripts/research/update.mjs [--only id,id] [--limit N] [--hot] [--dry-run] [--mock] [--report path]
 //
 // --hot re-checks only the hot list (high intensity, recently updated, or
-// longest unchecked) and skips the bloc, election and candidate scans; the
-// daily workflow uses it.
+// longest unchecked) plus the new-unrest scan, and skips the bloc, election
+// and new-conflict scans; the daily workflow uses it.
 //
 // Needs Anthropic credentials unless --mock: ANTHROPIC_API_KEY, an `ant auth login` profile, or
 // Workload Identity Federation env vars (ANTHROPIC_FEDERATION_RULE_ID, ANTHROPIC_ORGANIZATION_ID,
@@ -21,8 +22,9 @@ import Anthropic from '@anthropic-ai/sdk';
 import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod';
 import { AssessmentOutputSchema, BlocReviewOutputSchema, BlocsFileSchema, ConflictsFileSchema, ElectionOutputSchema, ElectionsFileSchema, MONTH_OR_DATE, NewConflictsOutputSchema, NewUnrestOutputSchema, PARTIAL_DATE, UnrestFileSchema } from '../../src/data/schema.ts';
 import { hotSelection } from './select.mjs';
-import { clampIntensity, isMaterialChange, verifySources } from '../../src/data/guards.ts';
+import { clampIntensity, hostOf, isMaterialChange, verifySources } from '../../src/data/guards.ts';
 import { mockClient } from './mock.mjs';
+import { captureUnrest, MAX_AUTO_ADDS } from './capture.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '../..');
@@ -31,6 +33,11 @@ const BLOCS_PATH = resolve(root, 'src/data/blocs.json');
 const ELECTIONS_PATH = resolve(root, 'src/data/elections.json');
 const UNREST_PATH = resolve(root, 'src/data/unrest.json');
 const COUNTRIES = JSON.parse(readFileSync(resolve(root, 'src/data/countries.generated.json'), 'utf8'));
+/** Country centroid as [lon, lat], or null for an unknown code. */
+const countryLonLat = (iso) => {
+  const c = COUNTRIES.find((k) => k.cca3 === iso);
+  return c && Array.isArray(c.latlng) && c.latlng.length === 2 ? [c.latlng[1], c.latlng[0]] : null;
+};
 /** Election entries re-checked per pass: those past or due within this many days, plus a few of the oldest-verified. */
 const ELECTION_DUE_DAYS = 60;
 const ELECTION_BUDGET = 12;
@@ -48,10 +55,13 @@ const unrest = UnrestFileSchema.parse(JSON.parse(readFileSync(UNREST_PATH, 'utf8
 
 const client = args.mock ? mockClient() : new Anthropic();
 const usage = { input: 0, output: 0, cacheRead: 0, calls: 0 };
-const report = { updated: [], unchanged: [], clamped: [], droppedSources: [], errors: [], blocChanges: [], blocNote: '', candidates: [], unrestCandidates: [], elections: [], peace: [] };
+const report = { updated: [], unchanged: [], clamped: [], droppedSources: [], errors: [], blocChanges: [], blocNote: '', candidates: [], unrestCandidates: [], unrestAdded: [], elections: [], peace: [] };
 
 const SYSTEM = `You are a research analyst maintaining a public geopolitics map. Today is ${today}.
 Write in plain, neutral English with specific dates. Never invent events or URLs: every source you return must be a URL that appeared in your web search results. Prefer wire services, UN bodies and established conflict trackers (CFR, ACLED, Crisis Group, ISW). If nothing material happened since the previous assessment, say so by setting changed=false and restating the current situation briefly.`;
+
+const UNREST_SCALE =
+  'Intensity scale: high = nationwide mass mobilisation with lethal force or the government\'s survival in question; medium = sustained or recurring protests or riots with violence, or a coup consolidating; low = sporadic, localised or largely peaceful; latent = suppressed or dormant but unresolved.';
 
 let selected = conflicts;
 if (args.only) selected = conflicts.filter((c) => args.only.includes(c.id));
@@ -90,14 +100,17 @@ if (!args.only && !args.hot) {
     report.errors.push(`new-conflicts: ${describeError(err)}`);
   }
   try {
-    await scanForNewUnrest();
-  } catch (err) {
-    report.errors.push(`new-unrest: ${describeError(err)}`);
-  }
-  try {
     await reviewElections();
   } catch (err) {
     report.errors.push(`elections: ${describeError(err)}`);
+  }
+}
+// Riot waves can start and peak within a week, so the daily pass scans too.
+if (!args.only) {
+  try {
+    await scanForNewUnrest();
+  } catch (err) {
+    report.errors.push(`new-unrest: ${describeError(err)}`);
   }
 }
 
@@ -124,10 +137,7 @@ if (report.errors.length && !report.updated.length && !report.blocChanges.length
 /** Reassesses one conflict or (with kind 'unrest') one civil-unrest episode under the same guards. */
 async function assessConflict(conflict, kind = 'conflict') {
   const previous = conflict.history[0];
-  const scale =
-    kind === 'unrest'
-      ? 'Intensity scale: high = nationwide mass mobilisation with lethal force or the government\'s survival in question; medium = sustained or recurring protests or riots with violence, or a coup consolidating; low = sporadic, localised or largely peaceful; latent = suppressed or dormant but unresolved.'
-      : 'Intensity scale: high = large-scale sustained combat; medium = regular deadly fighting; low = sporadic violence; latent = ceasefire or standoff.';
+  const scale = kind === 'unrest' ? UNREST_SCALE : 'Intensity scale: high = large-scale sustained combat; medium = regular deadly fighting; low = sporadic violence; latent = ceasefire or standoff.';
   const context = [
     kind === 'unrest' ? `Unrest: ${conflict.name} (id ${conflict.id})` : `Conflict: ${conflict.name} (id ${conflict.id})`,
     kind === 'unrest' ? `Kind: ${conflict.kind}, since ${conflict.since}. Countries: ${conflict.countries.join(', ')}. Parties: ${conflict.parties.join('; ')}.` : `Type: ${conflict.type}. Countries: ${conflict.countries.join(', ')}. Parties: ${conflict.parties.join('; ')}.`,
@@ -279,19 +289,29 @@ async function scanForNewConflicts() {
   }
 }
 
-/** Lists unrest episodes the tracker may be missing; reported for a human, never auto-added. */
+/**
+ * Finds unrest episodes the tracker is missing. A candidate backed by two
+ * independent, verified, non-Wikipedia sources (and passing the other checks
+ * in capture.mjs) is added as a new episode; anything weaker is reported for
+ * a human with the reason.
+ */
 async function scanForNewUnrest() {
-  const known = unrest.map((u) => `${u.id}: ${u.name}`).join('\n');
+  const known = unrest.map((u) => `${u.id}: ${u.name} (${u.countries.join(', ')}, since ${u.since})`).join('\n');
   const response = await client.messages.parse({
     model: MODEL,
-    max_tokens: 16000,
+    max_tokens: 20000,
     system: SYSTEM,
     output_config: { effort: 'medium', format: zodOutputFormat(NewUnrestOutputSchema) },
-    tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 6 }],
+    tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 12 }],
     messages: [
       {
         role: 'user',
-        content: `The map already tracks these unrest episodes:\n${known}\n\nSearch for mass protest movements, riot waves, uprisings, coups or coup attempts, mutinies and violent crackdowns that began or escalated sharply in the last 60 days, are not armed conflicts, and are NOT covered above. Return up to 3 candidates with one source each, or an empty list.`,
+        content: [
+          `The map already tracks these unrest episodes:\n${known}`,
+          '',
+          `Search for mass protest movements, riot waves, uprisings, coups or coup attempts, mutinies and violent crackdowns anywhere in the world, Europe, North America and other wealthy democracies included, that began or escalated sharply in the last 60 days, are not armed conflicts, and are NOT covered above. Start with broad searches (for example "riots" and "mass protests" with the current month and year), then run at least one follow-up search per candidate to find a second outlet.`,
+          `Return up to ${MAX_AUTO_ADDS} candidates, or an empty list. For each: 2-4 sources from different outlets that appeared in your results (wire services, major broadcasters or national press; not Wikipedia), ISO 3166-1 alpha-3 country codes, the month the current wave began as YYYY-MM, the main city with its coordinates, the parties, a one-sentence trigger (20-300 characters), a 2-4 sentence background summary, and a dated status of 2-3 sentences (150-600 characters) covering events up to today. ${UNREST_SCALE}`,
+        ].join('\n'),
       },
     ],
   });
@@ -300,8 +320,17 @@ async function scanForNewUnrest() {
   if (!out) return;
   const seen = collectSearchUrls(response);
   for (const c of out.candidates) {
-    const { kept } = verifySources([c.source], seen);
-    if (kept.length) report.unrestCandidates.push({ ...c, source: kept[0] });
+    const { kept, dropped } = verifySources(c.sources ?? [], seen);
+    if (dropped.length) report.droppedSources.push({ id: `new-unrest/${c.name}`, dropped: dropped.map((s) => s.url) });
+    if (!kept.length) continue;
+    const location = c.location ? [c.location.lon, c.location.lat] : null;
+    const decision = report.unrestAdded.length >= MAX_AUTO_ADDS ? { add: false, reason: 'per-pass limit reached' } : captureUnrest({ ...c, location }, kept, unrest, today, countryLonLat);
+    if (decision.add) {
+      unrest.push(decision.episode);
+      report.unrestAdded.push({ id: decision.episode.id, name: c.name, countries: decision.episode.countries, kind: c.kind, intensity: c.intensity, confidence: c.confidence, why: c.why, sources: decision.episode.history[0].sources });
+    } else {
+      report.unrestCandidates.push({ ...c, source: kept[0], reason: decision.reason });
+    }
   }
 }
 
@@ -436,9 +465,13 @@ function renderReport() {
     lines.push('', '### Possible new conflicts (not added; needs a human)');
     for (const c of report.candidates) lines.push(`- **${c.name}** (${c.countries.join(', ')}; ${c.type}, ${c.intensity}) — ${c.why} [source](${c.source.url})`);
   }
+  if (report.unrestAdded.length) {
+    lines.push('', `### New unrest episodes added (${report.unrestAdded.length})`);
+    for (const c of report.unrestAdded) lines.push(`- **${c.name}** (${c.id}; ${c.countries.join(', ')}; ${c.kind}, ${c.intensity}, ${c.confidence} confidence) — ${c.why} Sources: ${c.sources.map((s) => `[${hostOf(s.url)}](${s.url})`).join(', ')}`);
+  }
   if (report.unrestCandidates.length) {
     lines.push('', '### Possible new unrest episodes (not added; needs a human)');
-    for (const c of report.unrestCandidates) lines.push(`- **${c.name}** (${c.countries.join(', ')}; ${c.kind}, ${c.intensity}) — ${c.why} [source](${c.source.url})`);
+    for (const c of report.unrestCandidates) lines.push(`- **${c.name}** (${c.countries.join(', ')}; ${c.kind}, ${c.intensity}) — ${c.why} Not added: ${c.reason}. [source](${c.source.url})`);
   }
   if (report.droppedSources.length) {
     lines.push('', '### Sources dropped as unverifiable');
