@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { BLOCS } from './blocs';
 import { CONFLICTS } from './conflicts';
+import { UNREST } from './unrest';
+import { isHomepage } from './guards';
 import { COUNTRY_BY_ISO } from '../lib/countries';
 import { COUNTRY_FEATURES, MICROSTATES, hasPolygon } from '../lib/geo';
 import { BlocsFileSchema, ConflictsFileSchema } from './schema';
@@ -99,5 +101,21 @@ describe('conflicts', () => {
     expect(c.summary.length).toBeGreaterThan(40);
     expect(c.status.length).toBeGreaterThan(40);
     expect(c.sources.length).toBeGreaterThan(0);
+  });
+});
+
+describe('citations', () => {
+  // The December 2025 baseline and one February 2026 summary cite tracker front pages only and are labelled as such.
+  // Everything from the research pass onwards must carry at least one specific article.
+  const RESEARCH_PASS_START = '2026-10-01';
+
+  it.each([...CONFLICTS, ...UNREST].map((c) => [c.id, c] as const))('%s: every researched entry cites at least one specific article', (_id, c) => {
+    for (const h of c.history) {
+      if (h.date < RESEARCH_PASS_START) continue;
+      expect(
+        h.sources.some((s) => !isHomepage(s.url)),
+        `${c.id} ${h.date}: only homepage citations`,
+      ).toBe(true);
+    }
   });
 });

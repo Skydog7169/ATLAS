@@ -69,6 +69,27 @@ export function verifySources(proposed: Source[], seenUrls: Iterable<string>): {
   return { kept, dropped };
 }
 
+/** Tracker index pages: useful background, but they cannot back a specific dated claim. */
+const TRACKER_INDEXES = ['cfr.org/global-conflict-tracker', 'crisisgroup.org/crisiswatch', 'acleddata.com/conflict-watchlist', 'understandingwar.org/backgrounder'];
+
+/**
+ * True for a site's front page (no path) or a tracker's index page. Such a
+ * link is shown as a background reference, and the research pass rejects an
+ * entry whose only citations are homepages.
+ */
+export function isHomepage(url: string): boolean {
+  let u: URL;
+  try {
+    u = new URL(url);
+  } catch {
+    return false;
+  }
+  const path = u.pathname.replace(/\/+$/, '');
+  if (path === '' && !u.search) return true;
+  const key = (u.hostname.replace(/^www\./, '') + path).toLowerCase();
+  return TRACKER_INDEXES.includes(key);
+}
+
 /** True when a proposed status is essentially the previous one (same text or trivially edited). */
 export function isMaterialChange(previous: HistoryEntry | undefined, proposedStatus: string, proposedIntensity: Intensity): boolean {
   if (!previous) return true;

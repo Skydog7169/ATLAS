@@ -21,12 +21,16 @@ export const HistoryEntrySchema = z.object({
   status: z.string().min(40).max(700),
   sources: z.array(SourceSchema).min(1).max(5),
   confidence: ConfidenceSchema.optional(),
+  drafted: z.enum(['ai', 'editor']).optional(),
 });
 
 export const BackerSchema = z.object({
   name: z.string().min(2),
   iso: z.string().regex(ISO3).optional(),
   support: z.enum(['troops', 'arms', 'funding', 'political', 'basing', 'intelligence']),
+  /** How firmly the support is established: acknowledged or proven, reported by credible outlets, or alleged and denied. */
+  basis: z.enum(['documented', 'reported', 'alleged']).optional(),
+  source: SourceSchema.optional(),
 });
 
 export const ActorSchema = z.object({
@@ -153,8 +157,17 @@ export const AssessmentOutputSchema = z.object({
   changed: z.boolean().describe('true only if there is a material development since the previous assessment'),
   intensity: IntensitySchema,
   status: z.string().describe('2-3 factual, dated sentences, 150-600 characters, covering developments up to today'),
-  sources: z.array(z.object({ name: z.string(), url: z.string() })).describe('1-3 specific articles or tracker pages found in the search results'),
-  confidence: ConfidenceSchema,
+  sources: z
+    .array(
+      z.object({
+        name: z.string().describe('the outlet, e.g. "Reuters"'),
+        headline: z.string().describe('the article headline as published'),
+        published: z.string().describe('publication date, YYYY-MM-DD'),
+        url: z.string().describe('the article itself, not a site front page or tracker index'),
+      }),
+    )
+    .describe('1-3 specific articles found in the search results; front pages and tracker index pages do not count'),
+  confidence: ConfidenceSchema.describe('high = corroborated by two or more independent outlets; medium = a single strong source or conflicting reports; low = thin or contested reporting'),
   note: z.string().describe('one line for the reviewer: anything surprising, disputed or worth a human look; empty string if none'),
   peaceEvents: z
     .array(
@@ -318,6 +331,15 @@ export const ChokepointsFileSchema = z.object({
   verified: z.string().regex(ISO_DATE),
   sources: z.array(SourceSchema).min(1),
   chokepoints: z.array(ChokepointSchema).min(1),
+});
+
+/** What the research model returns when re-checking a chokepoint's status. */
+export const ChokepointOutputSchema = z.object({
+  changed: z.boolean().describe('true only if traffic or access through the passage materially changed since the previous entry'),
+  status: ChokepointStatusSchema,
+  summary: z.string().describe('one or two factual, dated sentences, 60-450 characters'),
+  sources: AssessmentOutputSchema.shape.sources,
+  note: z.string().describe('one line for the reviewer; empty string if none'),
 });
 
 export const PresenceKindSchema = z.enum(['base', 'deployment', 'mission']);

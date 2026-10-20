@@ -134,6 +134,7 @@ jobs:
           add-paths: |
             src/data/conflicts.json
             src/data/unrest.json
+            src/data/chokepoints.json
             src/data/blocs.json
             src/data/displacement.generated.json
             src/data/worldbank.generated.json
