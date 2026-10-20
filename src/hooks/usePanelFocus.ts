@@ -1,8 +1,19 @@
 import { useEffect, useId, useRef, type RefObject } from 'react';
 
 let appReady = false;
+// The first commit is not enough to tell a user-opened panel from a deep link: the
+// panel renders lazily and can land after it. So a panel only takes focus once the
+// reader has pressed a key or a pointer in the page.
+let userActed = false;
+if (typeof window !== 'undefined') {
+  const mark = () => {
+    userActed = true;
+  };
+  window.addEventListener('pointerdown', mark, { capture: true, once: true });
+  window.addEventListener('keydown', mark, { capture: true, once: true });
+}
 
-/** Called once the app's first commit is done: panels opened from then on are user-initiated. */
+/** Called once the app's first commit is done: panels opened from then on may be user-initiated. */
 export function markAppReady() {
   appReady = true;
 }
@@ -47,7 +58,7 @@ export function usePanelFocus(sectionRef: RefObject<HTMLElement | null>, key: st
     const active = document.activeElement;
     const typing = (active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement) && !sectionRef.current?.contains(active);
     // document.hasFocus(): an embed must not pull focus out of its host page before the reader has used it.
-    if (appReady && !typing && document.hasFocus()) h2.focus({ preventScroll: true });
+    if (appReady && userActed && !typing && document.hasFocus()) h2.focus({ preventScroll: true });
   }, [sectionRef, key, headingId]);
 
   return headingId;

@@ -831,6 +831,20 @@ test('navigation: Back steps through panels, Escape and focus follow, the camera
   await expect.poll(() => layer.getAttribute('transform'), { timeout: 3000 }).not.toMatch(/scale\((?:[3-9]|\d\d)/);
 });
 
+test('navigation: a deep link opens its panel without taking focus; the next panel the reader opens does', async ({ page }) => {
+  await open(page, '#mode=blocs&bloc=nato');
+  const heading = page.locator('.panel h2');
+  await expect(heading).toContainText('North Atlantic');
+  // The panel renders lazily; give it time to finish before checking that focus stayed put.
+  await expect(page.locator('.panel .panel-body')).toBeVisible();
+  await page.waitForTimeout(400);
+  expect(await heading.evaluate((h) => h === document.activeElement)).toBe(false);
+
+  await page.getByRole('button', { name: /^EU —/ }).click();
+  await expect(heading).toContainText('European Union');
+  await expect(heading).toBeFocused();
+});
+
 test('navigation: related links keep the user layer, mode switches offer Undo, stale links say so', async ({ page }, testInfo) => {
   await open(page, '#mode=blocs&layer=sanctions');
   await page.getByRole('searchbox').fill('serbia anti');
