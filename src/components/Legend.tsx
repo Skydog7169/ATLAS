@@ -37,9 +37,13 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
               {binLabel(i)}
             </li>
           ))}
+          <li>
+            <span className="swatch" style={{ background: `repeating-linear-gradient(45deg, ${DISPLACEMENT_COLORS[4]} 0 3px, transparent 3px 6px)` }} />
+            Known source gap (non-UNHCR figures)
+          </li>
         </ul>
         <div className="note">
-          People displaced from each country: refugees, asylum seekers, IDPs and others in need of protection.{' '}
+          People displaced from each country: refugees, asylum seekers, IDPs and others in need of protection. UNHCR figures exclude Palestine refugees under UNRWA's mandate; Palestine adds UNRWA's register and is hatched. Kosovo is counted with Serbia.{' '}
           <a href={DISPLACEMENT.source.url} target="_blank" rel="noopener noreferrer">
             UNHCR
           </a>{' '}

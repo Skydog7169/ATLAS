@@ -8,6 +8,8 @@ import conflictsJson from './conflicts.json';
 import blocsJson from './blocs.json';
 import { conflictFillMaps } from '../lib/theatre';
 import { SANCTIONS_BY_ISO } from '../lib/sanctions';
+import { DISPLACEMENT, DISPLACEMENT_BY_ISO, displacementBin, displacementFill, displacementTotal } from '../lib/displacement';
+import { WORLDBANK_BY_ISO } from '../lib/worldbank';
 
 const ISO3 = /^[A-Z]{3}$/;
 const MONTH = /^\d{4}-(0[1-9]|1[0-2])$/;
@@ -123,5 +125,26 @@ describe('conflict theatres', () => {
 describe('sanctions truth', () => {
   it('Ukraine and Moldova are targeted by no regime', () => {
     for (const iso of ['UKR', 'MDA']) expect(SANCTIONS_BY_ISO.get(iso)?.regimes ?? [], iso).toHaveLength(0);
+  });
+});
+
+describe('displacement truth', () => {
+  it('drops UNHCR codes that are not countries', () => {
+    for (const iso of ['UNK', 'XXA', 'TIB']) expect(DISPLACEMENT_BY_ISO.has(iso), iso).toBe(false);
+    for (const r of DISPLACEMENT.rows) expect(COUNTRY_BY_ISO.has(r.iso), r.iso).toBe(true);
+  });
+
+  it('never reports more people displaced from a country than live in it', () => {
+    for (const r of DISPLACEMENT.rows) {
+      const pop = WORLDBANK_BY_ISO.get(r.iso)?.population;
+      if (pop) expect(r.total, `${r.iso}: ${r.total} displaced of ${pop}`).toBeLessThanOrEqual(pop);
+    }
+  });
+
+  it('Palestine is never shown as barely displaced', () => {
+    const row = DISPLACEMENT_BY_ISO.get('PSE')!;
+    expect(row.supplement?.unrwaRefugees).toBeGreaterThan(1_000_000);
+    expect(displacementBin(displacementTotal(row))).toBeGreaterThan(0);
+    expect(displacementFill('PSE').hatch).toBeDefined();
   });
 });

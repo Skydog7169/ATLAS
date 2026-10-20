@@ -1,4 +1,8 @@
-/** ISO 3166-1 alpha-3 code, e.g. "FRA". Kosovo uses the UN/World Bank "UNK". */
+/**
+ * ISO 3166-1 alpha-3 code, e.g. "FRA". Kosovo uses the user-assigned "UNK"
+ * (the World Bank uses XKX, and UNHCR uses UNK for "unknown origin"; the
+ * build scripts map or drop those).
+ */
 export type Iso3 = string;
 
 export interface Source {

@@ -5,7 +5,7 @@ import type { Intensity } from './data/types';
 import { useAppState } from './hooks/useAppState';
 import { currentMonth, earliestMonth, entryAt, monthRange } from './lib/history';
 import Timeline from './components/Timeline';
-import { DISPLACEMENT_BY_ISO, displacementColor, formatPeople } from './lib/displacement';
+import { displacementFill, displacementSummary } from './lib/displacement';
 import { sanctionsFill, sanctionsSummary } from './lib/sanctions';
 import { electionColor, electionSummary } from './lib/elections';
 import { nuclearColor, nuclearSummary } from './lib/nuclear';
@@ -149,7 +149,7 @@ export default function App() {
   const fillFor = useCallback(
     (iso: string | null): CountryFill => {
       if (!iso) return { fill: 'var(--land-dim)' };
-      if (layer === 'displacement') return { fill: displacementColor(iso) };
+      if (layer === 'displacement') return displacementFill(iso);
       if (layer === 'sanctions') return sanctionsFill(iso);
       if (layer === 'elections') return { fill: electionColor(iso) };
       if (layer === 'nuclear') return { fill: nuclearColor(iso) };
@@ -295,8 +295,7 @@ export default function App() {
     if (hover.sub) return hover.sub;
     if (!hover.iso) return null;
     if (layer === 'displacement') {
-      const row = DISPLACEMENT_BY_ISO.get(hover.iso);
-      return row ? `${formatPeople(row.total)} displaced · ${formatPeople(row.refugees)} refugees · ${formatPeople(row.idps)} IDPs` : 'No UNHCR displacement figure';
+      return displacementSummary(hover.iso);
     }
     if (layer === 'sanctions') {
       const s = sanctionsSummary(hover.iso);

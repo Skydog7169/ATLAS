@@ -9,7 +9,7 @@ import { changesSince, entryAt, type ChangeItem } from '../lib/history';
 import { CATEGORY_LABEL, CHANGE_LABEL, CONFLICT_TYPE_LABEL, INTENSITY_COLOR, INTENSITY_LABEL, STATUS_LABEL, formatDate, formatMonth } from '../lib/labels';
 import type { Selection } from '../lib/urlState';
 import { WORLD, WORLDBANK, blocFigures, formatCount, formatUsd, share, type Figures } from '../lib/worldbank';
-import { DISPLACEMENT, formatPeople } from '../lib/displacement';
+import { DISPLACEMENT, REPORTED_WITH, displacementTotal, formatPeople } from '../lib/displacement';
 import { SANCTIONS } from '../lib/sanctions';
 import { ELECTIONS_VERIFIED } from '../lib/elections';
 import { NUCLEAR } from '../lib/nuclear';
@@ -248,26 +248,50 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
         ))}
 
         <h4 id="dossier-displacement">Displacement</h4>
-        {displacement && displacement.total > 0 ? (
+        {REPORTED_WITH[country.cca3] ? (
+          <Muted>
+            {REPORTED_WITH[country.cca3]!.note}{' '}
+            <button className="inline-link" onClick={() => props.onSelectCountry(REPORTED_WITH[country.cca3]!.iso)}>
+              See {countryName(REPORTED_WITH[country.cca3]!.iso)}
+            </button>
+            .
+          </Muted>
+        ) : displacement && displacementTotal(displacement) > 0 ? (
           <div className="tiles" style={{ ['--tile-color' as string]: '#a35be6' }}>
             <div className="tile">
               <span className="label">Displaced</span>
-              <strong>{formatPeople(displacement.total)}</strong>
-              <span className="sub">from {country.name}</span>
+              <strong>{formatPeople(displacementTotal(displacement))}</strong>
+              <span className="sub">{displacement.supplement ? `UNHCR alone: ${formatPeople(displacement.total)}` : `from ${country.name}`}</span>
             </div>
             <div className="tile">
               <span className="label">Refugees</span>
-              <strong>{formatPeople(displacement.refugees)}</strong>
-              <span className="sub">{formatPeople(displacement.asylumSeekers)} asylum seekers</span>
+              <strong>{formatPeople(displacement.refugees + (displacement.supplement?.unrwaRefugees ?? 0))}</strong>
+              <span className="sub">
+                {displacement.supplement ? `${formatPeople(displacement.supplement.unrwaRefugees)} UNRWA-registered · ` : ''}plus {formatPeople(displacement.asylumSeekers)} asylum seekers
+              </span>
             </div>
             <div className="tile">
               <span className="label">IDPs</span>
-              <strong>{formatPeople(displacement.idps)}</strong>
-              <span className="sub">{displacement.oip > 0 ? `${formatPeople(displacement.oip)} others in need` : 'internally displaced'}</span>
+              <strong>{displacement.supplement?.idps ? formatPeople(displacement.supplement.idps) : displacement.idps > 0 ? formatPeople(displacement.idps) : '—'}</strong>
+              <span className="sub">{displacement.supplement?.idps ? `IDMC estimate, ${displacement.supplement.year}` : displacement.idps === 0 ? 'not reported by UNHCR' : displacement.oip > 0 ? `${formatPeople(displacement.oip)} others in need` : 'internally displaced'}</span>
             </div>
           </div>
         ) : (
           <Muted>No UNHCR displacement figure for people from {country.name}.</Muted>
+        )}
+        {displacement?.supplement && (
+          <div className="updated">
+            UNHCR's figures exclude Palestine refugees under UNRWA's mandate and carry no Gaza IDP figure; the totals add{' '}
+            {displacement.supplement.sources.map((s, i) => (
+              <span key={s.url}>
+                {i > 0 ? ' and ' : ''}
+                <a href={s.url} target="_blank" rel="noopener noreferrer">
+                  {s.name.split(' (')[0]}
+                </a>
+              </span>
+            ))}{' '}
+            figures ({displacement.supplement.year}). IDPs are not added to the total because many are themselves registered refugees.
+          </div>
         )}
 
         <h4 id="dossier-figures">Figures</h4>
@@ -1133,7 +1157,7 @@ function AboutView({ props }: { props: Props }) {
           <li>Borders follow Natural Earth and imply no position on disputes. Kosovo uses the code UNK; Northern Cyprus and Somaliland are drawn as neutral territory.</li>
           <li>Conflict tinting fills a country by the most intense conflict fought on its territory. States whose forces fight only abroad (the US in the Iran war, Saudi Arabia in Yemen, Rwanda in eastern DR Congo) are drawn with a dashed outline instead. Maritime flashpoints such as Hormuz and the South China Sea have no land theatre.</li>
           <li>Bloc figures count full members only and skip countries without a World Bank value; the tiles say when coverage is partial.</li>
-          <li>Displacement figures are UNHCR mid-year or end-year stocks, not flows, and lag events by months.</li>
+          <li>Displacement figures are UNHCR mid-year or end-year stocks, not flows, and lag events by months. UNHCR figures exclude Palestine refugees under UNRWA's mandate, so Palestine adds UNRWA's register and IDMC's IDP estimate; UNHCR reports Kosovo together with Serbia.</li>
           <li>An assessment is a dated snapshot. Check the linked sources before relying on it.</li>
         </ul>
         <h4>Following things</h4>
