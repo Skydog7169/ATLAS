@@ -14,6 +14,7 @@ export function selectionKey(s: Selection): string {
   if (!s) return '';
   if (s.kind === 'country') return 'country:' + s.iso;
   if (s.kind === 'pair') return `pair:${s.a},${s.b ?? ''}`;
+  if (s.kind === 'changes') return s.since ? 'changes:since' : 'changes';
   if ('id' in s) return `${s.kind}:${s.id}`;
   return s.kind;
 }

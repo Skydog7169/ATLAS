@@ -4,7 +4,8 @@ export type Selection =
   | { kind: 'country'; iso: string }
   | { kind: 'bloc'; id: string }
   | { kind: 'conflict'; id: string }
-  | { kind: 'changes' }
+  /** `since`: opened from the since-last-visit strip, so the panel preselects the unseen window. */
+  | { kind: 'changes'; since?: boolean }
   | { kind: 'compare' }
   | { kind: 'about' }
   | { kind: 'watchlist' }
@@ -68,7 +69,7 @@ export function serialize(state: AppState): string {
   if (state.embed && state.theme) p.set('theme', state.theme);
   if (state.selection) {
     if (state.selection.kind === 'country') p.set('country', state.selection.iso);
-    else if (state.selection.kind === 'changes') p.set('changes', '1');
+    else if (state.selection.kind === 'changes') p.set('changes', state.selection.since ? 'since' : '1');
     else if (state.selection.kind === 'compare') p.set('compare', '1');
     else if (state.selection.kind === 'about') p.set('about', '1');
     else if (state.selection.kind === 'watchlist') p.set('watchlist', '1');
@@ -157,6 +158,7 @@ export function parseHash(hash: string, isValid: Validators): { state: AppState;
   else if (unrestOk) selection = { kind: 'unrest', id: unrest! };
   else if (p.get('watchlist') === '1') selection = { kind: 'watchlist' };
   else if (p.get('changes') === '1') selection = { kind: 'changes' };
+  else if (p.get('changes') === 'since') selection = { kind: 'changes', since: true };
   else if (vs && mode === 'blocs' && p.get('compare') === '1') selection = { kind: 'compare' };
   else if (countryOk) selection = { kind: 'country', iso: country!.toUpperCase() };
   else if (conflictOk) selection = { kind: 'conflict', id: conflict! };

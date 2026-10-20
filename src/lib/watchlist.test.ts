@@ -69,8 +69,8 @@ describe('watchlist storage', () => {
 describe('matchesWatchlist', () => {
   const sudan = { id: 'sudan', countries: ['SDN', 'TCD'] } as unknown as Conflict;
   const byId = new Map([['sudan', sudan]]);
-  const assessment: ChangeItem = { date: '2026-10-01', kind: 'conflict', id: 'sudan', title: 'Sudan', detail: 'x', intensity: 'high' };
-  const membership: ChangeItem = { date: '2026-10-01', kind: 'bloc', id: 'brics', title: 'BRICS: Indonesia', detail: 'Joined', iso: 'IDN' };
+  const assessment: ChangeItem = { date: '2026-10-01', kind: 'conflict', id: 'sudan', title: 'Sudan', detail: 'x', intensity: 'high', prev: 'high', delta: 'same', key: 'conflict:sudan:2026-10-01' };
+  const membership: ChangeItem = { date: '2026-10-01', kind: 'bloc', id: 'brics', title: 'BRICS: Indonesia', detail: 'Joined', iso: 'IDN', delta: 'membership', key: 'bloc:brics:IDN:2026-10-01:joined' };
 
   it('matches a starred conflict or a starred country on its territory', () => {
     expect(matchesWatchlist(assessment, new Set(['conflict:sudan']), byId)).toBe(true);
