@@ -1,6 +1,6 @@
 # Design review briefs
 
-Implementation briefs from the October 2026 product and design review of ATLAS (140 verified issues). Each file is one batch, worked on by its own session and pull request. Wave 1 (batches 1-6) runs in parallel; wave 2 (batches 7-9) starts once wave 1 has merged.
+Implementation briefs from the October 2026 product and design review of ATLAS (140 verified issues). Each file is one batch, worked on by its own session and pull request. Wave 1 (batches 1-6) and wave 2 (batches 7-9) all run in parallel; wave 2 builds on wave 1 as its pull requests land.
 
 | Batch | Wave | Brief |
 | --- | --- | --- |
