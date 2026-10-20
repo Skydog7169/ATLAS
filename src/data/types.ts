@@ -126,7 +126,10 @@ export interface PeaceEvent {
 /** What the data file declares. The exported Conflict adds the derived current fields. */
 export interface ConflictInput {
   id: string;
+  /** '<Place>: <conflict noun> (<main armed actor if needed>)', e.g. 'Somalia: insurgency (al-Shabaab)'. */
   name: string;
+  /** Earlier names, kept as search aliases. */
+  aliases?: string[];
   type: ConflictType;
   /** Year the current phase began. */
   since: number;

@@ -53,7 +53,7 @@ test('compare mode shows shared members with stripes', async ({ page }, testInfo
 test('conflicts mode: markers, panel, timeline replay and changes feed', async ({ page }) => {
   await open(page, '#mode=conflicts');
   await expect(page.locator('g.marker')).toHaveCount(31);
-  await page.locator('g.marker[aria-label="Sudan civil war"]').click({ force: true });
+  await page.locator('g.marker[aria-label="Sudan: civil war"]').click({ force: true });
   await expect(page.locator('.panel h2')).toContainText('Sudan');
   await expect(page).toHaveURL(/conflict=sudan/);
   await page.locator('.panel .icon-btn[aria-label="Close panel"]').click();

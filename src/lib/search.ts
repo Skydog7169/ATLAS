@@ -28,7 +28,7 @@ const INDEX: Array<SearchHit & { keys: string[] }> = [
     label: c.name,
     sub: 'Conflict',
     color: '',
-    keys: [c.name, ...c.parties].map((s) => s.toLowerCase()),
+    keys: [c.name, ...(c.aliases ?? []), ...c.parties].map((s) => s.toLowerCase()),
   })),
   ...UNREST.map((u) => ({
     kind: 'unrest' as const,

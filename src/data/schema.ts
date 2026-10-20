@@ -53,6 +53,8 @@ export const PeaceEventSchema = z.object({
 export const ConflictInputSchema = z.object({
   id: z.string().regex(/^[a-z0-9-]+$/),
   name: z.string().min(3),
+  /** Earlier names, kept so old searches and links still resolve. */
+  aliases: z.array(z.string().min(3)).optional(),
   type: z.enum(['interstate', 'civil-war', 'insurgency', 'asymmetric', 'criminal-violence', 'flashpoint']),
   since: z.number().int().min(1900).max(2100),
   location: z.tuple([z.number().min(-180).max(180), z.number().min(-90).max(90)]),

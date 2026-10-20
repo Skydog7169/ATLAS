@@ -1,7 +1,10 @@
 [
   {
     "id": "russia-ukraine",
-    "name": "Russia–Ukraine war",
+    "name": "Ukraine: Russian invasion",
+    "aliases": [
+      "Russia–Ukraine war"
+    ],
     "type": "interstate",
     "since": 2014,
     "location": [
@@ -235,7 +238,10 @@
   },
   {
     "id": "sudan",
-    "name": "Sudan civil war",
+    "name": "Sudan: civil war",
+    "aliases": [
+      "Sudan civil war"
+    ],
     "type": "civil-war",
     "since": 2023,
     "location": [
@@ -405,7 +411,10 @@
   },
   {
     "id": "gaza",
-    "name": "Israel–Hamas war (Gaza)",
+    "name": "Gaza: Israel–Hamas war",
+    "aliases": [
+      "Israel–Hamas war (Gaza)"
+    ],
     "type": "asymmetric",
     "since": 2023,
     "location": [
@@ -621,7 +630,10 @@
   },
   {
     "id": "israel-lebanon",
-    "name": "Israel–Lebanon war",
+    "name": "Lebanon: Israel–Hezbollah war",
+    "aliases": [
+      "Israel–Lebanon war"
+    ],
     "type": "asymmetric",
     "since": 2023,
     "location": [
@@ -820,7 +832,10 @@
   },
   {
     "id": "iran-israel",
-    "name": "US–Israel war with Iran",
+    "name": "Iran: US–Israel war",
+    "aliases": [
+      "US–Israel war with Iran"
+    ],
     "type": "interstate",
     "since": 2024,
     "location": [
@@ -1024,7 +1039,10 @@
   },
   {
     "id": "yemen",
-    "name": "Yemen war (Houthis–Saudi Arabia)",
+    "name": "Yemen: civil war (Houthis)",
+    "aliases": [
+      "Yemen war (Houthis–Saudi Arabia)"
+    ],
     "type": "civil-war",
     "since": 2014,
     "location": [
@@ -1214,7 +1232,10 @@
   },
   {
     "id": "syria",
-    "name": "Syria transition",
+    "name": "Syria: post-Assad violence",
+    "aliases": [
+      "Syria transition"
+    ],
     "type": "civil-war",
     "since": 2011,
     "location": [
@@ -1383,7 +1404,10 @@
   },
   {
     "id": "myanmar",
-    "name": "Myanmar civil war",
+    "name": "Myanmar: civil war",
+    "aliases": [
+      "Myanmar civil war"
+    ],
     "type": "civil-war",
     "since": 2021,
     "location": [
@@ -1536,7 +1560,10 @@
   },
   {
     "id": "sahel",
-    "name": "Central Sahel insurgency",
+    "name": "Central Sahel: jihadist insurgency",
+    "aliases": [
+      "Central Sahel insurgency"
+    ],
     "type": "insurgency",
     "since": 2012,
     "location": [
@@ -1691,7 +1718,10 @@
   },
   {
     "id": "drc-east",
-    "name": "Eastern DR Congo (M23)",
+    "name": "Eastern DR Congo: M23 rebellion",
+    "aliases": [
+      "Eastern DR Congo (M23)"
+    ],
     "type": "insurgency",
     "since": 2021,
     "location": [
@@ -1885,7 +1915,10 @@
   },
   {
     "id": "somalia",
-    "name": "Somalia (al-Shabaab)",
+    "name": "Somalia: insurgency (al-Shabaab)",
+    "aliases": [
+      "Somalia (al-Shabaab)"
+    ],
     "type": "insurgency",
     "since": 2006,
     "location": [
@@ -2175,7 +2208,10 @@
   },
   {
     "id": "south-sudan",
-    "name": "South Sudan",
+    "name": "South Sudan: civil conflict",
+    "aliases": [
+      "South Sudan"
+    ],
     "type": "civil-war",
     "since": 2013,
     "location": [
@@ -2309,7 +2345,10 @@
   },
   {
     "id": "haiti",
-    "name": "Haiti gang conflict",
+    "name": "Haiti: gang conflict",
+    "aliases": [
+      "Haiti gang conflict"
+    ],
     "type": "criminal-violence",
     "since": 2021,
     "location": [
@@ -2446,7 +2485,10 @@
   },
   {
     "id": "nigeria",
-    "name": "Nigeria (north-east and north-west)",
+    "name": "Nigeria: insurgency and banditry",
+    "aliases": [
+      "Nigeria (north-east and north-west)"
+    ],
     "type": "insurgency",
     "since": 2009,
     "location": [
@@ -2584,7 +2626,10 @@
   },
   {
     "id": "mozambique",
-    "name": "Cabo Delgado insurgency",
+    "name": "Mozambique: Cabo Delgado insurgency",
+    "aliases": [
+      "Cabo Delgado insurgency"
+    ],
     "type": "insurgency",
     "since": 2017,
     "location": [
@@ -2693,7 +2738,10 @@
   },
   {
     "id": "colombia",
-    "name": "Colombia armed groups",
+    "name": "Colombia: armed-group conflict",
+    "aliases": [
+      "Colombia armed groups"
+    ],
     "type": "insurgency",
     "since": 2016,
     "location": [
@@ -2860,7 +2908,10 @@
   },
   {
     "id": "mexico",
-    "name": "Mexico cartel violence",
+    "name": "Mexico: cartel violence",
+    "aliases": [
+      "Mexico cartel violence"
+    ],
     "type": "criminal-violence",
     "since": 2006,
     "location": [
@@ -2979,7 +3030,10 @@
   },
   {
     "id": "india-pakistan",
-    "name": "India–Pakistan (Kashmir)",
+    "name": "India–Pakistan: Kashmir standoff",
+    "aliases": [
+      "India–Pakistan (Kashmir)"
+    ],
     "type": "interstate",
     "since": 1947,
     "location": [
@@ -3101,7 +3155,10 @@
   },
   {
     "id": "pakistan-afghanistan",
-    "name": "Pakistan–Afghanistan war",
+    "name": "Pakistan–Afghanistan: border war",
+    "aliases": [
+      "Pakistan–Afghanistan war"
+    ],
     "type": "interstate",
     "since": 2021,
     "location": [
@@ -3248,7 +3305,10 @@
   },
   {
     "id": "libya",
-    "name": "Libya",
+    "name": "Libya: rival-government conflict",
+    "aliases": [
+      "Libya"
+    ],
     "type": "civil-war",
     "since": 2011,
     "location": [
@@ -3429,7 +3489,10 @@
   },
   {
     "id": "thailand-cambodia",
-    "name": "Thailand–Cambodia border",
+    "name": "Thailand–Cambodia: border dispute",
+    "aliases": [
+      "Thailand–Cambodia border"
+    ],
     "type": "interstate",
     "since": 2025,
     "location": [
@@ -3586,7 +3649,10 @@
   },
   {
     "id": "taiwan-strait",
-    "name": "Taiwan Strait",
+    "name": "Taiwan Strait: cross-strait standoff",
+    "aliases": [
+      "Taiwan Strait"
+    ],
     "type": "flashpoint",
     "since": 1949,
     "location": [
@@ -3718,7 +3784,10 @@
   },
   {
     "id": "korean-peninsula",
-    "name": "Korean Peninsula",
+    "name": "Korean Peninsula: standoff",
+    "aliases": [
+      "Korean Peninsula"
+    ],
     "type": "flashpoint",
     "since": 1953,
     "location": [
@@ -3873,7 +3942,10 @@
   },
   {
     "id": "south-china-sea",
-    "name": "South China Sea",
+    "name": "South China Sea: maritime disputes",
+    "aliases": [
+      "South China Sea"
+    ],
     "type": "flashpoint",
     "since": 2012,
     "location": [
@@ -4020,7 +4092,10 @@
   },
   {
     "id": "armenia-azerbaijan",
-    "name": "Armenia–Azerbaijan peace process",
+    "name": "Armenia–Azerbaijan: border standoff",
+    "aliases": [
+      "Armenia–Azerbaijan peace process"
+    ],
     "type": "flashpoint",
     "since": 2020,
     "location": [
@@ -4199,7 +4274,10 @@
   },
   {
     "id": "venezuela-us",
-    "name": "Venezuela–United States",
+    "name": "Venezuela–US: military confrontation",
+    "aliases": [
+      "Venezuela–United States"
+    ],
     "type": "interstate",
     "since": 2025,
     "location": [
@@ -4344,7 +4422,10 @@
   },
   {
     "id": "cameroon-anglophone",
-    "name": "Cameroon Anglophone crisis",
+    "name": "Cameroon: Anglophone crisis",
+    "aliases": [
+      "Cameroon Anglophone crisis"
+    ],
     "type": "insurgency",
     "since": 2017,
     "location": [
@@ -4468,7 +4549,10 @@
   },
   {
     "id": "hormuz",
-    "name": "Strait of Hormuz crisis",
+    "name": "Strait of Hormuz: shipping crisis",
+    "aliases": [
+      "Strait of Hormuz crisis"
+    ],
     "type": "interstate",
     "since": 2026,
     "location": [
@@ -4706,7 +4790,10 @@
   },
   {
     "id": "balochistan",
-    "name": "Balochistan insurgency",
+    "name": "Pakistan: Balochistan insurgency",
+    "aliases": [
+      "Balochistan insurgency"
+    ],
     "type": "insurgency",
     "since": 2004,
     "location": [

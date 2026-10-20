@@ -13,6 +13,7 @@ import { WORLDBANK_BY_ISO, blocFigures } from '../lib/worldbank';
 import { blocMembers } from '../lib/membership';
 import { SOVEREIGN, memberFor, territoryLine } from '../lib/sovereign';
 import { NUCLEAR_BY_ISO } from '../lib/nuclear';
+import { search } from '../lib/search';
 
 const ISO3 = /^[A-Z]{3}$/;
 const MONTH = /^\d{4}-(0[1-9]|1[0-2])$/;
@@ -199,5 +200,13 @@ describe('dependent territories', () => {
       expect(COUNTRY_BY_ISO.has(iso), iso).toBe(true);
       expect(COUNTRY_BY_ISO.get(t.sovereign)?.independent, t.sovereign).toBe(true);
     }
+  });
+});
+
+describe('conflict names', () => {
+  it('follow "<Place>: <conflict noun>" and keep their old names searchable', () => {
+    for (const c of CONFLICTS) expect(c.name, c.id).toMatch(/^[^:]+: \S/);
+    expect(search('Sudan civil war')[0]).toMatchObject({ kind: 'conflict', id: 'sudan' });
+    expect(search('Russia–Ukraine war')[0]).toMatchObject({ kind: 'conflict', id: 'russia-ukraine' });
   });
 });
