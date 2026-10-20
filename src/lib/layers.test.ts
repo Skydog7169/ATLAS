@@ -4,7 +4,7 @@ import { ElectionsFileSchema, NuclearFileSchema, SanctionsFileSchema } from '../
 import sanctionsJson from '../data/sanctions.generated.json';
 import electionsJson from '../data/elections.json';
 import nuclearJson from '../data/nuclear.json';
-import { SANCTIONS, SANCTIONS_BY_ISO, sanctionsBin, sanctionsBinLabel, sanctionsColor, sanctionsSummary } from './sanctions';
+import { SANCTIONS, SANCTIONS_BY_ISO, sanctionsBin, sanctionsBinLabel, sanctionsColor, sanctionsFill, sanctionsSummary } from './sanctions';
 import { ELECTIONS, electionBin, electionBinLabel, electionColor, formatElectionDate, monthsUntil, electionSummary } from './elections';
 import { NUCLEAR, NUCLEAR_BY_ISO, nuclearColor, nuclearCount, nuclearSummary, testsFor } from './nuclear';
 
@@ -25,6 +25,19 @@ describe('sanctions dataset', () => {
     expect(SANCTIONS_BY_ISO.has('FRA')).toBe(false);
   });
 
+  it('files regimes that protect a country as concerns, not as sanctions against it', () => {
+    for (const iso of ['UKR', 'MDA']) {
+      const row = SANCTIONS_BY_ISO.get(iso)!;
+      expect(row.regimes, `${iso} targeting regimes`).toHaveLength(0);
+      expect(row.concerns!.length).toBeGreaterThan(0);
+      expect(sanctionsColor(iso)).toBe('var(--land)');
+      expect(sanctionsSummary(iso)).toBeNull();
+    }
+    expect(SANCTIONS_BY_ISO.get('UKR')!.concerns).toHaveLength(3);
+    expect(sanctionsFill('CUB').hatch).toBeDefined();
+    expect(sanctionsFill('RUS').hatch).toBeUndefined();
+  });
+
   it('bins and summarises', () => {
     expect([0, 1, 2, 3, 4, 5, 9].map(sanctionsBin)).toEqual([0, 1, 2, 3, 3, 4, 4]);
     expect(sanctionsBinLabel(0)).toBe('No country regime');
@@ -33,7 +46,7 @@ describe('sanctions dataset', () => {
     expect(sanctionsBinLabel(4)).toBe('5+ regimes');
     expect(sanctionsColor('FRA')).toBe('var(--land)');
     expect(sanctionsColor('RUS')).toBe('#ffd166');
-    expect(sanctionsSummary('PRK')).toBe('UN · US · EU');
+    expect(sanctionsSummary('PRK')).toBe('UN · US · EU · comprehensive US embargo');
     expect(sanctionsSummary('RUS')).toMatch(/^US×\d · EU×\d$/);
     expect(sanctionsSummary('FRA')).toBeNull();
   });

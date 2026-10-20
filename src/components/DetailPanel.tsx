@@ -225,6 +225,24 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
                 ))}
               </ul>
             )}
+            {x.secondary && (
+              <>
+                <h5 className="sub-head">{x.secondary.title}</h5>
+                <ul className="link-list">
+                  {x.secondary.rows.map((r, i) => (
+                    <li key={r.label + i}>
+                      <a href={r.href} target="_blank" rel="noopener noreferrer" title={r.note}>
+                        <span>
+                          {r.label}
+                          {r.note && <span className="row-note">{r.note}</span>}
+                        </span>
+                        <span className="meta">{r.value} ↗</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
             {x.footnote && <div className="updated">{x.footnote}</div>}
           </div>
         ))}

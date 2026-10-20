@@ -215,9 +215,13 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
               {sanctionsBinLabel(i)}
             </li>
           ))}
+          <li>
+            <span className="swatch" style={{ background: `repeating-linear-gradient(45deg, ${SANCTIONS_COLORS[SANCTIONS_COLORS.length - 1]} 0 3px, transparent 3px 6px)` }} />
+            Comprehensive US embargo
+          </li>
         </ul>
         <div className="note">
-          Country-level regimes by the UN Security Council, the United States (OFAC) and the EU; thematic programmes against people are not counted.{' '}
+          Country-level regimes by the UN Security Council, the United States (OFAC) and the EU; thematic programmes against people are not counted, nor are regimes that protect the country they are filed under (EU measures over Crimea count against no one, not Ukraine).{' '}
           {SANCTIONS.sources.map((s, i) => (
             <span key={s.url}>
               {i > 0 ? ', ' : ''}

@@ -236,7 +236,17 @@ export const SanctionsFileSchema = z.object({
   unmapped: z.array(z.string()),
   /** Countries the EU map flags as under UN measures that the curated UN list lacks. */
   unReview: z.array(z.string().regex(ISO3)),
-  rows: z.array(z.object({ iso: z.string().regex(ISO3), regimes: z.array(SanctionsRegimeSchema).min(1) })),
+  rows: z.array(
+    z
+      .object({
+        iso: z.string().regex(ISO3),
+        /** Regimes that target the country. */
+        regimes: z.array(SanctionsRegimeSchema),
+        /** Regimes filed under the country that protect it and are aimed at others (e.g. EU measures over Russia's annexation of Crimea). */
+        concerns: z.array(SanctionsRegimeSchema.extend({ aimedAt: z.string().min(10) })).optional(),
+      })
+      .refine((r) => r.regimes.length > 0 || (r.concerns?.length ?? 0) > 0, 'a row needs at least one regime or concern'),
+  ),
 });
 
 /** YYYY, YYYY-MM or YYYY-MM-DD: elections are often known only to the month or year. */

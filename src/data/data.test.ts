@@ -7,6 +7,7 @@ import { BlocsFileSchema, ConflictsFileSchema } from './schema';
 import conflictsJson from './conflicts.json';
 import blocsJson from './blocs.json';
 import { conflictFillMaps } from '../lib/theatre';
+import { SANCTIONS_BY_ISO } from '../lib/sanctions';
 
 const ISO3 = /^[A-Z]{3}$/;
 const MONTH = /^\d{4}-(0[1-9]|1[0-2])$/;
@@ -116,5 +117,11 @@ describe('conflict theatres', () => {
       expect(abroad.has(iso), `${iso} should be outlined as a party abroad`).toBe(true);
     }
     for (const iso of ['UKR', 'SDN', 'IRN', 'YEM', 'COD']) expect(home.get(iso)).toBeDefined();
+  });
+});
+
+describe('sanctions truth', () => {
+  it('Ukraine and Moldova are targeted by no regime', () => {
+    for (const iso of ['UKR', 'MDA']) expect(SANCTIONS_BY_ISO.get(iso)?.regimes ?? [], iso).toHaveLength(0);
   });
 });

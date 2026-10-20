@@ -816,6 +816,16 @@ a {
   background: var(--border);
 }
 
+.panel-body h5.sub-head {
+  margin: 10px 0 4px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
 .panel-body p {
   margin: 0 0 8px;
 }

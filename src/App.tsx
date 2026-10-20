@@ -6,7 +6,7 @@ import { useAppState } from './hooks/useAppState';
 import { currentMonth, earliestMonth, entryAt, monthRange } from './lib/history';
 import Timeline from './components/Timeline';
 import { DISPLACEMENT_BY_ISO, displacementColor, formatPeople } from './lib/displacement';
-import { sanctionsColor, sanctionsSummary } from './lib/sanctions';
+import { sanctionsFill, sanctionsSummary } from './lib/sanctions';
 import { electionColor, electionSummary } from './lib/elections';
 import { nuclearColor, nuclearSummary } from './lib/nuclear';
 import { ACLED, acledColor, acledSummary, acledUnrestColor, acledUnrestSummary } from './lib/acled';
@@ -150,7 +150,7 @@ export default function App() {
     (iso: string | null): CountryFill => {
       if (!iso) return { fill: 'var(--land-dim)' };
       if (layer === 'displacement') return { fill: displacementColor(iso) };
-      if (layer === 'sanctions') return { fill: sanctionsColor(iso) };
+      if (layer === 'sanctions') return sanctionsFill(iso);
       if (layer === 'elections') return { fill: electionColor(iso) };
       if (layer === 'nuclear') return { fill: nuclearColor(iso) };
       if (layer === 'acled') return { fill: acledColor(iso) };

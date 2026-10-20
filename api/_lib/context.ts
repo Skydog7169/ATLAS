@@ -46,8 +46,9 @@ export function buildContext(): string {
   }
 
   lines.push('', `## Sanctions (country-level regimes; fetched ${(sanctions as { fetchedAt: string }).fetchedAt})`);
-  for (const r of (sanctions as { rows: Array<{ iso: string; regimes: Array<{ authority: string; name: string; url: string }> }> }).rows) {
-    lines.push(`[sanctions:${r.iso}] ${name(r.iso)}: ${r.regimes.map((x) => `${x.authority}: ${x.name} <${x.url}>`).join('; ')}`);
+  for (const r of (sanctions as { rows: Array<{ iso: string; regimes: Array<{ authority: string; name: string; url: string }>; concerns?: Array<{ authority: string; name: string; url: string; aimedAt: string }> }> }).rows) {
+    if (r.regimes.length) lines.push(`[sanctions:${r.iso}] ${name(r.iso)}: ${r.regimes.map((x) => `${x.authority}: ${x.name} <${x.url}>`).join('; ')}`);
+    if (r.concerns?.length) lines.push(`[sanctions:${r.iso}] regimes concerning ${name(r.iso)} but aimed at others (not sanctions against it): ${r.concerns.map((x) => `${x.authority}: ${x.name} (${x.aimedAt}) <${x.url}>`).join('; ')}`);
   }
 
   lines.push('', '## Next national elections');

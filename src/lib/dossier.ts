@@ -31,6 +31,8 @@ export interface DossierExtra {
   rows: Array<{ label: string; value: string; href?: string; note?: string; conflictId?: string; unrestId?: string; countryIso?: string }>;
   /** Shown when `rows` is empty. */
   empty?: string;
+  /** A second, titled list under the first (sanctions regimes filed under a country but aimed at others). */
+  secondary?: { title: string; rows: DossierExtra['rows'] };
   /** Source and fetch date shown under the section. */
   footnote?: string;
 }

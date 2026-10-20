@@ -7,6 +7,10 @@
 //   UN  — Security Council regimes, curated below and cross-checked against
 //         the EU map's "adopted by UN" flag
 //
+// Regimes that protect the country they are filed under (Ukraine, Moldova,
+// Bosnia and Herzegovina, Guatemala, the US Western Balkans programme) are
+// emitted as `concerns`, not as regimes against it; see CONCERNS_EU.
+//
 // Refreshed by the weekly workflow; the committed file is the fallback when a
 // source is unreachable. Unknown OFAC country programmes are listed under
 // `unmapped` so a human can extend the table rather than silently dropping them.
@@ -56,6 +60,26 @@ const OFAC_SLUG_TO_ISO = {
   'yemen-related-sanctions': ['YEM'],
   'zimbabwe-sanctions': ['ZWE'],
 };
+/**
+ * Regimes filed under a country that protect it rather than target it: they
+ * sanction those undermining its sovereignty, territorial integrity or
+ * democratic order. They go in a row's `concerns` instead of `regimes`, so
+ * they neither tint the victim on the sanctions layer nor count as measures
+ * against it. Keyed on EU Sanctions Map regime id or OFAC slug.
+ */
+const CONCERNS_EU = {
+  36: "Aimed at those undermining Ukraine's territorial integrity, mainly Russian officials",
+  37: 'Aimed at Russia over the annexation of Crimea and Sevastopol',
+  52: "Aimed at Russia over its occupation and annexation of Ukraine's oblasts",
+  25: 'Aimed at Transnistrian separatist officials',
+  55: 'Aimed at those destabilising Moldova, mainly pro-Russian actors',
+  4: 'Aimed at those undermining the Dayton agreement and the state of Bosnia and Herzegovina',
+  59: "Aimed at those obstructing Guatemala's democratic transition",
+};
+const CONCERNS_OFAC = {
+  'balkans-related-sanctions': 'Aimed at those undermining stability and the Dayton and Ohrid agreements in the Western Balkans',
+};
+
 /** Slugs that are thematic (persons and entities, not a country) and so are expected to go unmapped. */
 const OFAC_THEMATIC = /counter-|cyber|magnitsky|narcotics|non-proliferation|rough-diamond|transnational|criminal-court|hostages|foreign-interference|adversaries|where-is-ofac|terrorism/;
 
@@ -96,7 +120,7 @@ async function ofac() {
   const unmapped = [];
   for (const [slug, title] of seen) {
     const isos = OFAC_SLUG_TO_ISO[slug];
-    if (isos) for (const iso of isos) regimes.push({ iso, authority: 'US', name: title, url: `${OFAC_INDEX}/${slug}` });
+    if (isos) for (const iso of isos) regimes.push({ iso, authority: 'US', name: title, url: `${OFAC_INDEX}/${slug}`, aimedAt: CONCERNS_OFAC[slug] });
     else if (!OFAC_THEMATIC.test(slug)) unmapped.push(slug);
   }
   return { regimes, unmapped };
@@ -117,7 +141,7 @@ async function eu() {
     if (!iso) continue;
     const by = r.adopted_by?.data?.title ?? 'EU';
     if (/UN/.test(by)) unAdopted.add(iso);
-    if (/EU/.test(by)) regimes.push({ iso, authority: 'EU', name: spec.replace(/^Restrictive measures /, 'Restrictive measures '), url: `${EU_DETAILS}${r.id}/` });
+    if (/EU/.test(by)) regimes.push({ iso, authority: 'EU', name: spec.replace(/^Restrictive measures /, 'Restrictive measures '), url: `${EU_DETAILS}${r.id}/`, aimedAt: CONCERNS_EU[r.id] });
   }
   if (regimes.length < 20) throw new Error('EU sanctions map returned fewer than 20 country regimes; API changed?');
   return { regimes, unAdopted };
@@ -143,12 +167,15 @@ async function main() {
   const byIso = new Map();
   for (const r of [...us.regimes, ...euRows.regimes, ...un]) {
     if (!KNOWN.has(r.iso)) continue;
-    if (!byIso.has(r.iso)) byIso.set(r.iso, []);
-    byIso.get(r.iso).push({ authority: r.authority, name: r.name, url: r.url });
+    if (!byIso.has(r.iso)) byIso.set(r.iso, { regimes: [], concerns: [] });
+    const entry = byIso.get(r.iso);
+    if (r.aimedAt) entry.concerns.push({ authority: r.authority, name: r.name, url: r.url, aimedAt: r.aimedAt });
+    else entry.regimes.push({ authority: r.authority, name: r.name, url: r.url });
   }
   const order = { UN: 0, US: 1, EU: 2 };
+  const byAuthority = (a, b) => order[a.authority] - order[b.authority] || a.name.localeCompare(b.name);
   const rows = [...byIso]
-    .map(([iso, regimes]) => ({ iso, regimes: regimes.sort((a, b) => order[a.authority] - order[b.authority] || a.name.localeCompare(b.name)) }))
+    .map(([iso, { regimes, concerns }]) => ({ iso, regimes: regimes.sort(byAuthority), ...(concerns.length ? { concerns: concerns.sort(byAuthority) } : {}) }))
     .sort((a, b) => a.iso.localeCompare(b.iso));
 
   const prev = existsSync(OUT) ? JSON.parse(readFileSync(OUT, 'utf8')) : null;
