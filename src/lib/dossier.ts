@@ -100,12 +100,12 @@ export function conflictBadges(iso: string, conflicts: readonly Conflict[]): Arr
   return out;
 }
 
-/** Headline blocs readers check first; the dossier names those a country is not a full member of. */
+/** Headline blocs readers check first; the dossier names those a country has no listed tie to (a candidacy or partnership is shown as its own row). */
 export const HEADLINE_BLOCS = ['nato', 'eu', 'brics', 'sco', 'g7'];
 
 export function notMemberOf(iso: string): string[] {
   return HEADLINE_BLOCS.map((id) => BLOC_BY_ID.get(id))
-    .filter((b): b is Bloc => !!b && !b.members.some((m) => m.iso === iso && m.status === 'member'))
+    .filter((b): b is Bloc => !!b && !b.members.some((m) => m.iso === iso))
     .map((b) => b.shortName);
 }
 
