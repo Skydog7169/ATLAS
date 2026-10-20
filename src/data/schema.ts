@@ -53,10 +53,14 @@ export const PeaceEventSchema = z.object({
 export const ConflictInputSchema = z.object({
   id: z.string().regex(/^[a-z0-9-]+$/),
   name: z.string().min(3),
+  /** Earlier names, kept so old searches and links still resolve. */
+  aliases: z.array(z.string().min(3)).optional(),
   type: z.enum(['interstate', 'civil-war', 'insurgency', 'asymmetric', 'criminal-violence', 'flashpoint']),
   since: z.number().int().min(1900).max(2100),
   location: z.tuple([z.number().min(-180).max(180), z.number().min(-90).max(90)]),
   countries: z.array(z.string().regex(ISO3)).min(1),
+  /** Where the fighting is; a subset of `countries`, defaulting to it. Empty for maritime flashpoints. */
+  theatre: z.array(z.string().regex(ISO3)).optional(),
   parties: z.array(z.string().min(2)).min(1),
   summary: z.string().min(40),
   actors: z.array(ActorSchema).min(1).optional(),
@@ -69,7 +73,7 @@ export const ConflictInputSchema = z.object({
 
 export const BlocMemberSchema = z.object({
   iso: z.string().regex(ISO3),
-  status: z.enum(['member', 'suspended', 'frozen', 'partner', 'observer', 'invited']),
+  status: z.enum(['member', 'suspended', 'frozen', 'partner', 'observer', 'invited', 'candidate']),
   note: z.string().optional(),
   since: z.number().int().min(1940).max(2100).optional(),
 });
@@ -83,7 +87,7 @@ export const FormerMemberSchema = z.object({
 export const BlocChangeSchema = z.object({
   date: z.string().regex(ISO_DATE),
   iso: z.string().regex(ISO3),
-  change: z.enum(['joined', 'left', 'suspended', 'reinstated', 'frozen', 'invited', 'founded']),
+  change: z.enum(['joined', 'left', 'suspended', 'reinstated', 'frozen', 'invited', 'founded', 'candidate']),
   note: z.string().optional(),
   source: SourceSchema.optional(),
 });
@@ -159,7 +163,7 @@ export const AssessmentOutputSchema = z.object({
   peaceEvents: z
     .array(
       z.object({
-        date: z.string().describe('YYYY-MM-DD, or YYYY-MM when only the month is known'),
+        date: z.string().describe('the date the event happened, not the date an article reported it: YYYY-MM-DD, or YYYY-MM when only the month is known'),
         kind: PeaceEventKindSchema,
         summary: z.string().describe('one sentence, 20-300 characters'),
         source: z.object({ name: z.string(), url: z.string() }),
@@ -173,7 +177,7 @@ export const BlocReviewOutputSchema = z.object({
     z.object({
       blocId: z.string(),
       iso: z.string().describe('ISO 3166-1 alpha-3'),
-      change: z.enum(['joined', 'left', 'suspended', 'reinstated', 'frozen', 'invited', 'founded']),
+      change: z.enum(['joined', 'left', 'suspended', 'reinstated', 'frozen', 'invited', 'founded', 'candidate']),
       date: z.string().describe('YYYY-MM-DD the change took effect'),
       note: z.string(),
       source: z.object({ name: z.string(), url: z.string() }),
@@ -234,7 +238,17 @@ export const SanctionsFileSchema = z.object({
   unmapped: z.array(z.string()),
   /** Countries the EU map flags as under UN measures that the curated UN list lacks. */
   unReview: z.array(z.string().regex(ISO3)),
-  rows: z.array(z.object({ iso: z.string().regex(ISO3), regimes: z.array(SanctionsRegimeSchema).min(1) })),
+  rows: z.array(
+    z
+      .object({
+        iso: z.string().regex(ISO3),
+        /** Regimes that target the country. */
+        regimes: z.array(SanctionsRegimeSchema),
+        /** Regimes filed under the country that protect it and are aimed at others (e.g. EU measures over Russia's annexation of Crimea). */
+        concerns: z.array(SanctionsRegimeSchema.extend({ aimedAt: z.string().min(10) })).optional(),
+      })
+      .refine((r) => r.regimes.length > 0 || (r.concerns?.length ?? 0) > 0, 'a row needs at least one regime or concern'),
+  ),
 });
 
 /** YYYY, YYYY-MM or YYYY-MM-DD: elections are often known only to the month or year. */
@@ -247,6 +261,8 @@ export const ElectionSchema = z.object({
   /** Next national election, or null when none is scheduled (suspended, postponed indefinitely). */
   date: z.string().regex(PARTIAL_DATE).nullable(),
   type: ElectionTypeSchema,
+  /** How the vote is held, when it is not a direct competitive election; sourced in `sources` (e.g. Freedom House). */
+  qualifiers: z.array(z.enum(['indirect', 'non-competitive'])).optional(),
   /** True when `date` is the constitutional deadline rather than a fixed date. */
   deadline: z.boolean().optional(),
   note: z.string().max(200).optional(),
@@ -320,7 +336,8 @@ export const ChokepointsFileSchema = z.object({
   chokepoints: z.array(ChokepointSchema).min(1),
 });
 
-export const PresenceKindSchema = z.enum(['base', 'deployment', 'mission']);
+/** occupation: an invasion or occupying force; contested: present without the host government's consent. */
+export const PresenceKindSchema = z.enum(['base', 'deployment', 'mission', 'occupation', 'contested']);
 
 export const PresenceSchema = z.object({
   host: z.string().regex(ISO3),

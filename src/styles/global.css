@@ -370,6 +370,13 @@ a {
   cursor: pointer;
 }
 
+/* A party to a conflict fought abroad: unfilled, dashed in the intensity colour. */
+.country[data-outline='true'] {
+  stroke: var(--outline);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+}
+
 .country:hover {
   filter: brightness(1.3) saturate(1.2);
   stroke: var(--accent);
@@ -615,6 +622,11 @@ a {
   border: 1px solid color-mix(in srgb, var(--fg) 20%, transparent);
 }
 
+.swatch.outline {
+  background: transparent;
+  border: 1.5px dashed;
+}
+
 .swatch.circle {
   width: 12px;
   height: 12px;
@@ -802,6 +814,16 @@ a {
   flex: 1;
   height: 1px;
   background: var(--border);
+}
+
+.panel-body h5.sub-head {
+  margin: 10px 0 4px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
 }
 
 .panel-body p {
@@ -2179,6 +2201,35 @@ a {
   .trends {
     grid-template-columns: 1fr 1fr;
   }
+
+  .trends.single {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Short series (a bloc founded a few years ago): start and end figures instead of a line. */
+.trend-figures {
+  display: grid;
+  gap: 4px;
+  margin: 6px 0 4px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev-2);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.trend-figures .label {
+  color: var(--fg-muted);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-right: 6px;
+}
+
+/* A figure from years before the others it is shown or summed with. */
+.stale {
+  color: var(--warn);
 }
 
 .trend {

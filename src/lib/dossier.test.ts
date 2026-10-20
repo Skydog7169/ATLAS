@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { COUNTRIES } from './countries';
-import { CHANGES_SHOWN, DOSSIER_PROVIDERS, countryDossier, profileLine } from './dossier';
+import { CHANGES_SHOWN, DOSSIER_PROVIDERS, conflictBadges, countryDossier, notMemberOf, profileLine } from './dossier';
 
 describe('country dossier', () => {
   it('exists for every country with at least four sections', () => {
@@ -66,5 +66,21 @@ describe('country dossier', () => {
   it('writes a readable profile line', () => {
     expect(profileLine(countryDossier('FRA')!.country)).toMatch(/French Republic · Capital: Paris · UN member/);
     expect(profileLine(countryDossier('TWN')!.country)).toMatch(/Taipei/);
+  });
+});
+
+describe('headline bloc gaps and conflict badges', () => {
+  it('names the headline blocs a country has no tie to, leaving out its candidacies', () => {
+    expect(notMemberOf('UKR')).toEqual(['NATO', 'BRICS', 'SCO', 'G7']);
+    expect(notMemberOf('FRA')).toEqual(['BRICS', 'SCO']);
+  });
+
+  it('separates a conflict at home from one fought abroad', () => {
+    expect(conflictBadges('USA', countryDossier('USA')!.conflicts).map((b) => b.label)).toEqual(['Party abroad']);
+    expect(conflictBadges('UKR', countryDossier('UKR')!.conflicts)[0]).toEqual({ label: 'Conflict at home', intensity: 'high' });
+  });
+
+  it('skips an official name that repeats the short name', () => {
+    expect(profileLine(countryDossier('UKR')!.country)).toBe('Capital: Kyiv · UN member');
   });
 });
