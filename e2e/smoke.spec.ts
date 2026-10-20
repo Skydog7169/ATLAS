@@ -752,7 +752,7 @@ test('camera frames the subject in the uncovered area: phone sheet, desktop pane
   await expect(page.locator('path.country[data-iso="USA"]')).toHaveAttribute('fill', 'var(--accent)');
   await expect(page.locator('path.country[data-iso="CHN"]')).toHaveAttribute('fill', 'var(--warn)');
   await expect(page.locator('path.country[data-iso="CHN"]')).toHaveAttribute('data-selected', 'true');
-  await expect(page.locator('path.country[data-iso="FRA"]')).toHaveAttribute('opacity', '0.55');
+  await expect(page.locator('path.country[data-iso="FRA"]')).toHaveAttribute('data-dim', 'mix');
 });
 
 test('globe toggle keeps the selection in view instead of resetting', async ({ page }, testInfo) => {
@@ -829,6 +829,20 @@ test('navigation: Back steps through panels, Escape and focus follow, the camera
   await page.waitForTimeout(900);
   await panel.getByRole('button', { name: 'Close panel' }).click();
   await expect.poll(() => layer.getAttribute('transform'), { timeout: 3000 }).not.toMatch(/scale\((?:[3-9]|\d\d)/);
+});
+
+test('navigation: a deep link opens its panel without taking focus; the next panel the reader opens does', async ({ page }) => {
+  await open(page, '#mode=blocs&bloc=nato');
+  const heading = page.locator('.panel h2');
+  await expect(heading).toContainText('North Atlantic');
+  // The panel renders lazily; give it time to finish before checking that focus stayed put.
+  await expect(page.locator('.panel .panel-body')).toBeVisible();
+  await page.waitForTimeout(400);
+  expect(await heading.evaluate((h) => h === document.activeElement)).toBe(false);
+
+  await page.getByRole('button', { name: /^EU —/ }).click();
+  await expect(heading).toContainText('European Union');
+  await expect(heading).toBeFocused();
 });
 
 test('navigation: related links keep the user layer, mode switches offer Undo, stale links say so', async ({ page }, testInfo) => {
@@ -1027,7 +1041,7 @@ test('truth: theatre fills, outlines abroad, protective sanctions, Palestine and
 
   await open(page, '#bloc=nato');
   await expect(page.locator('path.country[data-iso="GRL"]')).toHaveAttribute('fill', NATO_BLUE);
-  await expect(page.locator('path.country[data-iso="PRI"]')).toHaveAttribute('opacity', '0.55');
+  await expect(page.locator('path.country[data-iso="PRI"]')).toHaveAttribute('data-dim', 'mix');
 
   await open(page, '#pair=GBR,RUS');
   await expect(panel.locator('#pair-sanctions + p')).toContainText('Not tracked for this pair');

@@ -7,7 +7,8 @@ name: Daily research pass
 
 on:
   schedule:
-    - cron: '23 5 * * 2-7' # Tuesday to Sunday 05:23 UTC
+    # GitHub's day-of-week field is 0-6 (Sunday is 0); a 7 made the whole file invalid.
+    - cron: '23 5 * * 0,2-6' # Tuesday to Sunday 05:23 UTC
   workflow_dispatch:
 
 permissions:

@@ -7,7 +7,7 @@ import { geoAnchors, placeLabels, type Box } from '../lib/mapLabels';
 import { useSize } from '../hooks/useSize';
 import { triPath } from '../lib/shapes';
 import { useHoverIso } from '../hooks/useMapOverlays';
-import { CountryLayer, CountryOutlines, DiamondCore, type Focus, type MapMarker, type CountryFill } from './WorldMap';
+import { CountryLayer, CountryOutlines, DiamondCore, GlowUnderlay, type Focus, type MapMarker, type CountryFill } from './WorldMap';
 
 interface Props {
   fillFor: (iso: string | null) => CountryFill;
@@ -395,6 +395,8 @@ export default function GlobeMap({
           <g>
             <path className="sphere" d={spherePath} />
             <path className="graticule" d={graticulePath} />
+            <path className="sphere-rim" d={spherePath} />
+            <GlowUnderlay features={COUNTRY_FEATURES} paths={paths} fillFor={fillFor} />
             <CountryLayer features={COUNTRY_FEATURES} paths={paths} fillFor={fillFor} selectedIsos={selectedIsos} onCountryClick={onCountryClick} onHover={onCountryHover} />
             <path className="globe-shade" d={spherePath} fill="url(#globe-shade)" pointerEvents="none" />
             <CountryOutlines features={COUNTRY_FEATURES} paths={paths} selectedIsos={selectedIsos} hoverIso={hoverIso} />
