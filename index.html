@@ -6,32 +6,75 @@
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#04070d" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#dfe7ee" media="(prefers-color-scheme: light)" />
-    <meta name="description" content="ATLAS — an interactive geopolitics map of power blocs and active conflicts." />
+    <!-- Apply the saved theme before first paint so a dark choice on a light OS (or the reverse) never flashes. -->
+    <script>
+      // Mirrors src/lib/theme.ts: an embed's link pins the theme (#embed=1&theme=light|dark|auto,
+      // dark by default); otherwise the visitor's stored choice, else the OS preference.
+      try {
+        var p = new URLSearchParams(location.hash.replace(/^#/, ''));
+        var t = p.get('embed') === '1' ? p.get('theme') || 'dark' : localStorage.getItem('atlas:theme');
+        if (t === 'dark' || t === 'light') {
+          document.documentElement.setAttribute('data-theme', t);
+          document.querySelectorAll('meta[name=theme-color]').forEach(function (m) {
+            m.removeAttribute('media');
+            m.content = t === 'dark' ? '#04070d' : '#dfe7ee';
+          });
+        }
+        if (p.get('brief') === '1' || p.get('embed') === '1') document.documentElement.setAttribute('data-chrome', 'none');
+      } catch (e) {}
+    </script>
+    <title>ATLAS — alliances, wars and unrest</title>
+    <meta name="description" content="ATLAS is an interactive geopolitics map: power blocs, active conflicts, civil unrest and chokepoints, with dated, sourced changes." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ATLAS" />
+    <meta property="og:title" content="ATLAS — alliances, wars and unrest" />
+    <meta property="og:description" content="An interactive geopolitics map: power blocs, active conflicts, civil unrest and chokepoints, with dated, sourced changes." />
+    <meta property="og:url" content="https://atlas-geopolitic.vercel.app/" />
+    <meta property="og:image" content="https://atlas-geopolitic.vercel.app/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="ATLAS tactical world map with conflict markers and bloc colours" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ATLAS — alliances, wars and unrest" />
+    <meta name="twitter:description" content="An interactive geopolitics map: power blocs, active conflicts, civil unrest and chokepoints." />
+    <meta name="twitter:image" content="https://atlas-geopolitic.vercel.app/og.png" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="alternate" type="application/rss+xml" title="ATLAS: geopolitical changes" href="/feed.xml" />
     <link rel="alternate" type="application/feed+json" title="ATLAS: geopolitical changes (JSON Feed)" href="/feed.json" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap"
-      rel="stylesheet"
-    />
-    <title>ATLAS</title>
-    <script>
-      // Apply the theme before first paint (mirrors src/lib/theme.ts): an embed's
-      // link pins it (#embed=1&theme=light|dark|auto, dark by default); otherwise
-      // the visitor's stored choice, else the OS preference.
-      (function () {
-        try {
-          var p = new URLSearchParams(location.hash.replace(/^#/, ''));
-          var t = p.get('embed') === '1' ? p.get('theme') || 'dark' : localStorage.getItem('atlas:theme');
-          if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
-        } catch (e) {}
-      })();
-    </script>
+    <link rel="preload" href="/fonts/share-tech-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/rajdhani-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/rajdhani-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/rajdhani-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Static shell: painted before any JS runs, replaced when React mounts. -->
+      <div class="app app-shell" aria-busy="true">
+        <header class="header">
+          <span class="brand">
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+              <circle cx="16" cy="16" r="12" fill="none" stroke="currentColor" stroke-width="1.5" />
+              <circle cx="16" cy="16" r="5.5" fill="none" stroke="currentColor" stroke-width="1.5" />
+              <path d="M16 1v6M16 25v6M1 16h6M25 16h6" stroke="currentColor" stroke-width="1.5" />
+              <circle cx="16" cy="16" r="1.6" fill="var(--warn)" />
+            </svg>
+            <span>
+              <span class="word">ATLAS</span>
+              <span class="tag">GEOPOLITICAL AWARENESS</span>
+            </span>
+          </span>
+        </header>
+        <main class="stage">
+          <div class="map-skeleton">
+            <div>
+              <div class="globe"></div>
+              INITIALISING MAP
+            </div>
+          </div>
+        </main>
+      </div>
+      <noscript><p style="padding: 16px">ATLAS needs JavaScript to draw the map.</p></noscript>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
