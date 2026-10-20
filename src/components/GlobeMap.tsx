@@ -436,6 +436,8 @@ export default function GlobeMap({
                   className={'marker' + (mk.pulse ? ' pulse' : '') + (mk.shape && mk.shape !== 'circle' ? ' ' + mk.shape : '')}
                   data-selected={selected}
                   data-shape={mk.shape ?? 'circle'}
+                  data-stale={mk.stale || undefined}
+                  data-ghost={mk.ghost || undefined}
                   transform={`translate(${p[0]},${p[1]})`}
                   tabIndex={0}
                   role="button"

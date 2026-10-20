@@ -1,10 +1,12 @@
+import { Children, cloneElement, type ReactElement, type ReactNode } from 'react';
 import { BLOC_BY_ID } from '../data/blocs';
 import { INTENSITY_COLOR, INTENSITY_LABEL, conflictFill } from '../lib/labels';
 import { FAINT_FILL, NO_DATA_SWATCH, hatchSwatch } from '../lib/palette';
 import type { Intensity } from '../data/types';
 import type { Layer, Mode } from '../lib/urlState';
 import { DISPLACEMENT, DISPLACEMENT_COLORS, binLabel } from '../lib/displacement';
-import { formatDate } from '../lib/labels';
+import { formatDate, formatMonth } from '../lib/labels';
+import { layerAsOf } from '../lib/layerAsOf';
 import { SANCTIONS, SANCTIONS_COLORS, sanctionsBinLabel } from '../lib/sanctions';
 import { ELECTIONS, ELECTIONS_VERIFIED, ELECTION_COLORS, electionBinLabel } from '../lib/elections';
 import { NUCLEAR, NUCLEAR_COLOR, NUCLEAR_HATCHED, NUCLEAR_STATUSES, NUCLEAR_STATUS_LABEL, nuclearCount } from '../lib/nuclear';
@@ -23,6 +25,10 @@ interface Props {
   vs: string | null;
   overviewSteps: string[];
   layer: Layer;
+  /** Conflicts replay month, or null when live. */
+  month?: string | null;
+  /** Inside an iframe: no bloc chips above the map to point at. */
+  embed?: boolean;
 }
 
 const INTENSITIES: Intensity[] = ['high', 'medium', 'low', 'latent'];
@@ -37,7 +43,24 @@ function NoDataRow() {
   );
 }
 
-export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) {
+/**
+ * During replay a data layer still shows current data while the markers move
+ * back in time; the legend says so, so the two time bases never pass as one.
+ */
+export default function Legend(props: Props) {
+  const el = LegendBody(props) as ReactElement<{ children?: ReactNode }>;
+  const { month, layer, mode } = props;
+  if (!month || !layer || mode !== 'conflicts') return el;
+  const asOf = layerAsOf(layer);
+  const note = (
+    <div className="note replay-note" key="replay-note">
+      Layer shows current data{asOf ? ` (as of ${formatDate(asOf)})` : ''}; markers show {formatMonth(month)}.
+    </div>
+  );
+  return cloneElement(el, undefined, ...Children.toArray(el.props.children), note);
+}
+
+function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed = false }: Props) {
   if (layer === 'displacement') {
     return (
       <aside className="legend" aria-label="Legend">
@@ -329,7 +352,7 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
   if (mode === 'conflicts') {
     return (
       <aside className="legend" aria-label="Legend">
-        <h2 className="legend-title">Conflict intensity</h2>
+        <h2 className="legend-title">Conflict intensity{month ? ` · ${formatMonth(month)}` : ''}</h2>
         <ul>
           {INTENSITIES.map((i) => (
             <li key={i}>
@@ -342,6 +365,18 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
             <span className="swatch outline" style={{ borderColor: INTENSITY_COLOR.high }} />
             Party to a conflict abroad
           </li>
+          {month && (
+            <>
+              <li className="replay-key">
+                <span className="swatch circle stale" style={{ background: 'var(--fg-muted)' }} />
+                Faded: no new assessment, last one carried forward
+              </li>
+              <li className="replay-key">
+                <span className="swatch circle ghost" style={{ background: 'transparent' }} />
+                Outline: under way, not yet tracked
+              </li>
+            </>
+          )}
         </ul>
         <div className="note">Markers (circles) and territory (squares): countries are filled by the most intense conflict fought on their territory, deeper for more intense. A dashed outline marks a state whose forces fight only abroad. Marker size follows intensity.</div>
       </aside>
@@ -410,7 +445,7 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           </li>
         ))}
       </ul>
-      <div className="note">Pick a bloc above to see its members. Click any country for details.</div>
+      <div className="note">{embed ? 'Tap a country for details · open in ATLAS ↗ to pick a bloc.' : 'Pick a bloc above to see its members. Click any country for details.'}</div>
     </aside>
   );
 }

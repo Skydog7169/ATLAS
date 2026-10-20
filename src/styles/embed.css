@@ -1,0 +1,235 @@
+/* ---------- embed: cooperative gestures, dated badge, controls, snippet dialog ---------- */
+.app[data-embed='true'] .map-root {
+  /* Leave one-finger swipes to the host page; two fingers pan and pinch the map. */
+  touch-action: pan-y pinch-zoom;
+}
+
+.app[data-embed='true'][data-interactive='false'] .map-root {
+  touch-action: auto;
+}
+
+.app[data-embed='true'] .map-root svg {
+  cursor: default;
+}
+
+.gesture-hint {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
+  pointer-events: none;
+  animation: gesture-hint 1.5s ease both;
+}
+
+.gesture-hint span {
+  padding: 8px 14px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border-strong);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+@keyframes gesture-hint {
+  0% {
+    opacity: 0;
+  }
+  12%,
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* The badge carries the data date (or the replay month) in every embed. */
+.embed-badge .sep {
+  color: var(--fg-faint);
+}
+
+.embed-badge[data-replay='true'] {
+  border-color: var(--warn);
+}
+
+.embed-badge[data-replay='true'] .when {
+  color: var(--warn);
+}
+
+/* Narrow frames keep logo, arrow and date on one line. */
+@media (max-width: 419px) {
+  .app[data-embed='true'] .embed-badge .word {
+    display: none;
+  }
+
+  .app[data-embed='true'] .embed-badge {
+    right: 8px;
+    top: 8px;
+    padding: 4px 7px;
+    gap: 4px;
+    letter-spacing: 0.1em;
+  }
+}
+
+/* The Embed control lengthens the column: open the layer list from the column's foot so it stays on screen. */
+@media (min-width: 821px) {
+  .map-controls .layer-menu {
+    position: static;
+  }
+
+  .map-controls .layer-list {
+    max-height: calc(100vh - var(--header-h) - 80px);
+    overflow-y: auto;
+  }
+}
+
+/* Anchor the controls at the bottom only: the phone rule's top:56px made a transparent strip that ate map clicks. */
+.app[data-embed='true'] .map-controls {
+  top: auto;
+  bottom: calc(12px + var(--sheet-h, 0px));
+}
+
+.app[data-embed='true'] .layer-menu {
+  position: static;
+}
+
+.app[data-embed='true'] .layer-list {
+  max-height: calc(100vh - 24px);
+  overflow-y: auto;
+}
+
+.app[data-embed='true'][data-interactive='false'] .map-controls [aria-label='Zoom in'],
+.app[data-embed='true'][data-interactive='false'] .map-controls [aria-label='Zoom out'],
+.app[data-embed='true'][data-interactive='false'] .map-controls [aria-label='Reset view'] {
+  display: none;
+}
+
+/* The legend scrolls inside short frames instead of losing its heading off the top. */
+.app[data-embed='true'] .legend {
+  max-height: calc(100% - 24px);
+  overflow-y: auto;
+}
+
+/* Copy link fallback when the clipboard is blocked (third-party frames). */
+.share-fallback {
+  flex-basis: 100%;
+  margin-top: 6px;
+  padding: 6px 8px;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+/* ---------- embed snippet dialog ---------- */
+.embed-dialog {
+  width: min(1020px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  padding: 0;
+  background: var(--bg-elev);
+  color: var(--fg);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow);
+}
+
+.embed-dialog::backdrop {
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+}
+
+.embed-dialog-body {
+  display: grid;
+  gap: 14px;
+  padding: 0 16px 16px;
+}
+
+.embed-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  align-items: flex-start;
+}
+
+.embed-options fieldset {
+  display: grid;
+  gap: 3px;
+  margin: 0;
+  padding: 6px 10px 8px;
+  border: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.embed-options legend {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.embed-options .freeze {
+  font-size: 13px;
+  align-self: center;
+}
+
+.embed-options .hint,
+.embed-actions .hint {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.embed-preview {
+  overflow: auto;
+  padding: 8px;
+  background: var(--bg);
+  border: 1px dashed var(--border);
+}
+
+.embed-preview iframe {
+  display: block;
+  border: 0;
+  max-width: none;
+}
+
+.embed-snippet {
+  display: grid;
+  gap: 4px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.embed-snippet textarea {
+  width: 100%;
+  resize: vertical;
+  padding: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.embed-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Short frames: the badge already says REPLAY; the replay key gives way to the map. */
+@media (max-height: 439px) {
+  .app[data-embed='true'] .legend .replay-key {
+    display: none;
+  }
+}
