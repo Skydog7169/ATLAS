@@ -11,6 +11,7 @@ describe('ask atlas', () => {
     expect(ctx).toContain('[bloc:nato]');
     expect(ctx).toContain('[sanctions:IRN]');
     expect(ctx).toContain('[chokepoint:hormuz]');
+    expect(ctx).toMatch(/\[leaders:USA\] United States: President \[head of state and government, constitutional executive\]: \S/);
     expect(ctx.length).toBeGreaterThan(50_000);
     expect(ctx.length).toBeLessThan(400_000);
   });

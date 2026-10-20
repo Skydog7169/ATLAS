@@ -25,6 +25,7 @@
     "data:ucdp": "node scripts/build-ucdp.mjs",
     "data:trade": "node scripts/build-trade.mjs",
     "data:worldbank-history": "node scripts/build-worldbank-history.mjs",
+    "data:leaders": "node scripts/build-leaders.mjs",
     "test:e2e": "playwright test"
   },
   "dependencies": {

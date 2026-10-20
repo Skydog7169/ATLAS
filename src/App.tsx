@@ -9,6 +9,7 @@ import { DISPLACEMENT_BY_ISO, displacementColor, formatPeople } from './lib/disp
 import { sanctionsColor, sanctionsSummary } from './lib/sanctions';
 import { electionColor, electionSummary } from './lib/elections';
 import { nuclearColor, nuclearSummary } from './lib/nuclear';
+import { leaderColor, leaderSummary } from './lib/leaders';
 import { ACLED, acledColor, acledSummary, acledUnrestColor, acledUnrestSummary } from './lib/acled';
 import { UCDP, ucdpColor, ucdpSummary, ucdpYear } from './lib/ucdp';
 import { UNREST, UNREST_BY_ID } from './data/unrest';
@@ -44,6 +45,7 @@ const GlobeMap = lazy(() => import('./components/GlobeMap'));
 const OVERVIEW_STEPS = ['var(--land)', '#123a4a', '#17607a', '#1f8fb3', '#35e0ff'];
 
 const LAYER_OPTIONS: LayerOption[] = [
+  { id: 'leaders', label: 'Years in power', hint: 'How long whoever holds power has held their office' },
   { id: 'displacement', label: 'Displacement', hint: 'People displaced from each country (UNHCR)' },
   { id: 'sanctions', label: 'Sanctions', hint: 'UN, US and EU regimes targeting the country' },
   { id: 'elections', label: 'Elections', hint: 'Months to the next national election' },
@@ -156,6 +158,7 @@ export default function App() {
   const fillFor = useCallback(
     (iso: string | null): CountryFill => {
       if (!iso) return { fill: 'var(--land-dim)' };
+      if (layer === 'leaders') return { fill: leaderColor(iso) };
       if (layer === 'displacement') return { fill: displacementColor(iso) };
       if (layer === 'sanctions') return { fill: sanctionsColor(iso) };
       if (layer === 'elections') return { fill: electionColor(iso) };
@@ -279,7 +282,7 @@ export default function App() {
 
   const onPick = useCallback(
     (hit: SearchHit) => {
-      if (hit.kind === 'country') selectCountry(hit.id);
+      if (hit.kind === 'country' || hit.kind === 'leader') selectCountry(hit.id);
       else if (hit.kind === 'bloc') selectBloc(hit.id);
       else if (hit.kind === 'unrest') selectUnrest(hit.id);
       else selectConflict(hit.id);
@@ -298,6 +301,7 @@ export default function App() {
     if (!hover) return null;
     if (hover.sub) return hover.sub;
     if (!hover.iso) return null;
+    if (layer === 'leaders') return leaderSummary(hover.iso) ?? 'No leader on record';
     if (layer === 'displacement') {
       const row = DISPLACEMENT_BY_ISO.get(hover.iso);
       return row ? `${formatPeople(row.total)} displaced · ${formatPeople(row.refugees)} refugees · ${formatPeople(row.idps)} IDPs` : 'No UNHCR displacement figure';

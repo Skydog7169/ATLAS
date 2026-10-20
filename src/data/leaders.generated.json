@@ -1,0 +1,5734 @@
+{
+ "source": {
+  "name": "Wikipedia: List of current heads of state and government",
+  "url": "https://en.wikipedia.org/wiki/List_of_current_heads_of_state_and_government"
+ },
+ "enrichment": {
+  "name": "Wikidata (position held, member of political party)",
+  "url": "https://www.wikidata.org/"
+ },
+ "fetchedAt": "2026-10-20",
+ "rows": [
+  {
+   "iso": "AFG",
+   "offices": [
+    {
+     "role": "state",
+     "title": "Supreme Leader",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Hibatullah Akhundzada",
+       "wiki": "Hibatullah_Akhundzada",
+       "since": "2021-08-15",
+       "party": "Taliban"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Hasan Akhund",
+       "wiki": "Hasan_Akhund",
+       "since": "2023-07-17",
+       "party": "Taliban"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "AGO",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "João Lourenço",
+       "wiki": "João_Lourenço",
+       "since": "2017-09-26",
+       "party": "People's Movement for the Liberation of Angola"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "ALB",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Bajram Begaj",
+       "wiki": "Bajram_Begaj",
+       "since": "2022-07-24",
+       "party": "Independent"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Edi Rama",
+       "wiki": "Edi_Rama",
+       "since": "2013-09-15",
+       "party": "Socialist Party of Albania"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "AND",
+   "offices": [
+    {
+     "role": "state",
+     "title": "Episcopal Co-prince",
+     "people": [
+      {
+       "name": "Josep-Lluís Serrano Pentinat",
+       "wiki": "Josep-Lluís_Serrano_Pentinat",
+       "since": "2025-01-01"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Xavier Espot Zamora",
+       "wiki": "Xavier_Espot_Zamora",
+       "since": "2019-05-16",
+       "party": "Democrats for Andorra"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Co-prince's Representative",
+     "acting": true,
+     "people": [
+      {
+       "name": "Eduard Ibáñez",
+       "wiki": "Eduard_Ibáñez",
+       "since": "2023-11-27"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "French Co-prince",
+     "people": [
+      {
+       "name": "Emmanuel Macron",
+       "wiki": "Emmanuel_Macron",
+       "since": "2017-05-01",
+       "party": "Renaissance"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Co-prince's Representative",
+     "acting": true,
+     "people": [
+      {
+       "name": "Frédéric Rose"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "ARE",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Mohamed bin Zayed Al Nahyan",
+       "wiki": "Mohamed_bin_Zayed_Al_Nahyan",
+       "since": "2022-05-14"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Mohammed bin Rashid Al Maktoum",
+       "wiki": "Mohammed_bin_Rashid_Al_Maktoum"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "ARG",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Javier Milei",
+       "wiki": "Javier_Milei",
+       "since": "2023-12-10",
+       "party": "Freedom Advances"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "ARM",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Vahagn Khachaturyan",
+       "wiki": "Vahagn_Khachaturyan",
+       "since": "2022-03-13",
+       "party": "nonpartisanism"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Nikol Pashinyan",
+       "wiki": "Nikol_Pashinyan",
+       "since": "2021-06-20",
+       "party": "Civil Contract"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "ATG",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Charles III",
+       "wiki": "Charles_III",
+       "since": "2022-09-08"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Gaston Browne",
+       "wiki": "Gaston_Browne",
+       "since": "2014-06-13",
+       "party": "Antigua and Barbuda Labour Party"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Governor-General",
+     "acting": true,
+     "people": [
+      {
+       "name": "Rodney Williams",
+       "wiki": "Rodney_Williams",
+       "since": "2014-08-14",
+       "party": "Antigua and Barbuda Labour Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "AUS",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Charles III",
+       "wiki": "Charles_III",
+       "since": "2022-09-08"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Anthony Albanese",
+       "wiki": "Anthony_Albanese",
+       "since": "2022-05-23",
+       "party": "Australian Labor Party"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Governor-General",
+     "acting": true,
+     "people": [
+      {
+       "name": "Sam Mostyn",
+       "wiki": "Sam_Mostyn",
+       "since": "2024-07-01"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "AUT",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Alexander Van der Bellen",
+       "wiki": "Alexander_Van_der_Bellen",
+       "since": "2017-01-26",
+       "party": "The Greens – The Green Alternative"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Chancellor",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Christian Stocker",
+       "wiki": "Christian_Stocker",
+       "since": "2025-03-03",
+       "party": "Austrian People's Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "AZE",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Ilham Aliyev",
+       "wiki": "Ilham_Aliyev",
+       "since": "2003-10-31",
+       "party": "New Azerbaijan Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Ali Asadov",
+       "wiki": "Ali_Asadov",
+       "since": "2019-10-08",
+       "party": "New Azerbaijan Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "BDI",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Évariste Ndayishimiye",
+       "wiki": "Évariste_Ndayishimiye",
+       "since": "2020-06-18",
+       "party": "National Council for the Defense of Democracy–Forces for the Defense of Democracy"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Nestor Ntahontuye",
+       "wiki": "Nestor_Ntahontuye",
+       "since": "2025-08-05"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "BEL",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Philippe",
+       "wiki": "Philippe_of_Belgium",
+       "since": "2013-07-21"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Bart De Wever",
+       "wiki": "Bart_De_Wever",
+       "since": "2025-02-03",
+       "party": "New Flemish Alliance"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "BFA",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President of the Patriotic Movement for Safeguard and Restoration",
+     "power": "de-facto",
+     "acting": true,
+     "people": [
+      {
+       "name": "Ibrahim Traoré",
+       "wiki": "Ibrahim_Traoré"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Interim President",
+     "power": "executive",
+     "acting": true,
+     "people": [
+      {
+       "name": "Ibrahim Traoré",
+       "wiki": "Ibrahim_Traoré",
+       "since": "2022-09-30"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Interim Prime Minister",
+     "acting": true,
+     "people": [
+      {
+       "name": "Jean Emmanuel Ouédraogo",
+       "wiki": "Jean_Emmanuel_Ouédraogo",
+       "since": "2024-12-07"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "BGD",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Mirza Fakhrul Islam Alamgir",
+       "wiki": "Mirza_Fakhrul_Islam_Alamgir",
+       "since": "2026-08-21",
+       "party": "Bangladesh Nationalist Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Tarique Rahman",
+       "wiki": "Tarique_Rahman",
+       "since": "2026-02-17",
+       "party": "Bangladesh Nationalist Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "BGR",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Iliana Iotova",
+       "wiki": "Iliana_Iotova",
+       "since": "2026-01-23",
+       "party": "Bulgarian Socialist Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Rumen Radev",
+       "wiki": "Rumen_Radev",
+       "since": "2026-05-08",
+       "party": "Progressive Bulgaria"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "BHR",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Hamad bin Isa Al Khalifa",
+       "wiki": "Hamad_bin_Isa_Al_Khalifa",
+       "since": "1999-03-06"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Salman bin Hamad Al Khalifa",
+       "wiki": "Salman_bin_Hamad_Al_Khalifa",
+       "since": "2020-11-11"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "BHS",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Charles III",
+       "wiki": "Charles_III",
+       "since": "2022-09-08"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Philip Davis",
+       "wiki": "Philip_Davis_(Bahamian_politician)",
+       "since": "2021-09-17",
+       "party": "Progressive Liberal Party"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Governor-General",
+     "acting": true,
+     "people": [
+      {
+       "name": "Cynthia A. Pratt",
+       "wiki": "Cynthia_A._Pratt",
+       "since": "2023-09-01",
+       "party": "Progressive Liberal Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "BIH",
+   "offices": [
+    {
+     "role": "both",
+     "title": "Acting High Representative",
+     "power": "de-facto",
+     "acting": true,
+     "people": [
+      {
+       "name": "Louis Crishock",
+       "wiki": "Louis_Crishock"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Presidency",
+     "power": "executive",
+     "collective": true,
+     "people": [
+      {
+       "name": "Denis Bećirović",
+       "wiki": "Denis_Bećirović",
+       "role": "Bosniak member and Chairman",
+       "since": "2026-03-16",
+       "party": "Social Democratic Party of Bosnia and Herzegovina"
+      },
+      {
+       "name": "Željka Cvijanović",
+       "wiki": "Željka_Cvijanović",
+       "role": "Serb member",
+       "since": "2022-11-16",
+       "party": "Alliance of Independent Social Democrats"
+      },
+      {
+       "name": "Željko Komšić",
+       "wiki": "Željko_Komšić",
+       "role": "Croat member",
+       "since": "2025-07-16",
+       "party": "Social Democratic Party of Bosnia and Herzegovina"
+      },
+      {
+       "name": "Darijana Filipović",
+       "wiki": "Darijana_Filipović",
+       "role": "Croat member–designate",
+       "incoming": true,
+       "party": "Croatian Democratic Union of Bosnia and Herzegovina"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Chairwoman of the Council of Ministers",
+     "people": [
+      {
+       "name": "Borjana Krišto",
+       "wiki": "Borjana_Krišto",
+       "since": "2023-01-25",
+       "party": "Croatian Democratic Union of Bosnia and Herzegovina"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "BLR",
+   "offices": [
+    {
+     "role": "both",
+     "title": "Chairman of the All-Belarusian People's Assembly",
+     "power": "de-facto",
+     "people": [
+      {
+       "name": "Alexander Lukashenko",
+       "wiki": "Alexander_Lukashenko",
+       "party": "Independent"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Alexander Lukashenko",
+       "wiki": "Alexander_Lukashenko",
+       "since": "1994-07-20",
+       "party": "Independent"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Alexander Turchin",
+       "wiki": "Alexander_Turchin",
+       "since": "2025-03-10"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "BLZ",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Charles III",
+       "wiki": "Charles_III",
+       "since": "2022-09-08"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Johnny Briceño",
+       "wiki": "Johnny_Briceño",
+       "since": "2020-11-12",
+       "party": "People's United Party"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Governor-General",
+     "acting": true,
+     "people": [
+      {
+       "name": "Froyla Tzalam",
+       "wiki": "Froyla_Tzalam",
+       "since": "2021-05-27"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "BOL",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Rodrigo Paz",
+       "wiki": "Rodrigo_Paz",
+       "since": "2025-11-08"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "BRA",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Luiz Inácio Lula da Silva",
+       "wiki": "Luiz_Inácio_Lula_da_Silva",
+       "since": "2023-01-01",
+       "party": "Workers' Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "BRB",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Jeffrey Bostic",
+       "wiki": "Jeffrey_Bostic",
+       "since": "2025-11-30",
+       "party": "Barbados Labour Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Mia Mottley",
+       "wiki": "Mia_Mottley",
+       "since": "2018-05-25",
+       "party": "Barbados Labour Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "BRN",
+   "offices": [
+    {
+     "role": "state",
+     "title": "Sultan",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Hassanal Bolkiah",
+       "wiki": "Hassanal_Bolkiah"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Hassanal Bolkiah",
+       "wiki": "Hassanal_Bolkiah",
+       "since": "1984-01-01"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "BTN",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Jigme Khesar Namgyel Wangchuck",
+       "wiki": "Jigme_Khesar_Namgyel_Wangchuck",
+       "since": "2006-12-14"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Tshering Tobgay",
+       "wiki": "Tshering_Tobgay",
+       "since": "2024-01-28",
+       "party": "People's Democratic Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "BWA",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Duma Boko",
+       "wiki": "Duma_Boko",
+       "since": "2024-11-01",
+       "party": "Umbrella for Democratic Change"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "CAF",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Faustin-Archange Touadéra",
+       "wiki": "Faustin-Archange_Touadéra",
+       "since": "2016-03-30",
+       "party": "United Hearts Movement"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Félix Moloua",
+       "wiki": "Félix_Moloua",
+       "since": "2022-02-07"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "CAN",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Charles III",
+       "wiki": "Charles_III",
+       "since": "2022-09-08"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Mark Carney",
+       "wiki": "Mark_Carney",
+       "since": "2025-03-14",
+       "party": "Liberal Party of Canada"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Governor General",
+     "acting": true,
+     "people": [
+      {
+       "name": "Louise Arbour",
+       "wiki": "Louise_Arbour",
+       "since": "2026-06-08"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "CHE",
+   "offices": [
+    {
+     "role": "both",
+     "title": "Federal Council",
+     "power": "executive",
+     "collective": true,
+     "people": [
+      {
+       "name": "Guy Parmelin",
+       "wiki": "Guy_Parmelin",
+       "role": "President",
+       "party": "Swiss People's Party"
+      },
+      {
+       "name": "Ignazio Cassis",
+       "wiki": "Ignazio_Cassis",
+       "role": "Vice President",
+       "party": "FDP.The Liberals"
+      },
+      {
+       "name": "Karin Keller-Sutter",
+       "wiki": "Karin_Keller-Sutter",
+       "party": "FDP.The Liberals"
+      },
+      {
+       "name": "Albert Rösti",
+       "wiki": "Albert_Rösti",
+       "party": "Swiss People's Party"
+      },
+      {
+       "name": "Élisabeth Baume-Schneider",
+       "wiki": "Élisabeth_Baume-Schneider",
+       "party": "Social Democratic Party of Switzerland"
+      },
+      {
+       "name": "Beat Jans",
+       "wiki": "Beat_Jans",
+       "party": "Social Democratic Party of Switzerland"
+      },
+      {
+       "name": "Martin Pfister",
+       "wiki": "Martin_Pfister",
+       "party": "The Centre"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "CHL",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "José Antonio Kast",
+       "wiki": "José_Antonio_Kast",
+       "since": "2026-03-11",
+       "party": "Independent"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "CHN",
+   "offices": [
+    {
+     "role": "both",
+     "title": "General Secretary of the Communist Party",
+     "power": "de-facto",
+     "people": [
+      {
+       "name": "Xi Jinping",
+       "wiki": "Xi_Jinping",
+       "since": "2012-11-15",
+       "party": "Chinese Communist Party"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Xi Jinping",
+       "wiki": "Xi_Jinping",
+       "since": "2013-03-14",
+       "party": "Chinese Communist Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Premier",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Li Qiang",
+       "wiki": "Li_Qiang",
+       "since": "2023-03-11",
+       "party": "Chinese Communist Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "CIV",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Alassane Ouattara",
+       "wiki": "Alassane_Ouattara",
+       "since": "2010-12-04",
+       "party": "Democratic Party of Côte d'Ivoire – African Democratic Rally"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Robert Beugré Mambé",
+       "wiki": "Robert_Beugré_Mambé",
+       "since": "2023-10-16"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "CMR",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Paul Biya",
+       "wiki": "Paul_Biya",
+       "since": "1982-11-06",
+       "party": "Cameroon People's Democratic Movement"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Joseph Ngute",
+       "wiki": "Joseph_Ngute",
+       "since": "2019-01-04",
+       "party": "Cameroon People's Democratic Movement"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "COD",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Félix Tshisekedi",
+       "wiki": "Félix_Tshisekedi",
+       "since": "2019-01-25",
+       "party": "Union for Democracy and Social Progress"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Judith Suminwa",
+       "wiki": "Judith_Suminwa",
+       "since": "2024-06-12",
+       "party": "Union for Democracy and Social Progress"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "COG",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Denis Sassou Nguesso",
+       "wiki": "Denis_Sassou_Nguesso",
+       "since": "1997-10-25",
+       "party": "Congolese Party of Labour"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Anatole Collinet Makosso",
+       "wiki": "Anatole_Collinet_Makosso",
+       "since": "2021-05-12",
+       "party": "Congolese Party of Labour"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "COK",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Charles III",
+       "wiki": "Charles_III",
+       "since": "2022-09-08"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Mark Brown",
+       "wiki": "Mark_Brown_(Cook_Islands_politician)",
+       "since": "2020-10-01",
+       "party": "Cook Islands Party"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "King's Representative",
+     "acting": true,
+     "people": [
+      {
+       "name": "Tom Marsters",
+       "wiki": "Tom_Marsters",
+       "since": "2013-07-27",
+       "party": "Cook Islands Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "COL",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Abelardo de la Espriella",
+       "wiki": "Abelardo_de_la_Espriella",
+       "since": "2026-08-07",
+       "party": "Independent"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "COM",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Azali Assoumani",
+       "wiki": "Azali_Assoumani",
+       "since": "2019-05-26",
+       "party": "Convention for the Renewal of the Comoros"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "CPV",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "José Maria Neves",
+       "wiki": "José_Maria_Neves",
+       "since": "2021-11-09",
+       "party": "African Party for the Independence of Cape Verde"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Francisco Carvalho",
+       "wiki": "Francisco_Carvalho",
+       "since": "2026-06-19",
+       "party": "African Party for the Independence of Cape Verde"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "CRI",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Laura Fernández",
+       "wiki": "Laura_Fernández",
+       "since": "2026-05-08",
+       "party": "Sovereign People's Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "CUB",
+   "offices": [
+    {
+     "role": "both",
+     "title": "First Secretary of the Communist Party",
+     "power": "de-facto",
+     "people": [
+      {
+       "name": "Miguel Díaz-Canel",
+       "wiki": "Miguel_Díaz-Canel",
+       "since": "2021-04-19",
+       "party": "Communist Party of Cuba"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Miguel Díaz-Canel",
+       "wiki": "Miguel_Díaz-Canel",
+       "since": "2018-04-19",
+       "party": "Communist Party of Cuba"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Manuel Marrero Cruz",
+       "wiki": "Manuel_Marrero_Cruz",
+       "since": "2019-12-21",
+       "party": "Communist Party of Cuba"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "CYP",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Nikos Christodoulides",
+       "wiki": "Nikos_Christodoulides",
+       "since": "2023-02-28"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "CZE",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Petr Pavel",
+       "wiki": "Petr_Pavel",
+       "since": "2023-03-09",
+       "party": "Independent"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Andrej Babiš",
+       "wiki": "Andrej_Babiš",
+       "since": "2025-12-09",
+       "party": "ANO 2011"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "DEU",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Frank-Walter Steinmeier",
+       "wiki": "Frank-Walter_Steinmeier",
+       "since": "2017-03-19",
+       "party": "Social Democratic Party of Germany"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Chancellor",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Friedrich Merz",
+       "wiki": "Friedrich_Merz",
+       "since": "2025-05-06",
+       "party": "Christian Democratic Union"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "DJI",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Ismaïl Omar Guelleh",
+       "wiki": "Ismaïl_Omar_Guelleh",
+       "since": "1999-05-08",
+       "party": "People's Rally for Progress"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "DMA",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Sylvanie Burton",
+       "wiki": "Sylvanie_Burton",
+       "since": "2023-10-02",
+       "party": "Dominica Labour Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Roosevelt Skerrit",
+       "wiki": "Roosevelt_Skerrit",
+       "since": "2004-01-08",
+       "party": "Dominica Labour Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "DNK",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Frederik X",
+       "wiki": "Frederik_X",
+       "since": "2024-01-14"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Mette Frederiksen",
+       "wiki": "Mette_Frederiksen",
+       "since": "2019-06-27",
+       "party": "Social Democrats"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "DOM",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Luis Abinader",
+       "wiki": "Luis_Abinader",
+       "since": "2020-08-16",
+       "party": "Modern Revolutionary Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "DZA",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Abdelmadjid Tebboune",
+       "wiki": "Abdelmadjid_Tebboune",
+       "since": "2019-12-19",
+       "party": "National Liberation Front"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Sifi Ghrieb",
+       "wiki": "Sifi_Ghrieb",
+       "since": "2025-08-28"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "ECU",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Daniel Noboa",
+       "wiki": "Daniel_Noboa",
+       "since": "2023-11-23",
+       "party": "National Democratic Action"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "EGY",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Abdel Fattah el-Sisi",
+       "wiki": "Abdel_Fattah_el-Sisi",
+       "since": "2014-06-08",
+       "party": "Independent"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Mostafa Madbouly",
+       "wiki": "Mostafa_Madbouly",
+       "since": "2018-06-14",
+       "party": "Independent"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "ERI",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Isaias Afwerki",
+       "wiki": "Isaias_Afwerki",
+       "since": "1993-01-01",
+       "party": "People's Front for Democracy and Justice"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "ESH",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Brahim Ghali",
+       "wiki": "Brahim_Ghali",
+       "since": "2016-07-12",
+       "party": "Polisario Front"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Bouchraya Hammoudi Bayoun",
+       "wiki": "Bouchraya_Hammoudi_Bayoun",
+       "since": "2020-01-13",
+       "party": "Polisario Front"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "ESP",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Felipe VI",
+       "wiki": "Felipe_VI",
+       "since": "2014-06-19"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Pedro Sánchez",
+       "wiki": "Pedro_Sánchez",
+       "since": "2023-11-17",
+       "party": "Spanish Socialist Workers' Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "EST",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Ülle Madise",
+       "wiki": "Ülle_Madise",
+       "since": "2026-10-12"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Kristen Michal",
+       "wiki": "Kristen_Michal",
+       "since": "2024-07-22",
+       "party": "Estonian Reform Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "ETH",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Taye Atske Selassie",
+       "wiki": "Taye_Atske_Selassie",
+       "since": "2024-10-07"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Abiy Ahmed",
+       "wiki": "Abiy_Ahmed",
+       "since": "2018-04-02",
+       "party": "Prosperity Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "FIN",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Alexander Stubb",
+       "wiki": "Alexander_Stubb",
+       "since": "2024-03-01",
+       "party": "National Coalition Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Petteri Orpo",
+       "wiki": "Petteri_Orpo",
+       "since": "2023-06-20",
+       "party": "National Coalition Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "FJI",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Naiqama Lalabalavu",
+       "wiki": "Naiqama_Lalabalavu",
+       "since": "2024-11-12",
+       "party": "Social Democratic Liberal Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Sitiveni Rabuka",
+       "wiki": "Sitiveni_Rabuka",
+       "since": "2022-12-24",
+       "party": "People's Alliance"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "FRA",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Emmanuel Macron",
+       "wiki": "Emmanuel_Macron",
+       "since": "2017-05-14",
+       "party": "Renaissance"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Sébastien Lecornu",
+       "wiki": "Sébastien_Lecornu",
+       "since": "2025-09-09",
+       "party": "Renaissance"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "FSM",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Wesley Simina",
+       "wiki": "Wesley_Simina",
+       "since": "2023-01-01"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "GAB",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Brice Oligui Nguema",
+       "wiki": "Brice_Oligui_Nguema",
+       "since": "2023-08-30",
+       "party": "Democratic Union of Builders"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "GBR",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Charles III",
+       "wiki": "Charles_III",
+       "since": "2022-09-08"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Andy Burnham",
+       "wiki": "Andy_Burnham",
+       "since": "2026-07-20",
+       "party": "Labour Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "GEO",
+   "offices": [
+    {
+     "role": "both",
+     "title": "Honorary Chairman of Georgian Dream",
+     "power": "de-facto",
+     "people": [
+      {
+       "name": "Bidzina Ivanishvili",
+       "wiki": "Bidzina_Ivanishvili",
+       "party": "Georgian Dream"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Mikheil Kavelashvili",
+       "wiki": "Mikheil_Kavelashvili",
+       "since": "2024-12-29",
+       "party": "People's Power"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Irakli Kobakhidze",
+       "wiki": "Irakli_Kobakhidze",
+       "since": "2024-02-08",
+       "party": "Georgian Dream"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "GHA",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "John Mahama",
+       "wiki": "John_Mahama",
+       "since": "2025-01-07",
+       "party": "National Democratic Congress"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "GIN",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Mamady Doumbouya",
+       "wiki": "Mamady_Doumbouya",
+       "since": "2021-10-01"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Bah Oury",
+       "wiki": "Bah_Oury",
+       "since": "2024-02-27"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "GMB",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Adama Barrow",
+       "wiki": "Adama_Barrow",
+       "since": "2017-01-19",
+       "party": "National People's Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "GNB",
+   "offices": [
+    {
+     "role": "both",
+     "title": "Chief of the High Command",
+     "power": "de-facto",
+     "acting": true,
+     "people": [
+      {
+       "name": "Horta Inta-A Na Man",
+       "wiki": "Horta_Inta-A_Na_Man"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Transitional President",
+     "power": "executive",
+     "acting": true,
+     "people": [
+      {
+       "name": "Horta Inta-A Na Man",
+       "wiki": "Horta_Inta-A_Na_Man"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Ilídio Vieira Té",
+       "wiki": "Ilídio_Vieira_Té"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "GNQ",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Teodoro Obiang Nguema Mbasogo",
+       "wiki": "Teodoro_Obiang_Nguema_Mbasogo",
+       "since": "1979-08-03",
+       "party": "United National Workers' Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Manuel Osa Nsue Nsua",
+       "wiki": "Manuel_Osa_Nsue_Nsua",
+       "since": "2024-08-17"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "GRC",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Konstantinos Tasoulas",
+       "wiki": "Konstantinos_Tasoulas",
+       "since": "2025-03-13",
+       "party": "New Democracy"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Kyriakos Mitsotakis",
+       "wiki": "Kyriakos_Mitsotakis",
+       "since": "2023-06-26",
+       "party": "New Democracy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "GRD",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Charles III",
+       "wiki": "Charles_III",
+       "since": "2022-09-08"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Dickon Mitchell",
+       "wiki": "Dickon_Mitchell",
+       "since": "2022-01-01",
+       "party": "National Democratic Congress"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Governor-General",
+     "acting": true,
+     "people": [
+      {
+       "name": "Cécile La Grenade",
+       "wiki": "Cécile_La_Grenade",
+       "since": "2013-05-07"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "GTM",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Bernardo Arévalo",
+       "wiki": "Bernardo_Arévalo",
+       "since": "2024-01-15",
+       "party": "Semilla Movement"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "GUY",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Irfaan Ali",
+       "wiki": "Irfaan_Ali",
+       "since": "2020-08-02",
+       "party": "People's Progressive Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "HND",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Nasry Asfura",
+       "wiki": "Nasry_Asfura",
+       "since": "2026-01-27",
+       "party": "National Party of Honduras"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "HRV",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Zoran Milanović",
+       "wiki": "Zoran_Milanović",
+       "since": "2020-02-19",
+       "party": "Social Democratic Party of Croatia"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Andrej Plenković",
+       "wiki": "Andrej_Plenković",
+       "since": "2016-10-19",
+       "party": "Croatian Democratic Union"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "HTI",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "vacant": true,
+     "people": []
+    },
+    {
+     "role": "government",
+     "title": "Acting Prime Minister",
+     "power": "de-facto",
+     "acting": true,
+     "people": [
+      {
+       "name": "Alix Didier Fils-Aimé",
+       "wiki": "Alix_Didier_Fils-Aimé",
+       "since": "2024-11-11"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "HUN",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "András Baka",
+       "wiki": "András_Baka",
+       "since": "2026-08-19",
+       "party": "Hungarian Democratic Forum"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Péter Magyar",
+       "wiki": "Péter_Magyar",
+       "since": "2026-05-09",
+       "party": "Respect and Freedom Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "IDN",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Prabowo Subianto",
+       "wiki": "Prabowo_Subianto",
+       "since": "2024-10-20",
+       "party": "Great Indonesia Movement Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "IND",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Droupadi Murmu",
+       "wiki": "Droupadi_Murmu",
+       "since": "2022-07-25",
+       "party": "Bharatiya Janata Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Narendra Modi",
+       "wiki": "Narendra_Modi",
+       "since": "2014-05-26",
+       "party": "Bharatiya Janata Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "IRL",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Catherine Connolly",
+       "wiki": "Catherine_Connolly",
+       "since": "2025-11-11",
+       "party": "Independent"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Taoiseach",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Micheál Martin",
+       "wiki": "Micheál_Martin",
+       "since": "2025-01-23",
+       "party": "Fianna Fáil"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "IRN",
+   "offices": [
+    {
+     "role": "both",
+     "title": "Supreme Leader",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Mojtaba Khamenei",
+       "wiki": "Mojtaba_Khamenei",
+       "since": "2026-03-08",
+       "party": "Independent"
+      }
+     ]
+    },
+    {
+     "role": "both",
+     "title": "President",
+     "people": [
+      {
+       "name": "Masoud Pezeshkian",
+       "wiki": "Masoud_Pezeshkian",
+       "since": "2024-07-28",
+       "party": "Independent"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "IRQ",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Nizar Amidi",
+       "wiki": "Nizar_Amidi",
+       "since": "2026-04-12",
+       "party": "Patriotic Union of Kurdistan"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Ali al-Zaidi",
+       "wiki": "Ali_al-Zaidi",
+       "since": "2026-04-27",
+       "party": "Independent"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "ISL",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Halla Tómasdóttir",
+       "wiki": "Halla_Tómasdóttir",
+       "since": "2024-08-01",
+       "party": "Independent"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Kristrún Frostadóttir",
+       "wiki": "Kristrún_Frostadóttir",
+       "since": "2024-12-21",
+       "party": "Social Democratic Alliance"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "ISR",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Isaac Herzog",
+       "wiki": "Isaac_Herzog",
+       "since": "2021-06-02",
+       "party": "Israeli Labor Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Benjamin Netanyahu",
+       "wiki": "Benjamin_Netanyahu",
+       "since": "2022-12-29",
+       "party": "Likud"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "ITA",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Sergio Mattarella",
+       "wiki": "Sergio_Mattarella",
+       "since": "2015-02-03",
+       "party": "Independent"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Giorgia Meloni",
+       "wiki": "Giorgia_Meloni",
+       "since": "2022-10-22",
+       "party": "Brothers of Italy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "JAM",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Charles III",
+       "wiki": "Charles_III",
+       "since": "2022-09-08"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Andrew Holness",
+       "wiki": "Andrew_Holness",
+       "since": "2016-03-03",
+       "party": "Jamaica Labour Party"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Governor-General",
+     "acting": true,
+     "people": [
+      {
+       "name": "Patrick Allen",
+       "wiki": "Patrick_Allen_(governor-general)",
+       "since": "2009-02-26"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "JOR",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Abdullah II",
+       "wiki": "Abdullah_II",
+       "since": "1999-02-07"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Jafar Hassan",
+       "wiki": "Jafar_Hassan",
+       "since": "2024-09-18"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "JPN",
+   "offices": [
+    {
+     "role": "state",
+     "title": "Emperor",
+     "people": [
+      {
+       "name": "Naruhito",
+       "wiki": "Naruhito",
+       "since": "2019-05-01"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Sanae Takaichi",
+       "wiki": "Sanae_Takaichi",
+       "since": "2025-10-21",
+       "party": "Liberal Democratic Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "KAZ",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Kassym-Jomart Tokayev",
+       "wiki": "Kassym-Jomart_Tokayev",
+       "since": "2019-03-20",
+       "party": "Amanat"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Oljas Bektenov",
+       "wiki": "Oljas_Bektenov",
+       "since": "2024-02-06",
+       "party": "Amanat"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "KEN",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "William Ruto",
+       "wiki": "William_Ruto",
+       "since": "2022-09-13",
+       "party": "United Democratic Alliance"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "KGZ",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Sadyr Japarov",
+       "wiki": "Sadyr_Japarov",
+       "since": "2021-01-28",
+       "party": "Mekenchil"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "KHM",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President of the People's Party",
+     "power": "de-facto",
+     "people": [
+      {
+       "name": "Hun Sen",
+       "wiki": "Hun_Sen",
+       "party": "Cambodian People's Party"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Norodom Sihamoni",
+       "wiki": "Norodom_Sihamoni",
+       "since": "2004-10-14"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Hun Manet",
+       "wiki": "Hun_Manet",
+       "since": "2023-08-22",
+       "party": "Cambodian People's Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "KIR",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Taneti Maamau",
+       "wiki": "Taneti_Maamau",
+       "since": "2016-03-11",
+       "party": "Tobwaan Kiribati Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "KNA",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Charles III",
+       "wiki": "Charles_III",
+       "since": "2022-09-08"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Terrance Drew",
+       "wiki": "Terrance_Drew",
+       "since": "2022-01-01",
+       "party": "Saint Kitts and Nevis Labour Party"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Governor-General",
+     "acting": true,
+     "people": [
+      {
+       "name": "Marcella Liburd",
+       "wiki": "Marcella_Liburd",
+       "since": "2023-02-01",
+       "party": "Saint Kitts and Nevis Labour Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "KOR",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Lee Jae Myung",
+       "wiki": "Lee_Jae_Myung",
+       "since": "2025-06-04",
+       "party": "Democratic Party of Korea"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "KWT",
+   "offices": [
+    {
+     "role": "state",
+     "title": "Emir",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Mishal Al-Ahmad Al-Jaber Al-Sabah",
+       "wiki": "Mishal_Al-Ahmad_Al-Jaber_Al-Sabah",
+       "since": "2023-12-16"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Ahmad Al-Abdullah Al-Sabah",
+       "wiki": "Ahmad_Al-Abdullah_Al-Sabah"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "LAO",
+   "offices": [
+    {
+     "role": "both",
+     "title": "General Secretary of the People's Revolutionary Party",
+     "power": "de-facto",
+     "people": [
+      {
+       "name": "Thongloun Sisoulith",
+       "wiki": "Thongloun_Sisoulith",
+       "since": "2021-01-15",
+       "party": "Lao People's Revolutionary Party"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Thongloun Sisoulith",
+       "wiki": "Thongloun_Sisoulith",
+       "since": "2021-03-22",
+       "party": "Lao People's Revolutionary Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Saleumxay Kommasith",
+       "wiki": "Saleumxay_Kommasith",
+       "since": "2022-06-20"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "LBN",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Joseph Aoun",
+       "wiki": "Joseph_Aoun",
+       "since": "2025-01-09"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Nawaf Salam",
+       "wiki": "Nawaf_Salam",
+       "since": "2025-02-08"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "LBR",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Joseph Boakai",
+       "wiki": "Joseph_Boakai",
+       "since": "2024-01-22",
+       "party": "Unity Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "LBY",
+   "offices": [
+    {
+     "role": "state",
+     "title": "Chairman of the Presidential Council",
+     "people": [
+      {
+       "name": "Mohamed al-Menfi",
+       "wiki": "Mohamed_al-Menfi",
+       "since": "2021-03-15",
+       "party": "Independent"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Abdul Hamid Dbeibeh",
+       "wiki": "Abdul_Hamid_Dbeibeh",
+       "since": "2021-02-05",
+       "party": "Independent"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "LCA",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Charles III",
+       "wiki": "Charles_III",
+       "since": "2022-09-08"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Philip J. Pierre",
+       "wiki": "Philip_J._Pierre",
+       "since": "2021-07-28",
+       "party": "Saint Lucia Labour Party"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Acting Governor-General",
+     "acting": true,
+     "people": [
+      {
+       "name": "Felix Finisterre",
+       "wiki": "Felix_Finisterre",
+       "party": "Saint Lucia Labour Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "LIE",
+   "offices": [
+    {
+     "role": "state",
+     "title": "Prince Regnant",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Hans-Adam II",
+       "wiki": "Hans-Adam_II"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Brigitte Haas",
+       "wiki": "Brigitte_Haas",
+       "since": "2025-04-10",
+       "party": "Fatherland Union"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Regent",
+     "power": "de-facto",
+     "acting": true,
+     "people": [
+      {
+       "name": "Alois",
+       "wiki": "Alois,_Hereditary_Prince_of_Liechtenstein",
+       "since": "2004-08-15"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "LKA",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Anura Kumara Dissanayake",
+       "wiki": "Anura_Kumara_Dissanayake",
+       "since": "2024-09-23",
+       "party": "National People's Power"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "LSO",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Letsie III",
+       "wiki": "Letsie_III",
+       "since": "1996-02-07"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Sam Matekane",
+       "wiki": "Sam_Matekane",
+       "since": "2022-10-28",
+       "party": "Revolution for Prosperity"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "LTU",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Gitanas Nausėda",
+       "wiki": "Gitanas_Nausėda",
+       "since": "2019-07-12",
+       "party": "Independent"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Mindaugas Sinkevičius",
+       "wiki": "Mindaugas_Sinkevičius",
+       "since": "2026-07-07",
+       "party": "Social Democratic Party of Lithuania"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "LUX",
+   "offices": [
+    {
+     "role": "state",
+     "title": "Grand Duke",
+     "people": [
+      {
+       "name": "Guillaume V",
+       "wiki": "Guillaume_V_of_Luxembourg",
+       "since": "2025-10-03"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Luc Frieden",
+       "wiki": "Luc_Frieden",
+       "since": "2023-11-17",
+       "party": "Christian Social People's Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "LVA",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Edgars Rinkēvičs",
+       "wiki": "Edgars_Rinkēvičs",
+       "since": "2023-07-08"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Andris Kulbergs",
+       "wiki": "Andris_Kulbergs",
+       "since": "2026-05-28",
+       "party": "Independent"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "MAR",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Mohammed VI",
+       "wiki": "Mohammed_VI_of_Morocco",
+       "since": "1999-07-23"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Fatima Ezzahra El Mansouri",
+       "wiki": "Fatima_Ezzahra_El_Mansouri",
+       "since": "2026-09-29",
+       "party": "Authenticity and Modernity Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "MCO",
+   "offices": [
+    {
+     "role": "state",
+     "title": "Sovereign Prince",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Albert II",
+       "wiki": "Albert_II_of_Monaco",
+       "since": "2005-04-06"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Minister of State",
+     "people": [
+      {
+       "name": "Christophe Mirmand",
+       "wiki": "Christophe_Mirmand",
+       "since": "2025-07-21"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "MDA",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "de-facto",
+     "people": [
+      {
+       "name": "Maia Sandu",
+       "wiki": "Maia_Sandu",
+       "since": "2020-12-24",
+       "party": "Liberal Democratic Party of Moldova"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Vasile Tofan",
+       "wiki": "Vasile_Tofan",
+       "since": "2026-07-22"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "MDG",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President of the Council of the Presidency for the Re-Foundation of the Republic",
+     "power": "de-facto",
+     "acting": true,
+     "people": [
+      {
+       "name": "Michael Randrianirina",
+       "wiki": "Michael_Randrianirina"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Michael Randrianirina",
+       "wiki": "Michael_Randrianirina",
+       "since": "2025-10-14"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Mamitiana Rajaonarison",
+       "wiki": "Mamitiana_Rajaonarison",
+       "since": "2026-03-15"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "MDV",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Mohamed Muizzu",
+       "wiki": "Mohamed_Muizzu",
+       "since": "2023-11-17",
+       "party": "People's National Congress"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "MEX",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Claudia Sheinbaum",
+       "wiki": "Claudia_Sheinbaum",
+       "since": "2024-10-01",
+       "party": "Morena"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "MHL",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Hilda Heine",
+       "wiki": "Hilda_Heine",
+       "since": "2024-01-04",
+       "party": "Independent"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "MKD",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Gordana Siljanovska-Davkova",
+       "wiki": "Gordana_Siljanovska-Davkova",
+       "since": "2024-05-12",
+       "party": "Internal Macedonian Revolutionary Organization – Democratic Party for Macedonian National Unity"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Hristijan Mickoski",
+       "wiki": "Hristijan_Mickoski",
+       "since": "2024-06-23",
+       "party": "Internal Macedonian Revolutionary Organization – Democratic Party for Macedonian National Unity"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "MLI",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Assimi Goïta",
+       "wiki": "Assimi_Goïta"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "MLT",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Myriam Spiteri Debono",
+       "wiki": "Myriam_Spiteri_Debono",
+       "since": "2024-04-04",
+       "party": "Labour Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Robert Abela",
+       "wiki": "Robert_Abela",
+       "since": "2020-01-13",
+       "party": "Labour Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "MMR",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Min Aung Hlaing",
+       "wiki": "Min_Aung_Hlaing",
+       "since": "2024-07-22",
+       "party": "Union Solidarity and Development Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "MNE",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Jakov Milatović",
+       "wiki": "Jakov_Milatović",
+       "since": "2023-05-20"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Milojko Spajić",
+       "wiki": "Milojko_Spajić",
+       "since": "2023-10-31",
+       "party": "Europe Now"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "MNG",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "de-facto",
+     "people": [
+      {
+       "name": "Ukhnaagiin Khürelsükh",
+       "wiki": "Ukhnaagiin_Khürelsükh",
+       "since": "2021-07-10",
+       "party": "Mongolian People's Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Nyam-Osoryn Uchral",
+       "wiki": "Nyam-Osoryn_Uchral",
+       "since": "2026-03-30"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "MOZ",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Daniel Chapo",
+       "wiki": "Daniel_Chapo",
+       "since": "2025-01-15",
+       "party": "FRELIMO"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "MRT",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Mohamed Ould Ghazouani",
+       "wiki": "Mohamed_Ould_Ghazouani",
+       "since": "2019-08-01",
+       "party": "Union for the Republic"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Mokhtar Ould Djay",
+       "wiki": "Mokhtar_Ould_Djay",
+       "since": "2024-08-02",
+       "party": "Equity Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "MUS",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Dharam Gokhool",
+       "wiki": "Dharam_Gokhool",
+       "since": "2024-12-07",
+       "party": "Labour Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Navin Ramgoolam",
+       "wiki": "Navin_Ramgoolam",
+       "party": "Labour Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "MWI",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Peter Mutharika",
+       "wiki": "Peter_Mutharika",
+       "since": "2025-10-04",
+       "party": "Democratic Progressive Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "MYS",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Ibrahim Iskandar",
+       "wiki": "Ibrahim_Iskandar"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Anwar Ibrahim",
+       "wiki": "Anwar_Ibrahim",
+       "since": "2022-11-24",
+       "party": "People's Justice Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "NAM",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Netumbo Nandi-Ndaitwah",
+       "wiki": "Netumbo_Nandi-Ndaitwah",
+       "since": "2025-03-21",
+       "party": "SWAPO Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "NER",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President of the National Council for the Safeguard of the Homeland",
+     "power": "de-facto",
+     "acting": true,
+     "people": [
+      {
+       "name": "Abdourahamane Tiani",
+       "wiki": "Abdourahamane_Tiani"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Transitional President",
+     "power": "executive",
+     "acting": true,
+     "people": [
+      {
+       "name": "Abdourahamane Tiani",
+       "wiki": "Abdourahamane_Tiani",
+       "since": "2023-07-28"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Ali Lamine Zeine",
+       "wiki": "Ali_Lamine_Zeine",
+       "since": "2023-08-08",
+       "party": "National Movement for the Development of Society"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "NGA",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Bola Tinubu",
+       "wiki": "Bola_Tinubu",
+       "since": "2023-05-29",
+       "party": "All Progressives Congress"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "NIC",
+   "offices": [
+    {
+     "role": "both",
+     "title": "Co-Presidents",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Daniel Ortega",
+       "wiki": "Daniel_Ortega",
+       "since": "2025-02-18",
+       "party": "Sandinista National Liberation Front"
+      },
+      {
+       "name": "Rosario Murillo",
+       "wiki": "Rosario_Murillo",
+       "since": "2025-02-18",
+       "party": "Sandinista National Liberation Front"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "NIU",
+   "offices": [
+    {
+     "role": "state",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Dalton Tagelagi",
+       "wiki": "Dalton_Tagelagi",
+       "since": "2020-06-11",
+       "party": "Independent"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "NLD",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Willem-Alexander",
+       "wiki": "Willem-Alexander"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Rob Jetten",
+       "wiki": "Rob_Jetten",
+       "since": "2026-02-23",
+       "party": "Democrats 66"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "NOR",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Haakon VIII",
+       "wiki": "Haakon_VIII",
+       "since": "2026-08-28"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Jonas Gahr Støre",
+       "wiki": "Jonas_Gahr_Støre",
+       "since": "2021-10-14",
+       "party": "Norwegian Labour Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "NPL",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Ram Chandra Paudel",
+       "wiki": "Ram_Chandra_Paudel",
+       "since": "2023-03-13",
+       "party": "Nepali Congress"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Balen Shah",
+       "wiki": "Balen_Shah",
+       "since": "2026-03-27",
+       "party": "Rastriya Swatantra Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "NRU",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "David Adeang",
+       "wiki": "David_Adeang",
+       "since": "2023-10-30",
+       "party": "Nauru First"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "NZL",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Charles III",
+       "wiki": "Charles_III",
+       "since": "2022-09-08"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Christopher Luxon",
+       "wiki": "Christopher_Luxon",
+       "since": "2023-11-27",
+       "party": "New Zealand National Party"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Governor-General",
+     "acting": true,
+     "people": [
+      {
+       "name": "Cindy Kiro",
+       "wiki": "Cindy_Kiro",
+       "since": "2021-10-21"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "OMN",
+   "offices": [
+    {
+     "role": "state",
+     "title": "Sultan",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Haitham bin Tariq",
+       "wiki": "Haitham_bin_Tariq",
+       "since": "2020-01-11"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Haitham bin Tariq",
+       "wiki": "Haitham_bin_Tariq",
+       "since": "2020-01-11"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "PAK",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Asif Ali Zardari",
+       "wiki": "Asif_Ali_Zardari",
+       "since": "2024-03-10",
+       "party": "Pakistan Peoples Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Shehbaz Sharif",
+       "wiki": "Shehbaz_Sharif",
+       "since": "2024-03-03",
+       "party": "Pakistan Muslim League (N)"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "PAN",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "José Raúl Mulino",
+       "wiki": "José_Raúl_Mulino",
+       "since": "2024-07-01",
+       "party": "Realizing Goals"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "PER",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Keiko Fujimori",
+       "wiki": "Keiko_Fujimori",
+       "since": "2026-07-28",
+       "party": "People's Force"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "PHL",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Bongbong Marcos",
+       "wiki": "Bongbong_Marcos",
+       "since": "2022-06-30",
+       "party": "Partido Federal ng Pilipinas"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "PLW",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Surangel Whipps Jr.",
+       "wiki": "Surangel_Whipps_Jr.",
+       "since": "2021-01-21",
+       "party": "Independent"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "PNG",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Charles III",
+       "wiki": "Charles_III",
+       "since": "2022-09-08"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "James Marape",
+       "wiki": "James_Marape",
+       "since": "2019-05-30",
+       "party": "Pangu Party"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Governor-General",
+     "acting": true,
+     "people": [
+      {
+       "name": "Bob Dadae",
+       "wiki": "Bob_Dadae",
+       "since": "2017-02-28",
+       "party": "People's National Congress Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "POL",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Karol Nawrocki",
+       "wiki": "Karol_Nawrocki",
+       "since": "2025-08-06",
+       "party": "Independent"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Donald Tusk",
+       "wiki": "Donald_Tusk",
+       "since": "2023-12-13",
+       "party": "Civic Coalition"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "PRK",
+   "offices": [
+    {
+     "role": "both",
+     "title": "General Secretary of the Workers' Party",
+     "power": "de-facto",
+     "people": [
+      {
+       "name": "Kim Jong Un",
+       "wiki": "Kim_Jong_Un",
+       "since": "2012-04-11",
+       "party": "Workers’ Party of Korea"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "President of the State Affairs Commission",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Kim Jong Un",
+       "wiki": "Kim_Jong_Un",
+       "since": "2012-04-13",
+       "party": "Workers’ Party of Korea"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Premier",
+     "people": [
+      {
+       "name": "Pak Thae-song",
+       "wiki": "Pak_Thae-song",
+       "since": "2024-12-01",
+       "party": "Workers’ Party of Korea"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "PRT",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "António José Seguro",
+       "wiki": "António_José_Seguro",
+       "since": "2026-03-09",
+       "party": "Socialist Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Luís Montenegro",
+       "wiki": "Luís_Montenegro",
+       "since": "2024-04-02",
+       "party": "Social Democratic Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "PRY",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Santiago Peña",
+       "wiki": "Santiago_Peña",
+       "since": "2023-08-15",
+       "party": "Colorado Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "PSE",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Mahmoud Abbas",
+       "wiki": "Mahmoud_Abbas",
+       "since": "2008-10-14",
+       "party": "Fatah"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Mohammad Mustafa",
+       "wiki": "Mohammad_Mustafa_(politician)",
+       "since": "2024-03-28",
+       "party": "Independent"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "QAT",
+   "offices": [
+    {
+     "role": "state",
+     "title": "Emir",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Tamim bin Hamad Al Thani",
+       "wiki": "Tamim_bin_Hamad_Al_Thani",
+       "since": "2013-06-25"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Mohammed bin Abdulrahman bin Jassim Al Thani",
+       "wiki": "Mohammed_bin_Abdulrahman_bin_Jassim_Al_Thani",
+       "since": "2023-01-01",
+       "party": "Independent"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "ROU",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Nicușor Dan",
+       "wiki": "Nicușor_Dan",
+       "since": "2025-05-26",
+       "party": "Independent"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Caretaker Prime Minister",
+     "power": "executive",
+     "acting": true,
+     "people": [
+      {
+       "name": "Ilie Bolojan",
+       "wiki": "Ilie_Bolojan",
+       "since": "2025-06-23",
+       "party": "National Liberal Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "RUS",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Vladimir Putin",
+       "wiki": "Vladimir_Putin",
+       "since": "2012-05-07"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Mikhail Mishustin",
+       "wiki": "Mikhail_Mishustin",
+       "since": "2020-01-16"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "RWA",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Paul Kagame",
+       "wiki": "Paul_Kagame",
+       "since": "2000-03-24",
+       "party": "Rwandan Patriotic Front"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Justin Nsengiyumva",
+       "wiki": "Justin_Nsengiyumva",
+       "since": "2025-07-25"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "SAU",
+   "offices": [
+    {
+     "role": "both",
+     "title": "Crown Prince",
+     "power": "de-facto",
+     "people": [
+      {
+       "name": "Mohammed bin Salman",
+       "wiki": "Mohammed_bin_Salman",
+       "since": "2017-06-21"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "King",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Salman",
+       "wiki": "Salman_of_Saudi_Arabia",
+       "since": "2015-01-23"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Mohammed bin Salman",
+       "wiki": "Mohammed_bin_Salman",
+       "since": "2022-09-27"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "SDN",
+   "offices": [
+    {
+     "role": "state",
+     "title": "Transitional Sovereignty Council",
+     "power": "executive",
+     "acting": true,
+     "collective": true,
+     "people": [
+      {
+       "name": "Malik Agar",
+       "wiki": "Malik_Agar",
+       "role": "Vice President",
+       "party": "Sudan People's Liberation Movement-North"
+      },
+      {
+       "name": "Shams al-Din Kabbashi",
+       "wiki": "Shams_al-Din_Kabbashi"
+      },
+      {
+       "name": "Yasser al-Atta",
+       "wiki": "Yasser_al-Atta"
+      },
+      {
+       "name": "Ibrahim Jaber",
+       "wiki": "Ibrahim_Jaber"
+      },
+      {
+       "name": "Salma Abdul Jabbar al-Mubarak"
+      },
+      {
+       "name": "Salah al-Din Adam Tur"
+      },
+      {
+       "name": "Abdullah Yahya Ahmed Hussein"
+      },
+      {
+       "name": "Nawara Abu Muhammad Muhammad Taher"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Kamil Idris",
+       "wiki": "Kamil_Idris"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "President",
+     "power": "de-facto",
+     "acting": true,
+     "people": [
+      {
+       "name": "Abdel Fattah al-Burhan",
+       "wiki": "Abdel_Fattah_al-Burhan"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "SEN",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Bassirou Diomaye Faye",
+       "wiki": "Bassirou_Diomaye_Faye",
+       "since": "2024-04-02",
+       "party": "African Patriots of Senegal for Work, Ethics and Fraternity"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Ahmadou Al Aminou Lo",
+       "wiki": "Ahmadou_Al_Aminou_Lo",
+       "since": "2026-05-25"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "SGP",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Tharman Shanmugaratnam",
+       "wiki": "Tharman_Shanmugaratnam",
+       "since": "2023-09-14",
+       "party": "People's Action Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Lawrence Wong",
+       "wiki": "Lawrence_Wong",
+       "since": "2024-05-15",
+       "party": "People's Action Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "SLB",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Charles III",
+       "wiki": "Charles_III",
+       "since": "2022-09-08"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Matthew Wale",
+       "wiki": "Matthew_Wale",
+       "since": "2026-05-15",
+       "party": "Democratic Party"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Governor-General",
+     "acting": true,
+     "people": [
+      {
+       "name": "David Tiva Kapu",
+       "wiki": "David_Tiva_Kapu",
+       "since": "2024-07-07"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "SLE",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Julius Maada Bio",
+       "wiki": "Julius_Maada_Bio",
+       "since": "2018-04-04",
+       "party": "Sierra Leone People's Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "SLV",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Nayib Bukele",
+       "wiki": "Nayib_Bukele",
+       "since": "2019-06-01",
+       "party": "Nuevas Ideas"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "SMR",
+   "offices": [
+    {
+     "role": "state",
+     "title": "Captains Regent",
+     "people": [
+      {
+       "name": "Gerardo Giovagnoli",
+       "wiki": "Gerardo_Giovagnoli"
+      },
+      {
+       "name": "William Casali",
+       "wiki": "William_Casali",
+       "since": "2026-10-01"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Congress of State",
+     "power": "executive",
+     "collective": true,
+     "people": [
+      {
+       "name": "Andrea Belluzzi",
+       "wiki": "Andrea_Belluzzi",
+       "role": "Secretary of State for Internal Affairs, Civil Service, Institutional Affairs, Relations with the Castle Councils and Regulatory Simplification",
+       "party": "Party of Socialists and Democrats"
+      },
+      {
+       "name": "Marco Gatti",
+       "role": "Secretary of State for Finance and Budget"
+      },
+      {
+       "name": "Rossano Fabbri",
+       "role": "Secretary of State for Industry, Crafts, Commerce, Technological Research, Telecommunications and Sport"
+      },
+      {
+       "name": "Matteo Ciacci",
+       "wiki": "Matteo_Ciacci",
+       "role": "Secretary of State for Territory, Environment, Agriculture, Civil Protection and Relations with the A.A.S.L.P.",
+       "party": "Civic 10"
+      },
+      {
+       "name": "Federico Pedini Amati",
+       "wiki": "Federico_Pedini_Amati",
+       "role": "Secretary of State for Tourism, Postal Affairs, Cooperation, Expò and Information",
+       "party": "Party of Socialists and Democrats"
+      },
+      {
+       "name": "Massimo Andrea Ugolini",
+       "wiki": "Massimo_Andrea_Ugolini",
+       "role": "Secretary of State for Health, Social Security, Social Affairs and Equal Opportunities",
+       "party": "Sammarinese Christian Democratic Party"
+      },
+      {
+       "name": "Teodoro Lonfernini",
+       "wiki": "Teodoro_Lonfernini",
+       "role": "Secretary of State for Education, Culture, University, Scientific Research and Youth Policies",
+       "party": "Sammarinese Christian Democratic Party"
+      },
+      {
+       "name": "Alessandro Bevitori",
+       "role": "Secretary of State for Labour, Economic Planning, Relations with the A.A.S.S., Ecological Transition and Technological Innovation"
+      },
+      {
+       "name": "Stefano Canti",
+       "role": "Secretary of State for Justice, Welfare and Family"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Secretary for Foreign and Political Affairs",
+     "power": "de-facto",
+     "acting": true,
+     "people": [
+      {
+       "name": "Luca Beccari",
+       "wiki": "Luca_Beccari",
+       "since": "2020-01-07",
+       "party": "Sammarinese Christian Democratic Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "SOM",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "de-facto",
+     "people": [
+      {
+       "name": "Hassan Sheikh Mohamud",
+       "wiki": "Hassan_Sheikh_Mohamud",
+       "party": "Union for Peace and Development Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Hamza Abdi Barre",
+       "wiki": "Hamza_Abdi_Barre",
+       "since": "2022-06-26",
+       "party": "Union for Peace and Development Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "SRB",
+   "offices": [
+    {
+     "role": "both",
+     "title": "Former President of Serbia - Aleksandar Vučić",
+     "power": "de-facto",
+     "collective": true,
+     "people": []
+    },
+    {
+     "role": "state",
+     "title": "Acting President",
+     "acting": true,
+     "people": [
+      {
+       "name": "Ana Brnabić",
+       "wiki": "Ana_Brnabić",
+       "since": "2024-03-20",
+       "party": "Serbian Progressive Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Đuro Macut",
+       "wiki": "Đuro_Macut",
+       "since": "2025-04-16",
+       "party": "Independent"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "SSD",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Salva Kiir",
+       "wiki": "Salva_Kiir",
+       "since": "2011-07-09",
+       "party": "Sudan People's Liberation Movement"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "STP",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Carlos Vila Nova",
+       "wiki": "Carlos_Vila_Nova",
+       "since": "2021-10-02",
+       "party": "Independent Democratic Action"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Américo Ramos",
+       "wiki": "Américo_Ramos",
+       "since": "2025-01-12"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "SUR",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Jennifer Geerlings-Simons",
+       "wiki": "Jennifer_Geerlings-Simons",
+       "since": "2025-07-06",
+       "party": "National Democratic Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "SVK",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Peter Pellegrini",
+       "wiki": "Peter_Pellegrini",
+       "since": "2024-06-15",
+       "party": "Voice – Social Democracy"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Robert Fico",
+       "wiki": "Robert_Fico",
+       "since": "2023-10-25",
+       "party": "Direction – Social Democracy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "SVN",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Nataša Pirc Musar",
+       "wiki": "Nataša_Pirc_Musar",
+       "since": "2022-12-22",
+       "party": "Independent"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Janez Janša",
+       "wiki": "Janez_Janša",
+       "since": "2026-05-22",
+       "party": "Slovenian Democratic Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "SWE",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Carl XVI Gustaf",
+       "wiki": "Carl_XVI_Gustaf",
+       "since": "1973-09-15"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Caretaker Prime Minister",
+     "power": "executive",
+     "acting": true,
+     "people": [
+      {
+       "name": "Ulf Kristersson",
+       "wiki": "Ulf_Kristersson",
+       "since": "2022-10-18",
+       "party": "Moderate Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "SWZ",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Mswati III",
+       "wiki": "Mswati_III",
+       "since": "1986-04-25"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Russell Dlamini",
+       "wiki": "Russell_Dlamini",
+       "since": "2023-11-04"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Queen Mother",
+     "people": [
+      {
+       "name": "Ntfombi",
+       "wiki": "Ntfombi"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "SYC",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Patrick Herminie",
+       "wiki": "Patrick_Herminie",
+       "since": "2025-10-26",
+       "party": "United Seychelles Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "SYR",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Ahmed al-Sharaa",
+       "wiki": "Ahmed_al-Sharaa",
+       "since": "2025-01-29"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "TCD",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Mahamat Déby",
+       "wiki": "Mahamat_Déby",
+       "since": "2021-04-20",
+       "party": "Independent"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Allamaye Halina",
+       "wiki": "Allamaye_Halina"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "TGO",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Jean-Lucien Savi de Tové",
+       "wiki": "Jean-Lucien_Savi_de_Tové",
+       "since": "2025-05-03",
+       "party": "Patriotic Pan-African Convergence"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Faure Gnassingbé",
+       "wiki": "Faure_Gnassingbé",
+       "since": "2025-05-03",
+       "party": "Rally of the Togolese People"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "THA",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Vajiralongkorn",
+       "wiki": "Vajiralongkorn",
+       "since": "2016-10-13"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Anutin Charnvirakul",
+       "wiki": "Anutin_Charnvirakul",
+       "since": "2025-09-07",
+       "party": "Bhumjaithai Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "TJK",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Emomali Rahmon",
+       "wiki": "Emomali_Rahmon",
+       "since": "1994-11-19",
+       "party": "People's Democratic Party of Tajikistan"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Qohir Rasulzoda",
+       "wiki": "Qohir_Rasulzoda",
+       "since": "2013-11-23",
+       "party": "People's Democratic Party of Tajikistan"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "TKM",
+   "offices": [
+    {
+     "role": "both",
+     "title": "Chairman of the People's Council",
+     "power": "de-facto",
+     "people": [
+      {
+       "name": "Gurbanguly Berdimuhamedow",
+       "wiki": "Gurbanguly_Berdimuhamedow",
+       "party": "Independent"
+      }
+     ]
+    },
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Serdar Berdimuhamedow",
+       "wiki": "Serdar_Berdimuhamedow",
+       "since": "2022-03-19",
+       "party": "Democratic Party of Turkmenistan"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "TLS",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "José Ramos-Horta",
+       "wiki": "José_Ramos-Horta",
+       "since": "2022-05-20",
+       "party": "Revolutionary Front for an Independent East Timor"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Xanana Gusmão",
+       "wiki": "Xanana_Gusmão",
+       "since": "2023-07-01",
+       "party": "Revolutionary Front for an Independent East Timor"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "TON",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "power": "de-facto",
+     "people": [
+      {
+       "name": "Tupou VI",
+       "wiki": "Tupou_VI"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Fatafehi Fakafānua",
+       "wiki": "Fatafehi_Fakafānua",
+       "since": "2025-12-18",
+       "party": "Independent"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "TTO",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Christine Kangaloo",
+       "wiki": "Christine_Kangaloo",
+       "since": "2023-03-20",
+       "party": "People's National Movement"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Kamla Persad-Bissessar",
+       "wiki": "Kamla_Persad-Bissessar",
+       "since": "2025-05-01",
+       "party": "United National Congress"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "TUN",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Kais Saied",
+       "wiki": "Kais_Saied",
+       "since": "2019-10-23"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Sara Zaafarani",
+       "wiki": "Sara_Zaafarani",
+       "since": "2025-03-21"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "TUR",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Recep Tayyip Erdoğan",
+       "wiki": "Recep_Tayyip_Erdoğan",
+       "since": "2014-08-28",
+       "party": "Justice and Development Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "TUV",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Charles III",
+       "wiki": "Charles_III",
+       "since": "2022-09-08"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Feleti Teo",
+       "wiki": "Feleti_Teo",
+       "since": "2024-02-26"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Governor-General",
+     "acting": true,
+     "people": [
+      {
+       "name": "Temukisa Auina Penehuro Hauma",
+       "wiki": "Temukisa_Auina_Penehuro_Hauma",
+       "since": "2026-09-30"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "TWN",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Lai Ching-te",
+       "wiki": "Lai_Ching-te",
+       "since": "2024-05-20",
+       "party": "Democratic Progressive Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Premier",
+     "people": [
+      {
+       "name": "Cho Jung-tai",
+       "wiki": "Cho_Jung-tai",
+       "since": "2024-05-20",
+       "party": "Democratic Progressive Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "TZA",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Samia Suluhu Hassan",
+       "wiki": "Samia_Suluhu_Hassan",
+       "since": "2021-03-19",
+       "party": "Party of the Revolution"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "UGA",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Yoweri Museveni",
+       "wiki": "Yoweri_Museveni",
+       "since": "1986-01-29",
+       "party": "National Resistance Movement"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "UKR",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Volodymyr Zelenskyy",
+       "wiki": "Volodymyr_Zelenskyy",
+       "since": "2019-05-20",
+       "party": "Independent"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Serhii Koretskyi",
+       "wiki": "Serhii_Koretskyi",
+       "since": "2026-07-16"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "UNK",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Justina Shiroka Pula",
+       "wiki": "Justina_Shiroka_Pula"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Albin Kurti",
+       "wiki": "Albin_Kurti",
+       "since": "2021-03-22",
+       "party": "Vetëvendosje!"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "URY",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Yamandú Orsi",
+       "wiki": "Yamandú_Orsi",
+       "since": "2025-03-01",
+       "party": "Broad Front"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "USA",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Donald Trump",
+       "wiki": "Donald_Trump",
+       "since": "2025-01-20",
+       "party": "Republican Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "UZB",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Shavkat Mirziyoyev",
+       "wiki": "Shavkat_Mirziyoyev",
+       "since": "2016-12-14",
+       "party": "Uzbekistan Liberal Democratic Party"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Abdulla Aripov",
+       "wiki": "Abdulla_Aripov",
+       "since": "2016-12-14",
+       "party": "Uzbekistan Liberal Democratic Party"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "VAT",
+   "offices": [
+    {
+     "role": "state",
+     "title": "Pope",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Leo XIV",
+       "wiki": "Leo_XIV"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "President of the Governorate",
+     "people": [
+      {
+       "name": "Raffaella Petrini",
+       "wiki": "Raffaella_Petrini",
+       "since": "2025-03-01"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "VCT",
+   "offices": [
+    {
+     "role": "state",
+     "title": "King",
+     "people": [
+      {
+       "name": "Charles III",
+       "wiki": "Charles_III",
+       "since": "2022-09-08"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Godwin Friday",
+       "wiki": "Godwin_Friday",
+       "party": "New Democratic Party"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "Governor-General",
+     "acting": true,
+     "people": [
+      {
+       "name": "Stanley John",
+       "wiki": "Stanley_John_(politician)",
+       "since": "2026-01-06"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "VEN",
+   "offices": [
+    {
+     "role": "both",
+     "title": "Acting President",
+     "power": "de-facto",
+     "acting": true,
+     "people": [
+      {
+       "name": "Delcy Rodríguez",
+       "wiki": "Delcy_Rodríguez",
+       "since": "2026-01-05",
+       "party": "United Socialist Party of Venezuela"
+      }
+     ]
+    },
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Nicolás Maduro",
+       "wiki": "Nicolás_Maduro",
+       "party": "United Socialist Party of Venezuela"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "VNM",
+   "offices": [
+    {
+     "role": "both",
+     "title": "General Secretary of the Communist Party",
+     "power": "de-facto",
+     "people": [
+      {
+       "name": "Tô Lâm",
+       "wiki": "Tô_Lâm",
+       "since": "2024-08-03",
+       "party": "Communist Party of Vietnam"
+      }
+     ]
+    },
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Tô Lâm",
+       "wiki": "Tô_Lâm",
+       "since": "2026-04-07",
+       "party": "Communist Party of Vietnam"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Lê Minh Hưng",
+       "wiki": "Lê_Minh_Hưng",
+       "since": "2026-04-07"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "VUT",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President",
+     "people": [
+      {
+       "name": "Nikenike Vurobaravu",
+       "wiki": "Nikenike_Vurobaravu",
+       "since": "2022-07-23",
+       "party": "Vanua'aku Pati"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Jotham Napat",
+       "wiki": "Jotham_Napat"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "WSM",
+   "offices": [
+    {
+     "role": "state",
+     "title": "O le Ao o le Malo",
+     "people": [
+      {
+       "name": "Tuimalealiʻifano Vaʻaletoʻa Sualauvi II",
+       "wiki": "Tuimalealiʻifano_Vaʻaletoʻa_Sualauvi_II",
+       "since": "2017-07-21",
+       "party": "Independent"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Laʻauli Leuatea Schmidt",
+       "wiki": "Laʻauli_Leuatea_Schmidt",
+       "since": "2025-09-16",
+       "party": "Faʻatuatua i le Atua Samoa ua Tasi"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "YEM",
+   "offices": [
+    {
+     "role": "state",
+     "title": "President of the Presidential Leadership Council",
+     "power": "executive",
+     "acting": true,
+     "people": [
+      {
+       "name": "Rashad al-Alimi",
+       "wiki": "Rashad_al-Alimi",
+       "since": "2022-04-07",
+       "party": "General People's Congress"
+      }
+     ]
+    },
+    {
+     "role": "government",
+     "title": "Prime Minister",
+     "people": [
+      {
+       "name": "Shaya al-Zindani",
+       "wiki": "Shaya_al-Zindani",
+       "since": "2026-02-06"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "ZAF",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Cyril Ramaphosa",
+       "wiki": "Cyril_Ramaphosa",
+       "since": "2018-02-15",
+       "party": "African National Congress"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "ZMB",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Hakainde Hichilema",
+       "wiki": "Hakainde_Hichilema",
+       "since": "2021-08-24",
+       "party": "United Party for National Development"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "iso": "ZWE",
+   "offices": [
+    {
+     "role": "both",
+     "title": "President",
+     "power": "executive",
+     "people": [
+      {
+       "name": "Emmerson Mnangagwa",
+       "wiki": "Emmerson_Mnangagwa",
+       "since": "2017-11-24",
+       "party": "Zimbabwe African National Union – Patriotic Front"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -14,6 +14,7 @@ import { TRADE, TRADE_COLOR, TRADE_PARTNERS, TRADE_PARTNER_LABEL } from '../lib/
 import { CHOKEPOINTS_FILE, CHOKEPOINT_COLOR, CHOKEPOINT_STATUSES, CHOKEPOINT_STATUS_LABEL } from '../lib/chokepoints';
 import { UNREST } from '../data/unrest';
 import { UNREST_COLOR, UNREST_VERIFIED } from '../lib/unrest';
+import { LEADERS, TENURE_COLORS, tenureBinLabel } from '../lib/leaders';
 
 interface Props {
   mode: Mode;
@@ -26,6 +27,28 @@ interface Props {
 const INTENSITIES: Intensity[] = ['high', 'medium', 'low', 'latent'];
 
 export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) {
+  if (layer === 'leaders') {
+    return (
+      <aside className="legend frame" aria-label="Legend">
+        <h3>Years in power</h3>
+        <ul>
+          {TENURE_COLORS.map((color, i) => (
+            <li key={i}>
+              <span className="swatch" style={{ background: color }} />
+              {tenureBinLabel(i)}
+            </li>
+          ))}
+        </ul>
+        <div className="note">
+          Time the person who holds power has held their current office: the de facto ruler where there is one, otherwise the constitutional executive. Earlier spells in other posts are not counted.{' '}
+          <a href={LEADERS.source.url} target="_blank" rel="noopener noreferrer">
+            Wikipedia
+          </a>{' '}
+          and Wikidata, fetched {formatDate(LEADERS.fetchedAt)}.
+        </div>
+      </aside>
+    );
+  }
   if (layer === 'displacement') {
     return (
       <aside className="legend frame" aria-label="Legend">

@@ -38,7 +38,7 @@ export interface AppState {
 export type View = 'flat' | 'globe';
 export const DEFAULT_ROTATION: [number, number] = [15, 20];
 
-export const LAYERS = ['displacement', 'sanctions', 'elections', 'nuclear', 'acled', 'acled-unrest', 'ucdp', 'military', 'trade', 'chokepoints', 'unrest'] as const;
+export const LAYERS = ['leaders', 'displacement', 'sanctions', 'elections', 'nuclear', 'acled', 'acled-unrest', 'ucdp', 'military', 'trade', 'chokepoints', 'unrest'] as const;
 export type Layer = (typeof LAYERS)[number] | null;
 
 export const DEFAULT_STATE: AppState = { mode: 'blocs', bloc: null, vs: null, selection: null, month: null, layer: null, view: 'flat', rotation: DEFAULT_ROTATION, brief: false, embed: false };

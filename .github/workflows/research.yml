@@ -111,6 +111,9 @@ jobs:
       - name: Fill any countries missing from the elections table
         run: node scripts/build-elections.mjs
 
+      - name: Refresh heads of state and government
+        run: node scripts/build-leaders.mjs
+
       - name: Refresh ACLED event counts (skipped without credentials)
         env:
           ACLED_EMAIL: ${{ secrets.ACLED_EMAIL }}
@@ -143,6 +146,7 @@ jobs:
             src/data/trade.generated.json
             src/data/worldbank-history.generated.json
             src/data/ucdp.generated.json
+            src/data/leaders.generated.json
           commit-message: 'Data refresh: automated weekly research pass'
           title: 'Data refresh ${{ github.run_started_at }}'
           body-path: research-report.md

@@ -43,7 +43,7 @@ describe('country dossier', () => {
     // ACLED and UCDP sections appear only when their builds had credentials.
     const generated = (id: string) => id === 'acled' || id === 'ucdp';
     expect(irn.extras.map((x) => x.id).filter((id) => !generated(id))).toEqual(['unrest', 'sponsorship', 'sanctions', 'elections', 'nuclear', 'trade']);
-    expect(irn.sections.filter((id) => !generated(id)).slice(0, 9)).toEqual(['profile', 'memberships', 'conflicts', 'unrest', 'sponsorship', 'sanctions', 'elections', 'nuclear', 'trade']);
+    expect(irn.sections.filter((id) => !generated(id)).slice(0, 10)).toEqual(['profile', 'leaders', 'memberships', 'conflicts', 'unrest', 'sponsorship', 'sanctions', 'elections', 'nuclear', 'trade']);
     expect(irn.extras.find((x) => x.id === 'sanctions')!.rows.length).toBeGreaterThanOrEqual(3);
     // A country with no nuclear role gets no nuclear section but still an (empty) sanctions one.
     const bra = countryDossier('BRA')!;

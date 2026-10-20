@@ -12,10 +12,11 @@ import { WORLD, WORLDBANK, blocFigures, formatCount, formatUsd, share, type Figu
 import { DISPLACEMENT, formatPeople } from '../lib/displacement';
 import { SANCTIONS } from '../lib/sanctions';
 import { ELECTIONS_VERIFIED } from '../lib/elections';
+import { LEADERS } from '../lib/leaders';
 import { NUCLEAR } from '../lib/nuclear';
 import { TRUSTED_HOSTS } from '../data/guards';
 import { CHANGES, watchlistOnly } from '../lib/feed';
-import { countryDossier, profileLine, type CountryDossier } from '../lib/dossier';
+import { countryDossier, profileLine, type CountryDossier, type DossierExtra } from '../lib/dossier';
 import { useWatchlist } from '../hooks/useWatchlist';
 import StarButton from './StarButton';
 import ActorsGraph from './ActorsGraph';
@@ -128,8 +129,53 @@ function yearNote(year: number | null) {
   return year ? String(year) : '';
 }
 
+/** A section contributed by a dataset provider: rows that link out, into a panel, or to another dossier. */
+function ExtraSection({ x, props }: { x: DossierExtra; props: Props }) {
+  return (
+    <div>
+      <h4 id={`dossier-${x.id}`}>{x.title}</h4>
+      {x.rows.length === 0 ? (
+        <Muted>{x.empty ?? 'None recorded.'}</Muted>
+      ) : (
+        <ul className="link-list">
+          {x.rows.map((r, i) => (
+            <li key={r.label + i}>
+              {r.conflictId || r.unrestId ? (
+                <button onClick={() => (r.conflictId ? props.onSelectConflict(r.conflictId) : props.onSelectUnrest(r.unrestId!))}>
+                  <span>
+                    {r.label}
+                    {r.note && <span className="row-note">{r.note}</span>}
+                  </span>
+                  <span className="meta">{r.value}</span>
+                </button>
+              ) : r.href ? (
+                <a href={r.href} target="_blank" rel="noopener noreferrer" title={r.note}>
+                  <span>
+                    {r.label}
+                    {r.note && <span className="row-note">{r.note}</span>}
+                  </span>
+                  <span className="meta">{r.value ? `${r.value} ↗` : '↗'}</span>
+                </a>
+              ) : (
+                <span className="row">
+                  <span>
+                    {r.label}
+                    {r.note && <span className="row-note">{r.note}</span>}
+                  </span>
+                  <span className="meta">{r.value}</span>
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+      {x.footnote && <div className="updated">{x.footnote}</div>}
+    </div>
+  );
+}
+
 function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props }) {
-  const { country, memberships, conflicts, displacement, figures, changes, extras } = dossier;
+  const { country, memberships, conflicts, government, displacement, figures, changes, extras } = dossier;
   return (
     <>
       <div className="panel-head">
@@ -151,6 +197,8 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
             </span>
           )}
         </div>
+
+        {government && <ExtraSection x={government} props={props} />}
 
         <h4 id="dossier-memberships">Bloc memberships · {memberships.filter((m) => m.membership.status === 'member').length}</h4>
         {memberships.length === 0 ? (
@@ -187,45 +235,7 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
         )}
 
         {extras.map((x) => (
-          <div key={x.id}>
-            <h4 id={`dossier-${x.id}`}>{x.title}</h4>
-            {x.rows.length === 0 ? (
-              <Muted>{x.empty ?? 'None recorded.'}</Muted>
-            ) : (
-              <ul className="link-list">
-                {x.rows.map((r, i) => (
-                  <li key={r.label + i}>
-                    {r.conflictId || r.unrestId ? (
-                      <button onClick={() => (r.conflictId ? props.onSelectConflict(r.conflictId) : props.onSelectUnrest(r.unrestId!))}>
-                        <span>
-                          {r.label}
-                          {r.note && <span className="row-note">{r.note}</span>}
-                        </span>
-                        <span className="meta">{r.value}</span>
-                      </button>
-                    ) : r.href ? (
-                      <a href={r.href} target="_blank" rel="noopener noreferrer" title={r.note}>
-                        <span>
-                          {r.label}
-                          {r.note && <span className="row-note">{r.note}</span>}
-                        </span>
-                        <span className="meta">{r.value ? `${r.value} ↗` : '↗'}</span>
-                      </a>
-                    ) : (
-                      <span className="row">
-                        <span>
-                          {r.label}
-                          {r.note && <span className="row-note">{r.note}</span>}
-                        </span>
-                        <span className="meta">{r.value}</span>
-                      </span>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            )}
-            {x.footnote && <div className="updated">{x.footnote}</div>}
-          </div>
+          <ExtraSection key={x.id} x={x} props={props} />
         ))}
 
         <h4 id="dossier-displacement">Displacement</h4>
@@ -1081,6 +1091,10 @@ function AboutView({ props }: { props: Props }) {
             <span>Sanctions regimes from OFAC, the EU Sanctions Map and the UN Security Council</span>
           </li>
           <li>
+            <span className="when">{formatDate(LEADERS.fetchedAt)}</span>
+            <span>Heads of state and government, who holds executive power, start dates and parties (Wikipedia and Wikidata)</span>
+          </li>
+          <li>
             <span className="when">{formatDate(ELECTIONS_VERIFIED)}</span>
             <span>Next national elections (newest verification)</span>
           </li>
@@ -1107,7 +1121,7 @@ function AboutView({ props }: { props: Props }) {
         </p>
         <h4>Sources</h4>
         <p>
-          Conflict trackers: CFR Global Conflict Tracker, ACLED, Crisis Group CrisisWatch, ISW. Civil unrest: curated from wire services, Crisis Group, ACLED, the Carnegie Global Protest Tracker, HRW and Amnesty, then reassessed weekly by the same research pass; organised-violence deaths from the UCDP Georeferenced Event Dataset when a token is configured. Memberships: the organisations' own sites. Displacement: UNHCR Refugee Data Finder, by country of origin. Figures: World Bank Open Data. Sanctions: OFAC's programme index, the EU Sanctions Map and UN Security Council committees (country-level regimes only). Elections: seeded from Wikipedia's list of next general elections and IFES ElectionGuide, then re-checked weekly by the research pass. Nuclear status: SIPRI, the Arms Control Association and NATO, curated by hand. Geometry: Natural Earth via world-atlas. Trusted hosts for automated citations: {TRUSTED_HOSTS.join(', ')}.
+          Conflict trackers: CFR Global Conflict Tracker, ACLED, Crisis Group CrisisWatch, ISW. Civil unrest: curated from wire services, Crisis Group, ACLED, the Carnegie Global Protest Tracker, HRW and Amnesty, then reassessed weekly by the same research pass; organised-violence deaths from the UCDP Georeferenced Event Dataset when a token is configured. Memberships: the organisations' own sites. Displacement: UNHCR Refugee Data Finder, by country of origin. Figures: World Bank Open Data. Sanctions: OFAC's programme index, the EU Sanctions Map and UN Security Council committees (country-level regimes only). Leaders: Wikipedia's list of current heads of state and government, which marks who constitutionally or de facto runs the executive, with start dates and parties from Wikidata. Elections: seeded from Wikipedia's list of next general elections and IFES ElectionGuide, then re-checked weekly by the research pass. Nuclear status: SIPRI, the Arms Control Association and NATO, curated by hand. Geometry: Natural Earth via world-atlas. Trusted hosts for automated citations: {TRUSTED_HOSTS.join(', ')}.
         </p>
         <h4>Caveats</h4>
         <ul style={{ margin: 0, paddingLeft: 18 }}>
@@ -1119,7 +1133,7 @@ function AboutView({ props }: { props: Props }) {
         </ul>
         <h4>Following things</h4>
         <p>
-          Every country has a dossier (memberships, conflicts, displacement, figures and its recent changes) at a link you can share. The strip along the bottom cycles the ten newest dated changes and pauses while you hover it. Press the star on any panel to add it to a watchlist kept in this browser; the ticker and the changes feed can be filtered to it. A strip under the header lists what changed since you last pressed "Mark read". The same changes are available as <a href="/feed.xml">RSS</a> and <a href="/feed.json">JSON Feed</a>.
+          Every country has a dossier (who governs it, memberships, conflicts, displacement, figures and its recent changes) at a link you can share. The strip along the bottom cycles the ten newest dated changes and pauses while you hover it. Press the star on any panel to add it to a watchlist kept in this browser; the ticker and the changes feed can be filtered to it. A strip under the header lists what changed since you last pressed "Mark read". The same changes are available as <a href="/feed.xml">RSS</a> and <a href="/feed.json">JSON Feed</a>.
         </p>
         <h4>Globe, briefing, embed and export</h4>
         <p>

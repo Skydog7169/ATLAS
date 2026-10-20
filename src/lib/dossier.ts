@@ -15,8 +15,9 @@ import { tradeDossier } from './trade';
 import { unrestDossier } from './unrest';
 import { acledDossier } from './acled';
 import { ucdpDossier } from './ucdp';
+import { leadersDossier } from './leaders';
 
-export type DossierSectionId = 'profile' | 'memberships' | 'conflicts' | 'unrest' | 'acled' | 'ucdp' | 'sponsorship' | 'military' | 'displacement' | 'figures' | 'trade' | 'changes' | 'sanctions' | 'elections' | 'nuclear';
+export type DossierSectionId = 'profile' | 'leaders' | 'memberships' | 'conflicts' | 'unrest' | 'acled' | 'ucdp' | 'sponsorship' | 'military' | 'displacement' | 'figures' | 'trade' | 'changes' | 'sanctions' | 'elections' | 'nuclear';
 
 /**
  * A section contributed by a later dataset (sanctions, elections). Each row is
@@ -24,7 +25,7 @@ export type DossierSectionId = 'profile' | 'memberships' | 'conflicts' | 'unrest
  * without touching the panel component.
  */
 export interface DossierExtra {
-  id: Extract<DossierSectionId, 'sanctions' | 'elections' | 'nuclear' | 'sponsorship' | 'military' | 'trade' | 'unrest' | 'acled' | 'ucdp'>;
+  id: Extract<DossierSectionId, 'leaders' | 'sanctions' | 'elections' | 'nuclear' | 'sponsorship' | 'military' | 'trade' | 'unrest' | 'acled' | 'ucdp'>;
   title: string;
   /** A row links out (`href`), into a conflict panel (`conflictId`), an unrest panel (`unrestId`) or a country dossier (`countryIso`). */
   rows: Array<{ label: string; value: string; href?: string; note?: string; conflictId?: string; unrestId?: string; countryIso?: string }>;
@@ -48,6 +49,8 @@ export interface CountryDossier {
   memberships: Array<{ bloc: Bloc; membership: BlocMember }>;
   /** Conflicts on its territory or with its forces involved, most intense first. */
   conflicts: Conflict[];
+  /** Who heads the state and the government, shown first; null for territories the leaders list does not cover. */
+  government: DossierExtra | null;
   displacement: DisplacementRow | null;
   figures: WorldBankRow | null;
   /** Newest feed items about this country. */
@@ -69,11 +72,13 @@ export function countryDossier(iso: string, feed: readonly ChangeItem[] = CHANGE
     const extra = provide(iso);
     if (extra) extras.push(extra);
   }
-  const sections: DossierSectionId[] = ['profile', 'memberships', 'conflicts', ...extras.map((e) => e.id), 'displacement', 'figures', 'changes'];
+  const government = leadersDossier(iso);
+  const sections: DossierSectionId[] = ['profile', ...(government ? ['leaders' as const] : []), 'memberships', 'conflicts', ...extras.map((e) => e.id), 'displacement', 'figures', 'changes'];
   return {
     country,
     memberships,
     conflicts,
+    government,
     displacement: DISPLACEMENT_BY_ISO.get(iso) ?? null,
     figures: WORLDBANK_BY_ISO.get(iso) ?? null,
     changes: changesForCountry(feed, iso).slice(0, CHANGES_SHOWN),

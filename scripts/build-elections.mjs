@@ -34,7 +34,7 @@ const ALIAS = {
   'united states of america': 'USA', 'russian federation': 'RUS', 'republic of korea': 'KOR', 'viet nam': 'VNM', 'the republic of north macedonia': 'MKD',
 };
 
-function isoFor(name) {
+export function isoFor(name) {
   const key = name.toLowerCase().trim();
   return BY_NAME.get(key) ?? ALIAS[key] ?? null;
 }
@@ -77,7 +77,7 @@ export function parseGuide(html) {
   return out;
 }
 
-function stripTags(html) {
+export function stripTags(html) {
   return html
     .replace(/<sup[^>]*>.*?<\/sup>/gs, '')
     .replace(/<br\s*\/?>/gi, ' ')

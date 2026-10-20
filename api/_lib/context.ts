@@ -8,6 +8,7 @@ import nuclear from '../../src/data/nuclear.json' with { type: 'json' };
 import chokepoints from '../../src/data/chokepoints.json' with { type: 'json' };
 import military from '../../src/data/military.json' with { type: 'json' };
 import countries from '../../src/data/countries.generated.json' with { type: 'json' };
+import leaders from '../../src/data/leaders.generated.json' with { type: 'json' };
 
 type Source = { name: string; url: string };
 
@@ -70,6 +71,18 @@ export function buildContext(): string {
   for (const p of (military as { presence: Array<{ host: string; operator: string; kind: string; name: string; note: string; source: Source; ended?: string }> }).presence) {
     if (p.ended) continue;
     lines.push(`[presence:${p.operator}:${p.host}] ${name(p.operator)} in ${name(p.host)} (${p.kind}): ${p.name}. ${p.note} — ${src([p.source])}`);
+  }
+
+  type Holder = { name: string; party?: string; since?: string; incoming?: boolean };
+  const L = leaders as { fetchedAt: string; source: Source; rows: Array<{ iso: string; offices: Array<{ title: string; role: string; power?: string; collective?: boolean; vacant?: boolean; people: Holder[] }> }> };
+  lines.push('', `## Heads of state and government (fetched ${L.fetchedAt}; ${src([L.source])}; start dates and parties from Wikidata)`);
+  for (const r of L.rows) {
+    const offices = r.offices.map((o) => {
+      const who = o.vacant ? 'vacant' : o.collective ? `collective body${o.people.length ? ` (${o.people.map((p) => p.name).join(', ')})` : ''}` : o.people.map((p) => [p.name, p.party, p.since && `since ${p.since}`, p.incoming && 'incoming'].filter(Boolean).join(', ')).join(' and ');
+      const power = o.power === 'executive' ? ', constitutional executive' : o.power === 'de-facto' ? ', de facto executive' : '';
+      return `${o.title} [head of ${o.role === 'both' ? 'state and government' : o.role}${power}]: ${who}`;
+    });
+    lines.push(`[leaders:${r.iso}] ${name(r.iso)}: ${offices.join(' | ')}`);
   }
   return lines.join('\n') + '\n';
 }

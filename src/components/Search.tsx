@@ -47,8 +47,8 @@ export default function Search({ onPick, conflictColor }: Props) {
       <input
         ref={inputRef}
         type="search"
-        placeholder="Search countries, blocs, conflicts"
-        aria-label="Search countries, blocs and conflicts"
+        placeholder="Search countries, leaders, blocs, conflicts"
+        aria-label="Search countries, leaders, blocs and conflicts"
         aria-autocomplete="list"
         aria-controls={showList ? listId : undefined}
         aria-activedescendant={showList && hits[active] ? `${listId}-${active}` : undefined}
@@ -86,7 +86,7 @@ export default function Search({ onPick, conflictColor }: Props) {
           )}
           {hits.map((hit, i) => (
             <li
-              key={hit.kind + hit.id}
+              key={hit.kind + hit.id + hit.label}
               id={`${listId}-${i}`}
               role="option"
               aria-selected={i === active}
@@ -94,12 +94,12 @@ export default function Search({ onPick, conflictColor }: Props) {
               onPointerDown={(e) => e.preventDefault()}
               onClick={() => pick(hit)}
             >
-              {hit.kind !== 'country' && (
+              {hit.kind !== 'country' && hit.kind !== 'leader' && (
                 <span className="dot" style={{ width: 9, height: 9, borderRadius: '50%', background: hit.kind === 'bloc' ? hit.color : conflictColor(hit.id) }} />
               )}
               <span>
                 {hit.label}
-                {hit.kind === 'country' && <span style={{ color: 'var(--fg-muted)' }}> · {hit.sub}</span>}
+                {(hit.kind === 'country' || hit.kind === 'leader') && <span style={{ color: 'var(--fg-muted)' }}> · {hit.sub}</span>}
               </span>
               <span className="kind">{hit.kind === 'bloc' || hit.kind === 'unrest' ? hit.sub : hit.kind}</span>
             </li>

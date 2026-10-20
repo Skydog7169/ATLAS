@@ -2,13 +2,15 @@ import { BLOCS } from '../data/blocs';
 import { CONFLICTS } from '../data/conflicts';
 import { UNREST } from '../data/unrest';
 import { UNREST_KIND_LABEL } from './unrest';
-import { COUNTRIES } from '../lib/countries';
+import { COUNTRIES, COUNTRY_BY_ISO } from '../lib/countries';
+import { leaderIndex } from './leaders';
 
 export type SearchHit =
   | { kind: 'country'; id: string; label: string; sub: string }
   | { kind: 'bloc'; id: string; label: string; sub: string; color: string }
   | { kind: 'conflict'; id: string; label: string; sub: string; color: string }
-  | { kind: 'unrest'; id: string; label: string; sub: string; color: string };
+  | { kind: 'unrest'; id: string; label: string; sub: string; color: string }
+  | { kind: 'leader'; id: string; label: string; sub: string };
 
 /** Non-sovereign entries that still need to be findable because they appear on the map or in the data. */
 const EXTRA_TERRITORIES = new Set(['TWN', 'PSE', 'UNK', 'ESH']);
@@ -44,6 +46,14 @@ const INDEX: Array<SearchHit & { keys: string[] }> = [
     label: c.name,
     sub: c.capital ?? c.region,
     keys: [c.name, c.official, c.cca3, c.cca2, c.capital ?? ''].map((s) => s.toLowerCase()),
+  })),
+  // Leaders open their country's dossier; one hit per person per country even when they hold two offices.
+  ...[...new Map(leaderIndex().filter((l) => COUNTRY_BY_ISO.has(l.iso)).map((l) => [l.iso + l.name, l])).values()].map((l) => ({
+    kind: 'leader' as const,
+    id: l.iso,
+    label: l.name,
+    sub: `${l.title} · ${COUNTRY_BY_ISO.get(l.iso)!.name}`,
+    keys: [l.name.toLowerCase()],
   })),
 ];
 
