@@ -5,6 +5,7 @@ import { COUNTRY_BY_ISO } from '../lib/countries';
 import { CHOKEPOINT_BY_ID } from '../lib/chokepoints';
 import { UNREST_BY_ID } from '../data/unrest';
 import { timelineMonth } from '../lib/timeline';
+import { isLayerAvailable } from '../lib/layerOptions';
 import { DEFAULT_STATE, parse, serialize, type AppState } from '../lib/urlState';
 
 const validators = {
@@ -14,6 +15,7 @@ const validators = {
   chokepoint: (id: string) => CHOKEPOINT_BY_ID.has(id),
   unrest: (id: string) => UNREST_BY_ID.has(id),
   month: timelineMonth,
+  layer: isLayerAvailable,
 };
 
 function read(): AppState {

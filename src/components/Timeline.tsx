@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { formatMonth } from '../lib/labels';
+import { formatDate, formatMonth } from '../lib/labels';
 
 interface Props {
   months: string[];
@@ -8,6 +8,8 @@ interface Props {
   /** Selected month, or null for live. */
   value: string | null;
   onChange: (month: string | null) => void;
+  /** Date of the newest bundled change when it is too old to call live. */
+  snapshot?: string | null;
 }
 
 /**
@@ -16,7 +18,7 @@ interface Props {
  * Months with no new assessment get hollow ticks so carried-forward data
  * does not read as observed.
  */
-export default function Timeline({ months, assessed, value, onChange }: Props) {
+export default function Timeline({ months, assessed, value, onChange, snapshot }: Props) {
   const id = useId();
   if (months.length < 2) return null;
   const last = months.length - 1;
@@ -39,7 +41,7 @@ export default function Timeline({ months, assessed, value, onChange }: Props) {
           step={1}
           value={idx}
           aria-label="Replay month"
-          aria-valuetext={live ? 'Live' : `${label}${fresh ? '' : ', no new assessments'}`}
+          aria-valuetext={live ? (snapshot ? `Snapshot ${formatDate(snapshot)}` : 'Live') : `${label}${fresh ? '' : ', no new assessments'}`}
           onChange={(e) => {
             const i = Number(e.target.value);
             onChange(i >= last ? null : (months[i] ?? null));
@@ -56,7 +58,11 @@ export default function Timeline({ months, assessed, value, onChange }: Props) {
         </div>
       </div>
       <span className={'mono readout' + (live ? ' is-live' : '')} data-fresh={live || fresh} aria-live="polite">
-        {live ? (
+        {live && snapshot ? (
+          <>
+            <span className="live stale" aria-hidden="true" /> SNAPSHOT {formatDate(snapshot).toUpperCase()}
+          </>
+        ) : live ? (
           <>
             <span className="live" aria-hidden="true" /> LIVE
           </>

@@ -1,0 +1,55 @@
+/* First paint and layout stability. Loaded after global.css. */
+
+/* The static shell in index.html: the real header's height and the map skeleton,
+   painted from the HTML before any JS arrives. React replaces it on mount. */
+.app-shell .header {
+  min-height: var(--header-h);
+}
+
+:root[data-chrome='none'] .app-shell .header {
+  display: none;
+}
+
+/* Phone header: a fixed two-row grid (logo · mode · icons / search) so a late font
+   swap or a wider fallback face can never add a third row and push the map down. */
+@media (max-width: 820px) {
+  .header {
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr) repeat(6, auto);
+    align-items: center;
+    column-gap: 0;
+    row-gap: 8px;
+  }
+
+  .header > * {
+    grid-row: 1;
+  }
+
+  .header > .search {
+    grid-row: 2;
+    grid-column: 1 / -1;
+  }
+
+  .header > .segmented {
+    margin-left: 8px;
+  }
+
+  .header > .icon-btn {
+    margin-left: 6px;
+  }
+
+  .header .brand,
+  .header .segmented {
+    white-space: nowrap;
+  }
+
+  /* Shell: brand in the first row, the second row reserved for the search box. */
+  .app-shell .header {
+    min-height: 93px;
+    align-content: start;
+  }
+
+  .app-shell .brand {
+    height: 32px;
+  }
+}

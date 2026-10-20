@@ -99,9 +99,22 @@ function embedThemeOf(p: URLSearchParams): Pick<AppState, 'theme'> {
   return p.get('embed') === '1' && (t === 'light' || t === 'auto') ? { theme: t } : {};
 }
 
-export function parse(hash: string, isValid: { bloc: (id: string) => boolean; conflict: (id: string) => boolean; country: (iso: string) => boolean; chokepoint?: (id: string) => boolean; unrest?: (id: string) => boolean; month?: (m: string) => string | null }): AppState {
+/** Where a link to a layer this build cannot draw lands instead: the nearest tracked view. */
+const LAYER_FALLBACK: Partial<Record<string, { layer: Layer; mode?: Mode }>> = {
+  'acled-unrest': { layer: 'unrest' },
+  acled: { layer: null, mode: 'conflicts' },
+  ucdp: { layer: null, mode: 'conflicts' },
+};
+
+export function parse(
+  hash: string,
+  isValid: { bloc: (id: string) => boolean; conflict: (id: string) => boolean; country: (iso: string) => boolean; chokepoint?: (id: string) => boolean; unrest?: (id: string) => boolean; layer?: (id: string) => boolean; month?: (m: string) => string | null },
+): AppState {
   const p = new URLSearchParams(hash.replace(/^#/, ''));
-  const mode: Mode = p.get('mode') === 'conflicts' ? 'conflicts' : 'blocs';
+  const layerParam = p.get('layer');
+  // Credential-gated layers (ACLED, UCDP) may be missing from this build; never draw them as an all-zero map.
+  const fallback = layerParam && isValid.layer && !isValid.layer(layerParam) ? LAYER_FALLBACK[layerParam] : undefined;
+  const mode: Mode = fallback?.mode ?? (p.get('mode') === 'conflicts' ? 'conflicts' : 'blocs');
   const blocParam = p.get('bloc');
   const bloc = blocParam && isValid.bloc(blocParam) ? blocParam : null;
   const vsParam = p.get('vs');
@@ -110,8 +123,8 @@ export function parse(hash: string, isValid: { bloc: (id: string) => boolean; co
   const t = p.get('t');
   // The month validator clamps to the replay range: before it snaps to the first stop, the live month or later is live.
   const month = t && MONTH.test(t) ? (isValid.month ? isValid.month(t) : t) : null;
-  const layerParam = p.get('layer');
-  const layer: Layer = (LAYERS as readonly string[]).includes(layerParam ?? '') ? (layerParam as Layer) : null;
+  const drawable = (id: string) => (LAYERS as readonly string[]).includes(id) && (!isValid.layer || isValid.layer(id));
+  const layer: Layer = layerParam && drawable(layerParam) ? (layerParam as Layer) : fallback?.layer && drawable(fallback.layer) ? fallback.layer : null;
 
   let selection: Selection = null;
   const country = p.get('country');
