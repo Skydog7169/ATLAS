@@ -4,13 +4,15 @@ import { UNREST } from '../data/unrest';
 import { UNREST_KIND_LABEL } from './unrest';
 import { COUNTRIES, COUNTRY_BY_ISO } from '../lib/countries';
 import { leaderIndex } from './leaders';
+import { US_STATES } from './usStates';
 
 export type SearchHit =
   | { kind: 'country'; id: string; label: string; sub: string }
   | { kind: 'bloc'; id: string; label: string; sub: string; color: string }
   | { kind: 'conflict'; id: string; label: string; sub: string; color: string }
   | { kind: 'unrest'; id: string; label: string; sub: string; color: string }
-  | { kind: 'leader'; id: string; label: string; sub: string };
+  | { kind: 'leader'; id: string; label: string; sub: string }
+  | { kind: 'state'; id: string; label: string; sub: string };
 
 /** Non-sovereign entries that still need to be findable because they appear on the map or in the data. */
 const EXTRA_TERRITORIES = new Set(['TWN', 'PSE', 'UNK', 'ESH']);
@@ -54,6 +56,14 @@ const INDEX: Array<SearchHit & { keys: string[] }> = [
     label: l.name,
     sub: `${l.title} · ${COUNTRY_BY_ISO.get(l.iso)!.name}`,
     keys: [l.name.toLowerCase()],
+  })),
+  // US states and their governors open the state panel; listed after countries so Georgia the country ranks first.
+  ...US_STATES.map((s) => ({
+    kind: 'state' as const,
+    id: s.code,
+    label: s.name,
+    sub: s.governor ? `${s.code === 'DC' ? 'Mayor' : 'Gov.'} ${s.governor.name}` : 'US state',
+    keys: [s.name, `${s.name} state`, ...(s.governor ? [s.governor.name] : []), ...s.senators.map((x) => x.name)].map((k) => k.toLowerCase()),
   })),
 ];
 

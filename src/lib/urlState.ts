@@ -12,6 +12,7 @@ export type Selection =
   | { kind: 'unrest'; id: string }
   | { kind: 'pair'; a: string; b: string | null }
   | { kind: 'ask' }
+  | { kind: 'state'; code: string }
   | null;
 
 export interface AppState {
@@ -33,15 +34,21 @@ export interface AppState {
   brief: boolean;
   /** Chrome-less view for iframes. */
   embed: boolean;
+  /** US states view: which political layer colours the states. */
+  usLayer: UsLayer;
 }
 
-export type View = 'flat' | 'globe';
+/** The flat world map, the orthographic globe, or the US states drill-down. */
+export type View = 'flat' | 'globe' | 'us';
+
+export const US_LAYERS = ['governor', 'legislature', 'trifecta', 'senate', 'house', 'ballot'] as const;
+export type UsLayer = (typeof US_LAYERS)[number];
 export const DEFAULT_ROTATION: [number, number] = [15, 20];
 
 export const LAYERS = ['leaders', 'displacement', 'sanctions', 'elections', 'nuclear', 'acled', 'acled-unrest', 'ucdp', 'military', 'trade', 'chokepoints', 'unrest'] as const;
 export type Layer = (typeof LAYERS)[number] | null;
 
-export const DEFAULT_STATE: AppState = { mode: 'blocs', bloc: null, vs: null, selection: null, month: null, layer: null, view: 'flat', rotation: DEFAULT_ROTATION, brief: false, embed: false };
+export const DEFAULT_STATE: AppState = { mode: 'blocs', bloc: null, vs: null, selection: null, month: null, layer: null, view: 'flat', rotation: DEFAULT_ROTATION, brief: false, embed: false, usLayer: 'governor' };
 
 const MONTH = /^\d{4}-(0[1-9]|1[0-2])$/;
 
@@ -57,6 +64,10 @@ export function serialize(state: AppState): string {
     p.set('view', 'globe');
     if (state.rotation[0] !== DEFAULT_ROTATION[0] || state.rotation[1] !== DEFAULT_ROTATION[1]) p.set('rot', `${state.rotation[0]},${state.rotation[1]}`);
   }
+  if (state.view === 'us') {
+    p.set('view', 'us');
+    if (state.usLayer !== 'governor') p.set('us', state.usLayer);
+  }
   if (state.brief) p.set('brief', '1');
   if (state.embed) p.set('embed', '1');
   if (state.selection) {
@@ -69,12 +80,13 @@ export function serialize(state: AppState): string {
     else if (state.selection.kind === 'unrest') p.set('unrest', state.selection.id);
     else if (state.selection.kind === 'pair') p.set('pair', state.selection.b ? `${state.selection.a},${state.selection.b}` : state.selection.a);
     else if (state.selection.kind === 'ask') p.set('ask', '1');
+    else if (state.selection.kind === 'state') p.set('state', state.selection.code);
     else p.set(state.selection.kind, state.selection.id);
   }
   return '#' + p.toString();
 }
 
-export function parse(hash: string, isValid: { bloc: (id: string) => boolean; conflict: (id: string) => boolean; country: (iso: string) => boolean; chokepoint?: (id: string) => boolean; unrest?: (id: string) => boolean }): AppState {
+export function parse(hash: string, isValid: { bloc: (id: string) => boolean; conflict: (id: string) => boolean; country: (iso: string) => boolean; chokepoint?: (id: string) => boolean; unrest?: (id: string) => boolean; state?: (code: string) => boolean }): AppState {
   const p = new URLSearchParams(hash.replace(/^#/, ''));
   const mode: Mode = p.get('mode') === 'conflicts' ? 'conflicts' : 'blocs';
   const blocParam = p.get('bloc');
@@ -93,12 +105,14 @@ export function parse(hash: string, isValid: { bloc: (id: string) => boolean; co
   const selBloc = p.get('selbloc');
   const chokepoint = p.get('chokepoint');
   const unrest = p.get('unrest');
+  const usState = (p.get('state') ?? '').toUpperCase();
   const pair = (p.get('pair') ?? '').toUpperCase().split(',').filter(Boolean);
   if (p.get('about') === '1') selection = { kind: 'about' };
   else if (p.get('ask') === '1') selection = { kind: 'ask' };
   else if (pair[0] && isValid.country(pair[0]) && (!pair[1] || (isValid.country(pair[1]) && pair[1] !== pair[0]))) selection = { kind: 'pair', a: pair[0], b: pair[1] ?? null };
   else if (chokepoint && isValid.chokepoint?.(chokepoint)) selection = { kind: 'chokepoint', id: chokepoint };
   else if (unrest && isValid.unrest?.(unrest)) selection = { kind: 'unrest', id: unrest };
+  else if (usState && isValid.state?.(usState)) selection = { kind: 'state', code: usState };
   else if (p.get('watchlist') === '1') selection = { kind: 'watchlist' };
   else if (p.get('changes') === '1') selection = { kind: 'changes' };
   else if (vs && p.get('compare') === '1') selection = { kind: 'compare' };
@@ -108,9 +122,12 @@ export function parse(hash: string, isValid: { bloc: (id: string) => boolean; co
   else if (bloc && vs && !country && !conflict) selection = { kind: 'compare' };
   else if (bloc && !country && !conflict) selection = { kind: 'bloc', id: bloc };
 
-  const view: View = p.get('view') === 'globe' ? 'globe' : 'flat';
+  const viewParam = p.get('view');
+  const view: View = viewParam === 'globe' || viewParam === 'us' ? viewParam : 'flat';
   const rotation = parseRotation(p.get('rot'));
-  return { mode, bloc, vs, selection, month, layer, view, rotation, brief: p.get('brief') === '1', embed: p.get('embed') === '1' };
+  const usParam = p.get('us');
+  const usLayer: UsLayer = (US_LAYERS as readonly string[]).includes(usParam ?? '') ? (usParam as UsLayer) : 'governor';
+  return { mode, bloc, vs, selection, month, layer, view, rotation, brief: p.get('brief') === '1', embed: p.get('embed') === '1', usLayer };
 }
 
 export function parseRotation(raw: string | null): [number, number] {

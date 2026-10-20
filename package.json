@@ -2,7 +2,7 @@
   "name": "atlas",
   "private": true,
   "version": "0.2.0",
-  "description": "ATLAS \u2014 an interactive geopolitics map: power blocs and active conflicts.",
+  "description": "ATLAS — an interactive geopolitics map: power blocs and active conflicts.",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -26,6 +26,7 @@
     "data:trade": "node scripts/build-trade.mjs",
     "data:worldbank-history": "node scripts/build-worldbank-history.mjs",
     "data:leaders": "node scripts/build-leaders.mjs",
+    "data:us-states": "node scripts/build-us-states.mjs",
     "test:e2e": "playwright test"
   },
   "dependencies": {
@@ -63,6 +64,7 @@
     "jsdom": "^27.0.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.0",
+    "us-atlas": "3.0.1",
     "vite": "^7.3.0",
     "vitest": "^4.0.0",
     "world-atlas": "^2.0.2",

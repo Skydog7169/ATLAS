@@ -114,6 +114,9 @@ jobs:
       - name: Refresh heads of state and government
         run: node scripts/build-leaders.mjs
 
+      - name: Refresh US governors, Congress and state legislatures
+        run: node scripts/build-us-states.mjs
+
       - name: Refresh ACLED event counts (skipped without credentials)
         env:
           ACLED_EMAIL: ${{ secrets.ACLED_EMAIL }}
@@ -147,6 +150,7 @@ jobs:
             src/data/worldbank-history.generated.json
             src/data/ucdp.generated.json
             src/data/leaders.generated.json
+            src/data/us-states.generated.json
           commit-message: 'Data refresh: automated weekly research pass'
           title: 'Data refresh ${{ github.run_started_at }}'
           body-path: research-report.md

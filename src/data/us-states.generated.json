@@ -1,0 +1,5484 @@
+{
+ "sources": [
+  {
+   "id": "governors",
+   "name": "Wikipedia: List of current United States governors",
+   "url": "https://en.wikipedia.org/wiki/List_of_current_United_States_governors"
+  },
+  {
+   "id": "congress",
+   "name": "congress-legislators (unitedstates project)",
+   "url": "https://github.com/unitedstates/congress-legislators"
+  },
+  {
+   "id": "legislatures",
+   "name": "Open States (Plural Policy)",
+   "url": "https://open.pluralpolicy.com/data/"
+  }
+ ],
+ "fetchedAt": "2026-10-20",
+ "sourceDates": {
+  "governors": "2026-10-20",
+  "congress": "2026-10-20",
+  "legislatures": "2026-10-20"
+ },
+ "states": [
+  {
+   "code": "AL",
+   "fips": "01",
+   "name": "Alabama",
+   "governor": {
+    "name": "Kay Ivey",
+    "wiki": "Kay_Ivey",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2017-04-10",
+    "termEnds": 2027,
+    "termNote": "term limits"
+   },
+   "senators": [
+    {
+     "name": "Tommy Tuberville",
+     "party": "R",
+     "wiki": "Tommy_Tuberville",
+     "class": 2,
+     "since": "2021-01-03",
+     "nextElection": 2026,
+     "url": "https://www.tuberville.senate.gov"
+    },
+    {
+     "name": "Katie Boyd Britt",
+     "party": "R",
+     "wiki": "Katie_Britt",
+     "class": 3,
+     "since": "2023-01-03",
+     "nextElection": 2028,
+     "url": "https://www.britt.senate.gov"
+    }
+   ],
+   "houseSeats": 7,
+   "house": [
+    {
+     "name": "Barry Moore",
+     "party": "R",
+     "wiki": "Barry_Moore_(American_politician)",
+     "district": 1
+    },
+    {
+     "name": "Shomari Figures",
+     "party": "D",
+     "wiki": "Shomari_Figures",
+     "district": 2
+    },
+    {
+     "name": "Mike Rogers",
+     "party": "R",
+     "wiki": "Mike_Rogers_(Alabama_politician)",
+     "district": 3
+    },
+    {
+     "name": "Robert B. Aderholt",
+     "party": "R",
+     "wiki": "Robert_Aderholt",
+     "district": 4
+    },
+    {
+     "name": "Dale W. Strong",
+     "party": "R",
+     "wiki": "Dale_Strong",
+     "district": 5
+    },
+    {
+     "name": "Gary J. Palmer",
+     "party": "R",
+     "wiki": "Gary_Palmer",
+     "district": 6
+    },
+    {
+     "name": "Terri A. Sewell",
+     "party": "D",
+     "wiki": "Terri_Sewell",
+     "district": 7
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 8,
+      "R": 27,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 29,
+      "R": 76,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "AK",
+   "fips": "02",
+   "name": "Alaska",
+   "governor": {
+    "name": "Mike Dunleavy",
+    "wiki": "Mike_Dunleavy_(politician)",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2018-12-03",
+    "termEnds": 2026,
+    "termNote": "term limits"
+   },
+   "senators": [
+    {
+     "name": "Dan Sullivan",
+     "party": "R",
+     "wiki": "Dan_Sullivan_(U.S._senator)",
+     "class": 2,
+     "since": "2015-01-06",
+     "nextElection": 2026,
+     "url": "https://www.sullivan.senate.gov"
+    },
+    {
+     "name": "Lisa Murkowski",
+     "party": "R",
+     "wiki": "Lisa_Murkowski",
+     "class": 3,
+     "since": "2003-01-07",
+     "nextElection": 2028,
+     "url": "https://www.murkowski.senate.gov"
+    }
+   ],
+   "houseSeats": 1,
+   "house": [
+    {
+     "name": "Nicholas J. Begich III",
+     "party": "R",
+     "wiki": "Nick_Begich_III",
+     "district": 0
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 9,
+      "R": 11,
+      "O": 0,
+      "control": "coalition"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 14,
+      "R": 21,
+      "O": 5,
+      "control": "coalition"
+     }
+    ],
+    "note": "Both chambers are run by bipartisan majority coalitions of Democrats, independents and moderate Republicans.",
+    "noteSource": {
+     "name": "Ballotpedia: Alaska State Legislature",
+     "url": "https://ballotpedia.org/Alaska_State_Legislature"
+    }
+   }
+  },
+  {
+   "code": "AZ",
+   "fips": "04",
+   "name": "Arizona",
+   "governor": {
+    "name": "Katie Hobbs",
+    "wiki": "Katie_Hobbs",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2023-01-02",
+    "termEnds": 2027
+   },
+   "senators": [
+    {
+     "name": "Ruben Gallego",
+     "party": "D",
+     "wiki": "Ruben_Gallego",
+     "class": 1,
+     "since": "2025-01-03",
+     "nextElection": 2030,
+     "url": "https://www.gallego.senate.gov"
+    },
+    {
+     "name": "Mark Kelly",
+     "party": "D",
+     "wiki": "Mark_Kelly",
+     "class": 3,
+     "since": "2020-12-02",
+     "nextElection": 2028,
+     "url": "https://www.kelly.senate.gov"
+    }
+   ],
+   "houseSeats": 9,
+   "house": [
+    {
+     "name": "David Schweikert",
+     "party": "R",
+     "wiki": "David_Schweikert",
+     "district": 1
+    },
+    {
+     "name": "Elijah Crane",
+     "party": "R",
+     "wiki": "Eli_Crane",
+     "district": 2
+    },
+    {
+     "name": "Yassamin Ansari",
+     "party": "D",
+     "wiki": "Yassamin_Ansari",
+     "district": 3
+    },
+    {
+     "name": "Greg Stanton",
+     "party": "D",
+     "wiki": "Greg_Stanton",
+     "district": 4
+    },
+    {
+     "name": "Andy Biggs",
+     "party": "R",
+     "wiki": "Andy_Biggs",
+     "district": 5
+    },
+    {
+     "name": "Juan Ciscomani",
+     "party": "R",
+     "wiki": "Juan_Ciscomani",
+     "district": 6
+    },
+    {
+     "name": "Adelita S. Grijalva",
+     "party": "D",
+     "wiki": "Adelita_Grijalva",
+     "district": 7
+    },
+    {
+     "name": "Abraham J. Hamadeh",
+     "party": "R",
+     "wiki": "Abraham_Hamadeh",
+     "district": 8
+    },
+    {
+     "name": "Paul A. Gosar",
+     "party": "R",
+     "wiki": "Paul_Gosar",
+     "district": 9
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 13,
+      "R": 17,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 27,
+      "R": 33,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "AR",
+   "fips": "05",
+   "name": "Arkansas",
+   "governor": {
+    "name": "Sarah Huckabee Sanders",
+    "wiki": "Sarah_Huckabee_Sanders",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2023-01-10",
+    "termEnds": 2027
+   },
+   "senators": [
+    {
+     "name": "Tom Cotton",
+     "party": "R",
+     "wiki": "Tom_Cotton",
+     "class": 2,
+     "since": "2015-01-06",
+     "nextElection": 2026,
+     "url": "https://www.cotton.senate.gov"
+    },
+    {
+     "name": "John Boozman",
+     "party": "R",
+     "wiki": "John_Boozman",
+     "class": 3,
+     "since": "2011-01-05",
+     "nextElection": 2028,
+     "url": "https://www.boozman.senate.gov/public"
+    }
+   ],
+   "houseSeats": 4,
+   "house": [
+    {
+     "name": "Eric A. \"Rick\" Crawford",
+     "party": "R",
+     "wiki": "Rick_Crawford_(politician)",
+     "district": 1
+    },
+    {
+     "name": "J. French Hill",
+     "party": "R",
+     "wiki": "French_Hill_(politician)",
+     "district": 2
+    },
+    {
+     "name": "Steve Womack",
+     "party": "R",
+     "wiki": "Steve_Womack",
+     "district": 3
+    },
+    {
+     "name": "Bruce Westerman",
+     "party": "R",
+     "wiki": "Bruce_Westerman",
+     "district": 4
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 6,
+      "R": 27,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 20,
+      "R": 79,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "CA",
+   "fips": "06",
+   "name": "California",
+   "governor": {
+    "name": "Gavin Newsom",
+    "wiki": "Gavin_Newsom",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2019-01-07",
+    "termEnds": 2027,
+    "termNote": "term limits"
+   },
+   "senators": [
+    {
+     "name": "Adam B. Schiff",
+     "party": "D",
+     "wiki": "Adam_Schiff",
+     "class": 1,
+     "since": "2024-12-09",
+     "nextElection": 2030,
+     "url": "https://www.schiff.senate.gov"
+    },
+    {
+     "name": "Alex Padilla",
+     "party": "D",
+     "wiki": "Alex_Padilla",
+     "class": 3,
+     "since": "2021-01-20",
+     "nextElection": 2028,
+     "url": "https://www.padilla.senate.gov"
+    }
+   ],
+   "houseSeats": 52,
+   "house": [
+    {
+     "name": "James Gallagher",
+     "party": "R",
+     "district": 1
+    },
+    {
+     "name": "Jared Huffman",
+     "party": "D",
+     "wiki": "Jared_Huffman",
+     "district": 2
+    },
+    {
+     "name": "Kevin Kiley",
+     "party": "I",
+     "caucus": "R",
+     "wiki": "Kevin_Kiley_(politician)",
+     "district": 3
+    },
+    {
+     "name": "Mike Thompson",
+     "party": "D",
+     "wiki": "Mike_Thompson",
+     "district": 4
+    },
+    {
+     "name": "Tom McClintock",
+     "party": "R",
+     "wiki": "Tom_McClintock",
+     "district": 5
+    },
+    {
+     "name": "Ami Bera",
+     "party": "D",
+     "wiki": "Ami_Bera",
+     "district": 6
+    },
+    {
+     "name": "Doris O. Matsui",
+     "party": "D",
+     "wiki": "Doris_Matsui",
+     "district": 7
+    },
+    {
+     "name": "John Garamendi",
+     "party": "D",
+     "wiki": "John_Garamendi",
+     "district": 8
+    },
+    {
+     "name": "Josh Harder",
+     "party": "D",
+     "wiki": "Josh_Harder",
+     "district": 9
+    },
+    {
+     "name": "Mark DeSaulnier",
+     "party": "D",
+     "wiki": "Mark_DeSaulnier",
+     "district": 10
+    },
+    {
+     "name": "Nancy Pelosi",
+     "party": "D",
+     "wiki": "Nancy_Pelosi",
+     "district": 11
+    },
+    {
+     "name": "Lateefah Simon",
+     "party": "D",
+     "wiki": "Lateefah_Simon",
+     "district": 12
+    },
+    {
+     "name": "Adam Gray",
+     "party": "D",
+     "wiki": "Adam_Gray",
+     "district": 13
+    },
+    {
+     "name": "Aisha Wahab",
+     "party": "D",
+     "wiki": "Aisha_Wahab",
+     "district": 14
+    },
+    {
+     "name": "Kevin Mullin",
+     "party": "D",
+     "wiki": "Kevin_Mullin",
+     "district": 15
+    },
+    {
+     "name": "Sam T. Liccardo",
+     "party": "D",
+     "wiki": "Sam_Liccardo",
+     "district": 16
+    },
+    {
+     "name": "Ro Khanna",
+     "party": "D",
+     "wiki": "Ro_Khanna",
+     "district": 17
+    },
+    {
+     "name": "Zoe Lofgren",
+     "party": "D",
+     "wiki": "Zoe_Lofgren",
+     "district": 18
+    },
+    {
+     "name": "Jimmy Panetta",
+     "party": "D",
+     "wiki": "Jimmy_Panetta",
+     "district": 19
+    },
+    {
+     "name": "Vince Fong",
+     "party": "R",
+     "wiki": "Vince_Fong",
+     "district": 20
+    },
+    {
+     "name": "Jim Costa",
+     "party": "D",
+     "wiki": "Jim_Costa",
+     "district": 21
+    },
+    {
+     "name": "David G. Valadao",
+     "party": "R",
+     "wiki": "David_Valadao",
+     "district": 22
+    },
+    {
+     "name": "Jay Obernolte",
+     "party": "R",
+     "wiki": "Jay_Obernolte",
+     "district": 23
+    },
+    {
+     "name": "Salud O. Carbajal",
+     "party": "D",
+     "wiki": "Salud_Carbajal",
+     "district": 24
+    },
+    {
+     "name": "Raul Ruiz",
+     "party": "D",
+     "wiki": "Raul_Ruiz_(politician)",
+     "district": 25
+    },
+    {
+     "name": "Julia Brownley",
+     "party": "D",
+     "wiki": "Julia_Brownley",
+     "district": 26
+    },
+    {
+     "name": "George Whitesides",
+     "party": "D",
+     "wiki": "George_T._Whitesides",
+     "district": 27
+    },
+    {
+     "name": "Judy Chu",
+     "party": "D",
+     "wiki": "Judy_Chu",
+     "district": 28
+    },
+    {
+     "name": "Luz M. Rivas",
+     "party": "D",
+     "wiki": "Luz_Rivas",
+     "district": 29
+    },
+    {
+     "name": "Laura Friedman",
+     "party": "D",
+     "wiki": "Laura_Friedman",
+     "district": 30
+    },
+    {
+     "name": "Gilbert Ray Cisneros, Jr.",
+     "party": "D",
+     "wiki": "Gil_Cisneros",
+     "district": 31
+    },
+    {
+     "name": "Brad Sherman",
+     "party": "D",
+     "wiki": "Brad_Sherman",
+     "district": 32
+    },
+    {
+     "name": "Pete Aguilar",
+     "party": "D",
+     "wiki": "Pete_Aguilar",
+     "district": 33
+    },
+    {
+     "name": "Jimmy Gomez",
+     "party": "D",
+     "wiki": "Jimmy_Gomez",
+     "district": 34
+    },
+    {
+     "name": "Norma J. Torres",
+     "party": "D",
+     "wiki": "Norma_Torres",
+     "district": 35
+    },
+    {
+     "name": "Ted Lieu",
+     "party": "D",
+     "wiki": "Ted_Lieu",
+     "district": 36
+    },
+    {
+     "name": "Sydney Kamlager-Dove",
+     "party": "D",
+     "wiki": "Sydney_Kamlager-Dove",
+     "district": 37
+    },
+    {
+     "name": "Linda T. Sánchez",
+     "party": "D",
+     "wiki": "Linda_Sánchez",
+     "district": 38
+    },
+    {
+     "name": "Mark Takano",
+     "party": "D",
+     "wiki": "Mark_Takano",
+     "district": 39
+    },
+    {
+     "name": "Young Kim",
+     "party": "R",
+     "wiki": "Young_Kim",
+     "district": 40
+    },
+    {
+     "name": "Ken Calvert",
+     "party": "R",
+     "wiki": "Ken_Calvert",
+     "district": 41
+    },
+    {
+     "name": "Robert Garcia",
+     "party": "D",
+     "wiki": "Robert_Garcia_(California_congressman)",
+     "district": 42
+    },
+    {
+     "name": "Maxine Waters",
+     "party": "D",
+     "wiki": "Maxine_Waters",
+     "district": 43
+    },
+    {
+     "name": "Nanette Diaz Barragán",
+     "party": "D",
+     "wiki": "Nanette_Barragán",
+     "district": 44
+    },
+    {
+     "name": "Derek Tran",
+     "party": "D",
+     "wiki": "Derek_Tran",
+     "district": 45
+    },
+    {
+     "name": "J. Luis Correa",
+     "party": "D",
+     "wiki": "Lou_Correa",
+     "district": 46
+    },
+    {
+     "name": "Dave Min",
+     "party": "D",
+     "wiki": "Dave_Min",
+     "district": 47
+    },
+    {
+     "name": "Darrell Issa",
+     "party": "R",
+     "wiki": "Darrell_Issa",
+     "district": 48
+    },
+    {
+     "name": "Mike Levin",
+     "party": "D",
+     "wiki": "Mike_Levin",
+     "district": 49
+    },
+    {
+     "name": "Scott H. Peters",
+     "party": "D",
+     "wiki": "Scott_Peters_(politician)",
+     "district": 50
+    },
+    {
+     "name": "Sara Jacobs",
+     "party": "D",
+     "wiki": "Sara_Jacobs",
+     "district": 51
+    },
+    {
+     "name": "Juan Vargas",
+     "party": "D",
+     "wiki": "Juan_Vargas",
+     "district": 52
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 29,
+      "R": 10,
+      "O": 0,
+      "control": "D"
+     },
+     {
+      "id": "lower",
+      "name": "Assembly",
+      "D": 60,
+      "R": 19,
+      "O": 0,
+      "control": "D"
+     }
+    ]
+   }
+  },
+  {
+   "code": "CO",
+   "fips": "08",
+   "name": "Colorado",
+   "governor": {
+    "name": "Jared Polis",
+    "wiki": "Jared_Polis",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2019-01-08",
+    "termEnds": 2027,
+    "termNote": "term limits"
+   },
+   "senators": [
+    {
+     "name": "John W. Hickenlooper",
+     "party": "D",
+     "wiki": "John_Hickenlooper",
+     "class": 2,
+     "since": "2021-01-03",
+     "nextElection": 2026,
+     "url": "https://www.hickenlooper.senate.gov"
+    },
+    {
+     "name": "Michael F. Bennet",
+     "party": "D",
+     "wiki": "Michael_Bennet",
+     "class": 3,
+     "since": "2009-01-22",
+     "nextElection": 2028,
+     "url": "https://www.bennet.senate.gov"
+    }
+   ],
+   "houseSeats": 8,
+   "house": [
+    {
+     "name": "Diana DeGette",
+     "party": "D",
+     "wiki": "Diana_DeGette",
+     "district": 1
+    },
+    {
+     "name": "Joe Neguse",
+     "party": "D",
+     "wiki": "Joe_Neguse",
+     "district": 2
+    },
+    {
+     "name": "Jeff Hurd",
+     "party": "R",
+     "wiki": "Jeff_Hurd",
+     "district": 3
+    },
+    {
+     "name": "Lauren Boebert",
+     "party": "R",
+     "wiki": "Lauren_Boebert",
+     "district": 4
+    },
+    {
+     "name": "Jeff Crank",
+     "party": "R",
+     "wiki": "Jeff_Crank",
+     "district": 5
+    },
+    {
+     "name": "Jason Crow",
+     "party": "D",
+     "wiki": "Jason_Crow",
+     "district": 6
+    },
+    {
+     "name": "Brittany Pettersen",
+     "party": "D",
+     "wiki": "Brittany_Pettersen",
+     "district": 7
+    },
+    {
+     "name": "Gabe Evans",
+     "party": "R",
+     "wiki": "Gabe_Evans",
+     "district": 8
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 23,
+      "R": 12,
+      "O": 0,
+      "control": "D"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 42,
+      "R": 22,
+      "O": 0,
+      "control": "D"
+     }
+    ]
+   }
+  },
+  {
+   "code": "CT",
+   "fips": "09",
+   "name": "Connecticut",
+   "governor": {
+    "name": "Ned Lamont",
+    "wiki": "Ned_Lamont",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2019-01-09",
+    "termEnds": 2027
+   },
+   "senators": [
+    {
+     "name": "Christopher Murphy",
+     "party": "D",
+     "wiki": "Chris_Murphy",
+     "class": 1,
+     "since": "2013-01-03",
+     "nextElection": 2030,
+     "url": "https://www.murphy.senate.gov"
+    },
+    {
+     "name": "Richard Blumenthal",
+     "party": "D",
+     "wiki": "Richard_Blumenthal",
+     "class": 3,
+     "since": "2011-01-05",
+     "nextElection": 2028,
+     "url": "https://www.blumenthal.senate.gov"
+    }
+   ],
+   "houseSeats": 5,
+   "house": [
+    {
+     "name": "John B. Larson",
+     "party": "D",
+     "wiki": "John_B._Larson",
+     "district": 1
+    },
+    {
+     "name": "Joe Courtney",
+     "party": "D",
+     "wiki": "Joe_Courtney_(politician)",
+     "district": 2
+    },
+    {
+     "name": "Rosa L. DeLauro",
+     "party": "D",
+     "wiki": "Rosa_DeLauro",
+     "district": 3
+    },
+    {
+     "name": "James A. Himes",
+     "party": "D",
+     "wiki": "Jim_Himes",
+     "district": 4
+    },
+    {
+     "name": "Jahana Hayes",
+     "party": "D",
+     "wiki": "Jahana_Hayes",
+     "district": 5
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 25,
+      "R": 11,
+      "O": 0,
+      "control": "D"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 102,
+      "R": 49,
+      "O": 0,
+      "control": "D"
+     }
+    ]
+   }
+  },
+  {
+   "code": "DE",
+   "fips": "10",
+   "name": "Delaware",
+   "governor": {
+    "name": "Matt Meyer",
+    "wiki": "Matt_Meyer",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2025-01-21",
+    "termEnds": 2029
+   },
+   "senators": [
+    {
+     "name": "Lisa Blunt Rochester",
+     "party": "D",
+     "wiki": "Lisa_Blunt_Rochester",
+     "class": 1,
+     "since": "2025-01-03",
+     "nextElection": 2030,
+     "url": "https://www.bluntrochester.senate.gov"
+    },
+    {
+     "name": "Christopher A. Coons",
+     "party": "D",
+     "wiki": "Chris_Coons",
+     "class": 2,
+     "since": "2010-11-15",
+     "nextElection": 2026,
+     "url": "https://www.coons.senate.gov"
+    }
+   ],
+   "houseSeats": 1,
+   "house": [
+    {
+     "name": "Sarah McBride",
+     "party": "D",
+     "wiki": "Sarah_McBride",
+     "district": 0
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 15,
+      "R": 6,
+      "O": 0,
+      "control": "D"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 27,
+      "R": 14,
+      "O": 0,
+      "control": "D"
+     }
+    ]
+   }
+  },
+  {
+   "code": "DC",
+   "fips": "11",
+   "name": "District of Columbia",
+   "governor": {
+    "name": "Muriel Bowser",
+    "wiki": "Muriel_Bowser",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2015-01-02",
+    "termEnds": 2027,
+    "termNote": "retiring"
+   },
+   "senators": [],
+   "houseSeats": 1,
+   "house": [
+    {
+     "name": "Eleanor Holmes Norton",
+     "party": "D",
+     "wiki": "Eleanor_Holmes_Norton",
+     "district": 0
+    }
+   ],
+   "legislature": null
+  },
+  {
+   "code": "FL",
+   "fips": "12",
+   "name": "Florida",
+   "governor": {
+    "name": "Ron DeSantis",
+    "wiki": "Ron_DeSantis",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2019-01-08",
+    "termEnds": 2027,
+    "termNote": "term limits"
+   },
+   "senators": [
+    {
+     "name": "Rick Scott",
+     "party": "R",
+     "wiki": "Rick_Scott",
+     "class": 1,
+     "since": "2019-01-08",
+     "nextElection": 2030,
+     "url": "https://www.rickscott.senate.gov"
+    },
+    {
+     "name": "Ashley Moody",
+     "party": "R",
+     "wiki": "Ashley_Moody",
+     "class": 3,
+     "since": "2025-01-21",
+     "nextElection": 2026,
+     "special": true,
+     "appointed": true,
+     "url": "https://www.moody.senate.gov"
+    }
+   ],
+   "houseSeats": 28,
+   "house": [
+    {
+     "name": "Jimmy Patronis",
+     "party": "R",
+     "wiki": "Jimmy_Patronis",
+     "district": 1
+    },
+    {
+     "name": "Neal P. Dunn",
+     "party": "R",
+     "wiki": "Neal_Dunn",
+     "district": 2
+    },
+    {
+     "name": "Kat Cammack",
+     "party": "R",
+     "wiki": "Kat_Cammack",
+     "district": 3
+    },
+    {
+     "name": "Aaron Bean",
+     "party": "R",
+     "wiki": "Aaron_Bean",
+     "district": 4
+    },
+    {
+     "name": "John H. Rutherford",
+     "party": "R",
+     "wiki": "John_Rutherford_(Florida_politician)",
+     "district": 5
+    },
+    {
+     "name": "Randy Fine",
+     "party": "R",
+     "wiki": "Randy_Fine",
+     "district": 6
+    },
+    {
+     "name": "Cory Mills",
+     "party": "R",
+     "wiki": "Cory_Mills",
+     "district": 7
+    },
+    {
+     "name": "Mike Haridopolos",
+     "party": "R",
+     "wiki": "Mike_Haridopolos",
+     "district": 8
+    },
+    {
+     "name": "Darren Soto",
+     "party": "D",
+     "wiki": "Darren_Soto",
+     "district": 9
+    },
+    {
+     "name": "Maxwell Frost",
+     "party": "D",
+     "wiki": "Maxwell_Frost",
+     "district": 10
+    },
+    {
+     "name": "Daniel Webster",
+     "party": "R",
+     "wiki": "Daniel_Webster_(Florida_politician)",
+     "district": 11
+    },
+    {
+     "name": "Gus M. Bilirakis",
+     "party": "R",
+     "wiki": "Gus_Bilirakis",
+     "district": 12
+    },
+    {
+     "name": "Anna Paulina Luna",
+     "party": "R",
+     "wiki": "Anna_Paulina_Luna",
+     "district": 13
+    },
+    {
+     "name": "Kathy Castor",
+     "party": "D",
+     "wiki": "Kathy_Castor",
+     "district": 14
+    },
+    {
+     "name": "Laurel M. Lee",
+     "party": "R",
+     "wiki": "Laurel_Lee",
+     "district": 15
+    },
+    {
+     "name": "Vern Buchanan",
+     "party": "R",
+     "wiki": "Vern_Buchanan",
+     "district": 16
+    },
+    {
+     "name": "W. Gregory Steube",
+     "party": "R",
+     "wiki": "Greg_Steube",
+     "district": 17
+    },
+    {
+     "name": "Scott Franklin",
+     "party": "R",
+     "wiki": "Scott_Franklin_(politician)",
+     "district": 18
+    },
+    {
+     "name": "Byron Donalds",
+     "party": "R",
+     "wiki": "Byron_Donalds",
+     "district": 19
+    },
+    {
+     "name": "Brian J. Mast",
+     "party": "R",
+     "wiki": "Brian_Mast",
+     "district": 21
+    },
+    {
+     "name": "Lois Frankel",
+     "party": "D",
+     "wiki": "Lois_Frankel",
+     "district": 22
+    },
+    {
+     "name": "Jared Moskowitz",
+     "party": "D",
+     "wiki": "Jared_Moskowitz",
+     "district": 23
+    },
+    {
+     "name": "Frederica S. Wilson",
+     "party": "D",
+     "wiki": "Frederica_Wilson",
+     "district": 24
+    },
+    {
+     "name": "Debbie Wasserman Schultz",
+     "party": "D",
+     "wiki": "Debbie_Wasserman_Schultz",
+     "district": 25
+    },
+    {
+     "name": "Mario Diaz-Balart",
+     "party": "R",
+     "wiki": "Mario_Díaz-Balart",
+     "district": 26
+    },
+    {
+     "name": "Maria Elvira Salazar",
+     "party": "R",
+     "wiki": "María_Elvira_Salazar",
+     "district": 27
+    },
+    {
+     "name": "Carlos A. Gimenez",
+     "party": "R",
+     "wiki": "Carlos_A._Giménez",
+     "district": 28
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 12,
+      "R": 26,
+      "O": 1,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 34,
+      "R": 82,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "GA",
+   "fips": "13",
+   "name": "Georgia",
+   "governor": {
+    "name": "Brian Kemp",
+    "wiki": "Brian_Kemp",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2019-01-14",
+    "termEnds": 2027,
+    "termNote": "term limits"
+   },
+   "senators": [
+    {
+     "name": "Jon Ossoff",
+     "party": "D",
+     "wiki": "Jon_Ossoff",
+     "class": 2,
+     "since": "2021-01-20",
+     "nextElection": 2026,
+     "url": "https://www.ossoff.senate.gov"
+    },
+    {
+     "name": "Raphael G. Warnock",
+     "party": "D",
+     "wiki": "Raphael_Warnock",
+     "class": 3,
+     "since": "2021-01-20",
+     "nextElection": 2028,
+     "url": "https://www.warnock.senate.gov"
+    }
+   ],
+   "houseSeats": 14,
+   "house": [
+    {
+     "name": "Earl L. \"Buddy\" Carter",
+     "party": "R",
+     "wiki": "Buddy_Carter",
+     "district": 1
+    },
+    {
+     "name": "Sanford D. Bishop, Jr.",
+     "party": "D",
+     "wiki": "Sanford_Bishop",
+     "district": 2
+    },
+    {
+     "name": "Brian Jack",
+     "party": "R",
+     "wiki": "Brian_Jack",
+     "district": 3
+    },
+    {
+     "name": "Henry C. \"Hank\" Johnson, Jr.",
+     "party": "D",
+     "wiki": "Hank_Johnson",
+     "district": 4
+    },
+    {
+     "name": "Nikema Williams",
+     "party": "D",
+     "wiki": "Nikema_Williams",
+     "district": 5
+    },
+    {
+     "name": "Lucy McBath",
+     "party": "D",
+     "wiki": "Lucy_McBath",
+     "district": 6
+    },
+    {
+     "name": "Richard McCormick",
+     "party": "R",
+     "wiki": "Rich_McCormick",
+     "district": 7
+    },
+    {
+     "name": "Austin Scott",
+     "party": "R",
+     "wiki": "Austin_Scott",
+     "district": 8
+    },
+    {
+     "name": "Andrew S. Clyde",
+     "party": "R",
+     "wiki": "Andrew_Clyde",
+     "district": 9
+    },
+    {
+     "name": "Mike Collins",
+     "party": "R",
+     "wiki": "Mike_Collins_(politician)",
+     "district": 10
+    },
+    {
+     "name": "Barry Loudermilk",
+     "party": "R",
+     "wiki": "Barry_Loudermilk",
+     "district": 11
+    },
+    {
+     "name": "Rick W. Allen",
+     "party": "R",
+     "wiki": "Rick_Allen_(politician)",
+     "district": 12
+    },
+    {
+     "name": "Everton Blair Jr.",
+     "party": "D",
+     "wiki": "Everton_Blair",
+     "district": 13
+    },
+    {
+     "name": "Clay Fuller",
+     "party": "R",
+     "wiki": "Clay_Fuller",
+     "district": 14
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 22,
+      "R": 33,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 81,
+      "R": 99,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "HI",
+   "fips": "15",
+   "name": "Hawaii",
+   "governor": {
+    "name": "Josh Green",
+    "wiki": "Josh_Green_(politician)",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2022-12-05",
+    "termEnds": 2026
+   },
+   "senators": [
+    {
+     "name": "Mazie K. Hirono",
+     "party": "D",
+     "wiki": "Mazie_Hirono",
+     "class": 1,
+     "since": "2013-01-03",
+     "nextElection": 2030,
+     "url": "https://www.hirono.senate.gov"
+    },
+    {
+     "name": "Brian Schatz",
+     "party": "D",
+     "wiki": "Brian_Schatz",
+     "class": 3,
+     "since": "2012-12-27",
+     "nextElection": 2028,
+     "url": "https://www.schatz.senate.gov"
+    }
+   ],
+   "houseSeats": 2,
+   "house": [
+    {
+     "name": "Ed Case",
+     "party": "D",
+     "wiki": "Ed_Case",
+     "district": 1
+    },
+    {
+     "name": "Jill N. Tokuda",
+     "party": "D",
+     "wiki": "Jill_Tokuda",
+     "district": 2
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 22,
+      "R": 3,
+      "O": 0,
+      "control": "D"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 41,
+      "R": 10,
+      "O": 0,
+      "control": "D"
+     }
+    ]
+   }
+  },
+  {
+   "code": "ID",
+   "fips": "16",
+   "name": "Idaho",
+   "governor": {
+    "name": "Brad Little",
+    "wiki": "Brad_Little",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2019-01-07",
+    "termEnds": 2027
+   },
+   "senators": [
+    {
+     "name": "James E. Risch",
+     "party": "R",
+     "wiki": "Jim_Risch",
+     "class": 2,
+     "since": "2009-01-06",
+     "nextElection": 2026,
+     "url": "https://www.risch.senate.gov"
+    },
+    {
+     "name": "Mike Crapo",
+     "party": "R",
+     "wiki": "Mike_Crapo",
+     "class": 3,
+     "since": "1999-01-06",
+     "nextElection": 2028,
+     "url": "https://www.crapo.senate.gov"
+    }
+   ],
+   "houseSeats": 2,
+   "house": [
+    {
+     "name": "Russ Fulcher",
+     "party": "R",
+     "wiki": "Russ_Fulcher",
+     "district": 1
+    },
+    {
+     "name": "Michael K. Simpson",
+     "party": "R",
+     "wiki": "Mike_Simpson",
+     "district": 2
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 6,
+      "R": 29,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 9,
+      "R": 61,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "IL",
+   "fips": "17",
+   "name": "Illinois",
+   "governor": {
+    "name": "JB Pritzker",
+    "wiki": "JB_Pritzker",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2019-01-14",
+    "termEnds": 2027
+   },
+   "senators": [
+    {
+     "name": "Richard J. Durbin",
+     "party": "D",
+     "wiki": "Dick_Durbin",
+     "class": 2,
+     "since": "1997-01-07",
+     "nextElection": 2026,
+     "url": "https://www.durbin.senate.gov"
+    },
+    {
+     "name": "Tammy Duckworth",
+     "party": "D",
+     "wiki": "Tammy_Duckworth",
+     "class": 3,
+     "since": "2017-01-03",
+     "nextElection": 2028,
+     "url": "https://www.duckworth.senate.gov"
+    }
+   ],
+   "houseSeats": 17,
+   "house": [
+    {
+     "name": "Jonathan L. Jackson",
+     "party": "D",
+     "wiki": "Jonathan_Jackson_(Illinois_politician)",
+     "district": 1
+    },
+    {
+     "name": "Robin L. Kelly",
+     "party": "D",
+     "wiki": "Robin_Kelly",
+     "district": 2
+    },
+    {
+     "name": "Delia C. Ramirez",
+     "party": "D",
+     "wiki": "Delia_Ramirez",
+     "district": 3
+    },
+    {
+     "name": "Jesús G. \"Chuy\" García",
+     "party": "D",
+     "wiki": "Chuy_García",
+     "district": 4
+    },
+    {
+     "name": "Mike Quigley",
+     "party": "D",
+     "wiki": "Mike_Quigley",
+     "district": 5
+    },
+    {
+     "name": "Sean Casten",
+     "party": "D",
+     "wiki": "Sean_Casten",
+     "district": 6
+    },
+    {
+     "name": "Danny K. Davis",
+     "party": "D",
+     "wiki": "Danny_Davis_(Illinois_politician)",
+     "district": 7
+    },
+    {
+     "name": "Raja Krishnamoorthi",
+     "party": "D",
+     "wiki": "Raja_Krishnamoorthi",
+     "district": 8
+    },
+    {
+     "name": "Janice D. Schakowsky",
+     "party": "D",
+     "wiki": "Jan_Schakowsky",
+     "district": 9
+    },
+    {
+     "name": "Bradley Scott Schneider",
+     "party": "D",
+     "wiki": "Brad_Schneider",
+     "district": 10
+    },
+    {
+     "name": "Bill Foster",
+     "party": "D",
+     "wiki": "Bill_Foster_(politician)",
+     "district": 11
+    },
+    {
+     "name": "Mike Bost",
+     "party": "R",
+     "wiki": "Mike_Bost",
+     "district": 12
+    },
+    {
+     "name": "Nikki Budzinski",
+     "party": "D",
+     "wiki": "Nikki_Budzinski",
+     "district": 13
+    },
+    {
+     "name": "Lauren Underwood",
+     "party": "D",
+     "wiki": "Lauren_Underwood",
+     "district": 14
+    },
+    {
+     "name": "Mary E. Miller",
+     "party": "R",
+     "wiki": "Mary_Miller_(politician)",
+     "district": 15
+    },
+    {
+     "name": "Darin LaHood",
+     "party": "R",
+     "wiki": "Darin_LaHood",
+     "district": 16
+    },
+    {
+     "name": "Eric Sorensen",
+     "party": "D",
+     "wiki": "Eric_Sorensen_(politician)",
+     "district": 17
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 40,
+      "R": 19,
+      "O": 0,
+      "control": "D"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 78,
+      "R": 40,
+      "O": 0,
+      "control": "D"
+     }
+    ]
+   }
+  },
+  {
+   "code": "IN",
+   "fips": "18",
+   "name": "Indiana",
+   "governor": {
+    "name": "Mike Braun",
+    "wiki": "Mike_Braun",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2025-01-13",
+    "termEnds": 2029
+   },
+   "senators": [
+    {
+     "name": "Jim Banks",
+     "party": "R",
+     "wiki": "Jim_Banks",
+     "class": 1,
+     "since": "2025-01-03",
+     "nextElection": 2030,
+     "url": "https://www.banks.senate.gov"
+    },
+    {
+     "name": "Todd Young",
+     "party": "R",
+     "wiki": "Todd_Young",
+     "class": 3,
+     "since": "2017-01-03",
+     "nextElection": 2028,
+     "url": "https://www.young.senate.gov"
+    }
+   ],
+   "houseSeats": 9,
+   "house": [
+    {
+     "name": "Frank J. Mrvan",
+     "party": "D",
+     "wiki": "Frank_J._Mrvan",
+     "district": 1
+    },
+    {
+     "name": "Rudy Yakym III",
+     "party": "R",
+     "wiki": "Rudy_Yakym",
+     "district": 2
+    },
+    {
+     "name": "Marlin A. Stutzman",
+     "party": "R",
+     "wiki": "Marlin_Stutzman",
+     "district": 3
+    },
+    {
+     "name": "James R. Baird",
+     "party": "R",
+     "wiki": "Jim_Baird_(politician)",
+     "district": 4
+    },
+    {
+     "name": "Victoria Spartz",
+     "party": "R",
+     "wiki": "Victoria_Spartz",
+     "district": 5
+    },
+    {
+     "name": "Jefferson Shreve",
+     "party": "R",
+     "wiki": "Jefferson_Shreve",
+     "district": 6
+    },
+    {
+     "name": "André Carson",
+     "party": "D",
+     "wiki": "André_Carson",
+     "district": 7
+    },
+    {
+     "name": "Mark B. Messmer",
+     "party": "R",
+     "wiki": "Mark_Messmer",
+     "district": 8
+    },
+    {
+     "name": "Erin Houchin",
+     "party": "R",
+     "wiki": "Erin_Houchin",
+     "district": 9
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 10,
+      "R": 40,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 30,
+      "R": 69,
+      "O": 1,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "IA",
+   "fips": "19",
+   "name": "Iowa",
+   "governor": {
+    "name": "Kim Reynolds",
+    "wiki": "Kim_Reynolds",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2017-05-24",
+    "termEnds": 2027,
+    "termNote": "retiring"
+   },
+   "senators": [
+    {
+     "name": "Joni Ernst",
+     "party": "R",
+     "wiki": "Joni_Ernst",
+     "class": 2,
+     "since": "2015-01-06",
+     "nextElection": 2026,
+     "url": "https://www.ernst.senate.gov"
+    },
+    {
+     "name": "Chuck Grassley",
+     "party": "R",
+     "wiki": "Chuck_Grassley",
+     "class": 3,
+     "since": "1981-01-05",
+     "nextElection": 2028,
+     "url": "https://www.grassley.senate.gov"
+    }
+   ],
+   "houseSeats": 4,
+   "house": [
+    {
+     "name": "Mariannette Miller-Meeks",
+     "party": "R",
+     "wiki": "Mariannette_Miller-Meeks",
+     "district": 1
+    },
+    {
+     "name": "Ashley Hinson",
+     "party": "R",
+     "wiki": "Ashley_Hinson",
+     "district": 2
+    },
+    {
+     "name": "Zachary Nunn",
+     "party": "R",
+     "wiki": "Zach_Nunn",
+     "district": 3
+    },
+    {
+     "name": "Randy Feenstra",
+     "party": "R",
+     "wiki": "Randy_Feenstra",
+     "district": 4
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 17,
+      "R": 32,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 33,
+      "R": 66,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "KS",
+   "fips": "20",
+   "name": "Kansas",
+   "governor": {
+    "name": "Laura Kelly",
+    "wiki": "Laura_Kelly",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2019-01-14",
+    "termEnds": 2027,
+    "termNote": "term limits"
+   },
+   "senators": [
+    {
+     "name": "Roger Marshall",
+     "party": "R",
+     "wiki": "Roger_Marshall",
+     "class": 2,
+     "since": "2021-01-03",
+     "nextElection": 2026,
+     "url": "https://www.marshall.senate.gov"
+    },
+    {
+     "name": "Jerry Moran",
+     "party": "R",
+     "wiki": "Jerry_Moran",
+     "class": 3,
+     "since": "2011-01-05",
+     "nextElection": 2028,
+     "url": "https://www.moran.senate.gov"
+    }
+   ],
+   "houseSeats": 4,
+   "house": [
+    {
+     "name": "Tracey Mann",
+     "party": "R",
+     "wiki": "Tracey_Mann",
+     "district": 1
+    },
+    {
+     "name": "Derek Schmidt",
+     "party": "R",
+     "wiki": "Derek_Schmidt",
+     "district": 2
+    },
+    {
+     "name": "Sharice Davids",
+     "party": "D",
+     "wiki": "Sharice_Davids",
+     "district": 3
+    },
+    {
+     "name": "Ron Estes",
+     "party": "R",
+     "wiki": "Ron_Estes",
+     "district": 4
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 9,
+      "R": 31,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 37,
+      "R": 88,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "KY",
+   "fips": "21",
+   "name": "Kentucky",
+   "governor": {
+    "name": "Andy Beshear",
+    "wiki": "Andy_Beshear",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2019-12-10",
+    "termEnds": 2027,
+    "termNote": "term limits"
+   },
+   "senators": [
+    {
+     "name": "Mitch McConnell",
+     "party": "R",
+     "wiki": "Mitch_McConnell",
+     "class": 2,
+     "since": "1985-01-03",
+     "nextElection": 2026,
+     "url": "https://www.mcconnell.senate.gov"
+    },
+    {
+     "name": "Rand Paul",
+     "party": "R",
+     "wiki": "Rand_Paul",
+     "class": 3,
+     "since": "2011-01-05",
+     "nextElection": 2028,
+     "url": "https://www.paul.senate.gov"
+    }
+   ],
+   "houseSeats": 6,
+   "house": [
+    {
+     "name": "James Comer",
+     "party": "R",
+     "wiki": "James_Comer",
+     "district": 1
+    },
+    {
+     "name": "Brett Guthrie",
+     "party": "R",
+     "wiki": "Brett_Guthrie",
+     "district": 2
+    },
+    {
+     "name": "Morgan McGarvey",
+     "party": "D",
+     "wiki": "Morgan_McGarvey",
+     "district": 3
+    },
+    {
+     "name": "Thomas Massie",
+     "party": "R",
+     "wiki": "Thomas_Massie",
+     "district": 4
+    },
+    {
+     "name": "Harold Rogers",
+     "party": "R",
+     "wiki": "Hal_Rogers",
+     "district": 5
+    },
+    {
+     "name": "Andy Barr",
+     "party": "R",
+     "wiki": "Andy_Barr",
+     "district": 6
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 6,
+      "R": 32,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 20,
+      "R": 80,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "LA",
+   "fips": "22",
+   "name": "Louisiana",
+   "governor": {
+    "name": "Jeff Landry",
+    "wiki": "Jeff_Landry",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2024-01-08",
+    "termEnds": 2028
+   },
+   "senators": [
+    {
+     "name": "Bill Cassidy",
+     "party": "R",
+     "wiki": "Bill_Cassidy",
+     "class": 2,
+     "since": "2015-01-06",
+     "nextElection": 2026,
+     "url": "https://www.cassidy.senate.gov"
+    },
+    {
+     "name": "John Kennedy",
+     "party": "R",
+     "wiki": "John_Kennedy_(Louisiana_politician)",
+     "class": 3,
+     "since": "2017-01-03",
+     "nextElection": 2028,
+     "url": "https://www.kennedy.senate.gov/public"
+    }
+   ],
+   "houseSeats": 6,
+   "house": [
+    {
+     "name": "Steve Scalise",
+     "party": "R",
+     "wiki": "Steve_Scalise",
+     "district": 1
+    },
+    {
+     "name": "Troy A. Carter",
+     "party": "D",
+     "wiki": "Troy_Carter_(politician)",
+     "district": 2
+    },
+    {
+     "name": "Clay Higgins",
+     "party": "R",
+     "wiki": "Clay_Higgins",
+     "district": 3
+    },
+    {
+     "name": "Mike Johnson",
+     "party": "R",
+     "wiki": "Mike_Johnson",
+     "district": 4
+    },
+    {
+     "name": "Julia Letlow",
+     "party": "R",
+     "wiki": "Julia_Letlow",
+     "district": 5
+    },
+    {
+     "name": "Cleo Fields",
+     "party": "D",
+     "wiki": "Cleo_Fields",
+     "district": 6
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 10,
+      "R": 28,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 32,
+      "R": 71,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "ME",
+   "fips": "23",
+   "name": "Maine",
+   "governor": {
+    "name": "Janet Mills",
+    "wiki": "Janet_Mills",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2019-01-02",
+    "termEnds": 2027,
+    "termNote": "term limits"
+   },
+   "senators": [
+    {
+     "name": "Angus S. King, Jr.",
+     "party": "I",
+     "caucus": "D",
+     "wiki": "Angus_King",
+     "class": 1,
+     "since": "2013-01-03",
+     "nextElection": 2030,
+     "url": "https://www.king.senate.gov"
+    },
+    {
+     "name": "Susan M. Collins",
+     "party": "R",
+     "wiki": "Susan_Collins",
+     "class": 2,
+     "since": "1997-01-07",
+     "nextElection": 2026,
+     "url": "https://www.collins.senate.gov"
+    }
+   ],
+   "houseSeats": 2,
+   "house": [
+    {
+     "name": "Chellie Pingree",
+     "party": "D",
+     "wiki": "Chellie_Pingree",
+     "district": 1
+    },
+    {
+     "name": "Jared F. Golden",
+     "party": "D",
+     "wiki": "Jared_Golden",
+     "district": 2
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 20,
+      "R": 14,
+      "O": 1,
+      "control": "D"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 75,
+      "R": 73,
+      "O": 5,
+      "control": "D"
+     }
+    ]
+   }
+  },
+  {
+   "code": "MD",
+   "fips": "24",
+   "name": "Maryland",
+   "governor": {
+    "name": "Wes Moore",
+    "wiki": "Wes_Moore",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2023-01-18",
+    "termEnds": 2027
+   },
+   "senators": [
+    {
+     "name": "Angela D. Alsobrooks",
+     "party": "D",
+     "wiki": "Angela_Alsobrooks",
+     "class": 1,
+     "since": "2025-01-03",
+     "nextElection": 2030,
+     "url": "https://www.alsobrooks.senate.gov"
+    },
+    {
+     "name": "Chris Van Hollen",
+     "party": "D",
+     "wiki": "Chris_Van_Hollen",
+     "class": 3,
+     "since": "2017-01-03",
+     "nextElection": 2028,
+     "url": "https://www.vanhollen.senate.gov"
+    }
+   ],
+   "houseSeats": 8,
+   "house": [
+    {
+     "name": "Andy Harris",
+     "party": "R",
+     "wiki": "Andy_Harris_(politician)",
+     "district": 1
+    },
+    {
+     "name": "Johnny Olszewski, Jr.",
+     "party": "D",
+     "wiki": "Johnny_Olszewski",
+     "district": 2
+    },
+    {
+     "name": "Sarah Elfreth",
+     "party": "D",
+     "wiki": "Sarah_Elfreth",
+     "district": 3
+    },
+    {
+     "name": "Glenn Ivey",
+     "party": "D",
+     "wiki": "Glenn_Ivey",
+     "district": 4
+    },
+    {
+     "name": "Steny H. Hoyer",
+     "party": "D",
+     "wiki": "Steny_Hoyer",
+     "district": 5
+    },
+    {
+     "name": "April McClain Delaney",
+     "party": "D",
+     "wiki": "April_McClain_Delaney",
+     "district": 6
+    },
+    {
+     "name": "Kweisi Mfume",
+     "party": "D",
+     "wiki": "Kweisi_Mfume",
+     "district": 7
+    },
+    {
+     "name": "Jamie Raskin",
+     "party": "D",
+     "wiki": "Jamie_Raskin",
+     "district": 8
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 34,
+      "R": 13,
+      "O": 0,
+      "control": "D"
+     },
+     {
+      "id": "lower",
+      "name": "House of Delegates",
+      "D": 102,
+      "R": 39,
+      "O": 0,
+      "control": "D"
+     }
+    ]
+   }
+  },
+  {
+   "code": "MA",
+   "fips": "25",
+   "name": "Massachusetts",
+   "governor": {
+    "name": "Maura Healey",
+    "wiki": "Maura_Healey",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2023-01-05",
+    "termEnds": 2027
+   },
+   "senators": [
+    {
+     "name": "Elizabeth Warren",
+     "party": "D",
+     "wiki": "Elizabeth_Warren",
+     "class": 1,
+     "since": "2013-01-03",
+     "nextElection": 2030,
+     "url": "https://www.warren.senate.gov"
+    },
+    {
+     "name": "Edward J. Markey",
+     "party": "D",
+     "wiki": "Ed_Markey",
+     "class": 2,
+     "since": "2013-07-16",
+     "nextElection": 2026,
+     "url": "https://www.markey.senate.gov"
+    }
+   ],
+   "houseSeats": 9,
+   "house": [
+    {
+     "name": "Richard E. Neal",
+     "party": "D",
+     "wiki": "Richard_Neal",
+     "district": 1
+    },
+    {
+     "name": "James P. McGovern",
+     "party": "D",
+     "wiki": "Jim_McGovern_(American_politician)",
+     "district": 2
+    },
+    {
+     "name": "Lori Trahan",
+     "party": "D",
+     "wiki": "Lori_Trahan",
+     "district": 3
+    },
+    {
+     "name": "Jake Auchincloss",
+     "party": "D",
+     "wiki": "Jake_Auchincloss",
+     "district": 4
+    },
+    {
+     "name": "Katherine M. Clark",
+     "party": "D",
+     "wiki": "Katherine_Clark",
+     "district": 5
+    },
+    {
+     "name": "Seth Moulton",
+     "party": "D",
+     "wiki": "Seth_Moulton",
+     "district": 6
+    },
+    {
+     "name": "Ayanna Pressley",
+     "party": "D",
+     "wiki": "Ayanna_Pressley",
+     "district": 7
+    },
+    {
+     "name": "Stephen F. Lynch",
+     "party": "D",
+     "wiki": "Stephen_Lynch_(politician)",
+     "district": 8
+    },
+    {
+     "name": "William R. Keating",
+     "party": "D",
+     "wiki": "Bill_Keating",
+     "district": 9
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 35,
+      "R": 5,
+      "O": 0,
+      "control": "D"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 131,
+      "R": 25,
+      "O": 1,
+      "control": "D"
+     }
+    ]
+   }
+  },
+  {
+   "code": "MI",
+   "fips": "26",
+   "name": "Michigan",
+   "governor": {
+    "name": "Gretchen Whitmer",
+    "wiki": "Gretchen_Whitmer",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2019-01-01",
+    "termEnds": 2027,
+    "termNote": "term limits"
+   },
+   "senators": [
+    {
+     "name": "Elissa Slotkin",
+     "party": "D",
+     "wiki": "Elissa_Slotkin",
+     "class": 1,
+     "since": "2025-01-03",
+     "nextElection": 2030,
+     "url": "https://www.slotkin.senate.gov"
+    },
+    {
+     "name": "Gary C. Peters",
+     "party": "D",
+     "wiki": "Gary_Peters",
+     "class": 2,
+     "since": "2015-01-06",
+     "nextElection": 2026,
+     "url": "https://www.peters.senate.gov"
+    }
+   ],
+   "houseSeats": 13,
+   "house": [
+    {
+     "name": "Jack Bergman",
+     "party": "R",
+     "wiki": "Jack_Bergman",
+     "district": 1
+    },
+    {
+     "name": "John R. Moolenaar",
+     "party": "R",
+     "wiki": "John_Moolenaar",
+     "district": 2
+    },
+    {
+     "name": "Hillary J. Scholten",
+     "party": "D",
+     "wiki": "Hillary_Scholten",
+     "district": 3
+    },
+    {
+     "name": "Bill Huizenga",
+     "party": "R",
+     "wiki": "Bill_Huizenga",
+     "district": 4
+    },
+    {
+     "name": "Tim Walberg",
+     "party": "R",
+     "wiki": "Tim_Walberg",
+     "district": 5
+    },
+    {
+     "name": "Debbie Dingell",
+     "party": "D",
+     "wiki": "Debbie_Dingell",
+     "district": 6
+    },
+    {
+     "name": "Tom Barrett",
+     "party": "R",
+     "wiki": "Tom_Barrett_(Michigan_politician)",
+     "district": 7
+    },
+    {
+     "name": "Kristen McDonald Rivet",
+     "party": "D",
+     "wiki": "Kristen_McDonald_Rivet",
+     "district": 8
+    },
+    {
+     "name": "Lisa C. McClain",
+     "party": "R",
+     "wiki": "Lisa_McClain",
+     "district": 9
+    },
+    {
+     "name": "John James",
+     "party": "R",
+     "wiki": "John_James_(Michigan_politician)",
+     "district": 10
+    },
+    {
+     "name": "Haley M. Stevens",
+     "party": "D",
+     "wiki": "Haley_Stevens",
+     "district": 11
+    },
+    {
+     "name": "Rashida Tlaib",
+     "party": "D",
+     "wiki": "Rashida_Tlaib",
+     "district": 12
+    },
+    {
+     "name": "Shri Thanedar",
+     "party": "D",
+     "wiki": "Shri_Thanedar",
+     "district": 13
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 20,
+      "R": 18,
+      "O": 0,
+      "control": "D"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 52,
+      "R": 58,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "MN",
+   "fips": "27",
+   "name": "Minnesota",
+   "governor": {
+    "name": "Tim Walz",
+    "wiki": "Tim_Walz",
+    "party": "D",
+    "partyName": "Democratic–Farmer–Labor",
+    "since": "2019-01-07",
+    "termEnds": 2027,
+    "termNote": "retiring"
+   },
+   "senators": [
+    {
+     "name": "Amy Klobuchar",
+     "party": "D",
+     "wiki": "Amy_Klobuchar",
+     "class": 1,
+     "since": "2007-01-04",
+     "nextElection": 2030,
+     "url": "https://www.klobuchar.senate.gov"
+    },
+    {
+     "name": "Tina Smith",
+     "party": "D",
+     "wiki": "Tina_Smith",
+     "class": 2,
+     "since": "2018-01-03",
+     "nextElection": 2026,
+     "url": "https://www.smith.senate.gov"
+    }
+   ],
+   "houseSeats": 8,
+   "house": [
+    {
+     "name": "Brad Finstad",
+     "party": "R",
+     "wiki": "Brad_Finstad",
+     "district": 1
+    },
+    {
+     "name": "Angie Craig",
+     "party": "D",
+     "wiki": "Angie_Craig",
+     "district": 2
+    },
+    {
+     "name": "Kelly Morrison",
+     "party": "D",
+     "wiki": "Kelly_Morrison",
+     "district": 3
+    },
+    {
+     "name": "Betty McCollum",
+     "party": "D",
+     "wiki": "Betty_McCollum",
+     "district": 4
+    },
+    {
+     "name": "Ilhan Omar",
+     "party": "D",
+     "wiki": "Ilhan_Omar",
+     "district": 5
+    },
+    {
+     "name": "Tom Emmer",
+     "party": "R",
+     "wiki": "Tom_Emmer",
+     "district": 6
+    },
+    {
+     "name": "Michelle Fischbach",
+     "party": "R",
+     "wiki": "Michelle_Fischbach",
+     "district": 7
+    },
+    {
+     "name": "Pete Stauber",
+     "party": "R",
+     "wiki": "Pete_Stauber",
+     "district": 8
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 34,
+      "R": 33,
+      "O": 0,
+      "control": "D"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 67,
+      "R": 66,
+      "O": 0,
+      "control": "shared"
+     }
+    ],
+    "note": "The House runs under a 2025–26 power-sharing agreement after the parties tied 67–67: a Republican speaker and co-chaired committees.",
+    "noteSource": {
+     "name": "Ballotpedia: Minnesota House of Representatives",
+     "url": "https://ballotpedia.org/Minnesota_House_of_Representatives"
+    }
+   }
+  },
+  {
+   "code": "MS",
+   "fips": "28",
+   "name": "Mississippi",
+   "governor": {
+    "name": "Tate Reeves",
+    "wiki": "Tate_Reeves",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2020-01-14",
+    "termEnds": 2028,
+    "termNote": "term limits"
+   },
+   "senators": [
+    {
+     "name": "Roger F. Wicker",
+     "party": "R",
+     "wiki": "Roger_Wicker",
+     "class": 1,
+     "since": "2007-12-31",
+     "nextElection": 2030,
+     "url": "https://www.wicker.senate.gov"
+    },
+    {
+     "name": "Cindy Hyde-Smith",
+     "party": "R",
+     "wiki": "Cindy_Hyde-Smith",
+     "class": 2,
+     "since": "2018-04-09",
+     "nextElection": 2026,
+     "url": "https://www.hydesmith.senate.gov"
+    }
+   ],
+   "houseSeats": 4,
+   "house": [
+    {
+     "name": "Trent Kelly",
+     "party": "R",
+     "wiki": "Trent_Kelly",
+     "district": 1
+    },
+    {
+     "name": "Bennie G. Thompson",
+     "party": "D",
+     "wiki": "Bennie_Thompson",
+     "district": 2
+    },
+    {
+     "name": "Michael Guest",
+     "party": "R",
+     "wiki": "Michael_Guest_(politician)",
+     "district": 3
+    },
+    {
+     "name": "Mike Ezell",
+     "party": "R",
+     "wiki": "Mike_Ezell",
+     "district": 4
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 17,
+      "R": 34,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 41,
+      "R": 77,
+      "O": 2,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "MO",
+   "fips": "29",
+   "name": "Missouri",
+   "governor": {
+    "name": "Mike Kehoe",
+    "wiki": "Mike_Kehoe",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2025-01-13",
+    "termEnds": 2029
+   },
+   "senators": [
+    {
+     "name": "Josh Hawley",
+     "party": "R",
+     "wiki": "Josh_Hawley",
+     "class": 1,
+     "since": "2019-01-03",
+     "nextElection": 2030,
+     "url": "https://www.hawley.senate.gov"
+    },
+    {
+     "name": "Eric Schmitt",
+     "party": "R",
+     "wiki": "Eric_Schmitt",
+     "class": 3,
+     "since": "2023-01-03",
+     "nextElection": 2028,
+     "url": "https://www.schmitt.senate.gov"
+    }
+   ],
+   "houseSeats": 8,
+   "house": [
+    {
+     "name": "Wesley Bell",
+     "party": "D",
+     "wiki": "Wesley_Bell",
+     "district": 1
+    },
+    {
+     "name": "Ann Wagner",
+     "party": "R",
+     "wiki": "Ann_Wagner",
+     "district": 2
+    },
+    {
+     "name": "Robert F. Onder, Jr.",
+     "party": "R",
+     "wiki": "Bob_Onder",
+     "district": 3
+    },
+    {
+     "name": "Mark Alford",
+     "party": "R",
+     "wiki": "Mark_Alford",
+     "district": 4
+    },
+    {
+     "name": "Emanuel Cleaver",
+     "party": "D",
+     "wiki": "Emanuel_Cleaver",
+     "district": 5
+    },
+    {
+     "name": "Sam Graves",
+     "party": "R",
+     "wiki": "Sam_Graves",
+     "district": 6
+    },
+    {
+     "name": "Eric Burlison",
+     "party": "R",
+     "wiki": "Eric_Burlison",
+     "district": 7
+    },
+    {
+     "name": "Jason Smith",
+     "party": "R",
+     "wiki": "Jason_Smith_(American_politician)",
+     "district": 8
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 10,
+      "R": 23,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 50,
+      "R": 105,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "MT",
+   "fips": "30",
+   "name": "Montana",
+   "governor": {
+    "name": "Greg Gianforte",
+    "wiki": "Greg_Gianforte",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2021-01-04",
+    "termEnds": 2029,
+    "termNote": "term limits"
+   },
+   "senators": [
+    {
+     "name": "Tim Sheehy",
+     "party": "R",
+     "wiki": "Tim_Sheehy",
+     "class": 1,
+     "since": "2025-01-03",
+     "nextElection": 2030,
+     "url": "https://www.sheehy.senate.gov"
+    },
+    {
+     "name": "Steve Daines",
+     "party": "R",
+     "wiki": "Steve_Daines",
+     "class": 2,
+     "since": "2015-01-06",
+     "nextElection": 2026,
+     "url": "https://www.daines.senate.gov"
+    }
+   ],
+   "houseSeats": 2,
+   "house": [
+    {
+     "name": "Ryan K. Zinke",
+     "party": "R",
+     "wiki": "Ryan_Zinke",
+     "district": 1
+    },
+    {
+     "name": "Troy Downing",
+     "party": "R",
+     "wiki": "Troy_Downing",
+     "district": 2
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 18,
+      "R": 32,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 42,
+      "R": 58,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "NE",
+   "fips": "31",
+   "name": "Nebraska",
+   "governor": {
+    "name": "Jim Pillen",
+    "wiki": "Jim_Pillen",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2023-01-05",
+    "termEnds": 2027
+   },
+   "senators": [
+    {
+     "name": "Deb Fischer",
+     "party": "R",
+     "wiki": "Deb_Fischer",
+     "class": 1,
+     "since": "2013-01-03",
+     "nextElection": 2030,
+     "url": "https://www.fischer.senate.gov"
+    },
+    {
+     "name": "Pete Ricketts",
+     "party": "R",
+     "wiki": "Pete_Ricketts",
+     "class": 2,
+     "since": "2023-01-23",
+     "nextElection": 2026,
+     "url": "https://www.ricketts.senate.gov"
+    }
+   ],
+   "houseSeats": 3,
+   "house": [
+    {
+     "name": "Mike Flood",
+     "party": "R",
+     "wiki": "Mike_Flood_(politician)",
+     "district": 1
+    },
+    {
+     "name": "Don Bacon",
+     "party": "R",
+     "wiki": "Don_Bacon",
+     "district": 2
+    },
+    {
+     "name": "Adrian Smith",
+     "party": "R",
+     "wiki": "Adrian_Smith_(politician)",
+     "district": 3
+    }
+   ],
+   "legislature": {
+    "unicameral": true,
+    "chambers": [
+     {
+      "id": "legislature",
+      "name": "Legislature",
+      "D": 0,
+      "R": 0,
+      "O": 49,
+      "control": "nonpartisan"
+     }
+    ]
+   }
+  },
+  {
+   "code": "NV",
+   "fips": "32",
+   "name": "Nevada",
+   "governor": {
+    "name": "Joe Lombardo",
+    "wiki": "Joe_Lombardo",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2023-01-02",
+    "termEnds": 2027
+   },
+   "senators": [
+    {
+     "name": "Jacky Rosen",
+     "party": "D",
+     "wiki": "Jacky_Rosen",
+     "class": 1,
+     "since": "2019-01-03",
+     "nextElection": 2030,
+     "url": "https://www.rosen.senate.gov"
+    },
+    {
+     "name": "Catherine Cortez Masto",
+     "party": "D",
+     "wiki": "Catherine_Cortez_Masto",
+     "class": 3,
+     "since": "2017-01-03",
+     "nextElection": 2028,
+     "url": "https://www.cortezmasto.senate.gov"
+    }
+   ],
+   "houseSeats": 4,
+   "house": [
+    {
+     "name": "Dina Titus",
+     "party": "D",
+     "wiki": "Dina_Titus",
+     "district": 1
+    },
+    {
+     "name": "Mark E. Amodei",
+     "party": "R",
+     "wiki": "Mark_Amodei",
+     "district": 2
+    },
+    {
+     "name": "Susie Lee",
+     "party": "D",
+     "wiki": "Susie_Lee",
+     "district": 3
+    },
+    {
+     "name": "Steven Horsford",
+     "party": "D",
+     "wiki": "Steven_Horsford",
+     "district": 4
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 13,
+      "R": 8,
+      "O": 0,
+      "control": "D"
+     },
+     {
+      "id": "lower",
+      "name": "Assembly",
+      "D": 27,
+      "R": 15,
+      "O": 0,
+      "control": "D"
+     }
+    ]
+   }
+  },
+  {
+   "code": "NH",
+   "fips": "33",
+   "name": "New Hampshire",
+   "governor": {
+    "name": "Kelly Ayotte",
+    "wiki": "Kelly_Ayotte",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2025-01-09",
+    "termEnds": 2027
+   },
+   "senators": [
+    {
+     "name": "Jeanne Shaheen",
+     "party": "D",
+     "wiki": "Jeanne_Shaheen",
+     "class": 2,
+     "since": "2009-01-06",
+     "nextElection": 2026,
+     "url": "https://www.shaheen.senate.gov"
+    },
+    {
+     "name": "Margaret Wood Hassan",
+     "party": "D",
+     "wiki": "Maggie_Hassan",
+     "class": 3,
+     "since": "2017-01-03",
+     "nextElection": 2028,
+     "url": "https://www.hassan.senate.gov"
+    }
+   ],
+   "houseSeats": 2,
+   "house": [
+    {
+     "name": "Chris Pappas",
+     "party": "D",
+     "wiki": "Chris_Pappas_(American_politician)",
+     "district": 1
+    },
+    {
+     "name": "Maggie Goodlander",
+     "party": "D",
+     "wiki": "Maggie_Goodlander",
+     "district": 2
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 8,
+      "R": 16,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 169,
+      "R": 211,
+      "O": 2,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "NJ",
+   "fips": "34",
+   "name": "New Jersey",
+   "governor": {
+    "name": "Mikie Sherrill",
+    "wiki": "Mikie_Sherrill",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2026-01-20",
+    "termEnds": 2030
+   },
+   "senators": [
+    {
+     "name": "Andy Kim",
+     "party": "D",
+     "wiki": "Andy_Kim",
+     "class": 1,
+     "since": "2024-12-09",
+     "nextElection": 2030,
+     "url": "https://www.kim.senate.gov"
+    },
+    {
+     "name": "Cory A. Booker",
+     "party": "D",
+     "wiki": "Cory_Booker",
+     "class": 2,
+     "since": "2013-10-31",
+     "nextElection": 2026,
+     "url": "https://www.booker.senate.gov"
+    }
+   ],
+   "houseSeats": 12,
+   "house": [
+    {
+     "name": "Donald Norcross",
+     "party": "D",
+     "wiki": "Donald_Norcross",
+     "district": 1
+    },
+    {
+     "name": "Jefferson Van Drew",
+     "party": "R",
+     "wiki": "Jeff_Van_Drew",
+     "district": 2
+    },
+    {
+     "name": "Herbert C. Conaway, Jr.",
+     "party": "D",
+     "wiki": "Herb_Conaway",
+     "district": 3
+    },
+    {
+     "name": "Christopher H. Smith",
+     "party": "R",
+     "wiki": "Chris_Smith_(New_Jersey_politician)",
+     "district": 4
+    },
+    {
+     "name": "Josh Gottheimer",
+     "party": "D",
+     "wiki": "Josh_Gottheimer",
+     "district": 5
+    },
+    {
+     "name": "Frank Pallone, Jr.",
+     "party": "D",
+     "wiki": "Frank_Pallone",
+     "district": 6
+    },
+    {
+     "name": "Thomas H. Kean, Jr.",
+     "party": "R",
+     "wiki": "Thomas_Kean_Jr.",
+     "district": 7
+    },
+    {
+     "name": "Robert Menendez",
+     "party": "D",
+     "wiki": "Rob_Menendez",
+     "district": 8
+    },
+    {
+     "name": "Nellie Pou",
+     "party": "D",
+     "wiki": "Nellie_Pou",
+     "district": 9
+    },
+    {
+     "name": "LaMonica McIver",
+     "party": "D",
+     "wiki": "LaMonica_McIver",
+     "district": 10
+    },
+    {
+     "name": "Analilia Mejia",
+     "party": "D",
+     "wiki": "Analilia_Mejia",
+     "district": 11
+    },
+    {
+     "name": "Bonnie Watson Coleman",
+     "party": "D",
+     "wiki": "Bonnie_Watson_Coleman",
+     "district": 12
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 25,
+      "R": 15,
+      "O": 0,
+      "control": "D"
+     },
+     {
+      "id": "lower",
+      "name": "General Assembly",
+      "D": 57,
+      "R": 23,
+      "O": 0,
+      "control": "D"
+     }
+    ]
+   }
+  },
+  {
+   "code": "NM",
+   "fips": "35",
+   "name": "New Mexico",
+   "governor": {
+    "name": "Michelle Lujan Grisham",
+    "wiki": "Michelle_Lujan_Grisham",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2019-01-01",
+    "termEnds": 2027,
+    "termNote": "term limits"
+   },
+   "senators": [
+    {
+     "name": "Martin Heinrich",
+     "party": "D",
+     "wiki": "Martin_Heinrich",
+     "class": 1,
+     "since": "2013-01-03",
+     "nextElection": 2030,
+     "url": "https://www.heinrich.senate.gov"
+    },
+    {
+     "name": "Ben Ray Luján",
+     "party": "D",
+     "wiki": "Ben_Ray_Luján",
+     "class": 2,
+     "since": "2021-01-03",
+     "nextElection": 2026,
+     "url": "https://www.lujan.senate.gov"
+    }
+   ],
+   "houseSeats": 3,
+   "house": [
+    {
+     "name": "Melanie A. Stansbury",
+     "party": "D",
+     "wiki": "Melanie_Stansbury",
+     "district": 1
+    },
+    {
+     "name": "Gabe Vasquez",
+     "party": "D",
+     "wiki": "Gabe_Vasquez",
+     "district": 2
+    },
+    {
+     "name": "Teresa Leger Fernandez",
+     "party": "D",
+     "wiki": "Teresa_Leger_Fernández",
+     "district": 3
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 26,
+      "R": 16,
+      "O": 0,
+      "control": "D"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 42,
+      "R": 26,
+      "O": 0,
+      "control": "D"
+     }
+    ]
+   }
+  },
+  {
+   "code": "NY",
+   "fips": "36",
+   "name": "New York",
+   "governor": {
+    "name": "Kathy Hochul",
+    "wiki": "Kathy_Hochul",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2021-08-24",
+    "termEnds": 2026
+   },
+   "senators": [
+    {
+     "name": "Kirsten E. Gillibrand",
+     "party": "D",
+     "wiki": "Kirsten_Gillibrand",
+     "class": 1,
+     "since": "2009-01-27",
+     "nextElection": 2030,
+     "url": "https://www.gillibrand.senate.gov"
+    },
+    {
+     "name": "Charles E. Schumer",
+     "party": "D",
+     "wiki": "Chuck_Schumer",
+     "class": 3,
+     "since": "1999-01-06",
+     "nextElection": 2028,
+     "url": "https://www.schumer.senate.gov"
+    }
+   ],
+   "houseSeats": 26,
+   "house": [
+    {
+     "name": "Nick LaLota",
+     "party": "R",
+     "wiki": "Nick_LaLota",
+     "district": 1
+    },
+    {
+     "name": "Andrew R. Garbarino",
+     "party": "R",
+     "wiki": "Andrew_Garbarino",
+     "district": 2
+    },
+    {
+     "name": "Thomas R. Suozzi",
+     "party": "D",
+     "wiki": "Tom_Suozzi",
+     "district": 3
+    },
+    {
+     "name": "Laura Gillen",
+     "party": "D",
+     "wiki": "Laura_Gillen",
+     "district": 4
+    },
+    {
+     "name": "Gregory W. Meeks",
+     "party": "D",
+     "wiki": "Gregory_Meeks",
+     "district": 5
+    },
+    {
+     "name": "Grace Meng",
+     "party": "D",
+     "wiki": "Grace_Meng",
+     "district": 6
+    },
+    {
+     "name": "Nydia M. Velázquez",
+     "party": "D",
+     "wiki": "Nydia_Velázquez",
+     "district": 7
+    },
+    {
+     "name": "Hakeem S. Jeffries",
+     "party": "D",
+     "wiki": "Hakeem_Jeffries",
+     "district": 8
+    },
+    {
+     "name": "Yvette D. Clarke",
+     "party": "D",
+     "wiki": "Yvette_Clarke",
+     "district": 9
+    },
+    {
+     "name": "Daniel S. Goldman",
+     "party": "D",
+     "wiki": "Dan_Goldman",
+     "district": 10
+    },
+    {
+     "name": "Nicole Malliotakis",
+     "party": "R",
+     "wiki": "Nicole_Malliotakis",
+     "district": 11
+    },
+    {
+     "name": "Jerrold Nadler",
+     "party": "D",
+     "wiki": "Jerry_Nadler",
+     "district": 12
+    },
+    {
+     "name": "Adriano Espaillat",
+     "party": "D",
+     "wiki": "Adriano_Espaillat",
+     "district": 13
+    },
+    {
+     "name": "Alexandria Ocasio-Cortez",
+     "party": "D",
+     "wiki": "Alexandria_Ocasio-Cortez",
+     "district": 14
+    },
+    {
+     "name": "Ritchie Torres",
+     "party": "D",
+     "wiki": "Ritchie_Torres",
+     "district": 15
+    },
+    {
+     "name": "George Latimer",
+     "party": "D",
+     "wiki": "George_Latimer_(New_York_politician)",
+     "district": 16
+    },
+    {
+     "name": "Michael Lawler",
+     "party": "R",
+     "wiki": "Mike_Lawler",
+     "district": 17
+    },
+    {
+     "name": "Patrick Ryan",
+     "party": "D",
+     "wiki": "Pat_Ryan_(politician)",
+     "district": 18
+    },
+    {
+     "name": "Josh Riley",
+     "party": "D",
+     "wiki": "Josh_Riley",
+     "district": 19
+    },
+    {
+     "name": "Paul Tonko",
+     "party": "D",
+     "wiki": "Paul_Tonko",
+     "district": 20
+    },
+    {
+     "name": "Elise M. Stefanik",
+     "party": "R",
+     "wiki": "Elise_Stefanik",
+     "district": 21
+    },
+    {
+     "name": "John W. Mannion",
+     "party": "D",
+     "wiki": "John_Mannion_(American_politician)",
+     "district": 22
+    },
+    {
+     "name": "Nicholas A. Langworthy",
+     "party": "R",
+     "wiki": "Nick_Langworthy",
+     "district": 23
+    },
+    {
+     "name": "Claudia Tenney",
+     "party": "R",
+     "wiki": "Claudia_Tenney",
+     "district": 24
+    },
+    {
+     "name": "Joseph D. Morelle",
+     "party": "D",
+     "wiki": "Joseph_Morelle",
+     "district": 25
+    },
+    {
+     "name": "Timothy M. Kennedy",
+     "party": "D",
+     "wiki": "Tim_Kennedy_(politician)",
+     "district": 26
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 40,
+      "R": 22,
+      "O": 0,
+      "control": "D"
+     },
+     {
+      "id": "lower",
+      "name": "Assembly",
+      "D": 103,
+      "R": 47,
+      "O": 0,
+      "control": "D"
+     }
+    ]
+   }
+  },
+  {
+   "code": "NC",
+   "fips": "37",
+   "name": "North Carolina",
+   "governor": {
+    "name": "Josh Stein",
+    "wiki": "Josh_Stein",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2025-01-01",
+    "termEnds": 2029
+   },
+   "senators": [
+    {
+     "name": "Thom Tillis",
+     "party": "R",
+     "wiki": "Thom_Tillis",
+     "class": 2,
+     "since": "2015-01-06",
+     "nextElection": 2026,
+     "url": "https://www.tillis.senate.gov"
+    },
+    {
+     "name": "Ted Budd",
+     "party": "R",
+     "wiki": "Ted_Budd",
+     "class": 3,
+     "since": "2023-01-03",
+     "nextElection": 2028,
+     "url": "https://www.budd.senate.gov"
+    }
+   ],
+   "houseSeats": 14,
+   "house": [
+    {
+     "name": "Donald G. Davis",
+     "party": "D",
+     "wiki": "Don_Davis_(North_Carolina_politician)",
+     "district": 1
+    },
+    {
+     "name": "Deborah K. Ross",
+     "party": "D",
+     "wiki": "Deborah_Ross_(politician)",
+     "district": 2
+    },
+    {
+     "name": "Gregory F. Murphy",
+     "party": "R",
+     "wiki": "Greg_Murphy_(politician)",
+     "district": 3
+    },
+    {
+     "name": "Valerie P. Foushee",
+     "party": "D",
+     "wiki": "Valerie_Foushee",
+     "district": 4
+    },
+    {
+     "name": "Virginia Foxx",
+     "party": "R",
+     "wiki": "Virginia_Foxx",
+     "district": 5
+    },
+    {
+     "name": "Addison P. McDowell",
+     "party": "R",
+     "wiki": "Addison_McDowell",
+     "district": 6
+    },
+    {
+     "name": "David Rouzer",
+     "party": "R",
+     "wiki": "David_Rouzer",
+     "district": 7
+    },
+    {
+     "name": "Mark Harris",
+     "party": "R",
+     "wiki": "Mark_Harris_(North_Carolina_politician)",
+     "district": 8
+    },
+    {
+     "name": "Richard Hudson",
+     "party": "R",
+     "wiki": "Richard_Hudson_(American_politician)",
+     "district": 9
+    },
+    {
+     "name": "Pat Harrigan",
+     "party": "R",
+     "wiki": "Pat_Harrigan",
+     "district": 10
+    },
+    {
+     "name": "Chuck Edwards",
+     "party": "R",
+     "wiki": "Chuck_Edwards",
+     "district": 11
+    },
+    {
+     "name": "Alma S. Adams",
+     "party": "D",
+     "wiki": "Alma_Adams",
+     "district": 12
+    },
+    {
+     "name": "Brad Knott",
+     "party": "R",
+     "wiki": "Brad_Knott",
+     "district": 13
+    },
+    {
+     "name": "Tim Moore",
+     "party": "R",
+     "wiki": "Tim_Moore_(North_Carolina_politician)",
+     "district": 14
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 20,
+      "R": 30,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 47,
+      "R": 71,
+      "O": 2,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "ND",
+   "fips": "38",
+   "name": "North Dakota",
+   "governor": {
+    "name": "Kelly Armstrong",
+    "wiki": "Kelly_Armstrong",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2024-12-15",
+    "termEnds": 2028
+   },
+   "senators": [
+    {
+     "name": "Kevin Cramer",
+     "party": "R",
+     "wiki": "Kevin_Cramer",
+     "class": 1,
+     "since": "2019-01-03",
+     "nextElection": 2030,
+     "url": "https://www.cramer.senate.gov"
+    },
+    {
+     "name": "John Hoeven",
+     "party": "R",
+     "wiki": "John_Hoeven",
+     "class": 3,
+     "since": "2011-01-05",
+     "nextElection": 2028,
+     "url": "https://www.hoeven.senate.gov"
+    }
+   ],
+   "houseSeats": 1,
+   "house": [
+    {
+     "name": "Julie Fedorchak",
+     "party": "R",
+     "wiki": "Julie_Fedorchak",
+     "district": 0
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 5,
+      "R": 42,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 11,
+      "R": 83,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "OH",
+   "fips": "39",
+   "name": "Ohio",
+   "governor": {
+    "name": "Mike DeWine",
+    "wiki": "Mike_DeWine",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2019-01-14",
+    "termEnds": 2027,
+    "termNote": "term limits"
+   },
+   "senators": [
+    {
+     "name": "Bernie Moreno",
+     "party": "R",
+     "wiki": "Bernie_Moreno",
+     "class": 1,
+     "since": "2025-01-03",
+     "nextElection": 2030,
+     "url": "https://www.moreno.senate.gov"
+    },
+    {
+     "name": "Jon Husted",
+     "party": "R",
+     "wiki": "Jon_Husted",
+     "class": 3,
+     "since": "2025-01-21",
+     "nextElection": 2026,
+     "special": true,
+     "appointed": true,
+     "url": "https://www.husted.senate.gov"
+    }
+   ],
+   "houseSeats": 15,
+   "house": [
+    {
+     "name": "Greg Landsman",
+     "party": "D",
+     "wiki": "Greg_Landsman",
+     "district": 1
+    },
+    {
+     "name": "David J. Taylor",
+     "party": "R",
+     "wiki": "David_Taylor_(Ohio_politician)",
+     "district": 2
+    },
+    {
+     "name": "Joyce Beatty",
+     "party": "D",
+     "wiki": "Joyce_Beatty",
+     "district": 3
+    },
+    {
+     "name": "Jim Jordan",
+     "party": "R",
+     "wiki": "Jim_Jordan",
+     "district": 4
+    },
+    {
+     "name": "Robert E. Latta",
+     "party": "R",
+     "wiki": "Bob_Latta",
+     "district": 5
+    },
+    {
+     "name": "Michael A. Rulli",
+     "party": "R",
+     "wiki": "Michael_Rulli",
+     "district": 6
+    },
+    {
+     "name": "Max L. Miller",
+     "party": "R",
+     "wiki": "Max_Miller_(politician)",
+     "district": 7
+    },
+    {
+     "name": "Warren Davidson",
+     "party": "R",
+     "wiki": "Warren_Davidson",
+     "district": 8
+    },
+    {
+     "name": "Marcy Kaptur",
+     "party": "D",
+     "wiki": "Marcy_Kaptur",
+     "district": 9
+    },
+    {
+     "name": "Michael R. Turner",
+     "party": "R",
+     "wiki": "Mike_Turner",
+     "district": 10
+    },
+    {
+     "name": "Shontel M. Brown",
+     "party": "D",
+     "wiki": "Shontel_Brown",
+     "district": 11
+    },
+    {
+     "name": "Troy Balderson",
+     "party": "R",
+     "wiki": "Troy_Balderson",
+     "district": 12
+    },
+    {
+     "name": "Emilia Strong Sykes",
+     "party": "D",
+     "wiki": "Emilia_Sykes",
+     "district": 13
+    },
+    {
+     "name": "David P. Joyce",
+     "party": "R",
+     "wiki": "David_Joyce_(politician)",
+     "district": 14
+    },
+    {
+     "name": "Mike Carey",
+     "party": "R",
+     "wiki": "Mike_Carey_(politician)",
+     "district": 15
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 9,
+      "R": 23,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 34,
+      "R": 65,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "OK",
+   "fips": "40",
+   "name": "Oklahoma",
+   "governor": {
+    "name": "Kevin Stitt",
+    "wiki": "Kevin_Stitt",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2019-01-14",
+    "termEnds": 2027,
+    "termNote": "term limits"
+   },
+   "senators": [
+    {
+     "name": "Alan Armstrong",
+     "party": "R",
+     "wiki": "Alan_S._Armstrong",
+     "class": 2,
+     "since": "2026-03-24",
+     "nextElection": 2026,
+     "appointed": true,
+     "url": "https://www.armstrong.senate.gov"
+    },
+    {
+     "name": "James Lankford",
+     "party": "R",
+     "wiki": "James_Lankford",
+     "class": 3,
+     "since": "2015-01-06",
+     "nextElection": 2028,
+     "url": "https://www.lankford.senate.gov"
+    }
+   ],
+   "houseSeats": 5,
+   "house": [
+    {
+     "name": "Kevin Hern",
+     "party": "R",
+     "wiki": "Kevin_Hern",
+     "district": 1
+    },
+    {
+     "name": "Josh Brecheen",
+     "party": "R",
+     "wiki": "Josh_Brecheen",
+     "district": 2
+    },
+    {
+     "name": "Frank D. Lucas",
+     "party": "R",
+     "wiki": "Frank_Lucas_(Oklahoma_politician)",
+     "district": 3
+    },
+    {
+     "name": "Tom Cole",
+     "party": "R",
+     "wiki": "Tom_Cole",
+     "district": 4
+    },
+    {
+     "name": "Stephanie I. Bice",
+     "party": "R",
+     "wiki": "Stephanie_Bice",
+     "district": 5
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 8,
+      "R": 39,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 18,
+      "R": 81,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "OR",
+   "fips": "41",
+   "name": "Oregon",
+   "governor": {
+    "name": "Tina Kotek",
+    "wiki": "Tina_Kotek",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2023-01-09",
+    "termEnds": 2027
+   },
+   "senators": [
+    {
+     "name": "Jeff Merkley",
+     "party": "D",
+     "wiki": "Jeff_Merkley",
+     "class": 2,
+     "since": "2009-01-06",
+     "nextElection": 2026,
+     "url": "https://www.merkley.senate.gov"
+    },
+    {
+     "name": "Ron Wyden",
+     "party": "D",
+     "wiki": "Ron_Wyden",
+     "class": 3,
+     "since": "1996-02-05",
+     "nextElection": 2028,
+     "url": "https://www.wyden.senate.gov"
+    }
+   ],
+   "houseSeats": 6,
+   "house": [
+    {
+     "name": "Suzanne Bonamici",
+     "party": "D",
+     "wiki": "Suzanne_Bonamici",
+     "district": 1
+    },
+    {
+     "name": "Cliff Bentz",
+     "party": "R",
+     "wiki": "Cliff_Bentz",
+     "district": 2
+    },
+    {
+     "name": "Maxine Dexter",
+     "party": "D",
+     "wiki": "Maxine_Dexter",
+     "district": 3
+    },
+    {
+     "name": "Val T. Hoyle",
+     "party": "D",
+     "wiki": "Val_Hoyle",
+     "district": 4
+    },
+    {
+     "name": "Janelle S. Bynum",
+     "party": "D",
+     "wiki": "Janelle_Bynum",
+     "district": 5
+    },
+    {
+     "name": "Andrea Salinas",
+     "party": "D",
+     "wiki": "Andrea_Salinas",
+     "district": 6
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 18,
+      "R": 12,
+      "O": 0,
+      "control": "D"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 37,
+      "R": 23,
+      "O": 0,
+      "control": "D"
+     }
+    ]
+   }
+  },
+  {
+   "code": "PA",
+   "fips": "42",
+   "name": "Pennsylvania",
+   "governor": {
+    "name": "Josh Shapiro",
+    "wiki": "Josh_Shapiro",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2023-01-17",
+    "termEnds": 2027
+   },
+   "senators": [
+    {
+     "name": "David McCormick",
+     "party": "R",
+     "wiki": "Dave_McCormick",
+     "class": 1,
+     "since": "2025-01-03",
+     "nextElection": 2030,
+     "url": "https://www.mccormick.senate.gov"
+    },
+    {
+     "name": "John Fetterman",
+     "party": "D",
+     "wiki": "John_Fetterman",
+     "class": 3,
+     "since": "2023-01-03",
+     "nextElection": 2028,
+     "url": "https://www.fetterman.senate.gov"
+    }
+   ],
+   "houseSeats": 17,
+   "house": [
+    {
+     "name": "Brian K. Fitzpatrick",
+     "party": "R",
+     "wiki": "Brian_Fitzpatrick_(American_politician)",
+     "district": 1
+    },
+    {
+     "name": "Brendan F. Boyle",
+     "party": "D",
+     "wiki": "Brendan_Boyle",
+     "district": 2
+    },
+    {
+     "name": "Dwight Evans",
+     "party": "D",
+     "wiki": "Dwight_Evans_(politician)",
+     "district": 3
+    },
+    {
+     "name": "Madeleine Dean",
+     "party": "D",
+     "wiki": "Madeleine_Dean",
+     "district": 4
+    },
+    {
+     "name": "Mary Gay Scanlon",
+     "party": "D",
+     "wiki": "Mary_Gay_Scanlon",
+     "district": 5
+    },
+    {
+     "name": "Chrissy Houlahan",
+     "party": "D",
+     "wiki": "Chrissy_Houlahan",
+     "district": 6
+    },
+    {
+     "name": "Ryan Mackenzie",
+     "party": "R",
+     "wiki": "Ryan_Mackenzie",
+     "district": 7
+    },
+    {
+     "name": "Robert P. Bresnahan, Jr.",
+     "party": "R",
+     "wiki": "Rob_Bresnahan",
+     "district": 8
+    },
+    {
+     "name": "Daniel Meuser",
+     "party": "R",
+     "wiki": "Dan_Meuser",
+     "district": 9
+    },
+    {
+     "name": "Scott Perry",
+     "party": "R",
+     "wiki": "Scott_Perry",
+     "district": 10
+    },
+    {
+     "name": "Lloyd Smucker",
+     "party": "R",
+     "wiki": "Lloyd_Smucker",
+     "district": 11
+    },
+    {
+     "name": "Summer L. Lee",
+     "party": "D",
+     "wiki": "Summer_Lee",
+     "district": 12
+    },
+    {
+     "name": "John Joyce",
+     "party": "R",
+     "wiki": "John_Joyce_(American_politician)",
+     "district": 13
+    },
+    {
+     "name": "Guy Reschenthaler",
+     "party": "R",
+     "wiki": "Guy_Reschenthaler",
+     "district": 14
+    },
+    {
+     "name": "Glenn Thompson",
+     "party": "R",
+     "wiki": "Glenn_Thompson_(politician)",
+     "district": 15
+    },
+    {
+     "name": "Mike Kelly",
+     "party": "R",
+     "wiki": "Mike_Kelly_(Pennsylvania_politician)",
+     "district": 16
+    },
+    {
+     "name": "Christopher R. Deluzio",
+     "party": "D",
+     "wiki": "Chris_Deluzio",
+     "district": 17
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 23,
+      "R": 27,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 103,
+      "R": 100,
+      "O": 0,
+      "control": "D"
+     }
+    ]
+   }
+  },
+  {
+   "code": "RI",
+   "fips": "44",
+   "name": "Rhode Island",
+   "governor": {
+    "name": "Dan McKee",
+    "wiki": "Dan_McKee",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2021-03-02",
+    "termEnds": 2027
+   },
+   "senators": [
+    {
+     "name": "Sheldon Whitehouse",
+     "party": "D",
+     "wiki": "Sheldon_Whitehouse",
+     "class": 1,
+     "since": "2007-01-04",
+     "nextElection": 2030,
+     "url": "https://www.whitehouse.senate.gov"
+    },
+    {
+     "name": "Jack Reed",
+     "party": "D",
+     "wiki": "Jack_Reed_(Rhode_Island_politician)",
+     "class": 2,
+     "since": "1997-01-07",
+     "nextElection": 2026,
+     "url": "https://www.reed.senate.gov"
+    }
+   ],
+   "houseSeats": 2,
+   "house": [
+    {
+     "name": "Gabe Amo",
+     "party": "D",
+     "wiki": "Gabe_Amo",
+     "district": 1
+    },
+    {
+     "name": "Seth Magaziner",
+     "party": "D",
+     "wiki": "Seth_Magaziner",
+     "district": 2
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 34,
+      "R": 4,
+      "O": 0,
+      "control": "D"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 63,
+      "R": 10,
+      "O": 1,
+      "control": "D"
+     }
+    ]
+   }
+  },
+  {
+   "code": "SC",
+   "fips": "45",
+   "name": "South Carolina",
+   "governor": {
+    "name": "Henry McMaster",
+    "wiki": "Henry_McMaster",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2017-01-24",
+    "termEnds": 2027,
+    "termNote": "term limits"
+   },
+   "senators": [
+    {
+     "name": "Darline Graham",
+     "party": "R",
+     "wiki": "Darline_Graham_Nordone",
+     "class": 2,
+     "since": "2026-07-14",
+     "nextElection": 2026,
+     "appointed": true,
+     "url": "https://www.dgraham.senate.gov"
+    },
+    {
+     "name": "Tim Scott",
+     "party": "R",
+     "wiki": "Tim_Scott",
+     "class": 3,
+     "since": "2013-01-03",
+     "nextElection": 2028,
+     "url": "https://www.scott.senate.gov"
+    }
+   ],
+   "houseSeats": 7,
+   "house": [
+    {
+     "name": "Nancy Mace",
+     "party": "R",
+     "wiki": "Nancy_Mace",
+     "district": 1
+    },
+    {
+     "name": "Joe Wilson",
+     "party": "R",
+     "wiki": "Joe_Wilson",
+     "district": 2
+    },
+    {
+     "name": "Sheri Biggs",
+     "party": "R",
+     "wiki": "Sheri_Biggs",
+     "district": 3
+    },
+    {
+     "name": "William R. Timmons IV",
+     "party": "R",
+     "wiki": "William_Timmons",
+     "district": 4
+    },
+    {
+     "name": "Ralph Norman",
+     "party": "R",
+     "wiki": "Ralph_Norman",
+     "district": 5
+    },
+    {
+     "name": "James E. Clyburn",
+     "party": "D",
+     "wiki": "Jim_Clyburn",
+     "district": 6
+    },
+    {
+     "name": "Russell Fry",
+     "party": "R",
+     "wiki": "Russell_Fry",
+     "district": 7
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 12,
+      "R": 34,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 35,
+      "R": 89,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "SD",
+   "fips": "46",
+   "name": "South Dakota",
+   "governor": {
+    "name": "Larry Rhoden",
+    "wiki": "Larry_Rhoden",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2025-01-25",
+    "termEnds": 2027
+   },
+   "senators": [
+    {
+     "name": "Mike Rounds",
+     "party": "R",
+     "wiki": "Mike_Rounds",
+     "class": 2,
+     "since": "2015-01-06",
+     "nextElection": 2026,
+     "url": "https://www.rounds.senate.gov"
+    },
+    {
+     "name": "John Thune",
+     "party": "R",
+     "wiki": "John_Thune",
+     "class": 3,
+     "since": "2005-01-04",
+     "nextElection": 2028,
+     "url": "https://www.thune.senate.gov"
+    }
+   ],
+   "houseSeats": 1,
+   "house": [
+    {
+     "name": "Dusty Johnson",
+     "party": "R",
+     "wiki": "Dusty_Johnson",
+     "district": 0
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 3,
+      "R": 32,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 5,
+      "R": 65,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "TN",
+   "fips": "47",
+   "name": "Tennessee",
+   "governor": {
+    "name": "Bill Lee",
+    "wiki": "Bill_Lee_(Tennessee_politician)",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2019-01-19",
+    "termEnds": 2027,
+    "termNote": "term limits"
+   },
+   "senators": [
+    {
+     "name": "Marsha Blackburn",
+     "party": "R",
+     "wiki": "Marsha_Blackburn",
+     "class": 1,
+     "since": "2019-01-03",
+     "nextElection": 2030,
+     "url": "https://www.blackburn.senate.gov"
+    },
+    {
+     "name": "Bill Hagerty",
+     "party": "R",
+     "wiki": "Bill_Hagerty",
+     "class": 2,
+     "since": "2021-01-03",
+     "nextElection": 2026,
+     "url": "https://www.hagerty.senate.gov"
+    }
+   ],
+   "houseSeats": 9,
+   "house": [
+    {
+     "name": "Diana Harshbarger",
+     "party": "R",
+     "wiki": "Diana_Harshbarger",
+     "district": 1
+    },
+    {
+     "name": "Tim Burchett",
+     "party": "R",
+     "wiki": "Tim_Burchett",
+     "district": 2
+    },
+    {
+     "name": "Charles J. \"Chuck\" Fleischmann",
+     "party": "R",
+     "wiki": "Chuck_Fleischmann",
+     "district": 3
+    },
+    {
+     "name": "Scott DesJarlais",
+     "party": "R",
+     "wiki": "Scott_DesJarlais",
+     "district": 4
+    },
+    {
+     "name": "Andrew Ogles",
+     "party": "R",
+     "wiki": "Andy_Ogles",
+     "district": 5
+    },
+    {
+     "name": "John W. Rose",
+     "party": "R",
+     "wiki": "John_Rose_(Tennessee_politician)",
+     "district": 6
+    },
+    {
+     "name": "Matt Van Epps",
+     "party": "R",
+     "wiki": "Matt_Van_Epps",
+     "district": 7
+    },
+    {
+     "name": "David Kustoff",
+     "party": "R",
+     "wiki": "David_Kustoff",
+     "district": 8
+    },
+    {
+     "name": "Steve Cohen",
+     "party": "D",
+     "wiki": "Steve_Cohen_(politician)",
+     "district": 9
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 6,
+      "R": 27,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 23,
+      "R": 75,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "TX",
+   "fips": "48",
+   "name": "Texas",
+   "governor": {
+    "name": "Greg Abbott",
+    "wiki": "Greg_Abbott",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2015-01-20",
+    "termEnds": 2027
+   },
+   "senators": [
+    {
+     "name": "Ted Cruz",
+     "party": "R",
+     "wiki": "Ted_Cruz",
+     "class": 1,
+     "since": "2013-01-03",
+     "nextElection": 2030,
+     "url": "https://www.cruz.senate.gov"
+    },
+    {
+     "name": "John Cornyn",
+     "party": "R",
+     "wiki": "John_Cornyn",
+     "class": 2,
+     "since": "2002-11-30",
+     "nextElection": 2026,
+     "url": "https://www.cornyn.senate.gov"
+    }
+   ],
+   "houseSeats": 38,
+   "house": [
+    {
+     "name": "Nathaniel Moran",
+     "party": "R",
+     "wiki": "Nathaniel_Moran",
+     "district": 1
+    },
+    {
+     "name": "Dan Crenshaw",
+     "party": "R",
+     "wiki": "Dan_Crenshaw",
+     "district": 2
+    },
+    {
+     "name": "Keith Self",
+     "party": "R",
+     "wiki": "Keith_Self",
+     "district": 3
+    },
+    {
+     "name": "Pat Fallon",
+     "party": "R",
+     "wiki": "Pat_Fallon",
+     "district": 4
+    },
+    {
+     "name": "Lance Gooden",
+     "party": "R",
+     "wiki": "Lance_Gooden",
+     "district": 5
+    },
+    {
+     "name": "Jake Ellzey",
+     "party": "R",
+     "wiki": "Jake_Ellzey",
+     "district": 6
+    },
+    {
+     "name": "Lizzie Fletcher",
+     "party": "D",
+     "wiki": "Lizzie_Fletcher",
+     "district": 7
+    },
+    {
+     "name": "Morgan Luttrell",
+     "party": "R",
+     "wiki": "Morgan_Luttrell",
+     "district": 8
+    },
+    {
+     "name": "Al Green",
+     "party": "D",
+     "wiki": "Al_Green_(politician)",
+     "district": 9
+    },
+    {
+     "name": "Michael T. McCaul",
+     "party": "R",
+     "wiki": "Michael_McCaul",
+     "district": 10
+    },
+    {
+     "name": "August Pfluger",
+     "party": "R",
+     "wiki": "August_Pfluger",
+     "district": 11
+    },
+    {
+     "name": "Craig A. Goldman",
+     "party": "R",
+     "wiki": "Craig_Goldman",
+     "district": 12
+    },
+    {
+     "name": "Ronny Jackson",
+     "party": "R",
+     "wiki": "Ronny_Jackson",
+     "district": 13
+    },
+    {
+     "name": "Randy K. Weber, Sr.",
+     "party": "R",
+     "wiki": "Randy_Weber",
+     "district": 14
+    },
+    {
+     "name": "Monica De La Cruz",
+     "party": "R",
+     "wiki": "Monica_De_La_Cruz",
+     "district": 15
+    },
+    {
+     "name": "Veronica Escobar",
+     "party": "D",
+     "wiki": "Veronica_Escobar",
+     "district": 16
+    },
+    {
+     "name": "Pete Sessions",
+     "party": "R",
+     "wiki": "Pete_Sessions",
+     "district": 17
+    },
+    {
+     "name": "Christian D. Menefee",
+     "party": "D",
+     "wiki": "Christian_Menefee",
+     "district": 18
+    },
+    {
+     "name": "Jodey C. Arrington",
+     "party": "R",
+     "wiki": "Jodey_Arrington",
+     "district": 19
+    },
+    {
+     "name": "Joaquin Castro",
+     "party": "D",
+     "wiki": "Joaquin_Castro",
+     "district": 20
+    },
+    {
+     "name": "Chip Roy",
+     "party": "R",
+     "wiki": "Chip_Roy",
+     "district": 21
+    },
+    {
+     "name": "Troy E. Nehls",
+     "party": "R",
+     "wiki": "Troy_Nehls",
+     "district": 22
+    },
+    {
+     "name": "Beth Van Duyne",
+     "party": "R",
+     "wiki": "Beth_Van_Duyne",
+     "district": 24
+    },
+    {
+     "name": "Roger Williams",
+     "party": "R",
+     "wiki": "Roger_Williams_(Texas_politician)",
+     "district": 25
+    },
+    {
+     "name": "Brandon Gill",
+     "party": "R",
+     "wiki": "Brandon_Gill",
+     "district": 26
+    },
+    {
+     "name": "Michael Cloud",
+     "party": "R",
+     "wiki": "Michael_Cloud",
+     "district": 27
+    },
+    {
+     "name": "Henry Cuellar",
+     "party": "D",
+     "wiki": "Henry_Cuellar",
+     "district": 28
+    },
+    {
+     "name": "Sylvia R. Garcia",
+     "party": "D",
+     "wiki": "Sylvia_Garcia",
+     "district": 29
+    },
+    {
+     "name": "Jasmine Crockett",
+     "party": "D",
+     "wiki": "Jasmine_Crockett",
+     "district": 30
+    },
+    {
+     "name": "John R. Carter",
+     "party": "R",
+     "wiki": "John_Carter_(Texas_politician)",
+     "district": 31
+    },
+    {
+     "name": "Julie Johnson",
+     "party": "D",
+     "wiki": "Julie_Johnson_(politician)",
+     "district": 32
+    },
+    {
+     "name": "Marc A. Veasey",
+     "party": "D",
+     "wiki": "Marc_Veasey",
+     "district": 33
+    },
+    {
+     "name": "Vicente Gonzalez",
+     "party": "D",
+     "wiki": "Vicente_Gonzalez_(American_politician)",
+     "district": 34
+    },
+    {
+     "name": "Greg Casar",
+     "party": "D",
+     "wiki": "Greg_Casar",
+     "district": 35
+    },
+    {
+     "name": "Brian Babin",
+     "party": "R",
+     "wiki": "Brian_Babin",
+     "district": 36
+    },
+    {
+     "name": "Lloyd Doggett",
+     "party": "D",
+     "wiki": "Lloyd_Doggett",
+     "district": 37
+    },
+    {
+     "name": "Wesley Hunt",
+     "party": "R",
+     "wiki": "Wesley_Hunt",
+     "district": 38
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 12,
+      "R": 18,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 62,
+      "R": 86,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "UT",
+   "fips": "49",
+   "name": "Utah",
+   "governor": {
+    "name": "Spencer Cox",
+    "wiki": "Spencer_Cox_(politician)",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2021-01-04",
+    "termEnds": 2029,
+    "termNote": "retiring"
+   },
+   "senators": [
+    {
+     "name": "John R. Curtis",
+     "party": "R",
+     "wiki": "John_Curtis",
+     "class": 1,
+     "since": "2025-01-03",
+     "nextElection": 2030,
+     "url": "https://www.curtis.senate.gov"
+    },
+    {
+     "name": "Mike Lee",
+     "party": "R",
+     "wiki": "Mike_Lee",
+     "class": 3,
+     "since": "2011-01-05",
+     "nextElection": 2028,
+     "url": "https://www.lee.senate.gov"
+    }
+   ],
+   "houseSeats": 4,
+   "house": [
+    {
+     "name": "Blake D. Moore",
+     "party": "R",
+     "wiki": "Blake_Moore",
+     "district": 1
+    },
+    {
+     "name": "Celeste Maloy",
+     "party": "R",
+     "wiki": "Celeste_Maloy",
+     "district": 2
+    },
+    {
+     "name": "Mike Kennedy",
+     "party": "R",
+     "wiki": "Mike_Kennedy",
+     "district": 3
+    },
+    {
+     "name": "Burgess Owens",
+     "party": "R",
+     "wiki": "Burgess_Owens",
+     "district": 4
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 6,
+      "R": 22,
+      "O": 1,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 14,
+      "R": 60,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "VT",
+   "fips": "50",
+   "name": "Vermont",
+   "governor": {
+    "name": "Phil Scott",
+    "wiki": "Phil_Scott",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2017-01-05",
+    "termEnds": 2027
+   },
+   "senators": [
+    {
+     "name": "Bernard Sanders",
+     "party": "I",
+     "caucus": "D",
+     "wiki": "Bernie_Sanders",
+     "class": 1,
+     "since": "2007-01-04",
+     "nextElection": 2030,
+     "url": "https://www.sanders.senate.gov"
+    },
+    {
+     "name": "Peter Welch",
+     "party": "D",
+     "wiki": "Peter_Welch",
+     "class": 3,
+     "since": "2023-01-03",
+     "nextElection": 2028,
+     "url": "https://www.welch.senate.gov"
+    }
+   ],
+   "houseSeats": 1,
+   "house": [
+    {
+     "name": "Becca Balint",
+     "party": "D",
+     "wiki": "Becca_Balint",
+     "district": 0
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 17,
+      "R": 13,
+      "O": 0,
+      "control": "D"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 90,
+      "R": 57,
+      "O": 3,
+      "control": "D"
+     }
+    ]
+   }
+  },
+  {
+   "code": "VA",
+   "fips": "51",
+   "name": "Virginia",
+   "governor": {
+    "name": "Abigail Spanberger",
+    "wiki": "Abigail_Spanberger",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2026-01-17",
+    "termEnds": 2030,
+    "termNote": "term limits"
+   },
+   "senators": [
+    {
+     "name": "Tim Kaine",
+     "party": "D",
+     "wiki": "Tim_Kaine",
+     "class": 1,
+     "since": "2013-01-03",
+     "nextElection": 2030,
+     "url": "https://www.kaine.senate.gov"
+    },
+    {
+     "name": "Mark R. Warner",
+     "party": "D",
+     "wiki": "Mark_Warner",
+     "class": 2,
+     "since": "2009-01-06",
+     "nextElection": 2026,
+     "url": "https://www.warner.senate.gov"
+    }
+   ],
+   "houseSeats": 11,
+   "house": [
+    {
+     "name": "Robert J. Wittman",
+     "party": "R",
+     "wiki": "Rob_Wittman",
+     "district": 1
+    },
+    {
+     "name": "Jennifer A. Kiggans",
+     "party": "R",
+     "wiki": "Jen_Kiggans",
+     "district": 2
+    },
+    {
+     "name": "Robert C. \"Bobby\" Scott",
+     "party": "D",
+     "wiki": "Bobby_Scott_(politician)",
+     "district": 3
+    },
+    {
+     "name": "Jennifer L. McClellan",
+     "party": "D",
+     "wiki": "Jennifer_McClellan",
+     "district": 4
+    },
+    {
+     "name": "John J. McGuire III",
+     "party": "R",
+     "wiki": "John_McGuire_(Virginia_politician)",
+     "district": 5
+    },
+    {
+     "name": "Ben Cline",
+     "party": "R",
+     "wiki": "Ben_Cline",
+     "district": 6
+    },
+    {
+     "name": "Eugene Simon Vindman",
+     "party": "D",
+     "wiki": "Eugene_Vindman",
+     "district": 7
+    },
+    {
+     "name": "Donald S. Beyer, Jr.",
+     "party": "D",
+     "wiki": "Don_Beyer",
+     "district": 8
+    },
+    {
+     "name": "H. Morgan Griffith",
+     "party": "R",
+     "wiki": "Morgan_Griffith",
+     "district": 9
+    },
+    {
+     "name": "Suhas Subramanyam",
+     "party": "D",
+     "wiki": "Suhas_Subramanyam",
+     "district": 10
+    },
+    {
+     "name": "James R. Walkinshaw",
+     "party": "D",
+     "wiki": "James_Walkinshaw",
+     "district": 11
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 21,
+      "R": 19,
+      "O": 0,
+      "control": "D"
+     },
+     {
+      "id": "lower",
+      "name": "House of Delegates",
+      "D": 63,
+      "R": 36,
+      "O": 0,
+      "control": "D"
+     }
+    ]
+   }
+  },
+  {
+   "code": "WA",
+   "fips": "53",
+   "name": "Washington",
+   "governor": {
+    "name": "Bob Ferguson",
+    "wiki": "Bob_Ferguson_(politician)",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2025-01-15",
+    "termEnds": 2029
+   },
+   "senators": [
+    {
+     "name": "Maria Cantwell",
+     "party": "D",
+     "wiki": "Maria_Cantwell",
+     "class": 1,
+     "since": "2001-01-03",
+     "nextElection": 2030,
+     "url": "https://www.cantwell.senate.gov"
+    },
+    {
+     "name": "Patty Murray",
+     "party": "D",
+     "wiki": "Patty_Murray",
+     "class": 3,
+     "since": "1993-01-05",
+     "nextElection": 2028,
+     "url": "https://www.murray.senate.gov"
+    }
+   ],
+   "houseSeats": 10,
+   "house": [
+    {
+     "name": "Suzan K. DelBene",
+     "party": "D",
+     "wiki": "Suzan_DelBene",
+     "district": 1
+    },
+    {
+     "name": "Rick Larsen",
+     "party": "D",
+     "wiki": "Rick_Larsen",
+     "district": 2
+    },
+    {
+     "name": "Marie Gluesenkamp Perez",
+     "party": "D",
+     "wiki": "Marie_Gluesenkamp_Perez",
+     "district": 3
+    },
+    {
+     "name": "Dan Newhouse",
+     "party": "R",
+     "wiki": "Dan_Newhouse",
+     "district": 4
+    },
+    {
+     "name": "Michael Baumgartner",
+     "party": "R",
+     "wiki": "Michael_Baumgartner",
+     "district": 5
+    },
+    {
+     "name": "Emily Randall",
+     "party": "D",
+     "wiki": "Emily_Randall",
+     "district": 6
+    },
+    {
+     "name": "Pramila Jayapal",
+     "party": "D",
+     "wiki": "Pramila_Jayapal",
+     "district": 7
+    },
+    {
+     "name": "Kim Schrier",
+     "party": "D",
+     "wiki": "Kim_Schrier",
+     "district": 8
+    },
+    {
+     "name": "Adam Smith",
+     "party": "D",
+     "wiki": "Adam_Smith_(Washington_politician)",
+     "district": 9
+    },
+    {
+     "name": "Marilyn Strickland",
+     "party": "D",
+     "wiki": "Marilyn_Strickland",
+     "district": 10
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 30,
+      "R": 19,
+      "O": 0,
+      "control": "D"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 59,
+      "R": 39,
+      "O": 0,
+      "control": "D"
+     }
+    ]
+   }
+  },
+  {
+   "code": "WV",
+   "fips": "54",
+   "name": "West Virginia",
+   "governor": {
+    "name": "Patrick Morrisey",
+    "wiki": "Patrick_Morrisey",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2025-01-13",
+    "termEnds": 2029
+   },
+   "senators": [
+    {
+     "name": "James C. Justice",
+     "party": "R",
+     "wiki": "Jim_Justice",
+     "class": 1,
+     "since": "2025-01-14",
+     "nextElection": 2030,
+     "url": "https://www.justice.senate.gov"
+    },
+    {
+     "name": "Shelley Moore Capito",
+     "party": "R",
+     "wiki": "Shelley_Moore_Capito",
+     "class": 2,
+     "since": "2015-01-06",
+     "nextElection": 2026,
+     "url": "https://www.capito.senate.gov"
+    }
+   ],
+   "houseSeats": 2,
+   "house": [
+    {
+     "name": "Carol D. Miller",
+     "party": "R",
+     "wiki": "Carol_Miller_(politician)",
+     "district": 1
+    },
+    {
+     "name": "Riley M. Moore",
+     "party": "R",
+     "wiki": "Riley_Moore",
+     "district": 2
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 2,
+      "R": 32,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Delegates",
+      "D": 9,
+      "R": 91,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "WI",
+   "fips": "55",
+   "name": "Wisconsin",
+   "governor": {
+    "name": "Tony Evers",
+    "wiki": "Tony_Evers",
+    "party": "D",
+    "partyName": "Democratic",
+    "since": "2019-01-07",
+    "termEnds": 2027,
+    "termNote": "retiring"
+   },
+   "senators": [
+    {
+     "name": "Tammy Baldwin",
+     "party": "D",
+     "wiki": "Tammy_Baldwin",
+     "class": 1,
+     "since": "2013-01-03",
+     "nextElection": 2030,
+     "url": "https://www.baldwin.senate.gov"
+    },
+    {
+     "name": "Ron Johnson",
+     "party": "R",
+     "wiki": "Ron_Johnson",
+     "class": 3,
+     "since": "2011-01-05",
+     "nextElection": 2028,
+     "url": "https://www.ronjohnson.senate.gov"
+    }
+   ],
+   "houseSeats": 8,
+   "house": [
+    {
+     "name": "Bryan Steil",
+     "party": "R",
+     "wiki": "Bryan_Steil",
+     "district": 1
+    },
+    {
+     "name": "Mark Pocan",
+     "party": "D",
+     "wiki": "Mark_Pocan",
+     "district": 2
+    },
+    {
+     "name": "Derrick Van Orden",
+     "party": "R",
+     "wiki": "Derrick_Van_Orden",
+     "district": 3
+    },
+    {
+     "name": "Gwen Moore",
+     "party": "D",
+     "wiki": "Gwen_Moore",
+     "district": 4
+    },
+    {
+     "name": "Scott Fitzgerald",
+     "party": "R",
+     "wiki": "Scott_Fitzgerald_(politician)",
+     "district": 5
+    },
+    {
+     "name": "Glenn Grothman",
+     "party": "R",
+     "wiki": "Glenn_Grothman",
+     "district": 6
+    },
+    {
+     "name": "Thomas P. Tiffany",
+     "party": "R",
+     "wiki": "Tom_Tiffany",
+     "district": 7
+    },
+    {
+     "name": "Tony Wied",
+     "party": "R",
+     "wiki": "Tony_Wied",
+     "district": 8
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 15,
+      "R": 18,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "Assembly",
+      "D": 45,
+      "R": 54,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  },
+  {
+   "code": "WY",
+   "fips": "56",
+   "name": "Wyoming",
+   "governor": {
+    "name": "Mark Gordon",
+    "wiki": "Mark_Gordon",
+    "party": "R",
+    "partyName": "Republican",
+    "since": "2019-01-07",
+    "termEnds": 2027,
+    "termNote": "term limits"
+   },
+   "senators": [
+    {
+     "name": "John Barrasso",
+     "party": "R",
+     "wiki": "John_Barrasso",
+     "class": 1,
+     "since": "2007-06-25",
+     "nextElection": 2030,
+     "url": "https://www.barrasso.senate.gov"
+    },
+    {
+     "name": "Cynthia M. Lummis",
+     "party": "R",
+     "wiki": "Cynthia_Lummis",
+     "class": 2,
+     "since": "2021-01-03",
+     "nextElection": 2026,
+     "url": "https://www.lummis.senate.gov"
+    }
+   ],
+   "houseSeats": 1,
+   "house": [
+    {
+     "name": "Harriet M. Hageman",
+     "party": "R",
+     "wiki": "Harriet_Hageman",
+     "district": 0
+    }
+   ],
+   "legislature": {
+    "chambers": [
+     {
+      "id": "upper",
+      "name": "Senate",
+      "D": 2,
+      "R": 29,
+      "O": 0,
+      "control": "R"
+     },
+     {
+      "id": "lower",
+      "name": "House of Representatives",
+      "D": 6,
+      "R": 56,
+      "O": 0,
+      "control": "R"
+     }
+    ]
+   }
+  }
+ ]
+}

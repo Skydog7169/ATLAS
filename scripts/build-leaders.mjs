@@ -34,10 +34,14 @@ const decode = (s) => {
     return s;
   }
 };
-/** "/wiki/Bajram_Begaj" → "Bajram Begaj"; red links and anchors yield null. */
+/** Article links come relative from the API ("/wiki/X") and absolute or "./X" from the page view. */
+const normalise = (href) => href.replace(/^https:\/\/en\.wikipedia\.org(?=\/wiki\/)/, '').replace(/^\.\//, '/wiki/');
+
+/** "/wiki/Bajram_Begaj" → "Bajram Begaj"; red links, files and anchors yield null. */
 export function wikiTitle(href) {
-  if (!href || !href.startsWith('/wiki/')) return null;
-  return decode(href.slice(6).split('#')[0]).replace(/_/g, ' ');
+  const h = href ? normalise(href) : '';
+  if (!h.startsWith('/wiki/') || /^\/wiki\/(File|Special|Help|Category):/.test(h)) return null;
+  return decode(h.slice(6).split('#')[0]).replace(/_/g, ' ');
 }
 
 function attr(tag, name) {
@@ -47,7 +51,7 @@ function attr(tag, name) {
 /** Article and red links only: interlanguage "[fr]" links and external links are not people. */
 function links(html) {
   return [...html.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>(.*?)<\/a>/gs)]
-    .map((m) => ({ href: m[1].replace(/&amp;/g, '&'), text: stripTags(m[2]) }))
+    .map((m) => ({ href: normalise(m[1].replace(/&amp;/g, '&')), text: stripTags(m[2]) }))
     .filter((l) => l.href.startsWith('/wiki/') || /redlink=1/.test(l.href));
 }
 
@@ -282,13 +286,25 @@ export function toRows(states, info = new Map(), starts = new Map()) {
   return rows.sort((a, b) => a.iso.localeCompare(b.iso));
 }
 
+/** The parse API, falling back to the article view when the API is rate-limited. */
+async function fetchPage() {
+  try {
+    const res = await fetch(API, { signal: AbortSignal.timeout(60000), headers: { 'user-agent': UA } });
+    if (!res.ok) throw new Error(`${res.status}`);
+    return (await res.json()).parse.text;
+  } catch (err) {
+    console.warn(`Parse API failed (${err.message}); reading the article view.`);
+    const res = await fetch(PAGE_URL, { signal: AbortSignal.timeout(60000), headers: { 'user-agent': UA } });
+    if (!res.ok) throw new Error(`${res.status}`);
+    return res.text();
+  }
+}
+
 async function main() {
   const prev = existsSync(OUT) ? JSON.parse(readFileSync(OUT, 'utf8')) : null;
   let html;
   try {
-    const res = await fetch(API, { signal: AbortSignal.timeout(60000), headers: { 'user-agent': UA } });
-    if (!res.ok) throw new Error(`${res.status}`);
-    html = (await res.json()).parse.text;
+    html = await fetchPage();
   } catch (err) {
     if (prev) {
       console.warn(`Leaders list fetch failed (${err.message}); keeping the committed file.`);

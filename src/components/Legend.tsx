@@ -15,6 +15,7 @@ import { CHOKEPOINTS_FILE, CHOKEPOINT_COLOR, CHOKEPOINT_STATUSES, CHOKEPOINT_STA
 import { UNREST } from '../data/unrest';
 import { UNREST_COLOR, UNREST_VERIFIED } from '../lib/unrest';
 import { LEADERS, TENURE_COLORS, tenureBinLabel } from '../lib/leaders';
+import { US, US_LAYER_LABEL, nextFederalElection, usLegend, type UsLayer } from '../lib/usStates';
 
 interface Props {
   mode: Mode;
@@ -22,11 +23,43 @@ interface Props {
   vs: string | null;
   overviewSteps: string[];
   layer: Layer;
+  /** Set in the US states view: the legend describes the state layer instead. */
+  usLayer?: UsLayer | null;
 }
+
+const US_NOTE: Record<UsLayer, string> = {
+  governor: 'Party of each governor (DC: the mayor).',
+  legislature: 'Which party runs each chamber of the state legislature: the larger party unless a bipartisan coalition or power-sharing deal does. Nebraska has one nonpartisan chamber.',
+  trifecta: 'A trifecta is one party holding the governorship and every legislative chamber.',
+  senate: 'Party of the two US senators, counting independents with the party they caucus with.',
+  house: "Share of the state's US House delegation held by each party.",
+  ballot: 'What each state votes on at the next federal election besides its House seats.',
+};
 
 const INTENSITIES: Intensity[] = ['high', 'medium', 'low', 'latent'];
 
-export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) {
+export default function Legend({ mode, bloc, vs, overviewSteps, layer, usLayer }: Props) {
+  if (usLayer) {
+    return (
+      <aside className="legend frame" aria-label="Legend">
+        <h3>
+          US states · {US_LAYER_LABEL[usLayer]}
+          {usLayer === 'ballot' ? ` · ${formatDate(nextFederalElection())}` : ''}
+        </h3>
+        <ul>
+          {usLegend(usLayer).map((r) => (
+            <li key={r.label}>
+              <span className="swatch" style={{ background: r.color }} />
+              {r.label}
+            </li>
+          ))}
+        </ul>
+        <div className="note">
+          {US_NOTE[usLayer]} Governors from Wikipedia, Congress from the congress-legislators project, legislatures from Open States; fetched {formatDate(US.fetchedAt)}.
+        </div>
+      </aside>
+    );
+  }
   if (layer === 'leaders') {
     return (
       <aside className="legend frame" aria-label="Legend">

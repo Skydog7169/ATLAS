@@ -272,6 +272,7 @@ a {
 
 .segmented button {
   border: 0;
+  white-space: nowrap;
   background: transparent;
   padding: 7px 16px;
   cursor: pointer;
@@ -2288,4 +2289,85 @@ a {
   height: 11px;
   border: 0;
   clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+/* ---------- US states view ---------- */
+.state-label {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+}
+
+.seat-bar {
+  position: relative;
+  display: flex;
+  height: 10px;
+  margin: 4px 0 2px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev-2);
+  overflow: hidden;
+}
+
+.seat-bar span {
+  flex-basis: 0;
+  min-width: 0;
+}
+
+.seat-bar .majority {
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  left: 50%;
+  width: 1px;
+  background: var(--fg);
+  opacity: 0.7;
+}
+
+.seat-legend {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--fg-muted);
+}
+
+.chamber {
+  margin: 6px 0 8px;
+}
+
+.chamber-head {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.chamber-head .meta {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--fg-muted);
+  text-align: right;
+}
+
+.us-dossier details.members summary {
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  padding: 4px 0;
+}
+
+.pdot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.chamber-note {
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--fg-muted);
 }

@@ -36,11 +36,14 @@ import Briefing, { type BriefItem } from './components/Briefing';
 import { COUNTRY_BY_ISO } from './lib/countries';
 import { downloadBlob, readLegend, renderPng } from './lib/exportPng';
 import { serialize } from './lib/urlState';
+import UsChips from './components/UsChips';
+import { STATE_BY_CODE, US_LAYER_LABEL, stateFill, stateSummary, type UsState } from './lib/usStates';
 
 // The map pulls in d3 and the 110m geometry; loading it after the shell
 // paints keeps first render fast on phones.
 const WorldMap = lazy(() => import('./components/WorldMap'));
 const GlobeMap = lazy(() => import('./components/GlobeMap'));
+const UsMap = lazy(() => import('./components/UsMap'));
 
 const OVERVIEW_STEPS = ['var(--land)', '#123a4a', '#17607a', '#1f8fb3', '#35e0ff'];
 
@@ -103,11 +106,13 @@ function MapSkeleton() {
 
 export default function App() {
   const { state, update } = useAppState();
-  const { mode, bloc, vs, selection, month, layer, view, rotation, brief, embed } = state;
+  const { mode, bloc, vs, selection, month, layer, view, rotation, brief, embed, usLayer } = state;
   const [exporting, setExporting] = useState(false);
   const [picking, setPicking] = useState(false);
-  const [hover, setHover] = useState<{ label: string; sub?: string; iso: string | null; x: number; y: number } | null>(null);
+  const [hover, setHover] = useState<{ label: string; sub?: string; iso: string | null; state?: string; x: number; y: number } | null>(null);
   const [focus, setFocus] = useState<Focus>(null);
+  /** US view: the state to fly to. */
+  const [usFocus, setUsFocus] = useState<string | null>(null);
   const zoomApi = useRef<{ zoomIn: () => void; zoomOut: () => void; reset: () => void } | null>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const [insetRight, setInsetRight] = useState(0);
@@ -135,7 +140,7 @@ export default function App() {
     } else if (selection?.kind === 'chokepoint') {
       const cp = CHOKEPOINT_BY_ID.get(selection.id);
       if (cp) setFocus({ kind: 'point', lonLat: cp.location, scale: 3 });
-    }
+    } else if (selection?.kind === 'state') setUsFocus(selection.code);
   }, [selection]);
 
   const activeBloc = bloc ? BLOC_BY_ID.get(bloc) : undefined;
@@ -264,6 +269,27 @@ export default function App() {
     [selectChokepoint, selectConflict, selectUnrest],
   );
 
+  const selectState = useCallback(
+    (code: string) => {
+      update({ view: 'us', selection: { kind: 'state', code } });
+      setUsFocus(code);
+    },
+    [update],
+  );
+
+  const openUs = useCallback(
+    (code?: string) => {
+      if (code) selectState(code);
+      else {
+        update((s) => ({ view: 'us', selection: s.selection?.kind === 'country' ? null : s.selection }));
+        setUsFocus(null);
+      }
+    },
+    [update, selectState],
+  );
+
+  const usFill = useCallback((s: UsState) => stateFill(s, usLayer), [usLayer]);
+
   const selectPair = useCallback(
     (a: string, b: string | null) => {
       update({ selection: { kind: 'pair', a, b } });
@@ -285,21 +311,26 @@ export default function App() {
       if (hit.kind === 'country' || hit.kind === 'leader') selectCountry(hit.id);
       else if (hit.kind === 'bloc') selectBloc(hit.id);
       else if (hit.kind === 'unrest') selectUnrest(hit.id);
+      else if (hit.kind === 'state') selectState(hit.id);
       else selectConflict(hit.id);
     },
-    [selectCountry, selectBloc, selectConflict, selectUnrest],
+    [selectCountry, selectBloc, selectConflict, selectUnrest, selectState],
   );
 
-  const onHover = useCallback((h: { label: string; sub?: string; iso?: string | null } | null, clientX: number, clientY: number) => {
+  const onHover = useCallback((h: { label: string; sub?: string; iso?: string | null; state?: string } | null, clientX: number, clientY: number) => {
     if (!h) return setHover(null);
     const rect = stageRef.current?.getBoundingClientRect();
-    setHover({ label: h.label, sub: h.sub, iso: h.iso ?? null, x: clientX - (rect?.left ?? 0), y: clientY - (rect?.top ?? 0) });
+    setHover({ label: h.label, sub: h.sub, iso: h.iso ?? null, state: h.state, x: clientX - (rect?.left ?? 0), y: clientY - (rect?.top ?? 0) });
   }, []);
 
   // Second tooltip line: memberships in blocs mode, conflicts in conflicts mode.
   const hoverDetail = useMemo(() => {
     if (!hover) return null;
     if (hover.sub) return hover.sub;
+    if (hover.state) {
+      const s = STATE_BY_CODE.get(hover.state);
+      return s ? stateSummary(s, usLayer) : null;
+    }
     if (!hover.iso) return null;
     if (layer === 'leaders') return leaderSummary(hover.iso) ?? 'No leader on record';
     if (layer === 'displacement') {
@@ -324,7 +355,7 @@ export default function App() {
     }
     const list = blocsForCountry(hover.iso).filter((x) => x.membership.status === 'member');
     return list.length ? list.map((x) => x.bloc.shortName).join(' · ') : 'No tracked bloc memberships';
-  }, [hover, mode, layer]);
+  }, [hover, mode, layer, usLayer]);
 
   // Briefing cycles the live high-intensity conflicts first, then whatever is starred.
   const briefItems = useMemo<BriefItem[]>(() => {
@@ -398,7 +429,7 @@ export default function App() {
     try {
       const css = getComputedStyle(document.documentElement);
       const legend = readLegend(root);
-      const title = legend.title ?? (mode === 'conflicts' ? `ATLAS · Conflicts${viewMonth ? ' · ' + formatMonth(viewMonth) : ''}` : activeBloc ? `ATLAS · ${activeBloc.name}` : 'ATLAS · Bloc overview');
+      const title = view === 'us' ? `ATLAS · US states · ${US_LAYER_LABEL[usLayer]}` : legend.title ?? (mode === 'conflicts' ? `ATLAS · Conflicts${viewMonth ? ' · ' + formatMonth(viewMonth) : ''}` : activeBloc ? `ATLAS · ${activeBloc.name}` : 'ATLAS · Bloc overview');
       const today = new Date().toISOString().slice(0, 10);
       const blob = await renderPng({
         svg,
@@ -410,11 +441,11 @@ export default function App() {
         legend: legend.rows,
         stamp: `Data ${formatMonth(DATA_ASOF)} · exported ${formatDate(today)} · atlas-geopolitic.vercel.app`,
       });
-      downloadBlob(blob, `atlas-${layer ?? mode}-${today}.png`);
+      downloadBlob(blob, `atlas-${view === 'us' ? `us-${usLayer}` : (layer ?? mode)}-${today}.png`);
     } finally {
       setExporting(false);
     }
-  }, [exporting, mode, viewMonth, activeBloc, layer]);
+  }, [exporting, mode, viewMonth, activeBloc, layer, view, usLayer]);
 
   const conflictColor = useCallback((id: string) => {
     const c = CONFLICT_BY_ID.get(id);
@@ -424,7 +455,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="app" data-panel-open={selection !== null} data-mode={mode} data-layer={layer ?? undefined} data-view={view} data-brief={brief} data-embed={embed}>
+    <div className="app" data-panel-open={selection !== null} data-mode={view === 'us' ? 'us' : mode} data-layer={layer ?? undefined} data-view={view} data-brief={brief} data-embed={embed}>
       <header className="header">
         <a className="brand" href="#" onClick={(e) => { e.preventDefault(); update({ selection: null, bloc: null }); setFocus({ kind: 'reset' }); }}>
           <Logo />
@@ -434,11 +465,14 @@ export default function App() {
           </span>
         </a>
         <div className="segmented" role="group" aria-label="Map mode">
-          <button aria-pressed={mode === 'blocs'} onClick={() => update({ mode: 'blocs', selection: selection?.kind === 'conflict' ? null : selection })}>
+          <button aria-pressed={view !== 'us' && mode === 'blocs'} onClick={() => update({ mode: 'blocs', view: view === 'us' ? 'flat' : view, selection: selection?.kind === 'conflict' || selection?.kind === 'state' ? null : selection })}>
             Blocs
           </button>
-          <button aria-pressed={mode === 'conflicts'} onClick={() => update({ mode: 'conflicts', selection: selection?.kind === 'bloc' ? null : selection })}>
+          <button aria-pressed={view !== 'us' && mode === 'conflicts'} onClick={() => update({ mode: 'conflicts', view: view === 'us' ? 'flat' : view, selection: selection?.kind === 'bloc' || selection?.kind === 'state' ? null : selection })}>
             Conflicts
+          </button>
+          <button aria-pressed={view === 'us'} onClick={() => openUs()} title="US state politics">
+            US states
           </button>
         </div>
         <div className="spacer" />
@@ -511,7 +545,17 @@ export default function App() {
         <SinceLastVisit onSelectConflict={selectConflict} onSelectBloc={selectBloc} onSelectUnrest={selectUnrest} onOpenChanges={() => update({ selection: { kind: 'changes' } })} />
         <ErrorBoundary>
           <Suspense fallback={<MapSkeleton />}>
-            {view === 'globe' ? (
+            {view === 'us' ? (
+              <UsMap
+                fillFor={usFill}
+                selectedCode={selection?.kind === 'state' ? selection.code : null}
+                focusCode={usFocus}
+                insetRight={insetRight}
+                onStateClick={selectState}
+                onHover={onHover}
+                zoomApiRef={zoomApi}
+              />
+            ) : view === 'globe' ? (
               <GlobeMap
                 fillFor={fillFor}
                 markers={markers}
@@ -545,7 +589,18 @@ export default function App() {
           </Suspense>
         </ErrorBoundary>
 
-        {mode === 'blocs' && (
+        {view === 'us' && (
+          <UsChips
+            value={usLayer}
+            onChange={(l) => update({ usLayer: l })}
+            onWorld={() => {
+              update({ view: 'flat', selection: selection?.kind === 'state' ? null : selection });
+              setFocus({ kind: 'reset' });
+            }}
+          />
+        )}
+
+        {view !== 'us' && mode === 'blocs' && (
           <BlocChips
             active={bloc}
             vs={vs}
@@ -563,12 +618,12 @@ export default function App() {
           />
         )}
 
-        <Legend mode={mode} bloc={bloc} vs={mode === 'blocs' ? vs : null} overviewSteps={OVERVIEW_STEPS} layer={layer} />
+        <Legend mode={mode} bloc={bloc} vs={mode === 'blocs' ? vs : null} overviewSteps={OVERVIEW_STEPS} layer={layer} usLayer={view === 'us' ? usLayer : null} />
 
-        {mode === 'conflicts' && <Timeline months={TIMELINE_MONTHS} value={month} onChange={(m) => update({ month: m })} />}
+        {view !== 'us' && mode === 'conflicts' && <Timeline months={TIMELINE_MONTHS} value={month} onChange={(m) => update({ month: m })} />}
 
         <div className="map-controls">
-          <LayerMenu options={LAYER_OPTIONS} value={layer} onChange={(l) => update({ layer: l })} />
+          {view !== 'us' && <LayerMenu options={LAYER_OPTIONS} value={layer} onChange={(l) => update({ layer: l })} />}
           <button className="icon-btn" aria-label="Zoom in" onClick={() => zoomApi.current?.zoomIn()}>
             +
           </button>
@@ -608,7 +663,7 @@ export default function App() {
             </svg>
           </button>
           {!embed && (
-            <button className="icon-btn" aria-label="Start briefing" title="Full-screen briefing" onClick={() => update({ brief: true, selection: null })}>
+            <button className="icon-btn" aria-label="Start briefing" title="Full-screen briefing" onClick={() => update({ brief: true, selection: null, view: view === 'us' ? 'flat' : view })}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" />
               </svg>
@@ -653,6 +708,7 @@ export default function App() {
               onSelectChokepoint={selectChokepoint}
               onSelectUnrest={selectUnrest}
               onSelectPair={selectPair}
+              onOpenUs={openUs}
             />
           </ErrorBoundary>
         )}

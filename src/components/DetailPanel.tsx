@@ -30,6 +30,7 @@ import { WB_HISTORY } from '../lib/worldbankHistory';
 import { search } from '../lib/search';
 import TrendChart from './TrendChart';
 import AskPanel, { ASK_ENABLED } from './AskPanel';
+import { CONTROL_LABEL, PARTY_COLOR, PARTY_NAME, STATE_BY_CODE, US, ballotpediaUrl, caucusOf, districtLabel, houseCounts, nextFederalElection, nextGovernorElection, onBallot, openGovernorSeat, stateWikiUrl, trifecta, type UsState } from '../lib/usStates';
 
 interface Props {
   selection: Exclude<Selection, null>;
@@ -47,6 +48,8 @@ interface Props {
   onSelectChokepoint: (id: string) => void;
   onSelectPair: (a: string, b: string | null) => void;
   onSelectUnrest: (id: string) => void;
+  /** Opens the US states view, optionally on one state. */
+  onOpenUs: (code?: string) => void;
 }
 
 function CloseButton({ onClick }: { onClick: () => void }) {
@@ -288,6 +291,11 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
         {changes.length === 0 ? <Muted>No dated assessment or membership change on record for {country.name}.</Muted> : <FeedList items={changes} props={props} compact />}
 
         <div className="panel-actions">
+          {country.cca3 === 'USA' && (
+            <button className="text-btn primary" onClick={() => props.onOpenUs()}>
+              State politics →
+            </button>
+          )}
           <button className="text-btn primary" onClick={() => props.onSelectPair(country.cca3, null)}>
             Relationship with…
           </button>
@@ -1056,6 +1064,208 @@ function CompareView({ a, b, props }: { a: Bloc; b: Bloc; props: Props }) {
   );
 }
 
+function SeatBar({ D, R, O, label }: { D: number; R: number; O: number; label: string }) {
+  const total = D + R + O || 1;
+  return (
+    <div className="seat-bar" role="img" aria-label={label}>
+      <span style={{ flexGrow: D, background: PARTY_COLOR.D }} />
+      <span style={{ flexGrow: O, background: PARTY_COLOR.I }} />
+      <span style={{ flexGrow: R, background: PARTY_COLOR.R }} />
+      {total > 1 && <i className="majority" aria-hidden="true" />}
+    </div>
+  );
+}
+
+function partyTag(m: { party: string; caucus?: string }): string {
+  return m.party === 'I' && m.caucus ? `I, caucuses ${m.caucus}` : m.party;
+}
+
+function StateView({ state: s, props }: { state: UsState; props: Props }) {
+  const now = new Date();
+  const ballot = onBallot(s, now);
+  const election = nextFederalElection(now);
+  const days = Math.max(0, Math.round((Date.parse(election) - Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())) / 86400000));
+  const t = trifecta(s);
+  const house = houseCounts(s);
+  const gov = s.governor;
+  const govTitle = s.code === 'DC' ? 'Mayor' : 'Governor';
+  return (
+    <>
+      <div className="panel-head">
+        <h2>
+          <span className="eyebrow">{s.code === 'DC' ? 'Federal district' : 'US state'} · politics</span>
+          {s.name}
+        </h2>
+        <CloseButton onClick={props.onClose} />
+      </div>
+      <div className="panel-body dossier us-dossier">
+        <div className="badges">
+          <span className="badge muted">{s.code}</span>
+          {(t === 'D' || t === 'R') && (
+            <span className="badge" style={{ ['--badge-color' as string]: PARTY_COLOR[t] }}>
+              <span className="dot" /> {PARTY_NAME[t]} trifecta
+            </span>
+          )}
+          {t === 'divided' && <span className="badge muted">Divided government</span>}
+          <span className="badge" style={{ ['--badge-color' as string]: '#ffd166' }}>
+            <span className="dot" /> Election {formatDate(election)} · {days === 0 ? 'today' : `${days} day${days === 1 ? '' : 's'}`}
+          </span>
+        </div>
+
+        <h4 id="state-governor">{govTitle}</h4>
+        {gov ? (
+          <ul className="link-list">
+            <li>
+              <a href={gov.wiki ? stateWikiUrl(gov.wiki) : ballotpediaUrl(gov.name)} target="_blank" rel="noopener noreferrer">
+                <i className="pdot" style={{ background: PARTY_COLOR[gov.party] }} />
+                <span>
+                  {gov.name}
+                  <span className="row-note">
+                    {gov.partyName}
+                    {gov.since ? ` · since ${formatDate(gov.since)}` : ''}
+                  </span>
+                </span>
+                <span className="meta">
+                  {s.code === 'DC' ? 'Next race ' + nextGovernorElection(s.code, now) : `Next race ${nextGovernorElection(s.code, now)}`}
+                  {openGovernorSeat(s, now) ? ` · open (${gov.termNote})` : ''} ↗
+                </span>
+              </a>
+            </li>
+          </ul>
+        ) : (
+          <Muted>No {govTitle.toLowerCase()} on record.</Muted>
+        )}
+
+        {s.senators.length > 0 && (
+          <>
+            <h4 id="state-senate">US Senate</h4>
+            <ul className="link-list">
+              {s.senators.map((x) => (
+                <li key={x.name}>
+                  <a href={x.wiki ? stateWikiUrl(x.wiki) : (x.url ?? ballotpediaUrl(x.name))} target="_blank" rel="noopener noreferrer">
+                    <i className="pdot" style={{ background: PARTY_COLOR[caucusOf(x) === 'I' ? 'I' : caucusOf(x)] }} />
+                    <span>
+                      {x.name} ({partyTag(x)})
+                      <span className="row-note">
+                        Class {x.class} · since {formatDate(x.since)}
+                        {x.appointed ? ' · appointed' : ''}
+                      </span>
+                    </span>
+                    <span className="meta">
+                      {x.special ? 'Special election ' : 'Up '}
+                      {x.nextElection} ↗
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+
+        <h4 id="state-house">
+          {s.code === 'DC' ? 'Delegate to the House' : `US House · ${s.houseSeats} seat${s.houseSeats === 1 ? '' : 's'}`}
+        </h4>
+        {s.code !== 'DC' && (
+          <SeatBar D={house.D} R={house.R} O={house.I} label={`${house.D} Democrats, ${house.R} Republicans${house.I ? `, ${house.I} independents` : ''}${house.vacant ? `, ${house.vacant} vacant` : ''}`} />
+        )}
+        {s.code !== 'DC' && (
+          <p className="seat-legend">
+            {house.D} D · {house.R} R{house.I ? ` · ${house.I} I` : ''}
+            {house.vacant ? ` · ${house.vacant} vacant` : ''}
+          </p>
+        )}
+        <details className="members" open={s.house.length <= 3}>
+          <summary>{s.house.length <= 3 ? 'Members' : `All ${s.house.length} members`}</summary>
+          <ul className="link-list">
+            {s.house.map((m) => (
+              <li key={m.district + m.name}>
+                <a href={m.wiki ? stateWikiUrl(m.wiki) : ballotpediaUrl(m.name)} target="_blank" rel="noopener noreferrer">
+                  <i className="pdot" style={{ background: PARTY_COLOR[m.party] }} />
+                  <span>
+                    {m.name} ({partyTag(m)})
+                  </span>
+                  <span className="meta">{s.code === 'DC' ? 'non-voting' : districtLabel(m.district)} ↗</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </details>
+
+        {s.legislature && (
+          <>
+            <h4 id="state-legislature">{s.legislature.unicameral ? 'Legislature (unicameral, nonpartisan)' : 'State legislature'}</h4>
+            {s.legislature.chambers.map((c) => (
+              <div key={c.id} className="chamber">
+                <div className="chamber-head">
+                  <span>{c.name}</span>
+                  <span className="meta">
+                    {c.control === 'nonpartisan' ? `${c.O} members` : `${c.D}D · ${c.R}R${c.O ? ` · ${c.O} other` : ''}`} · {CONTROL_LABEL[c.control]}
+                  </span>
+                </div>
+                {c.control !== 'nonpartisan' && <SeatBar D={c.D} R={c.R} O={c.O} label={`${c.name}: ${c.D} Democrats, ${c.R} Republicans, ${c.O} other`} />}
+              </div>
+            ))}
+            {s.legislature.note && (
+              <p className="chamber-note">
+                {s.legislature.note}{' '}
+                {s.legislature.noteSource && (
+                  <a href={s.legislature.noteSource.url} target="_blank" rel="noopener noreferrer">
+                    source ↗
+                  </a>
+                )}
+              </p>
+            )}
+          </>
+        )}
+
+        <h4 id="state-ballot">On the ballot · {formatDate(election)}</h4>
+        <ul className="history">
+          {ballot.governor && (
+            <li>
+              <span className="when">{govTitle}</span>
+              <span>{openGovernorSeat(s, now) ? `Open seat: ${gov?.name} is ${gov?.termNote === 'retiring' ? 'retiring' : 'term-limited'}` : `${gov?.name ?? 'The incumbent'}'s seat`}</span>
+            </li>
+          )}
+          {ballot.senate.map((x) => (
+            <li key={x.name}>
+              <span className="when">Senate</span>
+              <span>
+                {x.special ? 'Special election for' : 'Class ' + x.class + ' seat held by'} {x.name} ({partyTag(x)}){x.appointed ? ', appointed' : ''}
+              </span>
+            </li>
+          ))}
+          <li>
+            <span className="when">House</span>
+            <span>{s.code === 'DC' ? 'Non-voting delegate' : `All ${s.houseSeats} seat${s.houseSeats === 1 ? '' : 's'}`}</span>
+          </li>
+        </ul>
+
+        <div className="panel-actions">
+          <button className="text-btn primary" onClick={() => props.onSelectCountry('USA')}>
+            United States dossier
+          </button>
+          <a className="text-btn" href={ballotpediaUrl(s.name)} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit', display: 'inline-block' }}>
+            Ballotpedia ↗
+          </a>
+          <ShareButton />
+        </div>
+        <div className="updated">
+          {US.sources.map((src, i) => (
+            <span key={src.id}>
+              {i > 0 ? ' · ' : ''}
+              <a href={src.url} target="_blank" rel="noopener noreferrer">
+                {src.name.replace(/^Wikipedia: /, 'Wikipedia, ')}
+              </a>{' '}
+              {formatDate(US.sourceDates[src.id] ?? US.fetchedAt)}
+            </span>
+          ))}
+          . Chamber control is the larger party unless a coalition or power-sharing deal is noted.
+        </div>
+      </div>
+    </>
+  );
+}
+
 function AboutView({ props }: { props: Props }) {
   const newest = [...CONFLICTS.map((c) => c.updated), ...BLOCS.flatMap((b) => b.changes.map((c) => c.date))].sort().at(-1) ?? '';
   return (
@@ -1093,6 +1303,10 @@ function AboutView({ props }: { props: Props }) {
           <li>
             <span className="when">{formatDate(LEADERS.fetchedAt)}</span>
             <span>Heads of state and government, who holds executive power, start dates and parties (Wikipedia and Wikidata)</span>
+          </li>
+          <li>
+            <span className="when">{formatDate(US.fetchedAt)}</span>
+            <span>US governors (Wikipedia), Congress (congress-legislators) and state legislatures (Open States)</span>
           </li>
           <li>
             <span className="when">{formatDate(ELECTIONS_VERIFIED)}</span>
@@ -1134,6 +1348,10 @@ function AboutView({ props }: { props: Props }) {
         <h4>Following things</h4>
         <p>
           Every country has a dossier (who governs it, memberships, conflicts, displacement, figures and its recent changes) at a link you can share. The strip along the bottom cycles the ten newest dated changes and pauses while you hover it. Press the star on any panel to add it to a watchlist kept in this browser; the ticker and the changes feed can be filtered to it. A strip under the header lists what changed since you last pressed "Mark read". The same changes are available as <a href="/feed.xml">RSS</a> and <a href="/feed.json">JSON Feed</a>.
+        </p>
+        <h4>US states</h4>
+        <p>
+          The US states tab, or "State politics" in the United States dossier, swaps the world for a map of the fifty states and DC coloured by governor, legislature control, trifecta, Senate delegation, House delegation or what is on the next federal ballot. Each state's panel lists its governor, senators, every House member, both chambers' seats and its races on election day, with links out to Wikipedia and Ballotpedia.
         </p>
         <h4>Globe, briefing, embed and export</h4>
         <p>
@@ -1202,6 +1420,9 @@ export default function DetailPanel(props: Props) {
   } else if (selection.kind === 'unrest') {
     const u = UNREST_BY_ID.get(selection.id);
     body = u ? <UnrestView unrest={u} props={props} /> : null;
+  } else if (selection.kind === 'state') {
+    const s = STATE_BY_CODE.get(selection.code);
+    body = s ? <StateView state={s} props={props} /> : null;
   }
   if (!body) return null;
   return (
