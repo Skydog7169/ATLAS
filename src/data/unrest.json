@@ -126,15 +126,15 @@
     ],
     "parties": [
       "Student-led protest movement and Student List",
-      "Serbian government and SNS of Aleksandar Vucic"
+      "Serbian government and SNS of Aleksandar Vučić"
     ],
     "trigger": "The collapse of a railway station canopy in Novi Sad on 1 November 2024 killed 16 people and set off student-led protests against corruption and state capture.",
-    "summary": "Student-led demonstrations against corruption and the rule of President Aleksandar Vucic have continued almost without interruption since November 2024, becoming the largest protest movement in Serbia's post-Milosevic history. Prime Minister Milos Vucevic resigned in January 2025, and the movement's central demand became a snap election. Vucic resigned as president on 27 September 2026 to run for prime minister in a snap parliamentary election on 25 October 2026, which the students are contesting with their own list.",
+    "summary": "Student-led demonstrations against corruption and the rule of President Aleksandar Vučić have continued almost without interruption since November 2024, becoming the largest protest movement in Serbia's post-Milošević history. Prime Minister Milos Vučević resigned in January 2025, and the movement's central demand became a snap election. Vučić resigned as president on 27 September 2026 to run for prime minister in a snap parliamentary election on 25 October 2026, which the students are contesting with their own list.",
     "history": [
       {
         "date": "2026-10-19",
         "intensity": "medium",
-        "status": "As of 19 October 2026 Serbia is in the final week before the 25 October snap parliamentary election, called after Vucic resigned as president on 27 September (pardoning dozens of protest-related suspects minutes beforehand) to run for prime minister; Ana Brnabic is acting president. Election-related protest walks began on 16 October and converge on a rally in Belgrade's Slavija Square on 22 October, with polls suggesting the Student List could win. Digital-rights groups reported on 19 October that the University of Belgrade rector and an organised-crime prosecutor were targeted by spyware.",
+        "status": "As of 19 October 2026 Serbia is in the final week before the 25 October snap parliamentary election, called after Vučić resigned as president on 27 September (pardoning dozens of protest-related suspects minutes beforehand) to run for prime minister; Ana Brnabić is acting president. Election-related protest walks began on 16 October and converge on a rally in Belgrade's Slavija Square on 22 October, with polls suggesting the Student List could win. Digital-rights groups reported on 19 October that the University of Belgrade rector and an organised-crime prosecutor were targeted by spyware.",
         "sources": [
           {
             "name": "Al Jazeera: Serbian President Aleksandar Vucic resigns amid prolonged protests",
@@ -154,7 +154,7 @@
       {
         "date": "2025-01-28",
         "intensity": "medium",
-        "status": "On 28 January 2025 Prime Minister Milos Vucevic resigned after months of student blockades and mass rallies sparked by the Novi Sad canopy collapse of 1 November 2024, which killed 16 people. Protesters demanded accountability for the disaster and later a snap election; demonstrations spread to dozens of towns and intermittently turned violent.",
+        "status": "On 28 January 2025 Prime Minister Milos Vučević resigned after months of student blockades and mass rallies sparked by the Novi Sad canopy collapse of 1 November 2024, which killed 16 people. Protesters demanded accountability for the disaster and later a snap election; demonstrations spread to dozens of towns and intermittently turned violent.",
         "sources": [
           {
             "name": "Al Jazeera: Serbia's PM Milos Vucevic resigns as protests raise political pressure",
@@ -980,7 +980,7 @@
   },
   {
     "id": "turkey-imamoglu-protests",
-    "name": "Turkey Imamoglu arrest protests",
+    "name": "Turkey İmamoğlu arrest protests",
     "kind": "protests",
     "since": "2025-03",
     "location": [
@@ -992,15 +992,15 @@
     ],
     "parties": [
       "CHP opposition and student protesters",
-      "Government of Recep Tayyip Erdogan"
+      "Government of Recep Tayyip Erdoğan"
     ],
-    "trigger": "Istanbul Mayor Ekrem Imamoglu, Erdogan's main rival, was detained on 19 March 2025 on corruption and terrorism charges days before the CHP named him presidential candidate.",
-    "summary": "Imamoglu's detention on 19 March 2025 triggered Turkey's largest protests in over a decade, with nightly rallies outside Istanbul City Hall and in dozens of cities; police used tear gas and water cannon and detained more than 1,100 people in the first week. The CHP ended the daily demonstrations with a mass rally but has held periodic rallies since. Imamoglu remains jailed and his corruption trial, opened in March 2026, is ongoing while courts have acquitted most prosecuted protesters.",
+    "trigger": "Istanbul Mayor Ekrem İmamoğlu, Erdoğan's main rival, was detained on 19 March 2025 on corruption and terrorism charges days before the CHP named him presidential candidate.",
+    "summary": "İmamoğlu's detention on 19 March 2025 triggered Turkey's largest protests in over a decade, with nightly rallies outside Istanbul City Hall and in dozens of cities; police used tear gas and water cannon and detained more than 1,100 people in the first week. The CHP ended the daily demonstrations with a mass rally but has held periodic rallies since. İmamoğlu remains jailed and his corruption trial, opened in March 2026, is ongoing while courts have acquitted most prosecuted protesters.",
     "history": [
       {
         "date": "2026-10-19",
         "intensity": "low",
-        "status": "Imamoglu gave a four-day defence in the Istanbul municipality corruption trial from 14 to 17 October 2026, calling the case political. On 17 October the court freed 7 detained defendants but kept Imamoglu and 45 others in custody and adjourned to 2 November. Prosecutors opened a new probe over his courtroom remarks. No large street protests were reported this week.",
+        "status": "İmamoğlu gave a four-day defence in the Istanbul municipality corruption trial from 14 to 17 October 2026, calling the case political. On 17 October the court freed 7 detained defendants but kept İmamoğlu and 45 others in custody and adjourned to 2 November. Prosecutors opened a new probe over his courtroom remarks. No large street protests were reported this week.",
         "sources": [
           {
             "name": "Turkish Minute",
@@ -1020,7 +1020,7 @@
       {
         "date": "2026-10-12",
         "intensity": "low",
-        "status": "On 12 October 2026 an Istanbul court acquitted 88 defendants in two trials over the March 2025 protests, following the acquittal of 542 protesters in ten earlier cases; Imamoglu's main corruption trial, which opened on 9 March 2026, continues without a verdict and he remains in prison alongside a separate espionage case. Thousands rallied in Istanbul in March 2026 to mark the anniversary of his arrest, but street protests are now sporadic and the dispute has moved to the courts.",
+        "status": "On 12 October 2026 an Istanbul court acquitted 88 defendants in two trials over the March 2025 protests, following the acquittal of 542 protesters in ten earlier cases; İmamoğlu's main corruption trial, which opened on 9 March 2026, continues without a verdict and he remains in prison alongside a separate espionage case. Thousands rallied in Istanbul in March 2026 to mark the anniversary of his arrest, but street protests are now sporadic and the dispute has moved to the courts.",
         "sources": [
           {
             "name": "Turkish Minute: 88 acquitted in trials over protests against Istanbul mayor's detention",
@@ -1036,7 +1036,7 @@
       {
         "date": "2025-03-25",
         "intensity": "medium",
-        "status": "After Imamoglu was detained on 19 March 2025 and jailed pending trial on 23 March, nightly protests spread across Turkey despite bans; by 24 March Interior Minister Ali Yerlikaya said more than 1,100 people had been detained and dozens of police injured. The CHP announced its final mass rally outside Istanbul City Hall on 25 March after naming Imamoglu its presidential candidate.",
+        "status": "After İmamoğlu was detained on 19 March 2025 and jailed pending trial on 23 March, nightly protests spread across Turkey despite bans; by 24 March Interior Minister Ali Yerlikaya said more than 1,100 people had been detained and dozens of police injured. The CHP announced its final mass rally outside Istanbul City Hall on 25 March after naming İmamoğlu its presidential candidate.",
         "sources": [
           {
             "name": "NBC News: Huge pro-democracy protests grip Turkey after Erdogan rival is imprisoned",

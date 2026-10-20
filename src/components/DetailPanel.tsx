@@ -6,16 +6,19 @@ import { UNREST_COLOR, UNREST_KIND_LABEL } from '../lib/unrest';
 import type { Bloc, Conflict, HistoryEntry, MembershipStatus, Unrest } from '../data/types';
 import { countryName } from '../lib/countries';
 import { changesSince, entryAt, type ChangeItem } from '../lib/history';
-import { CATEGORY_LABEL, CHANGE_LABEL, CONFLICT_TYPE_LABEL, INTENSITY_COLOR, INTENSITY_LABEL, STATUS_LABEL, formatDate, formatMonth } from '../lib/labels';
+import { CATEGORY_LABEL, CHANGE_LABEL, CONFLICT_TYPE_LABEL, INTENSITY_COLOR, INTENSITY_LABEL, STATUS_LABEL, STATUS_LABEL_PLURAL, formatDate, formatMonth } from '../lib/labels';
 import type { Selection } from '../lib/urlState';
-import { WORLD, WORLDBANK, blocFigures, formatCount, formatUsd, share, type Figures } from '../lib/worldbank';
-import { DISPLACEMENT, formatPeople } from '../lib/displacement';
+import { STALE_YEARS, WORLD, WORLDBANK, blocFigures, formatCount, formatUsd, share, staleValues, type Figures } from '../lib/worldbank';
+import { blocMembers } from '../lib/membership';
+import { DISPLACEMENT, REPORTED_WITH, displacementTotal, formatPeople } from '../lib/displacement';
 import { SANCTIONS } from '../lib/sanctions';
 import { ELECTIONS_VERIFIED } from '../lib/elections';
 import { NUCLEAR } from '../lib/nuclear';
 import { TRUSTED_HOSTS } from '../data/guards';
 import { CHANGES, watchlistOnly } from '../lib/feed';
-import { countryDossier, profileLine, type CountryDossier } from '../lib/dossier';
+import { conflictBadges, countryDossier, notMemberOf, profileLine, type CountryDossier } from '../lib/dossier';
+import { isTheatre } from '../lib/theatre';
+import { territoryLine } from '../lib/sovereign';
 import { useWatchlist } from '../hooks/useWatchlist';
 import StarButton from './StarButton';
 import ActorsGraph from './ActorsGraph';
@@ -24,7 +27,7 @@ import { CHOKEPOINTS_FILE, CHOKEPOINT_BY_ID, CHOKEPOINT_COLOR, CHOKEPOINT_STATUS
 import { MILITARY, PRESENCE_KIND_LABEL, operatorName } from '../lib/military';
 import { TRADE, pct } from '../lib/trade';
 import { relationship, relationshipSummary } from '../lib/relationship';
-import { blocTrend, trendComplete } from '../lib/trends';
+import { blocTrend, lastChange, trendComplete } from '../lib/trends';
 import { WB_HISTORY } from '../lib/worldbankHistory';
 import { search } from '../lib/search';
 import TrendChart from './TrendChart';
@@ -129,8 +132,17 @@ function FeedList({ items, props, compact }: { items: ChangeItem[]; props: Props
   );
 }
 
+/** A dossier figure's year, styled as a warning when the value is more than five years old. */
 function yearNote(year: number | null) {
-  return year ? String(year) : '';
+  if (!year) return null;
+  const old = new Date().getFullYear() - year > 5;
+  return old ? (
+    <span className="stale" title={`Latest World Bank value is from ${year}`}>
+      {year}
+    </span>
+  ) : (
+    String(year)
+  );
 }
 
 function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props }) {
@@ -158,19 +170,20 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
       />
       <div className="panel-body dossier" data-sections={dossier.sections.join(' ')}>
         <Muted>{profileLine(country)}</Muted>
+        {territoryLine(country.cca3, BLOCS) && <Muted>{territoryLine(country.cca3, BLOCS)}</Muted>}
         <div className="badges">
           <span className="badge muted">{country.cca3}</span>
           <span className="badge muted">{country.region}</span>
-          {conflicts.length > 0 && (
-            <span className="badge" style={{ ['--badge-color' as string]: INTENSITY_COLOR[conflicts[0]!.intensity] }}>
-              <span className="dot" /> {INTENSITY_LABEL[conflicts[0]!.intensity]}
+          {conflictBadges(country.cca3, conflicts).map((b) => (
+            <span key={b.label} className="badge" style={{ ['--badge-color' as string]: INTENSITY_COLOR[b.intensity] }}>
+              <span className="dot" /> {b.label}: {INTENSITY_LABEL[b.intensity]}
             </span>
-          )}
+          ))}
         </div>
 
         <h4 id="dossier-memberships">Bloc memberships · {memberships.filter((m) => m.membership.status === 'member').length}</h4>
         {memberships.length === 0 ? (
-          <Muted>Not a member of any bloc tracked here.</Muted>
+          <Muted>No membership, candidacy or partnership in any bloc tracked here.</Muted>
         ) : (
           <ul className="link-list">
             {memberships.map(({ bloc, membership }) => (
@@ -184,6 +197,7 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
             ))}
           </ul>
         )}
+        {notMemberOf(country.cca3).length > 0 && <Muted>Not a member of: {notMemberOf(country.cca3).join(', ')}</Muted>}
 
         <h4 id="dossier-conflicts">Conflicts · {conflicts.length}</h4>
         {conflicts.length === 0 ? (
@@ -195,7 +209,7 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
                 <button onClick={() => props.onSelectConflict(c.id)}>
                   <span className="dot" style={{ width: 10, height: 10, borderRadius: '50%', background: INTENSITY_COLOR[c.intensity] }} />
                   {c.name}
-                  <span className="meta">{INTENSITY_LABEL[c.intensity]}</span>
+                  <span className="meta">{isTheatre(c, country.cca3) ? INTENSITY_LABEL[c.intensity] : `${INTENSITY_LABEL[c.intensity]} · abroad`}</span>
                 </button>
               </li>
             ))}
@@ -240,31 +254,73 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
                 ))}
               </ul>
             )}
+            {x.secondary && (
+              <>
+                <h5 className="sub-head">{x.secondary.title}</h5>
+                <ul className="link-list">
+                  {x.secondary.rows.map((r, i) => (
+                    <li key={r.label + i}>
+                      <a href={r.href} target="_blank" rel="noopener noreferrer" title={r.note}>
+                        <span>
+                          {r.label}
+                          {r.note && <span className="row-note">{r.note}</span>}
+                        </span>
+                        <span className="meta">{r.value} ↗</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
             {x.footnote && <div className="updated">{x.footnote}</div>}
           </div>
         ))}
 
         <h4 id="dossier-displacement">Displacement</h4>
-        {displacement && displacement.total > 0 ? (
+        {REPORTED_WITH[country.cca3] ? (
+          <Muted>
+            {REPORTED_WITH[country.cca3]!.note}{' '}
+            <button className="inline-link" onClick={() => props.onSelectCountry(REPORTED_WITH[country.cca3]!.iso)}>
+              See {countryName(REPORTED_WITH[country.cca3]!.iso)}
+            </button>
+            .
+          </Muted>
+        ) : displacement && displacementTotal(displacement) > 0 ? (
           <div className="tiles" style={{ ['--tile-color' as string]: '#a35be6' }}>
             <div className="tile">
               <span className="label">Displaced</span>
-              <strong>{formatPeople(displacement.total)}</strong>
-              <span className="sub">from {country.name}</span>
+              <strong>{formatPeople(displacementTotal(displacement))}</strong>
+              <span className="sub">{displacement.supplement ? `UNHCR alone: ${formatPeople(displacement.total)}` : `from ${country.name}`}</span>
             </div>
             <div className="tile">
               <span className="label">Refugees</span>
-              <strong>{formatPeople(displacement.refugees)}</strong>
-              <span className="sub">{formatPeople(displacement.asylumSeekers)} asylum seekers</span>
+              <strong>{formatPeople(displacement.refugees + (displacement.supplement?.unrwaRefugees ?? 0))}</strong>
+              <span className="sub">
+                {displacement.supplement ? `${formatPeople(displacement.supplement.unrwaRefugees)} UNRWA-registered · ` : ''}plus {formatPeople(displacement.asylumSeekers)} asylum seekers
+              </span>
             </div>
             <div className="tile">
               <span className="label">IDPs</span>
-              <strong>{formatPeople(displacement.idps)}</strong>
-              <span className="sub">{displacement.oip > 0 ? `${formatPeople(displacement.oip)} others in need` : 'internally displaced'}</span>
+              <strong>{displacement.supplement?.idps ? formatPeople(displacement.supplement.idps) : displacement.idps > 0 ? formatPeople(displacement.idps) : '—'}</strong>
+              <span className="sub">{displacement.supplement?.idps ? `IDMC estimate, ${displacement.supplement.year}` : displacement.idps === 0 ? 'not reported by UNHCR' : displacement.oip > 0 ? `${formatPeople(displacement.oip)} others in need` : 'internally displaced'}</span>
             </div>
           </div>
         ) : (
           <Muted>No UNHCR displacement figure for people from {country.name}.</Muted>
+        )}
+        {displacement?.supplement && (
+          <div className="updated">
+            UNHCR's figures exclude Palestine refugees under UNRWA's mandate and carry no Gaza IDP figure; the totals add{' '}
+            {displacement.supplement.sources.map((s, i) => (
+              <span key={s.url}>
+                {i > 0 ? ' and ' : ''}
+                <a href={s.url} target="_blank" rel="noopener noreferrer">
+                  {s.name.split(' (')[0]}
+                </a>
+              </span>
+            ))}{' '}
+            figures ({displacement.supplement.year}). IDPs are not added to the total because many are themselves registered refugees.
+          </div>
         )}
 
         <h4 id="dossier-figures">Figures</h4>
@@ -273,17 +329,17 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
             <div className="tile">
               <span className="label">Population</span>
               <strong>{figures.population !== null ? formatCount(figures.population) : '—'}</strong>
-              <span className="sub">{figures.population !== null ? `${share(figures.population, WORLD.population)} of world · ${yearNote(figures.populationYear)}` : 'not reported'}</span>
+              <span className="sub">{figures.population !== null ? <>{share(figures.population, WORLD.population)} of world · {yearNote(figures.populationYear)}</> : 'not reported'}</span>
             </div>
             <div className="tile">
               <span className="label">GDP</span>
               <strong>{figures.gdpUsd !== null ? formatUsd(figures.gdpUsd) : '—'}</strong>
-              <span className="sub">{figures.gdpUsd !== null ? `${share(figures.gdpUsd, WORLD.gdpUsd)} of world · ${yearNote(figures.gdpYear)}` : 'not reported'}</span>
+              <span className="sub">{figures.gdpUsd !== null ? <>{share(figures.gdpUsd, WORLD.gdpUsd)} of world · {yearNote(figures.gdpYear)}</> : 'not reported'}</span>
             </div>
             <div className="tile">
               <span className="label">Military spend</span>
               <strong>{figures.militaryUsd !== null ? formatUsd(figures.militaryUsd) : '—'}</strong>
-              <span className="sub">{figures.militaryUsd !== null ? `${share(figures.militaryUsd, WORLD.militaryUsd)} of world · ${yearNote(figures.militaryYear)}` : 'not reported'}</span>
+              <span className="sub">{figures.militaryUsd !== null ? <>{share(figures.militaryUsd, WORLD.militaryUsd)} of world · {yearNote(figures.militaryYear)}</> : 'not reported'}</span>
             </div>
           </div>
         ) : (
@@ -307,38 +363,51 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
   );
 }
 
-const STATUS_ORDER: MembershipStatus[] = ['member', 'frozen', 'suspended', 'invited', 'observer', 'partner'];
+const STATUS_ORDER: MembershipStatus[] = ['member', 'frozen', 'suspended', 'invited', 'candidate', 'observer', 'partner'];
 
 function FigureTiles({ f, color }: { f: Figures; color?: string }) {
   const tiles = [
-    { label: 'Population', value: formatCount(f.population), pct: share(f.population, WORLD.population), cov: f.coverage.population },
-    { label: 'GDP', value: formatUsd(f.gdpUsd), pct: share(f.gdpUsd, WORLD.gdpUsd), cov: f.coverage.gdpUsd },
-    { label: 'Military spend', value: formatUsd(f.militaryUsd), pct: share(f.militaryUsd, WORLD.militaryUsd), cov: f.coverage.militaryUsd },
+    { label: 'Population', metric: 'population' as const, value: formatCount(f.population), pct: share(f.population, WORLD.population), cov: f.coverage.population },
+    { label: 'GDP', metric: 'gdpUsd' as const, value: formatUsd(f.gdpUsd), pct: share(f.gdpUsd, WORLD.gdpUsd), cov: f.coverage.gdpUsd },
+    { label: 'Military spend', metric: 'militaryUsd' as const, value: formatUsd(f.militaryUsd), pct: share(f.militaryUsd, WORLD.militaryUsd), cov: f.coverage.militaryUsd },
   ];
   return (
     <div className="tiles" style={color ? { ['--tile-color' as string]: color } : undefined}>
-      {tiles.map((t) => (
-        <div className="tile" key={t.label}>
-          <span className="label">{t.label}</span>
-          <strong>{t.value}</strong>
-          <span className="sub">
-            {t.pct} of world{t.cov < f.members ? ` · ${t.cov}/${f.members} reporting` : ''}
-          </span>
-        </div>
-      ))}
+      {tiles.map((t) => {
+        const older = f.older[t.metric];
+        const stale = staleValues(f, t.metric);
+        const title = older.length ? older.map((v) => `${countryName(v.iso)}: ${v.year}`).join(', ') : undefined;
+        return (
+          <div className="tile" key={t.label}>
+            <span className="label">{t.label}</span>
+            <strong>{t.value}</strong>
+            <span className="sub" title={title}>
+              {t.pct} of world{t.cov < f.members ? ` · ${t.cov}/${f.members} reporting` : ''}
+              {f.newest[t.metric] !== null && (stale.length ? (
+                <span className="stale"> · {stale.length} value{stale.length === 1 ? '' : 's'} from {stale[0]!.year}</span>
+              ) : older.length ? (
+                ` · ${f.newest[t.metric]}, ${older.length} member${older.length === 1 ? '' : 's'} ${[...new Set(older.map((v) => v.year))].join('/')}`
+              ) : (
+                ` · ${f.newest[t.metric]}`
+              ))}
+            </span>
+          </div>
+        );
+      })}
     </div>
   );
 }
 
-function FiguresNote() {
+function FiguresNote({ suspended = 0 }: { suspended?: number }) {
   return (
     <div className="updated">
-      Figures: <a href={WORLDBANK.source.url} target="_blank" rel="noopener noreferrer">World Bank</a>, latest available year per country, fetched {formatDate(WORLDBANK.fetchedAt)}. Full members only.
+      Figures: <a href={WORLDBANK.source.url} target="_blank" rel="noopener noreferrer">World Bank</a>, latest available year per country, fetched {formatDate(WORLDBANK.fetchedAt)}. Full members only{suspended ? `, excluding ${suspended} suspended or frozen` : ''}; values more than {STALE_YEARS} years older than the newest are flagged.
     </div>
   );
 }
 
 function BlocView({ bloc, props }: { bloc: Bloc; props: Props }) {
+  const members = blocMembers(bloc);
   const groups = STATUS_ORDER.map((status) => ({
     status,
     rows: bloc.members.filter((m) => m.status === status).sort((a, b) => countryName(a.iso).localeCompare(countryName(b.iso))),
@@ -362,8 +431,11 @@ function BlocView({ bloc, props }: { bloc: Bloc; props: Props }) {
           {bloc.headquarters && <span className="badge muted">{bloc.headquarters}</span>}
         </div>
         <p>{bloc.description}</p>
-        <h4>At a glance · {blocFigures(bloc).members} members</h4>
+        <h4>
+          At a glance · {members.full.length} members{members.suspended.length ? ` · ${members.suspended.length} suspended` : ''}
+        </h4>
         <FigureTiles f={blocFigures(bloc)} color={bloc.color} />
+        <FiguresNote suspended={members.suspended.length} />
         <BlocTrends bloc={bloc} />
         <div className="panel-actions">
           <button className="text-btn primary" onClick={() => props.onHighlightBloc(bloc.id)}>
@@ -374,7 +446,7 @@ function BlocView({ bloc, props }: { bloc: Bloc; props: Props }) {
         {groups.map((g) => (
           <div key={g.status}>
             <h4>
-              {STATUS_LABEL[g.status]} · {g.rows.length}
+              {g.rows.length === 1 ? STATUS_LABEL[g.status] : STATUS_LABEL_PLURAL[g.status]} · {g.rows.length}
             </h4>
             <ul className="link-list member-grid">
               {g.rows.map((m) => (
@@ -417,7 +489,6 @@ function BlocView({ bloc, props }: { bloc: Bloc; props: Props }) {
         )}
         <Sources sources={bloc.sources} />
         <div className="updated">Membership verified {formatMonth(bloc.updated)}.</div>
-        <FiguresNote />
       </div>
     </>
   );
@@ -426,20 +497,47 @@ function BlocView({ bloc, props }: { bloc: Bloc; props: Props }) {
 function BlocTrends({ bloc }: { bloc: Bloc }) {
   const points = useMemo(() => blocTrend(bloc), [bloc]);
   if (points.length < 2) return null;
+  const first = points[0]!;
   const last = points.at(-1)!;
+  const now = blocMembers(bloc);
+  const nowCount = now.full.length + now.suspended.length;
+  const flat = points.every((p) => p.members === first.members);
+  const short = points.length < 5;
+  const membersCap = `Members (incl. suspended)${nowCount !== last.members ? ` · ${nowCount} now` : ''}`;
+  const gdpSub = last.worldShare ? `${share(last.worldShare, 1)} of world` : undefined;
   return (
     <>
-      <h4 id="bloc-trends">Since {points[0]!.year}</h4>
-      <div className="trends">
-        <TrendChart points={points} color={bloc.color} series="members" label="Members" />
-        <TrendChart points={points} color={bloc.color} series="gdpUsd" label="Combined GDP" />
-      </div>
+      <h4 id="bloc-trends">Since {first.year}</h4>
+      {short ? (
+        <div className="trend-figures">
+          <div>
+            <span className="label">Members</span> {first.members} → {last.members}, {first.year}–{last.year}
+          </div>
+          <div>
+            <span className="label">Combined GDP · current US$</span> {formatUsd(first.gdpUsd)} → {formatUsd(last.gdpUsd)}
+            {last.estimated ? '*' : ''}, {first.year}–{last.year}
+          </div>
+        </div>
+      ) : (
+        <>
+          {flat && (
+            <div className="updated">
+              {last.members} members, unchanged since {lastChange(bloc)}.
+            </div>
+          )}
+          <div className={flat ? 'trends single' : 'trends'}>
+            {!flat && <TrendChart points={points} color={bloc.color} series="members" label={membersCap} />}
+            <TrendChart points={points} color={bloc.color} series="gdpUsd" label="Combined GDP · current US$" sub={gdpSub} />
+          </div>
+        </>
+      )}
       <div className="updated">
-        Membership from accession years{bloc.former?.length ? ', including past members' : ''}{trendComplete(bloc) ? '' : ' (incomplete)'}; GDP in current US$ from the{' '}
+        Membership from accession years{bloc.former?.length ? ', including past members' : ''}{trendComplete(bloc) ? '' : ' (incomplete)'}. GDP in nominal current US$, so currency swings show as rises and falls; full members only, from the{' '}
         <a href={WB_HISTORY.source.url} target="_blank" rel="noopener noreferrer">
           World Bank
         </a>{' '}
-        ({last.covered}/{last.members} members reporting in {last.year}; fetched {formatDate(WB_HISTORY.fetchedAt)}).
+        ({last.covered - last.estimated}/{last.covered + (last.members - last.covered)} members reporting in {last.year}
+        {last.estimated ? `; *${last.carried.map((c) => `${countryName(c.iso)} ${c.from}`).join(', ')} value${last.estimated === 1 ? '' : 's'} carried forward` : ''}; fetched {formatDate(WB_HISTORY.fetchedAt)}).
       </div>
     </>
   );
@@ -524,9 +622,11 @@ function RelationshipView({ a, b, props }: { a: string; b: string | null; props:
                 ))}
               </ul>
             )}
-            <h4 id="pair-sanctions">Sanctions between them</h4>
-            {r.sanctions.length === 0 ? (
-              <Muted>Neither applies a country-level regime to the other (UN measures are not counted as bilateral).</Muted>
+            <h4 id="pair-sanctions">US and EU sanctions between them</h4>
+            {!r.sanctionsInScope ? (
+              <Muted>Not tracked for this pair: ATLAS records only US and EU country-level regimes. UK, Japanese, Canadian, Swiss and other national sanctions, and countersanctions, are not included.</Muted>
+            ) : r.sanctions.length === 0 ? (
+              <Muted>Neither the US nor the EU applies a country-level regime to the other (UN measures are not counted as bilateral; other national sanctions and countersanctions are not tracked).</Muted>
             ) : (
               <ul className="link-list">
                 {r.sanctions.flatMap((s) =>
@@ -536,7 +636,7 @@ function RelationshipView({ a, b, props }: { a: string; b: string | null; props:
                         <span>
                           {x.name}
                           <span className="row-note">
-                            {countryName(s.from)} → {countryName(s.to)}
+                            {x.authority === 'EU' ? `EU (${countryName(s.from)} is a member)` : countryName(s.from)} → {countryName(s.to)}
                           </span>
                         </span>
                         <span className="meta">{x.authority} ↗</span>
@@ -569,12 +669,12 @@ function RelationshipView({ a, b, props }: { a: string; b: string | null; props:
               <div className="tile">
                 <span className="label">{na} → {nb}</span>
                 <strong>{r.trade.aToB === null ? '—' : pct(r.trade.aToB)}</strong>
-                <span className="sub">{r.trade.aToB === null ? (r.trade.yearA ? 'not among its 15 largest destinations' : 'no WITS data') : `of ${na}'s goods exports, ${r.trade.yearA}`}</span>
+                <span className="sub">{r.trade.aToB === null ? (r.trade.yearA ? 'not among its 15 largest destinations' : 'no WITS data') : `of its goods exports, ${r.trade.yearA}`}</span>
               </div>
               <div className="tile">
                 <span className="label">{nb} → {na}</span>
                 <strong>{r.trade.bToA === null ? '—' : pct(r.trade.bToA)}</strong>
-                <span className="sub">{r.trade.bToA === null ? (r.trade.yearB ? 'not among its 15 largest destinations' : 'no WITS data') : `of ${nb}'s goods exports, ${r.trade.yearB}`}</span>
+                <span className="sub">{r.trade.bToA === null ? (r.trade.yearB ? 'not among its 15 largest destinations' : 'no WITS data') : `of its goods exports, ${r.trade.yearB}`}</span>
               </div>
             </div>
             <h4>Status</h4>
@@ -1007,9 +1107,13 @@ function ChokepointView({ cp, props }: { cp: Chokepoint; props: Props }) {
 }
 
 function CompareView({ a, b, props }: { a: Bloc; b: Bloc; props: Props }) {
-  const full = (x: Bloc) => x.members.filter((m) => m.status === 'member').map((m) => m.iso);
-  const setA = new Set(full(a));
-  const setB = new Set(full(b));
+  const setA = new Set(blocMembers(a).full);
+  const setB = new Set(blocMembers(b).full);
+  const suspended = [...new Set([...blocMembers(a).suspended, ...blocMembers(b).suspended].map((m) => m.iso))].sort((x, y) => countryName(x).localeCompare(countryName(y)));
+  const statusIn = (bloc: Bloc, iso: string) => {
+    const m = bloc.members.find((x) => x.iso === iso);
+    return m ? STATUS_LABEL[m.status].toLowerCase() : 'not a member';
+  };
   const both = [...setA].filter((iso) => setB.has(iso)).sort((x, y) => countryName(x).localeCompare(countryName(y)));
   const onlyA = [...setA].filter((iso) => !setB.has(iso)).sort((x, y) => countryName(x).localeCompare(countryName(y)));
   const onlyB = [...setB].filter((iso) => !setA.has(iso)).sort((x, y) => countryName(x).localeCompare(countryName(y)));
@@ -1049,6 +1153,7 @@ function CompareView({ a, b, props }: { a: Bloc; b: Bloc; props: Props }) {
             <FigureTiles f={blocFigures(b)} color={b.color} />
           </div>
         </div>
+        <FiguresNote suspended={suspended.length} />
         <div className="panel-actions">
           <button className="text-btn" onClick={() => props.onSelectBloc(a.id)}>
             Open {a.shortName}
@@ -1071,7 +1176,23 @@ function CompareView({ a, b, props }: { a: Bloc; b: Bloc; props: Props }) {
           {b.shortName} only · {onlyB.length}
         </h4>
         {list(onlyB)}
-        <FiguresNote />
+        {suspended.length > 0 && (
+          <>
+            <h4>Suspended / frozen · {suspended.length}</h4>
+            <ul className="link-list">
+              {suspended.map((iso) => (
+                <li key={iso}>
+                  <button onClick={() => props.onSelectCountry(iso)}>
+                    {countryName(iso)}
+                    <span className="meta">
+                      {a.shortName}: {statusIn(a, iso)} · {b.shortName}: {statusIn(b, iso)}
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </div>
     </>
   );
@@ -1143,9 +1264,10 @@ function AboutView({ props }: { props: Props }) {
         <h4>Caveats</h4>
         <ul style={{ margin: 0, paddingLeft: 18 }}>
           <li>Borders follow Natural Earth and imply no position on disputes. Kosovo uses the code UNK; Northern Cyprus and Somaliland are drawn as neutral territory.</li>
-          <li>Conflict tinting uses the most intense conflict on a country's territory, including conflicts where it is an external party.</li>
+          <li>Dependent territories drawn on their own take the alliances whose treaty area covers them and their sovereign's nuclear deterrent: Greenland is shown in NATO via Denmark, while Puerto Rico and the Falklands lie outside NATO's Article 6 area. They never inherit EU membership, trade or elections. French Guiana is part of France's polygon.</li>
+          <li>Conflict tinting fills a country by the most intense conflict fought on its territory. States whose forces fight only abroad (the US in the Iran war, Saudi Arabia in Yemen, Rwanda in eastern DR Congo) are drawn with a dashed outline instead. Maritime flashpoints such as Hormuz and the South China Sea have no land theatre.</li>
           <li>Bloc figures count full members only and skip countries without a World Bank value; the tiles say when coverage is partial.</li>
-          <li>Displacement figures are UNHCR mid-year or end-year stocks, not flows, and lag events by months.</li>
+          <li>Displacement figures are UNHCR mid-year or end-year stocks, not flows, and lag events by months. UNHCR figures exclude Palestine refugees under UNRWA's mandate, so Palestine adds UNRWA's register and IDMC's IDP estimate; UNHCR reports Kosovo together with Serbia.</li>
           <li>An assessment is a dated snapshot. Check the linked sources before relying on it.</li>
         </ul>
         <h4>Following things</h4>
@@ -1158,7 +1280,7 @@ function AboutView({ props }: { props: Props }) {
         </p>
         <h4>Analysis</h4>
         <p>
-          Any country dossier offers "Relationship with…": pick a second country to see shared blocs, the conflicts that link them, sanctions one applies to the other, forces either keeps in the other, and each side's export share to the other. Bloc panels chart membership and combined GDP since 1990 from accession years and World Bank data.
+          Any country dossier offers "Relationship with…": pick a second country to see shared blocs, the conflicts that link them, US and EU sanctions either side applies to the other (other national sanctions and countersanctions are not tracked), forces either keeps in the other, and each side's export share to the other. Bloc panels chart membership and combined GDP since 1990 from accession years and World Bank data.
           {ASK_ENABLED ? ' Ask ATLAS answers questions strictly from this dataset with citations; it is rate-limited and capped per day.' : ''}
         </p>
         <h4>Keyboard</h4>
