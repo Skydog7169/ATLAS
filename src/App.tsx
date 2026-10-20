@@ -5,16 +5,16 @@ import type { Intensity } from './data/types';
 import { useAppState } from './hooks/useAppState';
 import { currentMonth, earliestMonth, entryAt, monthRange } from './lib/history';
 import Timeline from './components/Timeline';
-import { displacementFill, displacementSummary } from './lib/displacement';
-import { sanctionsFill, sanctionsSummary } from './lib/sanctions';
-import { electionColor, electionSummary } from './lib/elections';
-import { nuclearFill, nuclearSummary } from './lib/nuclear';
-import { acledColor, acledSummary, acledUnrestColor, acledUnrestSummary } from './lib/acled';
-import { ucdpColor, ucdpSummary, ucdpYear } from './lib/ucdp';
+import { displacementFill } from './lib/displacement';
+import { sanctionsFill } from './lib/sanctions';
+import { electionColor } from './lib/elections';
+import { nuclearFill } from './lib/nuclear';
+import { acledColor, acledUnrestColor } from './lib/acled';
+import { ucdpColor } from './lib/ucdp';
 import { UNREST, UNREST_BY_ID } from './data/unrest';
-import { UNREST_COLOR, UNREST_MARKER_PREFIX, UNREST_RADIUS, UNREST_KIND_LABEL, unrestColor, unrestSummary } from './lib/unrest';
-import { militaryColor, militarySummary } from './lib/military';
-import { tradeFill, tradeSummary } from './lib/trade';
+import { UNREST_COLOR, UNREST_MARKER_PREFIX, UNREST_RADIUS, UNREST_KIND_LABEL, unrestColor } from './lib/unrest';
+import { militaryColor } from './lib/military';
+import { tradeFill } from './lib/trade';
 import { CHOKEPOINTS, CHOKEPOINT_BY_ID, CHOKEPOINT_COLOR, CHOKEPOINT_GLYPH, CHOKEPOINT_MARKER_PREFIX, CHOKEPOINT_STATUS_LABEL, currentStatus } from './lib/chokepoints';
 import LayerMenu from './components/LayerMenu';
 import { LAYER_LABEL, LAYER_OPTIONS } from './lib/layerOptions';
@@ -38,7 +38,7 @@ import Briefing, { type BriefItem } from './components/Briefing';
 import { COUNTRY_BY_ISO } from './lib/countries';
 import { downloadBlob, readLegend, renderPng } from './lib/exportPng';
 import { serialize, type AppState } from './lib/urlState';
-import { focusForSelection, selectionLabel } from './lib/panelNav';
+import { selectionLabel } from './lib/panelNav';
 import { selectionKey } from './lib/navHistory';
 import { usePanelTrail } from './hooks/usePanelTrail';
 import { markAppReady } from './hooks/usePanelFocus';
@@ -50,6 +50,13 @@ import { lazyWithReload } from './lib/chunkReload';
 import { titleFor } from './lib/docTitle';
 import { daysSince } from './lib/edition';
 import { useEdition } from './hooks/useEdition';
+import { useMapChrome } from './hooks/useMapInsets';
+import { backerOutlines, blocFocus, focusForSelection } from './lib/focus';
+import { layerSummary } from './lib/layerSummary';
+import { relationship } from './lib/relationship';
+import LegendDock from './components/LegendDock';
+import EmbedCaption from './components/EmbedCaption';
+import MoreMenu from './components/MoreMenu';
 import { conflictFillMaps, isTheatre } from './lib/theatre';
 import { SOVEREIGN, memberFor, territoryLine } from './lib/sovereign';
 import { blocsSuppressed, embedCode, isDefaultMap, mapStateSegments, resetState, shareUrl } from './lib/mapState';
@@ -149,7 +156,6 @@ export default function App() {
   const [focus, setFocus] = useState<Focus>(null);
   const zoomApi = useRef<{ zoomIn: () => void; zoomOut: () => void; reset: () => void } | null>(null);
   const stageRef = useRef<HTMLDivElement>(null);
-  const [insetRight, setInsetRight] = useState(0);
   const watchlist = useWatchlist();
   const briefBtnRef = useRef<HTMLButtonElement>(null);
   const preBrief = useRef<Partial<AppState> | null>(null);
@@ -174,21 +180,20 @@ export default function App() {
 
   useEffect(prefetchLater, []);
 
-  // On wide screens the detail panel floats over the right edge; tell the map
-  // so fly-to animations centre targets in the uncovered area.
-  useEffect(() => {
-    const mq = window.matchMedia('(min-width: 821px)');
-    const apply = () => setInsetRight(mq.matches && selection ? 380 + 24 : 0);
-    apply();
-    mq.addEventListener('change', apply);
-    return () => mq.removeEventListener('change', apply);
-  }, [selection]);
+  // What the detail panel (side panel or bottom sheet), the embed caption and
+  // the chip row cover, so every fly-to frames its target in the rest.
+  const panelOpen = selection !== null && !embed;
+  const chromeKey = [selection?.kind ?? '', mode, layer ?? '', embed, brief, bloc ?? '', vs ?? ''].join('|');
+  const { insets, obstacles } = useMapChrome(stageRef, panelOpen, chromeKey);
 
-  // The camera follows the URL: a shared link lands zoomed on its subject,
-  // and Back/Forward (or an edited hash) fly to whatever the entry shows.
-  // Arriving at an entry with no panel returns to the view before the fly-to.
+  // The camera follows the URL: a shared link lands framed on its subject
+  // (with the panel or sheet inset), and Back/Forward (or an edited hash) fly
+  // to whatever the entry shows. Arriving at an entry with no panel returns to
+  // the view before the fly-to.
+  const blocVsRef = useRef({ bloc, vs });
+  blocVsRef.current = { bloc, vs };
   useEffect(() => {
-    const target = focusForSelection(arrival.selection);
+    const target = focusForSelection(arrival.selection, blocVsRef.current);
     if (target) setFocus(target);
     else if (arrival.seq > 0) setFocus({ kind: 'restore' });
   }, [arrival]);
@@ -201,6 +206,11 @@ export default function App() {
   const visible = useMemo(() => conflictsAt(viewMonth), [viewMonth]);
   // Theatre states are filled; parties fighting only abroad get a dashed outline.
   const { home: maxIntensityByCountry, abroad: partyAbroadByCountry } = useMemo(() => conflictFillMaps(visible), [visible]);
+
+  const pair = selection?.kind === 'pair' ? selection : null;
+  const selectedConflict = selection?.kind === 'conflict' ? CONFLICT_BY_ID.get(selection.id) : undefined;
+  const theatre = useMemo(() => (selectedConflict ? new Set(selectedConflict.countries.filter((iso) => isTheatre(selectedConflict, iso))) : null), [selectedConflict]);
+  const backers = useMemo(() => (selectedConflict ? backerOutlines(selectedConflict.id) : new Map<string, string>()), [selectedConflict]);
 
   const fillFor = useCallback(
     (iso: string | null): CountryFill => {
@@ -215,15 +225,24 @@ export default function App() {
       if (layer === 'military') return { fill: militaryColor(iso) };
       if (layer === 'trade') return tradeFill(iso);
       if (layer === 'unrest') return { fill: unrestColor(iso) };
+      // The pair view paints its two countries and steps everything else back.
+      if (pair) {
+        if (iso === pair.a) return { fill: 'var(--accent)' };
+        if (iso === pair.b) return { fill: 'var(--warn)' };
+        if (pair.b) return { fill: 'var(--land)', dim: true };
+      }
       // Chokepoints are diamonds on the sea; over Blocs, a membership fill would read as tied to them.
       if (layer === 'chokepoints' && mode === 'blocs') return { fill: 'var(--land)' };
       if (mode === 'conflicts') {
         const intensity = maxIntensityByCountry.get(iso);
         if (!intensity) {
           const abroad = partyAbroadByCountry.get(iso);
-          return abroad ? { fill: 'var(--land)', outline: INTENSITY_COLOR[abroad] } : { fill: 'var(--land)' };
+          // With a conflict open, its foreign backers are outlined; parties fighting abroad keep theirs.
+          const outline = (theatre ? backers.get(iso) : undefined) ?? (abroad ? INTENSITY_COLOR[abroad] : undefined);
+          return { fill: 'var(--land)', outline };
         }
-        return { fill: conflictFill(intensity) };
+        // With a conflict open, its foreign backers get a dashed outline in their side's colour.
+        return { fill: conflictFill(intensity), outline: theatre ? backers.get(iso) : undefined };
       }
       if (compare) {
         const inA = memberFor(compare.a, iso)?.status === 'member';
@@ -244,7 +263,7 @@ export default function App() {
       const n = Math.min(membershipCount.get(iso) ?? 0, OVERVIEW_STEPS.length - 1);
       return { fill: OVERVIEW_STEPS[n] ?? 'var(--land)' };
     },
-    [mode, activeBloc, compare, maxIntensityByCountry, partyAbroadByCountry, layer],
+    [mode, activeBloc, compare, maxIntensityByCountry, partyAbroadByCountry, layer, pair, theatre, backers],
   );
 
   // While a dossier, pair or conflict panel is open, the countries it is about stay at full strength and the rest recede.
@@ -309,8 +328,18 @@ export default function App() {
     return out;
   }, [mode, visible, viewMonth, layer, unseenIds, selection]);
 
-  const selectedIso = selection?.kind === 'country' ? selection.iso : null;
-  const selectedMarkerId = selection?.kind === 'conflict' ? selection.id : selection?.kind === 'chokepoint' ? CHOKEPOINT_MARKER_PREFIX + selection.id : selection?.kind === 'unrest' ? UNREST_MARKER_PREFIX + selection.id : null;
+  const selectedIsos = useMemo(() => (selection?.kind === 'country' ? [selection.iso] : selection?.kind === 'pair' ? [selection.a, ...(selection.b ? [selection.b] : [])] : []), [selection]);
+  const selectedMarkerIds = useMemo(() => {
+    if (selection?.kind === 'conflict') return [selection.id];
+    if (selection?.kind === 'chokepoint') return [CHOKEPOINT_MARKER_PREFIX + selection.id];
+    if (selection?.kind === 'unrest') return [UNREST_MARKER_PREFIX + selection.id];
+    // The conflicts that link a pair carry the reticle too.
+    if (selection?.kind === 'pair' && selection.b) return relationship(selection.a, selection.b).conflicts.map((l) => l.conflict.id);
+    return [];
+  }, [selection]);
+  // Labels for the countries being fought over are placed before any other.
+  const labelPriority = useMemo(() => (theatre ? [...theatre] : mode === 'conflicts' ? [...maxIntensityByCountry.keys()] : undefined), [theatre, mode, maxIntensityByCountry]);
+  const focusNow = useMemo(() => focusForSelection(selection, { bloc, vs }), [selection, bloc, vs]);
 
   const selectCountry = useCallback(
     (iso: string) => {
@@ -374,7 +403,7 @@ export default function App() {
   const selectPair = useCallback(
     (a: string, b: string | null) => {
       update({ selection: { kind: 'pair', a, b } });
-      if (b) setFocus({ kind: 'reset' });
+      if (b) setFocus({ kind: 'isos', isos: [a, b] });
     },
     [update],
   );
@@ -384,9 +413,19 @@ export default function App() {
       const next = { kind: 'bloc', id } as const;
       noteModeSwitch('blocs', next);
       update({ mode: 'blocs', bloc: id, vs: null, selection: next });
-      setFocus({ kind: 'reset' });
+      setFocus(blocFocus(id));
     },
     [update, noteModeSwitch],
+  );
+
+  // While the relationship picker waits for a second country, a map click picks it.
+  const pickingPair = selection?.kind === 'pair' && !selection.b ? selection.a : null;
+  const onMapCountryClick = useCallback(
+    (iso: string) => {
+      if (pickingPair && iso !== pickingPair) selectPair(pickingPair, iso);
+      else selectCountry(iso);
+    },
+    [pickingPair, selectPair, selectCountry],
   );
 
   const dismissToast = useCallback(() => setToast(null), []);
@@ -430,21 +469,8 @@ export default function App() {
     if (!hover) return null;
     if (hover.sub) return hover.sub;
     if (!hover.iso) return null;
-    if (layer === 'displacement') {
-      return displacementSummary(hover.iso);
-    }
-    if (layer === 'sanctions') {
-      const s = sanctionsSummary(hover.iso);
-      return s ? `Sanctions: ${s}` : 'No country-level sanctions regime';
-    }
-    if (layer === 'elections') return electionSummary(hover.iso) ?? 'No election on record';
-    if (layer === 'nuclear') return nuclearSummary(hover.iso) ?? 'No nuclear role recorded';
-    if (layer === 'acled') return acledSummary(hover.iso) ?? 'No ACLED events in the window';
-    if (layer === 'acled-unrest') return acledUnrestSummary(hover.iso) ?? 'No ACLED protests or riots in the window';
-    if (layer === 'ucdp') return ucdpSummary(hover.iso) ?? (ucdpYear() ? `No organised-violence deaths recorded in ${ucdpYear()}` : 'No data: UCDP unavailable in this build');
-    if (layer === 'military') return militarySummary(hover.iso) ?? 'No foreign military presence recorded';
-    if (layer === 'trade') return tradeSummary(hover.iso) ?? 'No WITS export data';
-    if (layer === 'unrest') return unrestSummary(hover.iso) ?? 'No tracked unrest';
+    const onLayer = layerSummary(layer, hover.iso);
+    if (onLayer) return onLayer;
     if (mode === 'conflicts') {
       const list = conflictsForCountry(hover.iso).sort((a, b) => INTENSITY_ORDER[b.intensity] - INTENSITY_ORDER[a.intensity]);
       return list.length ? list.map((c) => (isTheatre(c, hover.iso!) ? c.name : `${c.name} (abroad)`)).join(' · ') : null;
@@ -502,7 +528,7 @@ export default function App() {
         if (item.conflict) setFocus({ kind: 'point', lonLat: item.conflict.location, scale: 3.5 });
       } else {
         update({ mode: 'blocs', bloc: item.id, vs: null, selection: null });
-        setFocus({ kind: 'reset' });
+        setFocus(blocFocus(item.id));
       }
     },
     [update, edition.newer],
@@ -597,7 +623,18 @@ export default function App() {
   );
 
   return (
-    <div className="app" data-panel-open={selection !== null} data-mode={mode} data-layer={layer ?? undefined} data-view={view} data-brief={brief} data-embed={embed} data-stale={edition.stale || undefined} data-map-error={mapError ? true : undefined}>
+    <div
+      className="app"
+      style={{ ['--map-inset-top' as string]: `${insets.top}px`, ['--sheet-h' as string]: `${insets.bottom}px` }}
+      data-panel-open={panelOpen}
+      data-mode={mode}
+      data-layer={layer ?? undefined}
+      data-view={view}
+      data-brief={brief}
+      data-embed={embed}
+      data-stale={edition.stale || undefined}
+      data-map-error={mapError ? true : undefined}
+    >
       <header className="header">
         <h1 className="sr-only">ATLAS geopolitical map</h1>
         <a className="brand" href="#" onClick={(e) => { e.preventDefault(); resetMap(); }}>
@@ -682,6 +719,12 @@ export default function App() {
             <path d="M12 16v-5M12 8h.01" />
           </svg>
         </button>
+        <MoreMenu
+          items={[
+            { label: 'Recent changes', pressed: selection?.kind === 'changes', onSelect: () => update({ selection: selection?.kind === 'changes' ? null : { kind: 'changes' } }) },
+            { label: 'About ATLAS', pressed: selection?.kind === 'about', onSelect: () => update({ selection: selection?.kind === 'about' ? null : { kind: 'about' } }) },
+          ]}
+        />
         <ThemeToggle />
       </header>
 
@@ -715,13 +758,17 @@ export default function App() {
                 fillFor={fillWithFocus}
                 markers={markers}
                 showMicrostates={mode === 'blocs'}
-                selectedIso={selectedIso}
-                selectedMarkerId={selectedMarkerId}
+                selectedIsos={selectedIsos}
+                selectedMarkerIds={selectedMarkerIds}
                 focus={focus}
-                insetRight={insetRight}
+                insetTop={insets.top}
+                insetRight={insets.right}
+                insetBottom={insets.bottom}
+                obstacles={obstacles}
+                labelPriority={labelPriority}
                 rotation={rotation}
                 onRotate={(r) => update({ rotation: r })}
-                onCountryClick={selectCountry}
+                onCountryClick={onMapCountryClick}
                 onMarkerClick={onMarkerClick}
                 onHover={onHover}
                 zoomApiRef={zoomApi}
@@ -731,11 +778,15 @@ export default function App() {
                 fillFor={fillWithFocus}
                 markers={markers}
                 showMicrostates={mode === 'blocs'}
-                selectedIso={selectedIso}
-                selectedMarkerId={selectedMarkerId}
+                selectedIsos={selectedIsos}
+                selectedMarkerIds={selectedMarkerIds}
                 focus={focus}
-                insetRight={insetRight}
-                onCountryClick={selectCountry}
+                insetTop={insets.top}
+                insetRight={insets.right}
+                insetBottom={insets.bottom}
+                obstacles={obstacles}
+                labelPriority={labelPriority}
+                onCountryClick={onMapCountryClick}
                 onMarkerClick={onMarkerClick}
                 onHover={onHover}
                 zoomApiRef={zoomApi}
@@ -755,16 +806,20 @@ export default function App() {
               setPicking(false);
               // Picking a chip is a request to see the bloc, so it takes the map back from any layer.
               update({ bloc: id, vs: null, layer: null, selection: id ? { kind: 'bloc', id } : selection?.kind === 'bloc' || selection?.kind === 'compare' ? null : selection });
-              if (!id) setFocus({ kind: 'reset' });
+              setFocus(id ? blocFocus(id) : { kind: 'reset' });
             }}
             onVs={(id) => {
               update({ vs: id, layer: null, selection: id ? { kind: 'compare' } : bloc ? { kind: 'bloc', id: bloc } : null });
-              setFocus({ kind: 'reset' });
+              setFocus(blocFocus(bloc, id));
             }}
           />
         )}
 
-        {!mapError && <Legend mode={mode} bloc={bloc} vs={mode === 'blocs' ? vs : null} overviewSteps={OVERVIEW_STEPS} layer={layer} onClearLayer={() => update({ layer: null })} strip={stateStrip} />}
+        {!mapError && (
+          <LegendDock panelOpen={panelOpen}>
+            <Legend mode={mode} bloc={bloc} vs={mode === 'blocs' ? vs : null} overviewSteps={OVERVIEW_STEPS} layer={layer} onClearLayer={() => update({ layer: null })} strip={stateStrip} />
+          </LegendDock>
+        )}
 
         {mode === 'conflicts' && !mapError && <Timeline months={timelineMonths} value={month} onChange={(m) => update({ month: m })} snapshot={edition.stale ? edition.newest : null} />}
 
@@ -773,6 +828,15 @@ export default function App() {
             <LayerMenu options={LAYER_OPTIONS} value={layer} onChange={(l) => update({ layer: l })} />
           </div>
           <div className="control-group" role="group" aria-label="View">
+            {focusNow && (
+              <button className="icon-btn recentre" aria-label="Recentre on selection" title="Recentre on selection" onClick={() => setFocus({ ...focusNow })}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <circle cx="12" cy="12" r="6" />
+                  <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+                  <path d="M12 2v4M12 18v4M2 12h4M18 12h4" />
+                </svg>
+              </button>
+            )}
             <button className="icon-btn" aria-label="Zoom in" title="Zoom in" onClick={() => zoomApi.current?.zoomIn()}>
               <Icon name="plus" />
             </button>
@@ -789,7 +853,8 @@ export default function App() {
               title={view === 'globe' ? 'Switch to the flat map' : 'Switch to the globe'}
               onClick={() => {
                 update({ view: view === 'globe' ? 'flat' : 'globe' });
-                setFocus({ kind: 'reset' });
+                // Keep the selection in view; with none, the globe opens at its saved rotation.
+                setFocus(focusNow ? { ...focusNow } : null);
               }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -845,7 +910,9 @@ export default function App() {
           </div>
         )}
 
-        {selection && (
+        {embed && selection && <EmbedCaption selection={selection} href={serialize({ ...state, embed: false })} />}
+
+        {selection && !embed && (
           <ErrorBoundary variant="panel" resetKey={panelKey(selection)}>
             <Suspense fallback={<PanelSkeleton />}>
               {panelSelection ? (
@@ -861,13 +928,13 @@ export default function App() {
                   onSelectConflict={selectConflict}
                   onHighlightBloc={(id) => {
                     update({ mode: 'blocs', bloc: id, layer: null });
-                    setFocus({ kind: 'reset' });
+                    setFocus(blocFocus(id));
                   }}
                   onOpenChanges={() => update({ selection: { kind: 'changes' } })}
                   onSelectChokepoint={selectChokepoint}
                   onSelectUnrest={selectUnrest}
                   onSelectPair={selectPair}
-                  mapLayer={layer}
+                  layer={layer}
                   mapBloc={mode === 'blocs' ? bloc : null}
                   onCompareBloc={(id) => {
                     update({ mode: 'blocs', bloc: id, vs: null, layer: null, selection: { kind: 'bloc', id } });

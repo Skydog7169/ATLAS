@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { geoCentroid, geoDistance, geoGraticule10, geoOrthographic, geoPath } from 'd3-geo';
 import { COUNTRY_FEATURES, MICROSTATES, drawnIsos } from '../lib/geo';
+import { largestPolygon } from '../lib/camera';
+import { footprintView } from '../lib/globeCamera';
+import { geoAnchors, placeLabels, type Box } from '../lib/mapLabels';
 import { useSize } from '../hooks/useSize';
 import { triPath } from '../lib/shapes';
 import { useHoverIso } from '../hooks/useMapOverlays';
@@ -10,10 +13,14 @@ interface Props {
   fillFor: (iso: string | null) => CountryFill;
   markers: MapMarker[];
   showMicrostates: boolean;
-  selectedIso: string | null;
-  selectedMarkerId: string | null;
+  selectedIsos: string[];
+  selectedMarkerIds: string[];
   focus: Focus;
+  insetTop?: number;
   insetRight?: number;
+  insetBottom?: number;
+  obstacles?: Box[];
+  labelPriority?: string[];
   /** Globe centre [longitude, latitude]. */
   rotation: [number, number];
   onRotate: (rotation: [number, number]) => void;
@@ -27,6 +34,11 @@ const PAD = 12;
 const MIN_K = 1;
 const MAX_K = 8;
 const KEY_STEP = 12;
+const HOME: [number, number] = [15, 20];
+/** Labels appear from this zoom, and only well inside the visible hemisphere. */
+const LABEL_K = 2;
+const LABEL_HORIZON = Math.PI / 2 - 0.3;
+const GEO_ANCHORS = geoAnchors(COUNTRY_FEATURES);
 
 /**
  * Orthographic globe. Dragging rotates it (with inertia on release), the
@@ -34,7 +46,25 @@ const KEY_STEP = 12;
  * used because every path is re-projected on each frame of rotation.
  * Rotation is reported back so the URL can carry it.
  */
-export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIso, selectedMarkerId, focus, insetRight = 0, rotation, onRotate, onCountryClick, onMarkerClick, onHover, zoomApiRef }: Props) {
+export default function GlobeMap({
+  fillFor,
+  markers,
+  showMicrostates,
+  selectedIsos,
+  selectedMarkerIds,
+  focus,
+  insetTop = 0,
+  insetRight = 0,
+  insetBottom = 0,
+  obstacles,
+  labelPriority,
+  rotation,
+  onRotate,
+  onCountryClick,
+  onMarkerClick,
+  onHover,
+  zoomApiRef,
+}: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const { width, height } = useSize(rootRef);
@@ -55,15 +85,18 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
 
   const base = useMemo(() => {
     if (!width || !height) return null;
+    // Fit the sphere to the band no panel, sheet or chip row covers.
     const visW = Math.max(width - insetRight, width * 0.5);
+    const visB = Math.max(height - insetBottom, height * 0.35);
+    const top = Math.min(insetTop, visB - height * 0.3);
     return geoOrthographic().fitExtent(
       [
-        [PAD, PAD],
-        [visW - PAD, height - PAD],
+        [PAD, top + PAD],
+        [visW - PAD, visB - PAD],
       ],
       { type: 'Sphere' },
     );
-  }, [width, height, insetRight]);
+  }, [width, height, insetTop, insetRight, insetBottom]);
 
   const projection = useMemo(() => {
     if (!base) return null;
@@ -74,7 +107,8 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
       .clipAngle(90);
   }, [base, k, rot]);
 
-  const path = useMemo(() => (projection ? geoPath(projection) : null), [projection]);
+  // One decimal: the globe projects in screen space, and every drag frame rebuilds these strings.
+  const path = useMemo(() => (projection ? geoPath(projection).digits(1) : null), [projection]);
   const paths = useMemo(() => (path ? COUNTRY_FEATURES.map((f) => path(f) ?? '') : []), [path]);
   const spherePath = useMemo(() => (path ? (path({ type: 'Sphere' }) ?? '') : ''), [path]);
   const graticulePath = useMemo(() => (path ? (path(geoGraticule10()) ?? '') : ''), [path]);
@@ -99,8 +133,31 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
     onRotateRef.current(norm);
   }, []);
 
+  // Pointer moves can outpace the display; fold them into one re-projection per frame.
+  const pending = useRef<{ dx: number; dy: number; frame: number } | null>(null);
+  const [moving, setMoving] = useState(false);
   const applyDelta = (dx: number, dy: number) => {
-    setRot((r) => [r[0] - dx * degPerPx, Math.max(-89, Math.min(89, r[1] + dy * degPerPx))]);
+    if (pending.current) {
+      pending.current.dx += dx;
+      pending.current.dy += dy;
+      return;
+    }
+    const p = { dx, dy, frame: 0 };
+    pending.current = p;
+    p.frame = requestAnimationFrame(() => {
+      pending.current = null;
+      setRot((r) => [r[0] - p.dx * degPerPx, Math.max(-89, Math.min(89, r[1] + p.dy * degPerPx))]);
+    });
+  };
+  const flushDelta = () => {
+    const p = pending.current;
+    if (!p) return;
+    cancelAnimationFrame(p.frame);
+    pending.current = null;
+    const r = rotRef.current;
+    const next: [number, number] = [r[0] - p.dx * degPerPx, Math.max(-89, Math.min(89, r[1] + p.dy * degPerPx))];
+    rotRef.current = next;
+    setRot(next);
   };
 
   const onPointerDown = (e: React.PointerEvent<SVGSVGElement>) => {
@@ -130,7 +187,10 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
     const now = performance.now();
     const dx = e.clientX - d.x;
     const dy = e.clientY - d.y;
-    if (Math.abs(dx) + Math.abs(dy) > 2) d.moved = true;
+    if (!d.moved && Math.abs(dx) + Math.abs(dy) > 2) {
+      d.moved = true;
+      setMoving(true);
+    }
     const dt = Math.max(1, now - d.t);
     d.vx = 0.7 * d.vx + 0.3 * (dx / dt);
     d.vy = 0.7 * d.vy + 0.3 * (dy / dt);
@@ -146,7 +206,9 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
     if (pointers.current.size < 2) pinch.current = null;
     const d = drag.current;
     drag.current = null;
+    if (pointers.current.size === 0) setMoving(false);
     if (!d) return;
+    flushDelta();
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let vx = d.vx * 16;
     let vy = d.vy * 16; // px per frame at 60fps
@@ -154,12 +216,14 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
       commit(rotRef.current);
       return;
     }
+    setMoving(true);
     const step = () => {
       vx *= 0.94;
       vy *= 0.94;
-      applyDelta(vx, vy);
+      setRot((r) => [r[0] - vx * degPerPx, Math.max(-89, Math.min(89, r[1] + vy * degPerPx))]);
       if (Math.hypot(vx, vy) < 0.3) {
         inertia.current = null;
+        setMoving(false);
         commit(rotRef.current);
         return;
       }
@@ -168,10 +232,19 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
     inertia.current = requestAnimationFrame(step);
   };
 
-  const onWheel = (e: React.WheelEvent<SVGSVGElement>) => {
-    e.preventDefault();
-    setK((cur) => Math.max(MIN_K, Math.min(MAX_K, cur * Math.exp(-e.deltaY * 0.0015))));
-  };
+  // React registers wheel listeners as passive, so preventDefault there is ignored and a
+  // trackpad pinch (ctrl+wheel) zooms the page. Attach a non-passive listener instead.
+  const hasSvg = Boolean(projection);
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      setK((cur) => Math.max(MIN_K, Math.min(MAX_K, cur * Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.0015)))));
+    };
+    svg.addEventListener('wheel', onWheel, { passive: false });
+    return () => svg.removeEventListener('wheel', onWheel);
+  }, [hasSvg]);
 
   // Smoothly rotate to a target centre (fly-to and keyboard).
   const tweenTo = useCallback(
@@ -208,12 +281,15 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
 
   useEffect(() => {
     if (!focus || focus.kind === 'restore') return;
-    if (focus.kind === 'reset') tweenTo([15, 20], 1);
+    if (focus.kind === 'reset') tweenTo(HOME, 1);
     else if (focus.kind === 'country') {
       const f = COUNTRY_FEATURES.find((x) => x.properties.iso === focus.iso);
       const micro = MICROSTATES.find((m) => m.iso === focus.iso);
-      const c = f ? (geoCentroid(f) as [number, number]) : micro?.lonLat;
+      const c = f ? (geoCentroid(largestPolygon(f) ?? f) as [number, number]) : micro?.lonLat;
       if (c) tweenTo([c[0], c[1]], f ? 2.2 : 4);
+    } else if (focus.kind === 'isos') {
+      const v = footprintView(focus.isos);
+      if (v) tweenTo(v.centre, v.k);
     } else tweenTo([focus.lonLat[0], focus.lonLat[1]], Math.min(MAX_K, (focus.scale ?? 4) / 1.4));
     // tweenTo captures k; re-running on k changes would restart the tween.
   }, [focus]);
@@ -223,7 +299,7 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
     zoomApiRef.current = {
       zoomIn: () => setK((c) => Math.min(MAX_K, c * 1.6)),
       zoomOut: () => setK((c) => Math.max(MIN_K, c / 1.6)),
-      reset: () => tweenTo([15, 20], 1),
+      reset: () => tweenTo(HOME, 1),
     };
   }, [zoomApiRef, tweenTo]);
 
@@ -237,11 +313,48 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
       tweenTo([r[0] + a, Math.max(-89, Math.min(89, r[1] + b))]);
     } else if (e.key === '+' || e.key === '=') setK((c) => Math.min(MAX_K, c * 1.5));
     else if (e.key === '-' || e.key === '_') setK((c) => Math.max(MIN_K, c / 1.5));
-    else if (e.key === '0' || e.key === 'Home') tweenTo([15, 20], 1);
+    else if (e.key === '0' || e.key === 'Home') tweenTo(HOME, 1);
     else if (e.key === 'Escape') onHover(null, 0, 0);
     else return;
     e.preventDefault();
   };
+
+  // Markers behind the horizon: counted in a chip that rotates to the nearest one.
+  const hidden = useMemo(() => markers.filter((m) => !visible(m.lonLat)), [markers, visible]);
+  const nearestHidden = useMemo(() => {
+    let best: MapMarker | null = null;
+    let bestD = Infinity;
+    for (const m of hidden) {
+      const d = geoDistance(m.lonLat, centre);
+      if (d < bestD) {
+        bestD = d;
+        best = m;
+      }
+    }
+    return best;
+  }, [hidden, centre]);
+
+  const labels = useMemo(() => {
+    if (moving || k < LABEL_K || !projection || !base) return [];
+    const R = base.scale() * k;
+    const anchors = GEO_ANCHORS.flatMap((a) => {
+      if (geoDistance(a.lonLat, centre) >= LABEL_HORIZON) return [];
+      const p = projection(a.lonLat);
+      return p ? [{ iso: a.iso, name: a.name, x: p[0], y: p[1], width: a.span * R, area: a.area }] : [];
+    });
+    const screenMarkers = markers.flatMap((mk) => {
+      if (!visible(mk.lonLat)) return [];
+      const p = projection(mk.lonLat);
+      return p ? [{ x: p[0], y: p[1], r: mk.radius + 3 }] : [];
+    });
+    return placeLabels(anchors, {
+      t: { k: 1, x: 0, y: 0 },
+      view: { x0: 0, y0: insetTop, x1: Math.max(width - insetRight, width * 0.5), y1: Math.max(height - insetBottom, height * 0.35) },
+      obstacles: obstacles ?? [],
+      markers: screenMarkers,
+      priority: labelPriority ? new Set(labelPriority) : undefined,
+    });
+  }, [moving, k, projection, base, centre, markers, visible, width, height, insetTop, insetRight, insetBottom, obstacles, labelPriority]);
 
   return (
     <div ref={rootRef} className="map-root globe" data-view="globe" data-rotation={`${Math.round(rot[0])},${Math.round(rot[1])}`}>
@@ -260,7 +373,7 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
           onPointerCancel={onPointerUp}
-          onWheel={onWheel}
+          className={moving ? 'moving' : undefined}
           onClickCapture={(e) => {
             // A drag that moved should not count as a click on whatever is under the pointer.
             if (drag.current?.moved) e.stopPropagation();
@@ -282,9 +395,9 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
           <g>
             <path className="sphere" d={spherePath} />
             <path className="graticule" d={graticulePath} />
-            <CountryLayer features={COUNTRY_FEATURES} paths={paths} fillFor={fillFor} selectedIso={selectedIso} onCountryClick={onCountryClick} onHover={onCountryHover} />
+            <CountryLayer features={COUNTRY_FEATURES} paths={paths} fillFor={fillFor} selectedIsos={selectedIsos} onCountryClick={onCountryClick} onHover={onCountryHover} />
             <path className="globe-shade" d={spherePath} fill="url(#globe-shade)" pointerEvents="none" />
-            <CountryOutlines features={COUNTRY_FEATURES} paths={paths} selectedIso={selectedIso} hoverIso={hoverIso} />
+            <CountryOutlines features={COUNTRY_FEATURES} paths={paths} selectedIsos={selectedIsos} hoverIso={hoverIso} />
           </g>
           <g className="overlay">
             {showMicrostates &&
@@ -303,8 +416,8 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
                     rx={1.5}
                     fill={style.stripes ? style.stripes[0] : (style.hatch ?? style.fill)}
                     opacity={style.dim ? 0.6 : 1}
-                    stroke={m.iso === selectedIso ? 'var(--fg)' : style.outline}
-                    strokeDasharray={style.outline && m.iso !== selectedIso ? '2 1.5' : undefined}
+                    stroke={selectedIsos.includes(m.iso) ? 'var(--fg)' : style.outline}
+                    strokeDasharray={style.outline && !selectedIsos.includes(m.iso) ? '2 1.5' : undefined}
                     onClick={() => onCountryClick(m.iso)}
                     onPointerEnter={(e) => onHover({ label: m.name, iso: m.iso }, e.clientX, e.clientY)}
                     onPointerLeave={() => onHover(null, 0, 0)}
@@ -316,7 +429,7 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
               const p = projection(mk.lonLat);
               if (!p) return null;
               const r = mk.radius * (0.6 + 0.4 / Math.sqrt(k));
-              const selected = mk.id === selectedMarkerId;
+              const selected = selectedMarkerIds.includes(mk.id);
               return (
                 <g
                   key={mk.id}
@@ -363,8 +476,23 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
                 </g>
               );
             })}
+            {labels.map((l) => (
+              <text key={l.iso} className="country-label" x={l.x} y={l.y} textAnchor="middle" dominantBaseline="middle" aria-hidden="true">
+                {l.name}
+              </text>
+            ))}
           </g>
         </svg>
+      )}
+      {nearestHidden && (
+        <button
+          className="map-hud horizon"
+          style={{ top: insetTop, left: Math.max(width - insetRight, width * 0.5) / 2 }}
+          onClick={() => tweenTo(nearestHidden.lonLat)}
+          title={`Rotate to ${nearestHidden.label}`}
+        >
+          +{hidden.length} beyond horizon
+        </button>
       )}
     </div>
   );

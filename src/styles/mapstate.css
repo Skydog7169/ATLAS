@@ -251,3 +251,60 @@
   cursor: not-allowed;
   opacity: 0.5;
 }
+
+/* ---------- grouped controls under batch 4's phone, touch and embed rules ---------- */
+/* Those rules address direct children of .map-controls; the buttons now sit one level down. */
+@media (max-width: 820px) {
+  .app[data-panel-open='true'] .map-controls > .control-group {
+    display: flex;
+  }
+
+  /* With the sheet open only layers and recentre stay above it. */
+  .app[data-panel-open='true'] .map-controls > .control-group[aria-label='Share'],
+  .app[data-panel-open='true'] .control-group[aria-label='View'] > :not(.recentre) {
+    display: none;
+  }
+}
+
+@media (max-height: 520px) and (pointer: coarse) {
+  .app[data-panel-open='true'] .map-controls > .control-group {
+    display: flex;
+  }
+
+  .app[data-panel-open='true'] .map-controls > .control-group[aria-label='Share'],
+  .app[data-panel-open='true'] .control-group[aria-label='View'] > :not(.recentre) {
+    display: none;
+  }
+}
+
+@media (pointer: coarse) {
+  .control-group {
+    gap: 4px;
+  }
+
+  .control-group > .icon-btn + .icon-btn {
+    border-top: 1px solid var(--border-strong);
+  }
+}
+
+@media (max-height: 400px) {
+  .app[data-embed='true'] .map-controls > .control-group[aria-label='View'] {
+    display: flex;
+  }
+
+  .app[data-embed='true'] .control-group[aria-label='View'] > :not([aria-label='Zoom in'], [aria-label='Zoom out']) {
+    display: none;
+  }
+}
+
+/* ---------- legend dock (phones) with the h2 title and the state strip ---------- */
+.legend-dock:has(.legend-toggle) .legend .legend-title,
+.legend-dock:has(.legend-toggle) .legend .map-state {
+  padding-right: 28px;
+}
+
+/* Collapsed, the legend keeps its title (and its clear ✕) plus the swatches. */
+.legend-dock[data-collapsed='true'] .legend > .legend-title {
+  display: flex;
+  margin-bottom: 6px;
+}
