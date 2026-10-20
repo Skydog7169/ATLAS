@@ -26,6 +26,13 @@ describe('relationship between two countries', () => {
     expect(frRus.sanctions.find((s) => s.from === 'FRA')!.regimes.every((x) => x.authority === 'EU')).toBe(true);
   });
 
+  it('says sanctions are not tracked when neither side is the US or an EU member', () => {
+    expect(relationship('GBR', 'RUS').sanctionsInScope).toBe(false);
+    expect(relationship('JPN', 'RUS').sanctionsInScope).toBe(false);
+    expect(relationship('USA', 'CHN').sanctionsInScope).toBe(true);
+    expect(relationship('FRA', 'DEU').sanctionsInScope).toBe(true);
+  });
+
   it('reports no ties for an unrelated pair', () => {
     const r = relationship('ISL', 'PRY');
     expect(relationshipSummary(r)).toBe('No tracked ties');

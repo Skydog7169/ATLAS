@@ -13,12 +13,12 @@ An interactive geopolitics map. Two views of the same world:
 - **Watchlist** — star any country, bloc or conflict from its panel. Stars live in this browser's localStorage only (every read and write is guarded, so a blocked store just means an empty list), and the ticker and the changes feed can be filtered to what you follow.
 
 - **Alerts** — a strip under the header lists what changed since you last pressed "Mark read" (the date lives in this browser only). RSS and JSON feeds at `/feed.xml` and `/feed.json` are generated on every build. An email digest goes out after each merged weekly refresh.
-- **Data layers** — the layers button offers four overlays on either mode: displacement, **sanctions** (countries tinted by how many UN, US and EU country-level regimes target them, with each regime linked from the dossier), **elections** (months to the next national election) and **nuclear status** (armed, threshold, hosting allied weapons, under an umbrella). Each legend names its source and fetch date.
+- **Data layers** — the layers button offers four overlays on either mode: displacement, **sanctions** (countries tinted by how many UN, US and EU country-level regimes target them, with comprehensive US embargoes hatched and each regime linked from the dossier; regimes that protect the country they are filed under, such as the EU's Crimea and Moldova measures, are listed as concerning it rather than counted against it), **elections** (months to the next national election) and **nuclear status** (armed, threshold, hosting allied weapons, under an umbrella). Each legend names its source and fetch date.
 
 - **Power and trade layers** — eight maritime chokepoints (Hormuz, Bab el-Mandeb, Suez, Malacca, Taiwan Strait, Turkish Straits, Panama, GIUK) drawn as diamonds with a dated status and linked conflicts; foreign military presence by host country (bases, deployments and peace operations, curated and sourced); and export dependence as a three-way tint by the largest of the US, China and the EU from World Bank WITS, with the shares in each dossier.
 - **Conflict depth** — each conflict panel carries a dated peace-process tracker (ceasefires, agreements, talks, roadmaps, setbacks) that the weekly pass extends, and a who-backs-whom diagram built from structured actors and their outside backers. A country's dossier lists the conflicts it sponsors abroad.
 
-- **Analysis** — a relationship view for any two countries (shared blocs, conflicts linking them, sanctions one applies to the other, forces either keeps in the other, export share each way); bloc trend charts of membership and combined GDP since 1990; and, behind a flag, **Ask ATLAS**, a question box answered strictly from the dataset with citations.
+- **Analysis** — a relationship view for any two countries (shared blocs, conflicts linking them, US and EU sanctions either side applies to the other, forces either keeps in the other, export share each way); bloc trend charts of membership and combined GDP since 1990; and, behind a flag, **Ask ATLAS**, a question box answered strictly from the dataset with citations.
 
 Search any country, bloc or conflict. Every view is a shareable link.
 
@@ -64,7 +64,7 @@ Conventions worth knowing:
 
 - Kosovo uses the user-assigned code `UNK`. Northern Cyprus and Somaliland are drawn as neutral territory.
 - Taiwan, Palestine and Western Sahara are included as map entities without taking a position on status.
-- A country is tinted in Conflicts mode by the most intense conflict on its territory, including conflicts where it is an external party.
+- In Conflicts mode a country is filled by the most intense conflict fought on its territory (a conflict's `theatre`, which defaults to its `countries`). States whose forces fight only abroad, such as the US in the Iran war or Saudi Arabia in Yemen, get a dashed outline instead; maritime flashpoints (Hormuz, the South China Sea) have an empty theatre.
 - Bloc "member" counts in the legend and tests count full members only.
 
 ### How the data stays current

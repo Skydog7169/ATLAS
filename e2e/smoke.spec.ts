@@ -53,7 +53,7 @@ test('compare mode shows shared members with stripes', async ({ page }, testInfo
 test('conflicts mode: markers, panel, timeline replay and changes feed', async ({ page }) => {
   await open(page, '#mode=conflicts');
   await expect(page.locator('g.marker')).toHaveCount(31);
-  await page.locator('g.marker[aria-label="Sudan civil war"]').click({ force: true });
+  await page.locator('g.marker[aria-label="Sudan: civil war"]').click({ force: true });
   await expect(page.locator('.panel h2')).toContainText('Sudan');
   await expect(page).toHaveURL(/conflict=sudan/);
   await page.locator('.panel .icon-btn[aria-label="Close panel"]').click();
@@ -290,7 +290,7 @@ test('power and trade layers: chokepoint diamonds open a panel, military and tra
   await expect(page.locator('path.country[data-iso="MEX"]')).toHaveAttribute('fill', /#4f8cff/);
   await expect(panel.locator('#dossier-trade + ul')).toContainText('United States');
   await open(page, '#country=DJI');
-  await expect(panel.locator('#dossier-military')).toContainText(/Military presence · [1-9]/);
+  await expect(panel.locator('#dossier-military')).toContainText(/Foreign forces present · [1-9]/);
 });
 
 test('conflict panel shows who backs whom and the peace process; dossier lists sponsorship abroad', async ({ page }) => {
@@ -345,7 +345,7 @@ test('briefing mode hides the chrome and cycles captions; embed hides the chrome
   await expect(page.locator('.ticker')).toBeHidden();
   const card = page.getByRole('region', { name: 'Briefing' });
   await expect(card).toBeVisible();
-  await expect(card.locator('.eyebrow')).toContainText('High intensity');
+  await expect(card.locator('.eyebrow')).toContainText('Live conflict');
   await expect(card.locator('.brief-count')).toContainText(/^1 \/ \d+$/);
   await expect(page).toHaveURL(/mode=conflicts/);
   await card.getByRole('button', { name: 'Next' }).click();
@@ -538,7 +538,7 @@ test('embed dialog builds a snippet for the current view', async ({ page }, test
   const dialog = page.getByRole('dialog', { name: /Sudan/ });
   await expect(dialog).toBeVisible();
   const snippet = dialog.locator('textarea');
-  await expect(snippet).toHaveValue(/<iframe src="[^"]*#mode=conflicts&amp;t=2026-03&amp;embed=1&amp;conflict=sudan" width="100%" height="360" title="ATLAS: Sudan civil war" loading="lazy"/);
+  await expect(snippet).toHaveValue(/<iframe src="[^"]*#mode=conflicts&amp;t=2026-03&amp;embed=1&amp;conflict=sudan" width="100%" height="360" title="ATLAS: Sudan: civil war" loading="lazy"/);
   await dialog.getByLabel('Static').check();
   await dialog.getByLabel('Off').check();
   await expect(snippet).toHaveValue(/legend=off&amp;interactive=0/);
@@ -548,4 +548,37 @@ test('embed dialog builds a snippet for the current view', async ({ page }, test
   await noSeriousA11yIssues(page);
   await page.keyboard.press('Escape');
   await expect(dialog).toHaveCount(0);
+});
+
+test('truth: theatre fills, outlines abroad, protective sanctions, Palestine and Kosovo displacement, Greenland in NATO', async ({ page }) => {
+  await open(page, '#mode=conflicts');
+  await expect(page.locator('path.country[data-iso="UKR"]')).toHaveAttribute('fill', /color-mix/);
+  await expect(page.locator('path.country[data-iso="USA"]')).toHaveAttribute('fill', 'var(--land)');
+  await expect(page.locator('path.country[data-iso="USA"]')).toHaveAttribute('data-outline', 'true');
+  await expect(page.locator('path.country[data-iso="SAU"]')).toHaveAttribute('data-outline', 'true');
+  await expect(page.locator('.legend')).toContainText('Party to a conflict abroad');
+
+  await open(page, '#layer=sanctions');
+  await expect(page.locator('path.country[data-iso="UKR"]')).toHaveAttribute('fill', 'var(--land)');
+  await expect(page.locator('path.country[data-iso="MDA"]')).toHaveAttribute('fill', 'var(--land)');
+  await expect(page.locator('path.country[data-iso="CUB"]')).toHaveAttribute('fill', /^url\(#hatch/);
+  await open(page, '#country=UKR');
+  const panel = page.locator('.panel');
+  await expect(panel.locator('#dossier-sanctions')).toContainText('Sanctions · 0');
+  await expect(panel).toContainText('Regimes concerning this country (aimed at others) · 3');
+  await expect(panel.locator('#dossier-memberships ~ ul').first()).toContainText('Candidate');
+
+  await open(page, '#layer=displacement');
+  await expect(page.locator('path.country[data-iso="PSE"]')).toHaveAttribute('fill', /^url\(#hatch/);
+  await expect(page.locator('path.country[data-iso="UNK"]')).toHaveAttribute('fill', 'var(--land)');
+  await open(page, '#country=UNK');
+  await expect(panel).toContainText('UNHCR reports Kosovo together with Serbia');
+
+  await open(page, '#bloc=nato');
+  await expect(page.locator('path.country[data-iso="GRL"]')).toHaveAttribute('fill', NATO_BLUE);
+  await expect(page.locator('path.country[data-iso="PRI"]')).toHaveAttribute('opacity', '0.55');
+
+  await open(page, '#pair=GBR,RUS');
+  await expect(panel.locator('#pair-sanctions + p')).toContainText('Not tracked for this pair');
+  await noSeriousA11yIssues(page);
 });

@@ -6,8 +6,8 @@ import { useAppState } from './hooks/useAppState';
 import { replayAt } from './lib/history';
 import { ASSESSED_MONTHS, TIMELINE_MONTHS } from './lib/timeline';
 import Timeline from './components/Timeline';
-import { DISPLACEMENT_BY_ISO, displacementColor, formatPeople } from './lib/displacement';
-import { sanctionsColor, sanctionsSummary } from './lib/sanctions';
+import { displacementFill, displacementSummary } from './lib/displacement';
+import { sanctionsFill, sanctionsSummary } from './lib/sanctions';
 import { electionColor, electionSummary } from './lib/elections';
 import { nuclearColor, nuclearSummary } from './lib/nuclear';
 import { ACLED, acledColor, acledSummary, acledUnrestColor, acledUnrestSummary } from './lib/acled';
@@ -43,6 +43,8 @@ import ReplayBanner from './components/ReplayBanner';
 import EmbedBadge from './components/EmbedBadge';
 import EmbedDialog from './components/EmbedDialog';
 import GestureHint from './components/GestureHint';
+import { conflictFillMaps, isTheatre } from './lib/theatre';
+import { SOVEREIGN, memberFor, territoryLine } from './lib/sovereign';
 
 // The map pulls in d3 and the 110m geometry; loading it after the shell
 // paints keeps first render fast on phones.
@@ -71,6 +73,8 @@ const DATA_ASOF = [...BLOCS.map((b) => b.updated), ...CONFLICTS.map((c) => c.upd
 
 const membershipCount = new Map<string, number>();
 for (const b of BLOCS) for (const m of b.members) if (m.status === 'member') membershipCount.set(m.iso, (membershipCount.get(m.iso) ?? 0) + 1);
+// Territories drawn on their own (Greenland) count the alliances they inherit from their sovereign.
+for (const iso of Object.keys(SOVEREIGN)) for (const b of BLOCS) if (!b.members.some((m) => m.iso === iso) && memberFor(b, iso)) membershipCount.set(iso, (membershipCount.get(iso) ?? 0) + 1);
 
 /**
  * Conflicts with the assessment in force for the view month (live = newest).
@@ -164,22 +168,14 @@ export default function App() {
   const viewMonth = mode === 'conflicts' ? month : null;
   const visible = useMemo(() => conflictsAt(viewMonth), [viewMonth]);
   const untracked = useMemo(() => untrackedAt(viewMonth), [viewMonth]);
-  const maxIntensityByCountry = useMemo(() => {
-    const map = new Map<string, Intensity>();
-    for (const { conflict, intensity } of visible) {
-      for (const iso of conflict.countries) {
-        const cur = map.get(iso);
-        if (!cur || INTENSITY_ORDER[intensity] > INTENSITY_ORDER[cur]) map.set(iso, intensity);
-      }
-    }
-    return map;
-  }, [visible]);
+  // Theatre states are filled; parties fighting only abroad get a dashed outline.
+  const { home: maxIntensityByCountry, abroad: partyAbroadByCountry } = useMemo(() => conflictFillMaps(visible), [visible]);
 
   const fillFor = useCallback(
     (iso: string | null): CountryFill => {
       if (!iso) return { fill: 'var(--land-dim)' };
-      if (layer === 'displacement') return { fill: displacementColor(iso) };
-      if (layer === 'sanctions') return { fill: sanctionsColor(iso) };
+      if (layer === 'displacement') return displacementFill(iso);
+      if (layer === 'sanctions') return sanctionsFill(iso);
       if (layer === 'elections') return { fill: electionColor(iso) };
       if (layer === 'nuclear') return { fill: nuclearColor(iso) };
       if (layer === 'acled') return { fill: acledColor(iso) };
@@ -190,20 +186,23 @@ export default function App() {
       if (layer === 'unrest') return { fill: unrestColor(iso) };
       if (mode === 'conflicts') {
         const intensity = maxIntensityByCountry.get(iso);
-        if (!intensity) return { fill: 'var(--land)' };
+        if (!intensity) {
+          const abroad = partyAbroadByCountry.get(iso);
+          return abroad ? { fill: 'var(--land)', outline: INTENSITY_COLOR[abroad] } : { fill: 'var(--land)' };
+        }
         const pct = intensity === 'high' ? 55 : intensity === 'medium' ? 42 : intensity === 'low' ? 30 : 22;
         return { fill: `color-mix(in srgb, ${INTENSITY_COLOR[intensity]} ${pct}%, var(--land))` };
       }
       if (compare) {
-        const inA = compare.a.members.some((x) => x.iso === iso && x.status === 'member');
-        const inB = compare.b.members.some((x) => x.iso === iso && x.status === 'member');
+        const inA = memberFor(compare.a, iso)?.status === 'member';
+        const inB = memberFor(compare.b, iso)?.status === 'member';
         if (inA && inB) return { fill: compare.a.color, stripes: [compare.a.color, compare.b.color] };
         if (inA) return { fill: compare.a.color };
         if (inB) return { fill: compare.b.color };
         return { fill: 'var(--land)', dim: true };
       }
       if (activeBloc) {
-        const m = activeBloc.members.find((x) => x.iso === iso);
+        const m = memberFor(activeBloc, iso);
         if (!m) return { fill: 'var(--land)', dim: true };
         if (m.status === 'member') return { fill: activeBloc.color };
         if (m.status === 'suspended' || m.status === 'frozen') return { fill: activeBloc.color, hatch: activeBloc.color };
@@ -212,7 +211,7 @@ export default function App() {
       const n = Math.min(membershipCount.get(iso) ?? 0, OVERVIEW_STEPS.length - 1);
       return { fill: OVERVIEW_STEPS[n] ?? 'var(--land)' };
     },
-    [mode, activeBloc, compare, maxIntensityByCountry, layer],
+    [mode, activeBloc, compare, maxIntensityByCountry, partyAbroadByCountry, layer],
   );
 
   const markers = useMemo<MapMarker[]>(() => {
@@ -325,8 +324,7 @@ export default function App() {
     if (hover.sub) return hover.sub;
     if (!hover.iso) return null;
     if (layer === 'displacement') {
-      const row = DISPLACEMENT_BY_ISO.get(hover.iso);
-      return row ? `${formatPeople(row.total)} displaced · ${formatPeople(row.refugees)} refugees · ${formatPeople(row.idps)} IDPs` : 'No UNHCR displacement figure';
+      return displacementSummary(hover.iso);
     }
     if (layer === 'sanctions') {
       const s = sanctionsSummary(hover.iso);
@@ -342,9 +340,11 @@ export default function App() {
     if (layer === 'unrest') return unrestSummary(hover.iso) ?? 'No tracked unrest';
     if (mode === 'conflicts') {
       const list = conflictsForCountry(hover.iso).sort((a, b) => INTENSITY_ORDER[b.intensity] - INTENSITY_ORDER[a.intensity]);
-      return list.length ? list.map((c) => c.name).join(' · ') : null;
+      return list.length ? list.map((c) => (isTheatre(c, hover.iso!) ? c.name : `${c.name} (abroad)`)).join(' · ') : null;
     }
     const list = blocsForCountry(hover.iso).filter((x) => x.membership.status === 'member');
+    const territory = territoryLine(hover.iso, BLOCS);
+    if (territory) return territory;
     return list.length ? list.map((x) => x.bloc.shortName).join(' · ') : 'No tracked bloc memberships';
   }, [hover, mode, layer]);
 
@@ -355,7 +355,7 @@ export default function App() {
     for (const c of CONFLICTS) {
       if (c.history[0]?.intensity !== 'high') continue;
       seen.add('conflict:' + c.id);
-      out.push({ id: c.id, kind: 'conflict', title: c.name, eyebrow: 'High intensity', detail: c.history[0]?.status ?? '', color: INTENSITY_COLOR.high, conflict: c });
+      out.push({ id: c.id, kind: 'conflict', title: c.name, eyebrow: 'Live conflict', detail: c.history[0]?.status ?? '', color: INTENSITY_COLOR.high, conflict: c });
     }
     for (const w of watchlist.items) {
       const key = w.kind + ':' + w.id;
