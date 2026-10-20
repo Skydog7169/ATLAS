@@ -345,7 +345,7 @@ test('briefing mode hides the chrome and cycles captions; embed hides the chrome
   await expect(page.locator('.ticker')).toBeHidden();
   const card = page.getByRole('region', { name: 'Briefing' });
   await expect(card).toBeVisible();
-  await expect(card.locator('.eyebrow')).toContainText('High intensity');
+  await expect(card.locator('.eyebrow')).toContainText('Live conflict');
   await expect(card.locator('.brief-count')).toContainText(/^1 \/ \d+$/);
   await expect(page).toHaveURL(/mode=conflicts/);
   await card.getByRole('button', { name: 'Next' }).click();

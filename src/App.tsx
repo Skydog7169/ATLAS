@@ -329,7 +329,7 @@ export default function App() {
     for (const c of CONFLICTS) {
       if (c.history[0]?.intensity !== 'high') continue;
       seen.add('conflict:' + c.id);
-      out.push({ id: c.id, kind: 'conflict', title: c.name, eyebrow: 'High intensity', detail: c.history[0]?.status ?? '', color: INTENSITY_COLOR.high, conflict: c });
+      out.push({ id: c.id, kind: 'conflict', title: c.name, eyebrow: 'Live conflict', detail: c.history[0]?.status ?? '', color: INTENSITY_COLOR.high, conflict: c });
     }
     for (const w of watchlist.items) {
       const key = w.kind + ':' + w.id;

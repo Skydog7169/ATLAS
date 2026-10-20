@@ -14,6 +14,7 @@ import { blocMembers } from '../lib/membership';
 import { SOVEREIGN, memberFor, territoryLine } from '../lib/sovereign';
 import { NUCLEAR_BY_ISO } from '../lib/nuclear';
 import { search } from '../lib/search';
+import { UNREST } from './unrest';
 
 const ISO3 = /^[A-Z]{3}$/;
 const MONTH = /^\d{4}-(0[1-9]|1[0-2])$/;
@@ -208,5 +209,15 @@ describe('conflict names', () => {
     for (const c of CONFLICTS) expect(c.name, c.id).toMatch(/^[^:]+: \S/);
     expect(search('Sudan civil war')[0]).toMatchObject({ kind: 'conflict', id: 'sudan' });
     expect(search('Russia–Ukraine war')[0]).toMatchObject({ kind: 'conflict', id: 'russia-ukraine' });
+  });
+});
+
+describe('names keep their diacritics', () => {
+  // Prose fields only: source titles quote the publisher's own spelling.
+  const STRIPPED = [/\bVucic\b/, /\bVucevic\b/, /\bErdogan\b/, /\bImamoglu\b/, /\bMilosevic\b/];
+  const prose = (items: Array<{ name: string; summary: string; parties: string[]; history: Array<{ status: string }> }>) =>
+    items.flatMap((x) => [x.name, x.summary, ...x.parties, ...x.history.map((h) => h.status)]);
+  it('in conflicts and unrest', () => {
+    for (const text of [...prose(CONFLICTS), ...prose(UNREST)]) for (const re of STRIPPED) expect(text).not.toMatch(re);
   });
 });
