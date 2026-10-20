@@ -752,7 +752,7 @@ test('camera frames the subject in the uncovered area: phone sheet, desktop pane
   await expect(page.locator('path.country[data-iso="USA"]')).toHaveAttribute('fill', 'var(--accent)');
   await expect(page.locator('path.country[data-iso="CHN"]')).toHaveAttribute('fill', 'var(--warn)');
   await expect(page.locator('path.country[data-iso="CHN"]')).toHaveAttribute('data-selected', 'true');
-  await expect(page.locator('path.country[data-iso="FRA"]')).toHaveAttribute('opacity', '0.55');
+  await expect(page.locator('path.country[data-iso="FRA"]')).toHaveAttribute('data-dim', 'mix');
 });
 
 test('globe toggle keeps the selection in view instead of resetting', async ({ page }, testInfo) => {
@@ -1041,7 +1041,7 @@ test('truth: theatre fills, outlines abroad, protective sanctions, Palestine and
 
   await open(page, '#bloc=nato');
   await expect(page.locator('path.country[data-iso="GRL"]')).toHaveAttribute('fill', NATO_BLUE);
-  await expect(page.locator('path.country[data-iso="PRI"]')).toHaveAttribute('opacity', '0.55');
+  await expect(page.locator('path.country[data-iso="PRI"]')).toHaveAttribute('data-dim', 'mix');
 
   await open(page, '#pair=GBR,RUS');
   await expect(panel.locator('#pair-sanctions + p')).toContainText('Not tracked for this pair');

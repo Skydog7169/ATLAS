@@ -697,6 +697,8 @@ export default function App() {
       data-replay={viewMonth !== null}
       data-stale={edition.stale || undefined}
       data-map-error={mapError ? true : undefined}
+      // The neutral front door: no bloc, layer or pair is painting the land, so the map idles in its HUD look.
+      data-standby={mode === 'blocs' && !activeBloc && !compare && !layer && !pair ? true : undefined}
     >
       <header className="header">
         <h1 className="sr-only">ATLAS geopolitical map</h1>

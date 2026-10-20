@@ -159,14 +159,21 @@ export const CountryLayer = memo(function CountryLayer({ features, paths, fillFo
     if (style.stripes) stripes.set(stripesId(...style.stripes), style.stripes);
     const fill = style.stripes ? `url(#${stripesId(...style.stripes)})` : style.hatch ? `url(#${hatchId(style.hatch)})` : style.fill;
     const country = iso ? COUNTRY_BY_ISO.get(iso) : undefined;
+    // A dimmed colour is painted opaque, pre-mixed with the ocean (.country[data-dim='mix']), so the
+    // land glow underneath cannot show through; patterns, which cannot be mixed, still fade.
+    const dim = style.dim ? (fill.startsWith('url(') ? 'fade' : 'mix') : undefined;
+    const vars: Record<string, string> = {};
+    if (style.outline) vars['--outline'] = style.outline;
+    if (dim === 'mix') vars['--dim-from'] = fill;
     return (
       <path
         key={iso ?? f.properties.name}
         className="country"
         d={paths[i]}
         fill={fill}
-        opacity={style.dim ? 0.55 : 1}
-        style={style.outline ? { ['--outline' as string]: style.outline } : undefined}
+        opacity={dim === 'fade' ? 0.55 : 1}
+        style={style.outline || dim === 'mix' ? vars : undefined}
+        data-dim={dim}
         data-outline={style.outline ? true : undefined}
         data-iso={iso ?? undefined}
         data-selected={iso !== null && selectedIsos.includes(iso)}
@@ -225,6 +232,36 @@ export function CountryOutlines({ features, paths, selectedIsos, hoverIso }: { f
     </g>
   );
 }
+
+/**
+ * The HUD glow around the land (dark theme only; see .land-glow in global.css),
+ * drawn under the countries: each lit country's outline as a wide, soft stroke in
+ * its own colour. Every country above it is opaque (dimmed ones are pre-mixed with
+ * the ocean), so only the half of the glow that falls on the sea shows and no
+ * fill, the key to the legend, is tinted. No SVG filter: a blur over the land
+ * re-ran on every repaint and made hover and panning stutter.
+ */
+export const GlowUnderlay = memo(function GlowUnderlay({ features, paths, fillFor }: { features: CountryFeature[]; paths: string[]; fillFor: (iso: string | null) => CountryFill }) {
+  const lit: Array<{ d: string; color: string | null }> = [];
+  features.forEach((f, i) => {
+    const d = paths[i];
+    if (!d) return;
+    const style = fillFor(f.properties.iso);
+    if (style.dim) return;
+    const color = style.stripes?.[0] ?? style.hatch ?? style.fill;
+    // Empty land only glows on the neutral front door, in the UI cyan (see .glow-neutral).
+    const neutral = color.startsWith('url(') || color === 'var(--land)' || color === 'var(--land-dim)';
+    lit.push({ d, color: neutral ? null : color });
+  });
+  return (
+    <g className="land-glow" aria-hidden="true">
+      {/* One pass: a second, softer one doubled the cost of every repaint. */}
+      {lit.map((l, i) => (
+        <path key={i} d={l.d} className={l.color ? undefined : 'glow-neutral'} style={l.color ? { stroke: l.color } : undefined} />
+      ))}
+    </g>
+  );
+});
 
 export default function WorldMap({
   fillFor,
@@ -342,11 +379,15 @@ export default function WorldMap({
       .filter(gestureFilter(gestures, (kind) => onBlockedRef.current?.(kind)))
       .scaleExtent([MIN_SCALE, MAX_SCALE])
       .constrain(constrain)
+      .on('start', () => svgRef.current?.setAttribute('data-moving', ''))
+      .on('end', () => svgRef.current?.removeAttribute('data-moving'))
       .on('zoom', (event) => {
         const t = event.transform as ZoomTransform;
         // A drag or wheel is the user's own framing: nothing to restore any more.
         if (event.sourceEvent) preFlyRef.current = null;
         layerRef.current?.setAttribute('transform', t.toString());
+        // Glows inside the zoomed layer are drawn in its units; this keeps them a constant screen size.
+        svgRef.current?.style.setProperty('--zk', String(1 / t.k));
         setTransform(t);
         // Whatever was under the pointer has moved; drop the tooltip until the next enter.
         onHoverRef.current(null, 0, 0);
@@ -556,6 +597,8 @@ export default function WorldMap({
             {/* The vignette darkens the ocean edge only; drawn under the countries, it never shifts a data class. */}
             <path className="sphere-vignette" d={spherePath} fill="url(#ocean-vignette)" />
             <path className="graticule" d={graticulePath} />
+            <path className="sphere-rim" d={spherePath} />
+            <GlowUnderlay features={features} paths={paths} fillFor={fillFor} />
             <CountryLayer features={features} paths={paths} fillFor={fillFor} selectedIsos={selectedIsos} onCountryClick={onCountryClick} onHover={onCountryHover} />
             <CountryOutlines features={features} paths={paths} selectedIsos={selectedIsos} hoverIso={hoverIso} />
           </g>

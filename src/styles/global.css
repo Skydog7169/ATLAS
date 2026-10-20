@@ -50,6 +50,10 @@
 
   /* Glows only read on the dark ground; the light theme gets a 1px accent outline instead. */
   --glow: 0 0 0 1px light-dark(var(--accent), transparent), 0 0 12px light-dark(transparent, color-mix(in srgb, var(--accent) 55%, transparent));
+  /* HUD glow colours: cyan light in the dark theme, nothing in the light one. */
+  --hud-glow: light-dark(transparent, color-mix(in srgb, var(--accent) 45%, transparent));
+  --hud-glow-soft: light-dark(transparent, color-mix(in srgb, var(--accent) 20%, transparent));
+  --hud-glow-faint: light-dark(transparent, color-mix(in srgb, var(--accent) 9%, transparent));
   --shadow: 0 18px 50px light-dark(rgba(11, 26, 38, 0.18), rgba(0, 0, 0, 0.6));
   --header-h: 56px;
   --panel-w: 400px;
@@ -328,7 +332,7 @@ a {
   inset: 0;
   pointer-events: none;
   z-index: 2;
-  background: repeating-linear-gradient(0deg, transparent 0 2px, color-mix(in srgb, black 5%, transparent) 2px 3px);
+  background: repeating-linear-gradient(0deg, transparent 0 2px, color-mix(in srgb, black 10%, transparent) 2px 3px);
   mix-blend-mode: multiply;
   opacity: 0.6;
 }
@@ -404,18 +408,87 @@ a {
 }
 
 .hover-outline {
-  stroke: var(--fg);
+  stroke: color-mix(in srgb, var(--accent) 70%, var(--fg));
   stroke-width: 1.5;
+  filter: drop-shadow(0 0 calc(3px * var(--zk, 1)) var(--hud-glow-soft));
 }
 
+/* The dark halo keeps the cyan line readable on any fill, cyan included. */
 .selection-halo {
   stroke: var(--bg);
   stroke-width: 4;
 }
 
 .selection-line {
-  stroke: var(--fg);
+  stroke: var(--accent);
   stroke-width: 2;
+  filter: drop-shadow(0 0 calc(3px * var(--zk, 1)) var(--hud-glow));
+}
+
+/* ---------- HUD glow ----------
+   The look that makes ATLAS read as a situation display rather than a textbook
+   map. Every glow is decoration laid over the data, never mixed into it: the
+   land bloom keeps only the blur that falls on the ocean (#land-bloom), so a
+   fill still matches its legend swatch. Dark theme only; the light theme is the
+   paper version. Glows pause while the map moves so panning stays smooth. */
+.sphere-rim {
+  fill: none;
+  stroke: var(--hud-glow-faint);
+  stroke-width: 6;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+
+/* Land glow (GlowUnderlay): soft strokes under an ocean-coloured land silhouette. */
+.land-glow {
+  display: none;
+}
+
+:root[data-theme='dark'] .land-glow {
+  display: inline;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .land-glow {
+    display: inline;
+  }
+}
+
+.land-glow path {
+  fill: none;
+  stroke-width: 8;
+  stroke-opacity: 0.1;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+
+.land-glow path.glow-neutral {
+  stroke: var(--accent);
+  stroke-opacity: 0.07;
+}
+
+.app:not([data-standby]) .glow-neutral {
+  display: none;
+}
+
+/* Dimmed countries are opaque, pre-mixed with the ocean, rather than see-through. */
+.country[data-dim='mix'] {
+  fill: color-mix(in srgb, var(--dim-from) 55%, var(--ocean));
+}
+
+/* The globe re-projects every path on each drag frame; it glows again once it settles. */
+.map-root svg.moving .land-glow {
+  display: none;
+}
+
+/* The neutral front door idles as a hologram: cyan borders that the bloom lights up. */
+.app[data-standby] .country {
+  stroke: light-dark(var(--stroke), color-mix(in srgb, var(--accent) 24%, var(--stroke)));
+}
+
+.sphere {
+  stroke: light-dark(var(--border-strong), color-mix(in srgb, var(--accent) 35%, var(--border-strong)));
 }
 
 .sphere-vignette {
@@ -630,6 +703,7 @@ a {
   letter-spacing: var(--track-eyebrow);
   text-transform: uppercase;
   color: var(--accent);
+  text-shadow: 0 0 8px var(--hud-glow-faint);
 }
 
 .legend ul {
@@ -803,7 +877,7 @@ a {
   width: var(--panel-w);
   background: var(--bg-elev);
   border: 1px solid var(--border-strong);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow), 0 0 20px var(--hud-glow-faint);
   display: flex;
   flex-direction: column;
   z-index: 6;
@@ -837,6 +911,7 @@ a {
   margin: 0;
   font: var(--t-display);
   letter-spacing: 0.02em;
+  text-shadow: 0 0 14px var(--hud-glow-faint);
 }
 
 .panel-head .eyebrow {
@@ -847,6 +922,7 @@ a {
   text-transform: uppercase;
   color: var(--accent);
   margin: 0 0 6px;
+  text-shadow: 0 0 8px var(--hud-glow-faint);
 }
 
 .panel-body {
