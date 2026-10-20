@@ -1,16 +1,14 @@
-import { CONFLICTS } from '../data/conflicts';
-import { UNREST } from '../data/unrest';
-import type { HistoryEntry, Intensity } from '../data/types';
+import type { Intensity } from '../data/types';
+import { CHANGES } from './feed';
 import { DATA_ASOF } from './frontdoor';
+import type { ChangeItem, Delta } from './history';
 
 /**
- * Thin adapter for the This week card. It derives each assessment's change
- * against the previous entry of the same conflict or episode. When the
- * change/delta model (ChangeItem.delta in history.ts) lands, `weekItems`
- * should read from CHANGES and filter on it.delta instead: the card only
- * depends on the WeekItem shape below.
+ * The This week card's view of the change feed: conflict and unrest
+ * assessments with their delta against the previous entry (history.ts), so the
+ * card, the ticker and Latest changes count New / Escalated / Eased the same way.
  */
-export type WeekDelta = 'new' | 'up' | 'down' | 'same';
+export type WeekDelta = Exclude<Delta, 'membership'>;
 
 export interface WeekItem {
   kind: 'conflict' | 'unrest';
@@ -25,20 +23,12 @@ export interface WeekItem {
 
 const RANK: Record<Intensity, number> = { high: 3, medium: 2, low: 1, latent: 0 };
 
-function deltaOf(prev: Intensity | null, cur: Intensity): WeekDelta {
-  if (prev === null) return 'new';
-  return RANK[cur] > RANK[prev] ? 'up' : RANK[cur] < RANK[prev] ? 'down' : 'same';
-}
-
-function items(kind: WeekItem['kind'], list: ReadonlyArray<{ id: string; name: string; history: HistoryEntry[] }>): WeekItem[] {
+/** Assessment items from the shared change feed. */
+export function weekItems(feed: readonly ChangeItem[] = CHANGES): WeekItem[] {
   const out: WeekItem[] = [];
-  for (const r of list) {
-    const oldestFirst = [...r.history].sort((a, b) => a.date.localeCompare(b.date));
-    let prev: Intensity | null = null;
-    for (const h of oldestFirst) {
-      out.push({ kind, id: r.id, title: r.name, date: h.date, intensity: h.intensity, prev, delta: deltaOf(prev, h.intensity), detail: h.status });
-      prev = h.intensity;
-    }
+  for (const it of feed) {
+    if (it.kind === 'bloc' || !it.intensity || it.delta === 'membership') continue;
+    out.push({ kind: it.kind, id: it.id, title: it.title, date: it.date, intensity: it.intensity, prev: it.prev ?? null, delta: it.delta, detail: it.detail });
   }
   return out;
 }
@@ -64,7 +54,7 @@ export interface WeekSummary {
   top: WeekItem[];
 }
 
-export function weekSummary(asOf: string = DATA_ASOF, n = 3, pool: WeekItem[] = [...items('conflict', CONFLICTS), ...items('unrest', UNREST)]): WeekSummary {
+export function weekSummary(asOf: string = DATA_ASOF, n = 3, pool: WeekItem[] = weekItems()): WeekSummary {
   const from = daysBefore(asOf, WEEK_DAYS - 1);
   // One row per conflict or episode: its newest entry in the window.
   const newest = new Map<string, WeekItem>();

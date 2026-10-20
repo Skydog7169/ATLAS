@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { weekSummary, type WeekItem } from './thisWeek';
+import { CHANGES } from './feed';
+import { weekItems, weekSummary, type WeekItem } from './thisWeek';
 
 const item = (id: string, date: string, intensity: WeekItem['intensity'], delta: WeekItem['delta']): WeekItem => ({ kind: 'conflict', id, title: id, date, intensity, prev: null, delta, detail: '' });
 
@@ -24,5 +25,11 @@ describe('This week summary', () => {
     const s = weekSummary();
     expect(s.top.length).toBeGreaterThan(0);
     for (const t of s.top) expect(t.date >= s.from && t.date <= s.to).toBe(true);
+  });
+
+  it('reads the shared change feed, so its deltas match the ticker and Latest changes', () => {
+    const items = weekItems();
+    expect(items.length).toBe(CHANGES.filter((c) => c.kind !== 'bloc').length);
+    for (const it of items) expect(CHANGES.find((c) => c.key === `${it.kind}:${it.id}:${it.date}`)?.delta).toBe(it.delta);
   });
 });

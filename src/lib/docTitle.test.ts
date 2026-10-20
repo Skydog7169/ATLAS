@@ -17,7 +17,7 @@ describe('document title', () => {
     expect(t({ selection: { kind: 'country', iso: 'UKR' } })).toBe('Ukraine — ATLAS');
     expect(t({ selection: { kind: 'pair', a: 'USA', b: 'CHN' } })).toBe('United States ↔ China — ATLAS');
     expect(t({ bloc: 'nato', vs: 'eu', selection: { kind: 'compare' } })).toBe('NATO vs EU — ATLAS');
-    expect(t({ selection: { kind: 'changes' } })).toBe('Recent changes — ATLAS');
+    expect(t({ selection: { kind: 'changes' } })).toBe('Latest changes — ATLAS');
   });
 
   it('falls back to the mode or layer when nothing is selected', () => {

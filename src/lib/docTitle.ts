@@ -49,7 +49,7 @@ export function titleFor(state: Pick<AppState, 'mode' | 'bloc' | 'vs' | 'selecti
         break;
       }
       case 'changes':
-        return withBrand('Recent changes');
+        return withBrand('Latest changes');
       case 'watchlist':
         return withBrand('Watchlist');
       case 'about':
