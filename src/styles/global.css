@@ -696,7 +696,13 @@ a {
   z-index: 20;
 }
 
-.search-list li {
+.search-list ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.search-list li[role='option'] {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -722,6 +728,26 @@ a {
 .search-list .empty {
   color: var(--fg-muted);
   cursor: default;
+}
+
+.search-group {
+  padding: 8px 10px 3px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+.search-list .hint {
+  margin: 0;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.search-list ul + .hint {
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
 }
 
 /* ---------- detail panel ---------- */

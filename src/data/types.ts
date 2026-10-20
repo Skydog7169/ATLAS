@@ -183,6 +183,8 @@ export interface CountryRecord {
   ccn3: string | null;
   name: string;
   official: string;
+  /** Latin-script alternative spellings from world-countries ("UAE", "Burma"), used by search. */
+  alt: string[];
   capital: string | null;
   region: string;
   subregion: string | null;

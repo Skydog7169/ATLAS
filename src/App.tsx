@@ -9,14 +9,15 @@ import { DISPLACEMENT_BY_ISO, displacementColor, formatPeople } from './lib/disp
 import { sanctionsColor, sanctionsSummary } from './lib/sanctions';
 import { electionColor, electionSummary } from './lib/elections';
 import { nuclearColor, nuclearSummary } from './lib/nuclear';
-import { ACLED, acledColor, acledSummary, acledUnrestColor, acledUnrestSummary } from './lib/acled';
-import { UCDP, ucdpColor, ucdpSummary, ucdpYear } from './lib/ucdp';
+import { acledColor, acledSummary, acledUnrestColor, acledUnrestSummary } from './lib/acled';
+import { ucdpColor, ucdpSummary, ucdpYear } from './lib/ucdp';
 import { UNREST, UNREST_BY_ID } from './data/unrest';
 import { UNREST_COLOR, UNREST_MARKER_PREFIX, UNREST_RADIUS, UNREST_KIND_LABEL, unrestColor, unrestSummary } from './lib/unrest';
 import { militaryColor, militarySummary } from './lib/military';
 import { tradeColor, tradeSummary } from './lib/trade';
 import { CHOKEPOINTS, CHOKEPOINT_BY_ID, CHOKEPOINT_COLOR, CHOKEPOINT_MARKER_PREFIX, CHOKEPOINT_STATUS_LABEL, currentStatus } from './lib/chokepoints';
-import LayerMenu, { type LayerOption } from './components/LayerMenu';
+import LayerMenu from './components/LayerMenu';
+import { LAYER_OPTIONS } from './lib/layerOptions';
 import { INTENSITY_COLOR, INTENSITY_LABEL, INTENSITY_RADIUS } from './lib/labels';
 import BlocChips from './components/BlocChips';
 import DetailPanel from './components/DetailPanel';
@@ -43,20 +44,6 @@ const GlobeMap = lazy(() => import('./components/GlobeMap'));
 
 const OVERVIEW_STEPS = ['var(--land)', '#123a4a', '#17607a', '#1f8fb3', '#35e0ff'];
 
-const LAYER_OPTIONS: LayerOption[] = [
-  { id: 'displacement', label: 'Displacement', hint: 'People displaced from each country (UNHCR)' },
-  { id: 'sanctions', label: 'Sanctions', hint: 'UN, US and EU regimes targeting the country' },
-  { id: 'elections', label: 'Elections', hint: 'Months to the next national election' },
-  { id: 'nuclear', label: 'Nuclear', hint: 'Armed, threshold, hosting and umbrella states' },
-  { id: 'military', label: 'Military presence', hint: 'Foreign bases, deployments and peace operations by host' },
-  { id: 'trade', label: 'Trade dependence', hint: 'Export share to the US, China or the EU (WITS)' },
-  { id: 'chokepoints', label: 'Chokepoints', hint: 'Eight maritime passages with dated status' },
-  { id: 'unrest', label: 'Civil unrest', hint: 'Protest movements, riots, uprisings, coups and crackdowns' },
-  // The ACLED slot only appears when the weekly build had credentials for the API.
-  ...(ACLED.available ? [{ id: 'acled' as const, label: 'Violence events', hint: `ACLED political-violence events, last ${ACLED.days} days` }] : []),
-  ...(ACLED.available ? [{ id: 'acled-unrest' as const, label: 'Protests and riots', hint: `ACLED protest and riot events, last ${ACLED.days} days` }] : []),
-  ...(UCDP.available ? [{ id: 'ucdp' as const, label: 'Organised violence', hint: `UCDP deaths in state-based, non-state and one-sided violence, ${ucdpYear()}` }] : []),
-];
 
 /** Newest `updated` month across both datasets, shown in the header readouts. */
 const DATA_ASOF = [...BLOCS.map((b) => b.updated), ...CONFLICTS.map((c) => c.updated)].sort().at(-1) ?? '';
@@ -282,9 +269,20 @@ export default function App() {
       if (hit.kind === 'country') selectCountry(hit.id);
       else if (hit.kind === 'bloc') selectBloc(hit.id);
       else if (hit.kind === 'unrest') selectUnrest(hit.id);
-      else selectConflict(hit.id);
+      else if (hit.kind === 'chokepoint') selectChokepoint(hit.id);
+      else if (hit.kind === 'pair') selectPair(hit.a, hit.b);
+      else if (hit.kind === 'layer') update({ layer: hit.id });
+      else if (hit.kind === 'action') {
+        if (hit.id === 'brief') update({ brief: true, selection: null });
+        else if (hit.id === 'changes') update({ selection: { kind: 'changes' } });
+        else if (hit.id === 'watchlist') update({ selection: { kind: 'watchlist' } });
+        else {
+          update((s) => ({ mode: 'blocs', bloc: s.bloc ?? 'nato', vs: null, selection: { kind: 'bloc', id: s.bloc ?? 'nato' } }));
+          setPicking(true);
+        }
+      } else selectConflict(hit.id);
     },
-    [selectCountry, selectBloc, selectConflict, selectUnrest],
+    [selectCountry, selectBloc, selectConflict, selectUnrest, selectChokepoint, selectPair, update],
   );
 
   const onHover = useCallback((h: { label: string; sub?: string; iso?: string | null } | null, clientX: number, clientY: number) => {
@@ -310,7 +308,7 @@ export default function App() {
     if (layer === 'nuclear') return nuclearSummary(hover.iso) ?? 'No nuclear role recorded';
     if (layer === 'acled') return acledSummary(hover.iso) ?? 'No ACLED events in the window';
     if (layer === 'acled-unrest') return acledUnrestSummary(hover.iso) ?? 'No ACLED protests or riots in the window';
-    if (layer === 'ucdp') return ucdpSummary(hover.iso) ?? `No organised-violence deaths recorded in ${ucdpYear()}`;
+    if (layer === 'ucdp') return ucdpSummary(hover.iso) ?? (ucdpYear() ? `No organised-violence deaths recorded in ${ucdpYear()}` : 'No data: UCDP unavailable in this build');
     if (layer === 'military') return militarySummary(hover.iso) ?? 'No foreign military presence recorded';
     if (layer === 'trade') return tradeSummary(hover.iso) ?? 'No WITS export data';
     if (layer === 'unrest') return unrestSummary(hover.iso) ?? 'No tracked unrest';
@@ -447,7 +445,7 @@ export default function App() {
             DATA <b>{formatMonth(DATA_ASOF).toUpperCase()}</b>
           </button>
         </div>
-        <Search onPick={onPick} conflictColor={conflictColor} />
+        <Search onPick={onPick} conflictColor={conflictColor} mode={mode} watchlist={watchlist.items} />
         <button
           className="icon-btn"
           aria-label="Recent changes"
