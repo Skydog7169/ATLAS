@@ -111,11 +111,14 @@ test('a stale globe chunk after a deploy offers a reload, and the flat map recov
   await expect(alert.getByRole('button', { name: 'Try again' })).toHaveCount(0);
   await expect(page.locator('.legend')).toHaveCount(0);
   await expect(page.locator('.timeline')).toHaveCount(0);
-  await expect(page.getByRole('button', { name: 'Export PNG' })).toBeDisabled();
+  await page.getByRole('button', { name: 'Share and present' }).click();
+  await expect(page.getByRole('menuitem', { name: /Export PNG/ })).toBeDisabled();
+  await page.keyboard.press('Escape');
   await page.getByRole('button', { name: 'Flat map' }).click();
   await expect(page.locator('path.country')).toHaveCount(177);
   await expect(page.locator('.legend')).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Export PNG' })).toBeEnabled();
+  await page.getByRole('button', { name: 'Share and present' }).click();
+  await expect(page.getByRole('menuitem', { name: /Export PNG/ })).toBeEnabled();
 });
 
 test('links to a layer this build cannot draw land on tracked data, not an all-zero map', async ({ page }) => {

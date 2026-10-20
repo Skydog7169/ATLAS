@@ -1,4 +1,6 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
+import Icon from './Icon';
+import { menuPlacement, type MenuPlacement } from '../lib/menuPlacement';
 import type { Layer } from '../lib/urlState';
 
 export interface LayerOption {
@@ -22,10 +24,25 @@ interface Props {
  */
 export default function LayerMenu({ options, value, onChange }: Props) {
   const [open, setOpen] = useState(false);
+  const [place, setPlace] = useState<MenuPlacement | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const id = useId();
+
+  // Open toward whichever side of the stage has more room and cap the list to it, so
+  // "Off" and the first layers are never pushed under the header on short screens.
+  useLayoutEffect(() => {
+    if (!open) return;
+    const measure = () => {
+      const btn = rootRef.current?.getBoundingClientRect();
+      const stage = rootRef.current?.closest('.stage')?.getBoundingClientRect();
+      if (btn && stage) setPlace(menuPlacement(btn, stage));
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [open]);
 
   const close = (refocus: boolean) => {
     if (refocus) triggerRef.current?.focus();
@@ -79,8 +96,8 @@ export default function LayerMenu({ options, value, onChange }: Props) {
       }}
     >
       <button
-        className="icon-btn"
-        aria-label="Data layers"
+        className="icon-btn layer-trigger"
+        aria-label={current ? `Data layers: ${current.label}` : 'Data layers'}
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={id}
@@ -89,13 +106,21 @@ export default function LayerMenu({ options, value, onChange }: Props) {
         data-active={value !== null}
         onClick={() => setOpen((o) => !o)}
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-          <path d="m12 3 9 5-9 5-9-5 9-5Z" />
-          <path d="m3 13 9 5 9-5" />
-        </svg>
+        <Icon name="layers" />
+        <span className="layer-trigger-label">{current ? current.label : 'Layers'}</span>
+        <Icon name="chevron-down" size={12} />
       </button>
       {open && (
-        <ul className="layer-list frame" id={id} role="menu" aria-label="Data layers" ref={listRef} onKeyDown={onListKey}>
+        <ul
+          className="layer-list frame"
+          id={id}
+          role="menu"
+          aria-label="Data layers"
+          ref={listRef}
+          onKeyDown={onListKey}
+          data-place={place?.side}
+          style={place ? { maxHeight: place.maxHeight, overflowY: 'auto', ...(place.side === 'down' ? { top: 0, bottom: 'auto' } : { bottom: 0, top: 'auto' }) } : undefined}
+        >
           <li role="none">
             <button role="menuitemradio" tabIndex={-1} aria-checked={value === null} onClick={() => { onChange(null); close(true); }}>
               <span className="name">Off</span>

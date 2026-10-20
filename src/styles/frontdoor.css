@@ -85,8 +85,9 @@
 /* ---------- This week card ---------- */
 .this-week {
   position: absolute;
+  /* Top right on wide screens: the legend owns the left edge and can be tall with a layer on. */
   top: 56px;
-  left: 12px;
+  right: 12px;
   width: min(340px, calc(100% - 24px));
   padding: 12px 14px;
   background: color-mix(in srgb, var(--bg-elev) 94%, transparent);
@@ -209,6 +210,13 @@
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+}
+
+/* The detail panel takes the right edge on wide screens; the card yields to it. */
+@media (min-width: 821px) {
+  .app[data-panel-open='true'] .this-week {
+    display: none;
+  }
 }
 
 @media (max-width: 820px) {

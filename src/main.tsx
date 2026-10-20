@@ -10,6 +10,7 @@ import './styles/embed.css';
 import './styles/first-paint.css';
 import './styles/status.css';
 import './styles/nav.css';
+import './styles/mapstate.css';
 import './styles/frontdoor.css';
 
 installChunkReload();
