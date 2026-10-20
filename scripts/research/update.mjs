@@ -24,7 +24,6 @@ import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod';
 import { AssessmentOutputSchema, BlocReviewOutputSchema, BlocsFileSchema, ChokepointOutputSchema, ChokepointsFileSchema, ConflictsFileSchema, ElectionOutputSchema, ElectionsFileSchema, MONTH_OR_DATE, NewConflictsOutputSchema, NewUnrestOutputSchema, PARTIAL_DATE, UnrestFileSchema } from '../../src/data/schema.ts';
 import { hotSelection } from './select.mjs';
 import { clampIntensity, hostOf, isHomepage, isMaterialChange, verifySources } from '../../src/data/guards.ts';
-import { formatDate } from '../../src/lib/labels.ts';
 import { mockClient } from './mock.mjs';
 import { captureUnrest, MAX_AUTO_ADDS } from './capture.mjs';
 
@@ -209,6 +208,12 @@ async function assessConflict(conflict, kind = 'conflict') {
  * Turns the model's structured citation into the stored "Outlet: Headline (date)"
  * name the panel renders, matching the peace-process tracker.
  */
+/** "17 Oct 2026", the same style the panel prints (labels.ts is not importable from Node: it pulls in bundler-only paths). */
+function formatDate(iso) {
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  return `${Number(iso.slice(8, 10))} ${months[Number(iso.slice(5, 7)) - 1]} ${iso.slice(0, 4)}`;
+}
+
 export function citation(s) {
   const outlet = String(s.name ?? '').trim();
   const headline = String(s.headline ?? '').trim();
