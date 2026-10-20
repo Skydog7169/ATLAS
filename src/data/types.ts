@@ -1,4 +1,8 @@
-/** ISO 3166-1 alpha-3 code, e.g. "FRA". Kosovo uses the UN/World Bank "UNK". */
+/**
+ * ISO 3166-1 alpha-3 code, e.g. "FRA". Kosovo uses the user-assigned "UNK"
+ * (the World Bank uses XKX, and UNHCR uses UNK for "unknown origin"; the
+ * build scripts map or drop those).
+ */
 export type Iso3 = string;
 
 export interface Source {
@@ -14,7 +18,9 @@ export type MembershipStatus =
   | 'frozen'
   | 'partner'
   | 'observer'
-  | 'invited';
+  | 'invited'
+  /** Accession candidate (EU); not a member, never counted or summed. */
+  | 'candidate';
 
 export interface BlocMember {
   iso: Iso3;
@@ -31,7 +37,7 @@ export interface FormerMember {
   until: number;
 }
 
-export type BlocChangeKind = 'joined' | 'left' | 'suspended' | 'reinstated' | 'frozen' | 'invited' | 'founded';
+export type BlocChangeKind = 'joined' | 'left' | 'suspended' | 'reinstated' | 'frozen' | 'invited' | 'founded' | 'candidate';
 
 /** One dated membership event, used for the changes feed and the bloc panel. */
 export interface BlocChange {
@@ -120,7 +126,10 @@ export interface PeaceEvent {
 /** What the data file declares. The exported Conflict adds the derived current fields. */
 export interface ConflictInput {
   id: string;
+  /** '<Place>: <conflict noun> (<main armed actor if needed>)', e.g. 'Somalia: insurgency (al-Shabaab)'. */
   name: string;
+  /** Earlier names, kept as search aliases. */
+  aliases?: string[];
   type: ConflictType;
   /** Year the current phase began. */
   since: number;
@@ -128,6 +137,12 @@ export interface ConflictInput {
   location: [number, number];
   /** States whose territory or forces are directly involved. */
   countries: Iso3[];
+  /**
+   * The subset of `countries` on whose territory the fighting takes place.
+   * Defaults to `countries` when absent; empty for maritime flashpoints.
+   * The map tints theatre states and outlines the rest as parties abroad.
+   */
+  theatre?: Iso3[];
   parties: string[];
   summary: string;
   /** Structured parties with their outside backers. */
@@ -183,6 +198,8 @@ export interface CountryRecord {
   ccn3: string | null;
   name: string;
   official: string;
+  /** Latin-script alternative spellings from world-countries ("UAE", "Burma"), used by search. */
+  alt: string[];
   capital: string | null;
   region: string;
   subregion: string | null;

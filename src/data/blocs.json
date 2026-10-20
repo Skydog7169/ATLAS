@@ -334,12 +334,63 @@
         "iso": "SWE",
         "status": "member",
         "since": 1995
+      },
+      {
+        "iso": "ALB",
+        "status": "candidate",
+        "since": 2014
+      },
+      {
+        "iso": "BIH",
+        "status": "candidate",
+        "since": 2022
+      },
+      {
+        "iso": "GEO",
+        "status": "candidate",
+        "note": "Accession process halted by the EU since 2024",
+        "since": 2023
+      },
+      {
+        "iso": "MDA",
+        "status": "candidate",
+        "since": 2022
+      },
+      {
+        "iso": "MNE",
+        "status": "candidate",
+        "since": 2010
+      },
+      {
+        "iso": "MKD",
+        "status": "candidate",
+        "since": 2005
+      },
+      {
+        "iso": "SRB",
+        "status": "candidate",
+        "since": 2012
+      },
+      {
+        "iso": "TUR",
+        "status": "candidate",
+        "note": "Accession talks frozen since 2018",
+        "since": 1999
+      },
+      {
+        "iso": "UKR",
+        "status": "candidate",
+        "since": 2022
       }
     ],
     "sources": [
       {
         "name": "EU country profiles",
         "url": "https://european-union.europa.eu/principles-countries-history/eu-countries_en"
+      },
+      {
+        "name": "European Commission: EU enlargement",
+        "url": "https://enlargement.ec.europa.eu/enlargement-policy_en"
       }
     ],
     "updated": "2026-10",
@@ -582,17 +633,84 @@
       },
       {
         "iso": "AFG",
-        "status": "observer"
+        "status": "partner",
+        "note": "Observer until the 2025 Tianjin summit merged observer and dialogue-partner status"
       },
       {
         "iso": "MNG",
-        "status": "observer"
+        "status": "partner",
+        "note": "Observer until the 2025 Tianjin summit merged observer and dialogue-partner status"
+      },
+      {
+        "iso": "ARM",
+        "status": "partner"
+      },
+      {
+        "iso": "AZE",
+        "status": "partner"
+      },
+      {
+        "iso": "BHR",
+        "status": "partner"
+      },
+      {
+        "iso": "KHM",
+        "status": "partner"
+      },
+      {
+        "iso": "EGY",
+        "status": "partner"
+      },
+      {
+        "iso": "KWT",
+        "status": "partner"
+      },
+      {
+        "iso": "MDV",
+        "status": "partner"
+      },
+      {
+        "iso": "MMR",
+        "status": "partner"
+      },
+      {
+        "iso": "NPL",
+        "status": "partner"
+      },
+      {
+        "iso": "QAT",
+        "status": "partner"
+      },
+      {
+        "iso": "SAU",
+        "status": "partner"
+      },
+      {
+        "iso": "LKA",
+        "status": "partner"
+      },
+      {
+        "iso": "TUR",
+        "status": "partner"
+      },
+      {
+        "iso": "ARE",
+        "status": "partner"
+      },
+      {
+        "iso": "LAO",
+        "status": "partner",
+        "note": "Admitted at the 2025 Tianjin summit"
       }
     ],
     "sources": [
       {
         "name": "SCO Secretariat",
         "url": "https://eng.sectsco.org/"
+      },
+      {
+        "name": "Interfax: SCO creates single partner status at Tianjin summit (Sep 2025)",
+        "url": "https://interfax.com/newsroom/top-stories/113551/"
       }
     ],
     "updated": "2026-10",
@@ -1595,7 +1713,7 @@
     "name": "Organization of the Petroleum Exporting Countries",
     "shortName": "OPEC",
     "category": "economic",
-    "color": "#6d6875",
+    "color": "#0876be",
     "founded": 1960,
     "headquarters": "Vienna, Austria",
     "description": "Cartel of 11 oil-exporting states that coordinates production. Angola left in January 2024 and the United Arab Emirates withdrew from OPEC and OPEC+ in May 2026. The wider OPEC+ arrangement adds Russia, Kazakhstan, Mexico and others.",

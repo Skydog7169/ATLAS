@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { ramp } from '../src/lib/palette';
 
 const NATO_BLUE = '#4f7cff';
 
@@ -31,7 +32,7 @@ test('overview renders the world and passes an accessibility scan', async ({ pag
 
 test('bloc chips colour members and open the panel', async ({ page }) => {
   await open(page);
-  await page.getByRole('button', { name: 'NATO', exact: true }).click();
+  await page.getByRole('button', { name: /^NATO —/ }).click();
   await expect(page).toHaveURL(/bloc=nato/);
   await expect(page.locator('.panel h2')).toContainText('North Atlantic');
   await expect(page.locator('path.country[data-iso="FRA"]')).toHaveAttribute('fill', NATO_BLUE);
@@ -44,7 +45,7 @@ test('compare mode shows shared members with stripes', async ({ page }, testInfo
   test.skip(testInfo.project.name === 'phone', 'chip row scrolls on phones; covered on desktop');
   await open(page, '#mode=blocs&bloc=nato');
   await page.getByRole('button', { name: 'VS Compare' }).click();
-  await page.getByRole('button', { name: 'EU', exact: true }).click();
+  await page.getByRole('button', { name: /^EU —/ }).click();
   await expect(page).toHaveURL(/vs=eu/);
   await expect(page.locator('path.country[data-iso="FRA"]')).toHaveAttribute('fill', /url\(#stripes-/);
   await expect(page.locator('.panel')).toContainText('In both · 23');
@@ -53,7 +54,7 @@ test('compare mode shows shared members with stripes', async ({ page }, testInfo
 test('conflicts mode: markers, panel, timeline replay and changes feed', async ({ page }) => {
   await open(page, '#mode=conflicts');
   await expect(page.locator('g.marker')).toHaveCount(31);
-  await page.locator('g.marker[aria-label="Sudan civil war"]').click({ force: true });
+  await page.locator('g.marker[aria-label^="Sudan: civil war: "]').click({ force: true });
   await expect(page.locator('.panel h2')).toContainText('Sudan');
   await expect(page).toHaveURL(/conflict=sudan/);
   await page.locator('.panel .icon-btn[aria-label="Close panel"]').click();
@@ -87,7 +88,7 @@ test('displacement layer tints countries and explains itself', async ({ page }) 
   await page.locator('.map-controls .icon-btn[aria-label="Data layers"]').click();
   await page.locator('.layer-list button[data-layer="displacement"]').click();
   await expect(page).toHaveURL(/layer=displacement/);
-  await expect(page.locator('path.country[data-iso="SDN"]')).toHaveAttribute('fill', '#dd8bff');
+  await expect(page.locator('path.country[data-iso="SDN"]')).toHaveAttribute('fill', ramp('displacement')[5]!);
   await expect(page.locator('.legend')).toContainText('Forcibly displaced');
 });
 
@@ -234,19 +235,21 @@ test('data layers: sanctions, elections and nuclear tint the map with legends', 
   await page.locator('.map-controls .icon-btn[aria-label="Data layers"]').click();
   await page.locator('.layer-list button[data-layer="sanctions"]').click();
   await expect(page).toHaveURL(/layer=sanctions/);
-  await expect(page.locator('path.country[data-iso="RUS"]')).toHaveAttribute('fill', '#ffd166');
+  await expect(page.locator('path.country[data-iso="RUS"]')).toHaveAttribute('fill', ramp('sanctions')[4]!);
   await expect(page.locator('path.country[data-iso="FRA"]')).toHaveAttribute('fill', 'var(--land)');
   await expect(page.locator('.legend')).toContainText('Sanctions regimes');
   await expect(page.locator('.legend')).toContainText('fetched');
 
   await open(page, '#layer=elections');
   await expect(page.locator('.legend')).toContainText('Next national election');
-  await expect(page.locator('path.country[data-iso="USA"]')).toHaveAttribute('fill', /#8cff7a|#3fb04a/);
+  await expect(page.locator('path.country[data-iso="USA"]')).toHaveAttribute('fill', /--ramp-elections/);
+  expect([ramp('elections')[3], ramp('elections')[4]]).toContain(await page.locator('path.country[data-iso="USA"]').getAttribute('fill'));
 
   await open(page, '#layer=nuclear');
   await expect(page.locator('.legend')).toContainText('Nuclear-armed · 9');
-  await expect(page.locator('path.country[data-iso="CHN"]')).toHaveAttribute('fill', '#ff4fd8');
-  await expect(page.locator('path.country[data-iso="POL"]')).toHaveAttribute('fill', '#3b7dd8');
+  await expect(page.locator('path.country[data-iso="CHN"]')).toHaveAttribute('fill', '#ff8ee6');
+  // Umbrella states are hatched, so they read apart from the armed states without relying on hue.
+  await expect(page.locator('path.country[data-iso="POL"]')).toHaveAttribute('fill', 'url(#hatch-3b7dd8)');
   await expect(page.locator('path.country[data-iso="BRA"]')).toHaveAttribute('fill', 'var(--land)');
 
   // Off returns to the mode colours and clears the URL. With a layer on, the trigger names it.
@@ -283,7 +286,7 @@ test('power and trade layers: chokepoint diamonds open a panel, military and tra
 
   await open(page, '#layer=military');
   await expect(page.locator('.legend')).toContainText('Foreign military presence');
-  await expect(page.locator('path.country[data-iso="DJI"]')).toHaveAttribute('fill', '#9fc0ff');
+  await expect(page.locator('path.country[data-iso="DJI"]')).toHaveAttribute('fill', ramp('military')[4]!);
   await expect(page.locator('path.country[data-iso="BRA"]')).toHaveAttribute('fill', 'var(--land)');
 
   await open(page, '#layer=trade&country=MEX');
@@ -291,14 +294,16 @@ test('power and trade layers: chokepoint diamonds open a panel, military and tra
   await expect(page.locator('path.country[data-iso="MEX"]')).toHaveAttribute('fill', /#4f8cff/);
   await expect(panel.locator('#dossier-trade + ul')).toContainText('United States');
   await open(page, '#country=DJI');
-  await expect(panel.locator('#dossier-military')).toContainText(/Military presence · [1-9]/);
+  await expect(panel.locator('#dossier-military')).toContainText(/Foreign forces present · [1-9]/);
 });
 
 test('conflict panel shows who backs whom and the peace process; dossier lists sponsorship abroad', async ({ page }) => {
   await open(page, '#mode=conflicts&conflict=drc-east');
   const panel = page.locator('.panel');
   await expect(panel.locator('#conflict-actors')).toBeVisible();
-  await expect(panel.locator('.actors svg')).toBeVisible();
+  // The diagram is HTML: text stays at its CSS size instead of scaling with the panel.
+  await expect(panel.locator('.actors .actor-side').first()).toBeVisible();
+  expect(await panel.locator('.actors .actor-name').first().evaluate((el) => parseFloat(getComputedStyle(el).fontSize))).toBeGreaterThanOrEqual(12);
   await expect(panel.locator('.actors .actor')).not.toHaveCount(0);
   await expect(panel.locator('#conflict-peace')).toContainText(/Peace process · [1-9]/);
   await expect(panel.locator('.peace li').first()).toContainText(/Roadmap|Talks|Agreement|Ceasefire|Setback|Mediation/);
@@ -346,7 +351,7 @@ test('briefing mode hides the chrome and cycles captions; embed hides the chrome
   await expect(page.locator('.ticker')).toBeHidden();
   const card = page.getByRole('region', { name: 'Briefing' });
   await expect(card).toBeVisible();
-  await expect(card.locator('.eyebrow')).toContainText('High intensity');
+  await expect(card.locator('.eyebrow')).toContainText('Live conflict');
   await expect(card.locator('.brief-count')).toContainText(/^1 \/ \d+$/);
   await expect(page).toHaveURL(/mode=conflicts/);
   await card.getByRole('button', { name: 'Next' }).click();
@@ -454,12 +459,121 @@ test('civil unrest: layer tints and marks episodes, panel, dossier row, search a
   await noSeriousA11yIssues(page);
 });
 
+/**
+ * axe's colour-contrast rule gives up ("incomplete") on text over the HUD
+ * pseudo-elements (scanlines, corner brackets), so the default scan cannot see
+ * a contrast failure. With them stripped it can, in both themes.
+ */
+async function noContrastFailures(page: Page) {
+  await page.addStyleTag({ content: '*::before, *::after { content: none !important; } .stage::after { display: none !important; }' });
+  const results = await new AxeBuilder({ page }).withRules(['color-contrast']).analyze();
+  const nodes = results.violations.flatMap((v) => v.nodes.map((n) => `${n.target.join(' ')}: ${n.failureSummary?.split('\n').at(-1)?.trim()}`));
+  expect(nodes).toEqual([]);
+}
+
+for (const scheme of ['dark', 'light'] as const) {
+  test(`text contrast holds with the decorative layers removed (${scheme})`, async ({ page }) => {
+    await page.emulateMedia({ colorScheme: scheme });
+    await open(page, '#mode=conflicts&conflict=sudan');
+    await noContrastFailures(page);
+    await open(page, '#mode=blocs&country=UKR');
+    await noContrastFailures(page);
+    await open(page, '#layer=sanctions');
+    await noContrastFailures(page);
+  });
+}
+
+test('light theme keeps every ramp in order: the top class is the darkest', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'light' });
+  await open(page, '#layer=sanctions');
+  const lum = await page.locator('.legend .swatch').evaluateAll((els) =>
+    els.map((el) => {
+      const probe = document.createElement('canvas').getContext('2d')!;
+      probe.fillStyle = getComputedStyle(el).backgroundColor;
+      probe.fillRect(0, 0, 1, 1);
+      const [r, g, b] = probe.getImageData(0, 0, 1, 1).data;
+      return 0.2126 * r! + 0.7152 * g! + 0.0722 * b!;
+    }),
+  );
+  for (let i = 1; i < lum.length; i++) expect(lum[i]!).toBeLessThan(lum[i - 1]!);
+});
+
+test('focus is visible on chamfered chips, text buttons and pressed toggles', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'phone', 'no hardware keyboard on phones');
+  await open(page, '#mode=blocs&bloc=nato');
+  await page.mouse.move(5, 5);
+  const targets = [page.locator('.chip-row .chip[aria-pressed="true"]').first(), page.locator('.panel .text-btn').first(), page.locator('.header .segmented button[aria-pressed="true"]')];
+  for (const t of targets) {
+    await page.keyboard.press('Shift');
+    await t.evaluate((el) => (el as HTMLElement).blur());
+    const before = await t.screenshot({ animations: 'disabled' });
+    await t.focus();
+    expect(await t.evaluate((el) => el.matches(':focus-visible'))).toBe(true);
+    const after = await t.screenshot({ animations: 'disabled' });
+    expect(after.equals(before), await t.evaluate((el) => el.outerHTML.slice(0, 80))).toBe(false);
+  }
+});
+
+test('embeds default to the dark theme whatever the reader prefers, unless the link names one', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'light' });
+  await open(page, '#mode=conflicts&embed=1');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  // A different embed is a fresh page load, not a hash change within this one.
+  await page.goto('about:blank');
+  await open(page, '#mode=conflicts&embed=1&theme=light');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await expect(page).toHaveURL(/theme=light/);
+});
+
+test('markers state their intensity and the most intense come first in tab order', async ({ page }) => {
+  await open(page, '#mode=conflicts');
+  const labels = await page.locator('g.marker').evaluateAll((els) => els.map((el) => el.getAttribute('aria-label') ?? ''));
+  expect(labels[0]).toMatch(/: high intensity$/);
+  expect(labels.at(-1)).toMatch(/: (latent|low)/);
+  await expect(page.locator('.map-root svg')).toHaveAttribute('aria-roledescription', 'map');
+  await expect(page.locator('h1')).toHaveText('ATLAS geopolitical map');
+  await expect(page.locator('.legend h2.legend-title')).toHaveText('Conflict intensity');
+});
+
+test('truth: theatre fills, outlines abroad, protective sanctions, Palestine and Kosovo displacement, Greenland in NATO', async ({ page }) => {
+  await open(page, '#mode=conflicts');
+  await expect(page.locator('path.country[data-iso="UKR"]')).toHaveAttribute('fill', /color-mix/);
+  await expect(page.locator('path.country[data-iso="USA"]')).toHaveAttribute('fill', 'var(--land)');
+  await expect(page.locator('path.country[data-iso="USA"]')).toHaveAttribute('data-outline', 'true');
+  await expect(page.locator('path.country[data-iso="SAU"]')).toHaveAttribute('data-outline', 'true');
+  await expect(page.locator('.legend')).toContainText('Party to a conflict abroad');
+
+  await open(page, '#layer=sanctions');
+  await expect(page.locator('path.country[data-iso="UKR"]')).toHaveAttribute('fill', 'var(--land)');
+  await expect(page.locator('path.country[data-iso="MDA"]')).toHaveAttribute('fill', 'var(--land)');
+  await expect(page.locator('path.country[data-iso="CUB"]')).toHaveAttribute('fill', /^url\(#hatch/);
+  await open(page, '#country=UKR');
+  const panel = page.locator('.panel');
+  await expect(panel.locator('#dossier-sanctions')).toContainText('Sanctions · 0');
+  await expect(panel).toContainText('Regimes concerning this country (aimed at others) · 3');
+  await expect(panel.locator('#dossier-memberships ~ ul').first()).toContainText('Candidate');
+
+  await open(page, '#layer=displacement');
+  await expect(page.locator('path.country[data-iso="PSE"]')).toHaveAttribute('fill', /^url\(#hatch/);
+  await expect(page.locator('path.country[data-iso="UNK"]')).toHaveAttribute('fill', 'var(--land)');
+  await open(page, '#country=UNK');
+  await expect(panel).toContainText('UNHCR reports Kosovo together with Serbia');
+
+  await open(page, '#bloc=nato');
+  await expect(page.locator('path.country[data-iso="GRL"]')).toHaveAttribute('fill', NATO_BLUE);
+  await expect(page.locator('path.country[data-iso="PRI"]')).toHaveAttribute('opacity', '0.55');
+
+  await open(page, '#pair=GBR,RUS');
+  await expect(panel.locator('#pair-sanctions + p')).toContainText('Not tracked for this pair');
+  await noSeriousA11yIssues(page);
+});
+
 test('map state: the strip names every overlay, each piece clears, and Reset returns to the default map', async ({ page }) => {
   await open(page, '#mode=conflicts&t=2026-03&layer=sanctions&conflict=sudan');
   const strip = page.getByRole('navigation', { name: 'Map state' });
   // On phones the open panel covers the legend; close it to read the strip.
   if ((page.viewportSize()?.width ?? 0) <= 820) await page.getByRole('button', { name: 'Close panel' }).click();
-  else await expect(strip).toContainText('Focus: Sudan civil war');
+  else await expect(strip).toContainText(/Focus: Sudan/);
   await expect(strip).toContainText('Conflicts');
   await expect(strip).toContainText('Overlay: Sanctions');
   await expect(strip).toContainText('Replay Mar 2026');
@@ -478,7 +592,7 @@ test('map state: the legend clears a layer, and the brand mark is a true reset',
   await expect(page.locator('.legend-intensity')).toContainText('High');
   await page.locator('.legend').getByRole('button', { name: 'Clear overlay' }).click();
   await expect(page).not.toHaveURL(/layer=/);
-  await expect(page.locator('.legend h3')).toContainText('Conflict intensity');
+  await expect(page.locator('.legend .legend-title')).toContainText('Conflict intensity');
 
   await open(page, '#mode=conflicts&t=2026-03&layer=sanctions&conflict=sudan');
   await page.locator('.brand').click();
@@ -494,7 +608,7 @@ test('map state: a layer mutes the bloc chips, and picking a bloc takes the map 
     // The panel's secondary action says it will hide the layer.
     await page.getByRole('button', { name: 'Show on map (hide layer)' }).click();
   } else {
-    await page.getByRole('button', { name: 'NATO', exact: true }).click();
+    await page.getByRole('button', { name: /^NATO/ }).click();
   }
   await expect(page).not.toHaveURL(/layer=/);
   await expect(page).toHaveURL(/bloc=nato/);

@@ -10,7 +10,7 @@ const INTENSITIES: Intensity[] = ['high', 'medium', 'low', 'latent'];
 export function LegendFrame({ children }: { children: ReactNode }) {
   const { mode, layer, strip } = useContext(LegendChromeContext);
   return (
-    <aside className="legend frame" aria-label="Legend">
+    <aside className="legend" aria-label="Legend">
       {strip}
       {children}
       {/* A layer replaces the conflict fill, but the round markers keep their intensity colours. */}
@@ -35,13 +35,13 @@ export function LegendFrame({ children }: { children: ReactNode }) {
 export function LegendTitle({ children }: { children: ReactNode }) {
   const { layer, onClearLayer } = useContext(LegendChromeContext);
   return (
-    <h3>
+    <h2 className="legend-title">
       <span>{children}</span>
       {layer && onClearLayer && (
         <button type="button" className="legend-clear" aria-label="Clear overlay" title="Clear overlay" onClick={onClearLayer}>
           <Icon name="close" size={12} />
         </button>
       )}
-    </h3>
+    </h2>
   );
 }

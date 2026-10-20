@@ -33,6 +33,8 @@ export interface AppState {
   brief: boolean;
   /** Chrome-less view for iframes. */
   embed: boolean;
+  /** Embeds only: the theme the host pinned (dark when absent). Kept in the link so a reload keeps it. */
+  theme?: 'light' | 'auto';
 }
 
 export type View = 'flat' | 'globe';
@@ -59,6 +61,7 @@ export function serialize(state: AppState): string {
   }
   if (state.brief) p.set('brief', '1');
   if (state.embed) p.set('embed', '1');
+  if (state.embed && state.theme) p.set('theme', state.theme);
   if (state.selection) {
     if (state.selection.kind === 'country') p.set('country', state.selection.iso);
     else if (state.selection.kind === 'changes') p.set('changes', '1');
@@ -74,9 +77,27 @@ export function serialize(state: AppState): string {
   return '#' + p.toString();
 }
 
-export function parse(hash: string, isValid: { bloc: (id: string) => boolean; conflict: (id: string) => boolean; country: (iso: string) => boolean; chokepoint?: (id: string) => boolean; unrest?: (id: string) => boolean }): AppState {
+function embedThemeOf(p: URLSearchParams): Pick<AppState, 'theme'> {
+  const t = p.get('theme');
+  return p.get('embed') === '1' && (t === 'light' || t === 'auto') ? { theme: t } : {};
+}
+
+/** Where a link to a layer this build cannot draw lands instead: the nearest tracked view. */
+const LAYER_FALLBACK: Partial<Record<string, { layer: Layer; mode?: Mode }>> = {
+  'acled-unrest': { layer: 'unrest' },
+  acled: { layer: null, mode: 'conflicts' },
+  ucdp: { layer: null, mode: 'conflicts' },
+};
+
+export function parse(
+  hash: string,
+  isValid: { bloc: (id: string) => boolean; conflict: (id: string) => boolean; country: (iso: string) => boolean; chokepoint?: (id: string) => boolean; unrest?: (id: string) => boolean; layer?: (id: string) => boolean },
+): AppState {
   const p = new URLSearchParams(hash.replace(/^#/, ''));
-  const mode: Mode = p.get('mode') === 'conflicts' ? 'conflicts' : 'blocs';
+  const layerParam = p.get('layer');
+  // Credential-gated layers (ACLED, UCDP) may be missing from this build; never draw them as an all-zero map.
+  const fallback = layerParam && isValid.layer && !isValid.layer(layerParam) ? LAYER_FALLBACK[layerParam] : undefined;
+  const mode: Mode = fallback?.mode ?? (p.get('mode') === 'conflicts' ? 'conflicts' : 'blocs');
   const blocParam = p.get('bloc');
   const bloc = blocParam && isValid.bloc(blocParam) ? blocParam : null;
   const vsParam = p.get('vs');
@@ -84,8 +105,8 @@ export function parse(hash: string, isValid: { bloc: (id: string) => boolean; co
 
   const t = p.get('t');
   const month = t && MONTH.test(t) ? t : null;
-  const layerParam = p.get('layer');
-  const layer: Layer = (LAYERS as readonly string[]).includes(layerParam ?? '') ? (layerParam as Layer) : null;
+  const drawable = (id: string) => (LAYERS as readonly string[]).includes(id) && (!isValid.layer || isValid.layer(id));
+  const layer: Layer = layerParam && drawable(layerParam) ? (layerParam as Layer) : fallback?.layer && drawable(fallback.layer) ? fallback.layer : null;
 
   let selection: Selection = null;
   const country = p.get('country');
@@ -110,7 +131,7 @@ export function parse(hash: string, isValid: { bloc: (id: string) => boolean; co
 
   const view: View = p.get('view') === 'globe' ? 'globe' : 'flat';
   const rotation = parseRotation(p.get('rot'));
-  return { mode, bloc, vs, selection, month, layer, view, rotation, brief: p.get('brief') === '1', embed: p.get('embed') === '1' };
+  return { mode, bloc, vs, selection, month, layer, view, rotation, brief: p.get('brief') === '1', embed: p.get('embed') === '1', ...embedThemeOf(p) };
 }
 
 export function parseRotation(raw: string | null): [number, number] {

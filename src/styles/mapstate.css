@@ -84,14 +84,14 @@
 }
 
 /* ---------- legend title with a clear-overlay ✕ ---------- */
-.legend h3 {
+.legend .legend-title {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
 }
 
-.legend h3 .legend-clear {
+.legend .legend-title .legend-clear {
   margin: -4px -6px -4px 0;
 }
 
@@ -244,5 +244,10 @@
 
 .chip-row[data-suppressed] .chip .dot {
   box-shadow: none;
+  opacity: 0.5;
+}
+
+.layer-list button:disabled {
+  cursor: not-allowed;
   opacity: 0.5;
 }

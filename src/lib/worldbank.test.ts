@@ -29,5 +29,8 @@ describe('formatting', () => {
     expect(formatCount(1_420_000_000)).toBe('1.42bn');
     expect(share(25, 100)).toBe('25%');
     expect(share(2.5, 100)).toBe('2.5%');
+    expect(share(0.032, 100)).toBe('0.032%');
+    expect(share(0.004, 100)).toBe('<0.01%');
+    expect(share(0, 100)).toBe('0%');
   });
 });

@@ -1,22 +1,24 @@
 import { BLOC_BY_ID } from '../data/blocs';
-import { INTENSITY_COLOR, INTENSITY_LABEL } from '../lib/labels';
+import { INTENSITY_COLOR, INTENSITY_LABEL, conflictFill } from '../lib/labels';
+import { FAINT_FILL, NO_DATA_SWATCH, hatchSwatch } from '../lib/palette';
 import type { Intensity } from '../data/types';
 import type { Layer, Mode } from '../lib/urlState';
 import { DISPLACEMENT, DISPLACEMENT_COLORS, binLabel } from '../lib/displacement';
 import { formatDate } from '../lib/labels';
 import { SANCTIONS, SANCTIONS_COLORS, sanctionsBinLabel } from '../lib/sanctions';
 import { ELECTIONS, ELECTIONS_VERIFIED, ELECTION_COLORS, electionBinLabel } from '../lib/elections';
-import { NUCLEAR, NUCLEAR_COLOR, NUCLEAR_STATUSES, NUCLEAR_STATUS_LABEL, nuclearCount } from '../lib/nuclear';
+import { NUCLEAR, NUCLEAR_COLOR, NUCLEAR_HATCHED, NUCLEAR_STATUSES, NUCLEAR_STATUS_LABEL, nuclearCount } from '../lib/nuclear';
 import { ACLED, ACLED_COLORS, ACLED_UNREST_COLORS, acledBinLabel, acledNote } from '../lib/acled';
 import { UCDP, UCDP_COLORS, ucdpBinLabel, ucdpNote } from '../lib/ucdp';
 import { MILITARY, MILITARY_COLORS, militaryBinLabel } from '../lib/military';
-import { TRADE, TRADE_COLOR, TRADE_PARTNERS, TRADE_PARTNER_LABEL } from '../lib/trade';
-import { CHOKEPOINTS_FILE, CHOKEPOINT_COLOR, CHOKEPOINT_STATUSES, CHOKEPOINT_STATUS_LABEL } from '../lib/chokepoints';
+import { TRADE, TRADE_BAND_LABEL, TRADE_PARTNERS, TRADE_PARTNER_LABEL, tradeMix } from '../lib/trade';
+import { CHOKEPOINTS_FILE, CHOKEPOINT_COLOR, CHOKEPOINT_GLYPH, CHOKEPOINT_STATUSES, CHOKEPOINT_STATUS_LABEL } from '../lib/chokepoints';
 import { UNREST } from '../data/unrest';
 import { UNREST_COLOR, UNREST_VERIFIED } from '../lib/unrest';
 import type { ReactNode } from 'react';
 import { LegendFrame, LegendTitle } from './LegendFrame';
 import { LegendChromeContext } from './legendChrome';
+import { unrestFillColor } from '../lib/palette';
 
 interface Props {
   mode: Mode;
@@ -31,6 +33,16 @@ interface Props {
 }
 
 const INTENSITIES: Intensity[] = ['high', 'medium', 'low', 'latent'];
+
+/** The "No data" row every quantitative legend whose source can lack a country carries. */
+function NoDataRow() {
+  return (
+    <li>
+      <span className="swatch" style={{ backgroundColor: 'var(--land)', backgroundImage: NO_DATA_SWATCH }} />
+      No data
+    </li>
+  );
+}
 
 export default function Legend(props: Props) {
   const { mode, layer, onClearLayer, strip } = props;
@@ -53,9 +65,14 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer }: Props) {
               {binLabel(i)}
             </li>
           ))}
+          <li>
+            <span className="swatch" style={hatchSwatch(DISPLACEMENT_COLORS[4]!)} />
+            Known source gap (non-UNHCR figures)
+          </li>
+          <NoDataRow />
         </ul>
         <div className="note">
-          People displaced from each country: refugees, asylum seekers, IDPs and others in need of protection.{' '}
+          People displaced from each country: refugees, asylum seekers, IDPs and others in need of protection. UNHCR figures exclude Palestine refugees under UNRWA's mandate; Palestine adds UNRWA's register and is hatched. Kosovo is counted with Serbia.{' '}
           <a href={DISPLACEMENT.source.url} target="_blank" rel="noopener noreferrer">
             UNHCR
           </a>{' '}
@@ -95,20 +112,43 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer }: Props) {
     return (
       <LegendFrame>
         <LegendTitle>Export dependence</LegendTitle>
+        <table className="trade-key">
+          <thead>
+            <tr>
+              <th scope="col">Largest of</th>
+              {TRADE_BAND_LABEL.map((b) => (
+                <th key={b} scope="col">
+                  {b}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {TRADE_PARTNERS.map((p) => (
+              <tr key={p}>
+                <th scope="row">{p === 'eu' ? 'EU' : p === 'us' ? 'US' : 'China'}</th>
+                {([0, 1, 2] as const).map((band) => (
+                  <td key={band}>
+                    <span className="swatch" style={{ background: tradeMix(p, band) }} title={`${TRADE_PARTNER_LABEL[p]}, ${TRADE_BAND_LABEL[band]} of exports`} />
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
         <ul>
-          {TRADE_PARTNERS.map((p) => (
-            <li key={p}>
-              <span className="swatch" style={{ background: TRADE_COLOR[p] }} />
-              Mostly to {TRADE_PARTNER_LABEL[p]}
-            </li>
-          ))}
           <li>
-            <span className="swatch" style={{ background: 'var(--land-dim)' }} />
+            <span className="swatch" style={{ background: `repeating-linear-gradient(45deg, ${tradeMix('us', 1)} 0 4px, ${tradeMix('china', 1)} 4px 8px)` }} />
+            Near tie (within 2 points)
+          </li>
+          <li>
+            <span className="swatch" style={{ background: FAINT_FILL }} />
             None above 10%
           </li>
+          <NoDataRow />
         </ul>
         <div className="note">
-          Hue is the largest of the three export destinations; a stronger tint means a larger share (60% of exports and up reads as full colour).{' '}
+          Hue is the largest export share among the US, China and the EU; depth is the share band. EU members are tinted by the US and China only, since most of their EU share is the single market.{' '}
           <a href={TRADE.source.url} target="_blank" rel="noopener noreferrer">
             {TRADE.source.name}
           </a>
@@ -124,7 +164,7 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer }: Props) {
         <ul>
           {CHOKEPOINT_STATUSES.map((st) => (
             <li key={st}>
-              <span className="swatch diamond" style={{ background: CHOKEPOINT_COLOR[st] }} />
+              <span className={'swatch diamond glyph-' + CHOKEPOINT_GLYPH[st]} style={{ ['--glyph-color' as string]: CHOKEPOINT_COLOR[st], background: CHOKEPOINT_COLOR[st] }} />
               {CHOKEPOINT_STATUS_LABEL[st]}
             </li>
           ))}
@@ -143,6 +183,7 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer }: Props) {
           {INTENSITIES.map((i) => (
             <li key={i}>
               <span className="swatch triangle" style={{ background: UNREST_COLOR[i] }} />
+              <span className="swatch" style={{ background: unrestFillColor(i) }} aria-hidden="true" />
               {INTENSITY_LABEL[i]}
             </li>
           ))}
@@ -230,9 +271,13 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer }: Props) {
               {sanctionsBinLabel(i)}
             </li>
           ))}
+          <li>
+            <span className="swatch" style={{ background: `repeating-linear-gradient(45deg, ${SANCTIONS_COLORS[SANCTIONS_COLORS.length - 1]} 0 3px, transparent 3px 6px)` }} />
+            Comprehensive US embargo
+          </li>
         </ul>
         <div className="note">
-          Country-level regimes by the UN Security Council, the United States (OFAC) and the EU; thematic programmes against people are not counted.{' '}
+          Country-level regimes by the UN Security Council, the United States (OFAC) and the EU; thematic programmes against people are not counted, nor are regimes that protect the country they are filed under (EU measures over Crimea count against no one, not Ukraine).{' '}
           {SANCTIONS.sources.map((s, i) => (
             <span key={s.url}>
               {i > 0 ? ', ' : ''}
@@ -257,6 +302,7 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer }: Props) {
               {electionBinLabel(i)}
             </li>
           ))}
+          <NoDataRow />
         </ul>
         <div className="note">
           Next presidential or legislative vote per country. Seeded from{' '}
@@ -275,7 +321,7 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer }: Props) {
         <ul>
           {NUCLEAR_STATUSES.map((st) => (
             <li key={st}>
-              <span className="swatch" style={{ background: NUCLEAR_COLOR[st] }} />
+              <span className="swatch" style={NUCLEAR_HATCHED.has(st) ? hatchSwatch(NUCLEAR_COLOR[st]) : { background: NUCLEAR_COLOR[st] }} />
               {NUCLEAR_STATUS_LABEL[st]} · {nuclearCount(st)}
             </li>
           ))}
@@ -303,11 +349,16 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer }: Props) {
           {INTENSITIES.map((i) => (
             <li key={i}>
               <span className="swatch circle" style={{ background: INTENSITY_COLOR[i] }} />
+              <span className="swatch" style={{ background: conflictFill(i) }} aria-hidden="true" />
               {INTENSITY_LABEL[i]}
             </li>
           ))}
+          <li>
+            <span className="swatch outline" style={{ borderColor: INTENSITY_COLOR.high }} />
+            Party to a conflict abroad
+          </li>
         </ul>
-        <div className="note">Countries are tinted by the most intense conflict on their territory. Marker size follows intensity.</div>
+        <div className="note">Markers (circles) and territory (squares): countries are filled by the most intense conflict fought on their territory, deeper for more intense. A dashed outline marks a state whose forces fight only abroad. Marker size follows intensity.</div>
       </LegendFrame>
     );
   }
@@ -329,13 +380,13 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer }: Props) {
             <span className="swatch" style={{ background: b.color }} /> {b.shortName} only · {setA.size - both}
           </li>
           <li>
-            <span className="swatch" style={{ background: v.color }} /> {v.shortName} only · {setB.size - both}
+            <span className="swatch" style={hatchSwatch(v.color)} /> {v.shortName} only · {setB.size - both}
           </li>
           <li>
             <span className="swatch" style={{ background: `repeating-linear-gradient(45deg, ${b.color} 0 4px, ${v.color} 4px 8px)` }} /> Both · {both}
           </li>
         </ul>
-        <div className="note">Full members only. Open the panel for shared members and combined figures.</div>
+        <div className="note">Full members only. Open the panel for shared members, suspended states and each bloc's totals.</div>
       </LegendFrame>
     );
   }
@@ -348,9 +399,9 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer }: Props) {
           <li>
             <span className="swatch" style={{ background: b.color }} /> Member
           </li>
-          {(statuses.has('partner') || statuses.has('observer') || statuses.has('invited')) && (
+          {(statuses.has('partner') || statuses.has('observer') || statuses.has('invited') || statuses.has('candidate')) && (
             <li>
-              <span className="swatch" style={{ background: b.color, opacity: 0.45 }} /> Partner, observer or invited
+              <span className="swatch" style={{ background: b.color, opacity: 0.45 }} /> {statuses.has('candidate') ? 'Candidate' : 'Partner, observer or invited'}
             </li>
           )}
           {(statuses.has('suspended') || statuses.has('frozen')) && (

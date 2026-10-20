@@ -10,6 +10,7 @@ export interface ShareAction {
   /** Text shown in place of the label for a moment after it ran, e.g. "Link copied". */
   done?: string;
   busy?: boolean;
+  disabled?: boolean;
   /** Return false when the action failed, so no confirmation shows. */
   run: () => boolean | void | Promise<boolean | void>;
 }
@@ -87,6 +88,7 @@ export default function SharePopover({ actions }: { actions: ShareAction[] }) {
                 role="menuitem"
                 data-action={a.id}
                 data-busy={a.busy || undefined}
+                disabled={a.disabled}
                 onClick={async () => {
                   const ok = await a.run();
                   if (ok === false) return;

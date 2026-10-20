@@ -83,7 +83,7 @@ export default function AskPanel({ onClose, onOpenId }: { onClose: () => void; o
             <p>{state.body.answer}</p>
             {state.body.citations.length > 0 && (
               <>
-                <h4>Citations</h4>
+                <h3>Citations</h3>
                 <ul className="link-list">
                   {state.body.citations.map((c, i) => (
                     <li key={c.id + i}>

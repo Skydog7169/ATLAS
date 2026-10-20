@@ -2,6 +2,8 @@ import raw from '../data/nuclear.json';
 import { BLOC_BY_ID } from '../data/blocs';
 import type { DossierExtra } from './dossier';
 import { formatDate } from './labels';
+import { SOVEREIGN } from './sovereign';
+import { countryName } from './countries';
 
 export type NuclearStatus = 'armed' | 'threshold' | 'hosting' | 'umbrella';
 
@@ -38,7 +40,7 @@ export const NUCLEAR_STATUS_LABEL: Record<NuclearStatus, string> = {
 
 /** Categorical, chosen to read apart from every sequential ramp on the map. */
 export const NUCLEAR_COLOR: Record<NuclearStatus, string> = {
-  armed: '#ff4fd8',
+  armed: '#ff8ee6',
   threshold: '#ff9a2e',
   hosting: '#b47cff',
   umbrella: '#3b7dd8',
@@ -59,6 +61,16 @@ export const NUCLEAR_BY_ISO: ReadonlyMap<string, NuclearRow> = (() => {
       sources: NUCLEAR.sources.filter((s) => /nato/i.test(s.name)),
     });
   }
+  // Dependent territories drawn on their own (Greenland, Puerto Rico) are covered by their sovereign's deterrent.
+  for (const [iso, t] of Object.entries(SOVEREIGN)) {
+    if (!t.nuclear || out.has(iso) || !out.has(t.sovereign)) continue;
+    out.set(iso, {
+      iso,
+      status: 'umbrella',
+      note: `${t.label}: covered by ${countryName(t.sovereign)}'s ${out.get(t.sovereign)!.status === 'armed' ? 'own nuclear deterrent' : 'nuclear umbrella'}.`,
+      sources: out.get(t.sovereign)!.sources,
+    });
+  }
   return out;
 })();
 
@@ -67,6 +79,20 @@ export const NUCLEAR_STATUSES: NuclearStatus[] = ['armed', 'threshold', 'hosting
 export function nuclearColor(iso: string): string {
   const row = NUCLEAR_BY_ISO.get(iso);
   return row ? NUCLEAR_COLOR[row.status] : 'var(--land)';
+}
+
+/**
+ * Statuses drawn as a hatch rather than a solid. Umbrella coverage is derived
+ * from an alliance, and a hatch keeps it apart from the armed states for
+ * readers who cannot tell the hues apart.
+ */
+export const NUCLEAR_HATCHED: ReadonlySet<NuclearStatus> = new Set(['umbrella']);
+
+export function nuclearFill(iso: string): { fill: string; hatch?: string } {
+  const row = NUCLEAR_BY_ISO.get(iso);
+  if (!row) return { fill: 'var(--land)' };
+  const color = NUCLEAR_COLOR[row.status];
+  return NUCLEAR_HATCHED.has(row.status) ? { fill: color, hatch: color } : { fill: color };
 }
 
 export function nuclearCount(status: NuclearStatus): number {
