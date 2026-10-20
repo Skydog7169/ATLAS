@@ -29,6 +29,7 @@ const STATUS_DEF: Record<keyof typeof STATUS_LABEL, string> = {
   partner: 'Formal partner, associate or dialogue partner',
   observer: 'Observer status',
   invited: 'Invited to join; not yet a member',
+  candidate: 'Formal candidate for membership; not counted as a member',
 };
 
 /** About > Disputed territories. The dossier profile line links here for each entity listed. */
@@ -50,10 +51,10 @@ export default function AboutView({ onClose, closeButton, actions }: { onClose: 
   return (
     <>
       <div className="panel-head">
-        <h2>
-          <span className="eyebrow">About</span>
-          How ATLAS works
-        </h2>
+        <div className="panel-title">
+          <p className="eyebrow">About</p>
+          <h2>How ATLAS works</h2>
+        </div>
         {closeButton(onClose)}
       </div>
       <div className="panel-body about">
@@ -198,9 +199,10 @@ export default function AboutView({ onClose, closeButton, actions }: { onClose: 
 
         <h3>Caveats</h3>
         <ul className="plain">
-          <li>Conflict tinting uses the most intense conflict on a country’s territory, including conflicts where it is an external party.</li>
+          <li>Dependent territories drawn on their own take the alliances whose treaty area covers them and their sovereign’s nuclear deterrent: Greenland is shown in NATO via Denmark, while Puerto Rico and the Falklands lie outside NATO’s Article 6 area. They never inherit EU membership, trade or elections. French Guiana is part of France’s polygon.</li>
+          <li>Conflict tinting fills a country by the most intense conflict fought on its territory. States whose forces fight only abroad (the US in the Iran war, Saudi Arabia in Yemen, Rwanda in eastern DR Congo) are drawn with a dashed outline instead. Maritime flashpoints such as Hormuz and the South China Sea have no land theatre.</li>
           <li>Bloc figures count full members only and skip countries without a World Bank value; the tiles say when coverage is partial.</li>
-          <li>Displacement figures are UNHCR mid-year or end-year stocks, not flows, and lag events by months.</li>
+          <li>Displacement figures are UNHCR mid-year or end-year stocks, not flows, and lag events by months. UNHCR figures exclude Palestine refugees under UNRWA’s mandate, so Palestine adds UNRWA’s register and IDMC’s IDP estimate; UNHCR reports Kosovo together with Serbia.</li>
           <li>Older assessments (the December 2025 baseline) cite trackers’ front pages only and are marked “Baseline summary · general references only”.</li>
           <li>An assessment is a dated snapshot. Check the linked sources before relying on it.</li>
         </ul>
@@ -220,11 +222,11 @@ export default function AboutView({ onClose, closeButton, actions }: { onClose: 
         </p>
         <h3>Globe, briefing, embed and export</h3>
         <p>
-          The globe button in the map controls switches to an orthographic globe you can spin by dragging (it keeps turning briefly when released) and the centre travels in the link. The briefing button goes full screen, hides the chrome and cycles through the live high-intensity conflicts and your watchlist, nine seconds each; Space pauses, arrows step, Escape exits. Add <span className="mono">embed=1</span> to any link to get a chrome-less view for an iframe, and the download button saves the map you are looking at as a PNG with its legend and a date stamp.
+          The globe button in the map controls switches to an orthographic globe you can spin by dragging (it keeps turning briefly when released) and the centre travels in the link. The briefing button goes full screen, hides the chrome and cycles through the live high-intensity conflicts and your watchlist, nine seconds each; Space pauses, arrows step, Escape exits. Add <span className="mono">embed=1</span> to any link to get a chrome-less view for an iframe (dark unless the link also says <span className="mono">theme=light</span> or <span className="mono">theme=auto</span>), and the download button saves the map you are looking at as a PNG with its legend and a date stamp.
         </p>
         <h3>Analysis</h3>
         <p>
-          Any country dossier offers “Relationship with…”: pick a second country to see shared blocs, the conflicts that link them, sanctions one applies to the other, forces either keeps in the other, and each side’s export share to the other. Bloc panels chart membership and combined GDP since 1990 from accession years and World Bank data.
+          Any country dossier offers “Relationship with…”: pick a second country to see shared blocs, the conflicts that link them, US and EU sanctions either side applies to the other (other national sanctions and countersanctions are not tracked), forces either keeps in the other, and each side’s export share to the other. Bloc panels chart membership and combined GDP since 1990 from accession years and World Bank data.
           {ASK_ENABLED ? ' Ask ATLAS answers questions strictly from this dataset with citations; it is rate-limited and capped per day.' : ''}
         </p>
         <h3>Keyboard</h3>

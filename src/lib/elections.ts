@@ -1,4 +1,5 @@
 import raw from '../data/elections.json';
+import { NO_DATA_FILL, ramp } from './palette';
 import type { DossierExtra } from './dossier';
 import { formatDate, formatMonth } from './labels';
 
@@ -9,6 +10,7 @@ export interface ElectionRow {
   /** YYYY, YYYY-MM or YYYY-MM-DD; null when nothing is scheduled. */
   date: string | null;
   type: ElectionType;
+  qualifiers?: Array<'indirect' | 'non-competitive'>;
   deadline?: boolean;
   note?: string;
   sources: Array<{ name: string; url: string }>;
@@ -39,7 +41,7 @@ export function monthsUntil(date: string, now: Date = new Date()): number {
 /** Upper bounds (exclusive) of each bin in months; the last bin is open-ended, and null-date countries sit in bin 0. */
 export const ELECTION_BINS = [3, 6, 12, 24] as const;
 /** Green ramp, brightest for the soonest. Bin 0 is "no date". */
-export const ELECTION_COLORS = ['var(--land)', '#2a4a2a', '#2f7a3a', '#3fb04a', '#8cff7a'] as const;
+export const ELECTION_COLORS = ramp('elections');
 
 export function electionBin(months: number | null): number {
   if (months === null || months < 0) return 0;
@@ -52,13 +54,15 @@ export function electionBinLabel(i: number): string {
   const idx = ELECTION_BINS.length - i;
   const hi = ELECTION_BINS[idx]!;
   const lo = ELECTION_BINS[idx - 1];
-  if (i === 1) return `${hi}+ months away`;
+  // The open-ended bin starts at the previous bound: everything 12 months or more away.
+  if (i === 1) return `${ELECTION_BINS[ELECTION_BINS.length - 2]}+ months away`;
   return lo === undefined ? `Within ${hi} months` : `${lo}–${hi} months`;
 }
 
 export function electionColor(iso: string, now: Date = new Date()): string {
   const row = ELECTIONS_BY_ISO.get(iso);
-  const months = row?.date ? monthsUntil(row.date, now) : null;
+  if (!row) return NO_DATA_FILL;
+  const months = row.date ? monthsUntil(row.date, now) : null;
   return ELECTION_COLORS[electionBin(months)] ?? 'var(--land)';
 }
 
@@ -67,6 +71,23 @@ export function formatElectionDate(row: ElectionRow): string {
   if (!row.date) return 'No date set';
   const text = row.date.length === 10 ? formatDate(row.date) : row.date.length === 7 ? formatMonth(row.date) : row.date;
   return row.deadline ? `by ${text}` : text;
+}
+
+/** "Legislative election (indirect, non-competitive)". */
+export function electionTypeLabel(row: ElectionRow): string {
+  return ELECTION_TYPE_LABEL[row.type] + (row.qualifiers?.length ? ` (${row.qualifiers.join(', ')})` : '');
+}
+
+/**
+ * Whole months to a partial date, measured to the end of its period when
+ * asking whether it has passed: "2026" is not passed until 2027.
+ */
+export function monthsUntilForLabel(date: string, now: Date = new Date()): number {
+  const months = monthsUntil(date, now);
+  if (months >= 0 || date.length === 10) return months;
+  const [y, m] = date.split('-').map(Number) as [number, number?];
+  const end = m ? Date.UTC(y, m, 1) : Date.UTC(y + 1, 0, 1);
+  return end > now.getTime() ? 0 : months;
 }
 
 export function monthsLabel(months: number): string {
@@ -78,8 +99,8 @@ export function monthsLabel(months: number): string {
 export function electionSummary(iso: string, now: Date = new Date()): string | null {
   const row = ELECTIONS_BY_ISO.get(iso);
   if (!row) return null;
-  if (!row.date) return `${ELECTION_TYPE_LABEL[row.type]}: no date set`;
-  return `${ELECTION_TYPE_LABEL[row.type]} ${formatElectionDate(row)} (${monthsLabel(monthsUntil(row.date, now))})`;
+  if (!row.date) return `${electionTypeLabel(row)}: ${row.note ?? 'no date set'}`;
+  return `${electionTypeLabel(row)} ${formatElectionDate(row)} (${monthsLabel(monthsUntilForLabel(row.date, now))})`;
 }
 
 export function electionsDossier(iso: string, now: Date = new Date()): DossierExtra | null {
@@ -87,7 +108,9 @@ export function electionsDossier(iso: string, now: Date = new Date()): DossierEx
   const rows: DossierExtra['rows'] = [];
   if (row) {
     const first = row.sources[0];
-    rows.push({ label: ELECTION_TYPE_LABEL[row.type], value: row.date ? `${formatElectionDate(row)} · ${monthsLabel(monthsUntil(row.date, now))}` : 'No date set', href: first?.url, note: row.note });
+    const value = row.date ? `${formatElectionDate(row)} · ${monthsLabel(monthsUntilForLabel(row.date, now))}` : 'No date set';
+    // A note that only repeats the value ('No date set') is dropped.
+    rows.push({ label: electionTypeLabel(row), value, href: first?.url, note: row.note && row.note !== value ? row.note : undefined });
   }
   return {
     id: 'elections',

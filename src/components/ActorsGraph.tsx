@@ -1,5 +1,5 @@
-import type { Backer, Conflict } from '../data/types';
-import { SUPPORT_LABEL, basisWord, isMediator, sides, supportLabel } from '../lib/actors';
+import type { Conflict } from '../data/types';
+import { isMediator, sides, supportLabel } from '../lib/actors';
 import { countryName } from '../lib/countries';
 
 interface Props {
@@ -7,90 +7,58 @@ interface Props {
   onSelectCountry: (iso: string) => void;
 }
 
-const COL_W = 170;
-const ROW_H = 34;
-const BACKER_H = 20;
-/** A hedged backer gets a second line for 'reportedly' or 'alleged' so the hedge is never truncated away. */
-const backerH = (b: Backer) => (basisWord(b) ? BACKER_H + 12 : BACKER_H);
-const GAP = 14;
-const PAD = 6;
-
 /**
- * Who-backs-whom diagram: one column per side, an actor box per party, and
- * its outside backers stacked beneath with a connector. Pure SVG sized by
- * viewBox so it scales to the panel width on phones. Everything drawn here is
- * also listed as text below the diagram for screen readers.
+ * Who-backs-whom diagram: one column per side, a card per party, and its
+ * outside backers beneath it. Plain HTML in a CSS grid, so text stays at its
+ * stylesheet size on every screen: columns wrap (four sides become 2×2 on a
+ * phone) instead of the whole drawing shrinking, and names wrap instead of
+ * being cut at a character count. Backers with a country open its dossier.
  */
 export default function ActorsGraph({ conflict, onSelectCountry }: Props) {
   const cols = sides(conflict);
   if (cols.length === 0) return null;
-  const colHeight = (c: (typeof cols)[number]) => c.actors.reduce((h, a) => h + ROW_H + (a.backers ?? []).reduce((sum, b) => sum + backerH(b), 0) + GAP, 0);
-  const height = Math.max(...cols.map(colHeight)) + 24;
-  const width = cols.length * (COL_W + GAP) - GAP;
-  const truncate = (s: string, n: number) => (s.length > n ? s.slice(0, n - 1).trimEnd() + '…' : s);
   return (
-    <figure className="actors">
-      <svg viewBox={`0 0 ${width} ${height}`} width="100%" role="group" aria-label={`Parties to ${conflict.name} and their backers`}>
-        {cols.map((col, ci) => {
-          const x = ci * (COL_W + GAP);
-          let y = 18;
-          return (
-            <g key={col.side}>
-              <text x={x} y={10} className="side">
-                {truncate(col.side.toUpperCase(), 22)}
-              </text>
-              {col.actors.map((a) => {
-                const top = y;
-                const backers = a.backers ?? [];
-                y += ROW_H + backers.reduce((sum, b) => sum + backerH(b), 0) + GAP;
-                const mediator = isMediator(col);
-                return (
-                  <g key={a.id}>
-                    <rect x={x} y={top} width={COL_W} height={ROW_H - 6} className={`actor actor-${a.type}${mediator ? ' mediator' : ''}`} />
-                    <text x={x + PAD} y={top + 12} className="actor-name">
-                      {truncate(a.name, 24)}
-                    </text>
-                    <text x={x + PAD} y={top + 23} className="actor-type">
-                      {a.type.replace('-', ' ')}
-                    </text>
-                    {backers.map((b, bi) => {
-                      const by = top + ROW_H + backers.slice(0, bi).reduce((sum, x) => sum + backerH(x), 0);
-                      // Mediators broker talks; their sponsors are not "backing" a party.
-                      const label = `${b.iso ? countryName(b.iso) : b.name} · ${mediator ? 'mediating' : SUPPORT_LABEL[b.support].toLowerCase()}`;
-                      const hedge = mediator ? '' : basisWord(b);
-                      return (
-                        <g
-                          key={b.name + b.support}
-                          className={b.iso ? 'backer clickable' : 'backer'}
-                          onClick={b.iso ? () => onSelectCountry(b.iso!) : undefined}
-                          tabIndex={b.iso ? 0 : undefined}
-                          role={b.iso ? 'button' : undefined}
-                          aria-label={b.iso ? `${countryName(b.iso)}: ${mediator ? 'mediating' : supportLabel(b)} for ${a.name}` : undefined}
-                          onKeyDown={b.iso ? (e) => (e.key === 'Enter' || e.key === ' ') && onSelectCountry(b.iso!) : undefined}
-                        >
-                          <path d={`M${x + 10} ${top + ROW_H - 6} V${by + 9} H${x + 18}`} className="link" />
-                          <text x={x + 22} y={by + 12} className="backer-name">
-                            <title>{hedge ? `${label} (${hedge})` : label}</title>
-                            {truncate(label, 30)}
-                          </text>
-                          {hedge && (
-                            <text x={x + 22} y={by + 24} className="backer-name backer-hedge">
-                              ({hedge})
-                            </text>
-                          )}
-                        </g>
-                      );
-                    })}
-                  </g>
-                );
-              })}
-            </g>
-          );
-        })}
-      </svg>
-      <figcaption className="sr-only">
-        {cols.map((col) => `${col.side}: ${col.actors.map((a) => `${a.name}${a.backers?.length ? ` (backed by ${a.backers.map((b) => `${b.iso ? countryName(b.iso) : b.name}, ${supportLabel(b).toLowerCase()}`).join('; ')})` : ''}`).join(', ')}`).join('. ')}
-      </figcaption>
-    </figure>
+    <div className="actors" role="group" aria-label={`Parties to ${conflict.name} and their backers`}>
+      {cols.map((col) => {
+        const mediator = isMediator(col);
+        return (
+          <section key={col.side} className="actor-side">
+            <h4 className="side">{col.side}</h4>
+            <ul>
+              {col.actors.map((a) => (
+                <li key={a.id} className={`actor actor-${a.type}${mediator ? ' mediator' : ''}`}>
+                  <span className="actor-name">{a.name}</span>
+                  <span className="actor-type">{a.type.replace('-', ' ')}</span>
+                  {a.backers && a.backers.length > 0 && (
+                    <ul className="backers" aria-label={`Backers of ${a.name}`}>
+                      {a.backers.map((b) => {
+                        const name = b.iso ? countryName(b.iso) : b.name;
+                        // Mediators broker talks; their sponsors are not "backing" a party. Hedged support says so.
+                        const support = mediator ? 'mediating' : supportLabel(b).toLowerCase();
+                        return (
+                          <li key={b.name + b.support}>
+                            {b.iso ? (
+                              <button type="button" className="backer clickable" onClick={() => onSelectCountry(b.iso!)} aria-label={`${name}: ${mediator ? 'mediating' : supportLabel(b)} for ${a.name}. Open dossier`}>
+                                <span className="backer-name">{name}</span>
+                                <span className="backer-support">{support}</span>
+                              </button>
+                            ) : (
+                              <span className="backer">
+                                <span className="backer-name">{name}</span>
+                                <span className="backer-support">{support}</span>
+                              </span>
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })}
+    </div>
   );
 }

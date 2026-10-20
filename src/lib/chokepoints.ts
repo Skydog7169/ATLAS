@@ -50,6 +50,15 @@ export const CHOKEPOINT_COLOR: Record<ChokepointStatus, string> = {
 
 export const CHOKEPOINT_STATUSES: ChokepointStatus[] = ['open', 'recovering', 'restricted', 'disrupted', 'closed'];
 
+/** Glyph per status, so the map does not rely on the green-to-red hue alone. */
+export const CHOKEPOINT_GLYPH: Record<ChokepointStatus, 'outline' | 'half' | 'cross'> = {
+  open: 'outline',
+  recovering: 'outline',
+  restricted: 'half',
+  disrupted: 'half',
+  closed: 'cross',
+};
+
 export function currentStatus(c: Chokepoint): ChokepointEntry {
   return c.history[0]!;
 }

@@ -66,10 +66,13 @@ export function buildRows(year, usChn, eu, world) {
 
 const round = (x) => Math.round(Math.min(1, Math.max(0, x)) * 1000) / 1000;
 
+/** Partners below this share round to 0.000 and are padding, not destinations. */
+export const MIN_PARTNER_SHARE = 0.0005;
+
 /** One reporter's partner shares, largest first, limited to TOP_PARTNERS real countries. Exported for tests. */
 export function topPartners(partners, total, limit = TOP_PARTNERS) {
   const out = [];
-  for (const [iso, value] of partners) if (KNOWN.has(iso) && iso !== 'WLD' && value > 0) out.push({ iso, share: round(value / total) });
+  for (const [iso, value] of partners) if (KNOWN.has(iso) && iso !== 'WLD' && value / total >= MIN_PARTNER_SHARE) out.push({ iso, share: round(value / total) });
   return out.sort((a, b) => b.share - a.share).slice(0, limit);
 }
 

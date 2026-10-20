@@ -1,4 +1,5 @@
 import raw from '../data/displacement.generated.json';
+import { NO_DATA_FILL, ramp } from './palette';
 
 export interface DisplacementRow {
   iso: string;
@@ -6,7 +7,13 @@ export interface DisplacementRow {
   asylumSeekers: number;
   idps: number;
   oip: number;
+  /** UNHCR's own total: refugees + asylum seekers + IDPs + others in need. */
   total: number;
+  /**
+   * Known source gap: figures outside UNHCR's mandate, published alongside
+   * its own (UNRWA-registered Palestine refugees, IDMC internal displacement).
+   */
+  supplement?: { unrwaRefugees: number; idps: number; year: number; sources: Array<{ name: string; url: string }> };
 }
 
 interface DisplacementFile {
@@ -23,7 +30,7 @@ export const DISPLACEMENT_BY_ISO: ReadonlyMap<string, DisplacementRow> = new Map
 export const DISPLACEMENT_BINS = [0, 100_000, 500_000, 1_000_000, 3_000_000, 6_000_000] as const;
 
 /** Sequential violet ramp, kept distinct from the red/orange conflict scale and the cyan bloc scale. */
-export const DISPLACEMENT_COLORS = ['var(--land)', '#2b2150', '#4a2f86', '#7142bf', '#a35be6', '#dd8bff'] as const;
+export const DISPLACEMENT_COLORS = ramp('displacement');
 
 export function displacementBin(total: number): number {
   let bin = 0;
@@ -31,9 +38,42 @@ export function displacementBin(total: number): number {
   return total <= 0 ? 0 : bin;
 }
 
+/**
+ * People displaced from the country, adding UNRWA-registered refugees where
+ * UNHCR's mandate leaves them out. IDMC's IDP estimate is not added: many of
+ * Gaza's displaced are themselves registered refugees.
+ */
+export function displacementTotal(row: DisplacementRow): number {
+  return row.total + (row.supplement?.unrwaRefugees ?? 0);
+}
+
 export function displacementColor(iso: string): string {
   const row = DISPLACEMENT_BY_ISO.get(iso);
-  return DISPLACEMENT_COLORS[displacementBin(row?.total ?? 0)] ?? 'var(--land)';
+  // Kosovo is counted inside Serbia's figure, so it is not missing data.
+  if (!row) return REPORTED_WITH[iso] ? 'var(--land)' : NO_DATA_FILL;
+  return DISPLACEMENT_COLORS[displacementBin(displacementTotal(row))] ?? 'var(--land)';
+}
+
+/** Map fill; a known source gap (figures from outside UNHCR) is drawn hatched. */
+export function displacementFill(iso: string): { fill: string; hatch?: string } {
+  const fill = displacementColor(iso);
+  return DISPLACEMENT_BY_ISO.get(iso)?.supplement ? { fill, hatch: fill } : { fill };
+}
+
+/**
+ * Kosovo has no row of its own: UNHCR reports it inside Serbia (S/RES/1244),
+ * and its 'UNK' code means 'unknown origin', which the build drops.
+ */
+export const REPORTED_WITH: Readonly<Record<string, { iso: string; note: string }>> = {
+  UNK: { iso: 'SRB', note: 'UNHCR reports Kosovo together with Serbia (UNSCR 1244).' },
+};
+
+/** Tooltip line for the displacement layer. */
+export function displacementSummary(iso: string): string {
+  const row = DISPLACEMENT_BY_ISO.get(iso);
+  if (!row) return REPORTED_WITH[iso]?.note ?? 'No UNHCR displacement figure';
+  if (row.supplement) return `${formatPeople(displacementTotal(row))} displaced incl. ${formatPeople(row.supplement.unrwaRefugees)} UNRWA refugees · ${formatPeople(row.supplement.idps)} IDPs (IDMC) · UNHCR alone ${formatPeople(row.total)}`;
+  return `${formatPeople(row.total)} displaced · ${formatPeople(row.refugees)} refugees · ${formatPeople(row.idps)} IDPs`;
 }
 
 export function formatPeople(n: number): string {

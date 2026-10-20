@@ -3,6 +3,7 @@ import { UNREST, unrestForCountry } from '../data/unrest';
 import type { Intensity, UnrestKind } from '../data/types';
 import type { DossierExtra } from './dossier';
 import { UNREST_INTENSITY_LABEL, formatDate, formatMonth } from './labels';
+import { unrestFillColor } from './palette';
 
 export const UNREST_KIND_LABEL: Record<UnrestKind, string> = {
   protests: 'Protest movement',
@@ -35,11 +36,10 @@ export function maxUnrestIntensity(iso: string): Intensity | null {
   return best;
 }
 
+/** Country tint: a lightness ramp of one violet (palette.ts), so intensity reads without hue. */
 export function unrestColor(iso: string): string {
   const i = maxUnrestIntensity(iso);
-  if (!i) return 'var(--land)';
-  const pct = i === 'high' ? 60 : i === 'medium' ? 45 : i === 'low' ? 32 : 22;
-  return `color-mix(in srgb, ${UNREST_COLOR[i]} ${pct}%, var(--land))`;
+  return i ? unrestFillColor(i) : 'var(--land)';
 }
 
 export function unrestSummary(iso: string): string | null {
@@ -56,7 +56,8 @@ export function unrestDossier(iso: string): DossierExtra | null {
     title: 'Civil unrest',
     rows: list.map((u) => ({
       label: u.name,
-      value: `${UNREST_KIND_LABEL[u.kind]} · ${UNREST_INTENSITY_LABEL[u.intensity]}`,
+      value: UNREST_KIND_LABEL[u.kind],
+      intensity: u.intensity,
       note: `Since ${formatMonth(u.since)} · updated ${formatDate(u.updated)}`,
       unrestId: u.id,
     })),

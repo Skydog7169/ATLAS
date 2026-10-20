@@ -425,14 +425,23 @@
     {
       "iso": "CHN",
       "date": "2028-03",
-      "type": "general",
+      "type": "legislative",
+      "qualifiers": [
+        "indirect",
+        "non-competitive"
+      ],
       "sources": [
         {
           "name": "Wikipedia: List of next general elections",
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
+        },
+        {
+          "name": "Freedom House: Freedom in the World 2025, China",
+          "url": "https://freedomhouse.org/country/china/freedom-world/2025"
         }
       ],
-      "verified": "2026-10-08"
+      "verified": "2026-10-08",
+      "note": "National People’s Congress, elected by provincial congresses"
     },
     {
       "iso": "CIV",
@@ -551,10 +560,17 @@
       "iso": "CUB",
       "date": "2028-03",
       "type": "legislative",
+      "qualifiers": [
+        "non-competitive"
+      ],
       "sources": [
         {
           "name": "Wikipedia: List of next general elections",
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
+        },
+        {
+          "name": "Freedom House: Freedom in the World 2025, Cuba",
+          "url": "https://freedomhouse.org/country/cuba/freedom-world/2025"
         }
       ],
       "verified": "2026-10-08"
@@ -671,18 +687,6 @@
       "iso": "EGY",
       "date": "2029-12",
       "type": "presidential",
-      "sources": [
-        {
-          "name": "Wikipedia: List of next general elections",
-          "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
-        }
-      ],
-      "verified": "2026-10-08"
-    },
-    {
-      "iso": "ESH",
-      "date": "2026",
-      "type": "general",
       "sources": [
         {
           "name": "Wikipedia: List of next general elections",
@@ -1224,10 +1228,17 @@
       "iso": "LAO",
       "date": "2031-02",
       "type": "legislative",
+      "qualifiers": [
+        "non-competitive"
+      ],
       "sources": [
         {
           "name": "Wikipedia: List of next general elections",
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
+        },
+        {
+          "name": "Freedom House: Freedom in the World 2025, Laos",
+          "url": "https://freedomhouse.org/country/laos/freedom-world/2025"
         }
       ],
       "verified": "2026-10-08"
@@ -1790,10 +1801,17 @@
       "iso": "PRK",
       "date": "2031-03",
       "type": "legislative",
+      "qualifiers": [
+        "non-competitive"
+      ],
       "sources": [
         {
           "name": "Wikipedia: List of next general elections",
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
+        },
+        {
+          "name": "Freedom House: Freedom in the World 2025, North Korea",
+          "url": "https://freedomhouse.org/country/north-korea/freedom-world/2025"
         }
       ],
       "verified": "2026-10-08"
@@ -2273,7 +2291,7 @@
       "iso": "UKR",
       "date": null,
       "type": "general",
-      "note": "No date set",
+      "note": "Elections suspended under martial law since February 2022",
       "sources": [
         {
           "name": "Wikipedia: List of next general elections",
@@ -2371,10 +2389,17 @@
       "iso": "VNM",
       "date": "2031-03",
       "type": "legislative",
+      "qualifiers": [
+        "non-competitive"
+      ],
       "sources": [
         {
           "name": "Wikipedia: List of next general elections",
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
+        },
+        {
+          "name": "Freedom House: Freedom in the World 2025, Vietnam",
+          "url": "https://freedomhouse.org/country/vietnam/freedom-world/2025"
         }
       ],
       "verified": "2026-10-08"

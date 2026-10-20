@@ -100,9 +100,9 @@ export function LatestBlock({ entry, unrest, replay }: { entry: HistoryEntry; un
   const label = unrest ? UNREST_INTENSITY_LABEL[entry.intensity] : INTENSITY_LABEL[entry.intensity];
   return (
     <section className="latest" aria-labelledby="latest-title">
-      <h4 id="latest-title">
+      <h3 id="latest-title">
         {replay ? 'Assessment in force' : 'Latest'} · {formatDate(entry.date)}
-      </h4>
+      </h3>
       <p className="latest-meta">
         <span className="dot" style={{ background: unrest ? UNREST_COLOR[entry.intensity] : INTENSITY_COLOR[entry.intensity] }} aria-hidden="true" />
         {label}

@@ -14,7 +14,8 @@ export const FROM = 1990;
 export function tabulate(rows, from = FROM, to = new Date().getFullYear()) {
   const out = {};
   for (const r of rows ?? []) {
-    const iso = r.countryiso3code;
+    // The World Bank codes Kosovo XKX; ATLAS uses UNK.
+    const iso = r.countryiso3code === 'XKX' ? 'UNK' : r.countryiso3code;
     const year = Number(r.date);
     if (!/^[A-Z]{3}$/.test(iso) || !KNOWN.has(iso) || year < from || year > to) continue;
     out[iso] ??= Array(to - from + 1).fill(null);

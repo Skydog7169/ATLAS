@@ -4,7 +4,7 @@
   "url": "https://www.unhcr.org/refugee-statistics/"
  },
  "year": 2025,
- "fetchedAt": "2026-10-07",
+ "fetchedAt": "2026-10-20",
  "rows": [
   {
    "iso": "SDN",
@@ -125,14 +125,6 @@
    "idps": 1430903,
    "oip": 0,
    "total": 1847923
-  },
-  {
-   "iso": "UNK",
-   "refugees": 126784,
-   "asylumSeekers": 1572774,
-   "idps": 0,
-   "oip": 103809,
-   "total": 1803367
   },
   {
    "iso": "IRQ",
@@ -444,7 +436,22 @@
    "asylumSeekers": 16726,
    "idps": 0,
    "oip": 0,
-   "total": 65049
+   "total": 65049,
+   "supplement": {
+    "unrwaRefugees": 5964782,
+    "idps": 2035000,
+    "year": 2025,
+    "sources": [
+     {
+      "name": "UNRWA registered Palestine refugees (via UNHCR Refugee Data Finder)",
+      "url": "https://www.unrwa.org/palestine-refugees"
+     },
+     {
+      "name": "IDMC internal displacement (via UNHCR Refugee Data Finder)",
+      "url": "https://www.internal-displacement.org/countries/palestine/"
+     }
+    ]
+   }
   },
   {
    "iso": "CIV",
@@ -485,14 +492,6 @@
    "idps": 0,
    "oip": 0,
    "total": 39889
-  },
-  {
-   "iso": "XXA",
-   "refugees": 34736,
-   "asylumSeekers": 3934,
-   "idps": 0,
-   "oip": 0,
-   "total": 38670
   },
   {
    "iso": "GHA",
@@ -677,14 +676,6 @@
    "idps": 0,
    "oip": 0,
    "total": 13005
-  },
-  {
-   "iso": "TIB",
-   "refugees": 12581,
-   "asylumSeekers": 0,
-   "idps": 0,
-   "oip": 0,
-   "total": 12581
   },
   {
    "iso": "KGZ",

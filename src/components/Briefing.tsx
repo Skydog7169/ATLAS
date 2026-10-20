@@ -22,6 +22,8 @@ interface Props {
   onShow: (item: BriefItem) => void;
   onOpen: (item: BriefItem) => void;
   onExit: () => void;
+  /** "Data as of …" line for wall displays, so an old edition is visible as such. */
+  asOf?: string;
 }
 
 /**
@@ -29,7 +31,7 @@ interface Props {
  * each and showing a caption. Space pauses, arrows step, Escape exits.
  * Requests browser full screen when available; failures are ignored.
  */
-export default function Briefing({ items, intervalMs = 9000, onShow, onOpen, onExit }: Props) {
+export default function Briefing({ items, intervalMs = 9000, onShow, onOpen, onExit, asOf }: Props) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const onShowRef = useRef(onShow);
@@ -85,6 +87,7 @@ export default function Briefing({ items, intervalMs = 9000, onShow, onOpen, onE
           {item.eyebrow}
         </span>
         <Clock live={Date.now() - Date.parse(DATA_ASOF + 'T00:00:00Z') < 86400000 * 1.5} />
+        {asOf && <span className="brief-asof mono">{asOf}</span>}
         <span className="brief-count mono">
           {index + 1} / {items.length}
         </span>

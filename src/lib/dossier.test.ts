@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { COUNTRIES } from './countries';
-import { CHANGES_SHOWN, DOSSIER_PROVIDERS, countryDossier, profileLine } from './dossier';
+import { CHANGES_SHOWN, DOSSIER_PROVIDERS, conflictBadges, countryDossier, notMemberOf, profileLine } from './dossier';
 
 describe('country dossier', () => {
   it('exists for every country with at least four sections', () => {
@@ -74,10 +74,26 @@ describe('country dossier', () => {
     expect(line('PSE')).toMatch(/UN non-member observer state$/);
     expect(line('PSE')).toContain('Administrative seat: Ramallah (claims East Jerusalem)');
     expect(line('UNK')).toMatch(/Partially recognised/);
-    expect(line('ESH')).toMatch(/^Western Sahara · /);
+    expect(line('ESH')).toMatch(/^Largest city: El Aaiún/);
     expect(line('ESH')).not.toContain('Sahrawi Arab Democratic Republic');
     expect(line('ISR')).toContain('status disputed');
     for (const iso of ['TWN', 'PSE', 'UNK', 'ESH']) expect(line(iso)).not.toMatch(/Territory$/);
     expect(line('PRI')).toMatch(/Territory$/);
+  });
+});
+
+describe('headline bloc gaps and conflict badges', () => {
+  it('names the headline blocs a country has no tie to, leaving out its candidacies', () => {
+    expect(notMemberOf('UKR')).toEqual(['NATO', 'BRICS', 'SCO', 'G7']);
+    expect(notMemberOf('FRA')).toEqual(['BRICS', 'SCO']);
+  });
+
+  it('separates a conflict at home from one fought abroad', () => {
+    expect(conflictBadges('USA', countryDossier('USA')!.conflicts).map((b) => b.label)).toEqual(['Party abroad']);
+    expect(conflictBadges('UKR', countryDossier('UKR')!.conflicts)[0]).toEqual({ label: 'Conflict at home', intensity: 'high' });
+  });
+
+  it('skips an official name that repeats the short name', () => {
+    expect(profileLine(countryDossier('UKR')!.country)).toBe('Capital: Kyiv · UN member');
   });
 });

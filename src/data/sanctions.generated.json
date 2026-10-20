@@ -13,7 +13,7 @@
    "url": "https://main.un.org/securitycouncil/en/sanctions/information"
   }
  ],
- "fetchedAt": "2026-10-08",
+ "fetchedAt": "2026-10-20",
  "unmapped": [],
  "unReview": [
   "SYR"
@@ -36,11 +36,13 @@
   },
   {
    "iso": "ALB",
-   "regimes": [
+   "regimes": [],
+   "concerns": [
     {
      "authority": "US",
      "name": "Balkans-Related Sanctions",
-     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/balkans-related-sanctions"
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/balkans-related-sanctions",
+     "aimedAt": "Aimed at those undermining stability and the Dayton and Ohrid agreements in the Western Balkans"
     }
    ]
   },
@@ -56,16 +58,19 @@
   },
   {
    "iso": "BIH",
-   "regimes": [
+   "regimes": [],
+   "concerns": [
     {
      "authority": "US",
      "name": "Balkans-Related Sanctions",
-     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/balkans-related-sanctions"
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/balkans-related-sanctions",
+     "aimedAt": "Aimed at those undermining stability and the Dayton and Ohrid agreements in the Western Balkans"
     },
     {
      "authority": "EU",
      "name": "Restrictive measures in view of the situation in Bosnia and Herzegovina",
-     "url": "https://www.sanctionsmap.eu/#/main/details/4/"
+     "url": "https://www.sanctionsmap.eu/#/main/details/4/",
+     "aimedAt": "Aimed at those undermining the Dayton agreement and the state of Bosnia and Herzegovina"
     }
    ]
   },
@@ -171,11 +176,13 @@
   },
   {
    "iso": "GTM",
-   "regimes": [
+   "regimes": [],
+   "concerns": [
     {
      "authority": "EU",
      "name": "Restrictive measures in view of the situation in Guatemala",
-     "url": "https://www.sanctionsmap.eu/#/main/details/59/"
+     "url": "https://www.sanctionsmap.eu/#/main/details/59/",
+     "aimedAt": "Aimed at those obstructing Guatemala's democratic transition"
     }
    ]
   },
@@ -291,26 +298,31 @@
   },
   {
    "iso": "MDA",
-   "regimes": [
+   "regimes": [],
+   "concerns": [
     {
      "authority": "EU",
      "name": "Restrictive measures in relation to the campaign against Latinscript schools in the Transnistrian region",
-     "url": "https://www.sanctionsmap.eu/#/main/details/25/"
+     "url": "https://www.sanctionsmap.eu/#/main/details/25/",
+     "aimedAt": "Aimed at Transnistrian separatist officials"
     },
     {
      "authority": "EU",
      "name": "Restrictive measures in view of actions destabilising the Republic of Moldova",
-     "url": "https://www.sanctionsmap.eu/#/main/details/55/"
+     "url": "https://www.sanctionsmap.eu/#/main/details/55/",
+     "aimedAt": "Aimed at those destabilising Moldova, mainly pro-Russian actors"
     }
    ]
   },
   {
    "iso": "MKD",
-   "regimes": [
+   "regimes": [],
+   "concerns": [
     {
      "authority": "US",
      "name": "Balkans-Related Sanctions",
-     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/balkans-related-sanctions"
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/balkans-related-sanctions",
+     "aimedAt": "Aimed at those undermining stability and the Dayton and Ohrid agreements in the Western Balkans"
     }
    ]
   },
@@ -346,11 +358,13 @@
   },
   {
    "iso": "MNE",
-   "regimes": [
+   "regimes": [],
+   "concerns": [
     {
      "authority": "US",
      "name": "Balkans-Related Sanctions",
-     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/balkans-related-sanctions"
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/balkans-related-sanctions",
+     "aimedAt": "Aimed at those undermining stability and the Dayton and Ohrid agreements in the Western Balkans"
     }
    ]
   },
@@ -476,11 +490,13 @@
   },
   {
    "iso": "SRB",
-   "regimes": [
+   "regimes": [],
+   "concerns": [
     {
      "authority": "US",
      "name": "Balkans-Related Sanctions",
-     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/balkans-related-sanctions"
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/balkans-related-sanctions",
+     "aimedAt": "Aimed at those undermining stability and the Dayton and Ohrid agreements in the Western Balkans"
     }
    ]
   },
@@ -531,31 +547,37 @@
   },
   {
    "iso": "UKR",
-   "regimes": [
+   "regimes": [],
+   "concerns": [
     {
      "authority": "EU",
      "name": "Restrictive measures in respect of actions undermining or threatening the territorial integrity, sovereignty and independence of Ukraine",
-     "url": "https://www.sanctionsmap.eu/#/main/details/36/"
+     "url": "https://www.sanctionsmap.eu/#/main/details/36/",
+     "aimedAt": "Aimed at those undermining Ukraine's territorial integrity, mainly Russian officials"
     },
     {
      "authority": "EU",
      "name": "Restrictive measures in response to the illegal annexation of Crimea and Sevastopol",
-     "url": "https://www.sanctionsmap.eu/#/main/details/37/"
+     "url": "https://www.sanctionsmap.eu/#/main/details/37/",
+     "aimedAt": "Aimed at Russia over the annexation of Crimea and Sevastopol"
     },
     {
      "authority": "EU",
      "name": "Restrictive measures in response to the illegal recognition, occupation or annexation by the Russian Federation of certain non-government controlled areas of Ukraine",
-     "url": "https://www.sanctionsmap.eu/#/main/details/52/"
+     "url": "https://www.sanctionsmap.eu/#/main/details/52/",
+     "aimedAt": "Aimed at Russia over its occupation and annexation of Ukraine's oblasts"
     }
    ]
   },
   {
    "iso": "UNK",
-   "regimes": [
+   "regimes": [],
+   "concerns": [
     {
      "authority": "US",
      "name": "Balkans-Related Sanctions",
-     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/balkans-related-sanctions"
+     "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information/balkans-related-sanctions",
+     "aimedAt": "Aimed at those undermining stability and the Dayton and Ohrid agreements in the Western Balkans"
     }
    ]
   },

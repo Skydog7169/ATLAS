@@ -62,7 +62,8 @@ const usage = { input: 0, output: 0, cacheRead: 0, calls: 0 };
 const report = { updated: [], unchanged: [], clamped: [], droppedSources: [], errors: [], blocChanges: [], blocNote: '', candidates: [], unrestCandidates: [], unrestAdded: [], elections: [], peace: [], chokepoints: [] };
 
 const SYSTEM = `You are a research analyst maintaining a public geopolitics map. Today is ${today}.
-Write in plain, neutral English with specific dates. Never invent events or URLs: every source you return must be a URL that appeared in your web search results, pointing at the specific article that supports the claim (with its outlet, headline and publication date), not a site's front page or a tracker's index page. Prefer wire services, UN bodies and established conflict trackers (CFR, ACLED, Crisis Group, ISW). If nothing material happened since the previous assessment, say so by setting changed=false and restating the current situation briefly.`;
+Write in plain, neutral English with specific dates. Never invent events or URLs: every source you return must be a URL that appeared in your web search results, pointing at the specific article that supports the claim (with its outlet, headline and publication date), not a site's front page or a tracker's index page. Prefer wire services, UN bodies and established conflict trackers (CFR, ACLED, Crisis Group, ISW). If nothing material happened since the previous assessment, say so by setting changed=false and restating the current situation briefly.
+Keep the native diacritics of Latin-alphabet names (Erdoğan, Vučić, Türkiye, Côte d'Ivoire); do not strip them.`;
 
 const UNREST_SCALE =
   'Intensity scale: high = nationwide mass mobilisation with lethal force or the government\'s survival in question; medium = sustained or recurring protests or riots with violence, or a coup consolidating; low = sporadic, localised or largely peaceful; latent = suppressed or dormant but unresolved.';
@@ -290,7 +291,7 @@ async function reviewBlocs() {
     })
     .join('\n');
   const latest = blocs.flatMap((b) => b.changes.map((c) => c.date)).sort().at(-1) ?? '2020-01-01';
-  const prompt = `Here are the current membership lists:\n${listing}\n\nSearch for formal membership changes (accessions, withdrawals, suspensions, reinstatements, frozen participation, new founding members) that took effect between ${latest} and ${today}. Return only changes you can source to a page in your search results, with the exact date. Return an empty list if none.`;
+  const prompt = `Here are the current membership lists:\n${listing}\n\nSearch for formal membership changes (accessions, withdrawals, suspensions, reinstatements, frozen participation, new founding members, and candidate status granted, e.g. by the EU) that took effect between ${latest} and ${today}. Return only changes you can source to a page in your search results, with the exact date. Return an empty list if none.`;
 
   const response = await client.messages.parse({
     model: MODEL,
@@ -322,7 +323,7 @@ async function reviewBlocs() {
 
 function applyBlocChange(bloc, ch, source) {
   const member = bloc.members.find((m) => m.iso === ch.iso);
-  const statusFor = { joined: 'member', founded: 'member', reinstated: 'member', suspended: 'suspended', frozen: 'frozen', invited: 'invited' };
+  const statusFor = { joined: 'member', founded: 'member', reinstated: 'member', suspended: 'suspended', frozen: 'frozen', invited: 'invited', candidate: 'candidate' };
   if (ch.change === 'left') {
     bloc.members = bloc.members.filter((m) => m.iso !== ch.iso);
   } else if (member) {
@@ -347,7 +348,7 @@ async function scanForNewConflicts() {
     messages: [
       {
         role: 'user',
-        content: `The map already tracks:\n${known}\n\nSearch for armed conflicts or interstate crises that began or escalated sharply in the last 90 days and are NOT covered above. Return up to 3 candidates with one source each, or an empty list.`,
+        content: `The map already tracks:\n${known}\n\nSearch for armed conflicts or interstate crises that began or escalated sharply in the last 90 days and are NOT covered above. Return up to 3 candidates with one source each, or an empty list. Name each one '<Place>: <conflict noun> (<main armed actor if needed>)', e.g. 'Somalia: insurgency (al-Shabaab)' or 'Thailand–Cambodia: border dispute', with party pairs in conventional order.`,
       },
     ],
   });

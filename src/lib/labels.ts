@@ -1,4 +1,5 @@
 import type { BlocCategory, BlocChangeKind, Confidence, ConflictType, Intensity, MembershipStatus } from '../data/types';
+import { conflictFillColor } from './palette';
 
 export const CONFLICT_TYPE_LABEL: Record<ConflictType, string> = {
   interstate: 'Interstate',
@@ -55,6 +56,14 @@ export const INTENSITY_COLOR: Record<Intensity, string> = {
 
 export const INTENSITY_RADIUS: Record<Intensity, number> = { high: 9, medium: 7, low: 5.5, latent: 4.5 };
 
+/** Short form for row pills, so nothing wraps. */
+export const INTENSITY_SHORT: Record<Intensity, string> = { high: 'High', medium: 'Med', low: 'Low', latent: 'Latent' };
+
+/** Territory tint in Conflicts mode: one red lightness ramp (palette.ts), shared by the map and the legend's Territory row. */
+export function conflictFill(intensity: Intensity): string {
+  return conflictFillColor(intensity);
+}
+
 export const STATUS_LABEL: Record<MembershipStatus, string> = {
   member: 'Member',
   suspended: 'Suspended',
@@ -62,6 +71,18 @@ export const STATUS_LABEL: Record<MembershipStatus, string> = {
   partner: 'Partner / associate',
   observer: 'Observer',
   invited: 'Invited',
+  candidate: 'Candidate',
+};
+
+/** Roster headings for groups of more than one. */
+export const STATUS_LABEL_PLURAL: Record<MembershipStatus, string> = {
+  member: 'Members',
+  suspended: 'Suspended',
+  frozen: 'Participation frozen',
+  partner: 'Partners / associates',
+  observer: 'Observers',
+  invited: 'Invited',
+  candidate: 'Candidates',
 };
 
 export const CATEGORY_LABEL: Record<BlocCategory, string> = {
@@ -136,4 +157,5 @@ export const CHANGE_LABEL: Record<BlocChangeKind, string> = {
   frozen: 'Froze participation',
   invited: 'Invited',
   founded: 'Founding member',
+  candidate: 'Granted candidate status',
 };

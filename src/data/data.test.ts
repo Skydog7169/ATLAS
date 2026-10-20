@@ -1,13 +1,21 @@
 import { describe, expect, it } from 'vitest';
 import { BLOCS } from './blocs';
 import { CONFLICTS } from './conflicts';
-import { UNREST } from './unrest';
 import { isHomepage } from './guards';
 import { COUNTRY_BY_ISO } from '../lib/countries';
 import { COUNTRY_FEATURES, MICROSTATES, hasPolygon } from '../lib/geo';
 import { BlocsFileSchema, ConflictsFileSchema } from './schema';
 import conflictsJson from './conflicts.json';
 import blocsJson from './blocs.json';
+import { conflictFillMaps } from '../lib/theatre';
+import { SANCTIONS_BY_ISO } from '../lib/sanctions';
+import { DISPLACEMENT, DISPLACEMENT_BY_ISO, displacementBin, displacementFill, displacementTotal } from '../lib/displacement';
+import { WORLDBANK_BY_ISO, blocFigures } from '../lib/worldbank';
+import { blocMembers } from '../lib/membership';
+import { SOVEREIGN, memberFor, territoryLine } from '../lib/sovereign';
+import { NUCLEAR_BY_ISO } from '../lib/nuclear';
+import { search } from '../lib/search';
+import { UNREST } from './unrest';
 
 const ISO3 = /^[A-Z]{3}$/;
 const MONTH = /^\d{4}-(0[1-9]|1[0-2])$/;
@@ -117,5 +125,115 @@ describe('citations', () => {
         `${c.id} ${h.date}: only homepage citations`,
       ).toBe(true);
     }
+  });
+});
+describe('conflict theatres', () => {
+  it.each(CONFLICTS.filter((c) => c.theatre).map((c) => [c.id, c] as const))('%s theatre is a subset of its countries', (_id, c) => {
+    for (const iso of c.theatre!) expect(c.countries, `${c.id}: theatre ${iso} not in countries`).toContain(iso);
+    expect(new Set(c.theatre).size).toBe(c.theatre!.length);
+  });
+
+  it('does not count outside belligerents as war zones', () => {
+    const { home, abroad } = conflictFillMaps(CONFLICTS.map((c) => ({ conflict: c, intensity: c.intensity })));
+    for (const iso of ['USA', 'SAU', 'ARE', 'QAT', 'RWA', 'UGA']) {
+      expect(home.has(iso), `${iso} should not be filled`).toBe(false);
+      expect(abroad.has(iso), `${iso} should be outlined as a party abroad`).toBe(true);
+    }
+    for (const iso of ['UKR', 'SDN', 'IRN', 'YEM', 'COD']) expect(home.get(iso)).toBeDefined();
+  });
+});
+
+describe('sanctions truth', () => {
+  it('Ukraine and Moldova are targeted by no regime', () => {
+    for (const iso of ['UKR', 'MDA']) expect(SANCTIONS_BY_ISO.get(iso)?.regimes ?? [], iso).toHaveLength(0);
+  });
+});
+
+describe('displacement truth', () => {
+  it('drops UNHCR codes that are not countries', () => {
+    for (const iso of ['UNK', 'XXA', 'TIB']) expect(DISPLACEMENT_BY_ISO.has(iso), iso).toBe(false);
+    for (const r of DISPLACEMENT.rows) expect(COUNTRY_BY_ISO.has(r.iso), r.iso).toBe(true);
+  });
+
+  it('never reports more people displaced from a country than live in it', () => {
+    for (const r of DISPLACEMENT.rows) {
+      const pop = WORLDBANK_BY_ISO.get(r.iso)?.population;
+      if (pop) expect(r.total, `${r.iso}: ${r.total} displaced of ${pop}`).toBeLessThanOrEqual(pop);
+    }
+  });
+
+  it('Palestine is never shown as barely displaced', () => {
+    const row = DISPLACEMENT_BY_ISO.get('PSE')!;
+    expect(row.supplement?.unrwaRefugees).toBeGreaterThan(1_000_000);
+    expect(displacementBin(displacementTotal(row))).toBeGreaterThan(0);
+    expect(displacementFill('PSE').hatch).toBeDefined();
+  });
+});
+
+describe('conflict panels agree with themselves', () => {
+  // The Parties list and the who-backs-whom graph are both shown; an armed actor in one must appear in the other.
+  const ALIASES: Record<string, string[]> = { syria: ['Druze forces in Sweida (al-Hijri)'] };
+  it.each(CONFLICTS.filter((c) => c.actors).map((c) => [c.id, c] as const))('%s lists every non-mediator actor among its parties', (id, c) => {
+    const parties = c.parties.join(' | ').toLowerCase();
+    for (const a of c.actors!) {
+      if (a.side === 'Mediators' || ALIASES[id]?.includes(a.name)) continue;
+      const stem = a.name.split(' (')[0]!.toLowerCase().slice(0, 12);
+      expect(parties, `${id}: actor "${a.name}" missing from parties`).toContain(stem);
+    }
+  });
+});
+
+describe('membership counting', () => {
+  it('uses one rule: full members counted, suspended and frozen listed apart', () => {
+    const au = blocMembers(BLOCS.find((b) => b.id === 'au')!);
+    expect(au.full.length + au.suspended.length).toBe(55);
+    expect(blocFigures(BLOCS.find((b) => b.id === 'au')!).members).toBe(au.full.length);
+  });
+
+  it('records EU candidates without counting them', () => {
+    const eu = BLOCS.find((b) => b.id === 'eu')!;
+    expect(eu.members.filter((m) => m.status === 'candidate').map((m) => m.iso).sort()).toEqual(['ALB', 'BIH', 'GEO', 'MDA', 'MKD', 'MNE', 'SRB', 'TUR', 'UKR']);
+    expect(blocMembers(eu).full).toHaveLength(27);
+  });
+});
+
+describe('dependent territories', () => {
+  it('Greenland inherits NATO and the umbrella from Denmark, not the EU', () => {
+    const nato = BLOCS.find((b) => b.id === 'nato')!;
+    const eu = BLOCS.find((b) => b.id === 'eu')!;
+    expect(memberFor(nato, 'GRL')?.status).toBe('member');
+    expect(memberFor(eu, 'GRL')).toBeUndefined();
+    expect(NUCLEAR_BY_ISO.get('GRL')?.status).toBe('umbrella');
+    expect(territoryLine('GRL', BLOCS)).toBe("Autonomous territory of Denmark · covered via Denmark's NATO membership");
+  });
+
+  it('Puerto Rico stays outside NATO (south of the Article 6 area) but under the US deterrent', () => {
+    expect(memberFor(BLOCS.find((b) => b.id === 'nato')!, 'PRI')).toBeUndefined();
+    expect(NUCLEAR_BY_ISO.get('PRI')?.status).toBe('umbrella');
+  });
+
+  it('every sovereign resolves to a country', () => {
+    for (const [iso, t] of Object.entries(SOVEREIGN)) {
+      expect(COUNTRY_BY_ISO.has(iso), iso).toBe(true);
+      expect(COUNTRY_BY_ISO.get(t.sovereign)?.independent, t.sovereign).toBe(true);
+    }
+  });
+});
+
+describe('conflict names', () => {
+  it('follow "<Place>: <conflict noun>" and keep their old names searchable', () => {
+    for (const c of CONFLICTS) expect(c.name, c.id).toMatch(/^[^:]+: \S/);
+    expect(search('Sudan civil war')[0]).toMatchObject({ kind: 'conflict', id: 'sudan' });
+    expect(search('Russia–Ukraine war')[0]).toMatchObject({ kind: 'conflict', id: 'russia-ukraine' });
+  });
+});
+
+describe('names keep their diacritics', () => {
+  // Prose fields only: source titles quote the publisher's own spelling.
+  const STRIPPED = [/\bVucic\b/, /\bVucevic\b/, /\bErdogan\b/, /\bImamoglu\b/, /\bMilosevic\b/];
+  const prose = (items: Array<{ name: string; summary: string; parties: string[]; history: Array<{ status: string }> }>) =>
+    items.flatMap((x) => [x.name, x.summary, ...x.parties, ...x.history.map((h) => h.status)]);
+  it('in conflicts and unrest', () => {
+    for (const text of [...prose(CONFLICTS), ...prose(UNREST)]) for (const re of STRIPPED) expect(text).not.toMatch(re);
   });
 });

@@ -1,6 +1,6 @@
-import { blocsForCountry } from '../data/blocs';
+import { BLOC_BY_ID, blocsForCountry } from '../data/blocs';
 import { INTENSITY_ORDER, conflictsForCountry } from '../data/conflicts';
-import type { Bloc, BlocMember, Conflict, CountryRecord } from '../data/types';
+import type { Bloc, BlocMember, Conflict, CountryRecord, Intensity } from '../data/types';
 import { COUNTRY_BY_ISO } from './countries';
 import { DISPLACEMENT_BY_ISO, type DisplacementRow } from './displacement';
 import { CHANGES, changesForCountry } from './feed';
@@ -15,6 +15,7 @@ import { tradeDossier } from './trade';
 import { unrestDossier } from './unrest';
 import { acledDossier } from './acled';
 import { ucdpDossier } from './ucdp';
+import { isTheatre } from './theatre';
 
 export type DossierSectionId = 'profile' | 'memberships' | 'conflicts' | 'unrest' | 'acled' | 'ucdp' | 'sponsorship' | 'mediation' | 'military' | 'displacement' | 'figures' | 'trade' | 'changes' | 'sanctions' | 'elections' | 'nuclear';
 
@@ -27,9 +28,11 @@ export interface DossierExtra {
   id: Extract<DossierSectionId, 'sanctions' | 'elections' | 'nuclear' | 'sponsorship' | 'mediation' | 'military' | 'trade' | 'unrest' | 'acled' | 'ucdp'>;
   title: string;
   /** A row links out (`href`), into a conflict panel (`conflictId`), an unrest panel (`unrestId`) or a country dossier (`countryIso`). */
-  rows: Array<{ label: string; value: string; href?: string; note?: string; conflictId?: string; unrestId?: string; countryIso?: string }>;
+  rows: Array<{ label: string; value: string; href?: string; note?: string; conflictId?: string; unrestId?: string; countryIso?: string; intensity?: Intensity; share?: number }>;
   /** Shown when `rows` is empty. */
   empty?: string;
+  /** A second, titled list under the first (sanctions regimes filed under a country but aimed at others). */
+  secondary?: { title: string; rows: DossierExtra['rows'] };
   /** Source and fetch date shown under the section. */
   footnote?: string;
 }
@@ -102,10 +105,35 @@ export function isDisputed(iso: string): boolean {
   return iso in DISPUTED;
 }
 
+/**
+ * Dossier intensity badges: the most intense conflict fought on the country's
+ * soil, and separately the most intense one its forces join abroad, so the US
+ * and Ukraine never share an unqualified 'High' badge. `conflicts` is sorted
+ * most intense first.
+ */
+export function conflictBadges(iso: string, conflicts: readonly Conflict[]): Array<{ label: string; intensity: Conflict['intensity'] }> {
+  const out: Array<{ label: string; intensity: Conflict['intensity'] }> = [];
+  const home = conflicts.find((c) => isTheatre(c, iso));
+  const abroad = conflicts.find((c) => !isTheatre(c, iso));
+  if (home) out.push({ label: 'Conflict at home', intensity: home.intensity });
+  if (abroad) out.push({ label: 'Party abroad', intensity: abroad.intensity });
+  return out;
+}
+
+/** Headline blocs readers check first; the dossier names those a country has no listed tie to (a candidacy or partnership is shown as its own row). */
+export const HEADLINE_BLOCS = ['nato', 'eu', 'brics', 'sco', 'g7'];
+
+export function notMemberOf(iso: string): string[] {
+  return HEADLINE_BLOCS.map((id) => BLOC_BY_ID.get(id))
+    .filter((b): b is Bloc => !!b && !b.members.some((m) => m.iso === iso))
+    .map((b) => b.shortName);
+}
+
 /** Human line for the profile section: "Republic of X · Capital: Y · UN member". */
 export function profileLine(c: CountryRecord): string {
   const o = DISPUTED[c.cca3];
-  const parts = [o?.official ?? c.official];
+  const official = o?.official ?? c.official;
+  const parts = official && official !== c.name ? [official] : [];
   if (o?.capital) parts.push(o.capital);
   else if (c.capital) parts.push(`Capital: ${c.capital}`);
   parts.push(o?.status ?? (c.unMember ? 'UN member' : c.independent ? 'Not a UN member' : 'Territory'));
