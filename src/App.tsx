@@ -34,7 +34,15 @@ import type { CountryFill, Focus, MapMarker } from './components/WorldMap';
 import Briefing, { type BriefItem } from './components/Briefing';
 import { COUNTRY_BY_ISO } from './lib/countries';
 import { downloadBlob, readLegend, renderPng } from './lib/exportPng';
-import { serialize } from './lib/urlState';
+import { serialize, type AppState } from './lib/urlState';
+import { focusForSelection, selectionLabel } from './lib/panelNav';
+import { selectionKey } from './lib/navHistory';
+import { usePanelTrail } from './hooks/usePanelTrail';
+import { markAppReady } from './hooks/usePanelFocus';
+import { useEscapeLayers } from './hooks/useEscapeLayers';
+import StaleLinkNotice from './components/StaleLinkNotice';
+import ModeToast from './components/ModeToast';
+import { SEARCH_PREFILL_EVENT } from './components/Search';
 
 // The map pulls in d3 and the 110m geometry; loading it after the shell
 // paints keeps first render fast on phones.
@@ -100,7 +108,7 @@ function MapSkeleton() {
 }
 
 export default function App() {
-  const { state, update } = useAppState();
+  const { state, update, back, arrival, dropped, dismissDropped } = useAppState();
   const { mode, bloc, vs, selection, month, layer, view, rotation, brief, embed } = state;
   const [exporting, setExporting] = useState(false);
   const [picking, setPicking] = useState(false);
@@ -110,6 +118,12 @@ export default function App() {
   const stageRef = useRef<HTMLDivElement>(null);
   const [insetRight, setInsetRight] = useState(0);
   const watchlist = useWatchlist();
+  const briefBtnRef = useRef<HTMLButtonElement>(null);
+  const preBrief = useRef<Partial<AppState> | null>(null);
+  const [toast, setToast] = useState<{ message: string; key: string; seq: number; prev: Partial<AppState> } | null>(null);
+  const previousPanel = usePanelTrail(selection, arrival.seq);
+
+  useEffect(() => markAppReady(), []);
 
   // On wide screens the detail panel floats over the right edge; tell the map
   // so fly-to animations centre targets in the uncovered area.
@@ -121,20 +135,14 @@ export default function App() {
     return () => mq.removeEventListener('change', apply);
   }, [selection]);
 
-  // A shared link that names a country or conflict should land zoomed on it.
-  const landed = useRef(false);
+  // The camera follows the URL: a shared link lands zoomed on its subject,
+  // and Back/Forward (or an edited hash) fly to whatever the entry shows.
+  // Arriving at an entry with no panel returns to the view before the fly-to.
   useEffect(() => {
-    if (landed.current) return;
-    landed.current = true;
-    if (selection?.kind === 'country') setFocus({ kind: 'country', iso: selection.iso });
-    else if (selection?.kind === 'conflict') {
-      const c = CONFLICT_BY_ID.get(selection.id);
-      if (c) setFocus({ kind: 'point', lonLat: c.location, scale: 3.5 });
-    } else if (selection?.kind === 'chokepoint') {
-      const cp = CHOKEPOINT_BY_ID.get(selection.id);
-      if (cp) setFocus({ kind: 'point', lonLat: cp.location, scale: 3 });
-    }
-  }, [selection]);
+    const target = focusForSelection(arrival.selection);
+    if (target) setFocus(target);
+    else if (arrival.seq > 0) setFocus({ kind: 'restore' });
+  }, [arrival]);
 
   const activeBloc = bloc ? BLOC_BY_ID.get(bloc) : undefined;
   const vsBloc = vs ? BLOC_BY_ID.get(vs) : undefined;
@@ -211,8 +219,16 @@ export default function App() {
         out.push({ id: CHOKEPOINT_MARKER_PREFIX + cp.id, lonLat: cp.location, color: CHOKEPOINT_COLOR[st], radius: 7, label: `${cp.name}: ${CHOKEPOINT_STATUS_LABEL[st]}`, shape: 'diamond' });
       }
     }
+    // An unrest episode or chokepoint opened from a link keeps the user's layer; mark just that one.
+    const u = selection?.kind === 'unrest' && layer !== 'unrest' ? UNREST_BY_ID.get(selection.id) : undefined;
+    if (u) out.push({ id: UNREST_MARKER_PREFIX + u.id, lonLat: u.location, color: UNREST_COLOR[u.intensity], radius: UNREST_RADIUS[u.intensity], label: `${u.name}: ${UNREST_KIND_LABEL[u.kind]}, ${INTENSITY_LABEL[u.intensity].toLowerCase()}`, shape: 'triangle' });
+    const cp = selection?.kind === 'chokepoint' && layer !== 'chokepoints' ? CHOKEPOINT_BY_ID.get(selection.id) : undefined;
+    if (cp) {
+      const st = currentStatus(cp).status;
+      out.push({ id: CHOKEPOINT_MARKER_PREFIX + cp.id, lonLat: cp.location, color: CHOKEPOINT_COLOR[st], radius: 7, label: `${cp.name}: ${CHOKEPOINT_STATUS_LABEL[st]}`, shape: 'diamond' });
+    }
     return out;
-  }, [mode, visible, viewMonth, layer]);
+  }, [mode, visible, viewMonth, layer, selection]);
 
   const selectedIso = selection?.kind === 'country' ? selection.iso : null;
   const selectedMarkerId = selection?.kind === 'conflict' ? selection.id : selection?.kind === 'chokepoint' ? CHOKEPOINT_MARKER_PREFIX + selection.id : selection?.kind === 'unrest' ? UNREST_MARKER_PREFIX + selection.id : null;
@@ -225,19 +241,31 @@ export default function App() {
     [update],
   );
 
+  // A link that has to switch the map mode says so, with Undo (one Back step).
+  const noteModeSwitch = useCallback(
+    (to: 'blocs' | 'conflicts', selection: AppState['selection']) => {
+      if (mode === to) return;
+      setToast({ message: to === 'conflicts' ? 'Switched to Conflicts to show this war' : 'Switched to Blocs to show this bloc', key: selectionKey(selection), seq: arrival.seq, prev: { mode, bloc, vs, layer, selection: state.selection } });
+    },
+    [mode, bloc, vs, layer, state.selection, arrival.seq],
+  );
+
   const selectConflict = useCallback(
     (id: string) => {
       const c = CONFLICT_BY_ID.get(id);
-      update({ mode: 'conflicts', selection: { kind: 'conflict', id } });
+      const next = { kind: 'conflict', id } as const;
+      noteModeSwitch('conflicts', next);
+      update({ mode: 'conflicts', selection: next });
       if (c) setFocus({ kind: 'point', lonLat: c.location, scale: 3.5 });
     },
-    [update],
+    [update, noteModeSwitch],
   );
 
   const selectChokepoint = useCallback(
     (id: string) => {
       const cp = CHOKEPOINT_BY_ID.get(id);
-      update({ layer: 'chokepoints', selection: { kind: 'chokepoint', id } });
+      // Keep whatever layer the user chose; the selected chokepoint is marked on its own.
+      update((s) => ({ layer: s.layer ?? 'chokepoints', selection: { kind: 'chokepoint', id } }));
       if (cp) setFocus({ kind: 'point', lonLat: cp.location, scale: 3 });
     },
     [update],
@@ -246,7 +274,7 @@ export default function App() {
   const selectUnrest = useCallback(
     (id: string) => {
       const u = UNREST_BY_ID.get(id);
-      update({ layer: 'unrest', selection: { kind: 'unrest', id } });
+      update((s) => ({ layer: s.layer ?? 'unrest', selection: { kind: 'unrest', id } }));
       if (u) setFocus({ kind: 'point', lonLat: u.location, scale: 3.5 });
     },
     [update],
@@ -271,11 +299,22 @@ export default function App() {
 
   const selectBloc = useCallback(
     (id: string) => {
-      update({ mode: 'blocs', bloc: id, vs: null, selection: { kind: 'bloc', id } });
+      const next = { kind: 'bloc', id } as const;
+      noteModeSwitch('blocs', next);
+      update({ mode: 'blocs', bloc: id, vs: null, selection: next });
       setFocus({ kind: 'reset' });
     },
-    [update],
+    [update, noteModeSwitch],
   );
+
+  const dismissToast = useCallback(() => setToast(null), []);
+
+  const closePanel = useCallback(() => {
+    update({ selection: null });
+    setFocus({ kind: 'restore' });
+  }, [update]);
+
+  useEscapeLayers({ brief, picking, panelOpen: selection !== null, onCancelPicking: () => setPicking(false), onClosePanel: closePanel });
 
   const onPick = useCallback(
     (hit: SearchHit) => {
@@ -373,6 +412,11 @@ export default function App() {
     [update],
   );
 
+  const startBrief = useCallback(() => {
+    preBrief.current = { mode, bloc, vs, selection, layer, month, view };
+    update({ brief: true, selection: null });
+  }, [update, mode, bloc, vs, selection, layer, month, view]);
+
   const onBriefOpen = useCallback(
     (item: BriefItem) => {
       if (item.kind === 'conflict') update({ brief: false, mode: 'conflicts', selection: { kind: 'conflict', id: item.id } });
@@ -383,7 +427,22 @@ export default function App() {
     [update],
   );
 
-  const exitBrief = useCallback(() => update({ brief: false }), [update]);
+  // Slides rewrite the briefing's own history entry, so stepping back restores
+  // the view the presenter started from; a briefing opened by link has nothing
+  // behind it, so the remembered state (if any) is applied in place.
+  const exitBrief = useCallback(() => {
+    const snapshot = preBrief.current;
+    preBrief.current = null;
+    if (!back({ brief: false, ...snapshot })) setFocus(focusForSelection(snapshot?.selection ?? null) ?? { kind: 'restore' });
+  }, [back]);
+
+  // Out of a briefing onto a plain map: return focus to the button that started it.
+  const briefWas = useRef(brief);
+  useEffect(() => {
+    const exited = briefWas.current && !brief;
+    briefWas.current = brief;
+    if (exited && !selection) briefBtnRef.current?.focus({ preventScroll: true });
+  }, [brief, selection]);
 
   // One-tap PNG of the current map with the legend and a date stamp.
   const exportPng = useCallback(async () => {
@@ -504,6 +563,26 @@ export default function App() {
       </header>
 
       <main className="stage" ref={stageRef}>
+        {dropped.length > 0 && !embed && (
+          <StaleLinkNotice
+            dropped={dropped}
+            onDismiss={dismissDropped}
+            onSearch={(q) => {
+              dismissDropped();
+              window.dispatchEvent(new CustomEvent(SEARCH_PREFILL_EVENT, { detail: q }));
+            }}
+          />
+        )}
+        {toast && toast.key === selectionKey(selection) && toast.seq === arrival.seq && (
+          <ModeToast
+            message={toast.message}
+            onDismiss={dismissToast}
+            onUndo={() => {
+              setToast(null);
+              back(toast.prev);
+            }}
+          />
+        )}
         <SinceLastVisit onSelectConflict={selectConflict} onSelectBloc={selectBloc} onSelectUnrest={selectUnrest} onOpenChanges={() => update({ selection: { kind: 'changes' } })} />
         <ErrorBoundary>
           <Suspense fallback={<MapSkeleton />}>
@@ -604,7 +683,7 @@ export default function App() {
             </svg>
           </button>
           {!embed && (
-            <button className="icon-btn" aria-label="Start briefing" title="Full-screen briefing" onClick={() => update({ brief: true, selection: null })}>
+            <button className="icon-btn" aria-label="Start briefing" title="Full-screen briefing" ref={briefBtnRef} onClick={startBrief}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" />
               </svg>
@@ -637,7 +716,8 @@ export default function App() {
               month={viewMonth}
               compare={compare}
               onStopCompare={() => update({ vs: null, selection: bloc ? { kind: 'bloc', id: bloc } : null })}
-              onClose={() => update({ selection: null })}
+              onClose={closePanel}
+              backTo={previousPanel ? { label: selectionLabel(previousPanel), onBack: () => window.history.back() } : null}
               onSelectCountry={selectCountry}
               onSelectBloc={selectBloc}
               onSelectConflict={selectConflict}

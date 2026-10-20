@@ -43,6 +43,9 @@ export default function BlocChips({ active, vs, picking, onChange, onVs, onPicki
               if (picking && active && b.id !== active) {
                 onVs(b.id);
                 onPicking(false);
+              } else if (picking && isA) {
+                // Clicking the first bloc again cancels picking rather than dropping the bloc.
+                onPicking(false);
               } else if (isB) {
                 onVs(null);
               } else {
