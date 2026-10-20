@@ -205,7 +205,7 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
   );
 
   useEffect(() => {
-    if (!focus) return;
+    if (!focus || focus.kind === 'restore') return;
     if (focus.kind === 'reset') tweenTo([15, 20], 1);
     else if (focus.kind === 'country') {
       const f = COUNTRY_FEATURES.find((x) => x.properties.iso === focus.iso);
