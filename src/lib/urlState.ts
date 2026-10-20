@@ -33,6 +33,8 @@ export interface AppState {
   brief: boolean;
   /** Chrome-less view for iframes. */
   embed: boolean;
+  /** Embeds only: the theme the host pinned (dark when absent). Kept in the link so a reload keeps it. */
+  theme?: 'light' | 'auto';
 }
 
 export type View = 'flat' | 'globe';
@@ -59,6 +61,7 @@ export function serialize(state: AppState): string {
   }
   if (state.brief) p.set('brief', '1');
   if (state.embed) p.set('embed', '1');
+  if (state.embed && state.theme) p.set('theme', state.theme);
   if (state.selection) {
     if (state.selection.kind === 'country') p.set('country', state.selection.iso);
     else if (state.selection.kind === 'changes') p.set('changes', '1');
@@ -72,6 +75,11 @@ export function serialize(state: AppState): string {
     else p.set(state.selection.kind, state.selection.id);
   }
   return '#' + p.toString();
+}
+
+function embedThemeOf(p: URLSearchParams): Pick<AppState, 'theme'> {
+  const t = p.get('theme');
+  return p.get('embed') === '1' && (t === 'light' || t === 'auto') ? { theme: t } : {};
 }
 
 /** Where a link to a layer this build cannot draw lands instead: the nearest tracked view. */
@@ -123,7 +131,7 @@ export function parse(
 
   const view: View = p.get('view') === 'globe' ? 'globe' : 'flat';
   const rotation = parseRotation(p.get('rot'));
-  return { mode, bloc, vs, selection, month, layer, view, rotation, brief: p.get('brief') === '1', embed: p.get('embed') === '1' };
+  return { mode, bloc, vs, selection, month, layer, view, rotation, brief: p.get('brief') === '1', embed: p.get('embed') === '1', ...embedThemeOf(p) };
 }
 
 export function parseRotation(raw: string | null): [number, number] {

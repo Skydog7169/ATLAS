@@ -8,8 +8,11 @@
     <meta name="theme-color" content="#dfe7ee" media="(prefers-color-scheme: light)" />
     <!-- Apply the saved theme before first paint so a dark choice on a light OS (or the reverse) never flashes. -->
     <script>
+      // Mirrors src/lib/theme.ts: an embed's link pins the theme (#embed=1&theme=light|dark|auto,
+      // dark by default); otherwise the visitor's stored choice, else the OS preference.
       try {
-        var t = localStorage.getItem('atlas:theme');
+        var p = new URLSearchParams(location.hash.replace(/^#/, ''));
+        var t = p.get('embed') === '1' ? p.get('theme') || 'dark' : localStorage.getItem('atlas:theme');
         if (t === 'dark' || t === 'light') {
           document.documentElement.setAttribute('data-theme', t);
           document.querySelectorAll('meta[name=theme-color]').forEach(function (m) {
@@ -17,7 +20,7 @@
             m.content = t === 'dark' ? '#04070d' : '#dfe7ee';
           });
         }
-        if (/(^|[#&])(brief|embed)=1(&|$)/.test(location.hash)) document.documentElement.setAttribute('data-chrome', 'none');
+        if (p.get('brief') === '1' || p.get('embed') === '1') document.documentElement.setAttribute('data-chrome', 'none');
       } catch (e) {}
     </script>
     <title>ATLAS — alliances, wars and unrest</title>

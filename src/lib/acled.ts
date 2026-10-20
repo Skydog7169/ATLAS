@@ -1,4 +1,5 @@
 import raw from '../data/acled.generated.json';
+import { ramp } from './palette';
 import { formatDate } from './labels';
 import type { DossierExtra } from './dossier';
 
@@ -46,7 +47,7 @@ export const ACLED_BY_ISO: ReadonlyMap<string, AcledRow> = new Map(ACLED.rows.ma
 /** Lower bounds of each bin: political-violence events in the window. */
 export const ACLED_BINS = [0, 1, 10, 50, 200, 1000] as const;
 /** Teal-to-white ramp, kept apart from the conflict reds and the bloc cyans. */
-export const ACLED_COLORS = ['var(--land)', '#1d4a45', '#1f7a6a', '#2bb09a', '#6fe3c9', '#dffcf4'] as const;
+export const ACLED_COLORS = ramp('acled');
 
 export function acledBin(events: number): number {
   let bin = 0;
@@ -59,7 +60,7 @@ export function acledColor(iso: string): string {
 }
 
 /** Amber ramp for the protests-and-riots view, distinct from the teal political-violence ramp. */
-export const ACLED_UNREST_COLORS = ['var(--land)', '#4a3a12', '#8a6a1a', '#c9a227', '#ffd166', '#fff1b8'] as const;
+export const ACLED_UNREST_COLORS = ramp('acledUnrest');
 
 /** Protests plus riots in the window; zero when the file predates the per-type split. */
 export function acledUnrestEvents(iso: string): number {

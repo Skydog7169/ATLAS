@@ -3,7 +3,8 @@ import { geoCentroid, geoDistance, geoGraticule10, geoOrthographic, geoPath } fr
 import { COUNTRY_FEATURES, MICROSTATES, drawnIsos } from '../lib/geo';
 import { useSize } from '../hooks/useSize';
 import { triPath } from '../lib/shapes';
-import { CountryLayer, type Focus, type MapMarker, type CountryFill } from './WorldMap';
+import { useHoverIso } from '../hooks/useMapOverlays';
+import { CountryLayer, CountryOutlines, DiamondCore, type Focus, type MapMarker, type CountryFill } from './WorldMap';
 
 interface Props {
   fillFor: (iso: string | null) => CountryFill;
@@ -37,6 +38,7 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
   const rootRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const { width, height } = useSize(rootRef);
+  const [hoverIso, onCountryHover] = useHoverIso(onHover);
   const [k, setK] = useState(1);
   // Live rotation during a drag lives in state; the parent only hears about it when the gesture ends.
   const [rot, setRot] = useState<[number, number]>(rotation);
@@ -250,7 +252,8 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
           width={width}
           height={height}
           tabIndex={0}
-          role="application"
+          role="group"
+          aria-roledescription="map"
           aria-label="Globe. Drag to rotate, arrow keys rotate, plus and minus zoom, 0 resets."
           onKeyDown={onKeyDown}
           onPointerDown={onPointerDown}
@@ -279,8 +282,9 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
           <g>
             <path className="sphere" d={spherePath} />
             <path className="graticule" d={graticulePath} />
-            <CountryLayer features={COUNTRY_FEATURES} paths={paths} fillFor={fillFor} selectedIso={selectedIso} onCountryClick={onCountryClick} onHover={onHover} />
+            <CountryLayer features={COUNTRY_FEATURES} paths={paths} fillFor={fillFor} selectedIso={selectedIso} onCountryClick={onCountryClick} onHover={onCountryHover} />
             <path className="globe-shade" d={spherePath} fill="url(#globe-shade)" pointerEvents="none" />
+            <CountryOutlines features={COUNTRY_FEATURES} paths={paths} selectedIso={selectedIso} hoverIso={hoverIso} />
           </g>
           <g className="overlay">
             {showMicrostates &&
@@ -338,6 +342,8 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
                       <circle r={r + 11} strokeDasharray="6 5" />
                     </g>
                   )}
+                  {/* A finger-sized hit area on touch screens; hidden for fine pointers. */}
+                  <circle className="hit" r={Math.max(12, r + 3)} />
                   {mk.shape === 'triangle' ? (
                     <>
                       <path className="ring" d={triPath(r + 3)} stroke={mk.color} />
@@ -346,7 +352,7 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
                   ) : mk.shape === 'diamond' ? (
                     <>
                       <rect className="ring" x={-(r + 3)} y={-(r + 3)} width={2 * (r + 3)} height={2 * (r + 3)} transform="rotate(45)" stroke={mk.color} />
-                      <rect className="core" x={-r} y={-r} width={2 * r} height={2 * r} transform="rotate(45)" fill={mk.color} filter="url(#marker-glow)" />
+                      <DiamondCore r={r} color={mk.color} glyph={mk.glyph} />
                     </>
                   ) : (
                     <>
