@@ -473,7 +473,8 @@ test('briefing mode hides the chrome and cycles captions; embed hides the chrome
   await expect(page.locator('.app[data-embed="true"]')).toBeVisible();
   await expect(page.locator('.header')).toBeHidden();
   await expect(page.locator('.legend')).toBeVisible();
-  const badge = page.getByRole('link', { name: 'Open this view in ATLAS' });
+  const badge = page.getByRole('link', { name: /^Open this view in ATLAS, data as of / });
+  await expect(badge).toContainText(/DATA [A-Z]{3,} \d{4}/);
   await expect(badge).toBeVisible();
   expect(await badge.getAttribute('href')).toMatch(/layer=sanctions/);
   expect(await badge.getAttribute('href')).not.toMatch(/embed/);
@@ -617,6 +618,105 @@ test('provenance: conflict panels open on the latest dated assessment with its s
   await expect(page.locator('#about-disputed')).toBeVisible();
   await expect(page.locator('.panel')).toContainText('Anthropic’s Claude');
   await noSeriousA11yIssues(page);
+});
+
+test('replay is honest: clamped links, hollow months, carried-forward badges and a banner', async ({ page }) => {
+  // A month before the replay range snaps to its first stop, says so and rewrites the link.
+  await open(page, '#mode=conflicts&t=2023-01');
+  await expect(page).toHaveURL(/t=2025-12/);
+  await expect(page.locator('.replay-notice')).toContainText('Replay starts');
+  await expect(page.locator('.replay-banner .replay-tag')).toContainText(/DEC 2025/i);
+  expect(await page.locator('g.marker').count()).toBeGreaterThan(20);
+
+  // A future month is the live view.
+  await open(page, '#mode=conflicts&t=2099-01');
+  await expect(page).not.toHaveURL(/[#&]t=/);
+  await expect(page.locator('.replay-tag')).toHaveCount(0);
+  await expect(page.locator('g.marker')).toHaveCount(31);
+
+  // A month with no new assessment: hollow tick, faded markers, honest panel badge, legend month.
+  await open(page, '#mode=conflicts&t=2026-04&conflict=iran-israel');
+  await expect(page.locator('.timeline .tick[data-current="true"]')).toHaveAttribute('data-assessed', 'false');
+  expect(await page.locator('g.marker[data-stale="true"]').count()).toBeGreaterThan(20);
+  await expect(page.locator('g.marker[data-ghost="true"]')).not.toHaveCount(0);
+  await expect(page.locator('.panel .replay-badge')).toContainText(/Last assessed .* · no assessment on record for Apr/);
+  await expect(page.locator('.legend .legend-title')).toContainText(/· Apr/);
+
+  // Return to live from the banner; the brand and the Blocs toggle also clear the month.
+  await page.getByRole('button', { name: 'Return to live' }).click();
+  await expect(page).not.toHaveURL(/[#&]t=/);
+  await open(page, '#mode=conflicts&t=2026-03&layer=sanctions');
+  await expect(page.locator('.legend .replay-note')).toContainText(/Layer shows current data .*markers show Mar/);
+  await page.locator('.brand').click();
+  await expect(page).not.toHaveURL(/[#&]t=/);
+  await open(page, '#mode=conflicts&t=2026-03');
+  await page.getByRole('button', { name: 'Blocs', exact: true }).click();
+  await expect(page).not.toHaveURL(/[#&]t=/);
+  await page.getByRole('button', { name: 'Conflicts', exact: true }).click();
+  await expect(page.locator('.timeline .readout')).toContainText('LIVE');
+});
+
+test('replay export carries the month in its filename', async ({ page }) => {
+  await open(page, '#mode=conflicts&t=2026-03');
+  const download = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Export PNG' }).click();
+  expect((await download).suggestedFilename()).toMatch(/^atlas-conflicts-2026-03-exported-\d{4}-\d{2}-\d{2}\.png$/);
+});
+
+test('embeds: dated replay badge, cooperative scrolling and bottom-anchored controls', async ({ page }) => {
+  await page.setViewportSize({ width: 728, height: 400 });
+  await open(page, '#mode=conflicts&t=2026-03&embed=1');
+  const badge = page.getByRole('link', { name: /^Open this view in ATLAS, replay of / });
+  await expect(badge).toContainText(/REPLAY · MAR 2026/i);
+  // The badge is the first stop in tab order.
+  await page.keyboard.press('Tab');
+  await expect(badge).toBeFocused();
+
+  // A plain wheel leaves the map alone (it scrolls the host page); ctrl+wheel zooms.
+  const layer = page.locator('.map-root svg > g').first();
+  const before = await layer.getAttribute('transform');
+  await page.mouse.move(364, 200);
+  await page.mouse.wheel(0, -300);
+  await expect(page.locator('.gesture-hint')).toBeVisible();
+  expect(await layer.getAttribute('transform')).toBe(before);
+  await page.keyboard.down('Control');
+  await page.mouse.wheel(0, -300);
+  await page.keyboard.up('Control');
+  await expect.poll(() => layer.getAttribute('transform')).not.toBe(before);
+
+  // The control column ends at its last button rather than stretching up the frame.
+  const box = await page.locator('.map-controls').boundingBox();
+  expect(box!.height).toBeLessThan(260);
+  expect(box!.y + box!.height).toBeGreaterThan(380);
+
+  // Off the frame's edge, markers leave the tab order.
+  await page.setViewportSize({ width: 360, height: 240 });
+  // A deep link flies to Sudan; markers in East Asia and the Americas end up outside the frame.
+  // (Leave the page first: a hash-only goto would not reload, and the landing fly-to runs on load.)
+  await page.goto('about:blank');
+  await open(page, '#mode=conflicts&embed=1&conflict=sudan');
+  const total = await page.locator('g.marker').count();
+  await expect.poll(() => page.locator('g.marker[tabindex="0"]').count()).toBeLessThan(total);
+  expect(await page.locator('g.marker[tabindex="-1"]').count()).toBeGreaterThan(0);
+});
+
+test('embed dialog builds a snippet for the current view', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'phone', 'desktop flow');
+  await open(page, '#mode=conflicts&t=2026-03&conflict=sudan');
+  await page.locator('.panel').getByRole('button', { name: 'Embed', exact: true }).click();
+  const dialog = page.getByRole('dialog', { name: /Sudan/ });
+  await expect(dialog).toBeVisible();
+  const snippet = dialog.locator('textarea');
+  await expect(snippet).toHaveValue(/<iframe src="[^"]*#mode=conflicts&amp;t=2026-03&amp;embed=1&amp;conflict=sudan" width="100%" height="360" title="ATLAS: Sudan: civil war" loading="lazy"/);
+  await dialog.getByLabel('Static').check();
+  await dialog.getByLabel('Off').check();
+  await expect(snippet).toHaveValue(/legend=off&amp;interactive=0/);
+  await dialog.getByLabel(/Freeze at/).uncheck();
+  await expect(snippet).not.toHaveValue(/t=2026-03/);
+  await expect(dialog.locator('iframe')).toHaveAttribute('src', /embed=1/);
+  await noSeriousA11yIssues(page);
+  await page.keyboard.press('Escape');
+  await expect(dialog).toHaveCount(0);
 });
 
 test('camera frames the subject in the uncovered area: phone sheet, desktop panel, pairs', async ({ page }, testInfo) => {

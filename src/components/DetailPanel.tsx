@@ -32,6 +32,8 @@ import { relationship, relationshipSummary } from '../lib/relationship';
 import { blocTrend, lastChange, trendComplete } from '../lib/trends';
 import { WB_HISTORY } from '../lib/worldbankHistory';
 import { search } from '../lib/search';
+import { useEmbed } from '../lib/embedContext';
+import { replayBadge } from '../lib/timeline';
 import TrendChart from './TrendChart';
 import AskPanel from './AskPanel';
 import { AgeBadges, ConfidenceLabel, FreshnessFooter, IntensityBadge, LatestBlock, ProvenanceNote, SourceLinks } from './Provenance';
@@ -73,23 +75,37 @@ function CloseButton({ onClick }: { onClick: () => void }) {
   );
 }
 
+/** Copies the full-app link (never the chrome-less embed URL); offers the embed snippet next to it. */
 function ShareButton() {
+  const { shareUrl, onEmbed } = useEmbed();
   const [copied, setCopied] = useState(false);
+  const [fallback, setFallback] = useState<string | null>(null);
   return (
-    <button
-      className="text-btn"
-      onClick={async () => {
-        try {
-          await navigator.clipboard.writeText(window.location.href);
-          setCopied(true);
-          setTimeout(() => setCopied(false), 1500);
-        } catch {
-          /* clipboard unavailable: the URL bar already holds the link */
-        }
-      }}
-    >
-      {copied ? 'Link copied' : 'Copy link'}
-    </button>
+    <>
+      <button
+        className="text-btn"
+        onClick={async () => {
+          const url = shareUrl();
+          try {
+            await navigator.clipboard.writeText(url);
+            setFallback(null);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1500);
+          } catch {
+            // Clipboard blocked (common in third-party frames): show the link to copy by hand.
+            setFallback(url);
+          }
+        }}
+      >
+        {copied ? 'Link copied' : 'Copy link'}
+      </button>
+      {onEmbed && (
+        <button className="text-btn" onClick={onEmbed}>
+          Embed
+        </button>
+      )}
+      {fallback && <input className="share-fallback" readOnly value={fallback} aria-label="Link to this view" autoFocus onFocus={(e) => e.currentTarget.select()} />}
+    </>
   );
 }
 
@@ -884,9 +900,9 @@ function ConflictView({ conflict, props }: { conflict: Conflict; props: Props })
         <div className="badges">
           <IntensityBadge intensity={(shown ?? conflict).intensity} />
           <span className="badge muted">Since {conflict.since}</span>
-          {replay && props.month ? <span className="badge muted">As of {formatMonth(props.month)}</span> : <AgeBadges date={conflict.updated} kind="assessment" />}
+          {replay && props.month ? <span className="badge muted replay-badge">{replayBadge(conflict, props.month)}</span> : <AgeBadges date={conflict.updated} kind="assessment" />}
         </div>
-        {shown ? <LatestBlock entry={shown} replay={replay} /> : <p style={{ color: 'var(--fg-muted)' }}>No assessment on record for {props.month ? formatMonth(props.month) : ''}.</p>}
+        {shown ? <LatestBlock entry={shown} replay={replay} /> : <p style={{ color: 'var(--fg-muted)' }}>No assessment on record for {props.month ? formatMonth(props.month) : ''}{conflict.since <= Number(props.month?.slice(0, 4)) ? `; the current phase began in ${conflict.since}, before ATLAS tracked it` : ''}.</p>}
         {conflict.actors && conflict.actors.length > 0 && (
           <>
             <h3 id="conflict-actors">Who backs whom</h3>

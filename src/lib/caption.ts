@@ -4,13 +4,19 @@ import { UNREST_BY_ID } from '../data/unrest';
 import { CHOKEPOINT_BY_ID } from './chokepoints';
 import { countryName } from './countries';
 import { CONFLICT_TYPE_LABEL, INTENSITY_LABEL, formatDate } from './labels';
+import { replayAt } from './history';
+import { replayBadge } from './timeline';
 import type { Selection } from './urlState';
 
-/** Kicker and title for a deep-linked subject. */
-export function captionFor(selection: Exclude<Selection, null>): { kicker: string; title: string } | null {
+/** Kicker and title for a deep-linked subject; during replay a conflict reads at `month` and says whether that month has its own assessment. */
+export function captionFor(selection: Exclude<Selection, null>, month: string | null = null): { kicker: string; title: string } | null {
   switch (selection.kind) {
     case 'conflict': {
       const c = CONFLICT_BY_ID.get(selection.id);
+      if (c && month) {
+        const r = replayAt(c, month);
+        return { kicker: [CONFLICT_TYPE_LABEL[c.type], r.entry ? INTENSITY_LABEL[r.entry.intensity] : null, replayBadge(c, month)].filter(Boolean).join(' · '), title: c.name };
+      }
       return c ? { kicker: [CONFLICT_TYPE_LABEL[c.type], INTENSITY_LABEL[c.intensity], `since ${c.since}`, `assessed ${formatDate(c.updated)}`].join(' · '), title: c.name } : null;
     }
     case 'unrest': {

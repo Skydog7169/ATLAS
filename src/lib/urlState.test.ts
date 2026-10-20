@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { DEFAULT_STATE, parse, parseHash, serialize, type AppState } from './urlState';
+import { DEFAULT_EMBED_OPTS, DEFAULT_STATE, parse, parseHash, serialize, type AppState } from './urlState';
+import { clampMonth, monthRange } from './history';
 
 const valid = { bloc: (id: string) => id === 'nato' || id === 'eu', conflict: (id: string) => id === 'sudan', country: (iso: string) => iso === 'UKR' };
 
@@ -33,6 +34,39 @@ describe('presentation state', () => {
     expect(parse('#view=globe&rot=200,95', valid).rotation).toEqual([-160, 89]);
     expect(parse('#view=globe&rot=junk', valid).rotation).toEqual(DEFAULT_STATE.rotation);
     expect(parse('#', valid).view).toBe('flat');
+  });
+});
+
+describe('replay month', () => {
+  const months = monthRange('2025-12', '2026-10');
+  const withMonth = { ...valid, month: (m: string) => clampMonth(m, months).month };
+  it('clamps a month before the replay range to its first stop', () => {
+    expect(parse('#mode=conflicts&t=2023-01', withMonth).month).toBe('2025-12');
+  });
+  it('treats a month after the range as live and drops it from the rewritten hash', () => {
+    const s = parse('#mode=conflicts&t=2099-01', withMonth);
+    expect(s.month).toBeNull();
+    expect(serialize(s)).not.toContain('t=');
+  });
+  it('keeps an in-range month and rejects malformed ones', () => {
+    expect(parse('#mode=conflicts&t=2026-03', withMonth).month).toBe('2026-03');
+    expect(parse('#mode=conflicts&t=2026-13', withMonth).month).toBeNull();
+  });
+});
+
+describe('embed host options', () => {
+  it('round-trips legend, interaction and theme only when embedded', () => {
+    const hash = serialize({ ...DEFAULT_STATE, embed: true, embedOpts: { legend: 'off', interactive: false }, theme: 'light' });
+    expect(hash).toContain('legend=off');
+    expect(hash).toContain('interactive=0');
+    expect(hash).toContain('theme=light');
+    expect(parse(hash, valid).embedOpts).toEqual({ legend: 'off', interactive: false });
+    expect(parse(hash, valid).theme).toBe('light');
+    expect(serialize({ ...DEFAULT_STATE, embedOpts: { legend: 'off', interactive: false }, theme: 'light' })).not.toMatch(/legend|interactive|theme/);
+  });
+  it('falls back to defaults for unknown values and outside embeds', () => {
+    expect(parse('#embed=1&legend=huge&interactive=maybe', valid).embedOpts).toEqual(DEFAULT_EMBED_OPTS);
+    expect(parse('#legend=off', valid).embedOpts).toEqual(DEFAULT_EMBED_OPTS);
   });
 });
 

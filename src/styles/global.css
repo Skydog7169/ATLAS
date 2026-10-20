@@ -3128,7 +3128,7 @@ a {
   cursor: pointer;
 }
 
-.legend-dock:has(.legend-toggle) .legend h3 {
+.legend-dock:has(.legend-toggle) .legend :is(h3, .legend-title) {
   padding-right: 28px;
 }
 
@@ -3136,11 +3136,11 @@ a {
   padding: 8px 10px;
 }
 
-.legend-dock[data-collapsed='true'] .legend > :not(h3, ul) {
+.legend-dock[data-collapsed='true'] .legend > :not(h3, .legend-title, ul) {
   display: none;
 }
 
-.legend-dock[data-collapsed='true'] .legend h3 {
+.legend-dock[data-collapsed='true'] .legend :is(h3, .legend-title) {
   margin-bottom: 6px;
 }
 
@@ -3500,7 +3500,7 @@ a {
     display: none;
   }
 
-  .app[data-embed='true'] .legend-dock[data-collapsed='true'] .legend h3 {
+  .app[data-embed='true'] .legend-dock[data-collapsed='true'] .legend :is(h3, .legend-title) {
     margin: 0;
   }
 }

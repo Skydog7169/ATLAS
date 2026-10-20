@@ -222,7 +222,7 @@ export default function AboutView({ onClose, closeButton, actions }: { onClose: 
         </p>
         <h3>Globe, briefing, embed and export</h3>
         <p>
-          The globe button in the map controls switches to an orthographic globe you can spin by dragging (it keeps turning briefly when released) and the centre travels in the link. The briefing button goes full screen, hides the chrome and cycles through the live high-intensity conflicts and your watchlist, nine seconds each; Space pauses, arrows step, Escape exits. Add <span className="mono">embed=1</span> to any link to get a chrome-less view for an iframe (dark unless the link also says <span className="mono">theme=light</span> or <span className="mono">theme=auto</span>), and the download button saves the map you are looking at as a PNG with its legend and a date stamp.
+          The globe button in the map controls switches to an orthographic globe you can spin by dragging (it keeps turning briefly when released) and the centre travels in the link. The briefing button goes full screen, hides the chrome and cycles through the live high-intensity conflicts and your watchlist, nine seconds each; Space pauses, arrows step, Escape exits. The Embed button next to Copy link (and in the map controls) builds an iframe snippet for the current view, with a preview and options for the legend, interaction, theme (dark unless the link says <span className="mono">theme=light</span> or <span className="mono">theme=auto</span>) and a frozen replay month; embeds carry their data date in the badge. The download button saves the map you are looking at as a PNG with its legend and a date stamp.
         </p>
         <h3>Analysis</h3>
         <p>
