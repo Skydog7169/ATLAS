@@ -5,7 +5,7 @@ import sanctionsJson from '../data/sanctions.generated.json';
 import electionsJson from '../data/elections.json';
 import nuclearJson from '../data/nuclear.json';
 import { SANCTIONS, SANCTIONS_BY_ISO, sanctionsBin, sanctionsBinLabel, sanctionsColor, sanctionsFill, sanctionsSummary } from './sanctions';
-import { ELECTIONS, electionBin, electionBinLabel, electionColor, formatElectionDate, monthsUntil, electionSummary } from './elections';
+import { ELECTIONS, electionBin, electionBinLabel, electionColor, electionsDossier, formatElectionDate, monthsUntil, monthsUntilForLabel, electionSummary } from './elections';
 import { NUCLEAR, NUCLEAR_BY_ISO, nuclearColor, nuclearCount, nuclearSummary, testsFor } from './nuclear';
 
 describe('sanctions dataset', () => {
@@ -52,6 +52,18 @@ describe('sanctions dataset', () => {
   });
 });
 
+describe('election rows say what kind of vote they are', () => {
+  it('qualifies non-competitive votes, keeps the year-only date open until the year ends and drops echo notes', () => {
+    expect(electionSummary('CHN', new Date('2026-10-20T00:00:00Z'))).toMatch(/^Legislative election \(indirect, non-competitive\) Mar 2028/);
+    expect(ELECTIONS.rows.some((r) => r.iso === 'ESH')).toBe(false);
+    expect(monthsUntilForLabel('2026', new Date('2026-10-20T00:00:00Z'))).toBe(0);
+    expect(monthsUntilForLabel('2025', new Date('2026-10-20T00:00:00Z'))).toBeLessThan(0);
+    const ukr = electionsDossier('UKR')!.rows[0]!;
+    expect(ukr.value).toBe('No date set');
+    expect(ukr.note).toMatch(/martial law/);
+  });
+});
+
 describe('elections dataset', () => {
   it('validates, resolves every ISO code and has no duplicates', () => {
     const r = ElectionsFileSchema.safeParse(electionsJson);
@@ -73,7 +85,9 @@ describe('elections dataset', () => {
     expect([null, -1, 0, 2, 3, 5, 6, 11, 12, 23, 24, 60].map(electionBin)).toEqual([0, 0, 4, 4, 3, 3, 2, 2, 1, 1, 1, 1]);
     expect(electionBinLabel(4)).toBe('Within 3 months');
     expect(electionBinLabel(3)).toBe('3–6 months');
-    expect(electionBinLabel(1)).toBe('24+ months away');
+    expect(electionBinLabel(1)).toBe('12+ months away');
+    expect(electionBin(18)).toBe(1);
+    expect(electionBin(30)).toBe(1);
     expect(electionBinLabel(0)).toBe('No date set');
     expect(electionColor('USA', now)).toBe('#8cff7a');
     expect(electionColor('ZZZ', now)).toBe('var(--land)');

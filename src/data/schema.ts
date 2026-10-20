@@ -259,6 +259,8 @@ export const ElectionSchema = z.object({
   /** Next national election, or null when none is scheduled (suspended, postponed indefinitely). */
   date: z.string().regex(PARTIAL_DATE).nullable(),
   type: ElectionTypeSchema,
+  /** How the vote is held, when it is not a direct competitive election; sourced in `sources` (e.g. Freedom House). */
+  qualifiers: z.array(z.enum(['indirect', 'non-competitive'])).optional(),
   /** True when `date` is the constitutional deadline rather than a fixed date. */
   deadline: z.boolean().optional(),
   note: z.string().max(200).optional(),
