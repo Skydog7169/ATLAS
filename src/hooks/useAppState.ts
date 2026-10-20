@@ -4,6 +4,7 @@ import { CONFLICT_BY_ID } from '../data/conflicts';
 import { COUNTRY_BY_ISO } from '../lib/countries';
 import { CHOKEPOINT_BY_ID } from '../lib/chokepoints';
 import { UNREST_BY_ID } from '../data/unrest';
+import { isLayerAvailable } from '../lib/layerOptions';
 import { DEFAULT_STATE, parseHash, serialize, type AppState, type DroppedId, type Selection } from '../lib/urlState';
 import { historyMode, type HistoryMode } from '../lib/navHistory';
 
@@ -13,6 +14,7 @@ const validators = {
   country: (iso: string) => COUNTRY_BY_ISO.has(iso),
   chokepoint: (id: string) => CHOKEPOINT_BY_ID.has(id),
   unrest: (id: string) => UNREST_BY_ID.has(id),
+  layer: isLayerAvailable,
 };
 
 function read(): { state: AppState; dropped: DroppedId[] } {

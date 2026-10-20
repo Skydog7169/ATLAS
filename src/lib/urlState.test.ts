@@ -101,3 +101,30 @@ describe('history-friendly hash', () => {
     expect(parseHash('#mode=blocs&country=UKR', all).dropped).toEqual([]);
   });
 });
+
+describe('layers this build cannot draw', () => {
+  const offline = new Set(['acled', 'acled-unrest', 'ucdp']);
+  const withLayers = { ...valid, layer: (id: string) => !offline.has(id) };
+
+  it('keeps available layers', () => {
+    expect(parse('#mode=blocs&layer=sanctions', withLayers).layer).toBe('sanctions');
+  });
+
+  it('sends ACLED protest links to the tracked unrest layer', () => {
+    const s = parse('#mode=blocs&layer=acled-unrest', withLayers);
+    expect(s.layer).toBe('unrest');
+    expect(s.mode).toBe('blocs');
+  });
+
+  it('sends violence-event links to tracked conflicts instead of an all-zero map', () => {
+    for (const l of ['acled', 'ucdp']) {
+      const s = parse(`#mode=blocs&layer=${l}`, withLayers);
+      expect(s.layer).toBeNull();
+      expect(s.mode).toBe('conflicts');
+    }
+  });
+
+  it('accepts every known layer when no validator is given', () => {
+    expect(parse('#layer=ucdp', valid).layer).toBe('ucdp');
+  });
+});
