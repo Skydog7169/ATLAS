@@ -1,0 +1,74 @@
+/* Loading, edition and failure states. Loaded after global.css. */
+
+/* A newer edition has shipped since this tab loaded. */
+.readouts .edition-chip {
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 60%, transparent);
+  padding: 1px 6px;
+  box-shadow: var(--glow);
+}
+
+.readouts .edition-chip b {
+  color: var(--accent);
+}
+
+/* Data older than the research cadence is a snapshot: the live dots stop claiming otherwise. */
+.app[data-stale] .live,
+.live.stale {
+  background: var(--warn);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--warn) 55%, transparent);
+  animation: none;
+}
+
+/* The dossier chunk is loading. */
+.panel-loading .map-skeleton {
+  position: static;
+  height: 100%;
+  background: transparent;
+}
+
+/* Export or map failures surface here instead of failing silently. */
+.toast {
+  position: absolute;
+  left: 50%;
+  top: 12px;
+  transform: translateX(-50%);
+  z-index: 12;
+  max-width: calc(100% - 24px);
+  padding: 8px 14px;
+  border: 1px solid var(--warn);
+  background: var(--bg-elev);
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  box-shadow: var(--shadow);
+}
+
+.icon-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.icon-btn:disabled:hover {
+  color: var(--fg-muted);
+  border-color: var(--border-strong);
+}
+
+.brief-asof {
+  margin-left: auto;
+  margin-right: 12px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--fg-faint);
+}
+
+.app[data-stale] .brief-asof {
+  color: var(--warn);
+}
+
+/* Taps register at once, before React has built whatever they open. */
+.chip:active,
+g.marker:active {
+  filter: brightness(1.35);
+}

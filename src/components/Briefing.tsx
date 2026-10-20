@@ -19,6 +19,8 @@ interface Props {
   onShow: (item: BriefItem) => void;
   onOpen: (item: BriefItem) => void;
   onExit: () => void;
+  /** "Data as of …" line for wall displays, so an old edition is visible as such. */
+  asOf?: string;
 }
 
 /**
@@ -26,7 +28,7 @@ interface Props {
  * each and showing a caption. Space pauses, arrows step, Escape exits.
  * Requests browser full screen when available; failures are ignored.
  */
-export default function Briefing({ items, intervalMs = 9000, onShow, onOpen, onExit }: Props) {
+export default function Briefing({ items, intervalMs = 9000, onShow, onOpen, onExit, asOf }: Props) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const onShowRef = useRef(onShow);
@@ -81,6 +83,7 @@ export default function Briefing({ items, intervalMs = 9000, onShow, onOpen, onE
         <span className="eyebrow" style={{ color: item.color }}>
           {item.eyebrow}
         </span>
+        {asOf && <span className="brief-asof mono">{asOf}</span>}
         <span className="brief-count mono">
           {index + 1} / {items.length}
         </span>
@@ -89,7 +92,8 @@ export default function Briefing({ items, intervalMs = 9000, onShow, onOpen, onE
       {latest ? (
         <p>
           <span className="label" style={{ color: INTENSITY_COLOR[latest.intensity] }}>
-            {INTENSITY_LABEL[latest.intensity]} · {formatDate(latest.date)}
+            {/* The eyebrow already names the intensity for the high-intensity rotation. */}
+            {item.eyebrow === INTENSITY_LABEL[latest.intensity] ? formatDate(latest.date) : `${INTENSITY_LABEL[latest.intensity]} · ${formatDate(latest.date)}`}
           </span>
           <br />
           {latest.status}

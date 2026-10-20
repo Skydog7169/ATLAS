@@ -1,4 +1,4 @@
-import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
 import { BLOCS, BLOC_BY_ID, blocsForCountry } from './data/blocs';
 import { CONFLICTS, CONFLICT_BY_ID, INTENSITY_ORDER, conflictsForCountry } from './data/conflicts';
 import type { Intensity } from './data/types';
@@ -20,7 +20,6 @@ import LayerMenu from './components/LayerMenu';
 import { LAYER_OPTIONS } from './lib/layerOptions';
 import { INTENSITY_COLOR, INTENSITY_LABEL, INTENSITY_RADIUS } from './lib/labels';
 import BlocChips from './components/BlocChips';
-import DetailPanel from './components/DetailPanel';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import Legend from './components/Legend';
 import Search, { type SearchHit } from './components/Search';
@@ -35,12 +34,30 @@ import type { CountryFill, Focus, MapMarker } from './components/WorldMap';
 import Briefing, { type BriefItem } from './components/Briefing';
 import { COUNTRY_BY_ISO } from './lib/countries';
 import { downloadBlob, readLegend, renderPng } from './lib/exportPng';
-import { serialize } from './lib/urlState';
+import { serialize, type AppState } from './lib/urlState';
+import { lazyWithReload } from './lib/chunkReload';
+import { titleFor } from './lib/docTitle';
+import { daysSince } from './lib/edition';
+import { useEdition } from './hooks/useEdition';
 
 // The map pulls in d3 and the 110m geometry; loading it after the shell
 // paints keeps first render fast on phones.
-const WorldMap = lazy(() => import('./components/WorldMap'));
-const GlobeMap = lazy(() => import('./components/GlobeMap'));
+// lazyWithReload reloads once if a deploy has replaced the chunk since this tab loaded.
+const WorldMap = lazyWithReload(() => import('./components/WorldMap'));
+const GlobeMap = lazyWithReload(() => import('./components/GlobeMap'));
+// The dossier carries World Bank series, trade and the actor graph; first paint needs none of it.
+const DetailPanel = lazyWithReload(() => import('./components/DetailPanel'));
+
+// Fetch the chunks a session will likely need once the map is up, so a tab left
+// open across a deploy already holds them.
+function prefetchLater() {
+  const run = () => {
+    void import('./components/DetailPanel').catch(() => undefined);
+    void import('./components/GlobeMap').catch(() => undefined);
+  };
+  if ('requestIdleCallback' in window) window.requestIdleCallback(run, { timeout: 8000 });
+  else setTimeout(run, 4000);
+}
 
 const OVERVIEW_STEPS = ['var(--land)', '#123a4a', '#17607a', '#1f8fb3', '#35e0ff'];
 
@@ -51,8 +68,7 @@ const DATA_ASOF = [...BLOCS.map((b) => b.updated), ...CONFLICTS.map((c) => c.upd
 const membershipCount = new Map<string, number>();
 for (const b of BLOCS) for (const m of b.members) if (m.status === 'member') membershipCount.set(m.iso, (membershipCount.get(m.iso) ?? 0) + 1);
 
-// Replay covers conflict assessments only; bloc events go back years and would stretch the scrubber.
-const TIMELINE_MONTHS = monthRange(earliestMonth(CONFLICTS, []), currentMonth());
+const EARLIEST_MONTH = earliestMonth(CONFLICTS, []);
 
 /** Conflicts with the assessment in force for the view month (live = newest). */
 function conflictsAt(month: string | null): Array<{ conflict: (typeof CONFLICTS)[number]; intensity: Intensity }> {
@@ -73,6 +89,23 @@ function Logo() {
       <circle cx="16" cy="16" r="1.6" fill="var(--warn)" />
     </svg>
   );
+}
+
+function PanelSkeleton() {
+  return (
+    <aside className="panel panel-loading" aria-busy="true" aria-label="Loading dossier">
+      <div className="map-skeleton">
+        <div>
+          <div className="globe" />
+          LOADING DOSSIER
+        </div>
+      </div>
+    </aside>
+  );
+}
+
+function panelKey(sel: NonNullable<AppState['selection']>): string {
+  return sel.kind + ':' + ('id' in sel ? sel.id : 'iso' in sel ? sel.iso : sel.kind === 'pair' ? `${sel.a},${sel.b}` : '');
 }
 
 function MapSkeleton() {
@@ -97,6 +130,22 @@ export default function App() {
   const stageRef = useRef<HTMLDivElement>(null);
   const [insetRight, setInsetRight] = useState(0);
   const watchlist = useWatchlist();
+  const edition = useEdition();
+  const [mapError, setMapError] = useState<Error | null>(null);
+  const [exportError, setExportError] = useState<string | null>(null);
+  // The panel renders from a deferred copy so the tap's own feedback (marker, chip, URL) paints first.
+  const panelSelection = useDeferredValue(selection);
+
+  // Replay covers conflict assessments only; bloc events go back years and would stretch the scrubber.
+  // Recomputed per month so a tab left open rolls over at month end.
+  const nowMonth = currentMonth();
+  const timelineMonths = useMemo(() => monthRange(EARLIEST_MONTH, nowMonth), [nowMonth]);
+
+  useEffect(() => {
+    document.title = titleFor(state);
+  }, [state]);
+
+  useEffect(prefetchLater, []);
 
   // On wide screens the detail panel floats over the right edge; tell the map
   // so fly-to animations centre targets in the uncovered area.
@@ -354,6 +403,8 @@ export default function App() {
 
   const onBriefShow = useCallback(
     (item: BriefItem) => {
+      // Wall displays pick up a newer edition at the next slide; brief=1 survives in the hash.
+      if (edition.newer) return window.location.reload();
       if (item.kind === 'conflict') {
         update({ mode: 'conflicts', month: null, selection: null });
         if (item.conflict) setFocus({ kind: 'point', lonLat: item.conflict.location, scale: 3.5 });
@@ -368,7 +419,7 @@ export default function App() {
         setFocus({ kind: 'reset' });
       }
     },
-    [update],
+    [update, edition.newer],
   );
 
   const onBriefOpen = useCallback(
@@ -387,8 +438,10 @@ export default function App() {
   const exportPng = useCallback(async () => {
     const root = stageRef.current;
     const svg = root?.querySelector<SVGSVGElement>('.map-root svg');
-    if (!root || !svg || exporting) return;
+    if (exporting) return;
+    if (!root || !svg) return setExportError('Map unavailable: nothing to export.');
     setExporting(true);
+    setExportError(null);
     try {
       const css = getComputedStyle(document.documentElement);
       const legend = readLegend(root);
@@ -405,10 +458,18 @@ export default function App() {
         stamp: `Data ${formatMonth(DATA_ASOF)} · exported ${formatDate(today)} · atlas-geopolitic.vercel.app`,
       });
       downloadBlob(blob, `atlas-${layer ?? mode}-${today}.png`);
+    } catch {
+      setExportError('Export failed. Try again or reload.');
     } finally {
       setExporting(false);
     }
   }, [exporting, mode, viewMonth, activeBloc, layer]);
+
+  useEffect(() => {
+    if (!exportError) return;
+    const id = setTimeout(() => setExportError(null), 5000);
+    return () => clearTimeout(id);
+  }, [exportError]);
 
   const conflictColor = useCallback((id: string) => {
     const c = CONFLICT_BY_ID.get(id);
@@ -418,7 +479,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="app" data-panel-open={selection !== null} data-mode={mode} data-layer={layer ?? undefined} data-view={view} data-brief={brief} data-embed={embed}>
+    <div className="app" data-panel-open={selection !== null} data-mode={mode} data-layer={layer ?? undefined} data-view={view} data-brief={brief} data-embed={embed} data-stale={edition.stale || undefined} data-map-error={mapError ? true : undefined}>
       <header className="header">
         <a className="brand" href="#" onClick={(e) => { e.preventDefault(); update({ selection: null, bloc: null }); setFocus({ kind: 'reset' }); }}>
           <Logo />
@@ -444,6 +505,11 @@ export default function App() {
           <button className="readout-btn optional" onClick={() => update({ selection: { kind: 'changes' } })} title="Recent changes">
             DATA <b>{formatMonth(DATA_ASOF).toUpperCase()}</b>
           </button>
+          {edition.newer && (
+            <button className="readout-btn edition-chip" onClick={() => window.location.reload()} title="A newer edition of the data has shipped. Reload to load it; your view is kept in the link.">
+              NEW EDITION · <b>{formatDate(edition.newer).toUpperCase()}</b> ↻
+            </button>
+          )}
         </div>
         <Search onPick={onPick} conflictColor={conflictColor} mode={mode} watchlist={watchlist.items} />
         <button
@@ -503,7 +569,8 @@ export default function App() {
 
       <main className="stage" ref={stageRef}>
         <SinceLastVisit onSelectConflict={selectConflict} onSelectBloc={selectBloc} onSelectUnrest={selectUnrest} onOpenChanges={() => update({ selection: { kind: 'changes' } })} />
-        <ErrorBoundary>
+        {/* Keyed on the view so switching back to the flat map recovers from a failed globe. */}
+        <ErrorBoundary key={view} variant="map" onError={setMapError} autoReloadMs={brief ? 5000 : undefined}>
           <Suspense fallback={<MapSkeleton />}>
             {view === 'globe' ? (
               <GlobeMap
@@ -557,9 +624,9 @@ export default function App() {
           />
         )}
 
-        <Legend mode={mode} bloc={bloc} vs={mode === 'blocs' ? vs : null} overviewSteps={OVERVIEW_STEPS} layer={layer} />
+        {!mapError && <Legend mode={mode} bloc={bloc} vs={mode === 'blocs' ? vs : null} overviewSteps={OVERVIEW_STEPS} layer={layer} />}
 
-        {mode === 'conflicts' && <Timeline months={TIMELINE_MONTHS} value={month} onChange={(m) => update({ month: m })} />}
+        {mode === 'conflicts' && !mapError && <Timeline months={timelineMonths} value={month} onChange={(m) => update({ month: m })} snapshot={edition.stale ? edition.newest : null} />}
 
         <div className="map-controls">
           <LayerMenu options={LAYER_OPTIONS} value={layer} onChange={(l) => update({ layer: l })} />
@@ -596,7 +663,7 @@ export default function App() {
               )}
             </svg>
           </button>
-          <button className="icon-btn" aria-label="Export PNG" title="Export the map as a PNG" data-busy={exporting} onClick={() => void exportPng()}>
+          <button className="icon-btn" aria-label="Export PNG" title={mapError ? 'Map unavailable' : 'Export the map as a PNG'} disabled={Boolean(mapError)} data-busy={exporting} onClick={() => void exportPng()}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <path d="M12 3v12M7 10l5 5 5-5M4 17v3h16v-3" />
             </svg>
@@ -617,7 +684,13 @@ export default function App() {
           </a>
         )}
 
-        {brief && <Briefing items={briefItems} onShow={onBriefShow} onOpen={onBriefOpen} onExit={exitBrief} />}
+        {exportError && (
+          <div className="toast" role="status">
+            {exportError}
+          </div>
+        )}
+
+        {brief && <Briefing items={briefItems} onShow={onBriefShow} onOpen={onBriefOpen} onExit={exitBrief} asOf={`DATA AS OF ${formatDate(edition.newest).toUpperCase()} · ${daysSince(edition.newest) === 0 ? 'TODAY' : `${daysSince(edition.newest)}D AGO`}`} />}
 
         <Ticker onSelectConflict={selectConflict} onSelectBloc={selectBloc} onSelectUnrest={selectUnrest} />
 
@@ -629,25 +702,31 @@ export default function App() {
         )}
 
         {selection && (
-          <ErrorBoundary>
-            <DetailPanel
-              selection={selection}
-              month={viewMonth}
-              compare={compare}
-              onStopCompare={() => update({ vs: null, selection: bloc ? { kind: 'bloc', id: bloc } : null })}
-              onClose={() => update({ selection: null })}
-              onSelectCountry={selectCountry}
-              onSelectBloc={selectBloc}
-              onSelectConflict={selectConflict}
-              onHighlightBloc={(id) => {
-                update({ mode: 'blocs', bloc: id });
-                setFocus({ kind: 'reset' });
-              }}
-              onOpenChanges={() => update({ selection: { kind: 'changes' } })}
-              onSelectChokepoint={selectChokepoint}
-              onSelectUnrest={selectUnrest}
-              onSelectPair={selectPair}
-            />
+          <ErrorBoundary variant="panel" resetKey={panelKey(selection)}>
+            <Suspense fallback={<PanelSkeleton />}>
+              {panelSelection ? (
+                <DetailPanel
+                  selection={panelSelection}
+                  month={viewMonth}
+                  compare={compare}
+                  onStopCompare={() => update({ vs: null, selection: bloc ? { kind: 'bloc', id: bloc } : null })}
+                  onClose={() => update({ selection: null })}
+                  onSelectCountry={selectCountry}
+                  onSelectBloc={selectBloc}
+                  onSelectConflict={selectConflict}
+                  onHighlightBloc={(id) => {
+                    update({ mode: 'blocs', bloc: id });
+                    setFocus({ kind: 'reset' });
+                  }}
+                  onOpenChanges={() => update({ selection: { kind: 'changes' } })}
+                  onSelectChokepoint={selectChokepoint}
+                  onSelectUnrest={selectUnrest}
+                  onSelectPair={selectPair}
+                />
+              ) : (
+                <PanelSkeleton />
+              )}
+            </Suspense>
           </ErrorBoundary>
         )}
       </main>

@@ -151,15 +151,20 @@ function modeBoost(kind: SearchKind, mode: Mode | undefined): number {
 
 const CONNECTORS = new Set(['and', 'vs', 'v', 'versus', '&', '-', 'x', '/', '↔', '<>', 'with', 'relations', 'relationship']);
 
-/** A country the phrase names outright (name, code, alias) or uniquely by prefix. */
+/** Country names, codes and aliases (not capitals) that name exactly one country, for pair queries. */
+const PAIR_KEYS = (() => {
+  const map = new Map<string, string | null>();
+  for (const c of COUNTRIES.filter((x) => x.independent || EXTRA_TERRITORIES.has(x.cca3))) {
+    for (const k of [c.name, c.official, c.cca3, c.cca2, ...(c.alt ?? []), ...(COUNTRY_ALIASES[c.cca3] ?? [])].map(fold)) {
+      map.set(k, map.has(k) && map.get(k) !== c.cca3 ? null : c.cca3);
+    }
+  }
+  return map;
+})();
+
+/** A country the phrase names outright; prefixes are too loose here ("serbia anti" is not Serbia ↔ Antigua). */
 function resolveCountry(phrase: string): string | null {
-  if (!phrase) return null;
-  const exact = COUNTRY_ENTRIES.filter((h) => h.keys.includes(phrase));
-  if (exact.length === 1) return exact[0]!.id;
-  if (exact.length > 1) return null;
-  if (phrase.length < 4) return null;
-  const prefix = COUNTRY_ENTRIES.filter((h) => h.keys.some((k) => k.startsWith(phrase)));
-  return prefix.length === 1 ? prefix[0]!.id : null;
+  return PAIR_KEYS.get(phrase) ?? null;
 }
 
 /** "usa china", "israel vs iran", "united states and china" → the relationship view. */

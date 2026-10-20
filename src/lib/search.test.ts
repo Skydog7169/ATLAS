@@ -122,3 +122,10 @@ describe('fold', () => {
     expect(fold('Russia–Ukraine')).toBe('russia ukraine');
   });
 });
+
+describe('search: pairs stay strict', () => {
+  it('does not read a country plus a word prefix as a pair', () => {
+    expect(search('serbia anti').some((h) => h.kind === 'pair')).toBe(false);
+    expect(search('serbia anti')[0]).toMatchObject({ kind: 'unrest' });
+  });
+});
