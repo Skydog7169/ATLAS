@@ -48,7 +48,7 @@ describe('military presence', () => {
     expect(militaryColor('DJI')).toBe('#9fc0ff');
     expect(militaryColor('ISL')).toBe('var(--land)');
     expect(militarySummary('SEN')).toBeNull();
-    expect(militarySummary('DJI')).toMatch(/^Hosts: /);
+    expect(militarySummary('DJI')).toMatch(/^Foreign forces: /);
   });
 
   it('builds a dossier section for hosts and operators, with ended rows in the footnote', () => {
@@ -57,6 +57,18 @@ describe('military presence', () => {
     expect(fra.footnote).toMatch(/Ended: .*Senegal/);
     expect(militaryDossier('ISL')).toBeNull();
     expect(countryDossier('DJI')!.sections).toContain('military');
+  });
+
+  it('does not call an occupying army hosted, and files North Korean troops under Russia', () => {
+    const kind = (host: string, op: string) => PRESENCE_ACTIVE.find((p) => p.host === host && p.operator === op)?.kind;
+    expect(kind('UKR', 'RUS')).toBe('occupation');
+    expect(kind('LBN', 'ISR')).toBe('occupation');
+    expect(kind('SYR', 'ISR')).toBe('occupation');
+    expect(kind('COD', 'RWA')).toBe('contested');
+    expect(kind('UKR', 'PRK')).toBeUndefined();
+    expect(kind('RUS', 'PRK')).toBe('deployment');
+    expect(militaryDossier('UKR')!.title).toMatch(/^Foreign forces present · \d/);
+    expect(militaryDossier('UKR')!.title).not.toMatch(/hosted/);
   });
 });
 

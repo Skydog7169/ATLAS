@@ -332,7 +332,8 @@ export const ChokepointsFileSchema = z.object({
   chokepoints: z.array(ChokepointSchema).min(1),
 });
 
-export const PresenceKindSchema = z.enum(['base', 'deployment', 'mission']);
+/** occupation: an invasion or occupying force; contested: present without the host government's consent. */
+export const PresenceKindSchema = z.enum(['base', 'deployment', 'mission', 'occupation', 'contested']);
 
 export const PresenceSchema = z.object({
   host: z.string().regex(ISO3),
