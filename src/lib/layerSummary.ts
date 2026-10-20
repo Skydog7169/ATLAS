@@ -1,4 +1,4 @@
-import { DISPLACEMENT_BY_ISO, formatPeople } from './displacement';
+import { displacementSummary } from './displacement';
 import { sanctionsSummary } from './sanctions';
 import { electionSummary } from './elections';
 import { nuclearSummary } from './nuclear';
@@ -16,10 +16,8 @@ import type { Layer } from './urlState';
  */
 export function layerSummary(layer: Layer, iso: string): string | null {
   switch (layer) {
-    case 'displacement': {
-      const row = DISPLACEMENT_BY_ISO.get(iso);
-      return row ? `${formatPeople(row.total)} displaced · ${formatPeople(row.refugees)} refugees · ${formatPeople(row.idps)} IDPs` : 'No UNHCR displacement figure';
-    }
+    case 'displacement':
+      return displacementSummary(iso);
     case 'sanctions': {
       const s = sanctionsSummary(iso);
       return s ? `Sanctions: ${s}` : 'No country-level sanctions regime';

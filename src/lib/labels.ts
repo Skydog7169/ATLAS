@@ -33,6 +33,18 @@ export const STATUS_LABEL: Record<MembershipStatus, string> = {
   partner: 'Partner / associate',
   observer: 'Observer',
   invited: 'Invited',
+  candidate: 'Candidate',
+};
+
+/** Roster headings for groups of more than one. */
+export const STATUS_LABEL_PLURAL: Record<MembershipStatus, string> = {
+  member: 'Members',
+  suspended: 'Suspended',
+  frozen: 'Participation frozen',
+  partner: 'Partners / associates',
+  observer: 'Observers',
+  invited: 'Invited',
+  candidate: 'Candidates',
 };
 
 export const CATEGORY_LABEL: Record<BlocCategory, string> = {
@@ -61,4 +73,5 @@ export const CHANGE_LABEL: Record<BlocChangeKind, string> = {
   frozen: 'Froze participation',
   invited: 'Invited',
   founded: 'Founding member',
+  candidate: 'Granted candidate status',
 };

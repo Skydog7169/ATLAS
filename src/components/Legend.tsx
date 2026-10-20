@@ -37,9 +37,13 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
               {binLabel(i)}
             </li>
           ))}
+          <li>
+            <span className="swatch" style={{ background: `repeating-linear-gradient(45deg, ${DISPLACEMENT_COLORS[4]} 0 3px, transparent 3px 6px)` }} />
+            Known source gap (non-UNHCR figures)
+          </li>
         </ul>
         <div className="note">
-          People displaced from each country: refugees, asylum seekers, IDPs and others in need of protection.{' '}
+          People displaced from each country: refugees, asylum seekers, IDPs and others in need of protection. UNHCR figures exclude Palestine refugees under UNRWA's mandate; Palestine adds UNRWA's register and is hatched. Kosovo is counted with Serbia.{' '}
           <a href={DISPLACEMENT.source.url} target="_blank" rel="noopener noreferrer">
             UNHCR
           </a>{' '}
@@ -215,9 +219,13 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
               {sanctionsBinLabel(i)}
             </li>
           ))}
+          <li>
+            <span className="swatch" style={{ background: `repeating-linear-gradient(45deg, ${SANCTIONS_COLORS[SANCTIONS_COLORS.length - 1]} 0 3px, transparent 3px 6px)` }} />
+            Comprehensive US embargo
+          </li>
         </ul>
         <div className="note">
-          Country-level regimes by the UN Security Council, the United States (OFAC) and the EU; thematic programmes against people are not counted.{' '}
+          Country-level regimes by the UN Security Council, the United States (OFAC) and the EU; thematic programmes against people are not counted, nor are regimes that protect the country they are filed under (EU measures over Crimea count against no one, not Ukraine).{' '}
           {SANCTIONS.sources.map((s, i) => (
             <span key={s.url}>
               {i > 0 ? ', ' : ''}
@@ -291,8 +299,12 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
               {INTENSITY_LABEL[i]}
             </li>
           ))}
+          <li>
+            <span className="swatch outline" style={{ borderColor: INTENSITY_COLOR.high }} />
+            Party to a conflict abroad
+          </li>
         </ul>
-        <div className="note">Countries are tinted by the most intense conflict on their territory. Marker size follows intensity.</div>
+        <div className="note">Countries are filled by the most intense conflict fought on their territory. A dashed outline marks a state whose forces fight only abroad. Marker size follows intensity.</div>
       </aside>
     );
   }
@@ -320,7 +332,7 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
             <span className="swatch" style={{ background: `repeating-linear-gradient(45deg, ${b.color} 0 4px, ${v.color} 4px 8px)` }} /> Both · {both}
           </li>
         </ul>
-        <div className="note">Full members only. Open the panel for shared members and combined figures.</div>
+        <div className="note">Full members only. Open the panel for shared members, suspended states and each bloc's totals.</div>
       </aside>
     );
   }
@@ -333,9 +345,9 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           <li>
             <span className="swatch" style={{ background: b.color }} /> Member
           </li>
-          {(statuses.has('partner') || statuses.has('observer') || statuses.has('invited')) && (
+          {(statuses.has('partner') || statuses.has('observer') || statuses.has('invited') || statuses.has('candidate')) && (
             <li>
-              <span className="swatch" style={{ background: b.color, opacity: 0.45 }} /> Partner, observer or invited
+              <span className="swatch" style={{ background: b.color, opacity: 0.45 }} /> {statuses.has('candidate') ? 'Candidate' : 'Partner, observer or invited'}
             </li>
           )}
           {(statuses.has('suspended') || statuses.has('frozen')) && (

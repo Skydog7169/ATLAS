@@ -34,6 +34,8 @@ export interface Relationship {
   sharedBlocs: SharedBloc[];
   conflicts: ConflictLink[];
   sanctions: SanctionLink[];
+  /** False when neither side is the US or an EU member: ATLAS records no other sanctioning authority, so an empty list means 'not tracked', not 'none'. */
+  sanctionsInScope: boolean;
   presence: { aInB: Presence[]; bInA: Presence[] };
   trade: { aToB: number | null; bToA: number | null; yearA: number | null; yearB: number | null };
   nuclear: { a: string | null; b: string | null };
@@ -41,6 +43,11 @@ export interface Relationship {
 }
 
 const EU27 = new Set(['AUT', 'BEL', 'BGR', 'HRV', 'CYP', 'CZE', 'DNK', 'EST', 'FIN', 'FRA', 'DEU', 'GRC', 'HUN', 'IRL', 'ITA', 'LVA', 'LTU', 'LUX', 'MLT', 'NLD', 'POL', 'PRT', 'ROU', 'SVK', 'SVN', 'ESP', 'SWE']);
+
+/** Whether ATLAS records the country-level regimes this country applies: the US's, and the EU's for its members. */
+export function sanctionsTracked(iso: string): boolean {
+  return iso === 'USA' || EU27.has(iso);
+}
 
 /** Regimes `from` applies to `to`: the US's own programmes, or the EU's when `from` is a member. */
 function sanctionsBetween(from: string, to: string): SanctionsRegime[] {
@@ -92,6 +99,7 @@ export function relationship(a: string, b: string, now: Date = new Date()): Rela
     sharedBlocs,
     conflicts: conflictLinks(a, b),
     sanctions,
+    sanctionsInScope: sanctionsTracked(a) || sanctionsTracked(b),
     presence: { aInB: PRESENCE_ACTIVE.filter((p) => p.operator === a && p.host === b), bInA: PRESENCE_ACTIVE.filter((p) => p.operator === b && p.host === a) },
     trade: { aToB: exportShare(a, b), bToA: exportShare(b, a), yearA: TRADE_BY_ISO.get(a)?.year ?? null, yearB: TRADE_BY_ISO.get(b)?.year ?? null },
     nuclear: { a: nuc(a), b: nuc(b) },

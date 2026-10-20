@@ -32,10 +32,6 @@
     {
      "iso": "PAN",
      "share": 0.015
-    },
-    {
-     "iso": "VEN",
-     "share": 0
     }
    ]
   },
@@ -1198,34 +1194,6 @@
     {
      "iso": "NLD",
      "share": 0.001
-    },
-    {
-     "iso": "AFG",
-     "share": 0
-    },
-    {
-     "iso": "AUS",
-     "share": 0
-    },
-    {
-     "iso": "AUT",
-     "share": 0
-    },
-    {
-     "iso": "BEL",
-     "share": 0
-    },
-    {
-     "iso": "BRA",
-     "share": 0
-    },
-    {
-     "iso": "CHE",
-     "share": 0
-    },
-    {
-     "iso": "COL",
-     "share": 0
     }
    ]
   },
@@ -1424,18 +1392,6 @@
     {
      "iso": "PRT",
      "share": 0.001
-    },
-    {
-     "iso": "AUT",
-     "share": 0
-    },
-    {
-     "iso": "BEL",
-     "share": 0
-    },
-    {
-     "iso": "BHR",
-     "share": 0
     }
    ]
   },
@@ -1782,10 +1738,6 @@
     {
      "iso": "VNM",
      "share": 0.001
-    },
-    {
-     "iso": "AUS",
-     "share": 0
     }
    ]
   },
@@ -6140,14 +6092,6 @@
     {
      "iso": "MOZ",
      "share": 0.001
-    },
-    {
-     "iso": "ARE",
-     "share": 0
-    },
-    {
-     "iso": "AUT",
-     "share": 0
     }
    ]
   },
@@ -6412,22 +6356,6 @@
     {
      "iso": "PHL",
      "share": 0.001
-    },
-    {
-     "iso": "ARE",
-     "share": 0
-    },
-    {
-     "iso": "AUS",
-     "share": 0
-    },
-    {
-     "iso": "BEL",
-     "share": 0
-    },
-    {
-     "iso": "CHE",
-     "share": 0
     }
    ]
   },
@@ -7054,10 +6982,6 @@
     {
      "iso": "USA",
      "share": 0.001
-    },
-    {
-     "iso": "ARE",
-     "share": 0
     }
    ]
   },

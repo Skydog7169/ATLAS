@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { BLOCS, BLOC_BY_ID } from '../data/blocs';
 import { WB_HISTORY, gdpIn } from './worldbankHistory';
-import { blocTrend, membersIn, trendComplete } from './trends';
+import { blocTrend, gdpCarried, lastChange, membersIn, trendComplete } from './trends';
+import { blocFigures } from './worldbank';
 
 describe('world bank history', () => {
   it('covers 1990 onward for most countries', () => {
@@ -47,7 +48,7 @@ describe('bloc trends', () => {
     expect(t[0]!.year).toBe(1990);
     expect(t.at(-1)!.year).toBe(WB_HISTORY.to);
     expect(t.at(-1)!.members).toBe(32);
-    expect(t.at(-1)!.covered).toBeGreaterThan(25);
+    expect(t.at(-1)!.covered).toBe(32);
     expect(t.at(-1)!.gdpUsd).toBeGreaterThan(t[0]!.gdpUsd);
     const aes = blocTrend(BLOC_BY_ID.get('aes')!);
     expect(aes[0]!.year).toBe(2023);
@@ -63,5 +64,37 @@ describe('former members', () => {
         expect(b.members.some((m) => m.iso === f.iso && m.status === 'member' && m.since !== undefined && m.since < f.until && m.since >= f.since)).toBe(false);
       }
     }
+  });
+});
+
+describe('combined GDP never collapses because a member has not reported yet', () => {
+  it('GCC last point is within 5% of the previous one', () => {
+    const t = blocTrend(BLOC_BY_ID.get('gcc')!);
+    expect(Math.abs(t.at(-1)!.gdpUsd - t.at(-2)!.gdpUsd) / t.at(-2)!.gdpUsd).toBeLessThan(0.05);
+  });
+
+  it.each(['gcc', 'opec', 'arab-league', 'brics', 'au'])('%s does not fall more than 5 percent in the last year', (id) => {
+    const t = blocTrend(BLOC_BY_ID.get(id)!);
+    expect(t.at(-1)!.gdpUsd, id).toBeGreaterThan(t.at(-2)!.gdpUsd * 0.95);
+  });
+
+  it('carries a missing year forward and records it', () => {
+    const iso = Object.keys(WB_HISTORY.gdpUsd).find((k) => gdpIn(k, WB_HISTORY.to) === null && gdpIn(k, WB_HISTORY.to - 1) !== null);
+    if (!iso) return;
+    expect(gdpCarried(iso, WB_HISTORY.to)).toEqual({ value: gdpIn(iso, WB_HISTORY.to - 1), from: WB_HISTORY.to - 1 });
+  });
+
+  it('agrees with the At a glance tile for blocs whose membership has not changed since the last data year', () => {
+    for (const id of ['gcc', 'au', 'mercosur', 'ecowas', 'brics', 'csto']) {
+      const b = BLOC_BY_ID.get(id)!;
+      expect(blocTrend(b).at(-1)!.gdpUsd, id).toBeCloseTo(blocFigures(b).gdpUsd, -9);
+    }
+  });
+
+  it('reports a world share and the last membership change', () => {
+    const t = blocTrend(BLOC_BY_ID.get('brics')!);
+    expect(t.at(-1)!.worldShare).toBeGreaterThan(0.15);
+    expect(t.at(-1)!.worldShare).toBeLessThan(0.5);
+    expect(lastChange(BLOC_BY_ID.get('gcc')!)).toBe(1981);
   });
 });

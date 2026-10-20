@@ -22,7 +22,8 @@ async function fetchIndicator(code) {
   const [, rows] = await res.json();
   const out = new Map();
   for (const r of rows ?? []) {
-    const iso = r.countryiso3code;
+    // The World Bank codes Kosovo XKX; ATLAS uses UNK.
+    const iso = r.countryiso3code === 'XKX' ? 'UNK' : r.countryiso3code;
     if (!/^[A-Z]{3}$/.test(iso) || r.value == null) continue;
     out.set(iso, { value: Number(r.value), year: Number(r.date) });
   }
