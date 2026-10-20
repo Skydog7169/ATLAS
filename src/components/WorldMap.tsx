@@ -4,7 +4,7 @@ import { useSize } from '../hooks/useSize';
 import { triPath } from '../lib/shapes';
 import { geoGraticule10, geoNaturalEarth1, geoPath, type GeoPath } from 'd3-geo';
 import { select } from 'd3-selection';
-import { zoom as d3zoom, zoomIdentity, type ZoomBehavior, type ZoomTransform } from 'd3-zoom';
+import { zoom as d3zoom, zoomIdentity, zoomTransform, type ZoomBehavior, type ZoomTransform } from 'd3-zoom';
 import 'd3-transition';
 import { COUNTRY_FEATURES, MICROSTATES, drawnIsos, loadDetailedFeatures, type CountryFeature } from '../lib/geo';
 import { COUNTRY_BY_ISO } from '../lib/countries';
@@ -41,6 +41,8 @@ export type Focus =
   | { kind: 'country'; iso: string }
   | { kind: 'point'; lonLat: [number, number]; scale?: number }
   | { kind: 'reset' }
+  /** Back to the view before the last fly-to, unless the user has moved the map since. */
+  | { kind: 'restore' }
   | null;
 
 export interface CountryFill {
@@ -194,6 +196,7 @@ export default function WorldMap({
   const svgRef = useRef<SVGSVGElement>(null);
   const layerRef = useRef<SVGGElement>(null);
   const zoomRef = useRef<ZoomBehavior<SVGSVGElement, unknown> | null>(null);
+  const preFlyRef = useRef<ZoomTransform | null>(null);
   const { width, height } = useSize(rootRef);
   const [transform, setTransform] = useState<ZoomTransform>(zoomIdentity);
   const [hoverIso, onCountryHover] = useHoverIso(onHover);
@@ -278,6 +281,8 @@ export default function WorldMap({
       ])
       .on('zoom', (event) => {
         const t = event.transform as ZoomTransform;
+        // A drag or wheel is the user's own framing: nothing to restore any more.
+        if (event.sourceEvent) preFlyRef.current = null;
         layerRef.current?.setAttribute('transform', t.toString());
         setTransform(t);
         // Whatever was under the pointer has moved; drop the tooltip until the next enter.
@@ -299,6 +304,7 @@ export default function WorldMap({
     const run = (fn: (sel: ReturnType<typeof select<SVGSVGElement, unknown>>) => void) => {
       const svg = svgRef.current;
       if (!svg || !zoomRef.current) return;
+      preFlyRef.current = null;
       fn(select(svg).transition().duration(250) as unknown as ReturnType<typeof select<SVGSVGElement, unknown>>);
     };
     zoomApiRef.current = {
@@ -316,7 +322,11 @@ export default function WorldMap({
     const cxView = visW / 2;
     const cyView = height / 2;
     let target: ZoomTransform | null = null;
-    if (focus.kind === 'reset') {
+    if (focus.kind === 'restore') {
+      target = preFlyRef.current;
+      preFlyRef.current = null;
+    } else if (focus.kind === 'reset') {
+      preFlyRef.current = null;
       target = initialRef.current;
     } else if (focus.kind === 'country') {
       const f = features.find((x) => x.properties.iso === focus.iso);
@@ -341,6 +351,8 @@ export default function WorldMap({
       if (p) target = zoomIdentity.translate(cxView - k * p[0], cyView - k * p[1]).scale(k);
     }
     if (!target) return;
+    // Remember where a chain of fly-tos started so closing the panel can return there.
+    if ((focus.kind === 'country' || focus.kind === 'point') && !preFlyRef.current) preFlyRef.current = zoomTransform(svg);
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const sel = select(svg);
     if (reduce) zoomRef.current.transform(sel, target);
@@ -364,8 +376,12 @@ export default function WorldMap({
     } else if (e.key === '+' || e.key === '=') z.scaleBy(sel, 1.5);
     else if (e.key === '-' || e.key === '_') z.scaleBy(sel, 1 / 1.5);
     else if (e.key === '0' || e.key === 'Home') z.transform(sel, initialRef.current);
-    else if (e.key === 'Escape') onHover(null, 0, 0);
-    else return;
+    else if (e.key === 'Escape') {
+      // Not consumed: the app-level Escape still closes the panel.
+      onHover(null, 0, 0);
+      return;
+    } else return;
+    preFlyRef.current = null;
     e.preventDefault();
   };
 

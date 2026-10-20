@@ -1,4 +1,4 @@
-import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState, type RefObject } from 'react';
 import { menuPlacement, type MenuPlacement } from '../lib/menuPlacement';
 import Icon, { type IconName } from './Icon';
 
@@ -19,12 +19,13 @@ export interface ShareAction {
  * The output end of the map controls: copy a link or embed code, export a
  * PNG, present. Built like the layer menu so the two read as one family.
  */
-export default function SharePopover({ actions }: { actions: ShareAction[] }) {
+export default function SharePopover({ actions, triggerRef: outerRef }: { actions: ShareAction[]; triggerRef?: RefObject<HTMLButtonElement | null> }) {
   const [open, setOpen] = useState(false);
   const [place, setPlace] = useState<MenuPlacement | null>(null);
   const [done, setDone] = useState<string | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const ownRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = outerRef ?? ownRef;
   const id = useId();
 
   useEffect(() => {

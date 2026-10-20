@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { Fragment, useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { BLOCS } from '../data/blocs';
 import Icon from './Icon';
 
@@ -129,6 +129,9 @@ export default function BlocChips({ active, vs, picking, suppressed = false, onC
               if (picking && active && b.id !== active) {
                 onVs(b.id);
                 onPicking(false);
+              } else if (picking && isA) {
+                // Clicking the first bloc again cancels picking rather than dropping the bloc.
+                onPicking(false);
               } else if (suppressed && (isA || isB)) {
                 // Under a layer the pressed chip isn't on the map: clicking it brings the bloc back.
                 onChange(active);
@@ -147,8 +150,14 @@ export default function BlocChips({ active, vs, picking, suppressed = false, onC
             {isB && <span className="tag-ab">B</span>}
           </button>
         );
-        // Compare sits right after the bloc it compares.
-        return isA ? [chip, compareChip] : chip;
+        // Compare sits right after the bloc it compares. Always a keyed fragment, so the
+        // chip keeps its DOM node (and focus) when it becomes active.
+        return (
+          <Fragment key={b.id}>
+            {chip}
+            {isA && compareChip}
+          </Fragment>
+        );
       })}
       {edges.overflow && (
         <button type="button" className="chip chip-page next" aria-label="Scroll blocs right" tabIndex={-1} data-hidden={edges.end} onClick={() => page(1)}>
