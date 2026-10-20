@@ -25,19 +25,29 @@ function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
+const plural = (n, one, many = one + 's') => `${n} ${n === 1 ? one : many}`;
+/** Real signals (new, escalated, eased, membership) before same-level re-assessments; otherwise feed order. */
+const signalsFirst = (list) => [...list.filter((it) => it.delta !== 'same'), ...list.filter((it) => it.delta === 'same')];
+
 /** Subject, plain text and HTML for the items dated after `since`. Returns null when nothing changed. */
 export function renderDigest(items, since, now = new Date()) {
   const fresh = items.filter((it) => it.date > since);
   if (!fresh.length) return null;
-  const conflicts = fresh.filter((it) => it.tags[0] === 'conflict');
+  const conflicts = signalsFirst(fresh.filter((it) => it.tags[0] === 'conflict'));
+  const unrest = signalsFirst(fresh.filter((it) => it.tags[0] === 'unrest'));
   const blocs = fresh.filter((it) => it.tags[0] === 'bloc');
+  const count = (d) => fresh.filter((it) => it.delta === d).length;
+  const tally = [count('new') && `${count('new')} new`, count('up') && `${count('up')} escalated`, count('down') && `${count('down')} eased`, count('same') && `${count('same')} re-assessed with no change`].filter(Boolean).join(', ');
   const day = now.toISOString().slice(0, 10);
-  const subject = `ATLAS digest ${day}: ${conflicts.length} assessment${conflicts.length === 1 ? '' : 's'}, ${blocs.length} membership change${blocs.length === 1 ? '' : 's'}`;
+  const subject = `ATLAS digest ${day}: ${plural(conflicts.length, 'conflict assessment')}, ${plural(unrest.length, 'unrest assessment')}, ${plural(blocs.length, 'membership change')}`;
+  const lines = (list) => list.map((it) => `- ${it.date} ${it.title}\n  ${it.summary}\n  ${it.url}`);
   const text = [
     `ATLAS: what changed since ${since}`,
+    ...(tally ? [tally + '.'] : []),
     '',
-    ...(conflicts.length ? ['Conflict assessments', ...conflicts.map((it) => `- ${it.date} ${it.title}\n  ${it.summary}\n  ${it.url}`), ''] : []),
-    ...(blocs.length ? ['Bloc memberships', ...blocs.map((it) => `- ${it.date} ${it.title}\n  ${it.summary}\n  ${it.url}`), ''] : []),
+    ...(conflicts.length ? ['Conflict assessments', ...lines(conflicts), ''] : []),
+    ...(unrest.length ? ['Civil unrest', ...lines(unrest), ''] : []),
+    ...(blocs.length ? ['Bloc memberships', ...lines(blocs), ''] : []),
     `Map: ${SITE}/  ·  Feed: ${SITE}/feed.xml`,
     'You receive this because your address is in the ATLAS repository\'s DIGEST_RECIPIENTS variable.',
   ].join('\n');
@@ -53,7 +63,7 @@ export function renderDigest(items, since, now = new Date()) {
           )
           .join('')
       : '';
-  const html = `<!doctype html><html><body style="margin:0;padding:24px;background:#f4f7fa;color:#0b1a26"><div style="max-width:640px;margin:0 auto"><h1 style="font:700 20px system-ui;letter-spacing:.08em;margin:0 0 4px">ATLAS</h1><p style="font:13px system-ui;color:#666;margin:0 0 16px">What changed since ${esc(since)}</p>${section('Conflict assessments', conflicts)}${section('Bloc memberships', blocs)}<p style="font:12px system-ui;color:#666;margin-top:24px"><a href="${SITE}/" style="color:#0a7ea4">Open the map</a> · <a href="${SITE}/feed.xml" style="color:#0a7ea4">RSS</a> · You receive this because your address is in the ATLAS repository's DIGEST_RECIPIENTS variable.</p></div></body></html>`;
+  const html = `<!doctype html><html><body style="margin:0;padding:24px;background:#f4f7fa;color:#0b1a26"><div style="max-width:640px;margin:0 auto"><h1 style="font:700 20px system-ui;letter-spacing:.08em;margin:0 0 4px">ATLAS</h1><p style="font:13px system-ui;color:#666;margin:0 0 16px">What changed since ${esc(since)}${tally ? ` · ${esc(tally)}` : ''}</p>${section('Conflict assessments', conflicts)}${section('Civil unrest', unrest)}${section('Bloc memberships', blocs)}<p style="font:12px system-ui;color:#666;margin-top:24px"><a href="${SITE}/" style="color:#0a7ea4">Open the map</a> · <a href="${SITE}/feed.xml" style="color:#0a7ea4">RSS</a> · You receive this because your address is in the ATLAS repository's DIGEST_RECIPIENTS variable.</p></div></body></html>`;
   return { subject, text, html, count: fresh.length };
 }
 

@@ -20,7 +20,7 @@ import LayerMenu from './components/LayerMenu';
 import { LAYER_OPTIONS } from './lib/layerOptions';
 import { INTENSITY_COLOR, INTENSITY_LABEL, INTENSITY_RADIUS, conflictFill } from './lib/labels';
 import { ramp, resolveColor } from './lib/palette';
-import { readLastVisit } from './lib/lastVisit';
+import { useSeen } from './hooks/useSeen';
 import BlocChips from './components/BlocChips';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import Legend from './components/Legend';
@@ -28,7 +28,8 @@ import Search, { type SearchHit } from './components/Search';
 import ThemeToggle from './components/ThemeToggle';
 import Clock from './components/Clock';
 import Ticker from './components/Ticker';
-import SinceLastVisit from './components/SinceLastVisit';
+import SinceLastVisit, { UpdatedReadout } from './components/SinceLastVisit';
+import { watchItemResolves } from './lib/feed';
 import { ASK_ENABLED } from './components/AskPanel';
 import { useWatchlist } from './hooks/useWatchlist';
 import { formatDate, formatMonth } from './lib/labels';
@@ -260,14 +261,16 @@ export default function App() {
   );
 
   // Pulse rings only where they point at something: the selected conflict and what changed since the last visit.
-  const [lastVisit] = useState(readLastVisit);
+  // Entities with an assessment the visitor has not seen (the same seen-set as the since-last-visit strip).
+  const { unseen } = useSeen();
+  const unseenIds = useMemo(() => new Set(unseen.map((it) => `${it.kind}:${it.id}`)), [unseen]);
 
   const markers = useMemo<MapMarker[]>(() => {
     const out: MapMarker[] = [];
     if (mode === 'conflicts') {
       // Most intense first, so keyboard and screen-reader order reaches the wars before the flashpoints.
       for (const { conflict: c, intensity } of [...visible].sort((a, b) => INTENSITY_ORDER[b.intensity] - INTENSITY_ORDER[a.intensity])) {
-        const changed = viewMonth === null && lastVisit !== null && (c.history[0]?.date ?? '') > lastVisit;
+        const changed = viewMonth === null && unseenIds.has(`conflict:${c.id}`);
         out.push({
           id: c.id,
           lonLat: c.location,
@@ -280,7 +283,7 @@ export default function App() {
     }
     if (layer === 'unrest') {
       for (const u of [...UNREST].sort((a, b) => INTENSITY_ORDER[b.intensity] - INTENSITY_ORDER[a.intensity])) {
-        const changed = lastVisit !== null && u.updated > lastVisit;
+        const changed = unseenIds.has(`unrest:${u.id}`);
         out.push({ id: UNREST_MARKER_PREFIX + u.id, lonLat: u.location, color: UNREST_COLOR[u.intensity], radius: UNREST_RADIUS[u.intensity], label: `${u.name}: ${UNREST_KIND_LABEL[u.kind]}, ${INTENSITY_LABEL[u.intensity].toLowerCase()}`, shape: 'triangle', pulse: changed || (selection?.kind === 'unrest' && selection.id === u.id) });
       }
     }
@@ -291,7 +294,7 @@ export default function App() {
       }
     }
     return out;
-  }, [mode, visible, viewMonth, layer, lastVisit, selection]);
+  }, [mode, visible, viewMonth, layer, unseenIds, selection]);
 
   const selectedIsos = useMemo(() => (selection?.kind === 'country' ? [selection.iso] : selection?.kind === 'pair' ? [selection.a, ...(selection.b ? [selection.b] : [])] : []), [selection]);
   const selectedMarkerIds = useMemo(() => {
@@ -317,8 +320,10 @@ export default function App() {
   const selectConflict = useCallback(
     (id: string) => {
       const c = CONFLICT_BY_ID.get(id);
+      // An unknown id (a stale star, say) would leave the app thinking a panel is open with nothing in it.
+      if (!c) return;
       update({ mode: 'conflicts', selection: { kind: 'conflict', id } });
-      if (c) setFocus({ kind: 'point', lonLat: c.location, scale: 3.5 });
+      setFocus({ kind: 'point', lonLat: c.location, scale: 3.5 });
     },
     [update],
   );
@@ -335,8 +340,9 @@ export default function App() {
   const selectUnrest = useCallback(
     (id: string) => {
       const u = UNREST_BY_ID.get(id);
+      if (!u) return;
       update({ layer: 'unrest', selection: { kind: 'unrest', id } });
-      if (u) setFocus({ kind: 'point', lonLat: u.location, scale: 3.5 });
+      setFocus({ kind: 'point', lonLat: u.location, scale: 3.5 });
     },
     [update],
   );
@@ -565,9 +571,7 @@ export default function App() {
           <span className="optional">
             TRACKED <b>{CONFLICTS.length}</b> · BLOCS <b>{BLOCS.length}</b>
           </span>
-          <button className="readout-btn optional" onClick={() => update({ selection: { kind: 'changes' } })} title="Recent changes">
-            DATA <b>{formatMonth(DATA_ASOF).toUpperCase()}</b>
-          </button>
+          <UpdatedReadout onOpen={(since) => update({ selection: { kind: 'changes', since } })} />
           {edition.newer && (
             <button className="readout-btn edition-chip" onClick={() => window.location.reload()} title={`A newer edition (${formatDate(edition.newer)}) has shipped. Reload to load it; your view is kept in the link.`}>
               NEW EDITION ↻
@@ -593,7 +597,8 @@ export default function App() {
           aria-label="Watchlist"
           aria-pressed={selection?.kind === 'watchlist'}
           title="Watchlist"
-          data-count={watchlist.items.length || undefined}
+          data-count={watchlist.items.filter(watchItemResolves).length || undefined}
+          data-unsaved={!watchlist.persisted || undefined}
           onClick={() => update({ selection: selection?.kind === 'watchlist' ? null : { kind: 'watchlist' } })}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill={watchlist.items.length ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden="true">
@@ -637,7 +642,7 @@ export default function App() {
       </header>
 
       <main className="stage" ref={stageRef}>
-        <SinceLastVisit onSelectConflict={selectConflict} onSelectBloc={selectBloc} onSelectUnrest={selectUnrest} onOpenChanges={() => update({ selection: { kind: 'changes' } })} />
+        <SinceLastVisit onSelectConflict={selectConflict} onSelectBloc={selectBloc} onSelectUnrest={selectUnrest} onOpenChanges={() => update({ selection: { kind: 'changes', since: true } })} />
         {/* Keyed on the view so switching back to the flat map recovers from a failed globe. */}
         <ErrorBoundary key={view} variant="map" onError={setMapError} autoReloadMs={brief ? 5000 : undefined}>
           <Suspense fallback={<MapSkeleton />}>
