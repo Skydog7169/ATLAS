@@ -6,7 +6,13 @@ export interface DisplacementRow {
   asylumSeekers: number;
   idps: number;
   oip: number;
+  /** UNHCR's own total: refugees + asylum seekers + IDPs + others in need. */
   total: number;
+  /**
+   * Known source gap: figures outside UNHCR's mandate, published alongside
+   * its own (UNRWA-registered Palestine refugees, IDMC internal displacement).
+   */
+  supplement?: { unrwaRefugees: number; idps: number; year: number; sources: Array<{ name: string; url: string }> };
 }
 
 interface DisplacementFile {
@@ -31,9 +37,40 @@ export function displacementBin(total: number): number {
   return total <= 0 ? 0 : bin;
 }
 
+/**
+ * People displaced from the country, adding UNRWA-registered refugees where
+ * UNHCR's mandate leaves them out. IDMC's IDP estimate is not added: many of
+ * Gaza's displaced are themselves registered refugees.
+ */
+export function displacementTotal(row: DisplacementRow): number {
+  return row.total + (row.supplement?.unrwaRefugees ?? 0);
+}
+
 export function displacementColor(iso: string): string {
   const row = DISPLACEMENT_BY_ISO.get(iso);
-  return DISPLACEMENT_COLORS[displacementBin(row?.total ?? 0)] ?? 'var(--land)';
+  return DISPLACEMENT_COLORS[displacementBin(row ? displacementTotal(row) : 0)] ?? 'var(--land)';
+}
+
+/** Map fill; a known source gap (figures from outside UNHCR) is drawn hatched. */
+export function displacementFill(iso: string): { fill: string; hatch?: string } {
+  const fill = displacementColor(iso);
+  return DISPLACEMENT_BY_ISO.get(iso)?.supplement ? { fill, hatch: fill } : { fill };
+}
+
+/**
+ * Kosovo has no row of its own: UNHCR reports it inside Serbia (S/RES/1244),
+ * and its 'UNK' code means 'unknown origin', which the build drops.
+ */
+export const REPORTED_WITH: Readonly<Record<string, { iso: string; note: string }>> = {
+  UNK: { iso: 'SRB', note: 'UNHCR reports Kosovo together with Serbia (UNSCR 1244).' },
+};
+
+/** Tooltip line for the displacement layer. */
+export function displacementSummary(iso: string): string {
+  const row = DISPLACEMENT_BY_ISO.get(iso);
+  if (!row) return REPORTED_WITH[iso]?.note ?? 'No UNHCR displacement figure';
+  if (row.supplement) return `${formatPeople(displacementTotal(row))} displaced incl. ${formatPeople(row.supplement.unrwaRefugees)} UNRWA refugees · ${formatPeople(row.supplement.idps)} IDPs (IDMC) · UNHCR alone ${formatPeople(row.total)}`;
+  return `${formatPeople(row.total)} displaced · ${formatPeople(row.refugees)} refugees · ${formatPeople(row.idps)} IDPs`;
 }
 
 export function formatPeople(n: number): string {

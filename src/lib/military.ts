@@ -4,7 +4,7 @@ import { countryName } from './countries';
 import type { DossierExtra } from './dossier';
 import { formatDate, formatMonth } from './labels';
 
-export type PresenceKind = 'base' | 'deployment' | 'mission';
+export type PresenceKind = 'base' | 'deployment' | 'mission' | 'occupation' | 'contested';
 
 export interface Presence {
   host: string;
@@ -26,7 +26,13 @@ export const MILITARY = raw as MilitaryFile;
 /** Presences in force today; ended rows stay in the file for the record. */
 export const PRESENCE_ACTIVE: Presence[] = MILITARY.presence.filter((p) => !p.ended);
 
-export const PRESENCE_KIND_LABEL: Record<PresenceKind, string> = { base: 'Base', deployment: 'Deployment', mission: 'Peace operation' };
+export const PRESENCE_KIND_LABEL: Record<PresenceKind, string> = {
+  base: 'Base',
+  deployment: 'Deployment',
+  mission: 'Peace operation',
+  occupation: 'Occupation / invasion force',
+  contested: 'Without host consent',
+};
 
 const ORG_NAME: Record<string, string> = { UN: 'United Nations', AU: 'African Union', EU: 'European Union', NATO: 'NATO' };
 
@@ -81,7 +87,7 @@ export function militarySummary(iso: string): string | null {
   const abroad = presencesBy(iso).length;
   if (!ops.length && !abroad) return null;
   const parts: string[] = [];
-  if (ops.length) parts.push(`Hosts: ${ops.map(operatorName).join(', ')}`);
+  if (ops.length) parts.push(`Foreign forces: ${ops.map(operatorName).join(', ')}`);
   if (abroad) parts.push(`Deploys abroad: ${new Set(presencesBy(iso).map((p) => p.host)).size} countries`);
   return parts.join(' · ');
 }
@@ -97,7 +103,8 @@ export function militaryDossier(iso: string): DossierExtra | null {
   const ended = MILITARY.presence.filter((p) => p.ended && (p.host === iso || p.operator === iso));
   return {
     id: 'military',
-    title: `Military presence · ${hosted.length} hosted${abroad.length ? `, ${abroad.length} abroad` : ''}`,
+    // 'Hosted' implies consent, which an occupying army does not have.
+    title: `Foreign forces present · ${hosted.length}${abroad.length ? `, ${abroad.length} abroad` : ''}`,
     rows,
     footnote: `Curated, verified ${formatDate(MILITARY.verified)}.${ended.length ? ` Ended: ${ended.map((p) => `${operatorName(p.operator)} in ${countryName(p.host)} (${formatMonth(p.ended!)})`).join('; ')}.` : ''}`,
   };

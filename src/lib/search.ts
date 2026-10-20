@@ -87,7 +87,7 @@ const INDEX: Entry[] = [
     label: c.name,
     sub: INTENSITY_LABEL[c.intensity],
     color: '',
-    keys: [c.name, ...c.parties].map(fold),
+    keys: [c.name, ...(c.aliases ?? []), ...c.parties].map(fold),
   })),
   ...UNREST.map((u) => ({
     kind: 'unrest' as const,
