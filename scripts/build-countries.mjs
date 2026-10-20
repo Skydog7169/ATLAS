@@ -11,6 +11,22 @@ const require = createRequire(import.meta.url);
 const source = require.resolve('world-countries/countries.json');
 const raw = JSON.parse(readFileSync(source, 'utf8'));
 
+// Search matches the names people type ("UAE", "Burma", "DPRK", "Ivory Coast"),
+// so keep the Latin-script alternative spellings. Two-letter codes are already
+// already indexed through cca2, and non-Latin scripts would only bloat the bundle.
+const LATIN = /^[\p{Script=Latin}\p{M}\s'’.,()-]+$/u;
+function altSpellings(c) {
+  const seen = new Set([c.name.common, c.name.official, c.cca2, c.cca3].map((s) => s.toLowerCase()));
+  const out = [];
+  for (const s of c.altSpellings ?? []) {
+    const key = s.toLowerCase();
+    if (seen.has(key) || !LATIN.test(s)) continue;
+    seen.add(key);
+    out.push(s);
+  }
+  return out;
+}
+
 const rows = raw
   .map((c) => ({
     cca3: c.cca3,
@@ -18,6 +34,7 @@ const rows = raw
     ccn3: c.ccn3 || null,
     name: c.name.common,
     official: c.name.official,
+    alt: altSpellings(c),
     capital: c.capital?.[0] ?? null,
     region: c.region,
     subregion: c.subregion || null,

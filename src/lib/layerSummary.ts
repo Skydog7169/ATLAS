@@ -31,7 +31,7 @@ export function layerSummary(layer: Layer, iso: string): string | null {
     case 'acled-unrest':
       return acledUnrestSummary(iso) ?? 'No ACLED protests or riots in the window';
     case 'ucdp':
-      return ucdpSummary(iso) ?? `No organised-violence deaths recorded in ${ucdpYear()}`;
+      return ucdpSummary(iso) ?? (ucdpYear() ? `No organised-violence deaths recorded in ${ucdpYear()}` : 'No data: UCDP unavailable in this build');
     case 'military':
       return militarySummary(iso) ?? 'No foreign military presence recorded';
     case 'trade':
