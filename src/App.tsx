@@ -37,6 +37,8 @@ import { COUNTRY_BY_ISO } from './lib/countries';
 import { downloadBlob, readLegend, renderPng } from './lib/exportPng';
 import { serialize } from './lib/urlState';
 import UsChips from './components/UsChips';
+import { useAircraft } from './hooks/useAircraft';
+import { AIRCRAFT_MARKER_PREFIX, DEFAULT_AIRCRAFT_FILTER, ROLE_COLOR, ahead, aircraftLabel, applyFilter, emergencyOf, isNotable, positionAt, roleOf, type AircraftFilter } from './lib/aircraft';
 import { STATE_BY_CODE, US_LAYER_LABEL, stateFill, stateSummary, type UsState } from './lib/usStates';
 
 // The map pulls in d3 and the 110m geometry; loading it after the shell
@@ -49,6 +51,7 @@ const OVERVIEW_STEPS = ['var(--land)', '#123a4a', '#17607a', '#1f8fb3', '#35e0ff
 
 const LAYER_OPTIONS: LayerOption[] = [
   { id: 'leaders', label: 'Years in power', hint: 'How long whoever holds power has held their office' },
+  { id: 'aircraft', label: 'Military aircraft · live', hint: 'Military flights broadcasting ADS-B, refreshed every minute' },
   { id: 'displacement', label: 'Displacement', hint: 'People displaced from each country (UNHCR)' },
   { id: 'sanctions', label: 'Sanctions', hint: 'UN, US and EU regimes targeting the country' },
   { id: 'elections', label: 'Elections', hint: 'Months to the next national election' },
@@ -113,6 +116,9 @@ export default function App() {
   const [focus, setFocus] = useState<Focus>(null);
   /** US view: the state to fly to. */
   const [usFocus, setUsFocus] = useState<string | null>(null);
+  const air = useAircraft(layer === 'aircraft' && view !== 'us');
+  const [airFilter, setAirFilter] = useState<AircraftFilter>(DEFAULT_AIRCRAFT_FILTER);
+  const visibleAircraft = useMemo(() => (air.feed ? applyFilter(air.feed.aircraft, airFilter) : []), [air.feed, airFilter]);
   const zoomApi = useRef<{ zoomIn: () => void; zoomOut: () => void; reset: () => void } | null>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const [insetRight, setInsetRight] = useState(0);
@@ -164,6 +170,8 @@ export default function App() {
     (iso: string | null): CountryFill => {
       if (!iso) return { fill: 'var(--land-dim)' };
       if (layer === 'leaders') return { fill: leaderColor(iso) };
+      // Aircraft sit over the conflict tint in conflicts mode and over plain land otherwise.
+      if (layer === 'aircraft' && mode !== 'conflicts') return { fill: 'var(--land)' };
       if (layer === 'displacement') return { fill: displacementColor(iso) };
       if (layer === 'sanctions') return { fill: sanctionsColor(iso) };
       if (layer === 'elections') return { fill: electionColor(iso) };
@@ -213,6 +221,28 @@ export default function App() {
         out.push({ id: UNREST_MARKER_PREFIX + u.id, lonLat: u.location, color: UNREST_COLOR[u.intensity], radius: UNREST_RADIUS[u.intensity], label: `${u.name}: ${UNREST_KIND_LABEL[u.kind]}, ${INTENSITY_LABEL[u.intensity].toLowerCase()}`, shape: 'triangle', pulse: u.intensity === 'high' });
       }
     }
+    if (layer === 'aircraft' && air.feed) {
+      // The snapshot's own timestamp, so time spent in the CDN cache is dead-reckoned too.
+      const now = air.clock || Date.now();
+      for (const a of visibleAircraft) {
+        const pos = positionAt(a, air.feed.now, now);
+        const notable = isNotable(a);
+        const moving = !a.ground && a.gs !== undefined && a.gs >= 30 && a.track !== undefined;
+        out.push({
+          id: AIRCRAFT_MARKER_PREFIX + a.hex,
+          lonLat: pos,
+          color: ROLE_COLOR[roleOf(a)],
+          radius: notable ? 7 : roleOf(a) === 'helicopter' ? 4.5 : 5.5,
+          label: aircraftLabel(a),
+          shape: 'plane',
+          heading: a.track ?? 0,
+          trail: air.trails.get(a.hex),
+          leader: moving ? ahead(pos, a.track!, a.gs!, 120) : undefined,
+          pulse: emergencyOf(a) !== null,
+          passive: true,
+        });
+      }
+    }
     if (layer === 'chokepoints') {
       for (const cp of CHOKEPOINTS) {
         const st = currentStatus(cp).status;
@@ -220,10 +250,19 @@ export default function App() {
       }
     }
     return out;
-  }, [mode, visible, viewMonth, layer]);
+  }, [mode, visible, viewMonth, layer, air, visibleAircraft]);
 
   const selectedIso = selection?.kind === 'country' ? selection.iso : null;
-  const selectedMarkerId = selection?.kind === 'conflict' ? selection.id : selection?.kind === 'chokepoint' ? CHOKEPOINT_MARKER_PREFIX + selection.id : selection?.kind === 'unrest' ? UNREST_MARKER_PREFIX + selection.id : null;
+  const selectedMarkerId =
+    selection?.kind === 'conflict'
+      ? selection.id
+      : selection?.kind === 'chokepoint'
+        ? CHOKEPOINT_MARKER_PREFIX + selection.id
+        : selection?.kind === 'unrest'
+          ? UNREST_MARKER_PREFIX + selection.id
+          : selection?.kind === 'aircraft' && selection.hex
+            ? AIRCRAFT_MARKER_PREFIX + selection.hex
+            : null;
 
   const selectCountry = useCallback(
     (iso: string) => {
@@ -260,13 +299,33 @@ export default function App() {
     [update],
   );
 
+  const selectAircraft = useCallback(
+    (hex: string | null) => update({ layer: 'aircraft', view: view === 'us' ? 'flat' : view, selection: { kind: 'aircraft', hex } }),
+    [update, view],
+  );
+
+  // Fly to a selected aircraft once, as soon as it is in a snapshot (a shared link loads before the feed does).
+  const flownTo = useRef<string | null>(null);
+  const selectedHex = selection?.kind === 'aircraft' ? selection.hex : null;
+  useEffect(() => {
+    if (!selectedHex || !air.feed || flownTo.current === selectedHex) return;
+    const a = air.feed.aircraft.find((x) => x.hex === selectedHex);
+    if (!a) return;
+    flownTo.current = selectedHex;
+    setFocus({ kind: 'point', lonLat: positionAt(a, air.feed.now, Date.now()), scale: 4 });
+  }, [selectedHex, air.feed]);
+  useEffect(() => {
+    if (!selectedHex) flownTo.current = null;
+  }, [selectedHex]);
+
   const onMarkerClick = useCallback(
     (id: string) => {
-      if (id.startsWith(CHOKEPOINT_MARKER_PREFIX)) selectChokepoint(id.slice(CHOKEPOINT_MARKER_PREFIX.length));
+      if (id.startsWith(AIRCRAFT_MARKER_PREFIX)) selectAircraft(id.slice(AIRCRAFT_MARKER_PREFIX.length));
+      else if (id.startsWith(CHOKEPOINT_MARKER_PREFIX)) selectChokepoint(id.slice(CHOKEPOINT_MARKER_PREFIX.length));
       else if (id.startsWith(UNREST_MARKER_PREFIX)) selectUnrest(id.slice(UNREST_MARKER_PREFIX.length));
       else selectConflict(id);
     },
-    [selectChokepoint, selectConflict, selectUnrest],
+    [selectChokepoint, selectConflict, selectUnrest, selectAircraft],
   );
 
   const selectState = useCallback(
@@ -618,7 +677,15 @@ export default function App() {
           />
         )}
 
-        <Legend mode={mode} bloc={bloc} vs={mode === 'blocs' ? vs : null} overviewSteps={OVERVIEW_STEPS} layer={layer} usLayer={view === 'us' ? usLayer : null} />
+        <Legend
+          mode={mode}
+          bloc={bloc}
+          vs={mode === 'blocs' ? vs : null}
+          overviewSteps={OVERVIEW_STEPS}
+          layer={layer}
+          usLayer={view === 'us' ? usLayer : null}
+          aircraft={layer === 'aircraft' ? { state: air, filter: airFilter, onFilter: setAirFilter, shown: visibleAircraft.length, onList: () => selectAircraft(null) } : undefined}
+        />
 
         {view !== 'us' && mode === 'conflicts' && <Timeline months={TIMELINE_MONTHS} value={month} onChange={(m) => update({ month: m })} />}
 
@@ -709,6 +776,8 @@ export default function App() {
               onSelectUnrest={selectUnrest}
               onSelectPair={selectPair}
               onOpenUs={openUs}
+              aircraft={air}
+              onSelectAircraft={selectAircraft}
             />
           </ErrorBoundary>
         )}

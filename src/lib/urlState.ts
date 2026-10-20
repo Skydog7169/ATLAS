@@ -13,6 +13,8 @@ export type Selection =
   | { kind: 'pair'; a: string; b: string | null }
   | { kind: 'ask' }
   | { kind: 'state'; code: string }
+  /** A live aircraft by ICAO hex, or null for the list of everything airborne. */
+  | { kind: 'aircraft'; hex: string | null }
   | null;
 
 export interface AppState {
@@ -45,7 +47,7 @@ export const US_LAYERS = ['governor', 'legislature', 'trifecta', 'senate', 'hous
 export type UsLayer = (typeof US_LAYERS)[number];
 export const DEFAULT_ROTATION: [number, number] = [15, 20];
 
-export const LAYERS = ['leaders', 'displacement', 'sanctions', 'elections', 'nuclear', 'acled', 'acled-unrest', 'ucdp', 'military', 'trade', 'chokepoints', 'unrest'] as const;
+export const LAYERS = ['leaders', 'aircraft', 'displacement', 'sanctions', 'elections', 'nuclear', 'acled', 'acled-unrest', 'ucdp', 'military', 'trade', 'chokepoints', 'unrest'] as const;
 export type Layer = (typeof LAYERS)[number] | null;
 
 export const DEFAULT_STATE: AppState = { mode: 'blocs', bloc: null, vs: null, selection: null, month: null, layer: null, view: 'flat', rotation: DEFAULT_ROTATION, brief: false, embed: false, usLayer: 'governor' };
@@ -81,6 +83,7 @@ export function serialize(state: AppState): string {
     else if (state.selection.kind === 'pair') p.set('pair', state.selection.b ? `${state.selection.a},${state.selection.b}` : state.selection.a);
     else if (state.selection.kind === 'ask') p.set('ask', '1');
     else if (state.selection.kind === 'state') p.set('state', state.selection.code);
+    else if (state.selection.kind === 'aircraft') p.set('aircraft', state.selection.hex ?? 'all');
     else p.set(state.selection.kind, state.selection.id);
   }
   return '#' + p.toString();
@@ -106,6 +109,7 @@ export function parse(hash: string, isValid: { bloc: (id: string) => boolean; co
   const chokepoint = p.get('chokepoint');
   const unrest = p.get('unrest');
   const usState = (p.get('state') ?? '').toUpperCase();
+  const aircraft = (p.get('aircraft') ?? '').toLowerCase();
   const pair = (p.get('pair') ?? '').toUpperCase().split(',').filter(Boolean);
   if (p.get('about') === '1') selection = { kind: 'about' };
   else if (p.get('ask') === '1') selection = { kind: 'ask' };
@@ -113,6 +117,9 @@ export function parse(hash: string, isValid: { bloc: (id: string) => boolean; co
   else if (chokepoint && isValid.chokepoint?.(chokepoint)) selection = { kind: 'chokepoint', id: chokepoint };
   else if (unrest && isValid.unrest?.(unrest)) selection = { kind: 'unrest', id: unrest };
   else if (usState && isValid.state?.(usState)) selection = { kind: 'state', code: usState };
+  // Aircraft come and go, so any well-formed ICAO hex is accepted; the panel says when it is no longer in the feed.
+  else if (aircraft === 'all') selection = { kind: 'aircraft', hex: null };
+  else if (/^~?[0-9a-f]{6}$/.test(aircraft)) selection = { kind: 'aircraft', hex: aircraft };
   else if (p.get('watchlist') === '1') selection = { kind: 'watchlist' };
   else if (p.get('changes') === '1') selection = { kind: 'changes' };
   else if (vs && p.get('compare') === '1') selection = { kind: 'compare' };

@@ -16,6 +16,8 @@ import { UNREST } from '../data/unrest';
 import { UNREST_COLOR, UNREST_VERIFIED } from '../lib/unrest';
 import { LEADERS, TENURE_COLORS, tenureBinLabel } from '../lib/leaders';
 import { US, US_LAYER_LABEL, nextFederalElection, usLegend, type UsLayer } from '../lib/usStates';
+import { ROLE_COLOR, ROLE_LABEL, ago, applyFilter, countByRole, type AircraftFilter, type AircraftRole } from '../lib/aircraft';
+import type { AircraftState } from '../hooks/useAircraft';
 
 interface Props {
   mode: Mode;
@@ -25,6 +27,69 @@ interface Props {
   layer: Layer;
   /** Set in the US states view: the legend describes the state layer instead. */
   usLayer?: UsLayer | null;
+  /** Live aircraft layer: feed state, the filter it controls, and how many aircraft pass it. */
+  aircraft?: { state: AircraftState; filter: AircraftFilter; onFilter: (f: AircraftFilter) => void; shown: number; onList: () => void };
+}
+
+function AircraftLegend({ state, filter, onFilter, shown, onList }: NonNullable<Props['aircraft']>) {
+  const feed = state.feed;
+  const counts = feed ? countByRole(applyFilter(feed.aircraft, { ...filter, hidden: new Set(), notableOnly: false })) : [];
+  const toggle = (role: AircraftRole) => {
+    const hidden = new Set(filter.hidden);
+    if (hidden.has(role)) hidden.delete(role);
+    else hidden.add(role);
+    onFilter({ ...filter, hidden });
+  };
+  return (
+    <aside className="legend frame" aria-label="Legend">
+      <h3>Military aircraft · live</h3>
+      <div className="note" style={{ marginTop: 0 }} aria-live="polite">
+        {feed ? (
+          <span className="air-live" data-stale={Boolean(feed.stale)}>
+            {feed.stale ? 'Feed delayed' : 'Live'} · {shown} shown of {feed.aircraft.length} · updated {ago((state.clock || Date.now()) - feed.now)}
+          </span>
+        ) : state.status === 'error' ? (
+          `Feed unavailable: ${state.error ?? 'unknown error'}. Retrying every minute.`
+        ) : (
+          'Contacting the ADS-B networks…'
+        )}
+      </div>
+      <ul>
+        {counts.map(({ role, count }) => (
+          <li key={role}>
+            <button className="toggle-row" aria-pressed={!filter.hidden.has(role)} onClick={() => toggle(role)} title={filter.hidden.has(role) ? 'Show' : 'Hide'}>
+              <span className="swatch" style={{ background: ROLE_COLOR[role] }} />
+              {ROLE_LABEL[role]}
+              <span className="count">{count}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+      <div className="air-switches">
+        <button className="chip" aria-pressed={filter.airborneOnly} onClick={() => onFilter({ ...filter, airborneOnly: !filter.airborneOnly })}>
+          Airborne only
+        </button>
+        <button className="chip" aria-pressed={filter.notableOnly} onClick={() => onFilter({ ...filter, notableOnly: !filter.notableOnly })}>
+          Notable only
+        </button>
+        <button className="chip" onClick={onList}>
+          List
+        </button>
+      </div>
+      <div className="note air-note">
+        Aircraft the community ADS-B networks flag as military and that are broadcasting a position. Many military flights fly with transponders off, so absence proves nothing. Positions are dead-reckoned between one-minute refreshes: the dashed trail is reported positions, the line ahead is two minutes at current speed.{' '}
+        {feed && (
+          <>
+            Source:{' '}
+            <a href={feed.source.url} target="_blank" rel="noopener noreferrer">
+              {feed.source.name}
+            </a>{' '}
+            ({feed.source.license}).
+          </>
+        )}
+      </div>
+    </aside>
+  );
 }
 
 const US_NOTE: Record<UsLayer, string> = {
@@ -38,7 +103,8 @@ const US_NOTE: Record<UsLayer, string> = {
 
 const INTENSITIES: Intensity[] = ['high', 'medium', 'low', 'latent'];
 
-export default function Legend({ mode, bloc, vs, overviewSteps, layer, usLayer }: Props) {
+export default function Legend({ mode, bloc, vs, overviewSteps, layer, usLayer, aircraft }: Props) {
+  if (layer === 'aircraft' && aircraft && !usLayer) return <AircraftLegend {...aircraft} />;
   if (usLayer) {
     return (
       <aside className="legend frame" aria-label="Legend">

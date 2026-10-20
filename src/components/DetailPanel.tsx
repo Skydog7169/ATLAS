@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { BLOCS, BLOC_BY_ID } from '../data/blocs';
 import { CONFLICTS, CONFLICT_BY_ID } from '../data/conflicts';
 import { UNREST_BY_ID } from '../data/unrest';
@@ -30,6 +30,11 @@ import { WB_HISTORY } from '../lib/worldbankHistory';
 import { search } from '../lib/search';
 import TrendChart from './TrendChart';
 import AskPanel, { ASK_ENABLED } from './AskPanel';
+import { ROLE_COLOR, ROLE_LABEL, ROLE_ORDER, ROLE_SHORT, ago, callsign, countByRole, emergencyOf, formatAltitude, isNotable, roleOf, trackerUrl, typeName, type Aircraft } from '../lib/aircraft';
+import type { AircraftState } from '../hooks/useAircraft';
+import type * as AircraftGeoModule from '../lib/aircraftGeo';
+
+type AircraftGeo = typeof AircraftGeoModule;
 import { CONTROL_LABEL, PARTY_COLOR, PARTY_NAME, STATE_BY_CODE, US, ballotpediaUrl, caucusOf, districtLabel, houseCounts, nextFederalElection, nextGovernorElection, onBallot, openGovernorSeat, stateWikiUrl, trifecta, type UsState } from '../lib/usStates';
 
 interface Props {
@@ -50,6 +55,9 @@ interface Props {
   onSelectUnrest: (id: string) => void;
   /** Opens the US states view, optionally on one state. */
   onOpenUs: (code?: string) => void;
+  /** Live aircraft feed, when the layer is on. */
+  aircraft?: AircraftState;
+  onSelectAircraft: (hex: string | null) => void;
 }
 
 function CloseButton({ onClick }: { onClick: () => void }) {
@@ -1266,6 +1274,211 @@ function StateView({ state: s, props }: { state: UsState; props: Props }) {
   );
 }
 
+/** The country-under-a-point helper, loaded on demand so its geometry stays out of the first paint. */
+function useAircraftGeo() {
+  const [mod, setMod] = useState<AircraftGeo | null>(null);
+  useEffect(() => {
+    let live = true;
+    void import('../lib/aircraftGeo').then((m) => live && setMod(m));
+    return () => {
+      live = false;
+    };
+  }, []);
+  return mod;
+}
+
+function AircraftRow({ a, props, feedNow }: { a: Aircraft; props: Props; feedNow: number }) {
+  const role = roleOf(a);
+  const em = emergencyOf(a);
+  return (
+    <li>
+      <button onClick={() => props.onSelectAircraft(a.hex)}>
+        <i className="pdot" style={{ background: ROLE_COLOR[role] }} />
+        <span>
+          {callsign(a)}
+          <span className="row-note">
+            {typeName(a)}
+            {em ? ` · ${em}` : ''}
+          </span>
+        </span>
+        <span className="meta">{formatAltitude(a)}{a.age > 60 || Date.now() - feedNow > 120_000 ? ' · old' : ''}</span>
+      </button>
+    </li>
+  );
+}
+
+function AircraftView({ hex, props }: { hex: string | null; props: Props }) {
+  const state = props.aircraft;
+  const feed = state?.feed ?? null;
+  const geo = useAircraftGeo();
+  const list = useMemo(() => (feed ? feed.aircraft.filter((a) => !a.ground) : []), [feed]);
+  const overhead = useMemo(() => (geo && feed ? geo.countriesOverhead(list.map((a) => [a.lon, a.lat] as [number, number]), 8) : []), [geo, feed, list]);
+  const a = hex && feed ? (feed.aircraft.find((x) => x.hex === hex) ?? null) : null;
+  const head = (title: string, eyebrow: string) => (
+    <div className="panel-head">
+      <h2>
+        <span className="eyebrow">{eyebrow}</span>
+        {title}
+      </h2>
+      <CloseButton onClick={props.onClose} />
+    </div>
+  );
+  const status = !feed ? (
+    <Muted>{state?.status === 'error' ? `The aircraft feed is unavailable (${state.error}). It retries every minute.` : 'Contacting the ADS-B networks…'}</Muted>
+  ) : null;
+  const sourceLine = feed && (
+    <div className="updated">
+      Snapshot {ago((state?.clock || Date.now()) - feed.now)}
+      {feed.stale ? ' (the feed is delayed; showing the last good snapshot)' : ''}. Source:{' '}
+      <a href={feed.source.url} target="_blank" rel="noopener noreferrer">
+        {feed.source.name}
+      </a>{' '}
+      ({feed.source.license}). Only aircraft broadcasting ADS-B or seen by multilateration appear; many military flights do not.
+    </div>
+  );
+
+  if (hex) {
+    if (!feed) return <>{head(hex.toUpperCase(), 'Military aircraft')}<div className="panel-body">{status}</div></>;
+    if (!a) {
+      return (
+        <>
+          {head(hex.toUpperCase(), 'Military aircraft')}
+          <div className="panel-body">
+            <Muted>This aircraft is not in the current snapshot: it may have landed, left receiver coverage or switched its transponder off.</Muted>
+            <div className="panel-actions">
+              <button className="text-btn primary" onClick={() => props.onSelectAircraft(null)}>
+                All aircraft
+              </button>
+              <a className="text-btn" href={trackerUrl(hex)} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit', display: 'inline-block' }}>
+                History on adsb.lol ↗
+              </a>
+            </div>
+            {sourceLine}
+          </div>
+        </>
+      );
+    }
+    const role = roleOf(a);
+    const em = emergencyOf(a);
+    const over = geo?.countryAt([a.lon, a.lat]) ?? null;
+    const rows: Array<[string, string]> = [
+      ['Type', `${typeName(a)}${a.t ? ` (${a.t})` : ''}`],
+      ['Registration / serial', a.r ?? '—'],
+      ['ICAO address', a.hex.toUpperCase()],
+      ['Altitude', formatAltitude(a)],
+      ['Ground speed', a.gs !== undefined ? `${a.gs} kt` : '—'],
+      ['Track', a.track !== undefined ? `${a.track}°` : '—'],
+      ['Vertical rate', a.vr !== undefined ? `${a.vr > 0 ? '+' : ''}${a.vr.toLocaleString('en-US')} ft/min` : '—'],
+      ['Squawk', a.squawk ?? '—'],
+      ['Position', `${a.lat.toFixed(3)}, ${a.lon.toFixed(3)}${a.mlat ? ' (multilateration)' : ''}`],
+      ['Reported', `${a.age} s before the snapshot`],
+    ];
+    if (a.op) rows.splice(2, 0, ['Operator', a.op]);
+    return (
+      <>
+        {head(callsign(a), `Military aircraft · ${ROLE_LABEL[role].toLowerCase()}`)}
+        <div className="panel-body">
+          <div className="badges">
+            <span className="badge" style={{ ['--badge-color' as string]: ROLE_COLOR[role] }}>
+              <span className="dot" /> {ROLE_LABEL[role]}
+            </span>
+            {em && (
+              <span className="badge" style={{ ['--badge-color' as string]: 'var(--warn)' }}>
+                <span className="dot" /> {em}
+              </span>
+            )}
+            {over && <span className="badge muted">Over {countryName(over)}</span>}
+            {!over && geo && <span className="badge muted">Over water or unrecognised territory</span>}
+          </div>
+          <ul className="link-list">
+            {rows.map(([k, v]) => (
+              <li key={k}>
+                <span className="row">
+                  <span>{k}</span>
+                  <span className="meta">{v}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+          <div className="panel-actions">
+            <a className="text-btn primary" href={trackerUrl(a.hex)} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'inline-block' }}>
+              Track history ↗
+            </a>
+            {over && (
+              <button className="text-btn" onClick={() => props.onSelectCountry(over)}>
+                {countryName(over)} dossier
+              </button>
+            )}
+            <button className="text-btn" onClick={() => props.onSelectAircraft(null)}>
+              All aircraft
+            </button>
+            <ShareButton />
+          </div>
+          {sourceLine}
+        </div>
+      </>
+    );
+  }
+
+  const notable = list.filter(isNotable).sort((x, y) => ROLE_ORDER.indexOf(roleOf(x)) - ROLE_ORDER.indexOf(roleOf(y)) || callsign(x).localeCompare(callsign(y)));
+  const counts = countByRole(list).filter((c) => c.count > 0);
+  return (
+    <>
+      {head(feed ? `${list.length} airborne` : 'Live tracking', 'Military aircraft · live')}
+      <div className="panel-body">
+        {status}
+        {feed && (
+          <>
+            <div className="badges">
+              {counts.map((c) => (
+                <span key={c.role} className="badge" style={{ ['--badge-color' as string]: ROLE_COLOR[c.role] }}>
+                  <span className="dot" /> {c.count} {ROLE_SHORT[c.role]}
+                </span>
+              ))}
+            </div>
+            <h4 id="air-notable">Notable now · {notable.length}</h4>
+            {notable.length ? (
+              <ul className="link-list">
+                {notable.map((x) => (
+                  <AircraftRow key={x.hex} a={x} props={props} feedNow={feed.now} />
+                ))}
+              </ul>
+            ) : (
+              <Muted>No surveillance aircraft, bombers, tankers or emergencies in this snapshot.</Muted>
+            )}
+            <h4 id="air-overhead">Most military traffic overhead</h4>
+            {overhead.length ? (
+              <ul className="link-list">
+                {overhead.map((o) => (
+                  <li key={o.iso}>
+                    <button onClick={() => props.onSelectCountry(o.iso)}>
+                      <span>{countryName(o.iso)}</span>
+                      <span className="meta">{o.count}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <Muted>{geo ? 'No airborne aircraft over land.' : 'Locating…'}</Muted>
+            )}
+            <details className="members">
+              <summary>All {list.length} airborne</summary>
+              <ul className="link-list">
+                {[...list]
+                  .sort((x, y) => callsign(x).localeCompare(callsign(y)))
+                  .map((x) => (
+                    <AircraftRow key={x.hex} a={x} props={props} feedNow={feed.now} />
+                  ))}
+              </ul>
+            </details>
+          </>
+        )}
+        {sourceLine}
+      </div>
+    </>
+  );
+}
+
 function AboutView({ props }: { props: Props }) {
   const newest = [...CONFLICTS.map((c) => c.updated), ...BLOCS.flatMap((b) => b.changes.map((c) => c.date))].sort().at(-1) ?? '';
   return (
@@ -1344,10 +1557,15 @@ function AboutView({ props }: { props: Props }) {
           <li>Bloc figures count full members only and skip countries without a World Bank value; the tiles say when coverage is partial.</li>
           <li>Displacement figures are UNHCR mid-year or end-year stocks, not flows, and lag events by months.</li>
           <li>An assessment is a dated snapshot. Check the linked sources before relying on it.</li>
+          <li>Live aircraft come from volunteer receivers. Military flights often switch transponders off, coverage is thin over oceans and much of Africa and Asia, and the military flag comes from community databases, so the layer shows a sample, not the whole picture.</li>
         </ul>
         <h4>Following things</h4>
         <p>
           Every country has a dossier (who governs it, memberships, conflicts, displacement, figures and its recent changes) at a link you can share. The strip along the bottom cycles the ten newest dated changes and pauses while you hover it. Press the star on any panel to add it to a watchlist kept in this browser; the ticker and the changes feed can be filtered to it. A strip under the header lists what changed since you last pressed "Mark read". The same changes are available as <a href="/feed.xml">RSS</a> and <a href="/feed.json">JSON Feed</a>.
+        </p>
+        <h4>Live military aircraft</h4>
+        <p>
+          The "Military aircraft · live" layer shows aircraft the community ADS-B networks (adsb.lol, falling back to adsb.fi) flag as military and that are broadcasting a position, refreshed every minute and dead-reckoned in between. Planes are coloured by role from their type; surveillance aircraft, bombers, tankers and emergency squawks count as notable. It is the one layer that is live rather than a reviewed snapshot, and it only sees aircraft that choose to be seen.
         </p>
         <h4>US states</h4>
         <p>
@@ -1423,6 +1641,8 @@ export default function DetailPanel(props: Props) {
   } else if (selection.kind === 'state') {
     const s = STATE_BY_CODE.get(selection.code);
     body = s ? <StateView state={s} props={props} /> : null;
+  } else if (selection.kind === 'aircraft') {
+    body = <AircraftView hex={selection.hex} props={props} />;
   }
   if (!body) return null;
   return (

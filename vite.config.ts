@@ -1,9 +1,37 @@
 /// <reference types="vitest/config" />
-import { defineConfig } from 'vite';
+import { defineConfig, type Connect, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
+import { DEFAULT_FEEDS, feedCache } from './api/_lib/aircraft';
+
+/**
+ * Serves /api/aircraft from the dev and preview servers the way the Vercel
+ * function does in production, so the live layer works under `pnpm dev`.
+ */
+function aircraftApi(): Plugin {
+  const cache = feedCache(DEFAULT_FEEDS, 90_000);
+  const handle: Connect.NextHandleFunction = (req, res, next) => {
+    if (req.url?.split('?')[0] !== '/api/aircraft') return next();
+    cache
+      .get()
+      .then((feed) => {
+        res.setHeader('content-type', 'application/json');
+        res.end(JSON.stringify(feed));
+      })
+      .catch((err: Error) => {
+        res.statusCode = 502;
+        res.setHeader('content-type', 'application/json');
+        res.end(JSON.stringify({ error: err.message }));
+      });
+  };
+  return {
+    name: 'atlas-aircraft-api',
+    configureServer: (server) => void server.middlewares.use(handle),
+    configurePreviewServer: (server) => void server.middlewares.use(handle),
+  };
+}
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), aircraftApi()],
   build: {
     target: 'es2022',
     sourcemap: false,

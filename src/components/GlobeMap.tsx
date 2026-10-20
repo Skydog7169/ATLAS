@@ -3,6 +3,7 @@ import { geoCentroid, geoDistance, geoGraticule10, geoOrthographic, geoPath } fr
 import { COUNTRY_FEATURES, MICROSTATES, drawnIsos } from '../lib/geo';
 import { useSize } from '../hooks/useSize';
 import { triPath } from '../lib/shapes';
+import PlaneGlyph from './PlaneGlyph';
 import { CountryLayer, type Focus, type MapMarker, type CountryFill } from './WorldMap';
 
 interface Props {
@@ -319,7 +320,7 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
                   data-selected={selected}
                   data-shape={mk.shape ?? 'circle'}
                   transform={`translate(${p[0]},${p[1]})`}
-                  tabIndex={0}
+                  tabIndex={mk.passive ? -1 : 0}
                   role="button"
                   aria-label={mk.label}
                   onKeyDown={(e) => {
@@ -337,7 +338,22 @@ export default function GlobeMap({ fillFor, markers, showMicrostates, selectedIs
                       <circle r={r + 11} strokeDasharray="6 5" />
                     </g>
                   )}
-                  {mk.shape === 'triangle' ? (
+                  {mk.shape === 'plane' ? (
+                    <PlaneGlyph
+                      r={r}
+                      color={mk.color}
+                      heading={mk.heading ?? 0}
+                      pulse={mk.pulse}
+                      trail={(mk.trail ?? []).flatMap((ll) => {
+                        const q = visible(ll) ? projection(ll) : null;
+                        return q ? [[q[0] - p[0], q[1] - p[1]] as [number, number]] : [];
+                      })}
+                      leader={(() => {
+                        const q = mk.leader && visible(mk.leader) ? projection(mk.leader) : null;
+                        return q ? [q[0] - p[0], q[1] - p[1]] : null;
+                      })()}
+                    />
+                  ) : mk.shape === 'triangle' ? (
                     <>
                       <path className="ring" d={triPath(r + 3)} stroke={mk.color} />
                       <path className="core" d={triPath(r)} fill={mk.color} filter="url(#marker-glow)" />

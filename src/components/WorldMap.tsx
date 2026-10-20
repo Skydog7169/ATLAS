@@ -1,6 +1,7 @@
 import { memo, useEffect, useMemo, useRef, useState, type RefObject } from 'react';
 import { useSize } from '../hooks/useSize';
 import { triPath } from '../lib/shapes';
+import PlaneGlyph from './PlaneGlyph';
 import { geoGraticule10, geoNaturalEarth1, geoPath, type GeoPath } from 'd3-geo';
 import { select } from 'd3-selection';
 import { zoom as d3zoom, zoomIdentity, type ZoomBehavior, type ZoomTransform } from 'd3-zoom';
@@ -15,8 +16,16 @@ export interface MapMarker {
   radius: number;
   label: string;
   pulse?: boolean;
-  /** Diamonds mark chokepoints so they read apart from round conflict markers. */
-  shape?: 'circle' | 'diamond' | 'triangle';
+  /** Diamonds mark chokepoints so they read apart from round conflict markers; planes are live aircraft. */
+  shape?: 'circle' | 'diamond' | 'triangle' | 'plane';
+  /** Planes: track in degrees clockwise from north. */
+  heading?: number;
+  /** Planes: earlier reported positions, oldest first. */
+  trail?: Array<[number, number]>;
+  /** Planes: projected position a little ahead, drawn as a leader line. */
+  leader?: [number, number];
+  /** Out of the tab order: dense live layers offer a list in the panel instead. */
+  passive?: boolean;
 }
 
 export type Focus =
@@ -388,7 +397,7 @@ export default function WorldMap({
                   data-selected={selected}
                   data-shape={mk.shape ?? 'circle'}
                   transform={`translate(${x},${y})`}
-                  tabIndex={0}
+                  tabIndex={mk.passive ? -1 : 0}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
@@ -409,7 +418,26 @@ export default function WorldMap({
                       <path d={`M0 ${-(r + 16)}v7M0 ${r + 16}v-7M${-(r + 16)} 0h7M${r + 16} 0h-7`} />
                     </g>
                   )}
-                  {mk.shape === 'triangle' ? (
+                  {mk.shape === 'plane' ? (
+                    <PlaneGlyph
+                      r={r}
+                      color={mk.color}
+                      heading={mk.heading ?? 0}
+                      pulse={mk.pulse}
+                      trail={(mk.trail ?? []).flatMap((ll) => {
+                        const q = projection(ll);
+                        if (!q) return [];
+                        const [tx, ty] = transform.apply(q);
+                        return [[tx - x, ty - y] as [number, number]];
+                      })}
+                      leader={(() => {
+                        const q = mk.leader ? projection(mk.leader) : null;
+                        if (!q) return null;
+                        const [lx, ly] = transform.apply(q);
+                        return [lx - x, ly - y];
+                      })()}
+                    />
+                  ) : mk.shape === 'triangle' ? (
                     <>
                       <path className="ring" d={triPath(r + 3)} stroke={mk.color} />
                       <path className="core" d={triPath(r)} fill={mk.color} filter="url(#marker-glow)" />
