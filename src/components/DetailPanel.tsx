@@ -62,6 +62,10 @@ interface Props {
   onSelectUnrest: (id: string) => void;
   /** Active data layer: the dossier leads with the country's value on it (touch has no hover tooltip). */
   layer?: Layer;
+  /** The bloc the map is painting, so the bloc panel offers "Show on map" only when it would change it. */
+  mapBloc?: string | null;
+  /** Opens compare picking with this bloc as the first side. */
+  onCompareBloc?: (id: string) => void;
   /** The panel this one was reached from, for the "‹ Ukraine" chip; it steps history back. */
   backTo?: { label: string; onBack: () => void } | null;
 }
@@ -490,9 +494,16 @@ function BlocView({ bloc, props }: { bloc: Bloc; props: Props }) {
         <FiguresNote suspended={members.suspended.length} />
         <BlocTrends bloc={bloc} />
         <div className="panel-actions">
-          <button className="text-btn primary" onClick={() => props.onHighlightBloc(bloc.id)}>
-            Show on map
-          </button>
+          {props.onCompareBloc && (
+            <button className="text-btn primary" onClick={() => props.onCompareBloc?.(bloc.id)}>
+              Compare with…
+            </button>
+          )}
+          {(props.layer || props.mapBloc !== bloc.id) && (
+            <button className="text-btn" onClick={() => props.onHighlightBloc(bloc.id)}>
+              {props.layer ? 'Show on map (hide layer)' : 'Show on map'}
+            </button>
+          )}
           <ShareButton />
         </div>
         {groups.map((g) => (

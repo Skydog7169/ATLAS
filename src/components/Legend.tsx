@@ -17,6 +17,8 @@ import { TRADE, TRADE_BAND_LABEL, TRADE_PARTNERS, TRADE_PARTNER_LABEL, tradeMix 
 import { CHOKEPOINTS_FILE, CHOKEPOINT_COLOR, CHOKEPOINT_GLYPH, CHOKEPOINT_STATUSES, CHOKEPOINT_STATUS_LABEL } from '../lib/chokepoints';
 import { UNREST } from '../data/unrest';
 import { UNREST_COLOR, UNREST_VERIFIED } from '../lib/unrest';
+import { LegendFrame, LegendTitle } from './LegendFrame';
+import { LegendChromeContext } from './legendChrome';
 import { unrestFillColor } from '../lib/palette';
 
 interface Props {
@@ -29,6 +31,10 @@ interface Props {
   month?: string | null;
   /** Inside an iframe: no bloc chips above the map to point at. */
   embed?: boolean;
+  /** Turns the data layer off from the legend title. */
+  onClearLayer?: () => void;
+  /** Map-state strip shown above the legend. */
+  strip?: ReactNode;
 }
 
 const INTENSITIES: Intensity[] = ['high', 'medium', 'low', 'latent'];
@@ -48,6 +54,15 @@ function NoDataRow() {
  * back in time; the legend says so, so the two time bases never pass as one.
  */
 export default function Legend(props: Props) {
+  const { mode, layer, onClearLayer, strip } = props;
+  return (
+    <LegendChromeContext.Provider value={{ mode, layer, onClearLayer, strip }}>
+      <LegendWithReplay {...props} />
+    </LegendChromeContext.Provider>
+  );
+}
+
+function LegendWithReplay(props: Props) {
   const el = LegendBody(props) as ReactElement<{ children?: ReactNode }>;
   const { month, layer, mode } = props;
   if (!month || !layer || mode !== 'conflicts') return el;
@@ -63,8 +78,8 @@ export default function Legend(props: Props) {
 function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed = false }: Props) {
   if (layer === 'displacement') {
     return (
-      <aside className="legend" aria-label="Legend">
-        <h2 className="legend-title">Forcibly displaced</h2>
+      <LegendFrame>
+        <LegendTitle>Forcibly displaced</LegendTitle>
         <ul>
           {DISPLACEMENT_COLORS.map((color, i) => (
             <li key={i}>
@@ -84,15 +99,14 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
             UNHCR
           </a>{' '}
           {DISPLACEMENT.year} figures, fetched {formatDate(DISPLACEMENT.fetchedAt)}.
-          {mode === 'conflicts' ? ' Markers still show conflict intensity.' : ''}
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (layer === 'military') {
     return (
-      <aside className="legend" aria-label="Legend">
-        <h2 className="legend-title">Foreign military presence</h2>
+      <LegendFrame>
+        <LegendTitle>Foreign military presence</LegendTitle>
         <ul>
           {MILITARY_COLORS.map((color, i) => (
             <li key={i}>
@@ -113,13 +127,13 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
           ))}
           ; verified {formatDate(MILITARY.verified)}.
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (layer === 'trade') {
     return (
-      <aside className="legend" aria-label="Legend">
-        <h2 className="legend-title">Export dependence</h2>
+      <LegendFrame>
+        <LegendTitle>Export dependence</LegendTitle>
         <table className="trade-key">
           <thead>
             <tr>
@@ -162,13 +176,13 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
           </a>
           , fetched {formatDate(TRADE.fetchedAt)}.
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (layer === 'chokepoints') {
     return (
-      <aside className="legend" aria-label="Legend">
-        <h2 className="legend-title">Maritime chokepoints</h2>
+      <LegendFrame>
+        <LegendTitle>Maritime chokepoints</LegendTitle>
         <ul>
           {CHOKEPOINT_STATUSES.map((st) => (
             <li key={st}>
@@ -178,15 +192,15 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
           ))}
         </ul>
         <div className="note">
-          Eight passages with a dated status and the conflicts that bear on them. Curated; verified {formatDate(CHOKEPOINTS_FILE.verified)}.{mode === 'conflicts' ? ' Round markers are still conflicts.' : ''}
+          Eight passages with a dated status and the conflicts that bear on them. Curated; verified {formatDate(CHOKEPOINTS_FILE.verified)}.
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (layer === 'unrest') {
     return (
-      <aside className="legend" aria-label="Legend">
-        <h2 className="legend-title">Civil unrest · {UNREST.length}</h2>
+      <LegendFrame>
+        <LegendTitle>Civil unrest · {UNREST.length}</LegendTitle>
         <ul>
           {INTENSITIES.map((i) => (
             <li key={i}>
@@ -199,13 +213,13 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
         <div className="note">
           Protest movements, riots, uprisings, coups, mutinies and crackdowns that are not armed conflicts, each with dated, sourced assessments. Intensity here means the scale of mobilisation and the lethality of the response, not armed combat. Countries are tinted by their most intense episode. Curated and reassessed weekly; newest assessment {formatDate(UNREST_VERIFIED)}.
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (layer === 'acled') {
     return (
-      <aside className="legend" aria-label="Legend">
-        <h2 className="legend-title">Political violence</h2>
+      <LegendFrame>
+        <LegendTitle>Political violence</LegendTitle>
         <ul>
           {ACLED_COLORS.map((color, i) => (
             <li key={i}>
@@ -221,13 +235,13 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
           </a>
           .
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (layer === 'acled-unrest') {
     return (
-      <aside className="legend" aria-label="Legend">
-        <h2 className="legend-title">Protests and riots</h2>
+      <LegendFrame>
+        <LegendTitle>Protests and riots</LegendTitle>
         <ul>
           {ACLED_UNREST_COLORS.map((color, i) => (
             <li key={i}>
@@ -243,13 +257,13 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
           </a>
           .
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (layer === 'ucdp') {
     return (
-      <aside className="legend" aria-label="Legend">
-        <h2 className="legend-title">Organised violence</h2>
+      <LegendFrame>
+        <LegendTitle>Organised violence</LegendTitle>
         <ul>
           {UCDP_COLORS.map((color, i) => (
             <li key={i}>
@@ -265,13 +279,13 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
           </a>
           .
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (layer === 'sanctions') {
     return (
-      <aside className="legend" aria-label="Legend">
-        <h2 className="legend-title">Sanctions regimes</h2>
+      <LegendFrame>
+        <LegendTitle>Sanctions regimes</LegendTitle>
         <ul>
           {SANCTIONS_COLORS.map((color, i) => (
             <li key={i}>
@@ -296,13 +310,13 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
           ))}
           , fetched {formatDate(SANCTIONS.fetchedAt)}.
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (layer === 'elections') {
     return (
-      <aside className="legend" aria-label="Legend">
-        <h2 className="legend-title">Next national election</h2>
+      <LegendFrame>
+        <LegendTitle>Next national election</LegendTitle>
         <ul>
           {[4, 3, 2, 1, 0].map((i) => (
             <li key={i}>
@@ -319,13 +333,13 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
           </a>{' '}
           and re-checked by the weekly research pass; last verified {formatDate(ELECTIONS_VERIFIED)}.
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (layer === 'nuclear') {
     return (
-      <aside className="legend" aria-label="Legend">
-        <h2 className="legend-title">Nuclear status</h2>
+      <LegendFrame>
+        <LegendTitle>Nuclear status</LegendTitle>
         <ul>
           {NUCLEAR_STATUSES.map((st) => (
             <li key={st}>
@@ -346,13 +360,13 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
           ))}
           ; verified {formatDate(NUCLEAR.verified)}. Umbrella covers NATO members, Japan, South Korea and Australia.
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (mode === 'conflicts') {
     return (
-      <aside className="legend" aria-label="Legend">
-        <h2 className="legend-title">Conflict intensity{month ? ` · ${formatMonth(month)}` : ''}</h2>
+      <LegendFrame>
+        <LegendTitle>Conflict intensity{month ? ` · ${formatMonth(month)}` : ''}</LegendTitle>
         <ul>
           {INTENSITIES.map((i) => (
             <li key={i}>
@@ -379,7 +393,7 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
           )}
         </ul>
         <div className="note">Markers (circles) and territory (squares): countries are filled by the most intense conflict fought on their territory, deeper for more intense. A dashed outline marks a state whose forces fight only abroad. Marker size follows intensity.</div>
-      </aside>
+      </LegendFrame>
     );
   }
 
@@ -391,10 +405,10 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
     let both = 0;
     for (const iso of setA) if (setB.has(iso)) both += 1;
     return (
-      <aside className="legend" aria-label="Legend">
-        <h2 className="legend-title">
+      <LegendFrame>
+        <LegendTitle>
           {b.shortName} vs {v.shortName}
-        </h2>
+        </LegendTitle>
         <ul>
           <li>
             <span className="swatch" style={{ background: b.color }} /> {b.shortName} only · {setA.size - both}
@@ -407,14 +421,14 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
           </li>
         </ul>
         <div className="note">Full members only. Open the panel for shared members, suspended states and each bloc's totals.</div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (b) {
     const statuses = new Set(b.members.map((m) => m.status));
     return (
-      <aside className="legend" aria-label="Legend">
-        <h2 className="legend-title">{b.shortName}</h2>
+      <LegendFrame>
+        <LegendTitle>{b.shortName}</LegendTitle>
         <ul>
           <li>
             <span className="swatch" style={{ background: b.color }} /> Member
@@ -430,13 +444,13 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
             </li>
           )}
         </ul>
-      </aside>
+      </LegendFrame>
     );
   }
 
   return (
-    <aside className="legend" aria-label="Legend">
-      <h2 className="legend-title">Bloc memberships</h2>
+    <LegendFrame>
+      <LegendTitle>Bloc memberships</LegendTitle>
       <ul>
         {overviewSteps.map((color, i) => (
           <li key={i}>
@@ -445,7 +459,7 @@ function LegendBody({ mode, bloc, vs, overviewSteps, layer, month = null, embed 
           </li>
         ))}
       </ul>
-      <div className="note">{embed ? 'Tap a country for details · open in ATLAS ↗ to pick a bloc.' : 'Pick a bloc above to see its members. Click any country for details.'}</div>
-    </aside>
+      <div className="note">{embed ? 'Tap a country for details · open in ATLAS ↗ to pick a bloc.' : 'Pick a bloc above to see its members, then use VS Compare to set two blocs side by side. Click any country for details.'}</div>
+    </LegendFrame>
   );
 }
