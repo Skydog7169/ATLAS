@@ -71,12 +71,15 @@ export default function Search({ onPick, conflictColor, mode, watchlist = [] }: 
     return () => window.removeEventListener(SEARCH_PREFILL_EVENT, onPrefill);
   }, []);
 
-  // Focus stays put: the app moves it into the panel the pick opens.
   const pick = (hit: SearchHit) => {
     onPick(hit);
-    if (hit.kind !== 'action' && hit.kind !== 'layer') setRecent(pushRecent({ kind: hit.kind, id: hit.id }));
+    const opensPanel = hit.kind !== 'action' && hit.kind !== 'layer';
+    if (opensPanel) setRecent(pushRecent({ kind: hit.kind, id: hit.id }));
     setQuery('');
     setOpen(false);
+    // A pick that opens a panel hands focus to it (the panel focuses its heading);
+    // layers and actions keep focus here so the user doesn't lose their place.
+    if (opensPanel) inputRef.current?.blur();
   };
 
   const showList = open;

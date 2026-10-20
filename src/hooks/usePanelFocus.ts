@@ -43,7 +43,10 @@ export function usePanelFocus(sectionRef: RefObject<HTMLElement | null>, key: st
     if (!h2) return;
     h2.id = headingId;
     h2.tabIndex = -1;
-    if (appReady) h2.focus({ preventScroll: true });
+    // Never pull focus out of a text field the user has moved into meanwhile (the panel can render a beat late).
+    const active = document.activeElement;
+    const typing = (active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement) && !sectionRef.current?.contains(active);
+    if (appReady && !typing) h2.focus({ preventScroll: true });
   }, [sectionRef, key, headingId]);
 
   return headingId;
