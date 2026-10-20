@@ -26,7 +26,8 @@ import Search, { type SearchHit } from './components/Search';
 import ThemeToggle from './components/ThemeToggle';
 import Clock from './components/Clock';
 import Ticker from './components/Ticker';
-import SinceLastVisit from './components/SinceLastVisit';
+import SinceLastVisit, { UpdatedReadout } from './components/SinceLastVisit';
+import { watchItemResolves } from './lib/feed';
 import { ASK_ENABLED } from './components/AskPanel';
 import { useWatchlist } from './hooks/useWatchlist';
 import { formatDate, formatMonth } from './lib/labels';
@@ -228,8 +229,10 @@ export default function App() {
   const selectConflict = useCallback(
     (id: string) => {
       const c = CONFLICT_BY_ID.get(id);
+      // An unknown id (a stale star, say) would leave the app thinking a panel is open with nothing in it.
+      if (!c) return;
       update({ mode: 'conflicts', selection: { kind: 'conflict', id } });
-      if (c) setFocus({ kind: 'point', lonLat: c.location, scale: 3.5 });
+      setFocus({ kind: 'point', lonLat: c.location, scale: 3.5 });
     },
     [update],
   );
@@ -246,8 +249,9 @@ export default function App() {
   const selectUnrest = useCallback(
     (id: string) => {
       const u = UNREST_BY_ID.get(id);
+      if (!u) return;
       update({ layer: 'unrest', selection: { kind: 'unrest', id } });
-      if (u) setFocus({ kind: 'point', lonLat: u.location, scale: 3.5 });
+      setFocus({ kind: 'point', lonLat: u.location, scale: 3.5 });
     },
     [update],
   );
@@ -443,9 +447,7 @@ export default function App() {
           <span className="optional">
             TRACKED <b>{CONFLICTS.length}</b> · BLOCS <b>{BLOCS.length}</b>
           </span>
-          <button className="readout-btn optional" onClick={() => update({ selection: { kind: 'changes' } })} title="Recent changes">
-            DATA <b>{formatMonth(DATA_ASOF).toUpperCase()}</b>
-          </button>
+          <UpdatedReadout onOpen={(since) => update({ selection: { kind: 'changes', since } })} />
         </div>
         <Search onPick={onPick} conflictColor={conflictColor} />
         <button
@@ -466,7 +468,8 @@ export default function App() {
           aria-label="Watchlist"
           aria-pressed={selection?.kind === 'watchlist'}
           title="Watchlist"
-          data-count={watchlist.items.length || undefined}
+          data-count={watchlist.items.filter(watchItemResolves).length || undefined}
+          data-unsaved={!watchlist.persisted || undefined}
           onClick={() => update({ selection: selection?.kind === 'watchlist' ? null : { kind: 'watchlist' } })}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill={watchlist.items.length ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden="true">
@@ -504,7 +507,7 @@ export default function App() {
       </header>
 
       <main className="stage" ref={stageRef}>
-        <SinceLastVisit onSelectConflict={selectConflict} onSelectBloc={selectBloc} onSelectUnrest={selectUnrest} onOpenChanges={() => update({ selection: { kind: 'changes' } })} />
+        <SinceLastVisit onSelectConflict={selectConflict} onSelectBloc={selectBloc} onSelectUnrest={selectUnrest} onOpenChanges={() => update({ selection: { kind: 'changes', since: true } })} />
         <ErrorBoundary>
           <Suspense fallback={<MapSkeleton />}>
             {view === 'globe' ? (
