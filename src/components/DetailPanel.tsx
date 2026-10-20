@@ -7,7 +7,7 @@ import type { Bloc, Conflict, HistoryEntry, MembershipStatus, Unrest } from '../
 import { countryName } from '../lib/countries';
 import { changesSince, entryAt, type ChangeItem } from '../lib/history';
 import { CATEGORY_LABEL, CHANGE_LABEL, CONFLICT_TYPE_LABEL, INTENSITY_COLOR, INTENSITY_LABEL, STATUS_LABEL, formatDate, formatMonth } from '../lib/labels';
-import type { Selection } from '../lib/urlState';
+import type { Layer, Selection } from '../lib/urlState';
 import { WORLD, WORLDBANK, blocFigures, formatCount, formatUsd, share, type Figures } from '../lib/worldbank';
 import { DISPLACEMENT, formatPeople } from '../lib/displacement';
 import { SANCTIONS } from '../lib/sanctions';
@@ -46,6 +46,11 @@ interface Props {
   onSelectChokepoint: (id: string) => void;
   onSelectPair: (a: string, b: string | null) => void;
   onSelectUnrest: (id: string) => void;
+  /** What the map is painting, so the bloc panel offers "Show on map" only when it would change it. */
+  mapLayer?: Layer;
+  mapBloc?: string | null;
+  /** Opens compare picking with this bloc as the first side. */
+  onCompareBloc?: (id: string) => void;
 }
 
 function CloseButton({ onClick }: { onClick: () => void }) {
@@ -350,9 +355,16 @@ function BlocView({ bloc, props }: { bloc: Bloc; props: Props }) {
         <FigureTiles f={blocFigures(bloc)} color={bloc.color} />
         <BlocTrends bloc={bloc} />
         <div className="panel-actions">
-          <button className="text-btn primary" onClick={() => props.onHighlightBloc(bloc.id)}>
-            Show on map
-          </button>
+          {props.onCompareBloc && (
+            <button className="text-btn primary" onClick={() => props.onCompareBloc?.(bloc.id)}>
+              Compare with…
+            </button>
+          )}
+          {(props.mapLayer || props.mapBloc !== bloc.id) && (
+            <button className="text-btn" onClick={() => props.onHighlightBloc(bloc.id)}>
+              {props.mapLayer ? 'Show on map (hide layer)' : 'Show on map'}
+            </button>
+          )}
           <ShareButton />
         </div>
         {groups.map((g) => (

@@ -14,6 +14,9 @@ import { TRADE, TRADE_COLOR, TRADE_PARTNERS, TRADE_PARTNER_LABEL } from '../lib/
 import { CHOKEPOINTS_FILE, CHOKEPOINT_COLOR, CHOKEPOINT_STATUSES, CHOKEPOINT_STATUS_LABEL } from '../lib/chokepoints';
 import { UNREST } from '../data/unrest';
 import { UNREST_COLOR, UNREST_VERIFIED } from '../lib/unrest';
+import type { ReactNode } from 'react';
+import { LegendFrame, LegendTitle } from './LegendFrame';
+import { LegendChromeContext } from './legendChrome';
 
 interface Props {
   mode: Mode;
@@ -21,15 +24,28 @@ interface Props {
   vs: string | null;
   overviewSteps: string[];
   layer: Layer;
+  /** Turns the data layer off from the legend title. */
+  onClearLayer?: () => void;
+  /** Map-state strip shown above the legend. */
+  strip?: ReactNode;
 }
 
 const INTENSITIES: Intensity[] = ['high', 'medium', 'low', 'latent'];
 
-export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) {
+export default function Legend(props: Props) {
+  const { mode, layer, onClearLayer, strip } = props;
+  return (
+    <LegendChromeContext.Provider value={{ mode, layer, onClearLayer, strip }}>
+      <LegendBody {...props} />
+    </LegendChromeContext.Provider>
+  );
+}
+
+function LegendBody({ mode, bloc, vs, overviewSteps, layer }: Props) {
   if (layer === 'displacement') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Forcibly displaced</h3>
+      <LegendFrame>
+        <LegendTitle>Forcibly displaced</LegendTitle>
         <ul>
           {DISPLACEMENT_COLORS.map((color, i) => (
             <li key={i}>
@@ -44,15 +60,14 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
             UNHCR
           </a>{' '}
           {DISPLACEMENT.year} figures, fetched {formatDate(DISPLACEMENT.fetchedAt)}.
-          {mode === 'conflicts' ? ' Markers still show conflict intensity.' : ''}
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (layer === 'military') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Foreign military presence</h3>
+      <LegendFrame>
+        <LegendTitle>Foreign military presence</LegendTitle>
         <ul>
           {MILITARY_COLORS.map((color, i) => (
             <li key={i}>
@@ -73,13 +88,13 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           ))}
           ; verified {formatDate(MILITARY.verified)}.
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (layer === 'trade') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Export dependence</h3>
+      <LegendFrame>
+        <LegendTitle>Export dependence</LegendTitle>
         <ul>
           {TRADE_PARTNERS.map((p) => (
             <li key={p}>
@@ -99,13 +114,13 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           </a>
           , fetched {formatDate(TRADE.fetchedAt)}.
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (layer === 'chokepoints') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Maritime chokepoints</h3>
+      <LegendFrame>
+        <LegendTitle>Maritime chokepoints</LegendTitle>
         <ul>
           {CHOKEPOINT_STATUSES.map((st) => (
             <li key={st}>
@@ -115,15 +130,15 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           ))}
         </ul>
         <div className="note">
-          Eight passages with a dated status and the conflicts that bear on them. Curated; verified {formatDate(CHOKEPOINTS_FILE.verified)}.{mode === 'conflicts' ? ' Round markers are still conflicts.' : ''}
+          Eight passages with a dated status and the conflicts that bear on them. Curated; verified {formatDate(CHOKEPOINTS_FILE.verified)}.
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (layer === 'unrest') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Civil unrest · {UNREST.length}</h3>
+      <LegendFrame>
+        <LegendTitle>Civil unrest · {UNREST.length}</LegendTitle>
         <ul>
           {INTENSITIES.map((i) => (
             <li key={i}>
@@ -135,13 +150,13 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
         <div className="note">
           Protest movements, riots, uprisings, coups, mutinies and crackdowns that are not armed conflicts, each with dated, sourced assessments. Countries are tinted by their most intense episode. Curated and reassessed weekly; newest assessment {formatDate(UNREST_VERIFIED)}.
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (layer === 'acled') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Political violence</h3>
+      <LegendFrame>
+        <LegendTitle>Political violence</LegendTitle>
         <ul>
           {ACLED_COLORS.map((color, i) => (
             <li key={i}>
@@ -157,13 +172,13 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           </a>
           .
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (layer === 'acled-unrest') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Protests and riots</h3>
+      <LegendFrame>
+        <LegendTitle>Protests and riots</LegendTitle>
         <ul>
           {ACLED_UNREST_COLORS.map((color, i) => (
             <li key={i}>
@@ -179,13 +194,13 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           </a>
           .
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (layer === 'ucdp') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Organised violence</h3>
+      <LegendFrame>
+        <LegendTitle>Organised violence</LegendTitle>
         <ul>
           {UCDP_COLORS.map((color, i) => (
             <li key={i}>
@@ -201,13 +216,13 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           </a>
           .
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (layer === 'sanctions') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Sanctions regimes</h3>
+      <LegendFrame>
+        <LegendTitle>Sanctions regimes</LegendTitle>
         <ul>
           {SANCTIONS_COLORS.map((color, i) => (
             <li key={i}>
@@ -228,13 +243,13 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           ))}
           , fetched {formatDate(SANCTIONS.fetchedAt)}.
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (layer === 'elections') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Next national election</h3>
+      <LegendFrame>
+        <LegendTitle>Next national election</LegendTitle>
         <ul>
           {[4, 3, 2, 1, 0].map((i) => (
             <li key={i}>
@@ -250,13 +265,13 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           </a>{' '}
           and re-checked by the weekly research pass; last verified {formatDate(ELECTIONS_VERIFIED)}.
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (layer === 'nuclear') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Nuclear status</h3>
+      <LegendFrame>
+        <LegendTitle>Nuclear status</LegendTitle>
         <ul>
           {NUCLEAR_STATUSES.map((st) => (
             <li key={st}>
@@ -277,13 +292,13 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           ))}
           ; verified {formatDate(NUCLEAR.verified)}. Umbrella covers NATO members, Japan, South Korea and Australia.
         </div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (mode === 'conflicts') {
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>Conflict intensity</h3>
+      <LegendFrame>
+        <LegendTitle>Conflict intensity</LegendTitle>
         <ul>
           {INTENSITIES.map((i) => (
             <li key={i}>
@@ -293,7 +308,7 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           ))}
         </ul>
         <div className="note">Countries are tinted by the most intense conflict on their territory. Marker size follows intensity.</div>
-      </aside>
+      </LegendFrame>
     );
   }
 
@@ -305,10 +320,10 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
     let both = 0;
     for (const iso of setA) if (setB.has(iso)) both += 1;
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>
+      <LegendFrame>
+        <LegendTitle>
           {b.shortName} vs {v.shortName}
-        </h3>
+        </LegendTitle>
         <ul>
           <li>
             <span className="swatch" style={{ background: b.color }} /> {b.shortName} only · {setA.size - both}
@@ -321,14 +336,14 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           </li>
         </ul>
         <div className="note">Full members only. Open the panel for shared members and combined figures.</div>
-      </aside>
+      </LegendFrame>
     );
   }
   if (b) {
     const statuses = new Set(b.members.map((m) => m.status));
     return (
-      <aside className="legend frame" aria-label="Legend">
-        <h3>{b.shortName}</h3>
+      <LegendFrame>
+        <LegendTitle>{b.shortName}</LegendTitle>
         <ul>
           <li>
             <span className="swatch" style={{ background: b.color }} /> Member
@@ -344,13 +359,13 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
             </li>
           )}
         </ul>
-      </aside>
+      </LegendFrame>
     );
   }
 
   return (
-    <aside className="legend frame" aria-label="Legend">
-      <h3>Bloc memberships</h3>
+    <LegendFrame>
+      <LegendTitle>Bloc memberships</LegendTitle>
       <ul>
         {overviewSteps.map((color, i) => (
           <li key={i}>
@@ -359,7 +374,7 @@ export default function Legend({ mode, bloc, vs, overviewSteps, layer }: Props) 
           </li>
         ))}
       </ul>
-      <div className="note">Pick a bloc above to see its members. Click any country for details.</div>
-    </aside>
+      <div className="note">Pick a bloc above to see its members, then use VS Compare to set two blocs side by side. Click any country for details.</div>
+    </LegendFrame>
   );
 }

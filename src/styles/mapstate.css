@@ -1,0 +1,248 @@
+/* Map state, overlay dismissal and the grouped map controls (review batch 8). */
+
+/* ---------- map-state strip (top of the legend) ---------- */
+.map-state {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin: -2px 0 8px;
+  padding-bottom: 7px;
+  border-bottom: 1px dashed var(--border-strong);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.map-state-path {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 0;
+  min-width: 0;
+}
+
+.map-state-seg {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.map-state-seg + .map-state-seg::before {
+  content: '›';
+  margin: 0 5px;
+  color: var(--fg-faint);
+}
+
+.map-state-seg[data-key='mode'] {
+  color: var(--accent);
+}
+
+.map-state-seg[data-key='layer'],
+.map-state-seg[data-key='month'] {
+  color: var(--fg);
+}
+
+.map-state-clear,
+.legend-clear {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--fg-muted);
+  cursor: pointer;
+}
+
+.map-state-clear:hover,
+.legend-clear:hover,
+.map-state-clear:focus-visible,
+.legend-clear:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.map-state-reset {
+  margin-left: auto;
+  padding: 2px 8px;
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--fg);
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
+.map-state-reset:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ---------- legend title with a clear-overlay ✕ ---------- */
+.legend h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.legend h3 .legend-clear {
+  margin: -4px -6px -4px 0;
+}
+
+.legend-intensity {
+  margin-top: 8px;
+  padding-top: 7px;
+  border-top: 1px dashed var(--border-strong);
+}
+
+.legend-intensity ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+
+.legend-sub {
+  margin-bottom: 5px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+/* ---------- map controls: Data, View and Share groups ---------- */
+.map-controls {
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.control-group > .icon-btn + .icon-btn {
+  border-top: 0;
+}
+
+.icon-btn .icon {
+  display: block;
+}
+
+/* The layers trigger names the current overlay ("SANCTIONS ▾") instead of being a bare icon. */
+.icon-btn.layer-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: auto;
+  min-width: 36px;
+  padding: 0 10px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.layer-trigger-label {
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.layer-list .name .icon {
+  display: inline-block;
+  vertical-align: -1px;
+  margin-right: 4px;
+}
+
+.layer-list button[data-busy] {
+  opacity: 0.6;
+}
+
+/* Short screens: keep title, swatches and the state strip; drop the prose. */
+@media (max-height: 560px) {
+  .legend .note {
+    display: none;
+  }
+}
+
+@media (max-height: 760px) {
+  .layer-list:not(.share-menu .layer-list) .hint {
+    display: none;
+  }
+}
+
+@media (max-width: 820px) {
+  .map-controls {
+    gap: 6px;
+  }
+
+  /* Phones keep the narrow column: icon only, and the cyan fill says a layer is on. */
+  .icon-btn.layer-trigger {
+    width: 36px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .layer-trigger-label,
+  .layer-trigger .icon:last-child {
+    display: none;
+  }
+}
+
+/* ---------- bloc chips ---------- */
+@media (min-width: 821px) {
+  .app[data-panel-open='true'] .chip-row {
+    right: calc(var(--panel-w) + 24px);
+  }
+}
+
+/* The row's end is marked by sticky ‹ › buttons that cast a fade over the chips, only on
+   the side that has more chips past it, instead of a static mask that also fades the last chip. */
+.chip-row {
+  mask-image: none;
+  scroll-padding-inline: 44px;
+}
+
+.chip.chip-page {
+  position: sticky;
+  z-index: 1;
+  padding: 6px 8px;
+  color: var(--fg);
+  background: var(--bg-elev-2);
+  clip-path: none;
+}
+
+.chip.chip-page.prev {
+  left: 0;
+  box-shadow: 14px 0 14px 2px var(--bg);
+}
+
+.chip.chip-page.next {
+  right: 0;
+  box-shadow: -14px 0 14px 2px var(--bg);
+}
+
+.chip.chip-page[data-hidden='true'] {
+  visibility: hidden;
+}
+
+/* Under a data layer the chips can't be what the map shows: mute the pressed fill. */
+.chip-row[data-suppressed] .chip[aria-pressed='true']:not(.compare) {
+  background: color-mix(in srgb, var(--bg-elev) 90%, transparent);
+  box-shadow: none;
+  border-style: dashed;
+  color: var(--fg-muted);
+}
+
+.chip-row[data-suppressed] .chip .dot {
+  box-shadow: none;
+  opacity: 0.5;
+}
