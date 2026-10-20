@@ -14,7 +14,7 @@
     ],
     "parties": [
       "Russia",
-      "Ukraine (backed by NATO members and the EU)"
+      "Ukraine"
     ],
     "summary": "Russia seized Crimea and parts of the Donbas in 2014 and launched a full-scale invasion in February 2022. The war became the largest in Europe since 1945, with attritional ground fighting across the east and south and long-range strike campaigns by both sides.",
     "actors": [
@@ -262,7 +262,8 @@
           {
             "name": "Iran",
             "iso": "IRN",
-            "support": "arms"
+            "support": "arms",
+            "basis": "reported"
           },
           {
             "name": "Türkiye",
@@ -280,7 +281,8 @@
           {
             "name": "United Arab Emirates",
             "iso": "ARE",
-            "support": "arms"
+            "support": "arms",
+            "basis": "reported"
           }
         ]
       },
@@ -1682,7 +1684,7 @@
       "BDI"
     ],
     "parties": [
-      "M23 / Congo River Alliance (backed by Rwanda)",
+      "M23 / Congo River Alliance",
       "DRC armed forces and allied militias",
       "Burundian and Ugandan forces"
     ],
@@ -1993,8 +1995,7 @@
     "parties": [
       "Federal government and allied regional forces",
       "TPLF (Tigray) allied with Amhara Fano militias",
-      "Oromo Liberation Army",
-      "Eritrea (accused of backing armed groups)"
+      "Oromo Liberation Army"
     ],
     "summary": "After the 2020–2022 Tigray war ended, insurgencies by Amhara Fano militias and the Oromo Liberation Army spread. Tigray’s ruling party split in 2025, and tensions with Eritrea over access to the sea rose sharply.",
     "actors": [
@@ -2014,7 +2015,8 @@
           {
             "name": "Eritrea",
             "iso": "ERI",
-            "support": "political"
+            "support": "political",
+            "basis": "alleged"
           }
         ]
       },

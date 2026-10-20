@@ -1,5 +1,5 @@
-import type { Conflict } from '../data/types';
-import { SUPPORT_LABEL, sides } from '../lib/actors';
+import type { Backer, Conflict } from '../data/types';
+import { SUPPORT_LABEL, basisWord, isMediator, sides, supportLabel } from '../lib/actors';
 import { countryName } from '../lib/countries';
 
 interface Props {
@@ -7,9 +7,11 @@ interface Props {
   onSelectCountry: (iso: string) => void;
 }
 
-const COL_W = 150;
+const COL_W = 170;
 const ROW_H = 34;
 const BACKER_H = 20;
+/** A hedged backer gets a second line for 'reportedly' or 'alleged' so the hedge is never truncated away. */
+const backerH = (b: Backer) => (basisWord(b) ? BACKER_H + 12 : BACKER_H);
 const GAP = 14;
 const PAD = 6;
 
@@ -22,7 +24,7 @@ const PAD = 6;
 export default function ActorsGraph({ conflict, onSelectCountry }: Props) {
   const cols = sides(conflict);
   if (cols.length === 0) return null;
-  const colHeight = (c: (typeof cols)[number]) => c.actors.reduce((h, a) => h + ROW_H + (a.backers?.length ?? 0) * BACKER_H + GAP, 0);
+  const colHeight = (c: (typeof cols)[number]) => c.actors.reduce((h, a) => h + ROW_H + (a.backers ?? []).reduce((sum, b) => sum + backerH(b), 0) + GAP, 0);
   const height = Math.max(...cols.map(colHeight)) + 24;
   const width = cols.length * (COL_W + GAP) - GAP;
   const truncate = (s: string, n: number) => (s.length > n ? s.slice(0, n - 1).trimEnd() + '…' : s);
@@ -40,8 +42,8 @@ export default function ActorsGraph({ conflict, onSelectCountry }: Props) {
               {col.actors.map((a) => {
                 const top = y;
                 const backers = a.backers ?? [];
-                y += ROW_H + backers.length * BACKER_H + GAP;
-                const mediator = /mediator/i.test(col.side);
+                y += ROW_H + backers.reduce((sum, b) => sum + backerH(b), 0) + GAP;
+                const mediator = isMediator(col);
                 return (
                   <g key={a.id}>
                     <rect x={x} y={top} width={COL_W} height={ROW_H - 6} className={`actor actor-${a.type}${mediator ? ' mediator' : ''}`} />
@@ -52,8 +54,10 @@ export default function ActorsGraph({ conflict, onSelectCountry }: Props) {
                       {a.type.replace('-', ' ')}
                     </text>
                     {backers.map((b, bi) => {
-                      const by = top + ROW_H + bi * BACKER_H;
-                      const label = `${b.iso ? countryName(b.iso) : b.name} · ${SUPPORT_LABEL[b.support].toLowerCase()}`;
+                      const by = top + ROW_H + backers.slice(0, bi).reduce((sum, x) => sum + backerH(x), 0);
+                      // Mediators broker talks; their sponsors are not "backing" a party.
+                      const label = `${b.iso ? countryName(b.iso) : b.name} · ${mediator ? 'mediating' : SUPPORT_LABEL[b.support].toLowerCase()}`;
+                      const hedge = mediator ? '' : basisWord(b);
                       return (
                         <g
                           key={b.name + b.support}
@@ -61,13 +65,19 @@ export default function ActorsGraph({ conflict, onSelectCountry }: Props) {
                           onClick={b.iso ? () => onSelectCountry(b.iso!) : undefined}
                           tabIndex={b.iso ? 0 : undefined}
                           role={b.iso ? 'button' : undefined}
-                          aria-label={b.iso ? `${countryName(b.iso)}: ${SUPPORT_LABEL[b.support]} for ${a.name}` : undefined}
+                          aria-label={b.iso ? `${countryName(b.iso)}: ${mediator ? 'mediating' : supportLabel(b)} for ${a.name}` : undefined}
                           onKeyDown={b.iso ? (e) => (e.key === 'Enter' || e.key === ' ') && onSelectCountry(b.iso!) : undefined}
                         >
                           <path d={`M${x + 10} ${top + ROW_H - 6} V${by + 9} H${x + 18}`} className="link" />
                           <text x={x + 22} y={by + 12} className="backer-name">
-                            {truncate(label, 26)}
+                            <title>{hedge ? `${label} (${hedge})` : label}</title>
+                            {truncate(label, 30)}
                           </text>
+                          {hedge && (
+                            <text x={x + 22} y={by + 24} className="backer-name backer-hedge">
+                              ({hedge})
+                            </text>
+                          )}
                         </g>
                       );
                     })}
@@ -79,7 +89,7 @@ export default function ActorsGraph({ conflict, onSelectCountry }: Props) {
         })}
       </svg>
       <figcaption className="sr-only">
-        {cols.map((col) => `${col.side}: ${col.actors.map((a) => `${a.name}${a.backers?.length ? ` (backed by ${a.backers.map((b) => `${b.iso ? countryName(b.iso) : b.name}, ${SUPPORT_LABEL[b.support].toLowerCase()}`).join('; ')})` : ''}`).join(', ')}`).join('. ')}
+        {cols.map((col) => `${col.side}: ${col.actors.map((a) => `${a.name}${a.backers?.length ? ` (backed by ${a.backers.map((b) => `${b.iso ? countryName(b.iso) : b.name}, ${supportLabel(b).toLowerCase()}`).join('; ')})` : ''}`).join(', ')}`).join('. ')}
       </figcaption>
     </figure>
   );
