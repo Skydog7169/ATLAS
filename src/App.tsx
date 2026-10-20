@@ -30,6 +30,7 @@ import ThemeToggle from './components/ThemeToggle';
 import HeaderReadouts from './components/HeaderReadouts';
 import ThisWeek from './components/ThisWeek';
 import { DATA_ASOF, PROMISE, PROMISE_SHORT } from './lib/frontdoor';
+import { MARK_CARDINALS, MARK_INTERCARDINALS, MARK_RING, MARK_TICKS } from './lib/brandMark';
 import Ticker from './components/Ticker';
 import SinceLastVisit from './components/SinceLastVisit';
 import { watchItemResolves } from './lib/feed';
@@ -119,13 +120,23 @@ function untrackedAt(month: string | null): Array<(typeof CONFLICTS)[number]> {
   return month ? CONFLICTS.filter((c) => replayAt(c, month).untracked) : [];
 }
 
+/** The compass-rose mark (src/lib/brandMark.ts). */
 function Logo() {
   return (
     <svg viewBox="0 0 32 32" aria-hidden="true">
-      <circle cx="16" cy="16" r="12" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="16" cy="16" r="5.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M16 1v6M16 25v6M1 16h6M25 16h6" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="16" cy="16" r="1.6" fill="var(--warn)" />
+      <path d={MARK_RING} fill="none" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
+      <path d={MARK_TICKS} stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" opacity="0.7" />
+      <path d={MARK_INTERCARDINALS} fill="currentColor" opacity="0.5" />
+      {MARK_CARDINALS.map((c) => {
+        const fill = c.name === 'N' ? 'var(--warn)' : 'currentColor';
+        return (
+          <g key={c.name}>
+            <path d={c.lit} fill={fill} />
+            <path d={c.shade} fill={fill} opacity="0.38" />
+          </g>
+        );
+      })}
+      <circle cx="16" cy="16" r="1.5" fill="var(--bg)" stroke="currentColor" strokeWidth="0.9" />
     </svg>
   );
 }
