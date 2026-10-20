@@ -1909,5 +1909,97 @@
       }
     ],
     "lastChecked": "2026-10-19"
+  },
+  {
+    "id": "france-student-cost-of-living-riots",
+    "name": "France student and cost-of-living protests",
+    "kind": "riots",
+    "since": "2026-09",
+    "location": [
+      2.3522,
+      48.8566
+    ],
+    "countries": [
+      "FRA"
+    ],
+    "parties": [
+      "High-school and university students",
+      "CGT and other unions, teachers and yellow-vest groups",
+      "Government of President Emmanuel Macron and Prime Minister Sébastien Lecornu"
+    ],
+    "trigger": "High-school students in Créteil, outside Paris, began blockading their lycée in mid-September 2026 over overcrowded classrooms, run-down buildings and teacher shortages, and the blockades spread nationwide within weeks.",
+    "summary": "What began as lycée blockades in mid-September 2026 over school conditions grew into a nationwide movement joined by teachers, the CGT union, nurses, farmers and remnants of the 2018 yellow vests, with anger widening to the cost of living and fuel prices. Early October brought clashes, arrests and school closures in Paris, Lyon, Strasbourg and Rennes. On 17 October 2026 the largest day of action drew 550,000 people by the government's count and ended in rioting in Paris, Marseille, Lyon, Limoges and Bordeaux with nearly 1,800 arrests, while the Lecornu government tries to pass a deficit-cutting budget ahead of the 2027 presidential election.",
+    "history": [
+      {
+        "date": "2026-10-20",
+        "intensity": "high",
+        "status": "On 17 October 2026 between 550,000 (Interior Ministry) and 800,000 (organisers) people marched nationwide in the movement's largest day, and rioting followed in Paris, Marseille, Lyon, Limoges and Bordeaux: Marseille's town hall was breached and shops looted, Limoges' historic city hall burned, and nearly 1,800 people were arrested with more than 500 police and firefighters injured. The IGPN police inspectorate has 36 investigations open into alleged police violence. Macron addressed the nation on 18 October, while Prime Minister Lecornu blamed the far left and pressed on with a deficit-cutting budget.",
+        "sources": [
+          {
+            "name": "Al Jazeera: Paris left reeling as student-led protests turn chaotic",
+            "url": "https://www.aljazeera.com/news/2026/10/18/paris-left-reeling-as-student-led-protests-turn-chaotic"
+          },
+          {
+            "name": "Al Jazeera: Tear gas and unrest as hundreds of thousands protest for reforms in France",
+            "url": "https://www.aljazeera.com/news/2026/10/17/france-wave-of-nationwide-protests"
+          },
+          {
+            "name": "CNN: Unprecedented student protests are rocking France",
+            "url": "https://www.cnn.com/2026/10/06/europe/france-student-protests-intl"
+          },
+          {
+            "name": "TIME: Why Are Students Protesting Across France?",
+            "url": "https://time.com/article/2026/10/02/france-student-protests-arrests-injuries-school-closures/"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ]
+  },
+  {
+    "id": "albania-student-anti-government-riots",
+    "name": "Albania student riots against Rama government",
+    "kind": "riots",
+    "since": "2026-10",
+    "location": [
+      19.8187,
+      41.3275
+    ],
+    "countries": [
+      "ALB"
+    ],
+    "parties": [
+      "University and secondary-school students",
+      "Flamingo anti-corruption movement and opposition supporters",
+      "Government of Prime Minister Edi Rama"
+    ],
+    "trigger": "Students who had protested peacefully for months over education costs and job prospects turned to street riots in Tirana on 13 October 2026, joining the Flamingo campaign against corruption and a Kushner-linked coastal resort.",
+    "summary": "Riots broke out in Tirana on 13 October 2026 when student protests over the cost of education and poor job prospects merged with the months-old Flamingo movement opposing alleged government corruption and a luxury resort project on the southern coast linked to Jared Kushner. Over six consecutive days protesters attacked ministries, the prime minister's office, banks and police with fireworks and barricades, and police answered with tear gas, water cannon and rubber bullets. Prime Minister Edi Rama, in power since 2013, refuses to resign and blames a foreign hand, while the EU delegation has urged a proportionate response as Albania pursues membership by 2030.",
+    "history": [
+      {
+        "date": "2026-10-20",
+        "intensity": "medium",
+        "status": "By 18 October 2026 Tirana had seen six consecutive days of rioting. On 14 October riots lasting more than eight hours damaged at least four ministries, banks and shops, with 35 people detained and 29 injured according to AP, and protests spread to universities in Elbasan and Shkodër. The Health Ministry counted 272 people injured since 13 October, 169 of them police officers. Police are using rubber bullets, water cannon and tear gas; Prime Minister Edi Rama rules out resigning and blames foreign interference, while President Begaj and the EU delegation have appealed for calm.",
+        "sources": [
+          {
+            "name": "AP via ABC News: Riots erupt in Albania's capital as students join anti-government movement",
+            "url": "https://abcnews.com/International/wireStory/clashes-erupt-albania-protesting-students-join-anti-government-movement-137261398"
+          },
+          {
+            "name": "Al Jazeera: Tirana sees sixth day of violent protests as Albania's PM refuses to resign",
+            "url": "https://www.aljazeera.com/news/2026/10/18/chaos-in-tirana-demonstrators-determined-to-not-give-up-so-easily"
+          },
+          {
+            "name": "Al Jazeera: Why students are protesting against Albania's Edi Rama",
+            "url": "https://www.aljazeera.com/news/2026/10/15/boiling-point-why-students-are-protesting-against-albanias-edi-rama"
+          },
+          {
+            "name": "NBC News: Albania's leader defies calls to resign as student protesters rampage in capital",
+            "url": "https://www.nbcnews.com/world/europe/riots-erupt-albanias-capital-students-join-anti-government-movement-rcna603644"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ]
   }
 ]

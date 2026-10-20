@@ -198,12 +198,20 @@ export const NewConflictsOutputSchema = z.object({
 export const NewUnrestOutputSchema = z.object({
   candidates: z.array(
     z.object({
-      name: z.string(),
-      countries: z.array(z.string()),
+      name: z.string().describe('short episode name, e.g. "Albania student riots against Rama government"'),
       kind: UnrestKindSchema,
+      since: z.string().describe('YYYY-MM the current wave began'),
+      countries: z.array(z.string()).describe('ISO 3166-1 alpha-3 codes'),
+      city: z.string().describe('main city or place of the unrest'),
+      location: z.object({ lon: z.number(), lat: z.number() }).describe('coordinates of that place'),
+      parties: z.array(z.string()).describe('1-4 main parties, protesters first'),
+      trigger: z.string().describe('one sentence, 20-300 characters, on what set the episode off'),
+      summary: z.string().describe('2-4 sentence background'),
+      status: z.string().describe('2-3 factual, dated sentences, 150-600 characters, on the situation as of today'),
       intensity: IntensitySchema,
+      confidence: ConfidenceSchema,
       why: z.string().describe('one or two sentences on why this belongs on the map'),
-      source: z.object({ name: z.string(), url: z.string() }),
+      sources: z.array(z.object({ name: z.string(), url: z.string() })).describe('2-4 pages from your search results, from different outlets, not Wikipedia'),
     }),
   ),
 });

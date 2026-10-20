@@ -23,7 +23,7 @@ describe('unrest dataset', () => {
       expect(u.history[0]!.date >= u.history.at(-1)!.date, `${u.id} history newest first`).toBe(true);
       expect(u.updated).toBe(u.history[0]!.date);
       for (const h of u.history) for (const s of h.sources) expect(s.url, u.id).toMatch(/^https:\/\//);
-      expect(u.history[0]!.date <= '2026-10-19', `${u.id} dated in the future`).toBe(true);
+      expect(u.history[0]!.date <= new Date().toISOString().slice(0, 10), `${u.id} dated in the future`).toBe(true);
     }
   });
 
