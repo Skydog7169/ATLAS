@@ -72,3 +72,17 @@
 g.marker:active {
   filter: brightness(1.35);
 }
+
+/* Keep the search box usable when the readouts grow (edition chip). */
+@media (min-width: 821px) {
+  .header .search {
+    min-width: 240px;
+  }
+}
+
+/* Leave the map controls clear: the Flat map button is how a failed globe recovers. */
+@media (max-width: 820px) {
+  .error-fallback[data-variant='map'] {
+    padding-right: 64px;
+  }
+}

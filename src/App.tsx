@@ -506,8 +506,8 @@ export default function App() {
             DATA <b>{formatMonth(DATA_ASOF).toUpperCase()}</b>
           </button>
           {edition.newer && (
-            <button className="readout-btn edition-chip" onClick={() => window.location.reload()} title="A newer edition of the data has shipped. Reload to load it; your view is kept in the link.">
-              NEW EDITION · <b>{formatDate(edition.newer).toUpperCase()}</b> ↻
+            <button className="readout-btn edition-chip" onClick={() => window.location.reload()} title={`A newer edition (${formatDate(edition.newer)}) has shipped. Reload to load it; your view is kept in the link.`}>
+              NEW EDITION ↻
             </button>
           )}
         </div>

@@ -28,6 +28,7 @@ export default function Search({ onPick, conflictColor, mode, watchlist = [] }: 
   const [active, setActive] = useState(0);
   const [recent, setRecent] = useState<RecentPick[]>(readRecent);
   const inputRef = useRef<HTMLInputElement>(null);
+  const blurTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const listId = useId();
   const hasQuery = query.trim().length > 0;
 
@@ -85,8 +86,12 @@ export default function Search({ onPick, conflictColor, mode, watchlist = [] }: 
           setQuery(e.target.value);
           setOpen(true);
         }}
-        onFocus={() => setOpen(true)}
-        onBlur={() => setTimeout(() => setOpen(false), 120)}
+        onFocus={() => {
+          // A blur moments ago (a pick) must not close the list we are reopening.
+          clearTimeout(blurTimer.current);
+          setOpen(true);
+        }}
+        onBlur={() => (blurTimer.current = setTimeout(() => setOpen(false), 120))}
         onKeyDown={(e) => {
           if (e.key === 'ArrowDown') {
             e.preventDefault();

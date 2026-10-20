@@ -92,8 +92,7 @@ export default function Briefing({ items, intervalMs = 9000, onShow, onOpen, onE
       {latest ? (
         <p>
           <span className="label" style={{ color: INTENSITY_COLOR[latest.intensity] }}>
-            {/* The eyebrow already names the intensity for the high-intensity rotation. */}
-            {item.eyebrow === INTENSITY_LABEL[latest.intensity] ? formatDate(latest.date) : `${INTENSITY_LABEL[latest.intensity]} · ${formatDate(latest.date)}`}
+            {INTENSITY_LABEL[latest.intensity]} · {formatDate(latest.date)}
           </span>
           <br />
           {latest.status}
