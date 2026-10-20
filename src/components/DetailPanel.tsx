@@ -8,8 +8,10 @@ import { countryName } from '../lib/countries';
 import { changesSince, entryAt, type ChangeItem } from '../lib/history';
 import { deltaTag, deltaWord, groupChanges, itemColor, kindTag, shortDay } from '../lib/delta';
 import { CATEGORY_LABEL, CHANGE_LABEL, CONFLICT_TYPE_LABEL, INTENSITY_COLOR, INTENSITY_LABEL, STATUS_LABEL, STATUS_LABEL_PLURAL, formatDate, formatMonth } from '../lib/labels';
-import type { Selection } from '../lib/urlState';
+import type { Layer, Selection } from '../lib/urlState';
 import type { WatchItem } from '../lib/watchlist';
+import { layerSummary } from '../lib/layerSummary';
+import { useSheet } from '../hooks/useSheet';
 import { STALE_YEARS, WORLD, WORLDBANK, blocFigures, formatCount, formatUsd, share, staleValues, type Figures } from '../lib/worldbank';
 import { blocMembers } from '../lib/membership';
 import { DISPLACEMENT, REPORTED_WITH, displacementTotal, formatPeople } from '../lib/displacement';
@@ -58,6 +60,8 @@ interface Props {
   onSelectChokepoint: (id: string) => void;
   onSelectPair: (a: string, b: string | null) => void;
   onSelectUnrest: (id: string) => void;
+  /** Active data layer: the dossier leads with the country's value on it (touch has no hover tooltip). */
+  layer?: Layer;
   /** The panel this one was reached from, for the "‹ Ukraine" chip; it steps history back. */
   backTo?: { label: string; onBack: () => void } | null;
 }
@@ -231,6 +235,7 @@ function CountryView({ dossier, props }: { dossier: CountryDossier; props: Props
       />
       <div className="panel-body dossier" data-sections={dossier.sections.join(' ')}>
         <Muted>{profileLine(country)}</Muted>
+        <LayerReadout layer={props.layer ?? null} iso={country.cca3} />
         {territoryLine(country.cca3, BLOCS) && <Muted>{territoryLine(country.cca3, BLOCS)}</Muted>}
         <div className="badges">
           <span className="badge muted">{country.cca3}</span>
@@ -590,18 +595,74 @@ function BlocTrends({ bloc }: { bloc: Bloc }) {
   );
 }
 
+const LAYER_TITLE: Record<Exclude<Layer, null>, string> = {
+  displacement: 'Displacement',
+  sanctions: 'Sanctions',
+  elections: 'Elections',
+  nuclear: 'Nuclear',
+  military: 'Military presence',
+  trade: 'Trade dependence',
+  chokepoints: 'Chokepoints',
+  unrest: 'Civil unrest',
+  acled: 'Violence events',
+  'acled-unrest': 'Protests and riots',
+  ucdp: 'Organised violence',
+};
+
+/** The active layer's reading for this country, right under the header. */
+function LayerReadout({ layer, iso }: { layer: Layer; iso: string }) {
+  const line = layer ? layerSummary(layer, iso) : null;
+  if (!layer || !line) return null;
+  return (
+    <div className="layer-readout">
+      <span className="label">{LAYER_TITLE[layer]}</span> {line.replace(/^Sanctions: /, '')}
+    </div>
+  );
+}
+
 function PairPicker({ a, props }: { a: string; props: Props }) {
   const [q, setQ] = useState('');
   const hits = useMemo(() => search(q).filter((h) => h.kind === 'country' && h.id !== a).slice(0, 8), [q, a]);
+  const listRef = useRef<HTMLUListElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const buttons = () => [...(listRef.current?.querySelectorAll('button') ?? [])];
+  const onListKey = (e: React.KeyboardEvent) => {
+    const all = buttons();
+    const i = all.indexOf(document.activeElement as HTMLButtonElement);
+    if (e.key === 'ArrowDown') all[Math.min(i + 1, all.length - 1)]?.focus();
+    else if (e.key === 'ArrowUp') (i <= 0 ? inputRef.current : all[i - 1])?.focus();
+    else if (e.key === 'Escape') props.onSelectCountry(a);
+    else return;
+    e.preventDefault();
+  };
   return (
     <>
       <Muted>Pick a second country to compare ties with {countryName(a)}: shared blocs, conflicts, sanctions, military presence and trade both ways.</Muted>
       <label className="sr-only" htmlFor="pair-q">
         Second country
       </label>
-      <input id="pair-q" className="pair-input" autoFocus value={q} onChange={(e) => setQ(e.target.value)} placeholder="Type a country name" />
+      <input
+        id="pair-q"
+        ref={inputRef}
+        className="pair-input"
+        autoFocus
+        value={q}
+        onChange={(e) => setQ(e.target.value)}
+        placeholder="Type a country name"
+        onKeyDown={(e) => {
+          if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            buttons()[0]?.focus();
+          } else if (e.key === 'Enter' && hits[0]) props.onSelectPair(a, hits[0].id);
+          else if (e.key === 'Escape') {
+            e.preventDefault();
+            props.onSelectCountry(a);
+          }
+        }}
+      />
+      <p className="pair-hint">…or click a country on the map.</p>
       {hits.length > 0 && (
-        <ul className="link-list">
+        <ul className="link-list" ref={listRef} onKeyDown={onListKey}>
           {hits.map((h) => (
             <li key={h.id}>
               <button onClick={() => props.onSelectPair(a, h.id)}>{h.label}</button>
@@ -1486,6 +1547,7 @@ function AboutView({ props }: { props: Props }) {
 
 export default function DetailPanel(props: Props) {
   const { selection } = props;
+  const sheet = useSheet(props.onClose);
   const sectionRef = useRef<HTMLElement>(null);
   const headingId = usePanelFocus(sectionRef, selectionKey(selection));
   let body: React.ReactNode = null;
@@ -1533,7 +1595,8 @@ export default function DetailPanel(props: Props) {
   if (!body) return null;
   return (
     // No aria-live: moving focus to the heading announces a new panel once.
-    <section className="panel frame" role="complementary" aria-labelledby={headingId} ref={sectionRef}>
+    <section className="panel frame" role="complementary" aria-labelledby={headingId} ref={sectionRef} {...sheet.sectionProps}>
+      <button type="button" {...sheet.gripProps} />
       {props.backTo && (
         <button className="panel-back" onClick={props.backTo.onBack} title={`Back to ${props.backTo.label}`}>
           <span aria-hidden="true">‹</span> {props.backTo.label}

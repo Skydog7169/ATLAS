@@ -53,3 +53,20 @@
     height: 32px;
   }
 }
+
+/* Touch screens use 44px header buttons (global.css), so the first row is taller. */
+@media (max-width: 820px) and (pointer: coarse) {
+  .app-shell .header {
+    min-height: 105px;
+  }
+
+  .app-shell .brand {
+    height: 44px;
+  }
+}
+
+@media (max-width: 820px) {
+  .header > .more-menu {
+    margin-left: 6px;
+  }
+}

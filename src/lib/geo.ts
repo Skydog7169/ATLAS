@@ -56,6 +56,25 @@ export function loadDetailedFeatures(fetcher: typeof fetch = fetch, now: () => n
   return detailed;
 }
 
+/**
+ * Start fetching and parsing the 1:50m set once the browser is idle after
+ * first paint, so a fly-to that crosses the detail zoom finds it ready.
+ * Returns a cleanup that cancels the scheduled start.
+ */
+export function prefetchDetailedFeatures(): () => void {
+  if (detailed || typeof window === 'undefined') return () => {};
+  const start = () => {
+    // A failure is remembered by the loader and retried on demand.
+    loadDetailedFeatures().catch(() => {});
+  };
+  if ('requestIdleCallback' in window) {
+    const id = window.requestIdleCallback(start, { timeout: 4000 });
+    return () => window.cancelIdleCallback(id);
+  }
+  const id = setTimeout(start, 2000);
+  return () => clearTimeout(id);
+}
+
 /** Test hook: forget any cached or failed load. */
 export function resetDetailedFeatures() {
   detailed = null;

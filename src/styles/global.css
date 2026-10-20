@@ -3018,3 +3018,489 @@ a {
   outline-offset: 2px;
 }
 
+/* ---------- camera, sheet and small-screen layout ---------- */
+.map-hud {
+  position: absolute;
+  transform: translate(-50%, 8px);
+  z-index: 3;
+  padding: 6px 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--fg);
+  background: color-mix(in srgb, var(--bg-elev) 92%, transparent);
+  border: 1px solid var(--accent-dim);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.map-hud b {
+  color: var(--accent);
+}
+
+/* While the globe is dragged, skip the costly decoration; it returns on release. */
+.map-root svg.moving .graticule {
+  display: none;
+}
+
+.map-root svg.moving .core {
+  filter: none;
+}
+
+.map-root svg.moving .marker.pulse .ring {
+  animation: none;
+}
+
+.layer-readout {
+  margin: 8px 0 4px;
+  padding: 8px 10px;
+  border-left: 3px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.layer-readout .label {
+  display: block;
+  color: var(--fg-muted);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.pair-hint {
+  margin: 6px 0 0;
+  color: var(--fg-muted);
+  font-size: 12px;
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0.3;
+    transform: translateX(12px);
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    opacity: 0.3;
+    transform: translateY(24px);
+  }
+}
+
+.panel {
+  animation: panel-in 180ms ease-out;
+  right: max(12px, env(safe-area-inset-right));
+}
+
+.sheet-grip {
+  display: none;
+}
+
+/* Legend: the dock positions it; on phones it collapses to title + swatches. */
+.legend-dock {
+  position: absolute;
+  left: max(12px, env(safe-area-inset-left));
+  bottom: calc(12px + var(--ticker-h));
+  z-index: 3;
+  max-width: 270px;
+}
+
+.legend-dock > .legend {
+  position: relative;
+  inset: auto !important;
+  max-width: none;
+}
+
+.legend-toggle {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  background: transparent;
+  color: var(--fg-muted);
+  cursor: pointer;
+}
+
+.legend-dock:has(.legend-toggle) .legend :is(h3, .legend-title) {
+  padding-right: 28px;
+}
+
+.legend-dock[data-collapsed='true'] .legend {
+  padding: 8px 10px;
+}
+
+.legend-dock[data-collapsed='true'] .legend > :not(h3, .legend-title, ul) {
+  display: none;
+}
+
+.legend-dock[data-collapsed='true'] .legend :is(h3, .legend-title) {
+  margin-bottom: 6px;
+}
+
+.legend-dock[data-collapsed='true'] .legend ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.legend-dock[data-collapsed='true'] .legend li {
+  font-size: 0;
+  gap: 0;
+}
+
+.app[data-embed='true'] .legend-dock {
+  bottom: calc(12px + var(--sheet-h, 0px));
+}
+
+.app[data-embed='true'] .map-controls {
+  bottom: calc(12px + var(--sheet-h, 0px));
+}
+
+.app[data-brief='true'] .legend-dock {
+  display: none;
+}
+
+.embed-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 6px max(12px, env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  background: color-mix(in srgb, var(--bg-elev) 94%, transparent);
+  border-top: 1px solid var(--border-strong);
+  font-family: var(--mono);
+}
+
+.embed-caption .text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.embed-caption .kicker {
+  color: var(--fg-muted);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.embed-caption strong {
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.embed-caption a {
+  color: var(--accent);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* Overflow menu for the narrowest phones. */
+.more-menu {
+  display: none;
+  position: relative;
+}
+
+.more-list {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 20;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  min-width: 180px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow);
+}
+
+.more-list button {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 0;
+  background: transparent;
+  color: var(--fg);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.more-list button[aria-pressed='true'],
+.more-list button:hover {
+  color: var(--accent);
+}
+
+/* Notched phones draw edge to edge (viewport-fit=cover); keep edge UI off the cutout. */
+.header {
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+}
+
+.ticker {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+.chip-row {
+  left: max(12px, env(safe-area-inset-left));
+  right: max(12px, env(safe-area-inset-right));
+}
+
+.map-controls {
+  right: max(12px, env(safe-area-inset-right));
+}
+
+@media (hover: none) {
+  .search .kbd {
+    display: none;
+  }
+}
+
+@media (max-width: 820px) {
+  .header {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+  }
+
+  .panel {
+    right: 0;
+    max-height: 52dvh;
+    padding-bottom: env(safe-area-inset-bottom);
+    animation-name: sheet-in;
+    transition: max-height 180ms ease;
+  }
+
+  .panel[data-snap='peek'] {
+    max-height: 30dvh;
+  }
+
+  .panel[data-snap='full'] {
+    max-height: calc(100% - 8px);
+  }
+
+  .panel[data-dragging='true'] {
+    transition: none;
+  }
+
+  .panel-head::after {
+    content: none;
+  }
+
+  .panel-head {
+    touch-action: none;
+  }
+
+  .sheet-grip {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 2;
+    width: 72px;
+    height: 22px;
+    margin-left: -36px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: grab;
+    touch-action: none;
+  }
+
+  .sheet-grip::before {
+    content: '';
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    top: 7px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--border-strong);
+  }
+
+  .legend-dock {
+    max-width: 210px;
+  }
+
+  .app[data-mode='conflicts'] .legend-dock {
+    bottom: calc(68px + var(--ticker-h));
+  }
+
+  /* With the sheet open, the legend becomes a pill at the top of the map strip... */
+  .app[data-panel-open='true'] .legend-dock {
+    top: var(--map-inset-top, 12px);
+    bottom: auto;
+  }
+
+  .app[data-panel-open='true'] .legend-dock > .legend {
+    display: block;
+  }
+
+  /* ...and recentre plus layers stay reachable just above the sheet. */
+  .app[data-panel-open='true'] .map-controls {
+    display: flex;
+    top: auto;
+    bottom: calc(var(--sheet-h, 52dvh) + 8px);
+  }
+
+  .app[data-panel-open='true'] .map-controls > :not(.layer-menu, .recentre) {
+    display: none;
+  }
+
+  .app[data-embed='true'] .map-controls {
+    top: auto;
+  }
+}
+
+/* Phones in landscape: wide enough for the desktop rules, far too short for them. */
+@media (max-height: 520px) and (pointer: coarse) {
+  :root {
+    --panel-w: min(340px, 42vw);
+  }
+
+  .readouts,
+  .brand .tag {
+    display: none;
+  }
+
+  .app[data-panel-open='true'] .timeline {
+    display: none;
+  }
+
+  .app[data-panel-open='true'] .map-controls > :not(.layer-menu, .recentre) {
+    display: none;
+  }
+}
+
+/* Thumb-sized targets on touch screens. */
+@media (pointer: coarse) {
+  .icon-btn,
+  .header .icon-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .segmented button {
+    min-height: 40px;
+  }
+
+  .map-controls {
+    gap: 4px;
+  }
+
+  .map-controls .icon-btn + .icon-btn {
+    border-top: 1px solid var(--border-strong);
+  }
+
+  .timeline input[type='range'] {
+    height: 44px;
+  }
+
+  .timeline input[type='range']::-webkit-slider-thumb {
+    width: 24px;
+    height: 24px;
+  }
+
+  .badge {
+    min-height: 36px;
+  }
+
+  .src-row {
+    gap: 8px;
+  }
+
+  .src-row a.src {
+    display: inline-block;
+    padding: 8px 0;
+  }
+
+  .ticker-filter {
+    min-width: 44px;
+  }
+}
+
+/* The narrowest phones: Changes and About move into the overflow menu so the header stays one row. */
+@media (max-width: 440px) {
+  .header .icon-btn[aria-label='Recent changes'],
+  .header .icon-btn[aria-label='About ATLAS'] {
+    display: none;
+  }
+
+  .more-menu {
+    display: block;
+  }
+
+  .header .spacer {
+    min-width: 0;
+  }
+
+  .brand .word {
+    letter-spacing: 0.1em;
+  }
+
+  .segmented button {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .brand .word {
+    display: none;
+  }
+
+  .header {
+    gap: 6px;
+  }
+
+  .segmented button {
+    padding-left: 7px;
+    padding-right: 7px;
+  }
+}
+
+@media (pointer: coarse) and (max-height: 700px) {
+  .map-controls {
+    gap: 2px;
+  }
+
+  .map-controls .icon-btn {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Tiny embeds: zoom buttons only, and the legend shrinks to its title. */
+@media (max-height: 400px) {
+  .app[data-embed='true'] .map-controls > :not([aria-label='Zoom in'], [aria-label='Zoom out']) {
+    display: none;
+  }
+
+  .app[data-embed='true'] .legend-dock[data-collapsed='true'] .legend ul {
+    display: none;
+  }
+
+  .app[data-embed='true'] .legend-dock[data-collapsed='true'] .legend :is(h3, .legend-title) {
+    margin: 0;
+  }
+}

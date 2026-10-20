@@ -90,7 +90,7 @@
 /* Anchor the controls at the bottom only: the phone rule's top:56px made a transparent strip that ate map clicks. */
 .app[data-embed='true'] .map-controls {
   top: auto;
-  bottom: 12px;
+  bottom: calc(12px + var(--sheet-h, 0px));
 }
 
 .app[data-embed='true'] .layer-menu {
