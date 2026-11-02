@@ -101,6 +101,39 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-10-25",
+        "kind": "talks",
+        "summary": "President Zelenskyy confirmed that trilateral talks between Ukraine, Russia and the US would take place in November.",
+        "sources": [
+          {
+            "name": "Euronews",
+            "url": "https://www.euronews.com/2026/10/25/ukraines-zelenskyy-confirms-trilateral-talks-with-russia-and-us-to-take-place-in-november"
+          }
+        ]
+      },
+      {
+        "date": "2026-10-23",
+        "kind": "talks",
+        "summary": "Kremlin spokesman Dmitry Peskov said US-brokered trilateral talks with Ukraine would resume in November in the UAE, the first since negotiations stalled earlier in 2026.",
+        "sources": [
+          {
+            "name": "Al Jazeera",
+            "url": "https://www.aljazeera.com/news/2026/10/23/russia-ukraine-talks-planned-for-november-in-uae-kremlin"
+          }
+        ]
+      },
+      {
+        "date": "2026-10-21",
+        "kind": "mediation",
+        "summary": "US envoy Steve Witkoff met Putin in St Petersburg for about three hours. Putin said he was ready to resume trilateral peace talks with Ukraine, and Russia released a US detainee.",
+        "sources": [
+          {
+            "name": "Axios",
+            "url": "https://www.axios.com/2026/10/21/russia-ukraine-putin-witkoff-peace"
+          }
+        ]
+      },
+      {
         "date": "2026-10-09",
         "kind": "talks",
         "summary": "US envoys Witkoff and Kushner met Ukrainian, E3, European Commission and NATO officials in Miami. They discussed de-escalation before winter, energy security, grain exports and security guarantees ahead of the next US contact with Russia.",
@@ -176,6 +209,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-02",
+        "intensity": "high",
+        "status": "On 21 October 2026 US envoy Steve Witkoff met Vladimir Putin in St Petersburg. Afterwards the Kremlin and, on 25 October, President Zelenskyy confirmed that US-Russia-Ukraine talks would resume in Abu Dhabi in November. On 28 October the Kremlin said the talks would come after 4 November, depending on battlefield conditions. Strikes on energy targets continued: Russian attacks left Dnipro almost entirely without power on 30 October, and Ukrainian drones hit refineries in Samara and Bashkortostan between 29 and 31 October.",
+        "sources": [
+          {
+            "name": "Al Jazeera – Putin and Zelenskyy back three-way US peace talks on Ukraine (21 Oct 2026)",
+            "url": "https://www.aljazeera.com/news/2026/10/21/witkoff-in-russia-for-putin-meeting-after-positive-talks-with-zelenskyy"
+          },
+          {
+            "name": "Meduza – Kremlin says US-Russia-Ukraine talks in Abu Dhabi after November 4",
+            "url": "https://meduza.io/en/news/2026/10/29/kremlin-says-u-s-russia-ukraine-peace-talks-will-take-place-in-abu-dhabi-after-november-4-depending-on-battlefield-conditions"
+          },
+          {
+            "name": "CNBC – Russian strikes plunge Ukrainian city into blackout (30 Oct 2026)",
+            "url": "https://www.cnbc.com/2026/10/30/russia-ukraine-putin-zelenskyy-energy-strikes.html"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "high",
@@ -351,6 +404,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-02",
+        "intensity": "high",
+        "status": "Heavy fighting and drone warfare continued from 19 October to 2 November 2026. On 27 October an army drone strike on a market in Nyala, South Darfur, killed at least 21 people according to Al Jazeera, while a Sudanese rights group put the toll above 100. RSF drones knocked out the Al Dabbah and Abu Hamad power stations in northern Sudan on 1 November. The same day, the army chief of staff said forces were advancing on Darfur and Kordofan, and the cabinet ordered a maximum state of alert.",
+        "sources": [
+          {
+            "name": "Al Jazeera",
+            "url": "https://www.aljazeera.com/news/2026/10/27/drone-strike-kills-at-least-21-and-injures-40-in-sudans-nyala"
+          },
+          {
+            "name": "Washington Post",
+            "url": "https://www.washingtonpost.com/world/2026/10/27/sudan-power-outage-capital-drone/1d4f0d34-d237-11f1-9931-2a41b76fc976_story.html"
+          },
+          {
+            "name": "Sudan Tribune",
+            "url": "https://sudantribune.com/article/320764"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "high",
@@ -628,7 +701,8 @@
           }
         ]
       }
-    ]
+    ],
+    "lastChecked": "2026-11-02"
   },
   {
     "id": "israel-lebanon",
@@ -716,6 +790,17 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-10-20",
+        "kind": "talks",
+        "summary": "Israeli and Lebanese military delegations held US-mediated technical talks at CENTCOM in Tampa on carrying out the framework. The talks ended without a breakthrough amid disputes over verification and direct coordination.",
+        "sources": [
+          {
+            "name": "The New Arab",
+            "url": "https://www.newarab.com/news/lebanon-israel-talks-us-end-without-breakthrough"
+          }
+        ]
+      },
+      {
         "date": "2026-10-19",
         "kind": "talks",
         "summary": "Israel and Lebanon were set to hold US-hosted military talks at CENTCOM in Tampa on pilot zones, Lebanese army deployment and Israeli withdrawal; Lebanon said it would reject direct military coordination.",
@@ -772,6 +857,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-02",
+        "intensity": "medium",
+        "status": "Israeli and Lebanese military delegations held US-mediated talks at CENTCOM headquarters in Tampa starting on 20 October 2026. The talks ended around 21–22 October without a breakthrough: Israel pushed for a direct joint operations room, while Lebanon called for an end to escalation and an Israeli withdrawal. Israeli strikes went on afterward, and Lebanese state media reported airstrikes and machine-gun fire across southern Lebanon on 31 October.",
+        "sources": [
+          {
+            "name": "The New Arab",
+            "url": "https://www.newarab.com/news/lebanon-israel-talks-us-end-without-breakthrough"
+          },
+          {
+            "name": "Middle East Eye",
+            "url": "https://www.middleeasteye.net/news/lebanon-israel-military-talks-us-end-without-a-breakthrough"
+          },
+          {
+            "name": "Yeni Safak",
+            "url": "https://en.yenisafak.com/world/israel-strikes-southern-lebanon-despite-us-ceasefire-talks-3725026"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "medium",
@@ -919,6 +1024,17 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-10-31",
+        "kind": "talks",
+        "summary": "An Iranian delegation held talks with Qatari mediators in Doha after Qatari mediators visited Tehran; Araghchi called the US outreach positive but ruled out meeting US officials until Iran's conditions are met.",
+        "sources": [
+          {
+            "name": "Al Jazeera",
+            "url": "https://www.aljazeera.com/news/2026/10/31/iran-fm-says-us-outreach-a-positive-step-as-delegation-in-qatar-for-talks"
+          }
+        ]
+      },
+      {
         "date": "2026-10-18",
         "kind": "talks",
         "summary": "Iran's foreign minister Abbas Araghchi said Tehran was still reviewing US comments, received through intermediaries, on its September seven-day ceasefire proposal, and that its conditions for reopening Hormuz still stood.",
@@ -926,6 +1042,17 @@
           {
             "name": "CBS News",
             "url": "https://www.cbsnews.com/live-updates/iran-war-us-trump-strait-of-hormuz-yemen-houthis-saudi-arabia/"
+          }
+        ]
+      },
+      {
+        "date": "2026-10",
+        "kind": "mediation",
+        "summary": "US Vice President JD Vance sent a letter to Iranian security chief Mohsen Rezaei saying any talks to head off US strikes must cover the nuclear issue; Trump described the outreach differently.",
+        "sources": [
+          {
+            "name": "Al Jazeera",
+            "url": "https://www.aljazeera.com/news/2026/10/31/iran-fm-says-us-outreach-a-positive-step-as-delegation-in-qatar-for-talks"
           }
         ]
       },
@@ -979,6 +1106,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-02",
+        "intensity": "medium",
+        "status": "US Vice President JD Vance sent a letter to Iran in late October 2026 saying any talks must cover the nuclear issue. An Iranian delegation then held talks with Qatari mediators in Doha on 31 October and 1 November. Iran's foreign minister called the US outreach a 'positive step' but ruled out meeting US officials until Iran's conditions are met. US strikes remain on hold before the 3 November midterms, but attacks on Gulf shipping continue: a Qatari LNG carrier was hit on 1 November.",
+        "sources": [
+          {
+            "name": "Al Jazeera – Iran FM says US outreach a 'positive step' as delegation in Qatar for talks (31 Oct 2026)",
+            "url": "https://www.aljazeera.com/news/2026/10/31/iran-fm-says-us-outreach-a-positive-step-as-delegation-in-qatar-for-talks"
+          },
+          {
+            "name": "Al Jazeera – Qatar LNG carrier struck by 'unidentified objects' in Gulf (1 Nov 2026)",
+            "url": "https://www.aljazeera.com/news/2026/11/1/qatar-lng-carrier-struck-by-unidentified-objects-in-gulf"
+          },
+          {
+            "name": "CTP-ISW Iran Update, October 22, 2026",
+            "url": "https://www.criticalthreats.org/analysis/iran-update-october-22-2026"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "high",
@@ -1127,6 +1274,17 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-10-26",
+        "kind": "talks",
+        "summary": "Senior Saudi, Turkish and Pakistani officials met Iranian leaders in Tehran to seek regional de-escalation amid the Houthi attacks on Saudi Arabia, and agreed to hold further talks.",
+        "sources": [
+          {
+            "name": "Times of Israel/Reuters",
+            "url": "https://www.timesofisrael.com/saudi-defense-pact-states-hold-talks-in-iran-as-yemens-houthis-launch-more-attacks/"
+          }
+        ]
+      },
+      {
         "date": "2026-09-08",
         "kind": "collapse",
         "summary": "The 2022 de facto truce broke as the Houthis struck Saudi cities and oil sites.",
@@ -1172,6 +1330,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-02",
+        "intensity": "high",
+        "status": "Houthi missile and drone attacks on Saudi Arabia went on: two people were killed at Dammam airport on 21 October 2026. The coalition intercepted 3 missiles and 4 drones on 27 October, and on 30 October it said it intercepted a drone near Mecca and missiles aimed at Riyadh, which the Houthis denied. On 26 October, Saudi, Turkish and Pakistani officials held de-escalation talks with Iran in Tehran while government forces kept fighting on the Taiz front.",
+        "sources": [
+          {
+            "name": "Al Jazeera – Saudi-led coalition says it downed Houthi missiles, drones (27 Oct 2026)",
+            "url": "https://www.aljazeera.com/news/2026/10/27/saudi-led-coalition-destroys-four-houthi-drones"
+          },
+          {
+            "name": "Times of Israel/Reuters – Saudi defense pact states hold talks in Iran",
+            "url": "https://www.timesofisrael.com/saudi-defense-pact-states-hold-talks-in-iran-as-yemens-houthis-launch-more-attacks/"
+          },
+          {
+            "name": "Al Jazeera – Saudi Arabia reports interception of Houthi drone targeting Mecca (30 Oct 2026)",
+            "url": "https://www.aljazeera.com/news/2026/10/30/saudi-arabia-reports-interception-of-houthi-drone-targeting-mecca"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "high",
@@ -1364,6 +1542,26 @@
     ],
     "history": [
       {
+        "date": "2026-11-02",
+        "intensity": "low",
+        "status": "Violence in Syria stayed sporadic between 7 October and 2 November 2026. On 7 October, followers of Druze leader Hikmat al-Hijri rallied in Sweida, which remains outside state control, and raised Israeli flags. Israeli forces remain in southern Syria, and the security pact is still unsigned. On the night of 26 October, Jordanian air strikes killed people in the village of Al-Taf in Daraa's Lajat area. The border reopened on 28 October while the strikes are investigated.",
+        "sources": [
+          {
+            "name": "Al Jazeera – Syria news page (Jordan strikes, border reopening, Iraqi PM visit, late Oct 2026)",
+            "url": "https://www.aljazeera.com/where/syria/"
+          },
+          {
+            "name": "Middle East Eye – Hijri supporters raise Israeli flags in Sweida (8 Oct 2026)",
+            "url": "https://www.middleeasteye.net/news/hijri-supporters-raise-israeli-flags-sweida-7-october-anniversary"
+          },
+          {
+            "name": "Enab Baladi – Israeli Presence in Syria: Managing, Not Ending Occupation (Oct 2026)",
+            "url": "https://english.enabbaladi.net/archives/2026/10/israeli-presence-in-syria-managing-not-ending-occupation/"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
         "date": "2026-10-07",
         "intensity": "low",
         "status": "A government offensive in January 2026 forced the SDF to cede Raqqa and Deir ez-Zor and sign an integration deal; on 25 August 2026 SDF commander Mazloum Abdi announced the force’s merger into the Syrian army, though integration issues remain. Sweida stays outside state control under Druze leader Hikmat al-Hijri’s forces despite US-mediated talks. A US-brokered Israel–Syria security pact was still unsigned as of mid-2026.",
@@ -1401,8 +1599,7 @@
           }
         ]
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "myanmar",
@@ -1504,6 +1701,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-02",
+        "intensity": "high",
+        "status": "Heavy fighting continued from 19 October to 2 November 2026. On 26 October the Arakan Army reportedly destroyed three more navy vessels as the junta's nearly two-month counteroffensive around Sittwe stalled. On 31 October a junta air strike on a KNU base across from Thailand's Mae Sam Laep damaged buildings on the Thai side. On 1 November air strikes in Rakhine and Karenni states killed at least 15 civilians, including an infant, and injured 32.",
+        "sources": [
+          {
+            "name": "The Irrawaddy",
+            "url": "https://www.irrawaddy.com/news/war-against-the-junta/myanmar-navy-loses-3-more-ships-as-arakan-army-tightens-sittwe-noose.html"
+          },
+          {
+            "name": "Anadolu Agency",
+            "url": "https://www.aa.com.tr/en/asia-pacific/myanmar-military-airstrikes-kill-at-least-15-civilians-including-12-in-rakhine-state-report/4108750"
+          },
+          {
+            "name": "Khaosod English",
+            "url": "https://www.khaosodenglish.com/politics/2026/11/01/myanmar-airstrikes-hit-base-opposite-mae-sam-laep-damaging-thai-buildings/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "high",
@@ -1658,6 +1875,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-02",
+        "intensity": "high",
+        "status": "Around 20 October 2026, Islamic State Sahel Province killed at least 48 civilians in Mali's Ménaka area. Officials described it as revenge on people accused of passing ISSP positions to the army, which had carried out a drone strike on the group. JNIM's blockade of Bamako, reimposed in late April 2026, was still in place. Fighting between JNIM and ISSP and attacks on state forces went on across Mali, Burkina Faso and Niger. No talks are under way.",
+        "sources": [
+          {
+            "name": "AP via Bay News 9",
+            "url": "https://baynews9.com/fl/tampa/ap-top-news/2026/10/20/attack-by-islamic-state-affiliated-group-in-mali-kills-48-people"
+          },
+          {
+            "name": "TimesLIVE (Reuters)",
+            "url": "https://www.timeslive.co.za/news/africa/2026-10-21-is-militants-kill-at-least-48-civilians-in-mali-say-sources/"
+          },
+          {
+            "name": "CFR Global Conflict Tracker",
+            "url": "https://www.cfr.org/global-conflict-tracker/conflict/violent-extremism-sahel"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "high",
@@ -1856,6 +2093,26 @@
     ],
     "history": [
       {
+        "date": "2026-11-02",
+        "intensity": "medium",
+        "status": "Around 31 October 2026, a Congolese court dissolved Joseph Kabila's PPRD party. It cited party officials' alleged role in an 'insurrectional enterprise' and Kabila's ties to the FRN coalition, which he launched with M23/AFC in Goma on 12 October. M23 still holds Goma, Bukavu and much of the Kivus. No new Doha round or ceasefire step has been confirmed since the 23 August roadmap.",
+        "sources": [
+          {
+            "name": "Rio Times – Congo Court Dissolves Ex-President's Party",
+            "url": "https://www.riotimesonline.com/dr-congo-court-dissolves-kabila-pprd-party-2026"
+          },
+          {
+            "name": "Al Jazeera – Former DR Congo President Kabila joins M23 rebels in a new coalition",
+            "url": "https://www.aljazeera.com/news/2026/10/13/former-dr-congo-president-kabila-joins-m23-rebels-in-a-new-coalition"
+          },
+          {
+            "name": "CFR Global Conflict Tracker – Conflict in the DRC",
+            "url": "https://www.cfr.org/global-conflict-tracker/conflict/violence-democratic-republic-congo"
+          }
+        ],
+        "confidence": "low"
+      },
+      {
         "date": "2026-10-19",
         "intensity": "medium",
         "status": "On 12 October 2026, former President Joseph Kabila appeared in M23-held Goma alongside M23 leaders to launch the Front pour la refondation de la nation (FRN), a political-military coalition against the Tshisekedi government that includes M23/AFC. Clashes between M23 and Wazalendo militias went on into early October, including in south-central Lubero. A new Doha round planned for October now looks uncertain, and M23 still holds Goma, Bukavu and much of the Kivus.",
@@ -1986,6 +2243,28 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-10-31",
+        "kind": "mediation",
+        "summary": "The UN political mission in Somalia was due to close after more than three decades, with no agreed mechanism left to mediate the government–opposition dispute over elections and the president's tenure.",
+        "sources": [
+          {
+            "name": "Addis Standard (citing AP)",
+            "url": "https://addisstandard.com/brief/n-60735/"
+          }
+        ]
+      },
+      {
+        "date": "2026-10-26",
+        "kind": "talks",
+        "summary": "President Hassan Sheikh Mohamud invited opposition groups and civil society to election talks in Mogadishu on 14–18 November. Opposition groups have rejected the electoral timetable, and there are no talks with al-Shabaab.",
+        "sources": [
+          {
+            "name": "Dawan Africa",
+            "url": "https://www.dawan.africa/news/somali-president-invites-opposition-groups-to-nov-14-18-talks-on-elections"
+          }
+        ]
+      },
+      {
         "date": "2026-06",
         "kind": "collapse",
         "summary": "Government forces fought opposition militias in Mogadishu over the election delay; no talks with al-Shabaab.",
@@ -1998,6 +2277,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-02",
+        "intensity": "high",
+        "status": "Between 8 and 16 October 2026, South West State opposition forces took five towns in Bay region, including Buurhakaba. Al-Shabaab then ambushed federal forces sent to counterattack and inflicted mass casualties, according to a 29 October ISW/CTP report. Since 19 October the group has also attacked near Galgala in Puntland, its first operations there since early 2024. On 26 October President Hassan Sheikh Mohamud invited opposition groups to election talks set for 14–18 November, and the UN political mission was due to close on 31 October.",
+        "sources": [
+          {
+            "name": "Critical Threats (ISW/AEI) Africa File, October 29, 2026",
+            "url": "https://www.criticalthreats.org/analysis/al-shabaab-somalia-algeria-niger-libya-morocco-haftar"
+          },
+          {
+            "name": "Dawan Africa",
+            "url": "https://www.dawan.africa/news/somali-president-invites-opposition-groups-to-nov-14-18-talks-on-elections"
+          },
+          {
+            "name": "Addis Standard (citing AP)",
+            "url": "https://addisstandard.com/brief/n-60735/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "high",
@@ -2036,8 +2335,7 @@
           }
         ]
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "ethiopia",
@@ -2103,6 +2401,17 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-10-20",
+        "kind": "mediation",
+        "summary": "The UN's top official in Ethiopia called for a ceasefire in Tigray, open aid routes and a return to civilian rule, while the US backed the return of displaced people to their homes.",
+        "sources": [
+          {
+            "name": "Rio Times",
+            "url": "https://www.riotimesonline.com/un-urges-tigray-ceasefire-ethiopia-2026/"
+          }
+        ]
+      },
+      {
         "date": "2026-10-16",
         "kind": "roadmap",
         "summary": "PM Abiy Ahmed named a six-month federal caretaker administration for Tigray, tasked with restoring security, returning displaced people and organizing regional elections.",
@@ -2148,6 +2457,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-02",
+        "intensity": "high",
+        "status": "By late October 2026 federal forces and the pro-government Tigray Peace Force held most of Tigray's main towns, and the six-month caretaker administration had started work. The TPLF and the Amhara Fano National Movement still fought over towns on roads near the Tigray–Amhara boundary, and Crisis Group reported heavier fighting in Amhara. On 20 October the UN's top official in Ethiopia called for a ceasefire, and around 23 October Abiy warned Eritrea of 'extremely severe consequences'.",
+        "sources": [
+          {
+            "name": "Crisis Group CrisisWatch – Ethiopia",
+            "url": "https://www.crisisgroup.org/africa/horn-africa/ethiopia"
+          },
+          {
+            "name": "Critical Threats – Ethiopia War Security Review, October 23, 2026",
+            "url": "https://www.criticalthreats.org/briefs/ethiopia-war-security-review/october-23-2026"
+          },
+          {
+            "name": "Rio Times – UN Urges Tigray Ceasefire in Ethiopia 20 Oct",
+            "url": "https://www.riotimesonline.com/un-urges-tigray-ceasefire-ethiopia-2026/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "high",
@@ -2343,7 +2672,7 @@
         ]
       }
     ],
-    "lastChecked": "2026-10-19"
+    "lastChecked": "2026-11-02"
   },
   {
     "id": "haiti",
@@ -2483,7 +2812,8 @@
           }
         ]
       }
-    ]
+    ],
+    "lastChecked": "2026-11-02"
   },
   {
     "id": "nigeria",
@@ -2566,6 +2896,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-02",
+        "intensity": "high",
+        "status": "Fighting went on in the north-east. Reuters reported that a convoy blast in Borno killed 10 soldiers and 5 militia members around 19 October. The military said on 30 October that it had killed an ISWAP commander who was planning attacks for the festive season. It also said troops repelled attacks on bases in Borno and Yobe, killing 48 insurgents. On 2 November, an ISWAP drone strike in Kukawa killed 2 soldiers and wounded 13. In Zamfara, villagers, police and troops repelled bandit attacks in Gummi (around 22–23 October) and Bukkuyum (28–30 October), and more than 30 bandits were reported killed in each.",
+        "sources": [
+          {
+            "name": "MyJoyOnline (Reuters): Nigeria says troops kill 48 Islamist fighters after attacks in Borno, Yobe bases",
+            "url": "https://www.myjoyonline.com/nigeria-says-troops-kill-48-islamist-fighters-after-attacks-in-borno-yobe-bases/"
+          },
+          {
+            "name": "Leadership: ISWAP drone attack reportedly kills 2 soldiers, injures 13 in Borno",
+            "url": "https://leadership.ng/iswap-drone-attack-reportedly-kills-2-soldiers-injures-13-in-borno/"
+          },
+          {
+            "name": "Gazette NGR: Over 30 suspected bandits killed in gun battle in Zamfara",
+            "url": "https://gazettengr.com/over-30-suspected-bandits-killed-in-gun-battle-in-zamfara/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "high",
@@ -2736,7 +3086,7 @@
         ]
       }
     ],
-    "lastChecked": "2026-10-19"
+    "lastChecked": "2026-11-02"
   },
   {
     "id": "colombia",
@@ -2848,6 +3198,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-02",
+        "intensity": "medium",
+        "status": "On 19 October 2026 President Abelardo de la Espriella ordered a \"total offensive\" against the ELN and FARC dissidents and said he would not negotiate. He then ordered air strikes on the Clan del Golfo: one in Chocó on 28 October killed six people, and EFE reported a second on 31 October that killed at least seven in western Colombia. On 1 November the army was fighting the Adán Izquierdo dissident faction near El Cerrito, Valle del Cauca. No talks are under way.",
+        "sources": [
+          {
+            "name": "Infobae/EFE – De la Espriella orders 'total offensive' against ELN and FARC dissidents (19 Oct 2026)",
+            "url": "https://www.infobae.com/america/agencias/2026/10/19/de-la-espriella-ordena-una-ofensiva-total-contra-guerrilla-del-eln-y-disidencias-de-farc/"
+          },
+          {
+            "name": "El Heraldo – Air strike on Clan del Golfo in Chocó (29 Oct 2026)",
+            "url": "https://www.elheraldo.co/colombia/2026/10/29/presidente-de-la-espriella-ordeno-bombardeo-contra-el-clan-del-golfo-en-choco-habrian-al-menos-seis-muertos/"
+          },
+          {
+            "name": "Infobae/EFE – New air strike on Clan del Golfo kills seven (31 Oct 2026)",
+            "url": "https://www.infobae.com/america/agencias/2026/11/01/un-nuevo-bombardeo-contra-el-clan-del-golfo-deja-siete-fallecidos-en-el-oeste-colombiano/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "medium",
@@ -2970,6 +3340,26 @@
     "actorsUpdated": "2026-10",
     "peace": [],
     "history": [
+      {
+        "date": "2026-11-02",
+        "intensity": "medium",
+        "status": "Violence in Sinaloa rose in October 2026. Milenio counted 191 victims in the state (169 homicides and 22 femicides), and Noroeste reported 201 violent deaths, 31% more than in September. About 31 October, Mexico sent 1,600 more naval troops to Sinaloa after President Sheinbaum acknowledged the rise in killings. On 28 October, naval forces killed Jesús González Peñuelas, 'El Chuy', a cartel operator wanted by the US, in an air and ground operation.",
+        "sources": [
+          {
+            "name": "Milenio – Violencia en Sinaloa: octubre deja más de 190 asesinatos",
+            "url": "https://www.milenio.com/estados/violencia-sinaloa-octubre-deja-190-asesinatos"
+          },
+          {
+            "name": "Noticias SIN – México despliega 1,600 militares navales más en Sinaloa",
+            "url": "https://noticiassin.com/mundo/america/2026/10/31/mexico-despliega-1600-militares-navales-mas-en-sinaloa-ante-repunte-de-homicidios-2159599"
+          },
+          {
+            "name": "UPI – Mexican forces kill cartel leader wanted by U.S. for $5 million",
+            "url": "https://www.upi.com/Top_News/World-News/2026/10/28/latam-mexico-cartel-leader-killed/9881793210807/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "medium",
@@ -3153,7 +3543,7 @@
         ]
       }
     ],
-    "lastChecked": "2026-10-19"
+    "lastChecked": "2026-11-02"
   },
   {
     "id": "pakistan-afghanistan",
@@ -3303,7 +3693,7 @@
         ]
       }
     ],
-    "lastChecked": "2026-10-19"
+    "lastChecked": "2026-11-02"
   },
   {
     "id": "libya",
@@ -3384,6 +3774,17 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-11",
+        "kind": "mediation",
+        "summary": "UN envoy Hanna Tetteh welcomed international support for renewing UNSMIL's mandate, acknowledged concerns about the political stalemate and promised an inclusive dialogue toward elections.",
+        "sources": [
+          {
+            "name": "Malta News Agency",
+            "url": "https://www.maltanewsagency.com/2026/11/libya-un-promises-inclusive-dialogue-for-elections/"
+          }
+        ]
+      },
+      {
         "date": "2026-10-15",
         "kind": "talks",
         "summary": "Greece and Egypt held their third round of political consultations on Libya in Athens.",
@@ -3429,6 +3830,22 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-02",
+        "intensity": "low",
+        "status": "Around 1 November 2026, UN envoy Hanna Tetteh welcomed international support for renewing the UN mission's (UNSMIL) mandate, which was due to expire on 31 October. She acknowledged concerns about the political stalemate and promised an inclusive dialogue toward elections. The High Council of State still rejects the track behind the 30 August election deal. No major fighting was found between 19 October and 2 November, and the 2020 ceasefire between east and west still holds.",
+        "sources": [
+          {
+            "name": "Malta News Agency – Libya, UN promises inclusive dialogue for elections",
+            "url": "https://www.maltanewsagency.com/2026/11/libya-un-promises-inclusive-dialogue-for-elections/"
+          },
+          {
+            "name": "Security Council Report – Programme of Work for October 2026",
+            "url": "https://www.securitycouncilreport.org/whatsinblue/2026/10/security-council-programme-of-work-for-october-2026.php"
+          }
+        ],
+        "confidence": "low"
+      },
       {
         "date": "2026-10-19",
         "intensity": "low",
@@ -3647,7 +4064,7 @@
         ]
       }
     ],
-    "lastChecked": "2026-10-19"
+    "lastChecked": "2026-11-02"
   },
   {
     "id": "taiwan-strait",
@@ -3782,7 +4199,8 @@
           }
         ]
       }
-    ]
+    ],
+    "lastChecked": "2026-11-02"
   },
   {
     "id": "korean-peninsula",
@@ -3940,7 +4358,8 @@
           }
         ]
       }
-    ]
+    ],
+    "lastChecked": "2026-11-02"
   },
   {
     "id": "south-china-sea",
@@ -4090,7 +4509,8 @@
           }
         ]
       }
-    ]
+    ],
+    "lastChecked": "2026-11-02"
   },
   {
     "id": "armenia-azerbaijan",
@@ -4272,7 +4692,8 @@
           }
         ]
       }
-    ]
+    ],
+    "lastChecked": "2026-11-02"
   },
   {
     "id": "venezuela-us",
@@ -4339,6 +4760,28 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-10-22",
+        "kind": "mediation",
+        "summary": "The US State Department welcomed the end of the third round and reaffirmed US support for the Venezuelan-led process as part of its three-phase plan for stabilization, recovery and transition.",
+        "sources": [
+          {
+            "name": "US State Department",
+            "url": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/advancing-venezuelas-democratic-transition-through-reconciliation-talks"
+          }
+        ]
+      },
+      {
+        "date": "2026-10-21",
+        "kind": "agreement",
+        "summary": "The third round of reconciliation talks ended with a joint statement. Both sides agreed to review the laws behind political disqualifications and to form a commission to recover Venezuelan gold held at the Bank of England.",
+        "sources": [
+          {
+            "name": "Anadolu Agency",
+            "url": "https://aa.com.tr/en/americas/venezuela-government-opposition-reach-key-agreements-in-3rd-round-of-transition-talks/4096592"
+          }
+        ]
+      },
+      {
         "date": "2026-10-09",
         "kind": "talks",
         "summary": "The US State Department said US-backed reconciliation talks between Venezuela's interim government and the 2015 National Assembly delegation had made concrete progress, with a third round set to begin on 14 October.",
@@ -4362,6 +4805,22 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-02",
+        "intensity": "low",
+        "status": "On 21 October 2026 the third round of US-backed reconciliation talks between Venezuela's interim government and the 2015 National Assembly delegation ended. The two sides agreed to review the laws used to bar opposition figures from office and to set up a joint commission to recover Venezuelan gold held at the Bank of England. The US State Department welcomed the outcome on 22 October. No new US strikes on Venezuelan territory were found, and no election date has been set.",
+        "sources": [
+          {
+            "name": "Anadolu Agency",
+            "url": "https://aa.com.tr/en/americas/venezuela-government-opposition-reach-key-agreements-in-3rd-round-of-transition-talks/4096592"
+          },
+          {
+            "name": "US State Department",
+            "url": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/advancing-venezuelas-democratic-transition-through-reconciliation-talks"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "low",
@@ -4547,7 +5006,8 @@
           }
         ]
       }
-    ]
+    ],
+    "lastChecked": "2026-11-02"
   },
   {
     "id": "hormuz",
@@ -4619,6 +5079,17 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-11-02",
+        "kind": "talks",
+        "summary": "Iran said it could carry out its Hormuz reopening plan in two days instead of the earlier seven if the US ended its naval blockade, lifted oil sanctions, unfroze Iranian assets and ended the war on all fronts.",
+        "sources": [
+          {
+            "name": "Euronews",
+            "url": "https://www.euronews.com/2026/11/02/iran-says-it-can-reopen-hormuz-in-two-days-if-us-meets-conditions"
+          }
+        ]
+      },
+      {
         "date": "2026-10-18",
         "kind": "talks",
         "summary": "Iranian Foreign Minister Araghchi said Tehran was reviewing US comments on its seven-day ceasefire and Hormuz reopening proposal, which he said was still on the table, though Iran's conditions had not changed.",
@@ -4653,6 +5124,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-02",
+        "intensity": "medium",
+        "status": "Attacks on shipping went on through late October 2026. On the evening of 31 October the Qatari LNG carrier Al Mayeda, bound for Pakistan, was hit near Hormuz hours after Iran had cleared it to pass; its 25 crew were safe. The IRGC then said two 'violating' tankers had exploded after hitting mines. On 1–2 November Iran said it could reopen the strait within two days if the US ended its blockade, lifted oil sanctions, unfroze Iranian assets and ended the war, while Trump threatened renewed military action.",
+        "sources": [
+          {
+            "name": "Euronews",
+            "url": "https://www.euronews.com/2026/11/02/iran-says-it-can-reopen-hormuz-in-two-days-if-us-meets-conditions"
+          },
+          {
+            "name": "Splash247",
+            "url": "https://splash247.com/hormuz-attacks-spread-deeper-into-the-gulf/"
+          },
+          {
+            "name": "ISW/CTP Iran Update, October 22, 2026",
+            "url": "https://www.criticalthreats.org/analysis/iran-update-october-22-2026"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "medium",
@@ -4788,7 +5279,7 @@
         ]
       }
     ],
-    "lastChecked": "2026-10-19"
+    "lastChecked": "2026-11-02"
   },
   {
     "id": "balochistan",
@@ -4842,6 +5333,26 @@
     "peace": [],
     "history": [
       {
+        "date": "2026-11-02",
+        "intensity": "medium",
+        "status": "Deadly fighting in Balochistan went on through late October 2026. The BLF said it ran a 20-hour operation in Gwadar from October 22, and the BLA said it attacked a camp in Kharan with drones and mortars on October 29. Pakistan's military said it killed nine militants in Kachhi and Wadh on October 26. On October 30, Chief Minister Bugti said the state's door was open to dialogue under the Constitution, but there is still no formal negotiation track.",
+        "sources": [
+          {
+            "name": "Nukta – Nine militants killed in Balochistan operations, Pakistan military says",
+            "url": "https://nukta.com/nine-militants-killed-balochistan"
+          },
+          {
+            "name": "The Hans India/IANS – BLA unleashes 'QAHR' on Pakistani forces with drone, mortar attacks",
+            "url": "https://www.thehansindia.com/news/international/bla-unleashes-qahr-on-pakistani-forces-in-balochistan-with-drone-mortar-attacks-1137497"
+          },
+          {
+            "name": "Dawn – State's door open for dialogue under Constitution: Balochistan CM Bugti",
+            "url": "https://www.dawn.com/news/2040880/states-door-open-for-dialogue-under-constitution-balochistan-cm-bugti"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
         "date": "2026-10-07",
         "intensity": "medium",
         "status": "ACLED recorded more than 540 armed clashes between Baloch militants and security forces from January to August 2026, up from 299 in the same period of 2025, with rising attacks on mining and transport infrastructure. Fighting continued into autumn 2026 with no negotiation track.",
@@ -4856,7 +5367,6 @@
           }
         ]
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   }
 ]
