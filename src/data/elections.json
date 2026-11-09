@@ -180,9 +180,13 @@
     {
       "iso": "BFA",
       "date": null,
-      "type": "general",
-      "note": "There is no election date. The military government has postponed elections, with only a general target of 2029.",
+      "type": "presidential",
+      "note": "No election scheduled; the military government extended the transition to mid-2029 and dissolved the electoral commission in July 2025.",
       "sources": [
+        {
+          "name": "Bloomberg – Burkina Faso Military Leader Set to Stay in Power Until 2029",
+          "url": "https://www.bloomberg.com/news/articles/2024-05-25/burkina-faso-military-leader-set-to-stay-in-power-until-2029"
+        },
         {
           "name": "BTI 2026 Burkina Faso Country Dashboard",
           "url": "https://bti-project.org/en/reports/country-dashboard/BFA"
@@ -192,7 +196,7 @@
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-19"
+      "verified": "2026-11-09"
     },
     {
       "iso": "BGD",
@@ -208,10 +212,14 @@
     },
     {
       "iso": "BGR",
-      "date": "2026-10-25",
-      "type": "presidential",
-      "note": "First round. If no candidate wins 50% of the vote, a runoff will be held on November 1, 2026. Date set by the National Assembly on July 29, 2026.",
+      "date": "2030-06-30",
+      "type": "legislative",
+      "note": "The next parliamentary election is due by June 30, 2030. The Oct 25 presidential vote and any Nov 1 runoff have passed. The last parliamentary election was a snap vote on Apr 19, 2026.",
       "sources": [
+        {
+          "name": "Wikipedia – Next Bulgarian parliamentary election",
+          "url": "https://en.wikipedia.org/wiki/Next_Bulgarian_parliamentary_election"
+        },
         {
           "name": "Sofia Globe",
           "url": "https://sofiaglobe.com/2026/07/29/bulgaria-sets-october-25-date-for-2026-presidential-elections/"
@@ -221,7 +229,8 @@
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-19"
+      "verified": "2026-11-09",
+      "deadline": true
     },
     {
       "iso": "BHR",
@@ -297,10 +306,14 @@
     },
     {
       "iso": "BRA",
-      "date": "2026-10-25",
-      "type": "presidential",
-      "note": "Second-round runoff between Flávio Bolsonaro and Lula; first round held 2026-10-04",
+      "date": "2030-10-06",
+      "type": "general",
+      "note": "The 2026 runoff on 25 Oct has passed. Under the constitution, the next general election falls on the first Sunday of October 2030. The source gives only the year.",
       "sources": [
+        {
+          "name": "Georgetown University PDBA – Presidential Election Calendar",
+          "url": "https://sigla.georgetown.domains/gateway/pec/"
+        },
         {
           "name": "Council on Foreign Relations",
           "url": "https://www.cfr.org/articles/brazils-2026-election-what-to-know-and-whats-at-stake"
@@ -314,7 +327,7 @@
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-19"
+      "verified": "2026-11-09"
     },
     {
       "iso": "BRB",
@@ -332,8 +345,12 @@
       "iso": "BRN",
       "date": null,
       "type": "legislative",
-      "note": "No change since the 2026-10-08 check. Brunei is an absolute monarchy and holds no national elections; the Sultan appoints the Legislative Council.",
+      "note": "No change since the 2026-10-19 check. Brunei is an absolute monarchy with no national elections, and the Sultan appoints the Legislative Council. The last elections were the 1962 district council poll",
       "sources": [
+        {
+          "name": "Wikipedia – 1962 Bruneian district council election",
+          "url": "https://en.wikipedia.org/wiki/1962_Bruneian_district_council_election"
+        },
         {
           "name": "Freedom House – Brunei: Freedom in the World 2023",
           "url": "https://freedomhouse.org/country/brunei/freedom-world/2023"
@@ -343,7 +360,7 @@
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-19"
+      "verified": "2026-11-09"
     },
     {
       "iso": "BTN",
@@ -397,8 +414,12 @@
       "iso": "CHE",
       "date": "2026-12",
       "type": "presidential",
-      "note": "Federal Assembly elects the 2027 President during the December winter session; exact day not confirmed in search results (expected 2026-12-09)",
+      "note": "Federal Assembly elects the 2027 President during the December 2026 winter session; exact day not confirmed (2026 President was elected 10 Dec 2025)",
       "sources": [
+        {
+          "name": "Wikipedia – President of the Swiss Confederation",
+          "url": "https://en.wikipedia.org/wiki/President_of_the_Swiss_Confederation"
+        },
         {
           "name": "Wikipedia – Bundespräsident (Schweiz)",
           "url": "https://de.wikipedia.org/wiki/Bundespr%C3%A4sident_(Schweiz)"
@@ -408,7 +429,7 @@
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-19"
+      "verified": "2026-11-09"
     },
     {
       "iso": "CHL",
@@ -457,15 +478,21 @@
     },
     {
       "iso": "CMR",
-      "date": "2026-12-20",
+      "date": "2027-02",
       "type": "legislative",
       "sources": [
+        {
+          "name": "Camer.be – Le calendrier électoral est devenu un secret d'État au Cameroun",
+          "url": "https://www.camer.be/index.php/actualites/politique/le-calendrier-electoral-est-devenu-un-secret-detat-au-cameroun"
+        },
         {
           "name": "Wikipedia: List of next general elections",
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-08"
+      "verified": "2026-11-09",
+      "deadline": true,
+      "note": "No election date set yet. MPs' term was extended to 20 Dec 2026; joint legislative and municipal polls are legally due by about 8 Feb 2027."
     },
     {
       "iso": "COD",
@@ -531,8 +558,12 @@
       "iso": "CPV",
       "date": "2026-11-15",
       "type": "presidential",
-      "note": "First round of the presidential election. The legislative election was held on 17 May 2026.",
+      "note": "First round of the presidential election; possible runoff on 29 November 2026. The legislative election was held on 17 May 2026.",
       "sources": [
+        {
+          "name": "Wikipedia – 2026 Cape Verdean parliamentary election",
+          "url": "https://en.wikipedia.org/wiki/2026_Cape_Verdean_parliamentary_election"
+        },
         {
           "name": "Lusa",
           "url": "https://www.lusa.pt/lusofonia/article/2026-01-19/46382037/cabo-verde-realiza-elei%C3%A7%C3%B5es-legislativas-a-17-de-maio-e-presidenciais-a-15-de-novembro"
@@ -542,7 +573,7 @@
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-19"
+      "verified": "2026-11-09"
     },
     {
       "iso": "CRI",
@@ -696,11 +727,32 @@
       "verified": "2026-10-08"
     },
     {
+      "iso": "ESH",
+      "date": null,
+      "type": "legislative",
+      "sources": [
+        {
+          "name": "Maroc.ma – Morocco's 2026 Legislative Elections",
+          "url": "https://maroc.ma/en/moroccos-2026-legislative-elections"
+        },
+        {
+          "name": "Wikipedia: List of next general elections",
+          "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
+        }
+      ],
+      "verified": "2026-11-09",
+      "note": "Western Sahara holds no national elections of its own. Morocco, which administers most of the territory, held legislative elections on 2026-09-23. The next ones are expected around 2031 under the five"
+    },
+    {
       "iso": "ESP",
       "date": "2026-11-29",
       "type": "legislative",
-      "note": "Snap general election announced by Pedro Sánchez on 5 Oct 2026",
+      "note": "Snap general election called by Pedro Sánchez on 5 Oct 2026 after Congress rejected his housing decrees",
       "sources": [
+        {
+          "name": "Latin Times",
+          "url": "https://www.latintimes.com/spain-snap-election-sanchez-housing-vote-601009"
+        },
         {
           "name": "La Moncloa",
           "url": "https://www.lamoncloa.gob.es/lang/en/presidente/news/paginas/2026/20261005-institutional-statement.aspx"
@@ -710,7 +762,7 @@
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-19"
+      "verified": "2026-11-09"
     },
     {
       "iso": "EST",
@@ -859,14 +911,18 @@
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-19"
+      "verified": "2026-11-09"
     },
     {
       "iso": "GNB",
       "date": null,
       "type": "general",
-      "note": "On 8 Oct 2026 the PM said the 6 Dec 2026 presidential and legislative elections would be delayed; no new date has been set",
+      "note": "The joint presidential and legislative vote planned for 6 Dec 2026 was put off on 8 Oct 2026. As of 9 Nov 2026 no new date has been set.",
       "sources": [
+        {
+          "name": "Reuters via WMBD Radio: Guinea-Bissau to delay elections following last year's coup",
+          "url": "https://wmbdradio.com/2026/10/08/guinea-bissau-to-delay-elections-following-last-years-coup/"
+        },
         {
           "name": "Reuters via Internazionale",
           "url": "https://www.internazionale.it/ultime-notizie-reuters/2026/10/08/guinea-bissau-to-delay-elections-following-last-year-s-coup"
@@ -876,7 +932,7 @@
           "url": "https://en.wikipedia.org/wiki/List_of_next_general_elections"
         }
       ],
-      "verified": "2026-10-19"
+      "verified": "2026-11-09"
     },
     {
       "iso": "GNQ",
