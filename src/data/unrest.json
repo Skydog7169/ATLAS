@@ -19,6 +19,26 @@
     "summary": "Daily protests outside parliament in Tbilisi began in late November 2024 after Georgian Dream froze EU accession talks following a disputed election. The government responded with riot police, new laws restricting assembly, media and NGOs, and prosecutions of opposition leaders, journalists and protesters. By October 2026 the ruling party was seeking a Constitutional Court ban on the main opposition parties while nightly rallies continued.",
     "history": [
       {
+        "date": "2026-11-23",
+        "intensity": "medium",
+        "status": "Nightly protests outside parliament in Tbilisi passed their 719th consecutive day around 17 November 2026, and the 48th weekly Saturday march took place on 14 November. A large rally is planned for 28 November, two years after EU accession talks were suspended. The Constitutional Court's hearings on Georgian Dream's lawsuit to ban five opposition parties have continued since 21 October amid disputes over evidence. In mid-November, the Coalition for Change accused prosecutors of fabricating evidence after its offices were searched.",
+        "sources": [
+          {
+            "name": "Caucasian Knot – protests in Tbilisi for 719 days",
+            "url": "https://www.eng.kavkaz-uzel.eu/articles/80288"
+          },
+          {
+            "name": "Georgia Today – Opposition ban case deepens as court hearings become increasingly contentious",
+            "url": "https://georgiatoday.ge/opposition-ban-case-deepens-as-court-hearings-become-increasingly-contentious"
+          },
+          {
+            "name": "Georgia Today – Coalition for Change alleges evidence fabrication",
+            "url": "https://georgiatoday.ge/coalition-for-change-hits-back-at-prosecutors-office-alleges-evidence-fabrication"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
         "date": "2026-10-19",
         "intensity": "medium",
         "status": "As of mid-October 2026 protesters have gathered outside parliament for roughly 690 consecutive days, and the 44th weekly Saturday march on 17 October demanded the release of around 150 people civil society counts as prisoners of conscience, including journalist Mzia Amaglobeli. The Constitutional Court accepted Georgian Dream's lawsuit to ban five opposition parties on 13 October and opens hearings in Batumi on 21-23 October; a judge resigned after being refused recusal. On 19 October a journalist was jailed for 30 days for criticising government figures online.",
@@ -54,8 +74,7 @@
         ],
         "confidence": "medium"
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "madagascar-gen-z-uprising-coup",
@@ -77,6 +96,26 @@
     "trigger": "Youth protests over chronic water and electricity cuts began in Antananarivo on 25 September 2025 and escalated into demands for Rajoelina's resignation.",
     "summary": "Gen Z-led demonstrations over power and water outages in late September 2025 grew into a nationwide uprising; the elite CAPSAT unit sided with protesters, Rajoelina fled abroad, and Colonel Michael Randrianirina was sworn in as transitional president on 17 October 2025. The African Union suspended Madagascar and the UN condemned the takeover. A military-led transition now runs to elections promised by 2027, while activists accuse the new authorities of reverting to repression.",
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "medium",
+        "status": "As of 23 November 2026, the military-led transition under Col. Michael Randrianirina is still in control. In early November 2026, Madagascar's top court ruled that a constitutional referendum may be held before the 2027 presidential election, though reports say no date has been fixed for either vote. A 18 November report said the referendum is now treated as the main 2027 vote, which casts doubt on a presidential election that year. In November, Amnesty said the junta's authoritarian practices had dashed Gen Z hopes for change.",
+        "sources": [
+          {
+            "name": "The Rio Times – Madagascar Court Allows Constitution Vote",
+            "url": "https://www.riotimesonline.com/madagascar-court-allows-constitutional-referendum-before-presidential-vote/"
+          },
+          {
+            "name": "allAfrica – Madagascar: Calendrier Electoral - Tout pour le référendum en 2027",
+            "url": "https://fr.allafrica.com/stories/202611180409.html"
+          },
+          {
+            "name": "Amnesty International – A year after the military coup: authoritarian practices dash Gen Z aspirations",
+            "url": "https://www.amnesty.org/en/latest/campaigns/2026/11/a-year-after-the-military-coup-authoritarian-practices-dash-gen-z-aspirations-for-a-new-madagascar/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "medium",
@@ -109,8 +148,7 @@
         ],
         "confidence": "high"
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "serbia-anti-corruption-protests",
@@ -131,6 +169,26 @@
     "trigger": "The collapse of a railway station canopy in Novi Sad on 1 November 2024 killed 16 people and set off student-led protests against corruption and state capture.",
     "summary": "Student-led demonstrations against corruption and the rule of President Aleksandar Vučić have continued almost without interruption since November 2024, becoming the largest protest movement in Serbia's post-Milošević history. Prime Minister Milos Vučević resigned in January 2025, and the movement's central demand became a snap election. Vučić resigned as president on 27 September 2026 to run for prime minister in a snap parliamentary election on 25 October 2026, which the students are contesting with their own list.",
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "low",
+        "status": "In the 25 October 2026 snap election, the Student List led by Ilija Srdanovic won an absolute majority, ending 14 years of SNS-led government. Vucic conceded on election night but repeated claims that the movement was a foreign-funded coup attempt. After a repeat vote at 53 polling stations on 1 November, final results announced on 5 November gave the Student List 53.69% and 140 of 250 seats. The new assembly must convene within 30 days of the vote, and a presidential election is due by 27 December 2026.",
+        "sources": [
+          {
+            "name": "Wikipedia – 2026 Serbian parliamentary election",
+            "url": "https://en.wikipedia.org/wiki/2026_Serbian_parliamentary_election"
+          },
+          {
+            "name": "House of Commons Library – Serbia under Aleksandar Vucic and the 2026 parliamentary election",
+            "url": "https://commonslibrary.parliament.uk/research-briefings/cbp-12267/"
+          },
+          {
+            "name": "Wikipedia – Student List",
+            "url": "https://en.wikipedia.org/wiki/Student_List"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "medium",
@@ -163,8 +221,7 @@
         ],
         "confidence": "high"
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "iran-2025-26-uprising-crackdown",
@@ -185,6 +242,26 @@
     "trigger": "Protests over currency collapse and economic hardship began in late December 2025 and spread nationwide into the largest anti-government uprising since 1979.",
     "summary": "Economic protests that began in December 2025 escalated in January 2026 into a nationwide uprising, met by live fire, an internet blackout and mass arrests; activist groups documented more than 7,000 deaths and over 26,000 detentions, while state TV acknowledged 3,117 dead. Through 2026 the judiciary has conducted mass trials and executions of detained protesters. Sporadic protests, notably by retirees and workers, continue despite the repression.",
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "medium",
+        "status": "Iran executed two more men over the January 2026 protests on 3 November 2026 in Isfahan, and three more on 8 November in Karaj, after the Supreme Court upheld their sentences. Iran Human Rights counts at least 41 protesters executed in 2026, and new death sentences continue. Retirees, workers and teachers held pension and cost-of-living rallies in Tehran, Isfahan, Ahvaz, Shush, Kermanshah and Rasht on 1 and 8 November. These protests remain far below January levels.",
+        "sources": [
+          {
+            "name": "Iran Human Rights – three protesters hanged in Karaj, 8 Nov 2026",
+            "url": "https://www.iranhr.net/en/articles/9188/"
+          },
+          {
+            "name": "Iran International – Two more men hanged in protest case in Iran (3 Nov 2026)",
+            "url": "https://www.iranintl.com/en/202611030117"
+          },
+          {
+            "name": "Eurasia Review – Retirees and educators protest in six cities (1 Nov 2026)",
+            "url": "https://www.eurasiareview.com/02112026-retirees-and-educators-protest-poverty-and-corruption-in-six-cities-across-iran-oped/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-18",
         "intensity": "medium",
@@ -217,8 +294,7 @@
         ],
         "confidence": "medium"
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "tunisia-anti-saied-protests",
@@ -239,6 +315,26 @@
     "trigger": "Prolonged power and water cuts during a summer 2026 heatwave, alongside unemployment and a crackdown on critics, brought Tunisians onto the streets in July 2026.",
     "summary": "Protests over blackouts, water shortages and joblessness spread across Tunisian cities from July 2026, with tyres burned in some towns, and turned into calls for President Kais Saied to go. In mid-September unemployed graduates in Sidi Bouzid, Kasserine and Gabes demanded public-sector hiring. On 17 October 2026 the UGTT union, opposition parties and civil society staged the biggest anti-Saied march in years in Tunis.",
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "medium",
+        "status": "On 17 October 2026 thousands joined a UGTT-led march in Tunis, the biggest protest against President Saied in years, demanding the release of jailed critics and action on the economy. Late on Thursday 22 October, scores of people protested in several parts of Tunis over the killing of two people in separate security incidents and over worsening living conditions, and some clashed with police. Protests have recurred since July and are ongoing. No later events were found.",
+        "sources": [
+          {
+            "name": "The New Arab – Protests, clashes erupt in Tunisia over recent deaths",
+            "url": "https://www.newarab.com/news/protests-clashes-erupt-tunisia-over-recent-deaths"
+          },
+          {
+            "name": "Al Jazeera – Thousands rally for biggest protest in years against Tunisia's Saied",
+            "url": "https://www.aljazeera.com/news/2026/10/17/thousands-rally-for-biggest-protest-in-years-against-tunisias-saied"
+          },
+          {
+            "name": "Middle East Monitor – Tunisia's UGTT reaffirms plans for general strike",
+            "url": "https://www.middleeastmonitor.com/20260911-tunisias-ugtt-reaffirms-plans-for-general-strike-amid-dispute-with-authorities/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-17",
         "intensity": "medium",
@@ -271,8 +367,7 @@
         ],
         "confidence": "medium"
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "us-anti-ice-no-kings-protests",
@@ -335,7 +430,7 @@
         "confidence": "high"
       }
     ],
-    "lastChecked": "2026-10-19"
+    "lastChecked": "2026-11-23"
   },
   {
     "id": "tanzania-post-election-crackdown",
@@ -357,6 +452,22 @@
     "trigger": "Protests broke out on election day, 29 October 2025, after the main opposition party Chadema was barred and its leader Tundu Lissu jailed for treason, with Samia later declared winner with about 98 percent.",
     "summary": "Protests in Dar es Salaam, Mwanza, Arusha and other cities against the exclusionary 29 October 2025 election were met with live fire, an internet shutdown and mass arrests; a government commission of inquiry later counted 518 deaths while the opposition claimed far more. More than 2,000 people were arrested and Samia vowed to crush unrest 'at all cost'. The street phase ended within weeks but the crackdown on opposition continues and accountability remains absent.",
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "latent",
+        "status": "On 6 November 2026 a three-judge High Court bench in Dar es Salaam acquitted Chadema leader Tundu Lissu of treason. It convicted him of the lesser charge of incitement and sentenced him to four years in prison, while heavily armed police were deployed outside the court. Street protest remains suppressed. Accountability for the post-election killings is still absent: the inquiry report giving 518 deaths has not been published and an ICC referral request is pending.",
+        "sources": [
+          {
+            "name": "Bloomberg – Tanzania Court Acquits Opposition Chief of Treason Charges (2026-11-06)",
+            "url": "https://www.bloomberg.com/news/articles/2026-11-06/tanzania-court-acquits-opposition-chief-of-treason-charges"
+          },
+          {
+            "name": "AP via ABC News – Lissu sentenced to 4 years for incitement, acquitted of treason",
+            "url": "https://abcnews.com/International/wireStory/tanzania-opposition-leader-lissu-sentenced-4-years-incitement-137905667"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-16",
         "intensity": "latent",
@@ -393,8 +504,7 @@
         ],
         "confidence": "high"
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "argentina-austerity-protests",
@@ -416,6 +526,22 @@
     "trigger": "President Milei's austerity programme, which cut pension spending and vetoed pension and university funding laws, set off weekly pensioner marches at Congress from early 2024 that have repeatedly turned violent.",
     "summary": "Since Milei took office in December 2023, pensioners have marched on Congress every Wednesday against real cuts to pensions and health coverage, routinely dispersed under the government's 'anti-picket protocol'. The largest clash came on 12 March 2025 when football fans joined the retirees: police used rubber bullets, tear gas and water cannon, over 120 were detained and photojournalist Pablo Grillo was critically injured. Clashes recurred outside Congress over labour reform in February 2026 and during the fifth Federal University March on 15 October 2026.",
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "medium",
+        "status": "Pensioners kept up their weekly Wednesday marches at Congress on 28 October, 4 November and 18 November 2026. Truckers' union members joined the 4 November march, and on 18 November pensioners, piquetero groups and left-wing parties held a national day of protest. On 23 October 2026 the Federal Police detained priest Francisco 'Paco' Olveira and two other protesters at a pensioners' rally in Plaza de Mayo. On 19–20 November the CGT union federation ruled out a general strike in 2026 and chose a shorter work stoppage instead.",
+        "sources": [
+          {
+            "name": "Agencia Comunas – Olveira detention, 23 Oct 2026",
+            "url": "https://agenciacomunas.com.ar/violencia-y-represion-en-plaza-de-mayo-detuvieron-al-padre-paco-olveira-y-a-una-pareja/"
+          },
+          {
+            "name": "Ámbito – CGT rules out general strike, 19 Nov 2026",
+            "url": "https://www.ambito.com/politica/sin-consenso-un-paro-la-cgt-llamara-un-cese-actividades-antes-fin-ano-y-marchara-las-obras-sociales-n6347302"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-15",
         "intensity": "medium",
@@ -452,8 +578,7 @@
         ],
         "confidence": "high"
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "bulgaria-gen-z-protests",
@@ -474,6 +599,26 @@
     "trigger": "A draft 2026 budget raising taxes and social-security contributions, released days before Bulgaria's eurozone entry, sparked mass youth-led protests in late November 2025.",
     "summary": "Youth-led demonstrations against the 2026 budget and entrenched corruption began on 26 November 2025, turned violent in Sofia on 1 December and drew tens of thousands onto the streets, forcing the Zhelyazkov government to withdraw the budget and resign on 11 December 2025. President Rumen Radev then resigned in January 2026 to found a party that won early elections and made him prime minister. Smaller protests have since targeted the Radev government over corruption and its stance toward Russia.",
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "low",
+        "status": "Protests against the Radev government picked up again in November 2026, after the ticket backed by Radev and Iotova won the presidential election on 1 November. Around 10 November, organisers called rallies in seven cities against the draft 2027 budget, which they say raises the tax burden by nearly €2 billion. On 17 November, demonstrators in Sofia protested against the ruling Progressive Bulgaria party and the budget. Police union members plan a protest on 28 November. All protests have been peaceful and far smaller than in December 2025.",
+        "sources": [
+          {
+            "name": "Novinite – Bulgaria Faces Seven-City Protest Against 2027 Budget",
+            "url": "https://www.novinite.com/articles/241501/Bulgaria+Faces+Seven-City+Protest+Against+2027+Budget"
+          },
+          {
+            "name": "Eurocom – Civic protest against Progressive Bulgaria government and Budget 2027 (17 Nov 2026)",
+            "url": "https://eurocom.bg/2026/11/17/polozhenieto-ne-e-rozovo-grazhdanski-protest-sreshtu-upravlenieto-na-progresivna-balgariya"
+          },
+          {
+            "name": "BTA – Interior Ministry employees to stage protest in Sofia on 28 November",
+            "url": "https://bta.bg/en/news/bulgaria/1251906-interior-ministry-employees-to-stage-protest-in-sofia-on-november-28-trade-unio"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-15",
         "intensity": "low",
@@ -506,8 +651,7 @@
         ],
         "confidence": "high"
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "guinea-bissau-coup-2025",
@@ -581,7 +725,8 @@
         ],
         "confidence": "high"
       }
-    ]
+    ],
+    "lastChecked": "2026-11-23"
   },
   {
     "id": "ladakh-statehood-protests",
@@ -602,6 +747,26 @@
     "trigger": "A hunger strike by activist Sonam Wangchuk for statehood and Sixth Schedule tribal protections culminated in a youth shutdown in Leh on 24 September 2025 that turned violent.",
     "summary": "A years-long campaign for statehood and constitutional safeguards for Ladakh erupted on 24 September 2025 when protesters torched the BJP office in Leh and police opened fire, killing four and injuring dozens. Wangchuk was detained under the National Security Act for six months and talks with Delhi broke down before resuming in October 2025. In 2026 the Centre has offered an elected body and Article 371-style safeguards short of statehood, but rounds of talks through October 2026 have ended without agreement.",
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "low",
+        "status": "The 22 October 2026 Delhi round of talks did not produce a deal, and Home Ministry talks with the Leh Apex Body and Kargil Democratic Alliance then stalled. On 12 November the Leh Apex Body began an indefinite sit-in in Leh over the stalled talks and the December hill council elections. It turned down informal offers of talks after the polls, saying it wanted a formal invitation and the vote moved to June. On 20 November it rejected the Chief Secretary's appeal to stop the protest, which remains peaceful.",
+        "sources": [
+          {
+            "name": "ETV Bharat: Ladakh group turns down talks with Centre, demands postponement of December elections",
+            "url": "https://www.etvbharat.com/en/bharat/ladakh-group-turns-down-talks-with-centre-demand-postponement-of-december-elections-enn26111607021"
+          },
+          {
+            "name": "The Daily Pioneer: Leh protest enters ninth day as Apex Body refuses to call off agitation",
+            "url": "https://dailypioneer.com/india/leh-protest-enters-ninth-day-as-apex-body-refuses-to-call-off-agitation"
+          },
+          {
+            "name": "The Chenab Times: Centre agrees to high-powered talks post hill council polls",
+            "url": "https://thechenabtimes.com/2026/11/15/ladakh-centre-agrees-to-high-powered-talks-post-hill-council-polls/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "low",
@@ -682,6 +847,26 @@
     "summary": "Weeks of student-led protests against job quotas turned into a mass uprising that killed several hundred people and forced Prime Minister Sheikh Hasina to flee to India on 5 August 2024. A Muhammad Yunus-led interim government banned the Awami League, tried Hasina in absentia and organised the first post-uprising election in February 2026, which the BNP won in a landslide. Political violence between rival parties and sporadic mob unrest, including the December 2025 riots after the killing of activist Osman Hadi, persisted through the transition.",
     "history": [
       {
+        "date": "2026-11-23",
+        "intensity": "medium",
+        "status": "Political violence rose sharply from 14 November 2026. Supporters of the banned Awami League held protests and a 19 November shutdown ahead of Sheikh Hasina's planned return from India in December. Police said at least four people had been killed by 22 November, and Muhammad Yunus's ancestral home was set on fire. PM Tarique Rahman blamed India for the unrest. On 23 November Dhaka said it would arrest Hasina if she returns and kept pressing India to extradite her.",
+        "sources": [
+          {
+            "name": "Al Jazeera",
+            "url": "https://www.aljazeera.com/news/2026/11/22/why-bangladesh-descended-into-violence-ahead-of-hasinas-planned-return"
+          },
+          {
+            "name": "Reuters via US News",
+            "url": "https://www.usnews.com/news/world/articles/2026-11-19/parts-of-bangladesh-shut-down-in-protests-by-hasinas-party-yunus-home-set-ablaze"
+          },
+          {
+            "name": "Business Recorder",
+            "url": "https://www.brecorder.com/news/40450375/bangladesh-vows-to-arrest-hasina-if-she-returns-from-india"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
         "date": "2026-10-14",
         "intensity": "low",
         "status": "As of 14 October 2026 the transition set off by the uprising is largely complete: the BNP won about 209 of 300 seats in the 12 February 2026 election and Tarique Rahman was sworn in as prime minister on 17 February, replacing the Yunus interim government. The Awami League remains banned and excluded from politics and Hasina was sentenced to death in absentia in November 2025. A UK fact-finding report published 14 October 2026 found political violence continuing but mostly localised; the Awami League cites a rights-group tally of 56 deaths and over 5,000 injuries in political violence from January to June 2026.",
@@ -717,8 +902,7 @@
         ],
         "confidence": "high"
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "bolivia-blockades-2026",
@@ -740,6 +924,18 @@
     "trigger": "President Rodrigo Paz's December 2025 decree scrapping fuel subsidies and raising diesel prices set off road blockades by unions and Morales-aligned peasant groups.",
     "summary": "Weeks of blockades over fuel-subsidy cuts in December 2025 to January 2026 ended with a government deal, but a second, larger wave erupted on 1 May 2026, sparked by a land-collateral law (Law 1720) and the wider economic crisis. Blockades lasted about 53 days, choked food, fuel and medicine supplies and left at least 24 people dead by 9 July 2026 according to the ombudsman; Paz declared a state of emergency on 20 June 2026 allowing the military to clear roads, and a deal with the COB ended the blockades on 23 June. A state of exception banning blockades has since been extended to 17 December 2026, while Morales-aligned groups plan renewed mobilisation.",
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "medium",
+        "status": "Searches for 19 October to 23 November 2026 returned little. Opinión Bolivia reported on 19 November 2026 that the urban teachers' union had called nationwide mobilisations for 20 November over unanswered demands and opposition to decentralisation, and its La Paz branch threatened blockades and a boycott of year-end grades. The state of exception banning road blockades runs to 17 December; whether the 6 November Patacamaya march took place could not be confirmed.",
+        "sources": [
+          {
+            "name": "Opinión Bolivia: Magisterio anuncia movilización este viernes; en La Paz advierten con bloquear y no presentar notas (19 Nov 2026)",
+            "url": "https://www.opinion.com.bo/pais/magisterio-anuncia-movilizacion-viernes-paz-advierten-bloquear-presentar-notas/20261119181202999390.html"
+          }
+        ],
+        "confidence": "low"
+      },
       {
         "date": "2026-10-19",
         "intensity": "medium",
@@ -822,6 +1018,26 @@
     "summary": "Mozambique's worst post-election unrest since independence ran from October 2024 to March 2025, with marches, barricades and looting across Maputo and provincial cities met by live fire; monitoring groups counted more than 300 people shot dead and thousands arrested. Street protests subsided after Mondlane and Chapo met in March 2025, but no one has been prosecuted for the killings. The state has instead moved to try Mondlane himself over the protests.",
     "history": [
       {
+        "date": "2026-11-23",
+        "intensity": "latent",
+        "status": "Venâncio Mondlane's trial opened as scheduled on 17 November 2026 before the criminal section of the Supreme Court in Maputo. He faces five charges, including incitement to terrorism and civil disobedience, over the 2024–25 post-election unrest. The trial is held under heavy security and is not being broadcast live. At hearings on 19–20 November, Mondlane denied ordering roadblocks or the burning of toll booths. The searches found no reports of renewed mass street protests.",
+        "sources": [
+          {
+            "name": "Reuters via Yahoo News – Mozambique's main opposition leader goes on trial over post-election unrest (17 Nov 2026)",
+            "url": "https://www.yahoo.com/news/world/articles/mozambiques-main-opposition-leader-goes-140046137.html"
+          },
+          {
+            "name": "Al Jazeera – Mozambique's opposition leader stands trial over deadly 2024 protests",
+            "url": "https://www.aljazeera.com/news/2026/11/17/mozambiques-opposition-leader-stands-trial-over-deadly-2024-protests"
+          },
+          {
+            "name": "Rio Times – Mondlane trial: Mozambique leader denies roadblocks",
+            "url": "https://riotimesonline.com/mondlane-trial-roadblocks-videos-mozambique-supreme-court"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
         "date": "2026-10-14",
         "intensity": "latent",
         "status": "As of 14 October 2026 the streets are quiet but the conflict has moved into the courts: the Council of State lifted Mondlane's immunity on 10 June 2026 and the Supreme Court notified him on 25 August that he will stand trial on five charges including incitement to terrorism and collective disobedience, with hearings scheduled to open on 17 November 2026. On 12 October the court rejected his appeal to have the trial broadcast live. Mondlane, who is not detained, denies the charges and says his movement's members continue to be killed.",
@@ -849,8 +1065,7 @@
         ],
         "confidence": "medium"
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "pakistan-pti-crackdown",
@@ -913,7 +1128,7 @@
         "confidence": "medium"
       }
     ],
-    "lastChecked": "2026-10-19"
+    "lastChecked": "2026-11-23"
   },
   {
     "id": "venezuela-post-election-unrest",
@@ -935,6 +1150,26 @@
     "trigger": "The electoral authority's declaration of Nicolás Maduro as winner of the 28 July 2024 presidential election, contradicted by opposition tally sheets, sparked nationwide protests and a violent crackdown.",
     "summary": "Protests against Maduro's disputed July 2024 re-election were met with lethal force: a UN fact-finding mission counted 25 protesters killed and at least 2,400 arrested, and HRW documented killings by security forces and colectivos. After US forces seized Maduro on 3 January 2026, acting President Delcy Rodríguez passed an amnesty that freed hundreds of political prisoners, but street protest has shifted to workers, teachers and pensioners demanding wage increases, with police repeatedly blocking marches on the Miraflores palace in April and October 2026. The US military operation itself is tracked separately.",
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "low",
+        "status": "On 16 November 2026, health, school and university unions held a 12-hour national strike, the first faced by acting President Delcy Rodríguez's government. They demanded higher wages and a year-end bonus of US$960 in place of the roughly US$75 being paid. UCV was shut down, the teachers' union says 60-80% of schools took part, and protesters blocked a Caracas motorway; no violence was reported. Unions have called a march on Miraflores for 24 November and are threatening a 24-hour strike.",
+        "sources": [
+          {
+            "name": "SWI swissinfo.ch (AFP)",
+            "url": "https://www.swissinfo.ch/spa/el-gobierno-interino-de-venezuela-enfrenta-el-primer-paro-de-trabajadores-que-exigen-mejores-salarios/92391296"
+          },
+          {
+            "name": "El Pitazo",
+            "url": "https://elpitazo.net/gran-caracas-2/trabajadores-marcharan-nuevamente-a-miraflores-el-24nov-exigen-respuestas-por-el-pago-de-aguinaldos/"
+          },
+          {
+            "name": "Infobae",
+            "url": "https://www.infobae.com/venezuela/2026/11/05/venezuela-tres-sectores-clave-definen-acciones-para-escalar-la-protesta-por-mejores-salarios/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-13",
         "intensity": "low",
@@ -975,8 +1210,7 @@
         ],
         "confidence": "high"
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "turkey-imamoglu-protests",
@@ -997,6 +1231,26 @@
     "trigger": "Istanbul Mayor Ekrem İmamoğlu, Erdoğan's main rival, was detained on 19 March 2025 on corruption and terrorism charges days before the CHP named him presidential candidate.",
     "summary": "İmamoğlu's detention on 19 March 2025 triggered Turkey's largest protests in over a decade, with nightly rallies outside Istanbul City Hall and in dozens of cities; police used tear gas and water cannon and detained more than 1,100 people in the first week. The CHP ended the daily demonstrations with a mass rally but has held periodic rallies since. İmamoğlu remains jailed and his corruption trial, opened in March 2026, is ongoing while courts have acquitted most prosecuted protesters.",
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "low",
+        "status": "In a ruling reported on 13 November 2026, the court in the Istanbul municipality corruption trial freed 8 defendants, including Imamoglu's lawyer Mehmet Pehlivan. It kept Imamoglu in custody and adjourned to 4 January 2027 so prosecutors can prepare closing arguments. On 18 November a court gave Imamoglu a further 2-year-1-month sentence and a political ban over the 2023 CHP congress. On 22 November several thousand people marched in Istanbul against a crackdown on opposition media.",
+        "sources": [
+          {
+            "name": "Reuters via US News",
+            "url": "https://www.usnews.com/news/world/articles/2026-11-18/turkish-court-hands-new-sentence-and-political-ban-to-jailed-istanbul-mayor-media-says"
+          },
+          {
+            "name": "Balkan Insight",
+            "url": "https://balkaninsight.com/2026/11/13/eight-key-defendants-in-istanbul-municipality-mass-trial-freed-from-custody/bi/&gsessionid=UbrXA4X-z3c7dB7SQd2cqmszoCY2yJcYUuHPHs7FlWzQhyvfkXlEWQ"
+          },
+          {
+            "name": "Turkish Minute",
+            "url": "https://www.turkishminute.com/2026/11/23/turkeys-top-court-to-review-imamoglus-detention-in-corruption-case/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "low",
@@ -1068,6 +1322,26 @@
     "summary": "Following the disputed January 2026 election, security forces killed at least seven people in Butambala, raided Bobi Wine's home and detained some 2,000 NUP supporters according to the army chief, who posted that Wine should be brought in 'dead or alive'. Wine went into hiding and then exile in the United States, while the military has continued seizing critics, closing independent media and prosecuting opposition figures. The European Parliament, the UN and HRW have condemned the repression.",
     "history": [
       {
+        "date": "2026-11-23",
+        "intensity": "medium",
+        "status": "Repression of critics continued into November 2026. The Uganda Law Society said student activist Musiri was seized from his home in Makindye on 14 November, and police confirmed on 16 November that he and political analyst Leonard Ronald Egesa were in detention, without giving reasons or saying where they were held. Kizza Besigye was still on trial for treason two years after his November 2024 abduction, with four bail applications rejected. Around 17 November, army chief Gen. Muhoozi ruled out dialogue with him. Bobi Wine remains in exile.",
+        "sources": [
+          {
+            "name": "Daily Monitor – Police confirm arrest of activist Musiri, analyst Egesa",
+            "url": "https://www.monitor.co.ug/uganda/news/national/police-confirm-arrest-of-activist-musiri-analyst-egesa-as-families-and-lawyers-demand-answers-5672680"
+          },
+          {
+            "name": "allAfrica – Two Years After Arrest of Besigye, Family Raises Health Concerns",
+            "url": "https://allafrica.com/stories/202611180012.html"
+          },
+          {
+            "name": "The Observer – Muhoozi rules out dialogue with Besigye as PFF rejects Saleh's power-sharing plan",
+            "url": "https://observer.ug/news/muhoozi-rules-out-dialogue-with-besigye-as-pff-rejects-salehs-power-sharing-plan"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
         "date": "2026-10-04",
         "intensity": "medium",
         "status": "As of early October 2026 the crackdown is ongoing rather than easing: HRW reported on 16 July 2026 that the military had unlawfully seized at least five government critics since mid-June, including opposition politician Erias Lukwago, and that Muhoozi ordered the closure of the Daily Monitor and NTV Uganda. Bobi Wine remains in exile in the US lobbying for sanctions; NUP supporters were arrested at a church during 'Bobi Wine Day' prayers on 4 October 2026, and Kizza Besigye remains on trial for treason.",
@@ -1103,8 +1377,7 @@
         ],
         "confidence": "high"
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "cuba-blackout-protests",
@@ -1125,6 +1398,18 @@
     "trigger": "Days-long power cuts and food shortages in Santiago de Cuba and other cities set off street protests in March 2024, which have recurred with every collapse of the national grid.",
     "summary": "Cuba's economic crisis has produced the most sustained street protest since July 2021, with cacerolazos and night-time demonstrations erupting after repeated nationwide blackouts. In 2026 the loss of Venezuelan oil after Maduro's removal and a US fuel blockade caused full grid collapses in March, July and August (at least seven by August), leaving some Havana districts without power for over 19 hours a day. Protests in Havana, Mayabeque, Guantánamo, Santiago and elsewhere have been met with arrests, and monitoring groups recorded record numbers of protest incidents in mid-2026.",
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "medium",
+        "status": "On the night of 13 November 2026, residents of Calabazar in Havana's Boyeros municipality protested after more than 30 hours without electricity, chanting for power to be restored. Opposition leader José Daniel Ferrer shared videos of the protest. Rolling blackouts and fuel shortages remain unresolved, and since mid-October blackout-driven street protests have kept recurring in Havana and the provinces.",
+        "sources": [
+          {
+            "name": "Infobae – “Queremos luz”: residentes de Calabazar protestan por los apagones (14 Nov 2026)",
+            "url": "https://www.infobae.com/cuba/2026/11/14/queremos-luz-residentes-de-calabazar-protestan-por-los-apagones-en-medio-de-la-crisis-energetica-cubana/"
+          }
+        ],
+        "confidence": "low"
+      },
       {
         "date": "2026-10-19",
         "intensity": "medium",
@@ -1244,7 +1529,7 @@
         "confidence": "high"
       }
     ],
-    "lastChecked": "2026-10-19"
+    "lastChecked": "2026-11-23"
   },
   {
     "id": "nepal-gen-z-protests",
@@ -1267,6 +1552,26 @@
     "trigger": "A government ban on more than two dozen social media platforms on top of anger at corruption and nepotism brought youth crowds onto the streets of Kathmandu on 8 September 2025.",
     "summary": "Police fire on youth protesters on 8 September 2025 killed at least 19 people and the next day crowds torched parliament, the Supreme Court and politicians' homes, forcing Prime Minister K.P. Sharma Oli to resign; about 76 people died in two days. Former chief justice Sushila Karki led an interim government that held elections on 5 March 2026, which Kathmandu ex-mayor Balen Shah's Rastriya Swatantra Party won in a landslide. Street mobilisation has ended, but accountability for the killings remains contested.",
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "low",
+        "status": "On 23 November 2026 OnlineKhabar reported that the Balen Shah government is drafting an ordinance to set up a commission that would investigate Gen Z protest cases, compensate those affected and oversee reparations. Earlier, on 5 October, a study committee recommended withdrawing only some criminal cases against protesters and keeping violent-crime cases. No large street protests were found between 19 October and 23 November.",
+        "sources": [
+          {
+            "name": "OnlineKhabar English: Govt prepares ordinance to form commission to probe Gen Z protest cases (23 Nov 2026)",
+            "url": "https://english.onlinekhabar.com/ordinance-commission-probe-gen-z-protest.html"
+          },
+          {
+            "name": "Civicus Monitor: Still no justice for protesters one year on",
+            "url": "https://monitor.civicus.org/explore/nepal-still-no-justice-for-protesters-one-year-on-as-journalists-and-critics-continue-to-be-targeted/"
+          },
+          {
+            "name": "OnlineKhabar English: Govt report recommends withdrawing some Gen Z protest cases",
+            "url": "https://english.onlinekhabar.com/govt-report-recommends-withdrawing-some-gen-z-protest-cases-not-violent-crime-cases.html"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "low",
@@ -1397,7 +1702,8 @@
         ],
         "confidence": "high"
       }
-    ]
+    ],
+    "lastChecked": "2026-11-23"
   },
   {
     "id": "philippines-flood-control-protests",
@@ -1419,6 +1725,26 @@
     "trigger": "Revelations that up to 118.5 billion pesos was lost to ghost and substandard flood-control projects, aired by President Marcos in his July 2025 State of the Nation address after deadly floods, brought tens of thousands onto Manila's streets on 21 September 2025.",
     "summary": "The 'Trillion Peso March' of 21 September 2025 drew tens of thousands to Luneta and EDSA, with clashes and dozens of arrests near the presidential palace, followed by a tens-of-thousands-strong church-led rally in November 2025. Marcos created an Independent Commission for Infrastructure that filed plunder and graft complaints against 37 people including former House Speaker Martin Romualdez, and Senator Jinggoy Estrada was arrested on plunder charges in June 2026. Anniversary rallies in September 2026 kept the movement alive but were peaceful and smaller.",
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "low",
+        "status": "I found no reports of new large anti-corruption protests between 21 September and 23 November 2026, after the peaceful martial-law anniversary rallies of about 5,800 people. The court cases continued: the Ombudsman filed a 7.44-billion-peso plunder case against former House Speaker Martin Romualdez on 7 September 2026, and the Sandiganbayan ordered his arrest. Around 10 November the court suspended him, and his trial went on in late November 2026.",
+        "sources": [
+          {
+            "name": "Rappler - Sandiganbayan suspends Martin Romualdez over plunder case",
+            "url": "https://www.rappler.com/philippines/sandiganbayan-suspension-martin-romualdez-plunder-case/"
+          },
+          {
+            "name": "Philstar - Romualdez ordered arrested in P7.44-B flood-control plunder case",
+            "url": "https://www.philstar.com/headlines/2026/09/07/2554656/romualdez-ordered-arrested-p744-b-flood-control-plunder-case"
+          },
+          {
+            "name": "GMA News - Samchan exec's testimony crucial to Romualdez plunder case",
+            "url": "https://www.gmanetwork.com/news/topstories/nation/1010510/samchan-exec-s-testimony-crucial-to-romualdez-plunder-case-ombudsman-spox/story/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-09-21",
         "intensity": "low",
@@ -1455,8 +1781,7 @@
         ],
         "confidence": "high"
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "armenia-opposition-church-crackdown",
@@ -1477,6 +1802,26 @@
     "trigger": "In June 2025 Pashinyan launched a campaign to remove Catholicos Karekin II and authorities arrested Archbishop Bagrat Galstanyan, other clergy and billionaire Samvel Karapetyan on charges of plotting a coup.",
     "summary": "Since mid-2025 the Pashinyan government has prosecuted Armenian Apostolic Church leaders and the opposition around tycoon Samvel Karapetyan, alleging coup plots and vote-buying, in a bitter feud that dominated the June 2026 parliamentary election. Civil Contract won the 7 June 2026 vote with 49.7 percent, while Karapetyan's Strong Armenia became the largest opposition force with 29 of 105 seats. Opposition figures were arrested before and after the vote, which the OSCE said offered a genuine choice but was marred by criminal cases against candidates.",
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "low",
+        "status": "On 21 October 2026, four days before local elections, investigators arrested 14 people in Stepanavan on bribery charges, including Arsen Gevorgyan, Strong Armenia's mayoral candidate. On 5 November 2026 Armenia's Anti-Corruption Court ordered one month of pre-trial detention for Samvel Karapetyan, who had been under house arrest. The government's 2026–2031 programme calls for removing Catholicos Karekin II, and Pashinyan has pointed to legislative changes to settle the church dispute. No mass protests have been reported.",
+        "sources": [
+          {
+            "name": "Public Radio of Armenia – Karapetyan remanded in custody for one month (5 Nov 2026)",
+            "url": "https://en.armradio.am/2026/11/05/businessman-samvel-karapetyan-remanded-in-custody-for-one-month/"
+          },
+          {
+            "name": "OC Media – Opposition candidates arrested ahead of local elections",
+            "url": "https://oc-media.org/armenian-opposition-candidates-arrested-on-bribery-charges-ahead-of-local-elections/"
+          },
+          {
+            "name": "Armenpress – Pashinyan highlights legislative changes for resolving Church crisis",
+            "url": "https://armenpress.am/en/article/1261769"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-09-15",
         "intensity": "low",
@@ -1513,8 +1858,7 @@
         ],
         "confidence": "medium"
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "indonesia-2025-protests",
@@ -1535,6 +1879,26 @@
     "trigger": "Revelations that all 580 lawmakers received a 50 million rupiah monthly housing allowance sparked protests outside parliament on 25 August 2025, which exploded after a police armoured vehicle ran over a motorcycle-taxi driver on 28 August.",
     "summary": "Protests over lawmakers' perks turned into nationwide riots in late August 2025 in which crowds torched regional parliaments and looted ministers' homes; the human rights commission counted 10 dead. President Prabowo revoked the perks but branded some protesters as treasonous and deployed troops. Student-led protests over the cost of living, fuel prices, corruption and the military's expanding role have recurred through 2026, including a June wave and confrontational anniversary rallies in August 2026.",
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "medium",
+        "status": "Students rallied in Jakarta and Yogyakarta on 20 October 2026, the government's second anniversary, and on 28 October (Youth Pledge Day), when police used tear gas at Jakarta's Hotel Indonesia roundabout. On 10 November (Heroes' Day), nationwide protests included calls at parliament to impeach Vice President Gibran. Yogyakarta clashes overnight into 11 November led to 154-157 arrests and a protester's skull fracture; HRW alleged excessive force on 12 November.",
+        "sources": [
+          {
+            "name": "Tempo: Yogyakarta Clashes - What Happened on November 10 as Police Arrest 154",
+            "url": "https://en.tempo.co/amp/2123398/yogyakarta-clashes-what-happened-on-november-10-as-police-arrest-154"
+          },
+          {
+            "name": "Human Rights Watch: Indonesia - Alleged Excessive Force Against Protesters (12 Nov 2026)",
+            "url": "https://www.hrw.org/news/2026/11/12/indonesia-alleged-excessive-force-against-protesters"
+          },
+          {
+            "name": "Tempo: October 28 Protesters Unable to Reach Jakarta's HI Roundabout",
+            "url": "https://en.tempo.co/read/2122530/october-28-protesters-unable-to-reach-jakartas-hi-roundabout"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "medium",
@@ -1618,6 +1982,26 @@
     "summary": "Youth-led 'Generation Z' protests began in Lima on 20 September 2025 and fed into Congress's removal of President Dina Boluarte on 10 October 2025. Protests continued against her successor José Jerí (one dead, about 100 injured on 15 October; a state of emergency in Lima), and Jerí was himself censured by Congress in February 2026 and replaced by José María Balcázar. After a disputed April first round, Keiko Fujimori won the June 2026 runoff by under 50,000 votes and took office on 28 July 2026 amid protests by relatives of those killed in earlier unrest.",
     "history": [
       {
+        "date": "2026-11-23",
+        "intensity": "low",
+        "status": "The Peruvian Coordinator of Cargo Transport Unions (CGTCP) called a public transport strike in Lima Metropolitana for 10 November 2026. It then held a 72-hour national strike of heavy-cargo truckers from 16 to 18 November over rising diesel prices, blocking highways in several regions, with the largest protests in Huánuco. No large or deadly Gen Z mobilisation in Lima has been reported since President Keiko Fujimori took office on 28 July 2026.",
+        "sources": [
+          {
+            "name": "La República – Paro de 72 horas: transportistas de carga pesada bloquean carreteras (17 Nov 2026)",
+            "url": "https://larepublica.pe/sociedad/2026/11/17/paro-de-72-horas-transportistas-de-carga-pesada-bloquean-carreteras-por-alza-de-combustible-1164602"
+          },
+          {
+            "name": "La República – Paro de transportistas hoy en vivo (10 Nov 2026)",
+            "url": "https://larepublica.pe/sociedad/2026/11/09/paro-de-transportistas-hoy-en-vivo-a-que-hora-inicia-donde-sera-la-concentracion-que-rutas-seran-afectadas-y-que-dicen-las-autoridades-801261"
+          },
+          {
+            "name": "RCR Perú – Transportistas ratifican paro nacional de 72 horas pese a diálogo con el Gobierno",
+            "url": "https://www.rcrperu.com/transportistas-ratifican-paro-nacional-de-72-horas-pese-a-dialogo-con-el-gobierno/"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
         "date": "2026-10-19",
         "intensity": "low",
         "status": "Starting 10 August 2026, transport workers held regional strikes over higher fuel prices in Pucallpa (Ucayali), Nauta (Loreto), Arequipa and parts of Tacna. Since President Keiko Fujimori's inauguration on 28 July 2026, no large or deadly Gen Z mobilisation in Lima has been reported. A state of emergency has been in force in Lima and Callao since October 2025, and Australian travel advice published in early October 2026 still lists it as active.",
@@ -1700,6 +2084,26 @@
     "summary": "A leaderless, youth-driven protest movement erupted in June 2024 against the Finance Bill and broadened into anger over corruption, police brutality and the cost of living; more than 120 people have been killed since 2024 and at least 41 remain missing. Protests recur around anniversaries (25 June, Saba Saba on 7 July) and new triggers such as fuel-price hikes, and are routinely met with lethal police force and mass arrests. Activists are increasingly channelling the movement toward voter registration ahead of the 2027 elections.",
     "history": [
       {
+        "date": "2026-11-23",
+        "intensity": "medium",
+        "status": "Between July and November 2026 protests kept recurring but were smaller and more localised than the May-July peaks. Police fired tear gas at protesters in Nairobi's CBD on 28 August, arrested demonstrators at a 21 September march for Uganda's Kizza Besigye, and clashed with fuel and cost-of-living protesters on 26 October. In October a rights group reported 36 people arrested or abducted around youth-led protests, and on about 18 November President Ruto promised public-order reforms and accountability for police abuses.",
+        "sources": [
+          {
+            "name": "allAfrica – Kenya: Police, Protesters Clash During Cost-of-Living, Fuel Demonstrations (26 Oct 2026)",
+            "url": "https://allafrica.com/stories/202610260221.html"
+          },
+          {
+            "name": "JURIST – Kenya deployed violent measures to repress youth-led protests, rights group says",
+            "url": "https://www.jurist.org/news/2026/10/kenya-deployed-violent-measures-to-repress-youth-led-protests-rights-group-says/"
+          },
+          {
+            "name": "allAfrica – Kenya: Ruto Promises Public Order Reforms, Accountability for Police Abuses",
+            "url": "https://allafrica.com/stories/202611180495.html"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
         "date": "2026-07-07",
         "intensity": "medium",
         "status": "As of 7 July 2026 the movement remains active but is being contained by heavy policing. Fuel-price protests on 18-19 May 2026 left at least four dead by initial reports (a rights coalition later counted 19 killed in those two days, and 49 police killings nationwide for January-May 2026). Police arrested more than 350 people on the 25 June 2026 anniversary and sealed off Parliament and the CBD with razor wire for Saba Saba on 7 July, when turnout was subdued and police reported only around 10 to dozens of arrests. Parliament passed the Finance Bill 2026 in June; no accountability for 2024-25 killings has been delivered.",
@@ -1735,8 +2139,7 @@
         ],
         "confidence": "high"
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "new-caledonia-unrest",
@@ -1795,7 +2198,7 @@
         "confidence": "high"
       }
     ],
-    "lastChecked": "2026-10-19"
+    "lastChecked": "2026-11-23"
   },
   {
     "id": "cameroon-post-election-unrest",
@@ -1816,6 +2219,26 @@
     "trigger": "Tchiroma declared himself winner of the 12 October 2025 presidential election before the Constitutional Council proclaimed 92-year-old Biya re-elected with 53.7 percent, sparking protests in Douala, Garoua and other cities.",
     "summary": "Protests and 'ghost town' shutdowns erupted across Cameroon after the disputed October 2025 election handed Paul Biya an eighth term; security forces fired on crowds, with the UN citing 48 deaths and civil society reporting around 2,000 arrests, and opposition figure Anicet Ekane died in custody. Tchiroma fled via Nigeria to The Gambia and the protests were crushed by December 2025. He has since pursued universal-jurisdiction complaints abroad while Cameroonian authorities threaten to prosecute him.",
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "latent",
+        "status": "As of 23 November 2026, no new mass protests have been reported. Biya remains in power, and Tchiroma is still in exile in The Gambia. In July and August 2026 Tchiroma appealed to the armed forces to bring him home and again announced an 'imminent' return, but he has not returned. On 10 November 2026 Biya set twice-delayed legislative and municipal elections for 7 February 2027, and about a week later Tchiroma urged opposition parties to boycott them.",
+        "sources": [
+          {
+            "name": "Al Jazeera",
+            "url": "https://www.aljazeera.com/news/2026/11/10/cameroon-sets-date-for-twice-delayed-legislative-and-local-elections"
+          },
+          {
+            "name": "Pan African Visions",
+            "url": "https://panafricanvisions.com/2026/11/tchiroma-urges-cameroon-opposition-parties-to-boycott-february-2027-elections/"
+          },
+          {
+            "name": "APA News",
+            "url": "https://apanews.net/cameroon-exiled-presidential-runner-up-tchiroma-announces-homecoming/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-06-17",
         "intensity": "latent",
@@ -1848,8 +2271,7 @@
         ],
         "confidence": "high"
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "ecuador-indigenous-strike-2025",
@@ -1871,6 +2293,26 @@
     "trigger": "President Noboa's September 2025 decree abolishing the diesel subsidy prompted CONAIE to declare an indefinite national strike on 22 September 2025.",
     "summary": "CONAIE's indefinite national strike against the removal of the diesel subsidy, mining and oil policy and cuts to health and education began on 22 September 2025, centred on the northern highlands (Imbabura, Pichincha). The government froze CONAIE's bank accounts, deployed the military and declared states of exception; three people were killed and dozens injured. CONAIE ended the strike on 22 October 2025 without concessions, and Noboa's constitutional referendum was then rejected by voters on 16 November 2025.",
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "low",
+        "status": "CONAIE has not called a new national strike since it ended the 2025 strike on 22 October 2025. Unions, Indigenous groups and civil society groups held demonstrations on 8 October 2026, and students protested in November 2026. At its annual assembly in Puyo in mid-November 2026, CONAIE decided not to call a new national strike against the Noboa government, reportedly after Amazonian member groups pushed back on the idea. Grievances over fuel prices and mining are still unresolved.",
+        "sources": [
+          {
+            "name": "Radio CORAPE: CONAIE resolvió no convocar a un paro nacional (18 Nov 2026)",
+            "url": "https://radio.corape.org.ec/noticia/item/nacional-conaie-resolvio-noconvocar-a-un-paro-nacional-y-rechaza-supuesta-cercania-con-el-gobierno"
+          },
+          {
+            "name": "ACLED: Are Ecuador's protests a warning sign for President Noboa?",
+            "url": "https://acleddata.com/expert-comment/are-ecuadors-protests-warning-sign-president-noboa"
+          },
+          {
+            "name": "Global Voices: Ecuadorian youth unite against neoliberal models and state violence (12 Nov 2026)",
+            "url": "https://globalvoices.org/2026/11/12/ecuadorian-youth-unite-against-neoliberal-models-and-state-violence/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2025-11-16",
         "intensity": "latent",
@@ -1907,8 +2349,7 @@
         ],
         "confidence": "medium"
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "france-student-cost-of-living-riots",
@@ -1930,6 +2371,26 @@
     "trigger": "High-school students in Créteil, outside Paris, began blockading their lycée in mid-September 2026 over overcrowded classrooms, run-down buildings and teacher shortages, and the blockades spread nationwide within weeks.",
     "summary": "What began as lycée blockades in mid-September 2026 over school conditions grew into a nationwide movement joined by teachers, the CGT union, nurses, farmers and remnants of the 2018 yellow vests, with anger widening to the cost of living and fuel prices. Early October brought clashes, arrests and school closures in Paris, Lyon, Strasbourg and Rennes. On 17 October 2026 the largest day of action drew 550,000 people by the government's count and ended in rioting in Paris, Marseille, Lyon, Limoges and Bordeaux with nearly 1,800 arrests, while the Lecornu government tries to pass a deficit-cutting budget ahead of the 2027 presidential election.",
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "medium",
+        "status": "Protests continued after 20 October 2026 but drew smaller crowds. Unions held a general strike on 5 November, with hundreds of thousands marching. On 7 November, 146,000 people protested and clashed with police for a fourth straight weekend. Unions called another youth and teacher action day on 10 November and a public-sector pay strike on 17 November, which drew more than 100,000. 21 November was the sixth Saturday in a row of marches against the cost of living and police violence. Talks with Lecornu's government have stalled while it struggles to pass its budget.",
+        "sources": [
+          {
+            "name": "CNBC – France protests draw 146,000 as clashes erupt for fourth straight weekend (8 Nov 2026)",
+            "url": "https://www.cnbc.com/2026/11/08/france-protests-clashes-arrests.html"
+          },
+          {
+            "name": "Euronews – Fresh public sector strike in France over pay as government struggles to pass budget (17 Nov 2026)",
+            "url": "https://www.euronews.com/2026/11/17/fresh-public-sector-strike-in-france-under-way-over-pay-as-government-struggles-to-pass-bu"
+          },
+          {
+            "name": "Al Jazeera – Thousands protest across Europe over living costs and housing (21 Nov 2026)",
+            "url": "https://www.aljazeera.com/news/2026/11/21/thousands-protest-across-europe-over-living-costs-and-housing"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-20",
         "intensity": "high",
@@ -1976,6 +2437,26 @@
     "trigger": "Students who had protested peacefully for months over education costs and job prospects turned to street riots in Tirana on 13 October 2026, joining the Flamingo campaign against corruption and a Kushner-linked coastal resort.",
     "summary": "Riots broke out in Tirana on 13 October 2026 when student protests over the cost of education and poor job prospects merged with the months-old Flamingo movement opposing alleged government corruption and a luxury resort project on the southern coast linked to Jared Kushner. Over six consecutive days protesters attacked ministries, the prime minister's office, banks and police with fireworks and barricades, and police answered with tear gas, water cannon and rubber bullets. Prime Minister Edi Rama, in power since 2013, refuses to resign and blames a foreign hand, while the EU delegation has urged a proportionate response as Albania pursues membership by 2030.",
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "medium",
+        "status": "The riots of mid-October have turned into regular, smaller protests in Tirana. On 4 November police used tear gas outside the prime minister's office, and on 7 November a nationwide student rally at the Education Ministry ended with police firing water cannon and tear gas. Students and citizens kept up their routine protests at the prime minister's office through at least 18 November, now calling for both Edi Rama and opposition leader Sali Berisha to go. Rama has not resigned.",
+        "sources": [
+          {
+            "name": "Bloomberg",
+            "url": "https://www.bloomberg.com/news/articles/2026-11-07/albania-protests-turn-violent-as-pressure-on-pm-continues"
+          },
+          {
+            "name": "AZERTAC (citing ATA)",
+            "url": "https://azertag.az/en/xeber/tensions_run_high_during_student_and_citizen_protest_in_front_of_albanias_prime_ministers_office-4514031"
+          },
+          {
+            "name": "Balkan Insight (BIRN)",
+            "url": "https://balkaninsight.com/2026/11/17/albania-protests-challenge-traditional-party-duopoly-ahead-of-elections/bi/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-20",
         "intensity": "medium",
