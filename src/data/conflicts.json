@@ -101,6 +101,39 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-11-12",
+        "kind": "mediation",
+        "summary": "US envoys Witkoff and Kushner met President Putin in Moscow to discuss a Ukraine settlement after the Abu Dhabi round; a meeting with Zelensky was also expected.",
+        "sources": [
+          {
+            "name": "TIME",
+            "url": "https://time.com/article/2026/11/12/ukraine-russia-peace-deal-talks-putin-zelensky-witkoff-kushner/"
+          }
+        ]
+      },
+      {
+        "date": "2026-11-10",
+        "kind": "talks",
+        "summary": "US, Russian and Ukrainian delegations held two days of talks in Abu Dhabi on 10–11 November, focused on territory and security guarantees, and ended without a major breakthrough.",
+        "sources": [
+          {
+            "name": "Euronews",
+            "url": "https://www.euronews.com/2026/11/11/ukraine-russia-peace-talks-enter-second-day-with-territory-and-security-guarantees-in-focu"
+          }
+        ]
+      },
+      {
+        "date": "2026-11-03",
+        "kind": "mediation",
+        "summary": "US envoy Steve Witkoff announced that the US would mediate trilateral talks between US, Russian and Ukrainian delegations in Abu Dhabi on 10–11 November, restarting talks suspended since February.",
+        "sources": [
+          {
+            "name": "Axios",
+            "url": "https://www.axios.com/2026/11/03/us-russia-ukraine-peace-talks-uae-trump-witkoff-kushner"
+          }
+        ]
+      },
+      {
         "date": "2026-10-09",
         "kind": "talks",
         "summary": "US envoys Witkoff and Kushner met Ukrainian, E3, European Commission and NATO officials in Miami. They discussed de-escalation before winter, energy security, grain exports and security guarantees ahead of the next US contact with Russia.",
@@ -176,6 +209,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "high",
+        "status": "US-mediated trilateral talks between the US, Russia and Ukraine resumed in Abu Dhabi on 10–11 November 2026, the first round in nine months, but produced no breakthrough. US envoys Witkoff and Kushner then met Putin in Moscow on 12 November. Fighting continued: ISW reported Russian advances near Kupyansk, Lyman and Dobropillia on 21 November. Russian strikes on 22 November killed at least 15 people and hit energy sites, and on 23 November Ukraine said it had struck Russian ships off Libya.",
+        "sources": [
+          {
+            "name": "CNN",
+            "url": "https://www.cnn.com/2026/11/09/europe/russia-ukraine-us-peace-talks-preview-intl"
+          },
+          {
+            "name": "TIME",
+            "url": "https://time.com/article/2026/11/12/ukraine-russia-peace-deal-talks-putin-zelensky-witkoff-kushner/"
+          },
+          {
+            "name": "Al Jazeera",
+            "url": "https://www.aljazeera.com/news/2026/11/22/zelenskyy-urges-us-to-release-patriot-missiles"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "high",
@@ -317,7 +370,18 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
-        "date": "2026-10-06",
+        "date": "2026-10-21",
+        "kind": "talks",
+        "summary": "Nearly two dozen countries met in Geneva for UN-backed talks on a pathway to a ceasefire in Sudan and a transition to inclusive civilian rule. The army and the RSF did not agree to anything directly.",
+        "sources": [
+          {
+            "name": "UN DPPA",
+            "url": "https://dppa.un.org/en/news/sudan-war-peace-efforts-resume-to-end-drone-war-fuelling-humanitarian-crisis"
+          }
+        ]
+      },
+      {
+        "date": "2026-10-07",
         "kind": "collapse",
         "summary": "Army chief al-Burhan rejected talks and vowed to retake all RSF-held territory.",
         "sources": [
@@ -351,6 +415,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "high",
+        "status": "Heavy fighting continued from 19 October to 23 November 2026. In early and mid-November the army and allied forces went on the offensive in North and West Kordofan, and Al Jazeera reported on 14 November that the RSF siege of El Obeid had been broken. The army carried out airstrikes on Nyala on 19 November. RSF drone strikes killed civilians in El Obeid and, on 22 November, in Khartoum, where a UN building was also damaged. Fighting also spread in Blue Nile.",
+        "sources": [
+          {
+            "name": "Al Jazeera – How SAF successes in Sudan's Kordofan could turn tide against the RSF (14 Nov 2026)",
+            "url": "https://www.aljazeera.com/news/2026/11/14/how-saf-successes-in-sudans-kordofan-could-turn-tide-against-the-rsf"
+          },
+          {
+            "name": "Sudan Tribune – Drone strikes kill four in Khartoum, damage U.N. compound (23 Nov 2026)",
+            "url": "https://sudantribune.com/article/321547"
+          },
+          {
+            "name": "UN DPPA – Sudan war: Peace efforts resume to end 'drone war' (21 Oct 2026)",
+            "url": "https://dppa.un.org/en/news/sudan-war-peace-efforts-resume-to-end-drone-war-fuelling-humanitarian-crisis"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "high",
@@ -510,6 +594,39 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-11-23",
+        "kind": "mediation",
+        "summary": "Board of Peace envoy Nickolay Mladenov met Russian Foreign Minister Sergey Lavrov in Moscow to discuss stalled Gaza rebuilding as the board looks for new sources of support.",
+        "sources": [
+          {
+            "name": "Times of Israel",
+            "url": "https://www.timesofisrael.com/liveblog-november-23-2026/"
+          }
+        ]
+      },
+      {
+        "date": "2026-11-17",
+        "kind": "mediation",
+        "summary": "The Board of Peace told the UN Security Council that Israel and Hamas had failed to meet key ceasefire commitments and warned that the truce could collapse without immediate action.",
+        "sources": [
+          {
+            "name": "The National",
+            "url": "https://www.thenationalnews.com/news/us/2026/11/18/israel-and-hamas-failing-to-meet-gaza-ceasefire-commitments-board-of-peace-warns/"
+          }
+        ]
+      },
+      {
+        "date": "2026-11-09",
+        "kind": "mediation",
+        "summary": "Israeli media reported that Israel's government approved an initial deployment of about 250 foreign troops for the International Stabilization Force, with US military preparations underway near the Gaza border.",
+        "sources": [
+          {
+            "name": "Anadolu Agency",
+            "url": "https://www.aa.com.tr/en/middle-east/us-military-preparations-underway-near-gaza-border-for-international-force-deployment-israeli-media/4117125"
+          }
+        ]
+      },
+      {
         "date": "2026-10-18",
         "kind": "mediation",
         "summary": "Board of Peace envoy Nickolay Mladenov demanded that Israel immediately let the International Stabilization Force and the Palestinian technocratic committee into Gaza, after Israel blocked construction of the force's base.",
@@ -570,6 +687,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "medium",
+        "status": "Israeli strikes kept killing Palestinians in Gaza after 19 October 2026. On 12 November an airstrike on Khan Younis's Nasser Hospital killed six people, and on 23 November strikes killed at least three, including an UNRWA worker. Palestinian and Israeli tallies put the dead since the October 2025 truce at more than 1,600 Palestinians and five Israeli soldiers. On 17 November the Board of Peace told the UN Security Council that the ceasefire could collapse because neither Israel nor Hamas had met key commitments.",
+        "sources": [
+          {
+            "name": "AP via Washington Times",
+            "url": "https://www.washingtontimes.com/news/2026/nov/17/board-peace-delivers-bleak-report-gaza-warning-ceasefire-collapse/"
+          },
+          {
+            "name": "Reuters via Al-Monitor",
+            "url": "https://www.al-monitor.com/originals/2026/11/israeli-strikes-kill-least-three-gaza-including-worker-un-palestinian-agency"
+          },
+          {
+            "name": "Anadolu Agency",
+            "url": "https://www.aa.com.tr/en/middle-east/us-military-preparations-underway-near-gaza-border-for-international-force-deployment-israeli-media/4117125"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "medium",
@@ -716,6 +853,17 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-10-20",
+        "kind": "talks",
+        "summary": "Israeli and Lebanese military delegations held two days of US-mediated technical talks at CENTCOM in Tampa. Lebanon sought an end to escalation and an Israeli withdrawal; Israel pressed for a direct joint operations room.",
+        "sources": [
+          {
+            "name": "Jerusalem Post",
+            "url": "https://www.jpost.com/middle-east/article-912312"
+          }
+        ]
+      },
+      {
         "date": "2026-10-19",
         "kind": "talks",
         "summary": "Israel and Lebanon were set to hold US-hosted military talks at CENTCOM in Tampa on pilot zones, Lebanese army deployment and Israeli withdrawal; Lebanon said it would reject direct military coordination.",
@@ -772,6 +920,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "low",
+        "status": "US-mediated Israeli–Lebanese military talks took place at CENTCOM in Tampa on 20–21 October 2026. Lebanon pressed for an end to escalation and an Israeli withdrawal, while Israel pushed for a direct joint operations room. Violence has been sporadic but continues: a drone strike in Marjayoun district in early November killed one person, which Arab News reported as the first such death since September. On 16 November, Israel struck what it said was a Hezbollah arms shipment near the Syrian border. It hit a weapons site in eastern Lebanon on 19–20 November and demolished homes in the south on 18 November.",
+        "sources": [
+          {
+            "name": "Haaretz – Israel strikes deep inside Lebanon, says it targeted Hezbollah arms shipment (16 Nov 2026)",
+            "url": "https://www.haaretz.com/middle-east-news/lebanonnews/2026-11-16/ty-article/.premium/israel-strikes-deep-inside-lebanon-after-prolonged-restraint-at-u-s-request/000001a1-e597-d029-abeb-e7b725d00000"
+          },
+          {
+            "name": "Asharq Al-Awsat – Israel says struck Hezbollah weapons site in east Lebanon",
+            "url": "https://english.aawsat.com/arab-world/5343521-israel-says-struck-hezbollah-weapons-site-east-lebanon"
+          },
+          {
+            "name": "Jerusalem Post – Israel, Lebanon hold talks at US CENTCOM headquarters in Florida",
+            "url": "https://www.jpost.com/middle-east/article-912312"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "medium",
@@ -919,6 +1087,50 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-11-21",
+        "kind": "talks",
+        "summary": "Araghchi said the US must correct its position for a deal to happen, and that Iran could cut the time needed to meet its Hormuz reopening conditions from two days to one day or two hours.",
+        "sources": [
+          {
+            "name": "Newsquawk",
+            "url": "https://www.newsquawk.com/headlines/iran-fm-araghchi-interview-says-if-us-wants-agreement-it-must-correct-position-willing-to-reduce-the-time-for-implementing-the-conditions-for-opening-the-strait-of-hormuz-from-two-days-to-one-day-or-two-hours"
+          }
+        ]
+      },
+      {
+        "date": "2026-11-16",
+        "kind": "talks",
+        "summary": "Araghchi said a 10-nation regional bloc backs Tehran's two-day plan to reopen the Strait of Hormuz as part of efforts to end the war with the United States.",
+        "sources": [
+          {
+            "name": "TRT World",
+            "url": "https://www.trtworld.com/article/1aa5e8cc0211"
+          }
+        ]
+      },
+      {
+        "date": "2026-11-03",
+        "kind": "mediation",
+        "summary": "Qatar said it was still facilitating US–Iran negotiations, and Araghchi reportedly urged Iran's security leadership to advance the latest Qatari peace proposal.",
+        "sources": [
+          {
+            "name": "JINSA Iran War Update, 3–4 November 2026",
+            "url": "https://jinsa.org/wp-content/uploads/2026/11/Iran-War-Update-11.4.26.pdf"
+          }
+        ]
+      },
+      {
+        "date": "2026-11-02",
+        "kind": "talks",
+        "summary": "Iran pushed to speed up its ceasefire proposal, saying Hormuz could reopen within two days if the US met its conditions. Trump signalled progress towards a possible deal.",
+        "sources": [
+          {
+            "name": "Al Jazeera",
+            "url": "https://www.aljazeera.com/news/2026/11/2/iran-pushing-accelerated-plan-for-ceasefire-talks-with-us"
+          }
+        ]
+      },
+      {
         "date": "2026-10-18",
         "kind": "talks",
         "summary": "Iran's foreign minister Abbas Araghchi said Tehran was still reviewing US comments, received through intermediaries, on its September seven-day ceasefire proposal, and that its conditions for reopening Hormuz still stood.",
@@ -979,6 +1191,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "high",
+        "status": "US forces carried out limited strikes on Iran on 3 and 6 November 2026 and hit a missile launch site on 17 November. Iran then widened its attacks to a Kuwaiti air base and to Bahrain, where Bahrain said a civilian site in Sitra was hit on 21 November. By 22 November, attacks on Hormuz shipping were at their highest level of the war. Talks through Qatar continue, but Iran says the US must meet its conditions before it reopens Hormuz.",
+        "sources": [
+          {
+            "name": "CNN – Iranian attacks in the Strait of Hormuz are at the highest levels since the conflict began (22 Nov 2026)",
+            "url": "https://www.cnn.com/2026/11/22/middleeast/hormuz-attacks-highest-levels-iran-war-intl"
+          },
+          {
+            "name": "CNN – Iran widens Gulf attacks after US strikes missile launch site (17 Nov 2026)",
+            "url": "https://www.cnn.com/2026/11/17/politics/us-iran-self-defense-strikes"
+          },
+          {
+            "name": "Al Jazeera – Trump signals progress on Iran deal as Tehran pushes faster ceasefire (2 Nov 2026)",
+            "url": "https://www.aljazeera.com/news/2026/11/2/iran-pushing-accelerated-plan-for-ceasefire-talks-with-us"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "high",
@@ -1172,6 +1404,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "high",
+        "status": "From late October to 23 November 2026, the Houthis kept up near-daily missile and drone attacks on Saudi Arabia. The Houthis said they hit the Aramco building in Riyadh on 8 November, and Saudi Arabia said a strike damaged the Public Investment Fund tower on 19 November. The Saudi-led coalition said it intercepted three ballistic missiles aimed at Riyadh on 21 November. Coalition aircraft struck Hodeidah, Sanaa, Saada and Taiz around 20 November, and ground fighting continued in Taiz and Lahij.",
+        "sources": [
+          {
+            "name": "Reuters via US News – Factbox: Houthi attacks on Saudi Arabia (19 Nov 2026)",
+            "url": "https://www.usnews.com/news/world/articles/2026-11-19/factbox-houthi-attacks-on-saudi-arabia"
+          },
+          {
+            "name": "Al Jazeera – Saudi-led coalition intercepts three Houthi missiles headed for Riyadh (21 Nov 2026)",
+            "url": "https://www.aljazeera.com/news/2026/11/21/saudi-led-coalition-intercepts-three-houthi-missiles-headed-for-riyadh"
+          },
+          {
+            "name": "Al Jazeera – Houthis renew strikes on Saudi Arabia as UNSC extends sanctions (12 Nov 2026)",
+            "url": "https://www.aljazeera.com/news/2026/11/12/yemens-houthis-renew-strikes-on-saudi-arabia-as-unsc-extends-sanctions"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "high",
@@ -1402,7 +1654,7 @@
         ]
       }
     ],
-    "lastChecked": "2026-10-19"
+    "lastChecked": "2026-11-23"
   },
   {
     "id": "myanmar",
@@ -1470,6 +1722,28 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-11-18",
+        "kind": "roadmap",
+        "summary": "President Min Aung Hlaing announced plans for a national peace conference in February 2027 to end the conflict, but gave few details.",
+        "sources": [
+          {
+            "name": "Bangkok Post",
+            "url": "https://www.bangkokpost.com/world/3357126/myanmar-leader-plans-peace-conference-in-february"
+          }
+        ]
+      },
+      {
+        "date": "2026-11-01",
+        "kind": "talks",
+        "summary": "A junta peace negotiation committee (NSPNC) led by Lt Gen Yar Pyae went to Mongla in Shan State for peace talks with the local ethnic armed group, which mainly covered election plans for the area.",
+        "sources": [
+          {
+            "name": "The Star",
+            "url": "https://www.thestar.com.my/aseanplus/aseanplus-news/2026/11/04/myanmar039s-negotiation-committee-and-ethnic-armed-organisation-discuss-election-plans-for-mongla-region-in-myanmar039s-shan-state"
+          }
+        ]
+      },
+      {
         "date": "2026-10-15",
         "kind": "talks",
         "summary": "Myanmar Now reported that the KIO/KIA had rejected the military government's invitation to peace talks in Naypyitaw. CNF and ABSDF also called a junta talks offer a ploy and refused it.",
@@ -1504,6 +1778,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "high",
+        "status": "Heavy fighting went on from 19 October to 23 November 2026. On 6 November the Arakan Army attacked the Shwemingan naval base on the edge of Sittwe. Junta air strikes kept killing civilians: 12 died across Rakhine on 1 November, 11 in strikes on schools in Sagaing around 10 November, and AFP reported that 12 died in a strike on a camp for displaced people around 15 November. On 18 November Min Aung Hlaing announced a peace conference for February 2027, and on 19 November the ICJ ruled that Myanmar had committed genocide against the Rohingya.",
+        "sources": [
+          {
+            "name": "Dawn (AFP): Air strike on DPs camp kills 12 in Myanmar",
+            "url": "https://www.dawn.com/news/2044668/air-strike-on-dps-camp-kills-12-in-myanmar&gsessionid=kcp6iakDg1HH6nW_BbEgKzRq7SpaVwHi-CkJAoe8CRkCBB4qji4HBg"
+          },
+          {
+            "name": "Bangkok Post: Myanmar leader plans peace conference in February",
+            "url": "https://www.bangkokpost.com/world/3357126/myanmar-leader-plans-peace-conference-in-february"
+          },
+          {
+            "name": "France 24: Myanmar civilians under fire from military junta",
+            "url": "https://www.france24.com/en/asia-pacific/20261105-myanmar-civilians-under-fire-from-military-junta"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "high",
@@ -1658,6 +1952,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "high",
+        "status": "As of 23 November 2026, JNIM's blockade of Bamako and other Malian towns is still in place. JNIM reportedly said on 1 November that it would extend the blockade to fuel trucks coming from Niger. Around 21–22 November it attacked the army and allied militias at Niono in Mali's Ségou region, killing several soldiers despite government air support. In Burkina Faso the state continues to lose ground as JNIM and Islamic State Sahel Province fight each other, Al Jazeera reported on 13 November. No formal negotiation track exists.",
+        "sources": [
+          {
+            "name": "Crisis Group – Handling JNIM's Threat to the Sahel's Urban Heartlands",
+            "url": "https://crisisgroup.org/brf/africa/burkina-faso-mali-niger/b213-handling-jnims-threat-sahels-urban-heartlands"
+          },
+          {
+            "name": "Al Jazeera – Burkina Faso's rival armed groups turn on each other as state loses ground (13 Nov 2026)",
+            "url": "https://www.aljazeera.com/news/2026/11/13/burkina-fasos-rival-armed-groups-turn-on-each-other-as-state-loses-ground"
+          },
+          {
+            "name": "Modern Ghana / RFI Hausa – JNIM attack at Niono",
+            "url": "https://www.modernghana.com/news/1546881/mali-jnim-resistance-at-niono-costs-government.html"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "high",
@@ -1913,7 +2227,8 @@
           }
         ]
       }
-    ]
+    ],
+    "lastChecked": "2026-11-23"
   },
   {
     "id": "somalia",
@@ -1999,6 +2314,26 @@
     ],
     "history": [
       {
+        "date": "2026-11-23",
+        "intensity": "high",
+        "status": "As of November 2026, al-Shabaab is still on the offensive and working to encircle Mogadishu, while a constitutional dispute over the government's legitimacy continues. The Somali army reported pursuit operations in Lower Shabelle on 12 November. Fighting near Baidoa displaced thousands around 17 November. AFRICOM carried out airstrikes on 5 November (Jamaame) and 12 November (Leego), and again on 13–15 November. Somalia expelled the UAE ambassador on 19 November.",
+        "sources": [
+          {
+            "name": "CFR Global Conflict Tracker",
+            "url": "https://www.cfr.org/global-conflict-tracker/conflict/al-shabab-somalia"
+          },
+          {
+            "name": "The Soufan Center IntelBrief, 20 Nov 2026",
+            "url": "https://thesoufancenter.org/intelbrief-2026-november-20/"
+          },
+          {
+            "name": "AFRICOM press release, 14 Nov 2026",
+            "url": "https://www.africom.mil/pressrelease/37112/us-forces-conduct-strike-targeting-al-shabaab"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
         "date": "2026-10-07",
         "intensity": "high",
         "status": "Parliament extended President Hassan Sheikh Mohamud’s term to May 2027 while Puntland and Jubaland boycott the federal process, and government forces fought opposition militias in Mogadishu in June 2026. Al-Shabaab stepped up attacks in Lower Shabelle from June to August 2026, pressing the Afgooye road into the capital. In September 2026 the United States said it would end logistical support to the AU mission after December 2026.",
@@ -2036,8 +2371,7 @@
           }
         ]
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "ethiopia",
@@ -2206,7 +2540,8 @@
           }
         ]
       }
-    ]
+    ],
+    "lastChecked": "2026-11-23"
   },
   {
     "id": "south-sudan",
@@ -2270,6 +2605,17 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-11",
+        "kind": "roadmap",
+        "summary": "South Sudan postponed its first national elections from 22 December 2026 to 11 February 2027, extending the transition under the 2018 peace agreement again.",
+        "sources": [
+          {
+            "name": "The National (SA)",
+            "url": "https://thenational.co.za/thought/2026-11-19-south-sudan-s-election-delay-deepens-its-democratic-crisis/"
+          }
+        ]
+      },
+      {
         "date": "2026-01-28",
         "kind": "collapse",
         "summary": "The army launched Operation Enduring Peace against SPLA-IO and White Army positions.",
@@ -2304,6 +2650,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "medium",
+        "status": "Fighting between the army (SSPDF) and SPLA-IO continued through November 2026. AFP reported at least 23 dead in clashes in Ruweng on 8 November, and fighting resumed in Tambura County around 20 November. On 22 November, 24 civilians were killed in Warrap State in an attack blamed on SPLA-IO. In November, authorities moved national elections from 22 December 2026 to 11 February 2027. Riek Machar's treason trial remained without a verdict after its 123rd session in late October.",
+        "sources": [
+          {
+            "name": "UN News – Security Council LIVE: South Sudan's first elections loom amid rising violence (10 Nov 2026)",
+            "url": "https://news.un.org/en/story/2026/11/1168774"
+          },
+          {
+            "name": "Al Arabiya/AFP – At least 23 dead in South Sudan clashes (8 Nov 2026)",
+            "url": "https://english.alarabiya.net/amp/News/world/2026/11/08/at-least-23-dead-in-south-sudan-clashes-"
+          },
+          {
+            "name": "The National (SA) – South Sudan's election delay deepens its democratic crisis (19 Nov 2026)",
+            "url": "https://thenational.co.za/thought/2026-11-19-south-sudan-s-election-delay-deepens-its-democratic-crisis/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "medium",
@@ -2342,8 +2708,7 @@
           }
         ]
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "haiti",
@@ -2413,6 +2778,17 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-11-03",
+        "kind": "mediation",
+        "summary": "A Haitian gang leader wanted by the United States asked the UN to mediate talks, as El Salvador sent more than 2,000 troops to search for its missing soldiers.",
+        "sources": [
+          {
+            "name": "UN",
+            "url": "https://www.un.org/en/haiti-gang-leader-seeks-un-talks-el-salvador-sends-2000-troops-hunt-missing-soldiers"
+          }
+        ]
+      },
+      {
         "date": "2026-09-29",
         "kind": "mediation",
         "summary": "The Security Council extended the Gang Suppression Force to March 2027; elections set for 13 December 2026.",
@@ -2425,6 +2801,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "high",
+        "status": "After four Salvadoran GSF soldiers went missing on 18 October 2026, El Salvador sent about 2,000–2,500 troops to Haiti. On 10 November they struck a gang site in Croix-des-Bouquets, and about 20 people were reported killed. Police killed gang leader Mathias Saintil around 6 November and said on 20 November that they had killed 34 gang members in one operation. On 23 November, Bukele identified three Salvadoran soldiers killed in Haiti. Elections are on hold.",
+        "sources": [
+          {
+            "name": "UN – Haiti gang leader seeks UN talks as El Salvador sends 2,000 troops",
+            "url": "https://www.un.org/en/haiti-gang-leader-seeks-un-talks-el-salvador-sends-2000-troops-hunt-missing-soldiers"
+          },
+          {
+            "name": "Al Jazeera – Salvadoran troops target Haitian gang, leaving 20 dead",
+            "url": "https://www.aljazeera.com/news/2026/11/10/salvadoran-troops-target-haitian-gang-leaving-20-dead"
+          },
+          {
+            "name": "Washington Post – Bukele reveals circumstances in which 3 Salvadoran soldiers died",
+            "url": "https://www.washingtonpost.com/world/2026/11/23/haiti-el-salvador-bukele-gangs-killed/6d95c95e-e74f-11f1-8db0-6f1e3c389e7c_story.html"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "high",
@@ -2567,6 +2963,26 @@
     ],
     "history": [
       {
+        "date": "2026-11-23",
+        "intensity": "high",
+        "status": "Fighting continued in Borno between 19 October and 23 November 2026. On 17 November, Boko Haram fighters reportedly attacked military positions on Yamtake Road in Gwoza LGA. Around 17–18 November, suspected jihadists attacked an APC campaign event in Kukawa that Senate Chief Whip Monguno attended. The military reported killing 21 ISWAP fighters near Monguno and 37 militants in air strikes on 16–23 November. Bandits kept killing and kidnapping people in Zamfara and Katsina, including 12 members of one family in Maradun in early November.",
+        "sources": [
+          {
+            "name": "Sahara Reporters",
+            "url": "https://saharareporters.com/2026/11/17/breaking-boko-haram-resumes-attacks-southern-borno-targets-nigerian-military-bases"
+          },
+          {
+            "name": "allAfrica",
+            "url": "https://allafrica.com/stories/202611190073.html"
+          },
+          {
+            "name": "Vanguard",
+            "url": "https://www.vanguardngr.com/2026/11/bandits-kill-12-family-members-abduct-others-in-zamfara/"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
         "date": "2026-10-19",
         "intensity": "high",
         "status": "Jihadist attacks in Borno went on after ISWAP's 7 October 2026 assault on the Kukawa base. On 13 October, insurgents attacked a military base in Guzamala LGA, killing about 15 soldiers and 5 militia members and burning military vehicles. Around 18 October, eight soldiers died when their patrol vehicle hit a landmine near the Cameroon border. Boko Haram also attacked communities in Adamawa, killing five security personnel and other people. Kidnappings and army rescue operations continued in Katsina and Zamfara.",
@@ -2698,6 +3114,26 @@
     ],
     "history": [
       {
+        "date": "2026-11-23",
+        "intensity": "medium",
+        "status": "Islamic State Mozambique attacks kept up in October and November 2026. Zitamar reported at least 22 people killed in Muidumbe and Mueda districts in the two weeks to about 10 November, with IS claiming 14 of the deaths. Insurgents beheaded two fishermen in Muidumbe on 9 November. On 19 November, attackers killed six people in Nangade town, the district headquarters. The Afungi LNG site stays under Rwandan guard.",
+        "sources": [
+          {
+            "name": "Zitamar News – Gunmen kill six in attack on Nangade town",
+            "url": "https://www.zitamar.com/gunmen-kill-six-in-attack-on-nangade-town/"
+          },
+          {
+            "name": "Zitamar News – Two fishermen beheaded as insurgents raid villages in Cabo Delgado",
+            "url": "https://www.zitamar.com/two-fishermen-beheaded-as-insurgents-raid-villages-in-cabo-delgado/"
+          },
+          {
+            "name": "Zitamar News – The war outside the fence",
+            "url": "https://www.zitamar.com/the-war-outside-the-fence/"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
         "date": "2026-10-07",
         "intensity": "medium",
         "status": "TotalEnergies lifted force majeure and restarted construction at Afungi on 29 January 2026, with the site guarded by Rwandan troops whose deployment was extended. Islamic State Mozambique kept up near-weekly attacks, abducting dozens of fishermen near Macomia in August 2026 and raiding villages in Mocímboa da Praia, Muidumbe and Nangade through September 2026, displacing hundreds at a time.",
@@ -2735,8 +3171,7 @@
           }
         ]
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "colombia",
@@ -2848,6 +3283,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "medium",
+        "status": "Fighting got worse from 19 October to 23 November 2026, and there were still no talks. President de la Espriella ordered a 'total offensive' on 19 October. On 8 November a drone attack on an army base in a gold-mining area killed three soldiers and wounded 16. On 12 November drone attacks in Tibú, Catatumbo, killed four soldiers. Air strikes around 21–22 November killed five ELN fighters in Dagua and five FARC dissidents, including alias 'Churco', in Mapiripán (Meta). On 4 November Congress toughened the terms offered to fighters who surrender.",
+        "sources": [
+          {
+            "name": "Al Jazeera",
+            "url": "https://www.aljazeera.com/news/2026/11/8/drone-attack-on-colombian-army-base-kills-three-soldiers-and-wounds-16"
+          },
+          {
+            "name": "El Espectador",
+            "url": "https://www.elespectador.com/judicial/operacion-ninfa-de-la-espriella-confirma-muerte-de-alias-el-churco-de-las-disidencibombardeo-en-mapiripan-meta-de-la-espriella-confirma-la-muerte-de-alias-churco/"
+          },
+          {
+            "name": "Prensa Latina",
+            "url": "https://prensa-latina.cu/2026/11/22/conflicto-armado-empeora-en-catatumbo-alerta-defensoria-de-colombia"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "medium",
@@ -2971,6 +3426,26 @@
     "peace": [],
     "history": [
       {
+        "date": "2026-11-23",
+        "intensity": "medium",
+        "status": "On 21 November 2026 Mexican forces captured Fausto Isidro Meza Flores, 'El Chapo Isidro', a Mayiza-aligned boss on the FBI's most-wanted list, near Guasave, Sinaloa. Clashes during the operation killed at least 11 people: seven alleged gunmen and four soldiers. Killings continued in Culiacán and Mazatlán through 22 November, including attacks on businesses, and authorities announced the arrest of a regional CJNG leader on 9 November.",
+        "sources": [
+          {
+            "name": "Al Jazeera",
+            "url": "https://www.aljazeera.com/news/2026/11/22/eleven-killed-in-burst-of-violence-during-mexican-cartel-leaders-capture"
+          },
+          {
+            "name": "ABC News (AP)",
+            "url": "https://abcnews.com/International/wireStory/mexico-detains-top-cartel-boss-el-chapo-isidro-138341584"
+          },
+          {
+            "name": "Al Jazeera",
+            "url": "https://www.aljazeera.com/news/2026/11/9/mexico-arrests-major-leader-of-jalisco-cartel"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
         "date": "2026-10-19",
         "intensity": "medium",
         "status": "Fighting between Sinaloa Cartel factions continues in Sinaloa. A clash in a Sinaloa prison killed 10 people around 8–9 October 2026, and Culiacán saw almost daily killings, including a 12 October attack on a house that left four dead. By mid-October troops had arrested suspects over the kidnapping of 10 Vizsla Silver miners in El Rosario and Mazatlán. Mexican data show Jalisco homicides down 39.6% in the first eight months of 2026.",
@@ -3087,6 +3562,17 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-11-20",
+        "kind": "talks",
+        "summary": "Pakistan's climate minister Musadik Malik arrived in New Delhi for the SCO Civilisational Dialogue Forum, the first visit to India by a Pakistani federal minister since the May 2025 war. India said its Indus Waters Treaty stance was unchanged.",
+        "sources": [
+          {
+            "name": "Al Jazeera",
+            "url": "https://www.aljazeera.com/news-analysis/2026/11/20/pakistan-minister-visits-india-for-first-time-since-2025-war"
+          }
+        ]
+      },
+      {
         "date": "2026-08-31",
         "kind": "mediation",
         "summary": "A Hague arbitration court ruled the Indus Waters Treaty remains in force; India rejected the award.",
@@ -3114,6 +3600,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "latent",
+        "status": "The May 2025 ceasefire has held, and no fighting between the two states was reported between 7 October and 23 November 2026. On 20 November 2026, Pakistan's climate minister Musadik Malik arrived in New Delhi for the SCO Civilisational Dialogue Forum (20–22 November). He was the first Pakistani federal minister to visit India since the 2025 war. On the same day, India's foreign ministry said there was 'absolutely no change' in its position on the Indus Waters Treaty. Militant attacks on Indian forces in Kashmir, including a mid-November ambush near Kulgam, continued at a low level.",
+        "sources": [
+          {
+            "name": "Al Jazeera – Pakistan minister visits India for first time since 2025 war",
+            "url": "https://www.aljazeera.com/news-analysis/2026/11/20/pakistan-minister-visits-india-for-first-time-since-2025-war"
+          },
+          {
+            "name": "IISS – The state of back-channel talks between India and Pakistan",
+            "url": "https://www.iiss.org/publications/strategic-comments/2026/11/the-state-of-back-channel-talks-between-india-and-pakistan/"
+          },
+          {
+            "name": "Washington Post – Indian troops kill militant hiding in a mosque in southern Kashmir",
+            "url": "https://www.washingtonpost.com/world/2026/11/18/kashmir-india-pakistan-fighting-militant/a6232210-e31e-11f1-a99e-b3e3805c6b8b_story.html"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "latent",
@@ -3152,8 +3658,7 @@
           }
         ]
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "pakistan-afghanistan",
@@ -3226,6 +3731,17 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-10",
+        "kind": "talks",
+        "summary": "Moscow talks involving Russia and regional states ended in early October 2026 without agreement, and Pakistan–Taliban border clashes continued afterwards.",
+        "sources": [
+          {
+            "name": "FDD's Long War Journal",
+            "url": "https://www.longwarjournal.org/archives/2026/10/taliban-pakistan-border-clashes-continue-after-moscow-talks-end-without-agreement.php"
+          }
+        ]
+      },
+      {
         "date": "2026-04",
         "kind": "collapse",
         "summary": "China-hosted talks failed and Pakistani strikes continued.",
@@ -3265,6 +3781,26 @@
     ],
     "history": [
       {
+        "date": "2026-11-23",
+        "intensity": "medium",
+        "status": "From 7 October to mid-November 2026, Pakistani and Taliban forces kept exchanging fire along the border, including a four-hour clash in Kurram and Paktia on 17 October and further clashes after 29 October. On 11 November the TTP killed 10 police officers in Kohat, and Pakistan reported killing 74 militants in raids during November. On 20–22 November the Taliban accused Islamabad of backing anti-Taliban armed groups. No ceasefire is in place.",
+        "sources": [
+          {
+            "name": "FDD's Long War Journal: Taliban–Pakistan border clashes continue, TTP attack kills 10 Pakistani police (12 Nov 2026)",
+            "url": "https://www.longwarjournal.org/archives/2026/11/taliban-pakistan-border-clashes-continue-ttp-attack-kills-10-pakistani-police.php"
+          },
+          {
+            "name": "FDD's Long War Journal: Pakistan-Taliban border clashes continue amid diplomatic efforts (19 Oct 2026)",
+            "url": "https://www.longwarjournal.org/archives/2026/10/pakistan-taliban-border-clashes-continue-amid-diplomatic-efforts.php"
+          },
+          {
+            "name": "CFR Global Conflict Tracker: Conflict Between Afghanistan and Pakistan",
+            "url": "https://www.cfr.org/global-conflict-tracker/conflict/war-afghanistan"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
         "date": "2026-10-07",
         "intensity": "high",
         "status": "After TTP attacks in February 2026, Pakistan bombed Kabul and Kandahar and declared open war on the Afghan Taliban on 27 February 2026; a March strike on a Kabul hospital killed hundreds. China-hosted talks in April failed and strikes continued, with the UN mission recording over 1,100 Afghan civilian casualties in 2026. Fresh Pakistani air strikes on 21 to 30 September 2026 and TTP attacks in Khyber Pakhtunkhwa kept the war active into October.",
@@ -3302,8 +3838,7 @@
           }
         ]
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "libya",
@@ -3384,6 +3919,39 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-11-23",
+        "kind": "roadmap",
+        "summary": "The House of Representatives launched an initiative to unify state institutions, asking the High Council of State to form a joint committee to draft a transition roadmap to elections.",
+        "sources": [
+          {
+            "name": "Anadolu Agency",
+            "url": "https://www.aa.com.tr/en/africa/libya-s-house-of-representatives-launches-initiative-to-unify-state-institutions-pave-way-for-elections/4135069"
+          }
+        ]
+      },
+      {
+        "date": "2026-11-08",
+        "kind": "talks",
+        "summary": "Prime Minister Abdulhamid Dbeibah met UN envoy Hanna Tetteh to review the UN-backed 4+4 committee and the path to elections.",
+        "sources": [
+          {
+            "name": "Rio Times",
+            "url": "https://www.riotimesonline.com/libya-dbeibah-tetteh-4-4-talks-election-path"
+          }
+        ]
+      },
+      {
+        "date": "2026-10-30",
+        "kind": "mediation",
+        "summary": "The UN Security Council adopted resolution 2835, renewing UNSMIL's mandate until 31 October 2027.",
+        "sources": [
+          {
+            "name": "UNSMIL",
+            "url": "https://unsmil.unmissions.org/en/unsmil-mandate"
+          }
+        ]
+      },
+      {
         "date": "2026-10-15",
         "kind": "talks",
         "summary": "Greece and Egypt held their third round of political consultations on Libya in Athens.",
@@ -3429,6 +3997,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "low",
+        "status": "On 30 October 2026 the UN Security Council adopted resolution 2835, extending the UN mission's (UNSMIL) mandate to 31 October 2027. In November, US envoy Massad Boulos pressed for the 4+4 deal that would unify Libya's institutions, and armed men blocked a House of Representatives session in Zintan, including by storming the airport. On 23 November the House proposed a joint roadmap committee with the High Council of State. No major fighting between the rival camps was reported, though ships were hit off Libya's coast on 22–23 November.",
+        "sources": [
+          {
+            "name": "UNSMIL – UNSMIL Mandate (Resolution 2835)",
+            "url": "https://unsmil.unmissions.org/en/unsmil-mandate"
+          },
+          {
+            "name": "Anadolu Agency – Libya's House of Representatives launches initiative to unify state institutions",
+            "url": "https://www.aa.com.tr/en/africa/libya-s-house-of-representatives-launches-initiative-to-unify-state-institutions-pave-way-for-elections/4135069"
+          },
+          {
+            "name": "Al Jazeera – Libya page",
+            "url": "https://www.aljazeera.com/where/libya/"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "low",
@@ -3609,6 +4197,26 @@
     ],
     "history": [
       {
+        "date": "2026-11-23",
+        "intensity": "latent",
+        "status": "The truce has held, and I found no reports of deadly clashes between 7 October and 23 November 2026, but the dispute has escalated diplomatically. Cambodia sent a letter to the UN in mid-October accusing Thailand of occupying border areas, and on 28 October the Thai army rejected those claims. Cambodia raised the dispute at the Francophonie summit it hosted on 14–16 November, saying about 20,000 people cannot return home; Thailand rejected this on 16 November. Around 21 November PM Anutin said Thailand would halt all other talks if Cambodia keeps pursuing UN conciliation.",
+        "sources": [
+          {
+            "name": "bne IntelliNews via Yahoo News: Cambodia takes Thai border dispute to two summits as Bangkok hits back (20 Nov 2026)",
+            "url": "https://www.yahoo.com/news/world/articles/cambodia-takes-thai-border-dispute-232129330.html"
+          },
+          {
+            "name": "The Nation Thailand: Thailand will halt all other talks if Cambodia pursues compulsory maritime conciliation",
+            "url": "https://www.nationthailand.com/news/general/40073765"
+          },
+          {
+            "name": "Khaosod English: Thailand urges Cambodia to honour all border agreements after Hun Sen's remarks (19 Nov 2026)",
+            "url": "https://www.khaosodenglish.com/politics/2026/11/19/thailand-urges-cambodia-to-honour-all-border-agreements-after-hun-sens-remarks/"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
         "date": "2026-10-07",
         "intensity": "latent",
         "status": "Fighting re-erupted in December 2025, killing over 100 and displacing close to a million people before a new truce. Land demarcation talks stayed frozen through 2026, Thailand ended the 2001 maritime memorandum in May and raised border defence spending, and around 24,000 Cambodians remain displaced. On 15 September 2026 both sides opened UN compulsory conciliation in Singapore on their Gulf of Thailand claims.",
@@ -3646,8 +4254,7 @@
           }
         ]
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "taiwan-strait",
@@ -3724,6 +4331,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "latent",
+        "status": "In early November 2026, China ran a large, unannounced military exercise across the western Pacific and around Taiwan, including area-denial drills by the Liaoning carrier group. On 3 November, Taiwan said more than 100 PLA Navy and China Coast Guard vessels were deployed in the region and reported 49 PLA aircraft sorties in one day, the highest daily count of 2026. Activity eased later in the month, with 6 aircraft and 12 ships reported on 23 November. No shots have been fired.",
+        "sources": [
+          {
+            "name": "Japan Times (Reuters): China stages unannounced Pacific drills in 'silent intimidation' push",
+            "url": "https://www.japantimes.co.jp/news/2026/11/13/asia-pacific/politics/china-silent-intimidation/"
+          },
+          {
+            "name": "AEI/ISW China & Taiwan Update, November 13, 2026",
+            "url": "https://www.aei.org/commentary/china-taiwan-update-november-13-2026/"
+          },
+          {
+            "name": "SCMP: Taiwan flags massive PLA naval mobilisation, spike in air sorties",
+            "url": "https://www.scmp.com/news/china/military/article/3373249/taiwan-flags-massive-pla-naval-mobilisation-spike-air-sorties"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "latent",
@@ -3859,6 +4486,39 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-11-20",
+        "kind": "talks",
+        "summary": "At their first trilateral summit in Shenzhen, held alongside APEC, Trump, Xi and Putin agreed to hold talks on reducing nuclear risks, and the Korean Peninsula was reportedly discussed.",
+        "sources": [
+          {
+            "name": "Korea JoongAng Daily",
+            "url": "https://www.koreajoongangdaily.com/korea/trump-xi-putin-agree-to-hold-dialogue-on-nuclear-risks-korean-peninsula-reportedly-discussed/12982300"
+          }
+        ]
+      },
+      {
+        "date": "2026-11-10",
+        "kind": "collapse",
+        "summary": "Kim Yo Jong rejected UN Secretary-General Guterres's call to resume inter-Korean dialogue and defended the North's border fortifications as self-defence.",
+        "sources": [
+          {
+            "name": "UPI",
+            "url": "https://www.upi.com/Top_News/World-News/2026/11/10/Kim-Yo-Jong-Antonio-Guterres-reject-dialogue-DMZ/3251794301537/"
+          }
+        ]
+      },
+      {
+        "date": "2026-10-23",
+        "kind": "talks",
+        "summary": "South Korea's defence ministry proposed military talks with North Korea to jointly check where the land border runs and to restore military communication lines after confrontations in the DMZ.",
+        "sources": [
+          {
+            "name": "UPI",
+            "url": "https://www.upi.com/Top_News/World-News/2026/10/23/korea-North-Korea-DMZ-border-defense-ministry-talks-MDL/4061792742282/"
+          }
+        ]
+      },
+      {
         "date": "2026-10",
         "kind": "collapse",
         "summary": "Pyongyang rebuffed dialogue and test-fired an IRBM amid a border mine dispute.",
@@ -3882,6 +4542,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "latent",
+        "status": "On 23 October 2026 Seoul proposed military talks with Pyongyang to jointly check where the land border runs and to restore military hotlines. On 4 November North Korea fired multiple missiles off its east coast, its fourth launch in a month, and said it had tested a new air-defence missile. On 10 November Kim Yo Jong rejected the UN Secretary-General's call for inter-Korean dialogue. Trump, Xi and Putin reportedly discussed the peninsula in Shenzhen on 19-20 November, but no US-North Korea meeting took place.",
+        "sources": [
+          {
+            "name": "UPI: Kim Yo Jong rejects U.N. chief's call for inter-Korean dialogue",
+            "url": "https://www.upi.com/Top_News/World-News/2026/11/10/Kim-Yo-Jong-Antonio-Guterres-reject-dialogue-DMZ/3251794301537/"
+          },
+          {
+            "name": "Reuters via US News: North Korea fires multiple missiles in fourth weapons launch in a month",
+            "url": "https://www.usnews.com/news/world/articles/2026-11-03/north-korea-fires-unidentified-projectile-toward-sea-off-its-east-coast-seoul-says"
+          },
+          {
+            "name": "Korea JoongAng Daily: Trump, Xi, Putin agree to hold dialogue on nuclear risks",
+            "url": "https://www.koreajoongangdaily.com/korea/trump-xi-putin-agree-to-hold-dialogue-on-nuclear-risks-korean-peninsula-reportedly-discussed/12982300"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "latent",
@@ -4020,6 +4700,28 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-11-17",
+        "kind": "talks",
+        "summary": "President Marcos said ASEAN and China remain committed to the 2002 Declaration on the Conduct of Parties until the code of conduct is finalised.",
+        "sources": [
+          {
+            "name": "US News / Reuters",
+            "url": "https://www.usnews.com/news/world/articles/2026-11-17/asean-china-committed-to-follow-south-china-sea-declaration-until-code-of-conduct-is-completed"
+          }
+        ]
+      },
+      {
+        "date": "2026-11-15",
+        "kind": "talks",
+        "summary": "At the ASEAN meetings in Manila, ASEAN and China did not conclude the South China Sea code of conduct under the Philippine chairmanship, despite provisional agreement on about 80% of the draft.",
+        "sources": [
+          {
+            "name": "Al Jazeera",
+            "url": "https://www.aljazeera.com/news/2026/11/16/asean-china-fall-short-of-agreeing-on-south-china-sea-code"
+          }
+        ]
+      },
+      {
         "date": "2016-07-12",
         "kind": "agreement",
         "summary": "Permanent Court of Arbitration ruled against China’s nine-dash-line claims; Beijing rejects the award. ASEAN–China code of conduct talks continue.",
@@ -4032,6 +4734,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "low",
+        "status": "On 24 October 2026, a new Philippine Coast Guard vessel shadowed China's Liaoning carrier group off Mindanao. In the 9–16 November week, the Philippine military counted 19 Chinese navy and coast guard ships at West Philippine Sea features, down from 29 the week before. At the ASEAN meetings in Manila on 15–17 November, ASEAN and China did not conclude the code of conduct despite provisional agreement on about 80% of the draft, and said they would keep following the 2002 Declaration until a code is finished.",
+        "sources": [
+          {
+            "name": "Al Jazeera – ASEAN, China fall short of agreeing on South China Sea code (16 Nov 2026)",
+            "url": "https://www.aljazeera.com/news/2026/11/16/asean-china-fall-short-of-agreeing-on-south-china-sea-code"
+          },
+          {
+            "name": "USNI News – New Philippine Coast Guard Vessel Shadows Chinese Carrier Strike Group off Mindanao (26 Oct 2026)",
+            "url": "https://news.usni.org/2026/10/26/new-philippine-coast-guard-vessel-shadows-chinese-carrier-strike-group-off-mindanao"
+          },
+          {
+            "name": "Daily Tribune – AFP: 19 Chinese vessels spotted near key shoals, Pag-asa Island (17 Nov 2026)",
+            "url": "https://tribune.net.ph/2026/11/17/afp-19-chinese-vessels-spotted-near-key-shoals-pag-asa-island"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "low",
@@ -4176,6 +4898,28 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-11-23",
+        "kind": "roadmap",
+        "summary": "Armenia published a draft constitution that drops the Declaration of Independence reference Baku objected to. Azerbaijan's foreign minister welcomed it and said he saw no further obstacle to signing the treaty.",
+        "sources": [
+          {
+            "name": "Reuters via LBC",
+            "url": "https://www.lbcgroup.tv/news/world-news/969327/armenia-proposes-new-constitution-in-step-towards-peace-with-azerbaija/en"
+          }
+        ]
+      },
+      {
+        "date": "2026-11-12",
+        "kind": "talks",
+        "summary": "Pashinyan and Aliyev met at the European Political Community summit in Dublin to discuss the TRIPP route, trade, border delimitation and water cooperation.",
+        "sources": [
+          {
+            "name": "OC Media",
+            "url": "https://oc-media.org/pashinyan-and-aliyev-meet-in-dublin-to-discuss-trump-route-trade-and-water-cooperation/"
+          }
+        ]
+      },
+      {
         "date": "2026-10-15",
         "kind": "roadmap",
         "summary": "Pashinyan said at a government meeting that Armenia aims to sign and ratify the initialled peace treaty with Azerbaijan by 2031.",
@@ -4214,6 +4958,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "latent",
+        "status": "On 12 November 2026, Pashinyan and Aliyev met at the European Political Community summit in Dublin and discussed the TRIPP route, trade, border delimitation and water cooperation. On 23 November Armenia published a draft constitution. Its preamble does not mention Nagorno-Karabakh or the Declaration of Independence. Azerbaijan's foreign minister Bayramov said the text appeared to contain no territorial claims and that Baku then sees no further obstacle to signing. The pro-Russian opposition rejects the draft. No deadly clashes were reported.",
+        "sources": [
+          {
+            "name": "Reuters via Yahoo News",
+            "url": "https://www.yahoo.com/news/world/articles/armenia-proposes-constitution-step-towards-074851233.html"
+          },
+          {
+            "name": "Reuters via LBC",
+            "url": "https://www.lbcgroup.tv/news/world-news/969327/armenia-proposes-new-constitution-in-step-towards-peace-with-azerbaija/en"
+          },
+          {
+            "name": "OC Media",
+            "url": "https://oc-media.org/pashinyan-and-aliyev-meet-in-dublin-to-discuss-trump-route-trade-and-water-cooperation/"
+          }
+        ],
+        "confidence": "high"
+      },
       {
         "date": "2026-10-19",
         "intensity": "latent",
@@ -4339,6 +5103,39 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-11-18",
+        "kind": "agreement",
+        "summary": "US Defense Secretary Pete Hegseth, on his first visit to Caracas since Maduro's capture, announced a military cooperation agreement with Venezuela's interim government.",
+        "sources": [
+          {
+            "name": "Al Jazeera",
+            "url": "https://www.aljazeera.com/news/2026/11/18/us-defence-secretary-announces-military-partnership-on-trip-to-venezuela"
+          }
+        ]
+      },
+      {
+        "date": "2026-11-13",
+        "kind": "talks",
+        "summary": "A fourth round of US-backed talks between the acting government, led by Jorge Rodríguez, and the 2015 National Assembly, led by Dinorah Figuera, opened in Caracas to discuss electoral reforms.",
+        "sources": [
+          {
+            "name": "Rio Times",
+            "url": "https://www.riotimesonline.com/venezuela-talks-fourth-round-caracas-election-path/"
+          }
+        ]
+      },
+      {
+        "date": "2026-11-03",
+        "kind": "roadmap",
+        "summary": "The United States urged Venezuela to follow a phased plan of economic recovery and political reconciliation before holding democratic elections.",
+        "sources": [
+          {
+            "name": "Al Jazeera",
+            "url": "https://www.aljazeera.com/news/2026/11/3/us-urges-venezuela-to-follow-phased-plan-for-democratic-transition"
+          }
+        ]
+      },
+      {
         "date": "2026-10-09",
         "kind": "talks",
         "summary": "The US State Department said US-backed reconciliation talks between Venezuela's interim government and the 2015 National Assembly delegation had made concrete progress, with a third round set to begin on 14 October.",
@@ -4362,6 +5159,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "low",
+        "status": "A fourth round of US-backed talks between Venezuela's acting government and the 2015 National Assembly opened in Caracas on 13 November 2026. On 18 November, US Defense Secretary Pete Hegseth visited Caracas and announced a military cooperation agreement with the interim government. US strikes on alleged drug boats continued, killing five people on 27 October and hitting another vessel on 10 November. No US strikes on Venezuelan territory were reported.",
+        "sources": [
+          {
+            "name": "Rio Times – Venezuela Talks Open Fourth Round in Caracas",
+            "url": "https://www.riotimesonline.com/venezuela-talks-fourth-round-caracas-election-path/"
+          },
+          {
+            "name": "Military Times – Hegseth, in Caracas, announces US-Venezuela military partnership agreement",
+            "url": "https://www.militarytimes.com/news/pentagon-congress/2026/11/19/hegseth-in-caracas-announces-us-venezuela-military-partnership-agreement/"
+          },
+          {
+            "name": "Al Jazeera – US says it killed five people in strike on alleged drug boat",
+            "url": "https://www.aljazeera.com/news/2026/10/27/us-says-it-killed-five-people-in-strike-on-alleged-drug-boat"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "low",
@@ -4547,7 +5364,8 @@
           }
         ]
       }
-    ]
+    ],
+    "lastChecked": "2026-11-23"
   },
   {
     "id": "hormuz",
@@ -4619,6 +5437,39 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-11-17",
+        "kind": "talks",
+        "summary": "Araghchi met Omani Foreign Minister Badr al-Busaidi in Muscat, but the meeting produced no agreement on reopening the Strait of Hormuz.",
+        "sources": [
+          {
+            "name": "House of Saud",
+            "url": "https://houseofsaud.com/trump-hormuz-total-control-iran-terms/"
+          }
+        ]
+      },
+      {
+        "date": "2026-11-16",
+        "kind": "mediation",
+        "summary": "Iranian Foreign Minister Araghchi said a 10-nation regional bloc backed Tehran's two-day plan to reopen the Strait of Hormuz as part of efforts to end the war with the United States.",
+        "sources": [
+          {
+            "name": "TRT World",
+            "url": "https://www.trtworld.com/article/1aa5e8cc0211"
+          }
+        ]
+      },
+      {
+        "date": "2026-11-02",
+        "kind": "roadmap",
+        "summary": "Iran proposed a faster plan to reopen the Strait of Hormuz within two days if the US agreed to its terms, with nuclear talks to follow. Trump signalled progress toward a deal.",
+        "sources": [
+          {
+            "name": "Al Jazeera",
+            "url": "https://www.aljazeera.com/news/2026/11/2/iran-pushing-accelerated-plan-for-ceasefire-talks-with-us"
+          }
+        ]
+      },
+      {
         "date": "2026-10-18",
         "kind": "talks",
         "summary": "Iranian Foreign Minister Araghchi said Tehran was reviewing US comments on its seven-day ceasefire and Hormuz reopening proposal, which he said was still on the table, though Iran's conditions had not changed.",
@@ -4653,6 +5504,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "medium",
+        "status": "Attacks on shipping grew in November 2026. An ADNOC tanker was hit in the Strait of Hormuz on 17 November, leaving one crew member missing and 11 injured. Tankers were also struck near Oman's Khasab on 20 and 21 November, and Gulf News said attacks had reached their highest level of the war. Traffic in mid-November was about 65% below pre-war levels, mostly in US-escorted transits. On 2 November Iran offered to reopen the strait within two days if its terms were met, but talks in Muscat on 17 November ended without agreement.",
+        "sources": [
+          {
+            "name": "Seatrade Maritime – One missing, 11 injured in attack on ADNOC tanker in Hormuz",
+            "url": "https://www.seatrade-maritime.com/security/one-missing-11-injured-in-attack-on-adnoc-tanker-in-hormuz"
+          },
+          {
+            "name": "Al Jazeera – Tankers hit in Strait of Hormuz as Iran tightens grip on shipping (21 Nov 2026)",
+            "url": "https://www.aljazeera.com/news/2026/11/21/tankers-hit-in-strait-of-hormuz-as-iran-tightens-grip-on-shipping"
+          },
+          {
+            "name": "Al Jazeera – Trump signals progress on Iran deal as Tehran pushes faster ceasefire (2 Nov 2026)",
+            "url": "https://www.aljazeera.com/news/2026/11/2/iran-pushing-accelerated-plan-for-ceasefire-talks-with-us"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-19",
         "intensity": "medium",
@@ -4760,6 +5631,28 @@
     "actorsUpdated": "2026-10",
     "peace": [
       {
+        "date": "2026-11-19",
+        "kind": "agreement",
+        "summary": "Iraqi security officials said Baghdad reached a compromise with Kataib Hezbollah after the government readied forces to take over the militia's Jurf al-Sakhar stronghold.",
+        "sources": [
+          {
+            "name": "Reuters via US News",
+            "url": "https://www.usnews.com/news/world/articles/2026-11-19/iraqi-forces-strike-compromise-with-powerful-pro-iran-militia-security-officials-say"
+          }
+        ]
+      },
+      {
+        "date": "2026-11-06",
+        "kind": "talks",
+        "summary": "Prime Minister al-Zaidi said three of the five main armed factions outside the Popular Mobilization Forces had agreed to surrender their weapons to the state, with talks continuing with the others.",
+        "sources": [
+          {
+            "name": "The Conversation",
+            "url": "https://theconversation.com/us-demands-that-iraq-disarms-brigades-misread-the-nations-complicated-security-landscape-293491"
+          }
+        ]
+      },
+      {
         "date": "2026-10",
         "kind": "talks",
         "summary": "Prime Minister al-Zaidi pressed factions to bring weapons under state control by June 2027.",
@@ -4772,6 +5665,26 @@
       }
     ],
     "history": [
+      {
+        "date": "2026-11-23",
+        "intensity": "latent",
+        "status": "No US or Israeli strikes on Iraqi militias, and no militia attacks on US targets, were reported between 7 October and 23 November 2026. On 6 November, Prime Minister al-Zaidi said three of the five main factions outside the Popular Mobilization Forces had agreed to hand over their weapons. On 16 November he ordered the army into Kataib Hezbollah's Jurf al-Sakhar stronghold. After a compromise reported on 19 November, government forces entered the area peacefully around 21 November.",
+        "sources": [
+          {
+            "name": "Reuters via US News: Iraqi forces strike compromise with powerful pro-Iran militia (2026-11-19)",
+            "url": "https://www.usnews.com/news/world/articles/2026-11-19/iraqi-forces-strike-compromise-with-powerful-pro-iran-militia-security-officials-say"
+          },
+          {
+            "name": "Al Jazeera: Iraq deploys army to stronghold of Iran-backed Kataib Hezbollah (2026-11-16)",
+            "url": "https://www.aljazeera.com/news/2026/11/16/iran-deploys-army-to-stronghold-of-iran-backed-kataib-hezbollah"
+          },
+          {
+            "name": "The Conversation: US demands that Iraq disarms brigades misread the nation's security landscape",
+            "url": "https://theconversation.com/us-demands-that-iraq-disarms-brigades-misread-the-nations-complicated-security-landscape-293491"
+          }
+        ],
+        "confidence": "medium"
+      },
       {
         "date": "2026-10-07",
         "intensity": "low",
@@ -4787,8 +5700,7 @@
           }
         ]
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   },
   {
     "id": "balochistan",
@@ -4842,6 +5754,26 @@
     "peace": [],
     "history": [
       {
+        "date": "2026-11-23",
+        "intensity": "medium",
+        "status": "Fighting continued through October and November 2026. On 2 November, militants attacked troops in Nushki and a blast hit a military vehicle in Kharan. The BLA said it carried out 44 attacks between 3 and 17 November that killed 38 security personnel; this is unverified. Pakistan's military said on about 13 November that it had killed 74 militants since 3 November in Balochistan and Khyber Pakhtunkhwa. On 21 November it reported 15 militants killed in Mastung under Operation Radd-ul-Fitna III. No negotiation track exists.",
+        "sources": [
+          {
+            "name": "Arab News Pakistan",
+            "url": "https://www.arabnews.pk/pakistan/pakistan-security-forces-kill-15-militants-destroy-hideouts-in-balochistan-3007699"
+          },
+          {
+            "name": "Arab News Pakistan",
+            "url": "https://www.arabnews.pk/pakistan/pakistan-says-74-militants-killed-since-nov-3-in-balochistan-khyber-pakhtunkhwa-security-operations-3006913"
+          },
+          {
+            "name": "IANS",
+            "url": "https://ianslive.in/multiple-attacks-target-pakistani-forces-in-balochistan--20261102204708"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
         "date": "2026-10-07",
         "intensity": "medium",
         "status": "ACLED recorded more than 540 armed clashes between Baloch militants and security forces from January to August 2026, up from 299 in the same period of 2025, with rising attacks on mining and transport infrastructure. Fighting continued into autumn 2026 with no negotiation track.",
@@ -4856,7 +5788,6 @@
           }
         ]
       }
-    ],
-    "lastChecked": "2026-10-19"
+    ]
   }
 ]
